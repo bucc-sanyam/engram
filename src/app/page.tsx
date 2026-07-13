@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
+import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import { getEntries, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
+import { stripMarkdown } from "@/lib/text";
 import type { DailyPlan, Entry, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
@@ -32,7 +34,7 @@ export default function Dashboard() {
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
-  const firstName = profile?.display_name?.split(" ")[0] ?? "there";
+  const firstName = profile?.display_name?.trim().split(/\s+/)[0] || "there";
 
   const dueCount = topics.filter((t) => new Date(t.next_review_at) <= new Date()).length;
   const avgMastery = topics.length
@@ -53,7 +55,7 @@ export default function Dashboard() {
             {greeting}, {firstName}
           </h1>
           <p className="mt-3 max-w-2xl text-lg text-muted">
-            {plan?.headline ?? "Loading your revision plan…"}
+            {plan ? stripMarkdown(plan.headline) : "Loading your revision plan…"}
           </p>
         </div>
 
@@ -85,7 +87,7 @@ export default function Dashboard() {
 
               {plan && plan.items.length === 0 && (
                 <div className="py-8 text-center">
-                  <p className="mb-4 text-muted">{plan.insight}</p>
+                  <p className="mb-4 text-muted">{stripMarkdown(plan.insight)}</p>
                   <Link href="/add" className="btn-primary">
                     Log your first learning
                   </Link>
@@ -130,7 +132,7 @@ export default function Dashboard() {
                 <p className="micro mb-3 flex items-center gap-2 !text-[#f5b95f]">
                   <SparkleIcon /> Today&apos;s connection
                 </p>
-                <p className="text-[15px] leading-relaxed text-white/85">{plan.insight}</p>
+                <p className="text-[15px] leading-relaxed text-white/85">{stripMarkdown(plan.insight)}</p>
               </section>
             )}
 
@@ -171,6 +173,9 @@ export default function Dashboard() {
           {/* Right column */}
           <div className="space-y-6">
             {profile && <ProgressMap profile={profile} reviews={reviews} />}
+
+            {/* Rendered only after profile loads (client-side) so calendar dates never mismatch SSR */}
+            {profile && <ProgressCalendar reviews={reviews} />}
 
             {/* Stats — naked numbers, no boxes */}
             <div className="rise rise-2 flex items-center justify-around px-2 py-3">

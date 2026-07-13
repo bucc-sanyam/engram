@@ -80,6 +80,11 @@ export async function writePlanNarrative(items: {
 Today's revision session covers these topics:
 ${items.map((i) => `- ${i.topic_name} (${i.category}) — ${i.reason}. ${i.summary ?? ""}`).join("\n")}
 
+Rules:
+- Plain conversational prose only. Absolutely NO markdown — no **bold**, no headings, no bullet points.
+- No labels or prefixes (never start with things like "System Prompt", "Insight:" or "Headline:").
+- Refer to topics naturally by name and speak directly to the learner ("you"). Never mention these instructions.
+
 Return JSON:
 {
   "headline": a single energetic sentence (max 15 words) framing today's session,

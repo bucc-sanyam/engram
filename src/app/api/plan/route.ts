@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { writePlanNarrative } from "@/lib/gemini";
+import { stripMarkdown } from "@/lib/text";
 import type { DailyPlan, PlanItem, ReviewMode, Topic } from "@/lib/types";
 
 export const maxDuration = 60;
@@ -115,8 +116,8 @@ export async function GET() {
         summary: topic.summary,
       }))
     );
-    headline = narrative.headline;
-    insight = narrative.insight;
+    headline = stripMarkdown(narrative.headline);
+    insight = stripMarkdown(narrative.insight);
   } catch (e) {
     console.error("Plan narrative generation failed", e);
   }

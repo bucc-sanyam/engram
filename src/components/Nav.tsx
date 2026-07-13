@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getProfile, isDemo, signOut } from "@/lib/data";
+import { getProfile, isDemo } from "@/lib/data";
 import { levelForXp } from "@/lib/types";
 
 const LINKS = [
@@ -86,12 +86,18 @@ export default function Nav() {
                 Sign in
               </Link>
             ) : (
-              <button
-                onClick={() => signOut()}
-                className="hidden rounded-full px-2.5 py-1.5 text-sm text-faint transition-colors hover:text-white md:block"
+              <Link
+                href="/profile"
+                title="Profile"
+                className={`hidden items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-all md:flex ${
+                  pathname === "/profile"
+                    ? "bg-[#f4f1e9] text-[#131118] shadow-[0_4px_16px_rgba(244,241,233,0.15)]"
+                    : "bg-white/[0.05] text-muted hover:text-white"
+                }`}
               >
-                Sign out
-              </button>
+                <UserIcon className="h-4 w-4" />
+                Profile
+              </Link>
             )}
           </div>
         </div>
@@ -112,18 +118,16 @@ export default function Nav() {
               {label}
             </Link>
           ))}
-          {/* Mobile auth tab */}
-          {isDemo && (
-            <Link
-              href="/login"
-              className={`flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition-colors ${
-                pathname === "/login" ? "text-[#ff9a80]" : "text-faint"
-              }`}
-            >
-              <UserIcon className="h-5 w-5" />
-              Sign in
-            </Link>
-          )}
+          {/* Mobile auth/profile tab */}
+          <Link
+            href={isDemo ? "/login" : "/profile"}
+            className={`flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition-colors ${
+              pathname === (isDemo ? "/login" : "/profile") ? "text-[#ff9a80]" : "text-faint"
+            }`}
+          >
+            <UserIcon className="h-5 w-5" />
+            {isDemo ? "Sign in" : "Profile"}
+          </Link>
         </div>
       </nav>
     </>

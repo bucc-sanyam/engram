@@ -59,6 +59,30 @@ export async function getProfile(): Promise<Profile> {
   return data as Profile;
 }
 
+export async function updateProfile(fields: { display_name: string }): Promise<Profile> {
+  if (isDemo) {
+    demoState.profile = { ...demoState.profile, ...fields };
+    return demoState.profile;
+  }
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase
+    .from("profiles")
+    .update(fields)
+    .eq("id", user!.id)
+    .select()
+    .single();
+  if (error) throw error;
+  return data as Profile;
+}
+
+export async function getUserEmail(): Promise<string | null> {
+  if (isDemo) return null;
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  return user?.email ?? null;
+}
+
 export async function getTopics(): Promise<Topic[]> {
   if (isDemo) return demoTopics;
   const supabase = createClient();

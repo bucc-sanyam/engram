@@ -10,6 +10,7 @@ import Link from "next/link";
 export default function LoginPage() {
   const router = useRouter();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +25,13 @@ export default function LoginPage() {
     const supabase = createClient();
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({ email, password });
+        // `name` lands in raw_user_meta_data; the handle_new_user trigger
+        // copies it into profiles.display_name.
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { name: name.trim() } },
+        });
         if (error) throw error;
         setMessage("Check your inbox to confirm your email, then sign in.");
       } else {
@@ -82,6 +89,18 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={submit} className="space-y-4">
+            {mode === "signup" && (
+              <input
+                id="name-input"
+                type="text"
+                required
+                maxLength={60}
+                placeholder="Your name"
+                className="input"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            )}
             <input
               id="email-input"
               type="email"
