@@ -15,7 +15,7 @@ import type {
  * configured (production). Set by the login page's "Continue as guest" link,
  * honoured by src/proxy.ts, and cleared there as soon as a real user signs in.
  */
-export const GUEST_COOKIE = "engram_guest";
+export const GUEST_COOKIE = "engramia_guest";
 
 function guestActive(): boolean {
   if (typeof document === "undefined") return false; // SSR — resolved on the client

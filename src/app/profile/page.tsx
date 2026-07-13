@@ -126,7 +126,7 @@ export default function ProfilePage() {
                 </p>
               )}
               <p className="mt-3 text-xs text-faint">
-                This is the name Engram greets you with on the Today page.
+                This is the name Engramia greets you with on the Today page.
               </p>
             </section>
 

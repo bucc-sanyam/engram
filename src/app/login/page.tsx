@@ -55,9 +55,9 @@ export default function LoginPage() {
           <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_48px_rgba(255,122,92,0.5)]">
             <BrainIcon className="h-9 w-9 text-[#1a120e]" />
           </span>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome to Engram</h1>
-          <p className="mt-2 text-sm text-muted max-w-xs">
-            Your second brain — log what you learn, and never forget it again.
+          <h1 className="text-3xl font-bold tracking-tight">Welcome to Engramia</h1>
+          <p className="mt-2 text-sm text-faint">
+            Sign in to access your knowledge graph.
           </p>
         </div>
 

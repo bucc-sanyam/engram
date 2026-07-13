@@ -26,9 +26,8 @@ const jetmono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Engram — your second brain",
-  description:
-    "Log what you learn, see it as a living knowledge graph, and let AI quiz you before you forget.",
+  title: "Engramia — your second brain",
+  description: "A generative spaced-repetition knowledge graph.",
 };
 
 export const viewport: Viewport = {

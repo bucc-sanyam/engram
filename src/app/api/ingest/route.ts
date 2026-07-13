@@ -9,7 +9,7 @@ export const maxDuration = 60;
 async function fetchReadable(url: string): Promise<{ pageTitle: string | null; text: string }> {
   const res = await fetch(url, {
     headers: {
-      "User-Agent": "Mozilla/5.0 (compatible; EngramBot/1.0; +learning-app)",
+      "User-Agent": "Mozilla/5.0 (compatible; EngramiaBot/1.0; +learning-app)",
       Accept: "text/html,application/xhtml+xml",
     },
     signal: AbortSignal.timeout(15000),
