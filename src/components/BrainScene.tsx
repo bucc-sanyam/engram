@@ -278,7 +278,7 @@ export default function BrainScene({
       const pos = brainPoint(uu, vv, sign).multiplyScalar(1.04);
       const color = new THREE.Color(categoryColor(t.category));
       const baseScale =
-        0.05 + Math.min(0.045, (degree.get(t.id) ?? 0) * 0.01) + (t.mastery / 100) * 0.018;
+        0.06 + Math.min(0.045, (degree.get(t.id) ?? 0) * 0.01) + Math.min(0.018, (t.review_count / 10) * 0.018);
 
       // brightened cortex patch around the topic
       const cPos = new Float32Array(CLUSTER_N * 3);

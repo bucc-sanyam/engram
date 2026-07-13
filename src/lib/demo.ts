@@ -171,20 +171,20 @@ export const demoEntries: Entry[] = [
 ];
 
 export const demoFlashcards: Flashcard[] = [
-  { id: "f1", topic_id: "d1", question: "Why did transformers replace RNNs for language modelling?", answer: "They process all tokens in parallel via self-attention, removing the sequential bottleneck and enabling much larger training runs." },
-  { id: "f2", topic_id: "d1", question: "What problem do positional encodings solve?", answer: "Self-attention is order-agnostic, so positional encodings inject word-order information into the model." },
-  { id: "f3", topic_id: "d5", question: "What is the spacing effect?", answer: "Information reviewed at spaced intervals is remembered far better than the same time spent massed together (cramming)." },
-  { id: "f4", topic_id: "d5", question: "In SM-2, what happens after a failed recall?", answer: "The interval resets to 1 day and the ease factor drops, so the item comes back sooner." },
-  { id: "f5", topic_id: "d7", question: "Which sleep stage replays hippocampal memories?", answer: "Slow-wave (deep) sleep replays the day's memories, transferring them toward cortical long-term storage." },
-  { id: "f6", topic_id: "d3", question: "What are the three steps of a RAG pipeline?", answer: "Retrieve relevant chunks via embedding similarity, add them to the prompt context, then generate the answer." },
-  { id: "f7", topic_id: "d10", question: "What was the Pax Romana?", answer: "A ~200-year period of relative peace and stability across the Roman Empire, starting under Augustus." },
-  { id: "f8", topic_id: "d12", question: "State Bayes' theorem.", answer: "P(A|B) = P(B|A) × P(A) / P(B) — posterior equals likelihood times prior over evidence." },
+  { id: "f1", topic_id: "d1", question: "Transformers process language tokens sequentially one by one.", answer: "False" },
+  { id: "f2", topic_id: "d1", question: "Positional encodings inject token order information into the transformer architecture.", answer: "True" },
+  { id: "f3", topic_id: "d5", question: "Spaced repetition intervals should remain constant over time.", answer: "False" },
+  { id: "f4", topic_id: "d5", question: "In SM-2, a failed recall resets the next interval to 1 day.", answer: "True" },
+  { id: "f5", topic_id: "d7", question: "Slow-wave sleep is the stage where memory consolidation primarily happens.", answer: "True" },
+  { id: "f6", topic_id: "d3", question: "RAG models retrieve chunks of text from a database before generating responses.", answer: "True" },
+  { id: "f7", topic_id: "d10", question: "Pax Romana was a period of stability in Rome lasting roughly 20 years.", answer: "False" },
+  { id: "f8", topic_id: "d12", question: "Bayes' theorem calculates the probability of an event based on prior knowledge.", answer: "True" },
 ];
 
 export const demoProfile: Profile = {
   id: "demo",
   display_name: "Demo Learner",
-  xp: 940,
+  xp: 0,
   streak: 6,
   longest_streak: 11,
   last_active: daysAgo(1).slice(0, 10),
@@ -192,11 +192,16 @@ export const demoProfile: Profile = {
 
 export const demoReviews: Review[] = Array.from({ length: 40 }, (_, i) => {
   const day = [0, 1, 1, 2, 3, 3, 3, 4, 6, 7, 8, 8, 10, 11, 13, 14, 15, 17, 18, 20][i % 20];
+  const topic = demoTopics[i % demoTopics.length];
+  const score = 2 + ((i * 7) % 4);
   return {
     id: `r${i}`,
-    topic_id: demoTopics[i % demoTopics.length].id,
+    topic_id: topic.id,
     mode: (["recall", "flashcard", "quickfire"] as const)[i % 3],
-    score: 2 + ((i * 7) % 4),
+    score,
+    question: `What are the core details of ${topic.name}?`,
+    answer: `The user answered some key facts about ${topic.name}.`,
+    feedback: score >= 4 ? "Strong answer — you hit the key ideas." : "You've got part of it, but some key points are missing.",
     created_at: daysAgo(day, 9 + (i % 8)),
   };
 });
@@ -208,7 +213,7 @@ export const demoPlan: DailyPlan = {
     "Notice the thread running through today: transformers decide what to attend to, your hippocampus decides what to consolidate, and spaced repetition exploits that same machinery. Sleep & Learning and Memory Consolidation explain WHY the SM-2 schedule behind this very app works.",
   items: [
     { topic_id: "d1", topic_name: "Transformer Architecture", category: "Technology", mode: "recall", reason: "Due for review today" },
-    { topic_id: "d7", topic_name: "Sleep & Learning", category: "Health", mode: "flashcard", reason: "Struggling topic — mastery 35%" },
+    { topic_id: "d7", topic_name: "Sleep & Learning", category: "Health", mode: "flashcard", reason: "Needs practice — only 0 reviews" },
     { topic_id: "d3", topic_name: "Retrieval-Augmented Generation", category: "Technology", mode: "recall", reason: "Due for review today" },
     { topic_id: "d13", topic_name: "Supabase & Postgres", category: "Technology", mode: "quickfire", reason: "Learnt 2 days ago — lock it in" },
     { topic_id: "d10", topic_name: "The Roman Empire", category: "History", mode: "flashcard", reason: "Overdue — last seen 2 weeks ago" },
@@ -216,7 +221,7 @@ export const demoPlan: DailyPlan = {
     { topic_id: "d6", topic_name: "How Memory Consolidates", category: "Science", mode: "recall", reason: "Due for review today" },
     { topic_id: "d5", topic_name: "Spaced Repetition", category: "Science", mode: "flashcard", reason: "Interval up today — keep the curve flat" },
     { topic_id: "d9", topic_name: "Stoicism", category: "Philosophy", mode: "quickfire", reason: "Not seen in 3 days" },
-    { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "recall", reason: "Mastery slipping — 61%" },
+    { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "recall", reason: "Needs practice — only 1 review" },
   ],
   completed: false,
 };

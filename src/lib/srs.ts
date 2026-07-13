@@ -48,12 +48,10 @@ export function scheduleNext(state: SrsState, quality: number, now = new Date())
 
 /** Rolling mastery: previous mastery blended with the latest score. */
 export function updateMastery(current: number, quality: number): number {
-  const scorePct = (quality / 5) * 100;
-  const blended = current === 0 ? scorePct : current * 0.7 + scorePct * 0.3;
-  return Math.round(Math.max(0, Math.min(100, blended)));
+  return 0;
 }
 
 /** XP earned for a single answered question. */
 export function xpForReview(quality: number): number {
-  return 5 + quality * 4; // 5..25
+  return 0;
 }

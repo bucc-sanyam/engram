@@ -11,6 +11,8 @@ import {
   rateFlashcard,
   saveQuizAnswer,
   startQuiz,
+  getTodayReviewDetail,
+  getLatestReportToday,
 } from "@/lib/data";
 import type {
   DailyPlan,
@@ -50,7 +52,6 @@ export default function ReviewPage() {
   const [saving, setSaving] = useState(false);
   const [answeredCount, setAnsweredCount] = useState(0);
   const [report, setReport] = useState<ReportCard | null>(null);
-  const [cardXp, setCardXp] = useState(0); // flashcard XP, earned immediately
   const [error, setError] = useState<string | null>(null);
   // Session start failure (e.g. DB missing the quiz tables) — shown on every
   // question item, since none of them can load without a session.
@@ -65,6 +66,18 @@ export default function ReviewPage() {
   const [revealed, setRevealed] = useState(false);
   const [cardRatings, setCardRatings] = useState<number[]>([]);
 
+  // T/F sub-state
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  const [checkedTF, setCheckedTF] = useState(false);
+
+  // Already-done sub-state
+  const [doneDetail, setDoneDetail] = useState<{
+    question: string;
+    userAnswer: string;
+    storedAnswer: string;
+    feedback?: string;
+  } | null>(null);
+
   const item: PlanItem | null = plan?.items[index] ?? null;
 
   const loadItem = useCallback(
@@ -77,10 +90,20 @@ export default function ReviewPage() {
       setRevealed(false);
       setCardIndex(0);
       setCardRatings([]);
+      setSelectedChoice(null);
+      setCheckedTF(false);
+      setDoneDetail(null);
 
       // If this item was already done today, show the "already done" card
       // instead of asking the question again.
       if (it.done) {
+        setPhase("loading");
+        try {
+          const detail = await getTodayReviewDetail(it.topic_id);
+          if (detail) {
+            setDoneDetail(detail);
+          }
+        } catch { /* fallback */ }
         setPhase("already-done");
         return;
       }
@@ -124,6 +147,18 @@ export default function ReviewPage() {
         : null;
     getPlan()
       .then(async (full) => {
+        // If the plan is completed and no topicId parameter is specified, show report directly
+        if (full.completed && !topicId) {
+          try {
+            const latestReport = await getLatestReportToday();
+            if (latestReport) {
+              setReport(latestReport);
+              setPhase("report");
+              return;
+            }
+          } catch { /* fallback to normal quiz session building */ }
+        }
+
         const matched = !!topicId && full.items.some((it) => it.topic_id === topicId);
         let p: DailyPlan;
         if (matched) {
@@ -181,19 +216,33 @@ export default function ReviewPage() {
     }
   }
 
-  async function rateCard(quality: number) {
+  function handleTFSelection(choice: "True" | "False") {
+    setSelectedChoice(choice);
+    setCheckedTF(true);
+  }
+
+  async function nextTFCard() {
+    const isCorrect = selectedChoice?.toLowerCase() === cards[cardIndex].answer.toLowerCase();
+    const quality = isCorrect ? 5 : 1;
     const ratings = [...cardRatings, quality];
     setCardRatings(ratings);
-    setRevealed(false);
+
+    try {
+      await rateFlashcard({
+        topicId: item!.topic_id,
+        quality,
+        question: cards[cardIndex].question,
+        answer: selectedChoice ?? undefined,
+        feedback: isCorrect ? "Correct answer!" : `Incorrect! The correct statement is actually ${cards[cardIndex].answer}.`
+      });
+    } catch { /* non-fatal */ }
+
+    setSelectedChoice(null);
+    setCheckedTF(false);
+
     if (cardIndex + 1 < cards.length) {
       setCardIndex(cardIndex + 1);
     } else {
-      // One SRS update per topic: the average of the card self-ratings.
-      const avg = Math.round(ratings.reduce((a, b) => a + b, 0) / ratings.length);
-      try {
-        const { xp } = await rateFlashcard({ topicId: item!.topic_id, quality: avg });
-        setCardXp((x) => x + xp);
-      } catch { /* non-fatal */ }
       next(false);
     }
   }
@@ -234,7 +283,6 @@ export default function ReviewPage() {
   const pendingCount = plan ? plan.items.filter((it) => !it.done).length : 0;
   // Progress = steps through the plan (regardless of done state)
   const progress = plan && plan.items.length ? (index / plan.items.length) * 100 : 0;
-  const totalXp = (report?.xp ?? 0) + cardXp;
 
   return (
     <>
@@ -304,19 +352,48 @@ export default function ReviewPage() {
           </div>
         )}
 
-        {/* Already-done card — topic answered earlier today */}
+        {/* Already-done card — show what was answered and what was stored */}
         {phase === "already-done" && item && (
-          <div className="glass rise p-8">
-            <div className="mb-5 flex items-center justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-3xl">
+          <div className="glass rise p-6 space-y-6">
+            <div className="text-center">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-xl text-[#43d6b5]">
                 ✓
               </div>
+              <h2 className="text-lg font-bold">Already reviewed today</h2>
+              <p className="text-xs text-muted">Here is your attempt from earlier today.</p>
             </div>
-            <h2 className="mb-2 text-center text-lg font-bold">Already reviewed today</h2>
-            <p className="mb-6 text-center text-sm text-muted">
-              You covered <span className="font-semibold text-white/85">{item.topic_name}</span> earlier in this session. It&apos;s locked in for today.
-            </p>
-            <div className="flex justify-center">
+
+            {doneDetail ? (
+              <div className="space-y-4">
+                <div className="rounded-xl bg-white/[0.02] p-4 border border-white/[0.04]">
+                  <p className="micro mb-1.5 !text-faint">Question Prompt</p>
+                  <p className="text-sm font-medium leading-relaxed text-white/90">{doneDetail.question}</p>
+                </div>
+
+                <div className="rounded-xl bg-white/[0.03] p-4 border border-white/[0.05]">
+                  <p className="micro mb-1.5 !text-[#ff9a80]">Your Answer</p>
+                  <p className="text-sm leading-relaxed text-white/80">{doneDetail.userAnswer}</p>
+                </div>
+
+                <div className="rounded-xl bg-[#43d6b5]/[0.04] p-4 border border-[#43d6b5]/[0.08]">
+                  <p className="micro mb-1.5 !text-[#43d6b5]">Stored Model Answer</p>
+                  <p className="text-sm leading-relaxed text-muted">{doneDetail.storedAnswer}</p>
+                </div>
+
+                {doneDetail.feedback && (
+                  <div className="rounded-xl bg-[#f5b95f]/[0.04] p-4 border border-[#f5b95f]/[0.08]">
+                    <p className="micro mb-1.5 !text-[#f5b95f]">Feedback</p>
+                    <p className="text-sm leading-relaxed text-muted">{doneDetail.feedback}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-center text-sm text-muted">
+                You covered <span className="font-semibold text-white/85">{item.topic_name}</span> earlier.
+              </p>
+            )}
+
+            <div className="flex justify-center pt-2">
               <button className="btn-primary" onClick={() => next(false)}>
                 {index + 1 < (plan?.items.length ?? 0) ? "Next topic →" : "Finish session →"}
               </button>
@@ -403,31 +480,50 @@ export default function ReviewPage() {
           </div>
         )}
 
-        {/* Flashcards */}
+        {/* Flashcards (True or False Statements) */}
         {phase === "cards" && cards[cardIndex] && (
-          <div className="rise">
-            <p className="micro mb-3 text-center">Card {cardIndex + 1} of {cards.length}</p>
-            <button
-              className="glass glass-hover block w-full cursor-pointer p-8 text-center"
-              onClick={() => setRevealed(true)}
-              disabled={revealed}
-            >
+          <div className="rise space-y-4">
+            <p className="micro mb-3 text-center">Statement {cardIndex + 1} of {cards.length}</p>
+            <div className="glass p-8 text-center">
               <p className="text-lg font-medium leading-relaxed">{cards[cardIndex].question}</p>
-              {revealed ? (
-                <p className="mt-6 border-t border-white/[0.07] pt-6 leading-relaxed text-[#7fe5cb]">
-                  {cards[cardIndex].answer}
-                </p>
-              ) : (
-                <p className="micro mt-6">tap to reveal</p>
+              
+              {checkedTF && (
+                <div className="mt-6 border-t border-white/[0.07] pt-6">
+                  {selectedChoice?.toLowerCase() === cards[cardIndex].answer.toLowerCase() ? (
+                    <p className="text-lg font-bold text-[#43d6b5]">✓ Correct!</p>
+                  ) : (
+                    <p className="text-lg font-bold text-[#f87171]">✗ Incorrect!</p>
+                  )}
+                  <p className="mt-2 text-sm text-muted">
+                    This statement is <span className="font-semibold text-white/80">{cards[cardIndex].answer}</span>.
+                  </p>
+                </div>
               )}
-            </button>
+            </div>
 
-            {revealed && (
-              <div className="mt-4 grid grid-cols-4 gap-2">
-                <RateBtn label="Again" color="#f87171" onClick={() => rateCard(1)} />
-                <RateBtn label="Hard" color="#f5b95f" onClick={() => rateCard(3)} />
-                <RateBtn label="Good" color="#8fd694" onClick={() => rateCard(4)} />
-                <RateBtn label="Easy" color="#43d6b5" onClick={() => rateCard(5)} />
+            {!checkedTF ? (
+              <div className="grid grid-cols-2 gap-4">
+                <button
+                  onClick={() => handleTFSelection("True")}
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.03] py-4 text-center text-base font-bold text-white transition-all hover:border-white/[0.15] hover:bg-white/[0.05]"
+                >
+                  True
+                </button>
+                <button
+                  onClick={() => handleTFSelection("False")}
+                  className="rounded-2xl border border-white/[0.07] bg-white/[0.03] py-4 text-center text-base font-bold text-white transition-all hover:border-white/[0.15] hover:bg-white/[0.05]"
+                >
+                  False
+                </button>
+              </div>
+            ) : (
+              <div className="flex justify-center">
+                <button
+                  onClick={nextTFCard}
+                  className="btn-primary"
+                >
+                  {cardIndex + 1 < cards.length ? "Next statement →" : index + 1 < (plan?.items.length ?? 0) ? "Next topic →" : "Finish session →"}
+                </button>
               </div>
             )}
           </div>
@@ -440,8 +536,8 @@ export default function ReviewPage() {
               <p className="micro mb-4">Report card · {report.date}</p>
               <div className="mb-4 flex items-center justify-center gap-6">
                 <BigScoreRing pct={report.score_pct} />
-                <div className="text-left">
-                  <div className="display text-3xl font-bold text-[#f5b95f]">+{totalXp} XP</div>
+                 <div className="text-left">
+                  <div className="display text-3xl font-bold text-[#43d6b5]">Session Graded</div>
                   <div className="text-sm text-muted">
                     {report.items.filter((i) => !i.skipped).length} answered ·{" "}
                     {report.items.filter((i) => i.skipped).length} skipped
@@ -484,10 +580,9 @@ export default function ReviewPage() {
               🏆
             </div>
             <h1 className="mb-2 text-2xl font-bold">Session complete!</h1>
-            <p className="display mb-1 text-3xl font-bold text-[#f5b95f]">+{totalXp} XP</p>
             {error && <p className="mb-3 text-sm text-danger">{error}</p>}
             <p className="mb-8 text-muted">
-              Streak secured. Every recall today just made the forgetting curve flatter.
+              Every recall today just made the forgetting curve flatter.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               <Link href="/" className="btn-primary">Back to dashboard</Link>

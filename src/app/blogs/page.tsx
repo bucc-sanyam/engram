@@ -159,18 +159,8 @@ export default function BlogsPage() {
                     </p>
                   )}
 
-                  {/* Footer — mastery + review count */}
+                  {/* Footer — review count */}
                   <div className="flex items-center gap-3 text-xs text-faint">
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="inline-block h-1 w-14 overflow-hidden rounded-full bg-white/[0.08]">
-                        <span
-                          className="block h-full rounded-full"
-                          style={{ width: `${topic.mastery}%`, background: color }}
-                        />
-                      </span>
-                      <span style={{ color }}>{topic.mastery}%</span>
-                    </span>
-                    <span className="text-white/20">·</span>
                     <span>{topic.review_count} review{topic.review_count === 1 ? "" : "s"}</span>
                     <span
                       aria-hidden

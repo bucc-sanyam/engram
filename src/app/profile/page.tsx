@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
 import { getProfile, getTopics, getUserEmail, isDemo, signOut, updateProfile } from "@/lib/data";
 import type { Profile } from "@/lib/types";
-import { levelForXp, levelTitle } from "@/lib/types";
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -51,7 +50,6 @@ export default function ProfilePage() {
     }
   }
 
-  const level = profile ? levelForXp(profile.xp).level : 1;
   const initial = (profile?.display_name?.trim()[0] ?? "?").toUpperCase();
 
   return (
@@ -133,15 +131,14 @@ export default function ProfilePage() {
             {/* Journey stats */}
             <section className="glass rise rise-2 p-6 sm:p-8">
               <p className="micro mb-4">Your journey</p>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-4">
-                <ProfileStat label={levelTitle(level)} value={`LV ${level}`} />
-                <ProfileStat label="Total XP" value={profile.xp.toLocaleString()} />
+              <div className="grid grid-cols-3 gap-x-4 gap-y-6 text-center">
                 <ProfileStat label="Day streak" value={profile.streak} accent />
                 <ProfileStat label="Longest streak" value={profile.longest_streak} />
+                <ProfileStat label="Total topics" value={topicCount ?? 0} />
               </div>
               {topicCount !== null && (
                 <p className="mt-6 text-sm text-muted">
-                  {topicCount} topic{topicCount === 1 ? "" : "s"} in your brain.{" "}
+                  Explore your brain graph to see how they are connected.{" "}
                   <Link href="/brain" className="text-[#7fe5cb] hover:underline">
                     Explore the graph →
                   </Link>

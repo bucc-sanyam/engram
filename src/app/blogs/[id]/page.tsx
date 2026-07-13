@@ -90,22 +90,11 @@ export default function TopicBlogPage() {
                 {topic.name}
               </h1>
 
-              {/* Meta + mastery */}
+              {/* Meta */}
               <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-muted">
                 <span className="inline-flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full" style={{ background: color }} />
                   {topic.review_count} review{topic.review_count === 1 ? "" : "s"}
-                </span>
-                <span className="text-faint">·</span>
-                <span className="inline-flex items-center gap-2.5">
-                  Mastery
-                  <span className="inline-block h-1.5 w-24 overflow-hidden rounded-full bg-white/[0.08]">
-                    <span
-                      className="block h-full rounded-full"
-                      style={{ width: `${topic.mastery}%`, background: color }}
-                    />
-                  </span>
-                  <span style={{ color }}>{topic.mastery}%</span>
                 </span>
               </div>
 

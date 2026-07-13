@@ -56,7 +56,7 @@ Rules:
 - Each topic gets a category from exactly this list: ${CATEGORIES}.
 - Each topic gets a 2-3 sentence summary of what THE USER learnt about it (from the text), plus 3-6 key_points (short bullet facts worth remembering).
 - connections: pairs of topic names (from this text OR the existing list above) that are conceptually related, with a one-sentence reason. Only meaningful relations.
-- flashcards: 2-4 per topic. Questions that test understanding, answerable from the text. Keep answers under 40 words.
+- flashcards: 2-4 per topic. True or false statements about the topic. The "question" field must be the statement (e.g. "A transformer model processes words sequentially."), and the "answer" field must be exactly "True" or "False".
 - questions: a quiz question BANK, 5-6 per topic, answerable from the text. Mix of kinds:
   * "open" (~2 per topic): open-ended recall — explain / compare / why / how.
   * "quickfire" (~1-2 per topic): answerable in one short sentence or phrase.
@@ -71,7 +71,7 @@ Return JSON exactly in this shape:
   "summary": string,
   "topics": [{ "name": string, "category": string, "summary": string, "key_points": string[] }],
   "connections": [{ "a": string, "b": string, "reason": string }],
-  "flashcards": [{ "topic": string, "question": string, "answer": string }],
+  "flashcards": [{ "topic": string, "question": string, "answer": "True"|"False" }],
   "questions": [{ "topic": string, "kind": "open"|"quickfire"|"mcq", "prompt": string, "options": string[] | null, "correct_index": number | null, "model_answer": string, "difficulty": "basic"|"intermediate"|"advanced" }],
   "facts": [{ "topic": string, "fact": string }]
 }

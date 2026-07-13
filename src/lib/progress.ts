@@ -24,12 +24,12 @@ export async function awardXp(
   await supabase
     .from("profiles")
     .update({
-      xp: profile.xp + xp,
+      xp: 0,
       streak,
       longest_streak: Math.max(profile.longest_streak, streak),
       last_active: today,
     })
     .eq("id", userId);
 
-  return xp;
+  return 0;
 }

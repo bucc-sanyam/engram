@@ -246,17 +246,7 @@ export default function BrainPage() {
                       </button>
                     </div>
 
-                    {/* Mastery */}
-                    <div className="mb-1 flex justify-between text-xs text-muted">
-                      <span>Mastery</span>
-                      <span>{t.mastery}%</span>
-                    </div>
-                    <div className="mb-4 h-1.5 overflow-hidden rounded-full bg-white/[0.07]">
-                      <div
-                        className="h-full rounded-full"
-                        style={{ width: `${t.mastery}%`, background: color }}
-                      />
-                    </div>
+
 
                     <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-white/80">{t.summary}</p>
 

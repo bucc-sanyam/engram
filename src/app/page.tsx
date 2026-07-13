@@ -57,9 +57,7 @@ export default function Dashboard() {
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const firstName = profile?.display_name?.trim().split(/\s+/)[0] || "there";
 
-  const avgMastery = topics.length
-    ? Math.round(topics.reduce((s, t) => s + t.mastery, 0) / topics.length)
-    : 0;
+
 
   // Remaining tasks first, completed ones sink to the bottom; long plans
   // collapse to 5 rows until expanded.
@@ -108,7 +106,7 @@ export default function Dashboard() {
                 </div>
                 {plan && plan.items.length > 0 && (
                   <Link href="/review" className="btn-primary shrink-0">
-                    {plan.completed ? "Review again" : "Start"} →
+                    {plan.completed ? "See report" : "Start"} →
                   </Link>
                 )}
               </div>
@@ -326,12 +324,6 @@ export default function Dashboard() {
                   value={plan ? plan.items.length : "—"} 
                   description="Topics scheduled for revision today"
                   accent={(plan?.items.length ?? 0) > 0} 
-                />
-                <Divider />
-                <Stat 
-                  label="Avg. mastery" 
-                  value={`${avgMastery}%`} 
-                  description="Your overall recall strength"
                 />
               </div>
             </div>

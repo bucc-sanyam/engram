@@ -100,6 +100,9 @@ export interface Review {
   topic_id: string;
   mode: ReviewMode;
   score: number;
+  question?: string | null;
+  answer?: string | null;
+  feedback?: string | null;
   created_at: string;
 }
 
@@ -207,32 +210,4 @@ export interface GradeResult {
   model_answer: string;
 }
 
-export function levelForXp(xp: number): { level: number; into: number; needed: number } {
-  // Each level needs 100 + 50*(level-1) XP — gentle early levels, slower later.
-  let level = 1;
-  let remaining = xp;
-  let needed = 100;
-  while (remaining >= needed) {
-    remaining -= needed;
-    level += 1;
-    needed = 100 + 50 * (level - 1);
-  }
-  return { level, into: remaining, needed };
-}
 
-export const LEVEL_TITLES = [
-  "Spark",
-  "Curious Mind",
-  "Note Taker",
-  "Connector",
-  "Pattern Seeker",
-  "Synthesizer",
-  "Deep Diver",
-  "Polymath",
-  "Sage",
-  "Luminary",
-];
-
-export function levelTitle(level: number): string {
-  return LEVEL_TITLES[Math.min(level - 1, LEVEL_TITLES.length - 1)];
-}

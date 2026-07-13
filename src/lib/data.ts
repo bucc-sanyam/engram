@@ -51,6 +51,7 @@ const demoState = {
   profile: { ...demoProfile },
   plan: JSON.parse(JSON.stringify(demoPlan)) as DailyPlan,
   done: new Set<string>(),
+  reviews: [...demoReviews] as Review[],
   session: null as DemoSession | null,
 };
 
@@ -183,13 +184,13 @@ export async function getFlashcards(topicId: string): Promise<Flashcard[]> {
 }
 
 export async function getReviews(sinceDays = 120): Promise<Review[]> {
-  if (isDemo) return demoReviews;
+  if (isDemo) return demoState.reviews;
   const supabase = createClient();
   const since = new Date();
   since.setDate(since.getDate() - sinceDays);
   const { data } = await supabase
     .from("reviews")
-    .select("id, topic_id, mode, score, created_at")
+    .select("id, topic_id, mode, score, question, answer, feedback, created_at")
     .gte("created_at", since.toISOString())
     .order("created_at", { ascending: false });
   return (data ?? []) as Review[];
@@ -222,7 +223,7 @@ export async function ingestText(text: string): Promise<IngestResult> {
     return {
       entryTitle: "Demo: knowledge extracted",
       topicNames: ["(Demo mode — add Supabase + Gemini keys to save real entries)"],
-      xp: 30,
+      xp: 0,
     };
   }
   return api("/api/ingest", { text });
@@ -231,7 +232,6 @@ export async function ingestText(text: string): Promise<IngestResult> {
 export async function ingestLink(url: string): Promise<IngestResult> {
   if (isDemo) {
     await new Promise((r) => setTimeout(r, 2200));
-    demoState.profile.xp += 30;
     let host = "the article";
     try {
       host = new URL(url).hostname.replace(/^www\./, "");
@@ -240,7 +240,7 @@ export async function ingestLink(url: string): Promise<IngestResult> {
       entryTitle: `Demo: article from ${host}`,
       topicNames: ["(Demo mode — add Supabase + Gemini keys to fetch and save real articles)"],
       sourceUrl: url,
-      xp: 30,
+      xp: 0,
     };
   }
   return api("/api/ingest", { url });
@@ -381,11 +381,31 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
     demoState.profile.xp += xp;
     const strengths = attempted.filter((i) => i.score >= 4).map((i) => i.topic_name).slice(0, 3);
     const focus = attempted.filter((i) => i.score <= 2).map((i) => i.topic_name).slice(0, 3);
+
+    // Also add to demoState.reviews so it shows up in calendar and review detail!
+    for (const q of s.questions) {
+      const a = s.answers.get(q.index);
+      if (!a) continue;
+      const item = items.find((x) => x.index === q.index)!;
+      if (!item.skipped) {
+        demoState.reviews.push({
+          id: `demo-r-${q.topic_id}-${Date.now()}`,
+          topic_id: q.topic_id,
+          mode: q.kind === "mcq" ? "quickfire" : q.kind === "quickfire" ? "quickfire" : "recall",
+          score: item.score,
+          created_at: new Date().toISOString(),
+          question: q.prompt,
+          answer: item.answer ?? undefined,
+          feedback: item.feedback ?? undefined,
+        } as any);
+      }
+    }
+
     return {
       session_id: sessionId,
       date: new Date().toISOString().slice(0, 10),
       score_pct: scorePct,
-      xp,
+      xp: 0,
       summary:
         scorePct >= 80
           ? "Excellent session — your recall is sharp across the board. (Demo mode: add your Gemini key for real AI report cards.)"
@@ -430,14 +450,25 @@ export async function getFactOfTheDay(): Promise<DailyFact | null> {
 export async function rateFlashcard(args: {
   topicId: string;
   quality: number; // 0..5
+  question?: string;
+  answer?: string;
+  feedback?: string;
 }): Promise<{ xp: number }> {
   if (isDemo) {
-    const xp = 5 + args.quality * 4;
-    demoState.profile.xp += xp;
     demoState.done.add(args.topicId);
-    return { xp };
+    demoState.reviews.push({
+      id: `demo-r-fc-${args.topicId}-${Date.now()}`,
+      topic_id: args.topicId,
+      mode: "flashcard",
+      score: args.quality,
+      created_at: new Date().toISOString(),
+      question: args.question ?? "True/False statement",
+      answer: args.answer ?? "True",
+      feedback: args.feedback ?? "Correct statement.",
+    } as any);
+    return { xp: 0 };
   }
-  return api("/api/quiz", { action: "rate", topicId: args.topicId, quality: args.quality });
+  return api("/api/quiz", { action: "rate", topicId: args.topicId, quality: args.quality, question: args.question, answer: args.answer, feedback: args.feedback });
 }
 
 export async function markPlanCompleted(): Promise<void> {
@@ -454,4 +485,102 @@ export async function signOut(): Promise<void> {
   const supabase = createClient();
   await supabase.auth.signOut();
   window.location.href = "/login";
+}
+
+export async function getTodayReviewDetail(topicId: string): Promise<{
+  question: string;
+  userAnswer: string;
+  storedAnswer: string;
+  feedback?: string;
+} | null> {
+  const today = new Date().toISOString().slice(0, 10);
+  if (isDemo) {
+    const r = demoState.reviews.find(
+      (x) => x.topic_id === topicId && x.created_at.slice(0, 10) === today
+    );
+    if (!r) return null;
+    const q = demoQuestionBank.find(
+      (x) => x.topic_id === topicId && x.prompt === r.question
+    );
+    return {
+      question: r.question ?? "Review prompt",
+      userAnswer: r.answer ?? "No answer",
+      storedAnswer: q?.model_answer ?? "No answer stored",
+      feedback: r.feedback ?? undefined,
+    };
+  }
+
+  const supabase = createClient();
+  const { data: revs } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("topic_id", topicId)
+    .gte("created_at", today + "T00:00:00Z")
+    .order("created_at", { ascending: false });
+  if (!revs || !revs.length) return null;
+  const r = revs[0];
+
+  const { data: q } = await supabase
+    .from("questions")
+    .select("model_answer")
+    .eq("topic_id", topicId)
+    .eq("prompt", r.question)
+    .maybeSingle();
+
+  return {
+    question: r.question ?? "",
+    userAnswer: r.answer ?? "",
+    storedAnswer: q?.model_answer ?? r.feedback ?? "",
+    feedback: r.feedback ?? undefined,
+  };
+}
+
+export async function getLatestReportToday(): Promise<ReportCard | null> {
+  const today = new Date().toISOString().slice(0, 10);
+  if (isDemo) {
+    if (demoState.plan.completed) {
+      const items: ReportItem[] = [];
+      const todayReviews = demoState.reviews.filter(r => r.created_at.slice(0, 10) === today);
+      if (todayReviews.length === 0) return null;
+      todayReviews.forEach((r, i) => {
+        items.push({
+          index: i,
+          topic_id: r.topic_id,
+          topic_name: demoTopics.find(t => t.id === r.topic_id)?.name ?? "Topic",
+          kind: r.mode === "flashcard" ? "quickfire" : "open",
+          prompt: r.question ?? "Review prompt",
+          answer: r.answer ?? null,
+          skipped: false,
+          correct: null,
+          score: r.score,
+          feedback: r.feedback ?? "Completed successfully.",
+          correct_answer: "Reference answer stored.",
+          options: null,
+          selected_index: null,
+          correct_index: null,
+        });
+      });
+      return {
+        session_id: "demo-latest",
+        date: today,
+        score_pct: Math.round((items.reduce((s, x) => s + x.score, 0) / (items.length * 5)) * 100),
+        xp: 0,
+        summary: "Excellent work completing today's revision session!",
+        strengths: ["Consistency", "Recall"],
+        focus: [],
+        items,
+      };
+    }
+    return null;
+  }
+
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("quiz_sessions")
+    .select("report")
+    .eq("status", "graded")
+    .gte("graded_at", today + "T00:00:00Z")
+    .order("graded_at", { ascending: false })
+    .limit(1);
+  return (data?.[0]?.report as ReportCard) ?? null;
 }

@@ -99,11 +99,11 @@ export async function GET() {
     .filter((t) => now - new Date(t.created_at).getTime() < 3 * dayMs)
     .forEach((t) => add(t, "Learnt in the last few days — lock it in"));
 
-  // 3. Weakest topics.
+  // 3. Least reviewed topics.
   [...topics]
-    .sort((a, b) => a.mastery - b.mastery)
+    .sort((a, b) => a.review_count - b.review_count)
     .slice(0, 3)
-    .forEach((t) => add(t, `Struggling topic — mastery ${t.mastery}%`));
+    .forEach((t) => add(t, `Needs practice — only ${t.review_count} review${t.review_count !== 1 ? "s" : ""}`));
 
   // 4. Top up with the longest-unreviewed topics.
   [...topics]

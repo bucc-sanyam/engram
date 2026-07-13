@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProfile, isDemo } from "@/lib/data";
-import { levelForXp } from "@/lib/types";
 
 const LINKS = [
   { href: "/", label: "Today", icon: SunIcon },
@@ -16,7 +15,7 @@ const LINKS = [
 
 export default function Nav() {
   const pathname = usePathname();
-  const [stats, setStats] = useState<{ streak: number; level: number } | null>(null);
+  const [stats, setStats] = useState<{ streak: number } | null>(null);
   const [authStatus, setAuthStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
   // isDemo depends on the guest cookie, which the server can't see — read it
   // after mount so SSR and first client render agree.
@@ -26,7 +25,7 @@ export default function Nav() {
     setDemo(isDemo);
     getProfile()
       .then((p) => {
-        setStats({ streak: p.streak, level: levelForXp(p.xp).level });
+        setStats({ streak: p.streak });
         setAuthStatus("authenticated");
       })
       .catch(() => setAuthStatus("unauthenticated"));
@@ -68,21 +67,13 @@ export default function Nav() {
 
           <div className="flex items-center gap-2">
             {stats && (
-              <>
-                <span
-                  className="flex items-center gap-1.5 rounded-full bg-[#ff7a5c]/12 px-3 py-1 text-sm font-semibold text-[#ff9a80]"
-                  title="Daily streak"
-                >
-                  <FlameIcon className="h-4 w-4" />
-                  {stats.streak}
-                </span>
-                <span
-                  className="micro hidden items-center gap-1.5 rounded-full bg-white/[0.05] px-3 py-1.5 !text-muted sm:flex"
-                  title="Level"
-                >
-                  LV {stats.level}
-                </span>
-              </>
+              <span
+                className="flex items-center gap-1.5 rounded-full bg-[#ff7a5c]/12 px-3 py-1 text-sm font-semibold text-[#ff9a80]"
+                title="Daily streak"
+              >
+                <FlameIcon className="h-4 w-4" />
+                {stats.streak}
+              </span>
             )}
 
             {/* Auth controls */}

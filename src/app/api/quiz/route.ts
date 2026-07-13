@@ -106,7 +106,7 @@ async function start(
   topicIds.forEach((topicId, i) => {
     const topic = topicById.get(topicId);
     if (!topic) return;
-    const picked = pickQuestion(bankByTopic.get(topicId) ?? [], topic.mastery, kindRotation[i % kindRotation.length]);
+    const picked = pickQuestion(bankByTopic.get(topicId) ?? [], topic.review_count, kindRotation[i % kindRotation.length]);
     if (picked) {
       snapshot.push({
         index: snapshot.length,
@@ -172,9 +172,9 @@ async function start(
 }
 
 /** Least-asked question of the preferred kind and mastery-matched difficulty. */
-function pickQuestion(pool: BankQuestion[], mastery: number, preferKind: QuestionKind): BankQuestion | null {
+function pickQuestion(pool: BankQuestion[], reviewCount: number, preferKind: QuestionKind): BankQuestion | null {
   if (!pool.length) return null;
-  const tier = mastery < 40 ? "basic" : mastery < 75 ? "intermediate" : "advanced";
+  const tier = reviewCount < 3 ? "basic" : reviewCount < 7 ? "intermediate" : "advanced";
   const freshness = (a: BankQuestion, b: BankQuestion) =>
     a.times_asked - b.times_asked ||
     (a.last_asked_at ?? "").localeCompare(b.last_asked_at ?? "");
@@ -394,7 +394,7 @@ async function finish(
         review_count: srs.review_count,
         next_review_at: srs.next_review_at,
         last_reviewed_at: new Date().toISOString(),
-        mastery: updateMastery(topic.mastery, avg),
+        mastery: 0,
       })
       .eq("id", topicId);
   }
@@ -464,7 +464,7 @@ function heuristicScore(answer: string, keyPoints: string[]): number {
 async function rate(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
-  body: { topicId?: string; quality?: number }
+  body: { topicId?: string; quality?: number; question?: string; answer?: string; feedback?: string }
 ) {
   const { data: topicData } = await supabase
     .from("topics")
@@ -488,7 +488,7 @@ async function rate(
       review_count: srs.review_count,
       next_review_at: srs.next_review_at,
       last_reviewed_at: new Date().toISOString(),
-      mastery: updateMastery(topic.mastery, quality),
+      mastery: 0,
     })
     .eq("id", topic.id);
   await supabase.from("reviews").insert({
@@ -496,6 +496,9 @@ async function rate(
     topic_id: topic.id,
     mode: "flashcard",
     score: Math.round(quality),
+    question: body.question ?? null,
+    answer: body.answer ?? null,
+    feedback: body.feedback ?? null,
   });
   const xp = await awardXp(supabase, userId, xpForReview(quality));
   return NextResponse.json({ xp });
