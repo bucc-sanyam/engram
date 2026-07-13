@@ -1,16 +1,16 @@
 # Graph Report - Learning  (2026-07-13)
 
 ## Corpus Check
-- 54 files · ~43,568 words
+- 55 files · ~44,717 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 410 nodes · 675 edges · 44 communities (21 shown, 23 thin omitted)
+- 411 nodes · 676 edges · 46 communities (23 shown, 23 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `0e100d4a`
+- Built from commit: `a67f4833`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -59,6 +59,8 @@
 - Incremental Update
 - Engram Project
 - engram
+- ProgressCalendar.tsx
+- RichText.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 16 edges
@@ -69,8 +71,8 @@
 6. `getTopics()` - 10 edges
 7. `createClient()` - 10 edges
 8. `/graphify` - 10 edges
-9. `finish()` - 9 edges
-10. `BrainScene()` - 9 edges
+9. `Session Log` - 10 edges
+10. `finish()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Heatmap()` --indirect_call--> `start()`  [INFERRED]
@@ -92,11 +94,11 @@
 - **Graphify Core Operations** — claude_skills_graphify_references_update_incremental, claude_skills_graphify_references_query_traversal, claude_skills_graphify_references_github_and_merge_merge [EXTRACTED 0.90]
 - **Graphify External Integrations** — claude_skills_graphify_references_exports_neo4j, claude_skills_graphify_references_exports_falkordb, claude_skills_graphify_references_exports_mcp [EXTRACTED 0.90]
 
-## Communities (44 total, 23 thin omitted)
+## Communities (46 total, 23 thin omitted)
 
 ### Community 0 - "Review and Scoring System"
 Cohesion: 0.07
-Nodes (44): Mode, Phase, KIND_LABEL, Phase, ReviewPage(), api(), DemoSession, demoState (+36 more)
+Nodes (42): Mode, Phase, LoginPage(), KIND_LABEL, Phase, ReviewPage(), BrainIcon(), api() (+34 more)
 
 ### Community 1 - "TypeScript Configuration"
 Cohesion: 0.06
@@ -104,11 +106,11 @@ Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-e
 
 ### Community 2 - "AI Content Generation"
 Cohesion: 0.09
-Nodes (37): fetchReadable(), POST(), composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), answer() (+29 more)
+Nodes (39): fetchReadable(), POST(), composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), answer() (+31 more)
 
 ### Community 3 - "Navigation and Core UI"
-Cohesion: 0.12
-Nodes (19): LoginPage(), ProfilePage(), BrainIcon(), FlameIcon(), LINKS, Nav(), Heatmap(), ProgressMap() (+11 more)
+Cohesion: 0.16
+Nodes (14): ProfilePage(), FlameIcon(), LINKS, Nav(), ProgressMap(), getProfile(), getUserEmail(), signOut() (+6 more)
 
 ### Community 4 - "Dashboard and Visualization"
 Cohesion: 0.18
@@ -123,12 +125,12 @@ Cohesion: 0.11
 Nodes (18): devDependencies, @types/node, @types/react, @types/react-dom, @types/three, typescript, name, private (+10 more)
 
 ### Community 7 - "schema.sql"
-Cohesion: 0.09
-Nodes (32): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+24 more)
+Cohesion: 0.13
+Nodes (24): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+16 more)
 
 ### Community 8 - "BrainScene.tsx"
-Cohesion: 0.14
-Nodes (18): sourceLabel(), TopicBlogPage(), BrainPage(), brainPoint(), BrainScene(), hashStr(), LinkObj, makeCircleTexture() (+10 more)
+Cohesion: 0.13
+Nodes (23): sourceLabel(), TopicBlogPage(), BrainPage(), brainPoint(), BrainScene(), hashStr(), LinkObj, makeCircleTexture() (+15 more)
 
 ### Community 9 - "layout.tsx"
 Cohesion: 0.25
@@ -159,8 +161,8 @@ Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 28 - "Session Log"
-Cohesion: 0.20
-Nodes (9): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Vercel Migration & Nav Auth Fix, Earlier (from git history) (+1 more)
+Cohesion: 0.18
+Nodes (10): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Vercel Migration & Nav Auth Fix (+2 more)
 
 ### Community 29 - "Tasks"
 Cohesion: 0.40
@@ -178,25 +180,33 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
+### Community 44 - "ProgressCalendar.tsx"
+Cohesion: 0.60
+Nodes (4): dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS
+
+### Community 45 - "RichText.tsx"
+Cohesion: 0.60
+Nodes (4): parse(), RichText(), RULES, tidy()
+
 ## Knowledge Gaps
-- **158 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+153 more)
+- **159 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+154 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Topic` connect `Review and Scoring System` to `BrainScene.tsx`, `AI Content Generation`, `schema.sql`?**
+- **Why does `Topic` connect `BrainScene.tsx` to `Review and Scoring System`, `AI Content Generation`, `Navigation and Core UI`, `schema.sql`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `categoryColor()` connect `BrainScene.tsx` to `Review and Scoring System`, `schema.sql`?**
+- **Why does `categoryColor()` connect `BrainScene.tsx` to `Review and Scoring System`, `Navigation and Core UI`, `schema.sql`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _158 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _159 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Review and Scoring System` be split into smaller, more focused modules?**
-  _Cohesion score 0.07259528130671507 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06578947368421052 - nodes in this community are weakly interconnected._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.09393939393939393 - nodes in this community are weakly interconnected._
-- **Should `Navigation and Core UI` be split into smaller, more focused modules?**
-  _Cohesion score 0.11954022988505747 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08788159111933395 - nodes in this community are weakly interconnected._
+- **Should `Project Dependencies` be split into smaller, more focused modules?**
+  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._

@@ -6,7 +6,7 @@
 - [ ] No active milestone
 
 ## Backlog
-- [ ] **Run updated schema.sql in Supabase** (new tables: questions, facts, quiz_sessions, quiz_answers) — required before the new quiz flow works in real mode.
+- [ ] **Run schema-quiz-tables-only.sql in Supabase** (new tables: questions, facts, quiz_sessions, quiz_answers) — required before the new quiz flow works in real mode. If you get "policy already exists" errors, use this file instead of schema.sql; it safely handles policy conflicts.
 - [ ] Question-bank replenishment for old topics: topics ingested before the bank exists only get the synthesized fallback question; consider a one-off backfill (one Gemini call per legacy topic) or regenerate-on-empty.
 - [ ] Consider zero-shadow label variant if the soft glow still reads as a boundary.
 - [ ] Topic blogs currently compose from `summary` + `key_points` (no long-form field). If richer articles are wanted, add a `body`/`article` column populated at ingest by Gemini.

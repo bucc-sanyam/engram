@@ -1,16 +1,16 @@
 # Graph Report - Learning  (2026-07-13)
 
 ## Corpus Check
-- 54 files · ~42,021 words
+- 54 files · ~43,568 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 403 nodes · 662 edges · 46 communities (23 shown, 23 thin omitted)
+- 410 nodes · 675 edges · 44 communities (21 shown, 23 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.69)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `98cf9b38`
+- Built from commit: `0e100d4a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -59,8 +59,6 @@
 - Incremental Update
 - Engram Project
 - engram
-- ProgressCalendar.tsx
-- RichText.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 16 edges
@@ -94,11 +92,11 @@
 - **Graphify Core Operations** — claude_skills_graphify_references_update_incremental, claude_skills_graphify_references_query_traversal, claude_skills_graphify_references_github_and_merge_merge [EXTRACTED 0.90]
 - **Graphify External Integrations** — claude_skills_graphify_references_exports_neo4j, claude_skills_graphify_references_exports_falkordb, claude_skills_graphify_references_exports_mcp [EXTRACTED 0.90]
 
-## Communities (46 total, 23 thin omitted)
+## Communities (44 total, 23 thin omitted)
 
 ### Community 0 - "Review and Scoring System"
-Cohesion: 0.08
-Nodes (37): Mode, Phase, KIND_LABEL, Phase, ReviewPage(), api(), DemoSession, demoState (+29 more)
+Cohesion: 0.07
+Nodes (44): Mode, Phase, KIND_LABEL, Phase, ReviewPage(), api(), DemoSession, demoState (+36 more)
 
 ### Community 1 - "TypeScript Configuration"
 Cohesion: 0.06
@@ -106,11 +104,11 @@ Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-e
 
 ### Community 2 - "AI Content Generation"
 Cohesion: 0.09
-Nodes (37): fetchReadable(), POST(), composeNarrative(), GET(), POST(), answer(), BankQuestion, finish() (+29 more)
+Nodes (37): fetchReadable(), POST(), composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), answer() (+29 more)
 
 ### Community 3 - "Navigation and Core UI"
-Cohesion: 0.09
-Nodes (30): sourceLabel(), TopicBlogPage(), BrainPage(), ProfilePage(), BrainIcon(), FlameIcon(), LINKS, Nav() (+22 more)
+Cohesion: 0.12
+Nodes (19): LoginPage(), ProfilePage(), BrainIcon(), FlameIcon(), LINKS, Nav(), Heatmap(), ProgressMap() (+11 more)
 
 ### Community 4 - "Dashboard and Visualization"
 Cohesion: 0.18
@@ -125,12 +123,12 @@ Cohesion: 0.11
 Nodes (18): devDependencies, @types/node, @types/react, @types/react-dom, @types/three, typescript, name, private (+10 more)
 
 ### Community 7 - "schema.sql"
-Cohesion: 0.13
-Nodes (24): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+16 more)
+Cohesion: 0.09
+Nodes (32): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+24 more)
 
 ### Community 8 - "BrainScene.tsx"
-Cohesion: 0.33
-Nodes (9): brainPoint(), BrainScene(), hashStr(), LinkObj, makeCircleTexture(), makeGlowTexture(), makeLabelTexture(), mulberry32() (+1 more)
+Cohesion: 0.14
+Nodes (18): sourceLabel(), TopicBlogPage(), BrainPage(), brainPoint(), BrainScene(), hashStr(), LinkObj, makeCircleTexture() (+10 more)
 
 ### Community 9 - "layout.tsx"
 Cohesion: 0.25
@@ -153,16 +151,16 @@ Cohesion: 0.22
 Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
 
 ### Community 26 - "Engram — Project Summary"
-Cohesion: 0.25
-Nodes (7): Conventions / gotchas, Design language, Engram — Project Summary, Key modules, Route map, Stack (fixed — do not propose alternatives), What it is
+Cohesion: 0.22
+Nodes (8): AI-call budget (deliberate design — keep it this way), Conventions / gotchas, Design language, Engram — Project Summary, Key modules, Route map, Stack (fixed — do not propose alternatives), What it is
 
 ### Community 27 - "graphify reference: query, path, explain"
 Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 28 - "Session Log"
-Cohesion: 0.22
-Nodes (8): 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Vercel Migration & Nav Auth Fix, Earlier (from git history), Session Log
+Cohesion: 0.20
+Nodes (9): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Vercel Migration & Nav Auth Fix, Earlier (from git history) (+1 more)
 
 ### Community 29 - "Tasks"
 Cohesion: 0.40
@@ -180,33 +178,25 @@ Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify refer
 Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
-### Community 44 - "ProgressCalendar.tsx"
-Cohesion: 0.60
-Nodes (4): dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS
-
-### Community 45 - "RichText.tsx"
-Cohesion: 0.60
-Nodes (4): parse(), RichText(), RULES, tidy()
-
 ## Knowledge Gaps
-- **156 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+151 more)
+- **158 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+153 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Topic` connect `Navigation and Core UI` to `BrainScene.tsx`, `Review and Scoring System`, `AI Content Generation`, `schema.sql`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `categoryColor()` connect `Navigation and Core UI` to `Review and Scoring System`, `BrainScene.tsx`, `schema.sql`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `Project Dependencies` to `package.json`?**
+- **Why does `Topic` connect `Review and Scoring System` to `BrainScene.tsx`, `AI Content Generation`, `schema.sql`?**
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
+- **Why does `categoryColor()` connect `BrainScene.tsx` to `Review and Scoring System`, `schema.sql`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _156 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _158 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Review and Scoring System` be split into smaller, more focused modules?**
-  _Cohesion score 0.07653061224489796 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07259528130671507 - nodes in this community are weakly interconnected._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.09191919191919191 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09393939393939393 - nodes in this community are weakly interconnected._
+- **Should `Navigation and Core UI` be split into smaller, more focused modules?**
+  _Cohesion score 0.11954022988505747 - nodes in this community are weakly interconnected._
