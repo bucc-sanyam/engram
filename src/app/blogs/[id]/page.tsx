@@ -53,7 +53,7 @@ export default function TopicBlogPage() {
     <>
       <Nav />
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-32 pt-8 sm:px-6 md:pb-24">
-        <div className="rise mb-8 flex items-center gap-2 text-sm text-faint">
+        <div className="rise relative z-10 mb-8 flex items-center gap-2 text-sm text-faint">
           <Link href="/blogs" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
             ← All blogs
           </Link>
@@ -76,7 +76,7 @@ export default function TopicBlogPage() {
             {/* Header */}
             <header className="relative mb-9">
               <div
-                className="absolute -left-24 -top-16 h-56 w-56 rounded-full opacity-20 blur-3xl"
+                className="pointer-events-none absolute -left-24 -top-16 h-56 w-56 rounded-full opacity-20 blur-3xl"
                 style={{ background: color }}
                 aria-hidden
               />
