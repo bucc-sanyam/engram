@@ -15,9 +15,9 @@
     "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
   },
   "package.json": {
-    "mtime": 1783909059.9209023,
-    "ast_hash": "a05fc257f04f3029e3dbbbe25fc51a3b",
-    "semantic_hash": "a05fc257f04f3029e3dbbbe25fc51a3b"
+    "mtime": 1783921173.884959,
+    "ast_hash": "367d84f9b66295767d65d20496af4482",
+    "semantic_hash": "367d84f9b66295767d65d20496af4482"
   },
   "postcss.config.mjs": {
     "mtime": 1783868628.7530887,
@@ -60,9 +60,9 @@
     "semantic_hash": "7182093bebb48ff1d777642014f9b250"
   },
   "src/app/login/page.tsx": {
-    "mtime": 1783909059.9163308,
-    "ast_hash": "a809a545d971072319ff6ee9e32a2231",
-    "semantic_hash": "a809a545d971072319ff6ee9e32a2231"
+    "mtime": 1783921483.4689703,
+    "ast_hash": "6bf96f31ccbf51d5b684e56eacee7b76",
+    "semantic_hash": "6bf96f31ccbf51d5b684e56eacee7b76"
   },
   "src/app/page.tsx": {
     "mtime": 1783871077.8972847,
@@ -75,14 +75,14 @@
     "semantic_hash": "9664ee6dd2c4d3f0cb7b1d9d79231b1c"
   },
   "src/components/BrainScene.tsx": {
-    "mtime": 1783911462.763659,
-    "ast_hash": "164a238628e760ce1a84d5a6fef730b8",
-    "semantic_hash": "164a238628e760ce1a84d5a6fef730b8"
+    "mtime": 1783914301.5130346,
+    "ast_hash": "c6d1a3e9311bb51f6663ab0f94e931ba",
+    "semantic_hash": "c6d1a3e9311bb51f6663ab0f94e931ba"
   },
   "src/components/Nav.tsx": {
-    "mtime": 1783909042.186661,
-    "ast_hash": "6022542fe2c1e58c5d012176a492093a",
-    "semantic_hash": "6022542fe2c1e58c5d012176a492093a"
+    "mtime": 1783914419.324121,
+    "ast_hash": "ea8eacaf96de724a6e2973038477472c",
+    "semantic_hash": "ea8eacaf96de724a6e2973038477472c"
   },
   "src/components/ProgressMap.tsx": {
     "mtime": 1783871077.8980029,
@@ -129,11 +129,6 @@
     "ast_hash": "5b363977e5aa4343a177411236e6a7e0",
     "semantic_hash": "5b363977e5aa4343a177411236e6a7e0"
   },
-  "src/middleware.ts": {
-    "mtime": 1783868793.3413153,
-    "ast_hash": "7b8afc1633e9894049fba188f32519ae",
-    "semantic_hash": "7b8afc1633e9894049fba188f32519ae"
-  },
   "supabase/schema.sql": {
     "mtime": 1783908869.2796063,
     "ast_hash": "baa8ff6262b5a584cdec8b7e20bb8338",
@@ -143,5 +138,25 @@
     "mtime": 1783868631.4220817,
     "ast_hash": "ee17fd1c97c735e9f3564e3f5251f125",
     "semantic_hash": "ee17fd1c97c735e9f3564e3f5251f125"
+  },
+  "src/proxy.ts": {
+    "mtime": 1783922853.1767435,
+    "ast_hash": "479ef2a7eee9b12cade56a71b8af72e7",
+    "semantic_hash": "479ef2a7eee9b12cade56a71b8af72e7"
+  },
+  ".claude/skills/graphify/SKILL.md": {
+    "mtime": 1783911737.4611878,
+    "ast_hash": "e582759bfc00f68579f37c74cbb64df9",
+    "semantic_hash": "e582759bfc00f68579f37c74cbb64df9"
+  },
+  "CLAUDE.md": {
+    "mtime": 1783911737.462115,
+    "ast_hash": "03e3d38ba74cf8886d3d8fc322d9da8a",
+    "semantic_hash": "03e3d38ba74cf8886d3d8fc322d9da8a"
+  },
+  "README.md": {
+    "mtime": 1783909059.9187047,
+    "ast_hash": "0630d929aee272a019516728980a4254",
+    "semantic_hash": "0630d929aee272a019516728980a4254"
   }
 }
