@@ -49,7 +49,7 @@ Dark, organic, atmospheric — NOT boxy/generic. Mesh glows, blobs, pill shapes,
 
 ## Conventions / gotchas
 - Dev server: use `.claude/launch.json` name `synapse-dev` (autoPort; 3000 often taken by other projects).
-- Knowledge graph of this repo lives in `graphify-out/` (`graph.json`); query it instead of grepping. **The real graphify CLI is the PyPI package `graphifyy` (double-y)** — install with `pipx install graphifyy`. NB: an unrelated `graphify` npm package (a "Random Graph Generator") is in the global npm dir and has no bin — ignore it. The `graphify-out/.graphify_python` file currently holds a placeholder path (`path/to/venv/...`), so graph queries fail until the CLI is installed; read `graph.json` directly with python meanwhile.
+- Knowledge graph of this repo lives in `graphify-out/` (`graph.json`); query it instead of grepping. **The graphify CLI is installed** (PyPI `graphifyy`, double-y) at `/Users/bucc/.local/bin/graphify` — if not on PATH in a fresh shell, call it by full path or `export PATH="/Users/bucc/.local/bin:$PATH"`. Use `graphify query "…"` / `path` / `explain`; run `graphify update .` after code changes (AST-only, no API cost). NB: an unrelated `graphify` npm package (a "Random Graph Generator") is in the global npm dir with no bin — ignore it.
 - Verify visual changes in the browser (demo mode works logged-out).
 - **Notes are localStorage-only** (per-browser, no server/graph). Cross-device sync would need a Supabase `notes` table — deliberately deferred (see TASKS backlog).
 - `npx tsc --noEmit` for typecheck; no test suite yet.
