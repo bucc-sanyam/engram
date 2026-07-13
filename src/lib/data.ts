@@ -55,8 +55,26 @@ export async function getProfile(): Promise<Profile> {
   if (isDemo) return demoState.profile;
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const { data } = await supabase.from("profiles").select("*").eq("id", user!.id).single();
-  return data as Profile;
+  if (!user) throw new Error("Not signed in");
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .maybeSingle();
+  if (error) throw error;
+  if (data) return data as Profile;
+  // No profile row — e.g. the account predates the handle_new_user trigger, or
+  // the trigger was never installed. Self-heal by creating the row now so the
+  // profile page (and dashboard greeting) never hang on a missing row.
+  const displayName =
+    (user.user_metadata?.name as string | undefined) ?? user.email?.split("@")[0] ?? null;
+  const { data: created, error: insertErr } = await supabase
+    .from("profiles")
+    .upsert({ id: user.id, display_name: displayName }, { onConflict: "id" })
+    .select()
+    .single();
+  if (insertErr) throw insertErr;
+  return created as Profile;
 }
 
 export async function updateProfile(fields: { display_name: string }): Promise<Profile> {

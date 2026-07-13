@@ -2,6 +2,12 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-13 — Fix /profile infinite loading (missing profiles row)
+- **Symptom:** /profile stuck on "Loading…" on the real-Supabase build. Schema *file* was fine — `supabase/schema.sql` already had all profile columns + `handle_new_user` trigger (committed together in `2b3ec32`). Root cause: `getProfile()` did `.single()` and returned `data as Profile` ignoring the error, so a *missing profiles row* (account predates the trigger, or trigger never installed in that project) returned `null` → profile stayed null → hung. Page's `.catch(()=>{})` hid the error.
+- **Fix:** `getProfile()` (`src/lib/data.ts`) now uses `.maybeSingle()`, throws on real errors, and **self-heals**: if no row, upserts one (`user_metadata.name` → email prefix). `/profile` page now shows an error card (with "run schema.sql" hint) instead of infinite Loading.
+- **Backfill for existing users:** the trigger only fires on new signups, so pre-existing accounts still need a row (self-heal handles it on next load, or run the SQL insert-from-auth.users backfill).
+- **Verified:** tsc clean; /profile still renders in demo mode (Demo Learner / LV 5, no regression). Real-Supabase self-heal not exercisable locally (env is demo-only).
+
 ## 2026-07-13 — Plan markdown fix, progress calendar, profile page
 - **Markdown leak:** "Today's connection" showed raw `**…**` from Gemini. Fixed three ways: `writePlanNarrative` prompt now forbids markdown/labels (`src/lib/gemini.ts`); new `stripMarkdown()` in `src/lib/text.ts` applied in `/api/plan` before caching AND at render time in `src/app/page.tsx` (covers already-cached plans in `daily_plans`).
 - **Progress calendar:** new `src/components/ProgressCalendar.tsx` on the dashboard right column — month view, days lit by review count (3 intensity tiers), today ring, ‹ › month nav (≤11 months back).

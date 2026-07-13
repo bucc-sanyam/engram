@@ -15,6 +15,7 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     getProfile()
@@ -22,7 +23,9 @@ export default function ProfilePage() {
         setProfile(p);
         setName(p.display_name ?? "");
       })
-      .catch(() => {});
+      .catch((e) =>
+        setLoadError(e instanceof Error ? e.message : "Couldn't load your profile"),
+      );
     getUserEmail().then(setEmail).catch(() => {});
     getTopics().then((t) => setTopicCount(t.length)).catch(() => {});
   }, []);
@@ -67,7 +70,12 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {!profile ? (
+        {loadError ? (
+          <div className="rise rounded-2xl bg-danger/[0.08] px-5 py-4 text-sm text-danger">
+            Couldn&apos;t load your profile: {loadError}. Make sure{" "}
+            <code>supabase/schema.sql</code> has been run in your Supabase project.
+          </div>
+        ) : !profile ? (
           <p className="text-muted">Loading…</p>
         ) : (
           <div className="space-y-6">
