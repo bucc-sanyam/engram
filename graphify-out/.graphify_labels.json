@@ -5,6 +5,7 @@
   "3": "Navigation and Core UI",
   "4": "Dashboard and Visualization",
   "5": "Project Dependencies",
+  "6": "package.json",
   "7": "schema.sql",
   "8": "BrainScene.tsx",
   "9": "layout.tsx",
@@ -41,6 +42,5 @@
   "40": "Whisper Transcription",
   "41": "Incremental Update",
   "42": "Engram Project",
-  "43": "engram",
-  "45": "RichText.tsx"
+  "43": "engram"
 }

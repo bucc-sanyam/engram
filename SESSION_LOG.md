@@ -2,6 +2,13 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews
+- **Rebranding to Engramia:** Renamed project "Engram" to "Engramia" globally across code and configurations (titles, cookies, localStorage keys, packages, etc.).
+- **Mastery and XP Metric Removal:** Disabled and hidden all XP and level components (XP totals, progress bars, level progress stars, and constellation paths). Sizing of brain graph nodes now leverages topic `review_count`. Dashboard "At a glance" stats simplified to "Total topics" and "Tasks today" only. Daily plans now rank/sort topics by `review_count` instead of `mastery`.
+- **See report Button:** When the daily revision plan is completed, the homepage "Start" button dynamically changes to "See report" which navigates to `/review` and pulls up the latest graded quiz report from today immediately.
+- **True or False Statements:** Flashcards have been replaced with True/False statements. Gemini ingest updated to generate statements under `flashcards` with exact `"True"` or `"False"` answers. Users click "True" or "False" buttons and are immediately graded (automatically rating spacing interval based on correctness).
+- **Detailed Done Review History:** Already reviewed topics now show a detailed card containing the question prompt, what you answered, the correct stored answer, and grading feedback. Guest attempts are saved in local memory so they populate the activity heatmap calendar and the review breakdown details.
+
 ## 2026-07-13 — Review bug fixes + /blogs page
 - **Bug 1 fixed — already-answered questions re-opening:** `/review` now loads ALL plan items (not filtered to remaining-only). Items with `it.done=true` show an "Already reviewed today" card (✓ icon, topic name, "locked in for today") with a "Next topic →" button instead of re-asking the question. The `loadItem()` callback short-circuits to `setPhase("already-done")` when `it.done` is true.
 - **Bug 2 fixed — report card after 1 question:** Root cause: old code filtered the plan to only `remaining` items — if 1 item remained, 1 question then report. Now the full plan is passed (all items); done items auto-skip via the `already-done` phase; quiz session is started only for `pendingIds` (non-done topics). After all items are stepped through, finalize() runs.
