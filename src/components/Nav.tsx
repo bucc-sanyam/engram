@@ -16,11 +16,15 @@ const LINKS = [
 export default function Nav() {
   const pathname = usePathname();
   const [stats, setStats] = useState<{ streak: number; level: number } | null>(null);
+  const [authStatus, setAuthStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
 
   useEffect(() => {
     getProfile()
-      .then((p) => setStats({ streak: p.streak, level: levelForXp(p.xp).level }))
-      .catch(() => {});
+      .then((p) => {
+        setStats({ streak: p.streak, level: levelForXp(p.xp).level });
+        setAuthStatus("authenticated");
+      })
+      .catch(() => setAuthStatus("unauthenticated"));
   }, [pathname]);
 
   return (
@@ -77,7 +81,7 @@ export default function Nav() {
             )}
 
             {/* Auth controls */}
-            {isDemo ? (
+            {isDemo || authStatus === "unauthenticated" ? (
               <Link
                 href="/login"
                 className="hidden rounded-full bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f] px-4 py-1.5 text-sm font-semibold text-[#1a120e] shadow-[0_0_18px_rgba(255,122,92,0.35)] transition-all hover:shadow-[0_0_28px_rgba(255,122,92,0.55)] md:flex items-center gap-1.5"
@@ -85,7 +89,7 @@ export default function Nav() {
                 <UserIcon className="h-3.5 w-3.5" />
                 Sign in
               </Link>
-            ) : (
+            ) : authStatus === "authenticated" ? (
               <Link
                 href="/profile"
                 title="Profile"
@@ -98,6 +102,8 @@ export default function Nav() {
                 <UserIcon className="h-4 w-4" />
                 Profile
               </Link>
+            ) : (
+              <div className="hidden md:block w-20" />
             )}
           </div>
         </div>
@@ -120,13 +126,13 @@ export default function Nav() {
           ))}
           {/* Mobile auth/profile tab */}
           <Link
-            href={isDemo ? "/login" : "/profile"}
+            href={isDemo || authStatus === "unauthenticated" ? "/login" : "/profile"}
             className={`flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition-colors ${
-              pathname === (isDemo ? "/login" : "/profile") ? "text-[#ff9a80]" : "text-faint"
+              pathname === (isDemo || authStatus === "unauthenticated" ? "/login" : "/profile") ? "text-[#ff9a80]" : "text-faint"
             }`}
           >
             <UserIcon className="h-5 w-5" />
-            {isDemo ? "Sign in" : "Profile"}
+            {isDemo || authStatus === "unauthenticated" ? "Sign in" : "Profile"}
           </Link>
         </div>
       </nav>
