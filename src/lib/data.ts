@@ -16,6 +16,7 @@ import {
   demoPlan,
   demoQuestions,
   demoGrade,
+  demoTopicSource,
 } from "./demo";
 import type {
   DailyPlan,
@@ -27,6 +28,7 @@ import type {
   ReviewMode,
   Topic,
   TopicLink,
+  TopicSource,
 } from "./types";
 
 export { isDemo };
@@ -113,6 +115,32 @@ export async function getTopic(id: string): Promise<Topic | null> {
   const supabase = createClient();
   const { data } = await supabase.from("topics").select("*").eq("id", id).single();
   return data as Topic | null;
+}
+
+/**
+ * Where a topic came from, for its blog page: the source_url of the entry it
+ * was extracted from (a link), or `text` when it was pasted in. Null if unknown.
+ */
+export async function getTopicSource(topicId: string): Promise<TopicSource> {
+  if (isDemo) {
+    return demoTopicSource[topicId] ?? { kind: "text" };
+  }
+  const supabase = createClient();
+  const { data } = await supabase
+    .from("entry_topics")
+    .select("entries(source_url, created_at)")
+    .eq("topic_id", topicId);
+  const rows = (data ?? []) as unknown as Array<{
+    entries: { source_url: string | null; created_at: string } | null;
+  }>;
+  const entries = rows
+    .map((r) => r.entries)
+    .filter((e): e is { source_url: string | null; created_at: string } => !!e)
+    .sort((a, b) => b.created_at.localeCompare(a.created_at));
+  if (entries.length === 0) return null;
+  const withUrl = entries.find((e) => e.source_url);
+  if (withUrl?.source_url) return { kind: "url", url: withUrl.source_url };
+  return { kind: "text" };
 }
 
 export async function getLinks(): Promise<TopicLink[]> {

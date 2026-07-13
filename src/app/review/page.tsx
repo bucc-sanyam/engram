@@ -25,6 +25,9 @@ export default function ReviewPage() {
   const [grade, setGrade] = useState<(GradeResult & { xp: number }) | null>(null);
   const [xpTotal, setXpTotal] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  // true when deep-linked to a single task via ?topic= — finishing it must not
+  // mark the whole day's plan complete / bump the streak.
+  const [singleTask, setSingleTask] = useState(false);
 
   // Flashcard sub-state
   const [cards, setCards] = useState<Flashcard[]>([]);
@@ -69,7 +72,18 @@ export default function ReviewPage() {
   }, []);
 
   useEffect(() => {
-    getPlan().then((p) => {
+    // Deep link from the dashboard: `/review?topic=<id>` runs just that one
+    // task. No param → the full daily plan, as before.
+    const topicId =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("topic")
+        : null;
+    getPlan().then((full) => {
+      const matched = !!topicId && full.items.some((it) => it.topic_id === topicId);
+      const p = matched
+        ? { ...full, items: full.items.filter((it) => it.topic_id === topicId) }
+        : full;
+      setSingleTask(matched);
       setPlan(p);
       if (p.items.length === 0) setPhase("empty");
       else loadItem(p, 0);
@@ -118,7 +132,8 @@ export default function ReviewPage() {
       setIndex(index + 1);
       loadItem(plan, index + 1);
     } else {
-      markPlanCompleted().catch(() => {});
+      // Only a full-plan run closes out the day; a single deep-linked task doesn't.
+      if (!singleTask) markPlanCompleted().catch(() => {});
       setPhase("finished");
     }
   }

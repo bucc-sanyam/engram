@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
 import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
+import RichText from "@/components/RichText";
 import { getEntries, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
+import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
-import type { DailyPlan, Entry, Profile, Review, Topic } from "@/lib/types";
+import type { DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
 const MODE_LABEL: Record<string, string> = {
@@ -22,6 +24,7 @@ export default function Dashboard() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
+  const [notes, setNotes] = useState<Note[]>([]);
   const [planError, setPlanError] = useState(false);
 
   useEffect(() => {
@@ -31,6 +34,21 @@ export default function Dashboard() {
     getEntries().then(setEntries).catch(() => {});
     getPlan().then(setPlan).catch(() => setPlanError(true));
   }, []);
+
+  // Personal notes live in localStorage — read on mount, stay in sync with edits.
+  useEffect(() => {
+    ensureSeeded();
+    const sync = () => setNotes(getNotes());
+    sync();
+    window.addEventListener(NOTES_EVENT, sync);
+    window.addEventListener("storage", sync);
+    return () => {
+      window.removeEventListener(NOTES_EVENT, sync);
+      window.removeEventListener("storage", sync);
+    };
+  }, []);
+
+  const topNotes = childrenOf(notes, null);
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
@@ -96,24 +114,32 @@ export default function Dashboard() {
 
               <ul className="space-y-2.5">
                 {plan?.items.map((item) => (
-                  <li
-                    key={item.topic_id}
-                    className="row-soft flex items-center gap-3.5 px-4 py-3.5"
-                  >
-                    <span
-                      className="h-2.5 w-2.5 shrink-0 rounded-full"
-                      style={{
-                        background: categoryColor(item.category),
-                        boxShadow: `0 0 10px ${categoryColor(item.category)}`,
-                      }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate font-medium">{item.topic_name}</div>
-                      <div className="truncate text-xs text-faint">{item.reason}</div>
-                    </div>
-                    <span className="micro shrink-0 rounded-full bg-white/[0.05] px-3 py-1.5">
-                      {MODE_LABEL[item.mode]}
-                    </span>
+                  <li key={item.topic_id}>
+                    <Link
+                      href={`/review?topic=${item.topic_id}`}
+                      className="row-soft group flex items-center gap-3.5 px-4 py-3.5"
+                    >
+                      <span
+                        className="h-2.5 w-2.5 shrink-0 rounded-full"
+                        style={{
+                          background: categoryColor(item.category),
+                          boxShadow: `0 0 10px ${categoryColor(item.category)}`,
+                        }}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-medium">{item.topic_name}</div>
+                        <div className="truncate text-xs text-faint">{item.reason}</div>
+                      </div>
+                      <span className="micro shrink-0 rounded-full bg-white/[0.05] px-3 py-1.5 transition-colors group-hover:bg-white/[0.09]">
+                        {MODE_LABEL[item.mode]}
+                      </span>
+                      <span
+                        aria-hidden
+                        className="-ml-1 shrink-0 text-faint opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                      >
+                        →
+                      </span>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -130,9 +156,11 @@ export default function Dashboard() {
               <section className="rise rise-2 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#f5b95f]/[0.08] via-transparent to-[#ff7a5c]/[0.04] p-6 sm:p-7">
                 <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-[#f5b95f]/15 blur-3xl" />
                 <p className="micro mb-3 flex items-center gap-2 !text-[#f5b95f]">
-                  <SparkleIcon /> Today&apos;s connection
+                  <SparkleIcon /> The thread today
                 </p>
-                <p className="text-[15px] leading-relaxed text-white/85">{stripMarkdown(plan.insight)}</p>
+                <RichText className="block text-[15px] leading-relaxed text-white/85">
+                  {plan.insight}
+                </RichText>
               </section>
             )}
 
@@ -165,6 +193,59 @@ export default function Dashboard() {
                       <p className="line-clamp-2 text-sm text-muted">{e.summary}</p>
                     </li>
                   ))}
+                </ul>
+              )}
+            </section>
+
+            {/* Personal notes — private reminders, not in the graph */}
+            <section className="glass rise rise-3 p-6 sm:p-7">
+              <div className="mb-5 flex items-center justify-between">
+                <div>
+                  <p className="micro mb-1 !text-[#bfa8f5]">Personal margin</p>
+                  <h2 className="text-xl font-bold">Personal notes</h2>
+                </div>
+                <Link href="/notes" className="btn-ghost px-4 py-2 text-sm">
+                  Open notes →
+                </Link>
+              </div>
+              {topNotes.length === 0 ? (
+                <Link
+                  href="/notes"
+                  className="row-soft flex items-center gap-3 px-4 py-4 text-sm text-muted"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#bfa8f5]/12 text-[#bfa8f5]">
+                    ✎
+                  </span>
+                  Jot a reminder — markdown, subnotes, all in one place.
+                </Link>
+              ) : (
+                <ul className="space-y-2.5">
+                  {topNotes.slice(0, 5).map((n) => {
+                    const subs = countDescendants(notes, n.id);
+                    return (
+                      <li key={n.id}>
+                        <Link
+                          href={`/notes?note=${n.id}`}
+                          className="row-soft group flex items-center gap-3.5 px-4 py-3.5"
+                        >
+                          <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-[#bfa8f5]" />
+                          <div className="min-w-0 flex-1">
+                            <div className="truncate font-medium">{n.title.trim() || "Untitled"}</div>
+                            <div className="truncate text-xs text-faint">
+                              {new Date(n.updated_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                              {subs > 0 && ` · ${subs} subnote${subs === 1 ? "" : "s"}`}
+                            </div>
+                          </div>
+                          <span
+                            aria-hidden
+                            className="shrink-0 text-faint opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                          >
+                            →
+                          </span>
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </section>

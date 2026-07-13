@@ -228,7 +228,14 @@ export default function BrainPage() {
                         >
                           {t.category}
                         </span>
-                        <h2 className="text-lg font-bold leading-snug">{t.name}</h2>
+                        <Link
+                          href={`/brain/${t.id}`}
+                          target="_blank"
+                          rel="noopener"
+                          className="text-lg font-bold leading-snug transition-colors hover:text-[#f5b95f]"
+                        >
+                          {t.name}
+                        </Link>
                       </div>
                       <button
                         onClick={() => setPath([])}
@@ -251,7 +258,18 @@ export default function BrainPage() {
                       />
                     </div>
 
-                    <p className="mb-4 text-sm leading-relaxed text-white/80">{t.summary}</p>
+                    <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-white/80">{t.summary}</p>
+
+                    <Link
+                      href={`/brain/${t.id}`}
+                      target="_blank"
+                      rel="noopener"
+                      className="group mb-5 inline-flex items-center gap-1.5 text-xs font-semibold"
+                      style={{ color: color }}
+                    >
+                      Read the full topic
+                      <span className="transition-transform group-hover:translate-x-0.5">↗</span>
+                    </Link>
 
                     {t.key_points?.length > 0 && (
                       <>

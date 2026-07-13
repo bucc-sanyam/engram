@@ -1,10 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+// Literary serif reserved for long-form reading (the topic "blog" pages).
+const fraunces = Fraunces({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  axes: ["opsz", "SOFT"],
 });
 
 const grotesk = Space_Grotesk({
@@ -36,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${grotesk.variable} ${jetmono.variable} h-full antialiased`}
+      className={`${inter.variable} ${grotesk.variable} ${jetmono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <div className="ambient" aria-hidden />

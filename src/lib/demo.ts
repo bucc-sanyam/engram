@@ -6,6 +6,7 @@ import type {
   Review,
   Topic,
   TopicLink,
+  TopicSource,
 } from "./types";
 
 /** Demo mode is active when Supabase isn't configured yet. */
@@ -127,6 +128,17 @@ export const demoLinks: TopicLink[] = [
   l("e14", "d8", "d12", "Both are about reasoning correctly with exponentials and probabilities"),
   l("e15", "d7", "d14", "Recovery is part of effective practice schedules"),
 ];
+
+/**
+ * Where each demo topic was "ingested" from — a few came from article links,
+ * the rest from pasted text. Topics not listed default to text input.
+ */
+export const demoTopicSource: Record<string, TopicSource> = {
+  d1: { kind: "url", url: "https://arxiv.org/abs/1706.03762" },
+  d3: { kind: "url", url: "https://arxiv.org/abs/2005.11401" },
+  d4: { kind: "url", url: "https://github.com/pgvector/pgvector" },
+  d11: { kind: "url", url: "https://practicaltypography.com" },
+};
 
 export const demoEntries: Entry[] = [
   { id: "en1", title: "Deep dive: how transformers actually work", raw_text: "", summary: "Discussed self-attention, positional encodings and why parallelism enabled the LLM era.", created_at: daysAgo(9) },

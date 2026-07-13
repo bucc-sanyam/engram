@@ -217,7 +217,7 @@ export default function BrainScene({
       .trim();
     const labelFont = `600 40px ${groteskVar || "'Space Grotesk'"}, system-ui, sans-serif`;
     const labelDraws: Array<() => void> = [];
-    const NODE_LABEL_H = 0.112;
+    const NODE_LABEL_H = 0.086;
 
     // ---------- particle shell (the brain itself) ----------
     const SHELL_N = 3200;
@@ -566,7 +566,7 @@ export default function BrainScene({
             l.labelMat.needsUpdate = true;
             l.label.userData.topicId = other.id; // clicking walks to that topic
             const aspect = other.label.scale.x / other.label.scale.y;
-            const h = 0.086;
+            const h = 0.066;
             l.label.scale.set(h * aspect, h, 1);
             // stagger each neighbour's name at a different distance along its
             // edge so the fan of labels doesn't stack up near the selection

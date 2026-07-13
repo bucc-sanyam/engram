@@ -59,6 +59,26 @@ export interface TopicLink {
   strength: number;
 }
 
+/** Where a topic was ingested from — shown on its blog page. */
+export type TopicSource =
+  | { kind: "url"; url: string }
+  | { kind: "text" }
+  | null;
+
+/**
+ * A personal note. Deliberately NOT part of the knowledge graph — notes are
+ * private reminders. `parent_id` gives OneNote-style nesting (subnotes).
+ * Stored locally (localStorage), keyed per browser.
+ */
+export interface Note {
+  id: string;
+  parent_id: string | null;
+  title: string;
+  body: string; // markdown
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Entry {
   id: string;
   title: string | null;

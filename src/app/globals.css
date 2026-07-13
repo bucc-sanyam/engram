@@ -33,6 +33,7 @@
   --font-sans: var(--font-inter);
   --font-display: var(--font-grotesk);
   --font-mono: var(--font-jetmono);
+  --font-serif: var(--font-serif);
 }
 
 html {
@@ -118,6 +119,32 @@ h1, h2, h3, .display {
   text-transform: uppercase;
   color: var(--faint);
   font-weight: 600;
+}
+
+/* ---------- Long-form reading (topic blog pages) ---------- */
+.article-lead {
+  font-family: var(--font-serif), Georgia, serif;
+  font-optical-sizing: auto;
+  font-size: 1.375rem;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  color: rgba(242, 240, 235, 0.92);
+}
+.article-body {
+  font-family: var(--font-serif), Georgia, serif;
+  font-optical-sizing: auto;
+  font-size: 1.15rem;
+  line-height: 1.85;
+  letter-spacing: -0.003em;
+  color: rgba(242, 240, 235, 0.82);
+}
+/* graceful first-letter flourish on the opening paragraph */
+.article-lead::first-letter {
+  initial-letter: 3;
+  font-family: var(--font-grotesk), sans-serif;
+  font-weight: 700;
+  color: var(--gold);
+  margin-right: 0.6rem;
 }
 
 /* ---------- Surfaces ---------- */
