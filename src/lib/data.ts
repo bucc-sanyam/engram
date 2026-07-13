@@ -11,7 +11,6 @@ import {
   demoLinks,
   demoEntries,
   demoFacts,
-  demoFlashcards,
   demoProfile,
   demoReviews,
   demoPlan,
@@ -24,7 +23,6 @@ import type {
   DailyFact,
   DailyPlan,
   Entry,
-  Flashcard,
   Profile,
   QuizSession,
   ReportCard,
@@ -33,6 +31,7 @@ import type {
   SessionQuestion,
   Topic,
   TopicLink,
+  TopicQuestion,
   TopicSource,
 } from "./types";
 
@@ -42,8 +41,11 @@ export { isDemo };
 interface DemoSession {
   id: string;
   questions: SessionQuestion[];
-  key: Map<number, { correct_index: number | null; model_answer: string }>;
-  answers: Map<number, { answer?: string; selectedIndex?: number }>;
+  key: Map<
+    number,
+    { correct_index: number | null; correct_indices: number[] | null; model_answer: string }
+  >;
+  answers: Map<number, { answer?: string; selectedIndex?: number; selectedIndices?: number[] }>;
 }
 
 // Demo-mode mutable state lives for the tab session.
@@ -53,6 +55,7 @@ const demoState = {
   done: new Set<string>(),
   reviews: [...demoReviews] as Review[],
   session: null as DemoSession | null,
+  reports: [] as ReportCard[], // graded reports from this tab (feeds day report cards)
 };
 
 async function api<T>(path: string, body?: unknown): Promise<T> {
@@ -176,11 +179,41 @@ export async function getEntries(): Promise<Entry[]> {
   return (data ?? []).map((e) => ({ ...e, raw_text: "" })) as Entry[];
 }
 
-export async function getFlashcards(topicId: string): Promise<Flashcard[]> {
-  if (isDemo) return demoFlashcards.filter((f) => f.topic_id === topicId);
+/** All bank questions for one topic, WITH answers — for the topic's blog page. */
+export async function getTopicQuestions(topicId: string): Promise<TopicQuestion[]> {
+  if (isDemo) {
+    return demoQuestionBank
+      .filter((q) => q.topic_id === topicId)
+      .map((q, i) => ({
+        id: `demo-q-${topicId}-${i}`,
+        topic_id: q.topic_id,
+        kind: q.kind,
+        prompt: q.prompt,
+        options: q.options,
+        correct_index: q.correct_index,
+        correct_indices: q.correct_indices ?? null,
+        model_answer: q.model_answer,
+        difficulty: "basic",
+      }));
+  }
   const supabase = createClient();
-  const { data } = await supabase.from("flashcards").select("*").eq("topic_id", topicId);
-  return (data ?? []) as Flashcard[];
+  // select * so databases without the newer correct_indices column still work.
+  const { data } = await supabase
+    .from("questions")
+    .select("*")
+    .eq("topic_id", topicId)
+    .order("created_at", { ascending: true });
+  return ((data ?? []) as Record<string, unknown>[]).map((q) => ({
+    id: q.id as string,
+    topic_id: q.topic_id as string,
+    kind: q.kind as TopicQuestion["kind"],
+    prompt: q.prompt as string,
+    options: (q.options as string[] | null) ?? null,
+    correct_index: (q.correct_index as number | null) ?? null,
+    correct_indices: (q.correct_indices as number[] | null) ?? null,
+    model_answer: q.model_answer as string,
+    difficulty: (q.difficulty as string) ?? "basic",
+  }));
 }
 
 export async function getReviews(sinceDays = 120): Promise<Review[]> {
@@ -253,9 +286,12 @@ export async function ingestLink(url: string): Promise<IngestResult> {
 export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
   if (isDemo) {
     await new Promise((r) => setTimeout(r, 500));
-    const kinds = ["open", "mcq", "quickfire"] as const;
+    const kinds = ["open", "mcq", "truefalse", "quickfire", "multi"] as const;
     const questions: SessionQuestion[] = [];
-    const key = new Map<number, { correct_index: number | null; model_answer: string }>();
+    const key = new Map<
+      number,
+      { correct_index: number | null; correct_indices: number[] | null; model_answer: string }
+    >();
     topicIds.forEach((topicId, i) => {
       const topic = demoTopics.find((t) => t.id === topicId);
       if (!topic) return;
@@ -273,7 +309,11 @@ export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
           prompt: bank.prompt,
           options: bank.options,
         });
-        key.set(index, { correct_index: bank.correct_index, model_answer: bank.model_answer });
+        key.set(index, {
+          correct_index: bank.correct_index,
+          correct_indices: bank.correct_indices ?? null,
+          model_answer: bank.model_answer,
+        });
       } else {
         questions.push({
           index,
@@ -284,7 +324,11 @@ export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
           prompt: `From memory, explain "${topic.name}" — the core idea and why it matters.`,
           options: null,
         });
-        key.set(index, { correct_index: null, model_answer: topic.key_points.join(" ") });
+        key.set(index, {
+          correct_index: null,
+          correct_indices: null,
+          model_answer: topic.key_points.join(" "),
+        });
       }
     });
     demoState.session = { id: `demo-${Date.now()}`, questions, key, answers: new Map() };
@@ -299,11 +343,13 @@ export async function saveQuizAnswer(args: {
   questionIndex: number;
   answer?: string;
   selectedIndex?: number;
+  selectedIndices?: number[];
 }): Promise<void> {
   if (isDemo) {
     demoState.session?.answers.set(args.questionIndex, {
       answer: args.answer,
       selectedIndex: args.selectedIndex,
+      selectedIndices: args.selectedIndices,
     });
     return;
   }
@@ -322,7 +368,7 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
     const items: ReportItem[] = [];
     for (const q of s.questions) {
       const a = s.answers.get(q.index);
-      if (!a) continue; // never presented (e.g. flashcards were shown instead)
+      if (!a) continue; // never presented this session
       const key = s.key.get(q.index)!;
       const topic = demoTopics.find((t) => t.id === q.topic_id)!;
       const item: ReportItem = {
@@ -339,9 +385,11 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
         correct_answer: key.model_answer,
         options: q.options,
         selected_index: null,
-        correct_index: q.kind === "mcq" ? key.correct_index : null,
+        correct_index: q.kind === "mcq" || q.kind === "truefalse" ? key.correct_index : null,
+        selected_indices: null,
+        correct_indices: q.kind === "multi" ? key.correct_indices : null,
       };
-      if (q.kind === "mcq") {
+      if (q.kind === "mcq" || q.kind === "truefalse") {
         const sel = typeof a.selectedIndex === "number" ? a.selectedIndex : null;
         item.selected_index = sel;
         item.answer = sel !== null ? q.options?.[sel] ?? null : null;
@@ -357,6 +405,32 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
         }
         if (key.correct_index !== null && q.options) {
           item.correct_answer = q.options[key.correct_index] ?? key.model_answer;
+        }
+      } else if (q.kind === "multi") {
+        const sel = a.selectedIndices?.filter((n) => typeof n === "number") ?? null;
+        const answerKey = key.correct_indices ?? [];
+        item.selected_indices = sel;
+        item.answer =
+          sel && q.options ? sel.map((i) => q.options![i]).filter(Boolean).join(" · ") || null : null;
+        item.correct_answer =
+          answerKey.length && q.options
+            ? answerKey.map((i) => q.options![i]).filter(Boolean).join(" · ")
+            : key.model_answer;
+        if (!sel || sel.length === 0) {
+          item.skipped = true;
+          item.feedback = "You skipped this one — no harm done, it'll come back around.";
+        } else {
+          const hits = sel.filter((i) => answerKey.includes(i)).length;
+          const wrong = sel.length - hits;
+          item.correct = hits === answerKey.length && wrong === 0;
+          item.score = item.correct
+            ? 5
+            : Math.max(0, Math.min(4, Math.round((5 * Math.max(0, hits - wrong)) / Math.max(1, answerKey.length))));
+          item.feedback = item.correct
+            ? "Correct — you picked every right option."
+            : hits > 0
+              ? `Partly right — you found ${hits} of ${answerKey.length} correct option${answerKey.length === 1 ? "" : "s"}${wrong ? ` but also picked ${wrong} wrong one${wrong === 1 ? "" : "s"}` : ""}.`
+              : "Not quite — none of your picks were correct this time.";
         }
       } else {
         const typed = (a.answer ?? "").trim();
@@ -391,17 +465,17 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
         demoState.reviews.push({
           id: `demo-r-${q.topic_id}-${Date.now()}`,
           topic_id: q.topic_id,
-          mode: q.kind === "mcq" ? "quickfire" : q.kind === "quickfire" ? "quickfire" : "recall",
+          mode: q.kind === "open" ? "recall" : "quickfire",
           score: item.score,
           created_at: new Date().toISOString(),
           question: q.prompt,
           answer: item.answer ?? undefined,
           feedback: item.feedback ?? undefined,
-        } as any);
+        } as Review);
       }
     }
 
-    return {
+    const report: ReportCard = {
       session_id: sessionId,
       date: new Date().toISOString().slice(0, 10),
       score_pct: scorePct,
@@ -416,6 +490,9 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
       focus,
       items,
     };
+    // Keep the graded report so "See report" and calendar day clicks can replay it.
+    demoState.reports.push(report);
+    return report;
   }
   return api("/api/quiz", { action: "finish", sessionId });
 }
@@ -445,30 +522,6 @@ export async function getFactOfTheDay(): Promise<DailyFact | null> {
   const t = withPoints[day % withPoints.length];
   const points = t.key_points as string[];
   return { text: points[day % points.length], topic_name: t.name };
-}
-
-export async function rateFlashcard(args: {
-  topicId: string;
-  quality: number; // 0..5
-  question?: string;
-  answer?: string;
-  feedback?: string;
-}): Promise<{ xp: number }> {
-  if (isDemo) {
-    demoState.done.add(args.topicId);
-    demoState.reviews.push({
-      id: `demo-r-fc-${args.topicId}-${Date.now()}`,
-      topic_id: args.topicId,
-      mode: "flashcard",
-      score: args.quality,
-      created_at: new Date().toISOString(),
-      question: args.question ?? "True/False statement",
-      answer: args.answer ?? "True",
-      feedback: args.feedback ?? "Correct statement.",
-    } as any);
-    return { xp: 0 };
-  }
-  return api("/api/quiz", { action: "rate", topicId: args.topicId, quality: args.quality, question: args.question, answer: args.answer, feedback: args.feedback });
 }
 
 export async function markPlanCompleted(): Promise<void> {
@@ -535,52 +588,119 @@ export async function getTodayReviewDetail(topicId: string): Promise<{
   };
 }
 
-export async function getLatestReportToday(): Promise<ReportCard | null> {
-  const today = new Date().toISOString().slice(0, 10);
+/** Merge several session reports into ONE report card for a day. */
+function mergeReports(reports: ReportCard[], day: string): ReportCard {
+  const items = reports
+    .flatMap((r) => r.items)
+    .map((it, i) => ({ ...it, index: i }));
+  const attempted = items.filter((i) => !i.skipped);
+  const scorePct = attempted.length
+    ? Math.round((attempted.reduce((s, i) => s + i.score, 0) / (attempted.length * 5)) * 100)
+    : 0;
+  const dedupe = (xs: string[]) => Array.from(new Set(xs)).slice(0, 4);
+  return {
+    session_id: reports.map((r) => r.session_id).join("+"),
+    date: day,
+    score_pct: scorePct,
+    xp: reports.reduce((s, r) => s + (r.xp ?? 0), 0),
+    summary:
+      reports.length === 1
+        ? reports[0].summary
+        : `Across ${reports.length} sessions this day you answered ${attempted.length} question${attempted.length === 1 ? "" : "s"}${items.length - attempted.length ? ` and skipped ${items.length - attempted.length}` : ""} — every one of them is below, questions and answers included.`,
+    strengths: dedupe(reports.flatMap((r) => r.strengths)),
+    focus: dedupe(reports.flatMap((r) => r.focus)),
+    items,
+  };
+}
+
+/** Rebuild a report card from raw review rows (history predating session reports). */
+function reportFromReviews(revs: Review[], day: string, topicName: (id: string) => string): ReportCard | null {
+  if (!revs.length) return null;
+  const items: ReportItem[] = revs.map((r, i) => {
+    const bank = demoQuestionBank.find(
+      (q) => q.topic_id === r.topic_id && q.prompt === r.question
+    );
+    return {
+      index: i,
+      topic_id: r.topic_id,
+      topic_name: topicName(r.topic_id),
+      kind: bank?.kind ?? (r.mode === "recall" ? "open" : "quickfire"),
+      prompt: r.question ?? "Review prompt",
+      answer: r.answer ?? null,
+      skipped: false,
+      correct: null,
+      score: r.score,
+      feedback: r.feedback ?? "",
+      correct_answer: bank?.model_answer ?? "",
+      options: bank?.options ?? null,
+      selected_index: null,
+      correct_index: bank?.correct_index ?? null,
+      selected_indices: null,
+      correct_indices: bank?.correct_indices ?? null,
+    };
+  });
+  const scorePct = Math.round(
+    (items.reduce((s, x) => s + x.score, 0) / (items.length * 5)) * 100
+  );
+  return {
+    session_id: `day-${day}`,
+    date: day,
+    score_pct: scorePct,
+    xp: 0,
+    summary: `You answered ${items.length} question${items.length === 1 ? "" : "s"} this day — here's the full breakdown, questions and answers included.`,
+    strengths: items.filter((i) => i.score >= 4).map((i) => i.topic_name).slice(0, 3),
+    focus: items.filter((i) => i.score <= 2).map((i) => i.topic_name).slice(0, 3),
+    items,
+  };
+}
+
+/**
+ * The full report card for one calendar day (YYYY-MM-DD): every question asked
+ * that day with the answer given, the correct answer and the feedback. Merges
+ * all graded sessions of the day; falls back to raw review history.
+ */
+export async function getDayReport(day: string): Promise<ReportCard | null> {
   if (isDemo) {
-    if (demoState.plan.completed) {
-      const items: ReportItem[] = [];
-      const todayReviews = demoState.reviews.filter(r => r.created_at.slice(0, 10) === today);
-      if (todayReviews.length === 0) return null;
-      todayReviews.forEach((r, i) => {
-        items.push({
-          index: i,
-          topic_id: r.topic_id,
-          topic_name: demoTopics.find(t => t.id === r.topic_id)?.name ?? "Topic",
-          kind: r.mode === "flashcard" ? "quickfire" : "open",
-          prompt: r.question ?? "Review prompt",
-          answer: r.answer ?? null,
-          skipped: false,
-          correct: null,
-          score: r.score,
-          feedback: r.feedback ?? "Completed successfully.",
-          correct_answer: "Reference answer stored.",
-          options: null,
-          selected_index: null,
-          correct_index: null,
-        });
-      });
-      return {
-        session_id: "demo-latest",
-        date: today,
-        score_pct: Math.round((items.reduce((s, x) => s + x.score, 0) / (items.length * 5)) * 100),
-        xp: 0,
-        summary: "Excellent work completing today's revision session!",
-        strengths: ["Consistency", "Recall"],
-        focus: [],
-        items,
-      };
-    }
-    return null;
+    const fromSessions = demoState.reports.filter((r) => r.date === day);
+    if (fromSessions.length) return mergeReports(fromSessions, day);
+    const dayReviews = demoState.reviews
+      .filter((r) => r.created_at.slice(0, 10) === day)
+      .sort((a, b) => a.created_at.localeCompare(b.created_at));
+    return reportFromReviews(dayReviews, day, (id) =>
+      demoTopics.find((t) => t.id === id)?.name ?? "Topic"
+    );
   }
 
   const supabase = createClient();
+  const nextDay = new Date(day + "T00:00:00Z");
+  nextDay.setUTCDate(nextDay.getUTCDate() + 1);
+  const until = nextDay.toISOString().slice(0, 10);
+
   const { data } = await supabase
     .from("quiz_sessions")
     .select("report")
     .eq("status", "graded")
-    .gte("graded_at", today + "T00:00:00Z")
-    .order("graded_at", { ascending: false })
-    .limit(1);
-  return (data?.[0]?.report as ReportCard) ?? null;
+    .gte("graded_at", day + "T00:00:00Z")
+    .lt("graded_at", until + "T00:00:00Z")
+    .order("graded_at", { ascending: true });
+  const reports = (data ?? [])
+    .map((r) => r.report as ReportCard)
+    .filter(Boolean);
+  if (reports.length) return mergeReports(reports, day);
+
+  // History that predates session reports — rebuild from the reviews rows.
+  const { data: revs } = await supabase
+    .from("reviews")
+    .select("id, topic_id, mode, score, question, answer, feedback, created_at")
+    .gte("created_at", day + "T00:00:00Z")
+    .lt("created_at", until + "T00:00:00Z")
+    .order("created_at", { ascending: true });
+  if (!revs?.length) return null;
+  const topics = await getTopics();
+  const nameById = new Map(topics.map((t) => [t.id, t.name]));
+  return reportFromReviews(revs as Review[], day, (id) => nameById.get(id) ?? "Topic");
+}
+
+export async function getLatestReportToday(): Promise<ReportCard | null> {
+  return getDayReport(new Date().toISOString().slice(0, 10));
 }

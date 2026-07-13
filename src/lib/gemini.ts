@@ -31,7 +31,7 @@ const CATEGORIES =
   "Technology, Science, Business, Design, Health, History, Philosophy, Language, Mathematics, General";
 
 /**
- * Extract topics, connections, flashcards, a QUESTION BANK and facts from a
+ * Extract topics, connections, a QUESTION BANK and facts from a
  * pasted conversation. This is the ONE ingest-time AI call — everything the
  * app later shows (quiz questions, MCQs, facts of the day) is pre-generated
  * here so reviews and dashboards cost zero AI calls.
@@ -56,12 +56,13 @@ Rules:
 - Each topic gets a category from exactly this list: ${CATEGORIES}.
 - Each topic gets a 2-3 sentence summary of what THE USER learnt about it (from the text), plus 3-6 key_points (short bullet facts worth remembering).
 - connections: pairs of topic names (from this text OR the existing list above) that are conceptually related, with a one-sentence reason. Only meaningful relations.
-- flashcards: 2-4 per topic. True or false statements about the topic. The "question" field must be the statement (e.g. "A transformer model processes words sequentially."), and the "answer" field must be exactly "True" or "False".
-- questions: a quiz question BANK, 5-6 per topic, answerable from the text. Mix of kinds:
+- questions: a quiz question BANK, 7-8 per topic, answerable from the text. Mix of kinds:
   * "open" (~2 per topic): open-ended recall — explain / compare / why / how.
-  * "quickfire" (~1-2 per topic): answerable in one short sentence or phrase.
+  * "quickfire" (~1 per topic): answerable in one short sentence or phrase.
   * "mcq" (~2 per topic): multiple choice with EXACTLY 4 plausible options and "correct_index" (0-3). Wrong options must be believable, not jokes.
-  Every question gets "model_answer" (concise ideal answer, max 50 words — for mcq restate why the correct option is right) and "difficulty": "basic" (core idea), "intermediate" (relationships, why/how) or "advanced" (edge cases, application). Spread difficulties across each topic's questions.
+  * "truefalse" (~1-2 per topic): "prompt" is a statement about the topic (e.g. "A transformer model processes words sequentially."), "options" must be exactly ["True", "False"], and "correct_index" is 0 for true statements, 1 for false ones.
+  * "multi" (~1 per topic): multiple choice where SEVERAL options are right — 4-5 plausible options with "correct_indices" (an array of 2 or more indices). Wrong options must be believable.
+  Every question gets "model_answer" (concise ideal answer, max 50 words — for choice questions restate why the correct option(s) are right) and "difficulty": "basic" (core idea), "intermediate" (relationships, why/how) or "advanced" (edge cases, application). Spread difficulties across each topic's questions.
 - facts: 1-2 per topic. A surprising, memorable "did you know"-style fact grounded in the text (one sentence each).
 - title: a short title for this learning session. summary: 2-3 sentences summarising the whole session.
 
@@ -71,8 +72,7 @@ Return JSON exactly in this shape:
   "summary": string,
   "topics": [{ "name": string, "category": string, "summary": string, "key_points": string[] }],
   "connections": [{ "a": string, "b": string, "reason": string }],
-  "flashcards": [{ "topic": string, "question": string, "answer": "True"|"False" }],
-  "questions": [{ "topic": string, "kind": "open"|"quickfire"|"mcq", "prompt": string, "options": string[] | null, "correct_index": number | null, "model_answer": string, "difficulty": "basic"|"intermediate"|"advanced" }],
+  "questions": [{ "topic": string, "kind": "open"|"quickfire"|"mcq"|"truefalse"|"multi", "prompt": string, "options": string[] | null, "correct_index": number | null, "correct_indices": number[] | null, "model_answer": string, "difficulty": "basic"|"intermediate"|"advanced" }],
   "facts": [{ "topic": string, "fact": string }]
 }
 

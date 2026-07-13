@@ -1,7 +1,6 @@
 import type {
   DailyPlan,
   Entry,
-  Flashcard,
   Profile,
   QuestionKind,
   Review,
@@ -170,17 +169,6 @@ export const demoEntries: Entry[] = [
   { id: "en4", title: "Stoic philosophy & Rome", raw_text: "", summary: "Marcus Aurelius, dichotomy of control, and the empire he ruled.", created_at: daysAgo(18) },
 ];
 
-export const demoFlashcards: Flashcard[] = [
-  { id: "f1", topic_id: "d1", question: "Transformers process language tokens sequentially one by one.", answer: "False" },
-  { id: "f2", topic_id: "d1", question: "Positional encodings inject token order information into the transformer architecture.", answer: "True" },
-  { id: "f3", topic_id: "d5", question: "Spaced repetition intervals should remain constant over time.", answer: "False" },
-  { id: "f4", topic_id: "d5", question: "In SM-2, a failed recall resets the next interval to 1 day.", answer: "True" },
-  { id: "f5", topic_id: "d7", question: "Slow-wave sleep is the stage where memory consolidation primarily happens.", answer: "True" },
-  { id: "f6", topic_id: "d3", question: "RAG models retrieve chunks of text from a database before generating responses.", answer: "True" },
-  { id: "f7", topic_id: "d10", question: "Pax Romana was a period of stability in Rome lasting roughly 20 years.", answer: "False" },
-  { id: "f8", topic_id: "d12", question: "Bayes' theorem calculates the probability of an event based on prior knowledge.", answer: "True" },
-];
-
 export const demoProfile: Profile = {
   id: "demo",
   display_name: "Demo Learner",
@@ -197,7 +185,7 @@ export const demoReviews: Review[] = Array.from({ length: 40 }, (_, i) => {
   return {
     id: `r${i}`,
     topic_id: topic.id,
-    mode: (["recall", "flashcard", "quickfire"] as const)[i % 3],
+    mode: (["recall", "quickfire"] as const)[i % 2],
     score,
     question: `What are the core details of ${topic.name}?`,
     answer: `The user answered some key facts about ${topic.name}.`,
@@ -213,15 +201,15 @@ export const demoPlan: DailyPlan = {
     "Notice the thread running through today: transformers decide what to attend to, your hippocampus decides what to consolidate, and spaced repetition exploits that same machinery. Sleep & Learning and Memory Consolidation explain WHY the SM-2 schedule behind this very app works.",
   items: [
     { topic_id: "d1", topic_name: "Transformer Architecture", category: "Technology", mode: "recall", reason: "Due for review today" },
-    { topic_id: "d7", topic_name: "Sleep & Learning", category: "Health", mode: "flashcard", reason: "Needs practice — only 0 reviews" },
+    { topic_id: "d7", topic_name: "Sleep & Learning", category: "Health", mode: "quickfire", reason: "Needs practice — only 0 reviews" },
     { topic_id: "d3", topic_name: "Retrieval-Augmented Generation", category: "Technology", mode: "recall", reason: "Due for review today" },
     { topic_id: "d13", topic_name: "Supabase & Postgres", category: "Technology", mode: "quickfire", reason: "Learnt 2 days ago — lock it in" },
-    { topic_id: "d10", topic_name: "The Roman Empire", category: "History", mode: "flashcard", reason: "Overdue — last seen 2 weeks ago" },
+    { topic_id: "d10", topic_name: "The Roman Empire", category: "History", mode: "recall", reason: "Overdue — last seen 2 weeks ago" },
     { topic_id: "d14", topic_name: "Deliberate Practice", category: "Science", mode: "quickfire", reason: "New topic from this week" },
     { topic_id: "d6", topic_name: "How Memory Consolidates", category: "Science", mode: "recall", reason: "Due for review today" },
-    { topic_id: "d5", topic_name: "Spaced Repetition", category: "Science", mode: "flashcard", reason: "Interval up today — keep the curve flat" },
-    { topic_id: "d9", topic_name: "Stoicism", category: "Philosophy", mode: "quickfire", reason: "Not seen in 3 days" },
-    { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "recall", reason: "Needs practice — only 1 review" },
+    { topic_id: "d5", topic_name: "Spaced Repetition", category: "Science", mode: "quickfire", reason: "Interval up today — keep the curve flat" },
+    { topic_id: "d9", topic_name: "Stoicism", category: "Philosophy", mode: "recall", reason: "Not seen in 3 days" },
+    { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "quickfire", reason: "Needs practice — only 1 review" },
   ],
   completed: false,
 };
@@ -233,10 +221,60 @@ export interface DemoBankQuestion {
   prompt: string;
   options: string[] | null;
   correct_index: number | null;
+  correct_indices?: number[] | null;
   model_answer: string;
 }
 
 export const demoQuestionBank: DemoBankQuestion[] = [
+  {
+    topic_id: "d1", kind: "truefalse",
+    prompt: "Transformers process language tokens sequentially, one by one.",
+    options: ["True", "False"], correct_index: 1,
+    model_answer: "False — self-attention processes all tokens in parallel, which is exactly what made web-scale training practical.",
+  },
+  {
+    topic_id: "d1", kind: "multi",
+    prompt: "Which of these are real ingredients of the transformer architecture? Select all that apply.",
+    options: [
+      "Self-attention over all tokens",
+      "Positional encodings",
+      "A recurrence loop over the sequence",
+      "Multi-head attention",
+      "A convolutional feature pyramid",
+    ],
+    correct_index: null, correct_indices: [0, 1, 3],
+    model_answer: "Self-attention, positional encodings and multi-head attention are core transformer pieces — recurrence and convolutional pyramids are what it replaced.",
+  },
+  {
+    topic_id: "d7", kind: "truefalse",
+    prompt: "Slow-wave sleep is the stage where memory consolidation primarily happens.",
+    options: ["True", "False"], correct_index: 0,
+    model_answer: "True — slow-wave (deep) sleep replays hippocampal memories into cortex; that replay is the consolidation step.",
+  },
+  {
+    topic_id: "d10", kind: "truefalse",
+    prompt: "Pax Romana was a period of stability in Rome lasting roughly 20 years.",
+    options: ["True", "False"], correct_index: 1,
+    model_answer: "False — the Pax Romana lasted roughly 200 years, not 20.",
+  },
+  {
+    topic_id: "d6", kind: "multi",
+    prompt: "Which of these genuinely strengthen memory consolidation? Select all that apply.",
+    options: [
+      "Active recall practice",
+      "Re-reading your notes a fifth time",
+      "A full night's sleep",
+      "Highlighting in three colours",
+    ],
+    correct_index: null, correct_indices: [0, 2],
+    model_answer: "Active recall and sleep both strengthen consolidation; re-reading and highlighting feel productive but barely move the needle.",
+  },
+  {
+    topic_id: "d9", kind: "truefalse",
+    prompt: "Marcus Aurelius wrote Meditations as a private journal, never meant for publication.",
+    options: ["True", "False"], correct_index: 0,
+    model_answer: "True — Meditations was the emperor's private notebook; it became the most-read Stoic text anyway.",
+  },
   {
     topic_id: "d1", kind: "open",
     prompt: "Explain why the transformer's parallelism was such a big deal compared to RNNs — what did it unlock?",

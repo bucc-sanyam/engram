@@ -88,13 +88,6 @@ export interface Entry {
   created_at: string;
 }
 
-export interface Flashcard {
-  id: string;
-  topic_id: string;
-  question: string;
-  answer: string;
-}
-
 export interface Review {
   id: string;
   topic_id: string;
@@ -106,10 +99,24 @@ export interface Review {
   created_at: string;
 }
 
+/** "flashcard" survives only in old cached plans — no longer generated. */
 export type ReviewMode = "recall" | "flashcard" | "quickfire";
 
 /** Kind of a pre-generated bank question. */
-export type QuestionKind = "open" | "quickfire" | "mcq";
+export type QuestionKind = "open" | "quickfire" | "mcq" | "truefalse" | "multi";
+
+/** A bank question WITH its answers — shown on the topic blog pages. */
+export interface TopicQuestion {
+  id: string;
+  topic_id: string;
+  kind: QuestionKind;
+  prompt: string;
+  options: string[] | null;
+  correct_index: number | null;     // mcq / truefalse
+  correct_indices: number[] | null; // multi
+  model_answer: string;
+  difficulty: string;
+}
 
 /** One question as sent to the client during a session — no answers included. */
 export interface SessionQuestion {
@@ -119,7 +126,7 @@ export interface SessionQuestion {
   category: string;
   kind: QuestionKind;
   prompt: string;
-  options: string[] | null; // mcq only
+  options: string[] | null; // mcq / truefalse / multi
 }
 
 export interface QuizSession {
@@ -136,13 +143,15 @@ export interface ReportItem {
   prompt: string;
   answer: string | null; // what the learner typed / picked
   skipped: boolean;
-  correct: boolean | null; // mcq only
+  correct: boolean | null; // choice questions only
   score: number; // 0..5
   feedback: string;
   correct_answer: string;
   options: string[] | null;
   selected_index: number | null;
   correct_index: number | null;
+  selected_indices?: number[] | null; // multi
+  correct_indices?: number[] | null;  // multi
 }
 
 /** The single-AI-call report shown after all answers are submitted. */
@@ -191,13 +200,13 @@ export interface ExtractionResult {
     key_points: string[];
   }[];
   connections: { a: string; b: string; reason: string }[];
-  flashcards: { topic: string; question: string; answer: string }[];
   questions: {
     topic: string;
     kind: QuestionKind;
     prompt: string;
     options?: string[];
     correct_index?: number;
+    correct_indices?: number[];
     model_answer: string;
     difficulty: "basic" | "intermediate" | "advanced";
   }[];

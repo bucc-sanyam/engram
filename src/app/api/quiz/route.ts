@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { gradeSession, type SessionGradeInput } from "@/lib/gemini";
-import { scheduleNext, updateMastery, xpForReview } from "@/lib/srs";
+import { scheduleNext, xpForReview } from "@/lib/srs";
 import { awardXp } from "@/lib/progress";
 import type {
   QuestionKind,
@@ -18,8 +18,8 @@ export const maxDuration = 60;
  * - "start":  builds a session from the PRE-GENERATED question bank (0 AI calls)
  * - "answer": persists one answer as it is submitted (0 AI calls)
  * - "finish": ONE batch Gemini call grades every typed answer and writes the
- *             report card; MCQs are graded deterministically (0 AI calls)
- * - "rate":   flashcard self-rating, unchanged (0 AI calls)
+ *             report card; choice questions (mcq / truefalse / multi) are
+ *             graded deterministically (0 AI calls)
  */
 
 /** Server-side snapshot of one session question (includes the answers). */
@@ -33,6 +33,7 @@ interface SnapshotItem {
   prompt: string;
   options: string[] | null;
   correct_index: number | null;
+  correct_indices: number[] | null;
   model_answer: string;
 }
 
@@ -43,11 +44,15 @@ interface BankQuestion {
   prompt: string;
   options: string[] | null;
   correct_index: number | null;
+  correct_indices: number[] | null;
   model_answer: string;
   difficulty: string;
   times_asked: number;
   last_asked_at: string | null;
 }
+
+/** Kinds answered by picking options rather than typing. */
+const CHOICE_KINDS = new Set<QuestionKind>(["mcq", "truefalse", "multi"]);
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -60,7 +65,6 @@ export async function POST(request: Request) {
   if (action === "start") return start(supabase, user.id, body);
   if (action === "answer") return answer(supabase, user.id, body);
   if (action === "finish") return finish(supabase, user.id, body);
-  if (action === "rate") return rate(supabase, user.id, body);
 
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
 }
@@ -99,8 +103,8 @@ async function start(
     bankByTopic.set(q.topic_id, list);
   }
 
-  // Rotate desired kinds so every session mixes MCQ and typed questions.
-  const kindRotation: QuestionKind[] = ["open", "mcq", "quickfire"];
+  // Rotate desired kinds so every session mixes choice and typed questions.
+  const kindRotation: QuestionKind[] = ["open", "mcq", "truefalse", "quickfire", "multi"];
   const snapshot: SnapshotItem[] = [];
 
   topicIds.forEach((topicId, i) => {
@@ -108,6 +112,7 @@ async function start(
     if (!topic) return;
     const picked = pickQuestion(bankByTopic.get(topicId) ?? [], topic.review_count, kindRotation[i % kindRotation.length]);
     if (picked) {
+      const isChoice = CHOICE_KINDS.has(picked.kind);
       snapshot.push({
         index: snapshot.length,
         question_id: picked.id,
@@ -116,8 +121,9 @@ async function start(
         category: topic.category,
         kind: picked.kind,
         prompt: picked.prompt,
-        options: picked.kind === "mcq" ? picked.options : null,
-        correct_index: picked.kind === "mcq" ? picked.correct_index : null,
+        options: isChoice ? (picked.kind === "truefalse" ? picked.options ?? ["True", "False"] : picked.options) : null,
+        correct_index: picked.kind === "mcq" || picked.kind === "truefalse" ? picked.correct_index : null,
+        correct_indices: picked.kind === "multi" ? picked.correct_indices : null,
         model_answer: picked.model_answer,
       });
     } else {
@@ -132,6 +138,7 @@ async function start(
         prompt: `From memory, explain "${topic.name}" — the core idea and why it matters.`,
         options: null,
         correct_index: null,
+        correct_indices: null,
         model_answer: topic.summary ?? (topic.key_points as string[]).join(" "),
       });
     }
@@ -191,7 +198,13 @@ function pickQuestion(pool: BankQuestion[], reviewCount: number, preferKind: Que
 async function answer(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
-  body: { sessionId?: string; questionIndex?: number; answer?: string; selectedIndex?: number }
+  body: {
+    sessionId?: string;
+    questionIndex?: number;
+    answer?: string;
+    selectedIndex?: number;
+    selectedIndices?: number[];
+  }
 ) {
   const { sessionId, questionIndex } = body;
   if (!sessionId || typeof questionIndex !== "number") {
@@ -210,13 +223,20 @@ async function answer(
   const item = (session.items as SnapshotItem[]).find((s) => s.index === questionIndex);
   if (!item) return NextResponse.json({ error: "Unknown question" }, { status: 400 });
 
+  // Multi-select picks are serialised into the (otherwise unused) answer text
+  // column, so the answers table needs no new columns.
+  const multiPicks = Array.isArray(body.selectedIndices)
+    ? body.selectedIndices.filter((n) => typeof n === "number")
+    : null;
   const { error } = await supabase.from("quiz_answers").upsert(
     {
       session_id: sessionId,
       user_id: userId,
       question_index: questionIndex,
       topic_id: item.topic_id,
-      answer: typeof body.answer === "string" ? body.answer.slice(0, 4000) : null,
+      answer: multiPicks
+        ? JSON.stringify(multiPicks)
+        : typeof body.answer === "string" ? body.answer.slice(0, 4000) : null,
       selected_index: typeof body.selectedIndex === "number" ? body.selectedIndex : null,
     },
     { onConflict: "session_id,question_index" }
@@ -286,10 +306,12 @@ async function finish(
       correct_answer: s.model_answer,
       options: s.options,
       selected_index: null,
-      correct_index: s.kind === "mcq" ? s.correct_index : null,
+      correct_index: s.kind === "mcq" || s.kind === "truefalse" ? s.correct_index : null,
+      selected_indices: null,
+      correct_indices: s.kind === "multi" ? s.correct_indices : null,
     };
 
-    if (s.kind === "mcq") {
+    if (s.kind === "mcq" || s.kind === "truefalse") {
       const sel = typeof a.selected_index === "number" ? a.selected_index : null;
       base.selected_index = sel;
       base.answer = sel !== null && s.options ? s.options[sel] ?? null : null;
@@ -305,6 +327,39 @@ async function finish(
       }
       if (s.options && s.correct_index !== null) {
         base.correct_answer = s.options[s.correct_index] ?? s.model_answer;
+      }
+      return base;
+    }
+
+    if (s.kind === "multi") {
+      let sel: number[] | null = null;
+      try {
+        const parsed = JSON.parse(a.answer ?? "");
+        if (Array.isArray(parsed)) sel = parsed.filter((n): n is number => typeof n === "number");
+      } catch { /* skipped or malformed → treated as skip */ }
+      const key = s.correct_indices ?? [];
+      base.selected_indices = sel;
+      base.answer =
+        sel && s.options ? sel.map((i) => s.options![i]).filter(Boolean).join(" · ") || null : null;
+      base.correct_answer =
+        key.length && s.options
+          ? key.map((i) => s.options![i]).filter(Boolean).join(" · ")
+          : s.model_answer;
+      if (!sel || sel.length === 0) {
+        base.skipped = true;
+        base.feedback = "You skipped this one — no harm done, it'll come back around.";
+      } else {
+        const hits = sel.filter((i) => key.includes(i)).length;
+        const wrong = sel.length - hits;
+        base.correct = hits === key.length && wrong === 0;
+        base.score = base.correct
+          ? 5
+          : Math.max(0, Math.min(4, Math.round((5 * Math.max(0, hits - wrong)) / Math.max(1, key.length))));
+        base.feedback = base.correct
+          ? "Correct — you picked every right option."
+          : hits > 0
+            ? `Partly right — you found ${hits} of ${key.length} correct option${key.length === 1 ? "" : "s"}${wrong ? ` but also picked ${wrong} wrong one${wrong === 1 ? "" : "s"}` : ""}.`
+            : "Not quite — none of your picks were correct this time.";
       }
       return base;
     }
@@ -405,7 +460,7 @@ async function finish(
       attempted.map((i) => ({
         user_id: userId,
         topic_id: i.topic_id,
-        mode: i.kind === "mcq" ? "quickfire" : i.kind === "quickfire" ? "quickfire" : "recall",
+        mode: i.kind === "open" ? "recall" : "quickfire",
         score: i.score,
         question: i.prompt,
         answer: i.answer,
@@ -458,48 +513,4 @@ function heuristicScore(answer: string, keyPoints: string[]): number {
   ).length;
   const lengthOk = answer.trim().split(/\s+/).length >= 8;
   return Math.min(5, Math.max(1, hits + (lengthOk ? 2 : 0)));
-}
-
-// ---- rate: flashcard self-rating (never used AI) ----
-async function rate(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  userId: string,
-  body: { topicId?: string; quality?: number; question?: string; answer?: string; feedback?: string }
-) {
-  const { data: topicData } = await supabase
-    .from("topics")
-    .select("*")
-    .eq("id", body.topicId)
-    .eq("user_id", userId)
-    .maybeSingle();
-  const topic = topicData as Topic | null;
-  if (!topic) return NextResponse.json({ error: "Topic not found" }, { status: 404 });
-
-  const quality = Math.max(0, Math.min(5, Number(body.quality)));
-  const srs = scheduleNext(
-    { ease: topic.ease, interval_days: topic.interval_days, review_count: topic.review_count },
-    quality
-  );
-  await supabase
-    .from("topics")
-    .update({
-      ease: srs.ease,
-      interval_days: srs.interval_days,
-      review_count: srs.review_count,
-      next_review_at: srs.next_review_at,
-      last_reviewed_at: new Date().toISOString(),
-      mastery: 0,
-    })
-    .eq("id", topic.id);
-  await supabase.from("reviews").insert({
-    user_id: userId,
-    topic_id: topic.id,
-    mode: "flashcard",
-    score: Math.round(quality),
-    question: body.question ?? null,
-    answer: body.answer ?? null,
-    feedback: body.feedback ?? null,
-  });
-  const xp = await awardXp(supabase, userId, xpForReview(quality));
-  return NextResponse.json({ xp });
 }

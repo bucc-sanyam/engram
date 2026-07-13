@@ -6,16 +6,19 @@ create table if not exists public.questions (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references auth.users on delete cascade,
   topic_id uuid not null references public.topics on delete cascade,
-  kind text not null default 'open',           -- 'open' | 'quickfire' | 'mcq'
+  kind text not null default 'open',           -- 'open' | 'quickfire' | 'mcq' | 'truefalse' | 'multi'
   prompt text not null,
-  options jsonb,                               -- mcq only: array of 4 option strings
-  correct_index integer,                       -- mcq only: index into options
+  options jsonb,                               -- choice kinds: array of option strings
+  correct_index integer,                       -- mcq / truefalse: index into options
+  correct_indices jsonb,                       -- multi: array of correct option indices
   model_answer text not null,
   difficulty text not null default 'basic',    -- 'basic' | 'intermediate' | 'advanced'
   times_asked integer not null default 0,
   last_asked_at timestamptz,
   created_at timestamptz not null default now()
 );
+-- migration for databases created before multi-select questions existed
+alter table public.questions add column if not exists correct_indices jsonb;
 
 -- ============ facts (pre-generated "fact of the day" pool, filled at ingest) ============
 create table if not exists public.facts (

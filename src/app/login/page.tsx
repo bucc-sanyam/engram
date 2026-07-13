@@ -56,8 +56,9 @@ export default function LoginPage() {
             <BrainIcon className="h-9 w-9 text-[#1a120e]" />
           </span>
           <h1 className="text-3xl font-bold tracking-tight">Welcome to Engramia</h1>
-          <p className="mt-2 text-sm text-faint">
-            Sign in to access your knowledge graph.
+          <p className="mt-2 max-w-sm text-sm text-faint">
+            An <em>engram</em> is the physical trace a memory leaves in your
+            brain. Engramia helps you grow yours — and keep them.
           </p>
         </div>
 

@@ -6,13 +6,14 @@
 - [ ] No active milestone
 
 ## Backlog
-- [ ] **Run schema-quiz-tables-only.sql in Supabase** (new tables: questions, facts, quiz_sessions, quiz_answers) — required before the new quiz flow works in real mode. If you get "policy already exists" errors, use this file instead of schema.sql; it safely handles policy conflicts.
+- [ ] **Run schema-quiz-tables-only.sql in Supabase** (new tables: questions, facts, quiz_sessions, quiz_answers; now also adds `questions.correct_indices` for multi-select) — required before the new quiz flow works in real mode. If you get "policy already exists" errors, use this file instead of schema.sql; it safely handles policy conflicts. Already-created DBs just need the one-liner: `alter table public.questions add column if not exists correct_indices jsonb;`
 - [ ] Question-bank replenishment for old topics: topics ingested before the bank exists only get the synthesized fallback question; consider a one-off backfill (one Gemini call per legacy topic) or regenerate-on-empty.
 - [ ] Consider zero-shadow label variant if the soft glow still reads as a boundary.
 - [ ] Topic blogs currently compose from `summary` + `key_points` (no long-form field). If richer articles are wanted, add a `body`/`article` column populated at ingest by Gemini.
 - [ ] **Notes cross-device sync:** notes are localStorage-only (per-browser). To sync for signed-in users, add a Supabase `notes` table (id, user_id, parent_id, title, body, position, timestamps) + RLS, and branch `src/lib/notes.ts` demo(localStorage)/real(Supabase) like `data.ts`.
 
 ## Done (recent)
+- [x] **Quiz-kind overhaul + day reports + blog Q&A + streak bar + footer/About** — flashcards fully removed; truefalse & multi-select question kinds added end-to-end; report card lists every question with full Q&A; calendar days clickable → day report modal; blog pages show their question bank with answers; streak-milestone progress bar on Momentum card; engram meaning tagline; global footer + quirky /about. (2026-07-14, see SESSION_LOG)
 - [x] **Rebranding, Mastery/XP Removal, True/False Statements & Review History Details** — Renamed Engram to Engramia globally, disabled XP/mastery metrics, replaced flashcards with graded True/False statement cards, show detailed prompt/answer/stored response breakdowns for already-done items, and change Start button to "See report" when daily plan is completed. (2026-07-13, see SESSION_LOG)
 - [x] **Review page bug fixes + /blogs page** — (1) done questions show "Already reviewed today" card instead of re-asking; (2) full-plan session now includes all items (done ones auto-skip) so report shows after all items not just 1; (3) stats "Due today" → "In plan" for consistency; (4) new `/blogs` library page + nav link, "Back to your brain" removed from blog pages. (2026-07-13, see SESSION_LOG)
 - [x] **Guest mode + plan polish** — fixed guest/demo loop on production (cookie + proxy), plan done-tracking (green dots, done-last, expandable), review error card instead of blank page, graph-card pills → blog pages. (2026-07-13, see SESSION_LOG)

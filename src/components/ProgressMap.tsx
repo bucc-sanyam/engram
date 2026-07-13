@@ -4,8 +4,15 @@ import { useMemo } from "react";
 import type { Profile, Review } from "@/lib/types";
 import { FlameIcon } from "./Nav";
 
+/** The next streak milestone worth chasing — keeps the bar always in reach. */
+function nextMilestone(streak: number): number {
+  const ladder = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 365];
+  return ladder.find((m) => m > streak) ?? (Math.floor(streak / 100) + 1) * 100;
+}
+
 /**
- * Shows the user's current review momentum: daily streak and activity heatmap.
+ * Shows the user's current review momentum: daily streak, progress toward the
+ * next streak milestone, and the activity heatmap.
  */
 export default function ProgressMap({
   profile,
@@ -14,6 +21,9 @@ export default function ProgressMap({
   profile: Profile;
   reviews: Review[];
 }) {
+  const milestone = nextMilestone(profile.streak);
+  const toGo = milestone - profile.streak;
+  const pct = Math.max(4, Math.min(100, Math.round((profile.streak / milestone) * 100)));
   return (
     <div className="glass p-5 sm:p-6">
       <div className="mb-5 flex items-start justify-between gap-4">
@@ -30,6 +40,31 @@ export default function ProgressMap({
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Next streak milestone — always a target in sight */}
+      <div className="mb-6">
+        <div className="mb-2 flex items-baseline justify-between text-xs">
+          <span className="font-semibold text-white/80">
+            {toGo} day{toGo === 1 ? "" : "s"} to a {milestone}-day streak
+          </span>
+          <span className="text-faint">
+            {profile.streak}/{milestone}
+          </span>
+        </div>
+        <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]">
+          <div
+            className="h-full rounded-full bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_10px_rgba(255,122,92,0.5)] transition-all duration-700"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <p className="mt-2 text-xs text-faint">
+          {toGo <= 2
+            ? "So close — don't break the chain now."
+            : profile.streak >= profile.longest_streak && profile.streak > 0
+              ? "This is your longest streak ever. Every day from here is a record."
+              : `Your record is ${profile.longest_streak} days — this streak can beat it.`}
+        </p>
       </div>
 
       {/* Activity heatmap */}

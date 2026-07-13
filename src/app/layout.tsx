@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from "next/font/google";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -27,7 +28,8 @@ const jetmono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Engramia — your second brain",
-  description: "A generative spaced-repetition knowledge graph.",
+  description:
+    "From 'engram' — the physical trace a memory leaves in your brain. Log what you learn, watch it grow into a living knowledge graph, and revise it right before you'd forget.",
 };
 
 export const viewport: Viewport = {
@@ -50,6 +52,7 @@ export default function RootLayout({
         <div className="blob blob-teal" aria-hidden />
         <div className="blob blob-gold" aria-hidden />
         {children}
+        <Footer />
       </body>
     </html>
   );

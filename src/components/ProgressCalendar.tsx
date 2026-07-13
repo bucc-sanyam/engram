@@ -1,7 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import type { Review } from "@/lib/types";
+import { useEffect, useMemo, useState } from "react";
+import ReportCardView from "@/components/ReportCardView";
+import { getDayReport } from "@/lib/data";
+import type { Review, ReportCard } from "@/lib/types";
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
 const MAX_MONTHS_BACK = 11;
@@ -9,9 +11,16 @@ const MAX_MONTHS_BACK = 11;
 const dayKey = (y: number, m: number, d: number) =>
   `${y}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
 
-/** Month-view study calendar: days light up with review activity. */
+/**
+ * Month-view study calendar: days light up with review activity, and clicking
+ * a lit day opens the full report card for that day — every question asked,
+ * the answer given, the correct answer and the feedback.
+ */
 export default function ProgressCalendar({ reviews }: { reviews: Review[] }) {
   const [monthsBack, setMonthsBack] = useState(0);
+  const [openDay, setOpenDay] = useState<string | null>(null);
+  const [dayReport, setDayReport] = useState<ReportCard | null>(null);
+  const [loadingDay, setLoadingDay] = useState(false);
 
   const counts = useMemo(() => {
     const m = new Map<string, number>();
@@ -21,6 +30,26 @@ export default function ProgressCalendar({ reviews }: { reviews: Review[] }) {
     }
     return m;
   }, [reviews]);
+
+  useEffect(() => {
+    if (!openDay) return;
+    let cancelled = false;
+    setLoadingDay(true);
+    setDayReport(null);
+    getDayReport(openDay)
+      .then((r) => { if (!cancelled) setDayReport(r); })
+      .catch(() => { if (!cancelled) setDayReport(null); })
+      .finally(() => { if (!cancelled) setLoadingDay(false); });
+    return () => { cancelled = true; };
+  }, [openDay]);
+
+  // Lock background scroll while the day report is open.
+  useEffect(() => {
+    if (!openDay) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [openDay]);
 
   const now = new Date();
   const first = new Date(now.getFullYear(), now.getMonth() - monthsBack, 1);
@@ -78,22 +107,86 @@ export default function ProgressCalendar({ reviews }: { reviews: Review[] }) {
         {Array.from({ length: first.getDay() }, (_, i) => (
           <div key={`pad-${i}`} />
         ))}
-        {days.map((d) => (
-          <div
-            key={d.key}
-            title={`${d.key} — ${d.count} review${d.count === 1 ? "" : "s"}`}
-            className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full text-[12px] transition-colors ${dayClasses(d)}`}
-          >
-            {d.day}
-          </div>
-        ))}
+        {days.map((d) =>
+          d.count > 0 ? (
+            <button
+              key={d.key}
+              onClick={() => setOpenDay(d.key)}
+              title={`${d.key} — ${d.count} question${d.count === 1 ? "" : "s"} answered. Click for the day's report card.`}
+              className={`mx-auto flex h-8 w-8 cursor-pointer items-center justify-center rounded-full text-[12px] transition-all hover:scale-110 hover:ring-2 hover:ring-white/30 ${dayClasses(d)}`}
+            >
+              {d.day}
+            </button>
+          ) : (
+            <div
+              key={d.key}
+              title={`${d.key} — no reviews`}
+              className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full text-[12px] transition-colors ${dayClasses(d)}`}
+            >
+              {d.day}
+            </div>
+          )
+        )}
       </div>
 
       <p className="mt-4 text-xs text-faint">
         {activeDays > 0
-          ? `${activeDays} active day${activeDays === 1 ? "" : "s"} this month — keep the flame alive.`
+          ? `${activeDays} active day${activeDays === 1 ? "" : "s"} this month — tap a lit day to see that day's report card.`
           : "No reviews this month yet — today is a good day to start."}
       </p>
+
+      {/* Day report modal */}
+      {openDay && (
+        <div
+          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#0b0a0e]/80 px-4 py-10 backdrop-blur-sm sm:py-14"
+          onClick={() => setOpenDay(null)}
+        >
+          <div
+            className="w-full max-w-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-bold">
+                {new Date(openDay + "T12:00:00").toLocaleDateString(undefined, {
+                  weekday: "long",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </h3>
+              <button
+                onClick={() => setOpenDay(null)}
+                aria-label="Close day report"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.06] text-muted transition-colors hover:bg-white/[0.12] hover:text-white"
+              >
+                ✕
+              </button>
+            </div>
+
+            {loadingDay && (
+              <div className="glass flex items-center justify-center gap-3 p-14 text-muted">
+                Pulling up that day&apos;s report card…
+              </div>
+            )}
+
+            {!loadingDay && dayReport && (
+              <ReportCardView report={dayReport} heading="Day report" />
+            )}
+
+            {!loadingDay && !dayReport && (
+              <div className="glass p-10 text-center text-muted">
+                No detailed answers stored for this day — newer sessions will
+                keep the full question-by-question history.
+              </div>
+            )}
+
+            <div className="mt-5 flex justify-center pb-6">
+              <button className="btn-ghost" onClick={() => setOpenDay(null)}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

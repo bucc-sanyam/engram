@@ -67,13 +67,6 @@ export async function GET() {
     return NextResponse.json(empty);
   }
 
-  // Which topics have flashcards (flashcard mode needs them).
-  const { data: cardCounts } = await supabase
-    .from("flashcards")
-    .select("topic_id")
-    .eq("user_id", user.id);
-  const hasCards = new Set((cardCounts ?? []).map((c) => c.topic_id));
-
   const now = Date.now();
   const dayMs = 86400000;
   const picked: { topic: Topic; reason: string }[] = [];
@@ -114,19 +107,16 @@ export async function GET() {
     )
     .forEach((t) => add(t, "Keeping older knowledge alive"));
 
-  // Assign varied modes; flashcard mode only where cards exist.
-  const rotation: ReviewMode[] = ["recall", "flashcard", "quickfire"];
-  const items: PlanItem[] = picked.map(({ topic, reason }, i) => {
-    let mode = rotation[i % rotation.length];
-    if (mode === "flashcard" && !hasCards.has(topic.id)) mode = "recall";
-    return {
-      topic_id: topic.id,
-      topic_name: topic.name,
-      category: topic.category,
-      mode,
-      reason,
-    };
-  });
+  // Modes are decorative variety on the dashboard — the quiz picks the real
+  // question kind (open/mcq/truefalse/quickfire/multi) from the bank.
+  const rotation: ReviewMode[] = ["recall", "quickfire"];
+  const items: PlanItem[] = picked.map(({ topic, reason }, i) => ({
+    topic_id: topic.id,
+    topic_name: topic.name,
+    category: topic.category,
+    mode: rotation[i % rotation.length],
+    reason,
+  }));
 
   // The narrative is composed locally from the connection reasons Gemini
   // already wrote at ingest time — no AI call for the daily plan.

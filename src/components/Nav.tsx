@@ -40,7 +40,12 @@ export default function Nav() {
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_28px_rgba(255,122,92,0.45)]">
               <BrainIcon className="h-5 w-5 text-[#1a120e]" />
             </span>
-            <span className="display text-lg font-bold tracking-tight">Engramia</span>
+            <span className="flex flex-col">
+              <span className="display text-lg font-bold leading-tight tracking-tight">Engramia</span>
+              <span className="hidden text-[9.5px] leading-tight tracking-wide text-faint sm:block">
+                en·gram — the trace a memory leaves in your brain
+              </span>
+            </span>
             {demo && (
               <span className="micro ml-1 rounded-full bg-[#f5b95f]/12 px-2.5 py-1 !text-[#f5b95f]">
                 demo

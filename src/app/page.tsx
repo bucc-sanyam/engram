@@ -14,7 +14,7 @@ import { categoryColor } from "@/lib/types";
 
 const MODE_LABEL: Record<string, string> = {
   recall: "Deep recall",
-  flashcard: "Flashcards",
+  flashcard: "Mixed quiz", // legacy cached plans only — no longer generated
   quickfire: "Quick-fire",
 };
 

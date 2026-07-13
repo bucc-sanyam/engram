@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import Nav from "@/components/Nav";
-import { getLinks, getTopic, getTopics, getTopicSource } from "@/lib/data";
-import type { Topic, TopicLink, TopicSource } from "@/lib/types";
+import { KIND_LABEL } from "@/components/ReportCardView";
+import { getLinks, getTopic, getTopics, getTopicQuestions, getTopicSource } from "@/lib/data";
+import type { Topic, TopicLink, TopicQuestion, TopicSource } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
 /**
@@ -21,16 +22,18 @@ export default function TopicBlogPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [links, setLinks] = useState<TopicLink[]>([]);
   const [source, setSource] = useState<TopicSource>(null);
+  const [questions, setQuestions] = useState<TopicQuestion[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (!id) return;
-    Promise.all([getTopic(id), getTopics(), getLinks(), getTopicSource(id)])
-      .then(([t, ts, ls, src]) => {
+    Promise.all([getTopic(id), getTopics(), getLinks(), getTopicSource(id), getTopicQuestions(id)])
+      .then(([t, ts, ls, src, qs]) => {
         setTopic(t);
         setTopics(ts);
         setLinks(ls);
         setSource(src);
+        setQuestions(qs);
       })
       .finally(() => setLoaded(true));
   }, [id]);
@@ -145,6 +148,72 @@ export default function TopicBlogPage() {
                     </li>
                   ))}
                 </ol>
+              </section>
+            )}
+
+            {/* Every question this topic can ask — with the answers */}
+            {questions.length > 0 && (
+              <section className="mb-12 border-t border-white/[0.07] pt-9">
+                <h2 className="micro mb-2" style={{ color }}>
+                  Questions &amp; answers
+                </h2>
+                <p className="mb-6 text-sm text-faint">
+                  Every quiz question drawn from this topic. Try answering before you peek.
+                </p>
+                <ul className="space-y-3">
+                  {questions.map((q) => (
+                    <li key={q.id}>
+                      <details className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] transition-colors open:bg-white/[0.03]">
+                        <summary className="flex cursor-pointer list-none items-start gap-3 px-4 py-3.5 [&::-webkit-details-marker]:hidden">
+                          <span className="micro mt-1 shrink-0 rounded-full bg-white/[0.05] px-2.5 py-0.5">
+                            {KIND_LABEL[q.kind] ?? q.kind}
+                          </span>
+                          <span className="min-w-0 flex-1 text-[15px] font-medium leading-relaxed">
+                            {q.prompt}
+                          </span>
+                          <span
+                            aria-hidden
+                            className="mt-1 shrink-0 text-faint transition-transform group-open:rotate-90"
+                          >
+                            ›
+                          </span>
+                        </summary>
+                        <div className="space-y-2.5 px-4 pb-4">
+                          {q.options && (
+                            <div className="space-y-1.5">
+                              {q.options.map((opt, i) => {
+                                const isCorrect =
+                                  q.kind === "multi"
+                                    ? q.correct_indices?.includes(i) ?? false
+                                    : i === q.correct_index;
+                                return (
+                                  <div
+                                    key={i}
+                                    className={`rounded-xl border px-3.5 py-2 text-sm leading-relaxed ${
+                                      isCorrect
+                                        ? "border-[#43d6b5]/50 bg-[#43d6b5]/[0.08] text-[#7fe5cb]"
+                                        : "border-white/[0.06] text-white/55"
+                                    }`}
+                                  >
+                                    <span className="mr-2 text-xs font-bold">
+                                      {String.fromCharCode(65 + i)}
+                                    </span>
+                                    {opt}
+                                    {isCorrect && <span className="ml-2 text-xs">✓</span>}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                          <div className="rounded-xl bg-[#43d6b5]/[0.05] p-3.5">
+                            <div className="micro mb-1 !text-[#43d6b5]">Answer</div>
+                            <p className="text-sm leading-relaxed text-muted">{q.model_answer}</p>
+                          </div>
+                        </div>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
 

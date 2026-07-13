@@ -1,16 +1,16 @@
-# Graph Report - Learning  (2026-07-14)
+# Graph Report - Learning  (2026-07-13)
 
 ## Corpus Check
-- 59 files · ~49,489 words
+- 56 files · ~46,579 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 425 nodes · 698 edges · 44 communities (21 shown, 23 thin omitted)
+- 415 nodes · 681 edges · 44 communities (21 shown, 23 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 12 edges (avg confidence: 0.67)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eb1b8183`
+- Built from commit: `79cb117e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -64,8 +64,8 @@
 1. `createClient()` - 17 edges
 2. `compilerOptions` - 16 edges
 3. `Dashboard()` - 13 edges
-4. `getTopics()` - 13 edges
-5. `categoryColor()` - 13 edges
+4. `categoryColor()` - 13 edges
+5. `getTopics()` - 12 edges
 6. `What You Must Do When Invoked` - 12 edges
 7. `Session Log` - 12 edges
 8. `createClient()` - 10 edges
@@ -96,7 +96,7 @@
 
 ### Community 0 - "Review and Scoring System"
 Cohesion: 0.07
-Nodes (44): Mode, Phase, Phase, ReviewPage(), dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS (+36 more)
+Nodes (45): Mode, Phase, KIND_LABEL, Phase, ReviewPage(), api(), DemoSession, demoState (+37 more)
 
 ### Community 1 - "TypeScript Configuration"
 Cohesion: 0.06
@@ -104,35 +104,35 @@ Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-e
 
 ### Community 2 - "AI Content Generation"
 Cohesion: 0.09
-Nodes (37): fetchReadable(), POST(), composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), answer() (+29 more)
+Nodes (39): fetchReadable(), POST(), composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), answer() (+31 more)
 
 ### Community 3 - "Navigation and Core UI"
-Cohesion: 0.09
-Nodes (16): metadata, LoginPage(), ProfilePage(), BrainIcon(), FlameIcon(), LINKS, Nav(), Heatmap() (+8 more)
+Cohesion: 0.13
+Nodes (13): LoginPage(), ProfilePage(), BrainIcon(), FlameIcon(), LINKS, Nav(), getProfile(), getUserEmail() (+5 more)
 
 ### Community 4 - "Dashboard and Visualization"
 Cohesion: 0.18
 Nodes (10): 1. Supabase, 2. Gemini, 3. Environment, 4. Run, Architecture, Deploy to Vercel, 🧠 Engramia — your second brain, Features (+2 more)
 
 ### Community 5 - "Project Dependencies"
-Cohesion: 0.05
-Nodes (37): @google/genai, next, dependencies, @google/genai, next, react, react-dom, @supabase/ssr (+29 more)
+Cohesion: 0.11
+Nodes (19): @google/genai, next, dependencies, @google/genai, next, react, react-dom, @supabase/ssr (+11 more)
 
 ### Community 6 - "package.json"
-Cohesion: 0.60
-Nodes (4): parse(), RichText(), RULES, tidy()
+Cohesion: 0.11
+Nodes (18): devDependencies, @types/node, @types/react, @types/react-dom, @types/three, typescript, name, private (+10 more)
 
 ### Community 7 - "schema.sql"
-Cohesion: 0.13
-Nodes (24): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+16 more)
+Cohesion: 0.09
+Nodes (33): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+25 more)
 
 ### Community 8 - "BrainScene.tsx"
-Cohesion: 0.12
-Nodes (27): sourceLabel(), TopicBlogPage(), BlogsPage(), BrainPage(), brainPoint(), BrainScene(), hashStr(), LinkObj (+19 more)
+Cohesion: 0.13
+Nodes (20): sourceLabel(), TopicBlogPage(), BlogsPage(), BrainPage(), brainPoint(), BrainScene(), hashStr(), LinkObj (+12 more)
 
 ### Community 9 - "layout.tsx"
-Cohesion: 0.17
-Nodes (8): fraunces, grotesk, inter, jetmono, metadata, viewport, CONNECT, EXPLORE
+Cohesion: 0.25
+Nodes (6): fraunces, grotesk, inter, jetmono, metadata, viewport
 
 ### Community 10 - "Engram Web Service"
 Cohesion: 0.50
@@ -179,24 +179,24 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ## Knowledge Gaps
-- **163 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+158 more)
+- **161 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+156 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Topic` connect `BrainScene.tsx` to `Review and Scoring System`, `AI Content Generation`, `schema.sql`?**
+- **Why does `Topic` connect `Review and Scoring System` to `BrainScene.tsx`, `AI Content Generation`, `schema.sql`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **Why does `categoryColor()` connect `BrainScene.tsx` to `Review and Scoring System`, `schema.sql`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _163 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _161 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Review and Scoring System` be split into smaller, more focused modules?**
-  _Cohesion score 0.06604324956165984 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07175141242937853 - nodes in this community are weakly interconnected._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.08502415458937199 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08603145235892692 - nodes in this community are weakly interconnected._
 - **Should `Navigation and Core UI` be split into smaller, more focused modules?**
-  _Cohesion score 0.09113300492610837 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13438735177865613 - nodes in this community are weakly interconnected._

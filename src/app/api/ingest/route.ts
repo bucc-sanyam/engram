@@ -198,40 +198,59 @@ export async function POST(request: Request) {
       );
   }
 
-  // 5. Flashcards.
-  const cards = extraction.flashcards
-    .map((f) => ({
-      user_id: user.id,
-      topic_id: nameToId.get(f.topic.toLowerCase()),
-      question: f.question,
-      answer: f.answer,
-    }))
-    .filter((f) => f.topic_id);
-  if (cards.length) await supabase.from("flashcards").insert(cards);
-
-  // 5b. Question bank — pre-generated here so review sessions cost no AI calls.
-  const KINDS = new Set(["open", "quickfire", "mcq"]);
+  // 5. Question bank — pre-generated here so review sessions cost no AI calls.
+  const KINDS = new Set(["open", "quickfire", "mcq", "truefalse", "multi"]);
   const DIFFICULTIES = new Set(["basic", "intermediate", "advanced"]);
   const questions = (extraction.questions ?? [])
     .map((q) => {
-      const isMcq = q.kind === "mcq";
-      const options = isMcq && Array.isArray(q.options) ? q.options.slice(0, 4) : null;
+      const kind = KINDS.has(q.kind) ? q.kind : "open";
+      let options: string[] | null = null;
+      let correctIndex: number | null = null;
+      let correctIndices: number[] | null = null;
+      if (kind === "mcq" && Array.isArray(q.options)) {
+        options = q.options.slice(0, 4);
+        if (typeof q.correct_index === "number") {
+          correctIndex = Math.max(0, Math.min(options.length - 1, q.correct_index));
+        }
+      } else if (kind === "truefalse") {
+        options = ["True", "False"];
+        // Fall back to the model answer when Gemini omits the index.
+        correctIndex =
+          q.correct_index === 0 || q.correct_index === 1
+            ? q.correct_index
+            : /^\s*true\b/i.test(q.model_answer) ? 0 : 1;
+      } else if (kind === "multi" && Array.isArray(q.options)) {
+        options = q.options.slice(0, 5);
+        const max = options.length - 1;
+        correctIndices = Array.from(
+          new Set(
+            (q.correct_indices ?? [])
+              .filter((i): i is number => typeof i === "number" && i >= 0 && i <= max)
+              .map((i) => Math.round(i))
+          )
+        ).sort((a, b) => a - b);
+      }
       return {
         user_id: user.id,
         topic_id: nameToId.get(q.topic.toLowerCase()),
-        kind: KINDS.has(q.kind) ? q.kind : "open",
+        kind,
         prompt: q.prompt,
         options,
-        correct_index:
-          isMcq && options && typeof q.correct_index === "number"
-            ? Math.max(0, Math.min(options.length - 1, q.correct_index))
-            : null,
+        correct_index: correctIndex,
+        correct_indices: correctIndices,
         model_answer: q.model_answer,
         difficulty: DIFFICULTIES.has(q.difficulty) ? q.difficulty : "basic",
       };
     })
-    // Drop malformed rows (missing topic, mcq without options, empty prompt).
-    .filter((q) => q.topic_id && q.prompt && q.model_answer && (q.kind !== "mcq" || (q.options && q.options.length >= 2)));
+    // Drop malformed rows (missing topic, empty prompt, choice kinds without a usable answer key).
+    .filter(
+      (q) =>
+        q.topic_id &&
+        q.prompt &&
+        q.model_answer &&
+        (q.kind !== "mcq" || (q.options && q.options.length >= 2 && q.correct_index !== null)) &&
+        (q.kind !== "multi" || (q.options && q.options.length >= 3 && (q.correct_indices?.length ?? 0) >= 1))
+    );
   if (questions.length) await supabase.from("questions").insert(questions);
 
   // 5c. Facts pool — feeds the zero-AI "fact of the day".
