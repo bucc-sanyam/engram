@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 const PUBLIC_PATHS = ["/login", "/auth"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // Demo mode: no Supabase configured — let everything through.
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
     return NextResponse.next();
