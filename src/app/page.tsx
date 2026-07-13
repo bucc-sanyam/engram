@@ -315,11 +315,24 @@ export default function Dashboard() {
             <div className="rise rise-2 py-3">
               <p className="micro mb-4 text-center !text-faint">At a glance</p>
               <div className="flex items-center justify-around px-2">
-                <Stat label="Total topics" value={topics.length} />
+                <Stat 
+                  label="Total topics" 
+                  value={topics.length} 
+                  description="All concepts logged in your brain"
+                />
                 <Divider />
-                <Stat label="Tasks today" value={plan ? plan.items.length : "—"} accent={(plan?.items.length ?? 0) > 0} />
+                <Stat 
+                  label="Tasks today" 
+                  value={plan ? plan.items.length : "—"} 
+                  description="Topics scheduled for revision today"
+                  accent={(plan?.items.length ?? 0) > 0} 
+                />
                 <Divider />
-                <Stat label="Avg. mastery" value={`${avgMastery}%`} />
+                <Stat 
+                  label="Avg. mastery" 
+                  value={`${avgMastery}%`} 
+                  description="Your overall recall strength"
+                />
               </div>
             </div>
 
@@ -359,11 +372,20 @@ export default function Dashboard() {
   );
 }
 
-function Stat({ label, value, accent }: { label: string; value: string | number; accent?: boolean }) {
+function Stat({ label, value, description, accent }: { label: string; value: string | number; description: string; accent?: boolean }) {
   return (
-    <div className="text-center">
-      <div className={`display text-3xl font-bold ${accent ? "text-[#ff9a80]" : ""}`}>{value}</div>
-      <div className="micro mt-1">{label}</div>
+    <div className="group relative h-16 w-28 [perspective:1000px]">
+      <div className="relative h-full w-full cursor-default transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+        {/* Front */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center [backface-visibility:hidden]">
+          <div className={`display text-3xl font-bold ${accent ? "text-[#ff9a80]" : ""}`}>{value}</div>
+          <div className="micro mt-1">{label}</div>
+        </div>
+        {/* Back */}
+        <div className="absolute inset-0 flex items-center justify-center px-1 text-center [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <p className="text-[11px] leading-snug text-faint">{description}</p>
+        </div>
+      </div>
     </div>
   );
 }
