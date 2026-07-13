@@ -173,18 +173,23 @@ alter table public.facts enable row level security;
 alter table public.quiz_sessions enable row level security;
 alter table public.quiz_answers enable row level security;
 
+drop policy if exists "own profile" on public.profiles;
 create policy "own profile" on public.profiles
   for all using (auth.uid() = id) with check (auth.uid() = id);
 
+drop policy if exists "own entries" on public.entries;
 create policy "own entries" on public.entries
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own topics" on public.topics;
 create policy "own topics" on public.topics
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own links" on public.topic_links;
 create policy "own links" on public.topic_links
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own entry_topics" on public.entry_topics;
 create policy "own entry_topics" on public.entry_topics
   for all using (
     exists (select 1 from public.entries e where e.id = entry_id and e.user_id = auth.uid())
@@ -192,24 +197,31 @@ create policy "own entry_topics" on public.entry_topics
     exists (select 1 from public.entries e where e.id = entry_id and e.user_id = auth.uid())
   );
 
+drop policy if exists "own flashcards" on public.flashcards;
 create policy "own flashcards" on public.flashcards
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own reviews" on public.reviews;
 create policy "own reviews" on public.reviews
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own plans" on public.daily_plans;
 create policy "own plans" on public.daily_plans
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own questions" on public.questions;
 create policy "own questions" on public.questions
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own facts" on public.facts;
 create policy "own facts" on public.facts
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own quiz_sessions" on public.quiz_sessions;
 create policy "own quiz_sessions" on public.quiz_sessions
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "own quiz_answers" on public.quiz_answers;
 create policy "own quiz_answers" on public.quiz_answers
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
