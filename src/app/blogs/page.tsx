@@ -126,7 +126,7 @@ export default function BlogsPage() {
               return (
                 <Link
                   key={topic.id}
-                  href={`/brain/${topic.id}`}
+                  href={`/blogs/${topic.id}`}
                   className="glass glass-hover group relative overflow-hidden rounded-[1.5rem] p-5 transition-all"
                 >
                   {/* Ambient glow */}

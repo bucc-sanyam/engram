@@ -312,12 +312,15 @@ export default function Dashboard() {
             {profile && <ProgressCalendar reviews={reviews} />}
 
             {/* Stats — naked numbers, no boxes */}
-            <div className="rise rise-2 flex items-center justify-around px-2 py-3">
-              <Stat label="Topics" value={topics.length} />
-              <Divider />
-              <Stat label="In plan" value={plan ? plan.items.length : "—"} accent={(plan?.items.length ?? 0) > 0} />
-              <Divider />
-              <Stat label="Mastery" value={`${avgMastery}%`} />
+            <div className="rise rise-2 py-3">
+              <p className="micro mb-4 text-center !text-faint">At a glance</p>
+              <div className="flex items-center justify-around px-2">
+                <Stat label="Total topics" value={topics.length} />
+                <Divider />
+                <Stat label="Tasks today" value={plan ? plan.items.length : "—"} accent={(plan?.items.length ?? 0) > 0} />
+                <Divider />
+                <Stat label="Avg. mastery" value={`${avgMastery}%`} />
+              </div>
             </div>
 
             {/* Mini brain teaser — pills open each topic's blog page */}
@@ -336,7 +339,7 @@ export default function Dashboard() {
                 {topics.slice(0, 8).map((t) => (
                   <Link
                     key={t.id}
-                    href={`/brain/${t.id}`}
+                    href={`/blogs/${t.id}`}
                     className="rounded-full px-3 py-1 text-[11px] font-medium transition-all hover:-translate-y-0.5"
                     style={{
                       background: `${categoryColor(t.category)}14`,

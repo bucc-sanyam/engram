@@ -169,7 +169,7 @@ export default function TopicBlogPage() {
                     return (
                       <li key={r.id}>
                         <Link
-                          href={`/brain/${r.id}`}
+                          href={`/blogs/${r.id}`}
                           className="row-soft group flex items-start gap-3.5 px-4 py-3.5"
                         >
                           <span

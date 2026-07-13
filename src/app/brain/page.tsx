@@ -229,7 +229,7 @@ export default function BrainPage() {
                           {t.category}
                         </span>
                         <Link
-                          href={`/brain/${t.id}`}
+                          href={`/blogs/${t.id}`}
                           target="_blank"
                           rel="noopener"
                           className="text-lg font-bold leading-snug transition-colors hover:text-[#f5b95f]"
@@ -261,7 +261,7 @@ export default function BrainPage() {
                     <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-white/80">{t.summary}</p>
 
                     <Link
-                      href={`/brain/${t.id}`}
+                      href={`/blogs/${t.id}`}
                       target="_blank"
                       rel="noopener"
                       className="group mb-5 inline-flex items-center gap-1.5 text-xs font-semibold"
