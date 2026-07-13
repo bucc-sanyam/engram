@@ -146,7 +146,17 @@ async function start(
     .insert({ user_id: userId, items: snapshot })
     .select("id")
     .single();
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    const missingTable = error.code === "42P01" || /does not exist/i.test(error.message);
+    return NextResponse.json(
+      {
+        error: missingTable
+          ? "Your database is missing the new quiz tables — run the latest supabase/schema.sql in the Supabase SQL editor, then try again."
+          : error.message,
+      },
+      { status: 500 }
+    );
+  }
 
   // Client gets the questions WITHOUT correct answers.
   const questions: SessionQuestion[] = snapshot.map((s) => ({

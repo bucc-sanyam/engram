@@ -4,7 +4,28 @@ import type { DailyPlan, PlanItem, ReviewMode, Topic } from "@/lib/types";
 
 export const maxDuration = 60;
 
-const MAX_ITEMS = 6;
+const MAX_ITEMS = 10;
+
+/** Topics the user has already reviewed today — marks plan items as done. */
+async function doneTopicsToday(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  today: string
+): Promise<Set<string>> {
+  const { data } = await supabase
+    .from("reviews")
+    .select("topic_id")
+    .eq("user_id", userId)
+    .gte("created_at", `${today}T00:00:00.000Z`);
+  return new Set((data ?? []).map((r) => r.topic_id as string));
+}
+
+function markDone(plan: DailyPlan, done: Set<string>): DailyPlan {
+  return {
+    ...plan,
+    items: plan.items.map((it) => ({ ...it, done: done.has(it.topic_id) })),
+  };
+}
 
 export async function GET() {
   const supabase = await createClient();
@@ -13,7 +34,8 @@ export async function GET() {
 
   const today = new Date().toISOString().slice(0, 10);
 
-  // A plan is generated once per day and stays stable.
+  // A plan is generated once per day and stays stable; the done flags are
+  // recomputed from today's reviews on every read.
   const { data: saved } = await supabase
     .from("daily_plans")
     .select("plan, completed")
@@ -21,7 +43,11 @@ export async function GET() {
     .eq("plan_date", today)
     .maybeSingle();
   if (saved) {
-    return NextResponse.json({ ...(saved.plan as DailyPlan), completed: saved.completed });
+    const done = await doneTopicsToday(supabase, user.id, today);
+    return NextResponse.json({
+      ...markDone(saved.plan as DailyPlan, done),
+      completed: saved.completed,
+    });
   }
 
   const { data: topicsData } = await supabase
@@ -111,7 +137,8 @@ export async function GET() {
     .from("daily_plans")
     .upsert({ user_id: user.id, plan_date: today, plan, completed: false });
 
-  return NextResponse.json(plan);
+  const done = await doneTopicsToday(supabase, user.id, today);
+  return NextResponse.json(markDone(plan, done));
 }
 
 /**

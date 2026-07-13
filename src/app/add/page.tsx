@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
 import { ingestLink, ingestText, isDemo, type IngestResult } from "@/lib/data";
 
@@ -15,6 +15,9 @@ export default function AddPage() {
   const [phase, setPhase] = useState<Phase>("input");
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<IngestResult | null>(null);
+  // Guest-cookie-dependent, so read after mount to keep hydration stable.
+  const [demo, setDemo] = useState(false);
+  useEffect(() => setDemo(isDemo), []);
 
   async function submit() {
     setError(null);
@@ -113,7 +116,7 @@ export default function AddPage() {
               </button>
             </div>
             {error && <p className="mt-3 text-sm text-danger">{error}</p>}
-            {isDemo && (
+            {demo && (
               <p className="mt-3 text-xs text-[#f5b95f]/80">
                 Demo mode — extraction is simulated. Add your Supabase & Gemini keys to save for real.
               </p>

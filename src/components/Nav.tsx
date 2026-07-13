@@ -17,8 +17,12 @@ export default function Nav() {
   const pathname = usePathname();
   const [stats, setStats] = useState<{ streak: number; level: number } | null>(null);
   const [authStatus, setAuthStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
+  // isDemo depends on the guest cookie, which the server can't see — read it
+  // after mount so SSR and first client render agree.
+  const [demo, setDemo] = useState(false);
 
   useEffect(() => {
+    setDemo(isDemo);
     getProfile()
       .then((p) => {
         setStats({ streak: p.streak, level: levelForXp(p.xp).level });
@@ -37,7 +41,7 @@ export default function Nav() {
               <BrainIcon className="h-5 w-5 text-[#1a120e]" />
             </span>
             <span className="display text-lg font-bold tracking-tight">Engram</span>
-            {isDemo && (
+            {demo && (
               <span className="micro ml-1 rounded-full bg-[#f5b95f]/12 px-2.5 py-1 !text-[#f5b95f]">
                 demo
               </span>
@@ -81,7 +85,7 @@ export default function Nav() {
             )}
 
             {/* Auth controls */}
-            {isDemo || authStatus === "unauthenticated" ? (
+            {demo || authStatus === "unauthenticated" ? (
               <Link
                 href="/login"
                 className="hidden rounded-full bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f] px-4 py-1.5 text-sm font-semibold text-[#1a120e] shadow-[0_0_18px_rgba(255,122,92,0.35)] transition-all hover:shadow-[0_0_28px_rgba(255,122,92,0.55)] md:flex items-center gap-1.5"
@@ -126,13 +130,13 @@ export default function Nav() {
           ))}
           {/* Mobile auth/profile tab */}
           <Link
-            href={isDemo || authStatus === "unauthenticated" ? "/login" : "/profile"}
+            href={demo || authStatus === "unauthenticated" ? "/login" : "/profile"}
             className={`flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px] font-medium transition-colors ${
-              pathname === (isDemo || authStatus === "unauthenticated" ? "/login" : "/profile") ? "text-[#ff9a80]" : "text-faint"
+              pathname === (demo || authStatus === "unauthenticated" ? "/login" : "/profile") ? "text-[#ff9a80]" : "text-faint"
             }`}
           >
             <UserIcon className="h-5 w-5" />
-            {isDemo || authStatus === "unauthenticated" ? "Sign in" : "Profile"}
+            {demo || authStatus === "unauthenticated" ? "Sign in" : "Profile"}
           </Link>
         </div>
       </nav>

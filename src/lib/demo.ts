@@ -10,8 +10,30 @@ import type {
   TopicSource,
 } from "./types";
 
-/** Demo mode is active when Supabase isn't configured yet. */
-export const isDemo = !process.env.NEXT_PUBLIC_SUPABASE_URL;
+/**
+ * Guest mode: lets visitors try the app with demo data even when Supabase IS
+ * configured (production). Set by the login page's "Continue as guest" link,
+ * honoured by src/proxy.ts, and cleared there as soon as a real user signs in.
+ */
+export const GUEST_COOKIE = "engram_guest";
+
+function guestActive(): boolean {
+  if (typeof document === "undefined") return false; // SSR — resolved on the client
+  return document.cookie.split("; ").includes(`${GUEST_COOKIE}=1`);
+}
+
+/** Enter guest mode. Caller must do a FULL page load afterwards (not a SPA
+ * navigation) so module-level `isDemo` re-evaluates with the cookie set. */
+export function enableGuestMode() {
+  document.cookie = `${GUEST_COOKIE}=1; path=/; max-age=31536000; samesite=lax`;
+}
+
+export function clearGuestMode() {
+  document.cookie = `${GUEST_COOKIE}=; path=/; max-age=0`;
+}
+
+/** Demo mode is active when Supabase isn't configured, or for guest visitors. */
+export const isDemo = !process.env.NEXT_PUBLIC_SUPABASE_URL || guestActive();
 
 const daysAgo = (n: number, h = 10) => {
   const d = new Date();
@@ -191,6 +213,10 @@ export const demoPlan: DailyPlan = {
     { topic_id: "d13", topic_name: "Supabase & Postgres", category: "Technology", mode: "quickfire", reason: "Learnt 2 days ago — lock it in" },
     { topic_id: "d10", topic_name: "The Roman Empire", category: "History", mode: "flashcard", reason: "Overdue — last seen 2 weeks ago" },
     { topic_id: "d14", topic_name: "Deliberate Practice", category: "Science", mode: "quickfire", reason: "New topic from this week" },
+    { topic_id: "d6", topic_name: "How Memory Consolidates", category: "Science", mode: "recall", reason: "Due for review today" },
+    { topic_id: "d5", topic_name: "Spaced Repetition", category: "Science", mode: "flashcard", reason: "Interval up today — keep the curve flat" },
+    { topic_id: "d9", topic_name: "Stoicism", category: "Philosophy", mode: "quickfire", reason: "Not seen in 3 days" },
+    { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "recall", reason: "Mastery slipping — 61%" },
   ],
   completed: false,
 };

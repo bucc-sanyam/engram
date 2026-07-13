@@ -26,7 +26,7 @@ Dark, organic, atmospheric — NOT boxy/generic. Mesh glows, blobs, pill shapes,
 | `/add` | `src/app/add/page.tsx` | Add/ingest new learning |
 | `/review` | `src/app/review/page.tsx` | Quiz session: answers saved per question (incl. MCQs), ONE batch AI grade at the end → report card |
 | `/profile` | `src/app/profile/page.tsx` | View/edit display name, journey stats, sign out |
-| `/login` | `src/app/login/page.tsx` | Email auth (no OAuth); signup captures name → `raw_user_meta_data.name` → `handle_new_user` trigger → `profiles.display_name` |
+| `/login` | `src/app/login/page.tsx` | Email auth (no OAuth); signup captures name → `raw_user_meta_data.name` → `handle_new_user` trigger → `profiles.display_name`. "Continue as guest" sets `engram_guest=1` cookie + hard-navigates → demo data on production. |
 | `/auth/callback` | `src/app/auth/callback/route.ts` | Supabase callback |
 | API | `src/app/api/{ingest,plan,quiz}/route.ts` | See "AI-call budget" below — only ingest & quiz-finish call Gemini |
 
@@ -54,7 +54,9 @@ Exactly **1 Gemini call per ingest** and **1 per finished quiz session**; everyt
 - `src/lib/demo.ts` — demo-mode seed data. `src/lib/data.ts` — data access.
 - `src/lib/types.ts` — `Topic`, `TopicLink`, `categoryColor(category)`.
 - `src/lib/supabase/{client,server}.ts`, `src/lib/gemini.ts`.
-- `src/proxy.ts` — Next 16 proxy (migrated from middleware.ts).
+- `src/proxy.ts` — Next 16 proxy (migrated from middleware.ts). Auth gate honours the `engram_guest` cookie (guest/demo access without an account) and deletes it as soon as a real session exists.
+- **Guest mode / isDemo:** `isDemo` (demo.ts) = no `NEXT_PUBLIC_SUPABASE_URL` OR `engram_guest=1` cookie. Cookie helpers `enableGuestMode()`/`clearGuestMode()`. Guest→signed-in transitions use full page loads so the module-level constant re-evaluates. Render-time isDemo checks (Nav, /add, /profile) go through post-mount state to keep hydration stable.
+- **Plan done-tracking:** `PlanItem.done` computed at read time (today's `reviews` rows in real mode; `demoState.done` in demo). Dashboard plan section: green dots = remaining, done rows dimmed/✓/last, 5 rows + "Show all" toggle (plan caps at 10 items). Full /review runs cover only remaining items.
 
 ## Conventions / gotchas
 - Dev server: use `.claude/launch.json` name `synapse-dev` (autoPort; 3000 often taken by other projects).

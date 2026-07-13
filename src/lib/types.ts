@@ -166,6 +166,7 @@ export interface PlanItem {
   category: string;
   mode: ReviewMode;
   reason: string; // why this topic today ("due for review", "learnt yesterday", …)
+  done?: boolean; // reviewed today — computed at read time, never stored in the plan
 }
 
 export interface DailyPlan {

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { clearGuestMode, enableGuestMode } from "@/lib/demo";
 import { BrainIcon } from "@/components/Nav";
-import Link from "next/link";
 
 
 export default function LoginPage() {
-  const router = useRouter();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,8 +35,10 @@ export default function LoginPage() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        router.push("/");
-        router.refresh();
+        // Real session replaces any guest session. Full page load (not SPA
+        // navigation) so the data layer re-evaluates demo mode.
+        clearGuestMode();
+        window.location.assign("/");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -134,12 +134,20 @@ export default function LoginPage() {
 
         </div>
 
-        {/* Guest link */}
+        {/* Guest link — sets the guest cookie so the proxy lets us through,
+            then hard-navigates so demo mode activates in the data layer. */}
         <p className="mt-5 text-center text-sm text-faint">
           Just exploring?{" "}
-          <Link href="/" className="font-medium text-muted hover:text-white transition-colors underline underline-offset-2">
+          <button
+            type="button"
+            onClick={() => {
+              enableGuestMode();
+              window.location.assign("/");
+            }}
+            className="font-medium text-muted hover:text-white transition-colors underline underline-offset-2"
+          >
             Continue as guest (demo mode)
-          </Link>
+          </button>
         </p>
       </div>
     </main>

@@ -16,8 +16,11 @@ export default function ProfilePage() {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  // Guest-cookie-dependent, so read after mount to keep hydration stable.
+  const [demo, setDemo] = useState(false);
 
   useEffect(() => {
+    setDemo(isDemo);
     getProfile()
       .then((p) => {
         setProfile(p);
@@ -60,7 +63,7 @@ export default function ProfilePage() {
           <h1 className="text-warm-gradient text-4xl font-bold">Profile</h1>
         </div>
 
-        {isDemo && (
+        {demo && (
           <div className="rise mb-6 rounded-2xl bg-[#f5b95f]/[0.08] px-5 py-4 text-sm text-[#f5d9a8]">
             You&apos;re in demo mode — changes stay in this tab.{" "}
             <Link href="/login" className="font-semibold underline underline-offset-2">
@@ -146,7 +149,7 @@ export default function ProfilePage() {
               )}
             </section>
 
-            {!isDemo && (
+            {!demo && (
               <div className="rise rise-3">
                 <button
                   onClick={() => signOut()}

@@ -27,6 +27,7 @@ export default function Dashboard() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [fact, setFact] = useState<DailyFact | null>(null);
   const [planError, setPlanError] = useState(false);
+  const [showAllTasks, setShowAllTasks] = useState(false);
 
   useEffect(() => {
     getProfile().then(setProfile).catch(() => {});
@@ -60,6 +61,12 @@ export default function Dashboard() {
   const avgMastery = topics.length
     ? Math.round(topics.reduce((s, t) => s + t.mastery, 0) / topics.length)
     : 0;
+
+  // Remaining tasks first, completed ones sink to the bottom; long plans
+  // collapse to 5 rows until expanded.
+  const planItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
+  const visiblePlanItems = showAllTasks ? planItems : planItems.slice(0, 5);
+  const remainingCount = planItems.filter((i) => !i.done).length;
 
   return (
     <>
@@ -115,22 +122,34 @@ export default function Dashboard() {
               )}
 
               <ul className="space-y-2.5">
-                {plan?.items.map((item) => (
+                {visiblePlanItems.map((item) => (
                   <li key={item.topic_id}>
                     <Link
                       href={`/review?topic=${item.topic_id}`}
-                      className="row-soft group flex items-center gap-3.5 px-4 py-3.5"
+                      className={`row-soft group flex items-center gap-3.5 px-4 py-3.5 ${
+                        item.done ? "opacity-55" : ""
+                      }`}
                     >
-                      <span
-                        className="h-2.5 w-2.5 shrink-0 rounded-full"
-                        style={{
-                          background: categoryColor(item.category),
-                          boxShadow: `0 0 10px ${categoryColor(item.category)}`,
-                        }}
-                      />
+                      {item.done ? (
+                        <span
+                          aria-hidden
+                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[9px] font-bold text-white/60"
+                        >
+                          ✓
+                        </span>
+                      ) : (
+                        <span
+                          className="h-2.5 w-2.5 shrink-0 rounded-full"
+                          style={{ background: "#43d6b5", boxShadow: "0 0 10px #43d6b5" }}
+                        />
+                      )}
                       <div className="min-w-0 flex-1">
-                        <div className="truncate font-medium">{item.topic_name}</div>
-                        <div className="truncate text-xs text-faint">{item.reason}</div>
+                        <div className={`truncate font-medium ${item.done ? "line-through decoration-white/30" : ""}`}>
+                          {item.topic_name}
+                        </div>
+                        <div className="truncate text-xs text-faint">
+                          {item.done ? "Completed today" : item.reason}
+                        </div>
                       </div>
                       <span className="micro shrink-0 rounded-full bg-white/[0.05] px-3 py-1.5 transition-colors group-hover:bg-white/[0.09]">
                         {MODE_LABEL[item.mode]}
@@ -145,6 +164,17 @@ export default function Dashboard() {
                   </li>
                 ))}
               </ul>
+
+              {planItems.length > 5 && (
+                <button
+                  onClick={() => setShowAllTasks((s) => !s)}
+                  className="mt-3 w-full rounded-full bg-white/[0.04] py-2.5 text-sm font-medium text-muted transition-colors hover:bg-white/[0.07] hover:text-white"
+                >
+                  {showAllTasks
+                    ? "Show less ↑"
+                    : `Show all ${planItems.length} tasks (${remainingCount} remaining) ↓`}
+                </button>
+              )}
 
               {plan?.completed && (
                 <p className="mt-4 rounded-2xl bg-[#43d6b5]/[0.09] px-4 py-3 text-sm text-[#7fe5cb]">
@@ -283,22 +313,24 @@ export default function Dashboard() {
               <Stat label="Mastery" value={`${avgMastery}%`} />
             </div>
 
-            {/* Mini brain teaser */}
-            <Link
-              href="/brain"
-              className="glass glass-hover rise rise-3 relative block overflow-hidden p-6 sm:p-7"
-            >
+            {/* Mini brain teaser — pills open each topic's blog page */}
+            <div className="glass rise rise-3 relative overflow-hidden p-6 sm:p-7">
               <div className="absolute -bottom-12 -right-12 h-40 w-40 rounded-full bg-[#43d6b5]/[0.08] blur-3xl" />
-              <p className="micro mb-1 !text-[#43d6b5]">Knowledge graph</p>
-              <h3 className="mb-1 text-xl font-bold">Your brain →</h3>
-              <p className="text-sm text-muted">
-                {topics.length} topics, interconnected. Explore the graph.
-              </p>
+              <Link href="/brain" className="group block">
+                <p className="micro mb-1 !text-[#43d6b5]">Knowledge graph</p>
+                <h3 className="mb-1 text-xl font-bold transition-colors group-hover:text-[#7fe5cb]">
+                  Your brain →
+                </h3>
+                <p className="text-sm text-muted">
+                  {topics.length} topics, interconnected. Explore the graph.
+                </p>
+              </Link>
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {topics.slice(0, 8).map((t) => (
-                  <span
+                  <Link
                     key={t.id}
-                    className="rounded-full px-3 py-1 text-[11px] font-medium"
+                    href={`/brain/${t.id}`}
+                    className="rounded-full px-3 py-1 text-[11px] font-medium transition-all hover:-translate-y-0.5"
                     style={{
                       background: `${categoryColor(t.category)}14`,
                       color: categoryColor(t.category),
@@ -306,10 +338,10 @@ export default function Dashboard() {
                     }}
                   >
                     {t.name}
-                  </span>
+                  </Link>
                 ))}
               </div>
-            </Link>
+            </div>
           </div>
         </div>
       </main>

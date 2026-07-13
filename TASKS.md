@@ -13,6 +13,7 @@
 - [ ] **Notes cross-device sync:** notes are localStorage-only (per-browser). To sync for signed-in users, add a Supabase `notes` table (id, user_id, parent_id, title, body, position, timestamps) + RLS, and branch `src/lib/notes.ts` demo(localStorage)/real(Supabase) like `data.ts`.
 
 ## Done (recent)
+- [x] **Guest mode + plan polish** — fixed guest/demo loop on production (cookie + proxy), plan done-tracking (green dots, done-last, expandable), review error card instead of blank page, graph-card pills → blog pages. (2026-07-13, see SESSION_LOG)
 - [x] **AI-call minimisation redesign** — ingest-time question bank (incl. MCQs) + facts, per-answer DB saves, single batch-grade report card, zero-AI plan narrative, fact of the day. (2026-07-13, see SESSION_LOG)
 - [x] **Install graphify CLI** — `pipx install graphifyy` (v0.9.14) at `/Users/bucc/.local/bin`; graph regenerated (384 nodes). (2026-07-13)
 - [x] **Personal notes + blog source** — `/notes` (localStorage, subnotes, markdown Write/Read), dashboard "Personal notes" section, blog source attribution (url vs "Text input"). (2026-07-13, see SESSION_LOG)

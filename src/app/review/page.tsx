@@ -51,6 +51,9 @@ export default function ReviewPage() {
   const [report, setReport] = useState<ReportCard | null>(null);
   const [cardXp, setCardXp] = useState(0); // flashcard XP, earned immediately
   const [error, setError] = useState<string | null>(null);
+  // Session start failure (e.g. DB missing the quiz tables) — shown on every
+  // question item, since none of them can load without a session.
+  const [startError, setStartError] = useState<string | null>(null);
   // true when deep-linked to a single task via ?topic= — finishing it must not
   // mark the whole day's plan complete / bump the streak.
   const [singleTask, setSingleTask] = useState(false);
@@ -112,9 +115,15 @@ export default function ReviewPage() {
     getPlan()
       .then(async (full) => {
         const matched = !!topicId && full.items.some((it) => it.topic_id === topicId);
-        const p = matched
-          ? { ...full, items: full.items.filter((it) => it.topic_id === topicId) }
-          : full;
+        let p: DailyPlan;
+        if (matched) {
+          p = { ...full, items: full.items.filter((it) => it.topic_id === topicId) };
+        } else {
+          // Full run covers what's still to do today; once everything is done,
+          // "Review again" replays the whole plan.
+          const remaining = full.items.filter((it) => !it.done);
+          p = { ...full, items: remaining.length ? remaining : full.items };
+        }
         setSingleTask(matched);
         setPlan(p);
         if (p.items.length === 0) {
@@ -125,8 +134,9 @@ export default function ReviewPage() {
         let quiz: QuizSession | null = null;
         try {
           quiz = await startQuiz(p.items.map((it) => it.topic_id));
-        } catch {
-          quiz = null; // flashcard items still work; question items will show an error
+        } catch (e) {
+          // Flashcard items still work; question items show this error.
+          setStartError(e instanceof Error ? e.message : "Couldn't start the quiz session");
         }
         setSession(quiz);
         loadItem(p, quiz, 0);
@@ -324,6 +334,24 @@ export default function ReviewPage() {
                 ) : (
                   "Save & finish →"
                 )}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Question failed to load — never leave a blank page */}
+        {phase === "question" && !question && (
+          <div className="glass rise p-8 text-center">
+            <h2 className="mb-2 text-lg font-bold">Couldn&apos;t load this question</h2>
+            <p className="mb-6 text-sm text-danger">
+              {error ?? startError ?? "Something went wrong preparing this topic."}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <button className="btn-ghost text-sm" onClick={() => next(false)}>
+                Skip this topic
+              </button>
+              <button className="btn-primary" onClick={() => window.location.reload()}>
+                Try again
               </button>
             </div>
           </div>

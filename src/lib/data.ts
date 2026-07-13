@@ -196,7 +196,15 @@ export async function getReviews(sinceDays = 120): Promise<Review[]> {
 }
 
 export async function getPlan(): Promise<DailyPlan> {
-  if (isDemo) return demoState.plan;
+  if (isDemo) {
+    return {
+      ...demoState.plan,
+      items: demoState.plan.items.map((it) => ({
+        ...it,
+        done: demoState.done.has(it.topic_id),
+      })),
+    };
+  }
   return api<DailyPlan>("/api/plan");
 }
 
