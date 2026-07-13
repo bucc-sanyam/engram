@@ -9,6 +9,7 @@ import { levelForXp } from "@/lib/types";
 const LINKS = [
   { href: "/", label: "Today", icon: SunIcon },
   { href: "/brain", label: "Brain", icon: BrainIcon },
+  { href: "/blogs", label: "Blogs", icon: BookIcon },
   { href: "/add", label: "Add", icon: PlusIcon },
   { href: "/review", label: "Review", icon: BoltIcon },
 ];
@@ -187,6 +188,15 @@ export function FlameIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
       <path d="M12 23c-4.4 0-8-3.2-8-7.6 0-3 1.9-5.2 3.4-7 .3-.4 1-.2 1 .3.1 1 .4 2 1.1 2.6C10.3 8.6 11 5 10.2 1.9c-.1-.5.4-.9.8-.7C15.3 3.6 20 8.6 20 15.4c0 4.4-3.6 7.6-8 7.6zm0-2c1.7 0 3-1.3 3-3 0-1.3-.8-2.3-1.6-3.3-.2-.3-.7-.3-.9 0-.7 1-1.5 2-1.5 3.3-.6-.4-1-.9-1.3-1.5-.2-.4-.7-.4-.9 0-.3.6-.8 1.5-.8 2.5 0 1.7 1.3 3 3 3h1z" />
+    </svg>
+  );
+}
+
+function BookIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
     </svg>
   );
 }

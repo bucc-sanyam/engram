@@ -13,6 +13,7 @@
 - [ ] **Notes cross-device sync:** notes are localStorage-only (per-browser). To sync for signed-in users, add a Supabase `notes` table (id, user_id, parent_id, title, body, position, timestamps) + RLS, and branch `src/lib/notes.ts` demo(localStorage)/real(Supabase) like `data.ts`.
 
 ## Done (recent)
+- [x] **Review page bug fixes + /blogs page** — (1) done questions show "Already reviewed today" card instead of re-asking; (2) full-plan session now includes all items (done ones auto-skip) so report shows after all items not just 1; (3) stats "Due today" → "In plan" for consistency; (4) new `/blogs` library page + nav link, "Back to your brain" removed from blog pages. (2026-07-13, see SESSION_LOG)
 - [x] **Guest mode + plan polish** — fixed guest/demo loop on production (cookie + proxy), plan done-tracking (green dots, done-last, expandable), review error card instead of blank page, graph-card pills → blog pages. (2026-07-13, see SESSION_LOG)
 - [x] **AI-call minimisation redesign** — ingest-time question bank (incl. MCQs) + facts, per-answer DB saves, single batch-grade report card, zero-AI plan narrative, fact of the day. (2026-07-13, see SESSION_LOG)
 - [x] **Install graphify CLI** — `pipx install graphifyy` (v0.9.14) at `/Users/bucc/.local/bin`; graph regenerated (384 nodes). (2026-07-13)

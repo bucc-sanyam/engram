@@ -130,8 +130,8 @@
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
-    "mtime": 1783951972.0528703,
-    "ast_hash": "0914576da676166a88829299d85a3d60",
+    "mtime": 1783959317.2932248,
+    "ast_hash": "ad0d3fc7bb2b4c9b50c27d7f17c316fc",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1783952838.6112673,
-    "ast_hash": "3d33938a39b346e15a6b7344667e472b",
+    "mtime": 1783959564.5013025,
+    "ast_hash": "bee167147c96cb421e9b19ef98616368",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1783952853.2804258,
-    "ast_hash": "e79638e2aa6a53b1cd6bdd56cf046fef",
+    "mtime": 1783957480.38319,
+    "ast_hash": "a1dec9472f6f08489fd6d4599416b12e",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1783952865.1355417,
-    "ast_hash": "87d900412bc81420096ee83d1e192d2a",
+    "mtime": 1783959569.9304166,
+    "ast_hash": "5a48790b0a74f54a7d6f634f41100a90",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -292,6 +292,11 @@
   "vercel.json": {
     "mtime": 1783950685.471726,
     "ast_hash": "4188dd8d6b745cca5d443108639b1fe2",
+    "semantic_hash": ""
+  },
+  "supabase/schema-quiz-tables-only.sql": {
+    "mtime": 1783959557.1580198,
+    "ast_hash": "3ba83e27dc78ec393e41a649b7ad0675",
     "semantic_hash": ""
   }
 }

@@ -53,12 +53,11 @@ export default function TopicBlogPage() {
     <>
       <Nav />
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-32 pt-8 sm:px-6 md:pb-24">
-        <Link
-          href="/brain"
-          className="micro inline-flex items-center gap-1.5 text-faint transition-colors hover:text-white"
-        >
-          ← Back to your brain
-        </Link>
+        <div className="rise mb-8 flex items-center gap-2 text-sm text-faint">
+          <Link href="/blogs" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
+            ← All blogs
+          </Link>
+        </div>
 
         {loaded && !topic && (
           <div className="glass mt-10 p-8 text-center">
@@ -206,8 +205,11 @@ export default function TopicBlogPage() {
               <Link href={`/review?topic=${topic.id}`} className="btn-primary">
                 Revise this topic →
               </Link>
+              <Link href="/blogs" className="btn-ghost">
+                All blogs
+              </Link>
               <Link href="/brain" className="btn-ghost">
-                Back to the graph
+                Brain graph
               </Link>
             </div>
           </article>

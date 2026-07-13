@@ -30,7 +30,8 @@ type Phase =
   | "finishing"
   | "report"
   | "finished"
-  | "empty";
+  | "empty"
+  | "already-done"; // new: topic already reviewed today
 
 const KIND_LABEL: Record<string, string> = {
   open: "Deep recall",
@@ -76,6 +77,14 @@ export default function ReviewPage() {
       setRevealed(false);
       setCardIndex(0);
       setCardRatings([]);
+
+      // If this item was already done today, show the "already done" card
+      // instead of asking the question again.
+      if (it.done) {
+        setPhase("already-done");
+        return;
+      }
+
       setPhase("loading");
 
       const bankQuestion = quiz?.questions.find((q) => q.topic_id === it.topic_id) ?? null;
@@ -107,7 +116,8 @@ export default function ReviewPage() {
 
   useEffect(() => {
     // Deep link from the dashboard: `/review?topic=<id>` runs just that one
-    // task. No param → the full daily plan, as before.
+    // task. No param → the full daily plan including all items (done ones shown
+    // as "already reviewed" so the user still sees every topic).
     const topicId =
       typeof window !== "undefined"
         ? new URLSearchParams(window.location.search).get("topic")
@@ -117,12 +127,13 @@ export default function ReviewPage() {
         const matched = !!topicId && full.items.some((it) => it.topic_id === topicId);
         let p: DailyPlan;
         if (matched) {
+          // Single-task deep link: just that one topic (regardless of done state)
           p = { ...full, items: full.items.filter((it) => it.topic_id === topicId) };
         } else {
-          // Full run covers what's still to do today; once everything is done,
-          // "Review again" replays the whole plan.
-          const remaining = full.items.filter((it) => !it.done);
-          p = { ...full, items: remaining.length ? remaining : full.items };
+          // Full plan run: include ALL items, done ones get the "already-done"
+          // card so the user knows they've covered that topic today. Replay mode
+          // (everything already done) shows the full plan too.
+          p = { ...full, items: full.items };
         }
         setSingleTask(matched);
         setPlan(p);
@@ -130,13 +141,17 @@ export default function ReviewPage() {
           setPhase("empty");
           return;
         }
-        // One session for the whole plan — questions come from the bank, no AI.
+        // Build a quiz session for non-done topics only (done ones are skipped
+        // without a question, so don't need bank slots).
+        const pendingIds = p.items.filter((it) => !it.done).map((it) => it.topic_id);
         let quiz: QuizSession | null = null;
-        try {
-          quiz = await startQuiz(p.items.map((it) => it.topic_id));
-        } catch (e) {
-          // Flashcard items still work; question items show this error.
-          setStartError(e instanceof Error ? e.message : "Couldn't start the quiz session");
+        if (pendingIds.length > 0) {
+          try {
+            quiz = await startQuiz(pendingIds);
+          } catch (e) {
+            // Flashcard items still work; question items show this error.
+            setStartError(e instanceof Error ? e.message : "Couldn't start the quiz session");
+          }
         }
         setSession(quiz);
         loadItem(p, quiz, 0);
@@ -215,6 +230,9 @@ export default function ReviewPage() {
     }
   }
 
+  // How many items in the plan are NOT already done (i.e. need answering this session)
+  const pendingCount = plan ? plan.items.filter((it) => !it.done).length : 0;
+  // Progress = steps through the plan (regardless of done state)
   const progress = plan && plan.items.length ? (index / plan.items.length) * 100 : 0;
   const totalXp = (report?.xp ?? 0) + cardXp;
 
@@ -228,6 +246,9 @@ export default function ReviewPage() {
             <div className="mb-2 flex items-center justify-between text-sm">
               <span className="text-muted">
                 {index + 1} of {plan.items.length}
+                {pendingCount < plan.items.length && (
+                  <span className="ml-2 text-xs opacity-60">· {pendingCount} to answer</span>
+                )}
               </span>
               <span className="micro !text-[#f5b95f]">
                 Answers are graded together at the end
@@ -265,7 +286,7 @@ export default function ReviewPage() {
         )}
 
         {/* Topic header */}
-        {item && ["question", "cards"].includes(phase) && (
+        {item && ["question", "cards", "already-done"].includes(phase) && (
           <div className="rise mb-4 flex items-center gap-2.5">
             <span
               className="h-2.5 w-2.5 rounded-full"
@@ -273,8 +294,33 @@ export default function ReviewPage() {
             />
             <span className="font-semibold">{item.topic_name}</span>
             <span className="micro rounded-full bg-white/[0.05] px-3 py-1">
-              {phase === "cards" ? "Flashcards" : KIND_LABEL[question?.kind ?? "open"]}
+              {phase === "cards" ? "Flashcards" : phase === "already-done" ? "Done today" : KIND_LABEL[question?.kind ?? "open"]}
             </span>
+            {item.done && (
+              <span className="micro ml-auto rounded-full bg-[#43d6b5]/[0.12] px-3 py-1 text-[#7fe5cb]">
+                ✓ Reviewed
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Already-done card — topic answered earlier today */}
+        {phase === "already-done" && item && (
+          <div className="glass rise p-8">
+            <div className="mb-5 flex items-center justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-3xl">
+                ✓
+              </div>
+            </div>
+            <h2 className="mb-2 text-center text-lg font-bold">Already reviewed today</h2>
+            <p className="mb-6 text-center text-sm text-muted">
+              You covered <span className="font-semibold text-white/85">{item.topic_name}</span> earlier in this session. It&apos;s locked in for today.
+            </p>
+            <div className="flex justify-center">
+              <button className="btn-primary" onClick={() => next(false)}>
+                {index + 1 < (plan?.items.length ?? 0) ? "Next topic →" : "Finish session →"}
+              </button>
+            </div>
           </div>
         )}
 

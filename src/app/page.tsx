@@ -57,7 +57,6 @@ export default function Dashboard() {
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const firstName = profile?.display_name?.trim().split(/\s+/)[0] || "there";
 
-  const dueCount = topics.filter((t) => new Date(t.next_review_at) <= new Date()).length;
   const avgMastery = topics.length
     ? Math.round(topics.reduce((s, t) => s + t.mastery, 0) / topics.length)
     : 0;
@@ -97,7 +96,15 @@ export default function Dashboard() {
                   <p className="micro mb-1 flex items-center gap-2 !text-[#ff9a80]">
                     <span className="ping-dot text-[#ff7a5c]" /> Today&apos;s session
                   </p>
-                  <h2 className="text-xl font-bold">Revision plan</h2>
+                  <h2 className="text-xl font-bold">
+                    Revision plan
+                    {plan && plan.items.length > 0 && (
+                      <span className="ml-2 text-sm font-normal text-muted">
+                        · {plan.items.length} topic{plan.items.length !== 1 ? "s" : ""}
+                        {remainingCount > 0 && `, ${remainingCount} remaining`}
+                      </span>
+                    )}
+                  </h2>
                 </div>
                 {plan && plan.items.length > 0 && (
                   <Link href="/review" className="btn-primary shrink-0">
@@ -308,7 +315,7 @@ export default function Dashboard() {
             <div className="rise rise-2 flex items-center justify-around px-2 py-3">
               <Stat label="Topics" value={topics.length} />
               <Divider />
-              <Stat label="Due today" value={dueCount} accent={dueCount > 0} />
+              <Stat label="In plan" value={plan ? plan.items.length : "—"} accent={(plan?.items.length ?? 0) > 0} />
               <Divider />
               <Stat label="Mastery" value={`${avgMastery}%`} />
             </div>

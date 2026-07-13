@@ -65,13 +65,13 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1783956890.1209671,
-    "ast_hash": "6157ab755223161e22d0fb28c4bd00cf",
+    "mtime": 1783960853.785072,
+    "ast_hash": "17102b41671bc079dddc97d8beaa7333",
     "semantic_hash": ""
   },
   "src/app/review/page.tsx": {
-    "mtime": 1783956862.8273787,
-    "ast_hash": "923295ac63040c66052f6b4664123381",
+    "mtime": 1783960830.6278865,
+    "ast_hash": "a1e40386803646487498a236d4c75ce3",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -80,8 +80,8 @@
     "semantic_hash": ""
   },
   "src/components/Nav.tsx": {
-    "mtime": 1783956728.995715,
-    "ast_hash": "9093bf3ac1a55735eaeb2d48cde6b745",
+    "mtime": 1783960915.578198,
+    "ast_hash": "7b3db4ed6f342c88ac02874f8c2f1911",
     "semantic_hash": ""
   },
   "src/components/ProgressMap.tsx": {
@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1783959564.5013025,
-    "ast_hash": "bee167147c96cb421e9b19ef98616368",
+    "mtime": 1783961022.4772782,
+    "ast_hash": "e4c4ea59c56a8928e94b611f1375312e",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1783957480.38319,
-    "ast_hash": "a1dec9472f6f08489fd6d4599416b12e",
+    "mtime": 1783960989.557406,
+    "ast_hash": "e8f9ddc7b3907a1fbd50e5209da6fb74",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1783959569.9304166,
-    "ast_hash": "5a48790b0a74f54a7d6f634f41100a90",
+    "mtime": 1783961036.8786092,
+    "ast_hash": "68375503939e54ab5ed9cbe1f282320b",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "src/app/brain/[id]/page.tsx": {
-    "mtime": 1783946072.348443,
-    "ast_hash": "0b5764a8b9a3514bbfecaf110c58da9c",
+    "mtime": 1783960940.121152,
+    "ast_hash": "a3a1fd561ed311629e55ecb779e9bb62",
     "semantic_hash": ""
   },
   "src/app/notes/page.tsx": {
@@ -297,6 +297,11 @@
   "supabase/schema-quiz-tables-only.sql": {
     "mtime": 1783959557.1580198,
     "ast_hash": "3ba83e27dc78ec393e41a649b7ad0675",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/page.tsx": {
+    "mtime": 1783960889.802702,
+    "ast_hash": "a8660780d1bd36702111be72787edf9a",
     "semantic_hash": ""
   }
 }
