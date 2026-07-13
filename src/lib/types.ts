@@ -1,0 +1,152 @@
+export type Category =
+  | "Technology"
+  | "Science"
+  | "Business"
+  | "Design"
+  | "Health"
+  | "History"
+  | "Philosophy"
+  | "Language"
+  | "Mathematics"
+  | "General";
+
+export const CATEGORY_COLORS: Record<string, string> = {
+  Technology: "#6fb0ff",
+  Science: "#43d6b5",
+  Business: "#f5b95f",
+  Design: "#ff8fb1",
+  Health: "#8fd694",
+  History: "#e8927c",
+  Philosophy: "#bfa8f5",
+  Language: "#7fd0e8",
+  Mathematics: "#ffd166",
+  General: "#a8a29e",
+};
+
+export function categoryColor(category: string): string {
+  return CATEGORY_COLORS[category] ?? CATEGORY_COLORS.General;
+}
+
+export interface Profile {
+  id: string;
+  display_name: string | null;
+  xp: number;
+  streak: number;
+  longest_streak: number;
+  last_active: string | null;
+}
+
+export interface Topic {
+  id: string;
+  name: string;
+  category: string;
+  summary: string | null;
+  key_points: string[];
+  mastery: number;
+  review_count: number;
+  ease: number;
+  interval_days: number;
+  next_review_at: string;
+  last_reviewed_at: string | null;
+  created_at: string;
+}
+
+export interface TopicLink {
+  id: string;
+  source: string;
+  target: string;
+  reason: string | null;
+  strength: number;
+}
+
+export interface Entry {
+  id: string;
+  title: string | null;
+  raw_text: string;
+  summary: string | null;
+  source_url?: string | null;
+  created_at: string;
+}
+
+export interface Flashcard {
+  id: string;
+  topic_id: string;
+  question: string;
+  answer: string;
+}
+
+export interface Review {
+  id: string;
+  topic_id: string;
+  mode: ReviewMode;
+  score: number;
+  created_at: string;
+}
+
+export type ReviewMode = "recall" | "flashcard" | "quickfire";
+
+export interface PlanItem {
+  topic_id: string;
+  topic_name: string;
+  category: string;
+  mode: ReviewMode;
+  reason: string; // why this topic today ("due for review", "learnt yesterday", …)
+}
+
+export interface DailyPlan {
+  date: string;
+  headline: string;      // AI-written one-liner for today's session
+  insight: string;       // AI-written connection insight between today's topics
+  items: PlanItem[];
+  completed: boolean;
+}
+
+/** Result of Gemini extracting knowledge from a pasted conversation. */
+export interface ExtractionResult {
+  title: string;
+  summary: string;
+  topics: {
+    name: string;
+    category: string;
+    summary: string;
+    key_points: string[];
+  }[];
+  connections: { a: string; b: string; reason: string }[];
+  flashcards: { topic: string; question: string; answer: string }[];
+}
+
+export interface GradeResult {
+  score: number; // 0..5
+  feedback: string;
+  model_answer: string;
+}
+
+export function levelForXp(xp: number): { level: number; into: number; needed: number } {
+  // Each level needs 100 + 50*(level-1) XP — gentle early levels, slower later.
+  let level = 1;
+  let remaining = xp;
+  let needed = 100;
+  while (remaining >= needed) {
+    remaining -= needed;
+    level += 1;
+    needed = 100 + 50 * (level - 1);
+  }
+  return { level, into: remaining, needed };
+}
+
+export const LEVEL_TITLES = [
+  "Spark",
+  "Curious Mind",
+  "Note Taker",
+  "Connector",
+  "Pattern Seeker",
+  "Synthesizer",
+  "Deep Diver",
+  "Polymath",
+  "Sage",
+  "Luminary",
+];
+
+export function levelTitle(level: number): string {
+  return LEVEL_TITLES[Math.min(level - 1, LEVEL_TITLES.length - 1)];
+}
