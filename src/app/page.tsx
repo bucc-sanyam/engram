@@ -6,10 +6,10 @@ import Nav from "@/components/Nav";
 import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
-import { getEntries, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
+import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
-import type { DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
+import type { DailyFact, DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
 const MODE_LABEL: Record<string, string> = {
@@ -25,6 +25,7 @@ export default function Dashboard() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [entries, setEntries] = useState<Entry[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
+  const [fact, setFact] = useState<DailyFact | null>(null);
   const [planError, setPlanError] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function Dashboard() {
     getTopics().then(setTopics).catch(() => {});
     getReviews().then(setReviews).catch(() => {});
     getEntries().then(setEntries).catch(() => {});
+    getFactOfTheDay().then(setFact).catch(() => {});
     getPlan().then(setPlan).catch(() => setPlanError(true));
   }, []);
 
@@ -253,6 +255,20 @@ export default function Dashboard() {
 
           {/* Right column */}
           <div className="space-y-6">
+            {/* Fact of the day — pre-generated from the user's own knowledge graph */}
+            {fact && (
+              <section className="rise rise-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#7fd0e8]/[0.08] via-transparent to-[#bfa8f5]/[0.05] p-6 sm:p-7">
+                <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-[#7fd0e8]/12 blur-3xl" />
+                <p className="micro mb-3 flex items-center gap-2 !text-[#7fd0e8]">
+                  <BulbIcon /> Fact of the day
+                </p>
+                <p className="text-[15px] leading-relaxed text-white/85">{fact.text}</p>
+                {fact.topic_name && (
+                  <p className="micro mt-3.5">from your topic · {fact.topic_name}</p>
+                )}
+              </section>
+            )}
+
             {profile && <ProgressMap profile={profile} reviews={reviews} />}
 
             {/* Rendered only after profile loads (client-side) so calendar dates never mismatch SSR */}
@@ -312,6 +328,14 @@ function Stat({ label, value, accent }: { label: string; value: string | number;
 
 function Divider() {
   return <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/[0.12] to-transparent" />;
+}
+
+function BulbIcon() {
+  return (
+    <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V18a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2zm-2 19a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.5h-4v.5z" />
+    </svg>
+  );
 }
 
 function SparkleIcon() {

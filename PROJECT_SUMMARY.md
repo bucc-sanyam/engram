@@ -24,11 +24,18 @@ Dark, organic, atmospheric — NOT boxy/generic. Mesh glows, blobs, pill shapes,
 | `/brain/[id]` | `src/app/brain/[id]/page.tsx` | Topic "blog" — full read, Fraunces serif w/ drop cap, key ideas, connections. Opened in a new tab from the card. |
 | `/notes` | `src/app/notes/page.tsx` | Personal notes — OneNote-style tree of notes + subnotes, markdown Write/Read. **localStorage only, NOT in the graph.** `?note=<id>` opens one. |
 | `/add` | `src/app/add/page.tsx` | Add/ingest new learning |
-| `/review` | `src/app/review/page.tsx` | Quiz/review flow with scoring |
+| `/review` | `src/app/review/page.tsx` | Quiz session: answers saved per question (incl. MCQs), ONE batch AI grade at the end → report card |
 | `/profile` | `src/app/profile/page.tsx` | View/edit display name, journey stats, sign out |
 | `/login` | `src/app/login/page.tsx` | Email auth (no OAuth); signup captures name → `raw_user_meta_data.name` → `handle_new_user` trigger → `profiles.display_name` |
 | `/auth/callback` | `src/app/auth/callback/route.ts` | Supabase callback |
-| API | `src/app/api/{ingest,plan,quiz}/route.ts` | Gemini-backed endpoints |
+| API | `src/app/api/{ingest,plan,quiz}/route.ts` | See "AI-call budget" below — only ingest & quiz-finish call Gemini |
+
+## AI-call budget (deliberate design — keep it this way)
+Exactly **1 Gemini call per ingest** and **1 per finished quiz session**; everything else is zero-AI:
+- **Ingest** (`/api/ingest`): the single `extractKnowledge()` call now also returns a **question bank** (5-6 per topic: ~2 open, 1-2 quickfire, ~2 MCQ with 4 options + correct_index; each with model_answer + difficulty) and **facts** (1-2/topic) → stored in `questions` & `facts` tables.
+- **Quiz** (`/api/quiz` actions): `start` picks bank questions (least-asked, mastery-matched difficulty, kind rotation open→mcq→quickfire; synthesized local fallback for pre-bank topics) into a `quiz_sessions` snapshot (client never sees answers); `answer` upserts each answer into `quiz_answers` as submitted; `finish` grades MCQs deterministically + ONE `gradeSession()` batch call for typed answers (keyword-overlap fallback if Gemini fails, call skipped entirely if nothing typed) → report card (score_pct, xp, summary, strengths/focus, per-item feedback) saved on the session (idempotent), SRS per topic from avg score, reviews rows, XP, bank usage bumped; `rate` = flashcard self-rating (never AI).
+- **Plan** (`/api/plan`): Gemini narrative REMOVED — headline from day-rotating templates, insight reuses a `topic_links.reason` between today's topics (`composeNarrative()`).
+- **Fact of the day**: `getFactOfTheDay()` in data.ts picks deterministically by day from `facts` (joined topic name; fallback = a topic key_point). Dashboard card, right column. Zero AI.
 
 ## Key modules
 - `src/components/BrainScene.tsx` (~850 lines) — the crown jewel. Stylised brain as particle shell; topics = glowing cortex patches; selection dives camera inside; label system: canvas-texture sprites in Space Grotesk, per-frame **screen-space declutter** (priority place → vertical nudge via `sprite.center` → fade), staggered edge labels, **labels are click targets** (raycast before glows, only when opacity > 0.3). Yaw bias +0.32 on landscape keeps selection out from under the info card.
@@ -42,6 +49,8 @@ Dark, organic, atmospheric — NOT boxy/generic. Mesh glows, blobs, pill shapes,
 - `src/components/Markdown.tsx` — dependency-free block+inline markdown renderer (headings, lists, blockquote, fenced code, hr, bold/italic/code/links). Used by the notes Read view. (`RichText.tsx` is the smaller inline-only variant for the dashboard insight.)
 - `getTopicSource(topicId)` in `data.ts` → `TopicSource` (`{kind:"url",url}` | `{kind:"text"}` | null): the blog page shows where a topic came from. Real mode joins `entry_topics`→`entries.source_url`; demo uses `demoTopicSource` (a few arxiv/github URLs, rest text).
 - `src/lib/srs.ts` — SM-2 spaced repetition. `src/lib/progress.ts` — XP/levels.
+- **New DB tables** (`supabase/schema.sql`, re-run in Supabase SQL editor after pulling): `questions` (bank: kind/options/correct_index/model_answer/difficulty/times_asked), `facts`, `quiz_sessions` (items snapshot + report jsonb), `quiz_answers` (unique session_id+question_index). All RLS'd.
+- Quiz types in `types.ts`: `QuestionKind`, `SessionQuestion` (client-safe, no answers), `QuizSession`, `ReportItem`, `ReportCard`, `DailyFact`; `ExtractionResult` extended with `questions` + `facts`.
 - `src/lib/demo.ts` — demo-mode seed data. `src/lib/data.ts` — data access.
 - `src/lib/types.ts` — `Topic`, `TopicLink`, `categoryColor(category)`.
 - `src/lib/supabase/{client,server}.ts`, `src/lib/gemini.ts`.

@@ -10,22 +10,27 @@ import {
   demoTopics,
   demoLinks,
   demoEntries,
+  demoFacts,
   demoFlashcards,
   demoProfile,
   demoReviews,
   demoPlan,
-  demoQuestions,
+  demoQuestionBank,
   demoGrade,
   demoTopicSource,
 } from "./demo";
+import { xpForReview } from "./srs";
 import type {
+  DailyFact,
   DailyPlan,
   Entry,
   Flashcard,
-  GradeResult,
   Profile,
+  QuizSession,
+  ReportCard,
+  ReportItem,
   Review,
-  ReviewMode,
+  SessionQuestion,
   Topic,
   TopicLink,
   TopicSource,
@@ -33,11 +38,20 @@ import type {
 
 export { isDemo };
 
+/** Demo quiz session: the client-safe questions plus the hidden answer key. */
+interface DemoSession {
+  id: string;
+  questions: SessionQuestion[];
+  key: Map<number, { correct_index: number | null; model_answer: string }>;
+  answers: Map<number, { answer?: string; selectedIndex?: number }>;
+}
+
 // Demo-mode mutable state lives for the tab session.
 const demoState = {
   profile: { ...demoProfile },
   plan: JSON.parse(JSON.stringify(demoPlan)) as DailyPlan,
   done: new Set<string>(),
+  session: null as DemoSession | null,
 };
 
 async function api<T>(path: string, body?: unknown): Promise<T> {
@@ -224,31 +238,185 @@ export async function ingestLink(url: string): Promise<IngestResult> {
   return api("/api/ingest", { url });
 }
 
-export async function getQuestion(topicId: string, mode: ReviewMode): Promise<{ question: string }> {
+/**
+ * Start a review session: questions come from the pre-generated bank, so this
+ * costs zero AI calls. The client never receives the correct answers.
+ */
+export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
   if (isDemo) {
-    await new Promise((r) => setTimeout(r, 700));
-    const topic = demoTopics.find((t) => t.id === topicId);
-    return { question: demoQuestions[topicId] ?? `From memory, explain the core idea of "${topic?.name}" and why it matters.` };
+    await new Promise((r) => setTimeout(r, 500));
+    const kinds = ["open", "mcq", "quickfire"] as const;
+    const questions: SessionQuestion[] = [];
+    const key = new Map<number, { correct_index: number | null; model_answer: string }>();
+    topicIds.forEach((topicId, i) => {
+      const topic = demoTopics.find((t) => t.id === topicId);
+      if (!topic) return;
+      const pool = demoQuestionBank.filter((q) => q.topic_id === topicId);
+      const bank =
+        pool.find((q) => q.kind === kinds[i % kinds.length]) ?? pool[0] ?? null;
+      const index = questions.length;
+      if (bank) {
+        questions.push({
+          index,
+          topic_id: topic.id,
+          topic_name: topic.name,
+          category: topic.category,
+          kind: bank.kind,
+          prompt: bank.prompt,
+          options: bank.options,
+        });
+        key.set(index, { correct_index: bank.correct_index, model_answer: bank.model_answer });
+      } else {
+        questions.push({
+          index,
+          topic_id: topic.id,
+          topic_name: topic.name,
+          category: topic.category,
+          kind: "open",
+          prompt: `From memory, explain "${topic.name}" — the core idea and why it matters.`,
+          options: null,
+        });
+        key.set(index, { correct_index: null, model_answer: topic.key_points.join(" ") });
+      }
+    });
+    demoState.session = { id: `demo-${Date.now()}`, questions, key, answers: new Map() };
+    return { id: demoState.session.id, questions };
   }
-  return api("/api/quiz", { action: "question", topicId, mode });
+  return api("/api/quiz", { action: "start", topicIds });
 }
 
-export async function submitAnswer(args: {
-  topicId: string;
-  mode: ReviewMode;
-  question: string;
-  answer: string;
-}): Promise<GradeResult & { xp: number }> {
+/** Save one answer the moment it's submitted — persisted in the DB, no AI. */
+export async function saveQuizAnswer(args: {
+  sessionId: string;
+  questionIndex: number;
+  answer?: string;
+  selectedIndex?: number;
+}): Promise<void> {
   if (isDemo) {
-    await new Promise((r) => setTimeout(r, 900));
-    const topic = demoTopics.find((t) => t.id === args.topicId)!;
-    const g = demoGrade(args.answer, topic.key_points);
-    const xp = 5 + g.score * 4;
-    demoState.profile.xp += xp;
-    demoState.done.add(args.topicId);
-    return { ...g, xp };
+    demoState.session?.answers.set(args.questionIndex, {
+      answer: args.answer,
+      selectedIndex: args.selectedIndex,
+    });
+    return;
   }
-  return api("/api/quiz", { action: "grade", ...args });
+  await api("/api/quiz", { action: "answer", ...args });
+}
+
+/**
+ * Finish the session: the ONE AI call grades everything at once and returns
+ * the report card (demo mode grades locally).
+ */
+export async function finishQuiz(sessionId: string): Promise<ReportCard> {
+  if (isDemo) {
+    await new Promise((r) => setTimeout(r, 1200));
+    const s = demoState.session;
+    if (!s || s.id !== sessionId) throw new Error("Session not found");
+    const items: ReportItem[] = [];
+    for (const q of s.questions) {
+      const a = s.answers.get(q.index);
+      if (!a) continue; // never presented (e.g. flashcards were shown instead)
+      const key = s.key.get(q.index)!;
+      const topic = demoTopics.find((t) => t.id === q.topic_id)!;
+      const item: ReportItem = {
+        index: q.index,
+        topic_id: q.topic_id,
+        topic_name: q.topic_name,
+        kind: q.kind,
+        prompt: q.prompt,
+        answer: null,
+        skipped: false,
+        correct: null,
+        score: 0,
+        feedback: "",
+        correct_answer: key.model_answer,
+        options: q.options,
+        selected_index: null,
+        correct_index: q.kind === "mcq" ? key.correct_index : null,
+      };
+      if (q.kind === "mcq") {
+        const sel = typeof a.selectedIndex === "number" ? a.selectedIndex : null;
+        item.selected_index = sel;
+        item.answer = sel !== null ? q.options?.[sel] ?? null : null;
+        if (sel === null) {
+          item.skipped = true;
+          item.feedback = "You skipped this one — no harm done, it'll come back around.";
+        } else {
+          item.correct = sel === key.correct_index;
+          item.score = item.correct ? 5 : 1;
+          item.feedback = item.correct
+            ? "Correct — you picked the right option."
+            : `Not quite — the right answer was "${q.options?.[key.correct_index ?? 0] ?? ""}".`;
+        }
+        if (key.correct_index !== null && q.options) {
+          item.correct_answer = q.options[key.correct_index] ?? key.model_answer;
+        }
+      } else {
+        const typed = (a.answer ?? "").trim();
+        item.answer = typed || null;
+        if (!typed) {
+          item.skipped = true;
+          item.feedback = "You skipped this one — no harm done, it'll come back around.";
+        } else {
+          const g = demoGrade(typed, topic.key_points);
+          item.score = g.score;
+          item.feedback = g.feedback;
+        }
+      }
+      items.push(item);
+      demoState.done.add(q.topic_id);
+    }
+    const attempted = items.filter((i) => !i.skipped);
+    const scorePct = attempted.length
+      ? Math.round((attempted.reduce((sum, i) => sum + i.score, 0) / (attempted.length * 5)) * 100)
+      : 0;
+    const xp = attempted.reduce((sum, i) => sum + xpForReview(i.score), 0);
+    demoState.profile.xp += xp;
+    const strengths = attempted.filter((i) => i.score >= 4).map((i) => i.topic_name).slice(0, 3);
+    const focus = attempted.filter((i) => i.score <= 2).map((i) => i.topic_name).slice(0, 3);
+    return {
+      session_id: sessionId,
+      date: new Date().toISOString().slice(0, 10),
+      score_pct: scorePct,
+      xp,
+      summary:
+        scorePct >= 80
+          ? "Excellent session — your recall is sharp across the board. (Demo mode: add your Gemini key for real AI report cards.)"
+          : scorePct >= 50
+            ? "Solid session — the core ideas are there, with a few gaps worth another pass. (Demo mode: add your Gemini key for real AI report cards.)"
+            : "Tough session, and that's fine — effortful recall is exactly what rewires memory. (Demo mode: add your Gemini key for real AI report cards.)",
+      strengths,
+      focus,
+      items,
+    };
+  }
+  return api("/api/quiz", { action: "finish", sessionId });
+}
+
+/**
+ * Fact of the day, drawn deterministically from the facts pre-generated at
+ * ingest — same fact all day, a new one tomorrow, zero AI calls.
+ */
+export async function getFactOfTheDay(): Promise<DailyFact | null> {
+  const day = Math.floor(Date.now() / 86400000);
+  if (isDemo) {
+    const f = demoFacts[day % demoFacts.length];
+    const topic = demoTopics.find((t) => t.id === f.topic_id);
+    return { text: f.fact, topic_name: topic?.name ?? null };
+  }
+  const supabase = createClient();
+  const { data } = await supabase.from("facts").select("fact, topics(name)").limit(300);
+  const facts = (data ?? []) as unknown as Array<{ fact: string; topics: { name: string } | null }>;
+  if (facts.length) {
+    const f = facts[day % facts.length];
+    return { text: f.fact, topic_name: f.topics?.name ?? null };
+  }
+  // Older accounts have no facts yet — fall back to a key point from a topic.
+  const { data: topics } = await supabase.from("topics").select("name, key_points");
+  const withPoints = (topics ?? []).filter((t) => (t.key_points as string[])?.length);
+  if (!withPoints.length) return null;
+  const t = withPoints[day % withPoints.length];
+  const points = t.key_points as string[];
+  return { text: points[day % points.length], topic_name: t.name };
 }
 
 export async function rateFlashcard(args: {

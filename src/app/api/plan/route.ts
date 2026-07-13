@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { writePlanNarrative } from "@/lib/gemini";
-import { stripMarkdown } from "@/lib/text";
 import type { DailyPlan, PlanItem, ReviewMode, Topic } from "@/lib/types";
 
 export const maxDuration = 60;
@@ -104,23 +102,9 @@ export async function GET() {
     };
   });
 
-  // Gemini writes the narrative; static fallback keeps the app working without it.
-  let headline = "Time to strengthen what you've learnt.";
-  let insight = "Revisiting topics right before you forget them is what makes memory stick.";
-  try {
-    const narrative = await writePlanNarrative(
-      picked.map(({ topic, reason }) => ({
-        topic_name: topic.name,
-        category: topic.category,
-        reason,
-        summary: topic.summary,
-      }))
-    );
-    headline = stripMarkdown(narrative.headline);
-    insight = stripMarkdown(narrative.insight);
-  } catch (e) {
-    console.error("Plan narrative generation failed", e);
-  }
+  // The narrative is composed locally from the connection reasons Gemini
+  // already wrote at ingest time — no AI call for the daily plan.
+  const { headline, insight } = await composeNarrative(supabase, user.id, picked);
 
   const plan: DailyPlan = { date: today, headline, insight, items, completed: false };
   await supabase
@@ -128,6 +112,55 @@ export async function GET() {
     .upsert({ user_id: user.id, plan_date: today, plan, completed: false });
 
   return NextResponse.json(plan);
+}
+
+/**
+ * Headline + "thread today" insight without an AI call: templates for the
+ * headline, and the insight reuses a `topic_links.reason` (written by Gemini
+ * once, at ingest) that connects two of today's topics.
+ */
+async function composeNarrative(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  picked: { topic: Topic; reason: string }[]
+): Promise<{ headline: string; insight: string }> {
+  const n = picked.length;
+  const first = picked[0]?.topic.name ?? "your topics";
+  const headlines = [
+    `${n === 1 ? "One topic" : `${n} topics`} today — short, sharp, and worth it.`,
+    `From ${first} onward: ${n === 1 ? "one recall" : `${n} recalls`} to lock in what you know.`,
+    `Your forgetting curve meets its match — ${n === 1 ? "one topic is" : `${n} topics are`} up today.`,
+    `Today's circuit: ${n === 1 ? first : `${first} and ${n - 1} more`}. Every recall makes it stick.`,
+    `${n === 1 ? "One idea" : `${n} ideas`} due for a workout — future you will thank present you.`,
+  ];
+  // Stable for the day, varied across days.
+  const day = Math.floor(Date.now() / 86400000);
+  const headline = headlines[day % headlines.length];
+
+  let insight =
+    "Revisiting topics right before you forget them is what makes memory stick. Answer from memory first — even a wrong guess strengthens the trace more than rereading ever will.";
+
+  const ids = picked.map((p) => p.topic.id);
+  const nameById = new Map(picked.map((p) => [p.topic.id, p.topic.name]));
+  const { data: links } = await supabase
+    .from("topic_links")
+    .select("source, target, reason, strength")
+    .eq("user_id", userId)
+    .in("source", ids)
+    .in("target", ids)
+    .not("reason", "is", null);
+  const usable = (links ?? []).filter((l) => l.source !== l.target && l.reason);
+  if (usable.length) {
+    const link = usable[day % usable.length];
+    const a = nameById.get(link.source);
+    const b = nameById.get(link.target);
+    const reason = String(link.reason).replace(/\.\s*$/, "");
+    if (a && b) {
+      insight = `${a} and ${b} sit side by side in today's session, and they're linked in your brain already: ${reason.charAt(0).toLowerCase()}${reason.slice(1)}. Keep that thread in mind as you answer — connected memories reinforce each other.`;
+    }
+  }
+
+  return { headline, insight };
 }
 
 export async function POST(request: Request) {

@@ -3,6 +3,7 @@ import type {
   Entry,
   Flashcard,
   Profile,
+  QuestionKind,
   Review,
   Topic,
   TopicLink,
@@ -194,15 +195,91 @@ export const demoPlan: DailyPlan = {
   completed: false,
 };
 
-/** Canned questions per topic for demo quiz mode. */
-export const demoQuestions: Record<string, string> = {
-  d1: "Explain why the transformer's parallelism was such a big deal compared to RNNs — what did it unlock?",
-  d3: "Walk through what happens between a user asking a question and a RAG system answering it.",
-  d7: "Your friend plans an all-nighter before an exam. Using what you know about sleep and memory, what would you tell them?",
-  d10: "What mechanisms did Rome use to hold such a large empire together?",
-  d13: "How does row-level security in Supabase differ from checking permissions in application code?",
-  d14: "What separates deliberate practice from just doing something a lot?",
-};
+/** Demo question bank — mirrors what ingest pre-generates in real mode. */
+export interface DemoBankQuestion {
+  topic_id: string;
+  kind: QuestionKind;
+  prompt: string;
+  options: string[] | null;
+  correct_index: number | null;
+  model_answer: string;
+}
+
+export const demoQuestionBank: DemoBankQuestion[] = [
+  {
+    topic_id: "d1", kind: "open",
+    prompt: "Explain why the transformer's parallelism was such a big deal compared to RNNs — what did it unlock?",
+    options: null, correct_index: null,
+    model_answer: "RNNs process tokens sequentially, so training can't be parallelised. Self-attention processes all tokens at once, letting transformers train on web-scale data efficiently — which is what made large language models practical.",
+  },
+  {
+    topic_id: "d3", kind: "mcq",
+    prompt: "In a RAG pipeline, what happens immediately after the relevant chunks are retrieved?",
+    options: [
+      "The chunks are added to the prompt context before generation",
+      "The model is fine-tuned on the chunks",
+      "The chunks are converted back into embeddings",
+      "The user query is rewritten and re-embedded",
+    ],
+    correct_index: 0,
+    model_answer: "Retrieved chunks are stuffed into the prompt context, and the LLM then generates an answer grounded in them — retrieve, augment, generate.",
+  },
+  {
+    topic_id: "d7", kind: "open",
+    prompt: "Your friend plans an all-nighter before an exam. Using what you know about sleep and memory, what would you tell them?",
+    options: null, correct_index: null,
+    model_answer: "Deep sleep is when the day's memories consolidate from hippocampus to cortex; skipping it can cut retention by up to 40%. Studying less but sleeping properly beats an all-nighter.",
+  },
+  {
+    topic_id: "d10", kind: "mcq",
+    prompt: "Which of these was NOT one of Rome's main tools for holding the empire together?",
+    options: ["Roads", "A universal printing press", "Roman law", "Extending citizenship"],
+    correct_index: 1,
+    model_answer: "Rome integrated its empire through roads, a shared legal system and the strategic extension of citizenship — printing didn't exist for another millennium.",
+  },
+  {
+    topic_id: "d13", kind: "quickfire",
+    prompt: "In one sentence: where is a row-level security policy enforced?",
+    options: null, correct_index: null,
+    model_answer: "In the database itself — Postgres checks the policy on every query, regardless of which app or client is asking.",
+  },
+  {
+    topic_id: "d14", kind: "open",
+    prompt: "What separates deliberate practice from just doing something a lot?",
+    options: null, correct_index: null,
+    model_answer: "Deliberate practice targets the edge of your current ability with immediate feedback and full focus, building better mental representations — mere repetition of what's comfortable doesn't improve skill.",
+  },
+  {
+    topic_id: "d5", kind: "mcq",
+    prompt: "In SM-2, what happens to an item after a failed recall?",
+    options: [
+      "Its interval resets to one day and ease drops",
+      "It's removed from the deck",
+      "Its interval doubles to force practice",
+      "Nothing — only successes change the schedule",
+    ],
+    correct_index: 0,
+    model_answer: "A failed recall resets the interval to one day and lowers the ease factor, so the item returns sooner and grows its interval more slowly.",
+  },
+  {
+    topic_id: "d12", kind: "quickfire",
+    prompt: "Quick — what's the classic failure mode Bayes' theorem protects you from?",
+    options: null, correct_index: null,
+    model_answer: "Base-rate neglect: ignoring the prior probability and judging only from the new evidence.",
+  },
+];
+
+/** Demo facts pool — mirrors the ingest-time facts table in real mode. */
+export const demoFacts: { topic_id: string; fact: string }[] = [
+  { topic_id: "d7", fact: "Pulling one all-nighter can cut your retention of newly learnt material by up to 40% — sleep is when memories consolidate." },
+  { topic_id: "d1", fact: "The transformer paper is called “Attention Is All You Need” because it removed recurrence entirely — attention really was all it needed." },
+  { topic_id: "d10", fact: "Rome's Pax Romana kept relative peace across the Mediterranean for roughly 200 years — longer than most modern states have existed." },
+  { topic_id: "d8", fact: "The Rule of 72: divide 72 by your growth rate to estimate doubling time. At 7% a year, your money — or your knowledge — doubles in about a decade." },
+  { topic_id: "d9", fact: "Marcus Aurelius never meant Meditations to be published — the most-read Stoic text was the Roman emperor's private journal." },
+  { topic_id: "d5", fact: "Ebbinghaus discovered the forgetting curve in 1885 by memorising thousands of nonsense syllables — on himself." },
+  { topic_id: "d12", fact: "Doctors given a positive test result routinely overestimate disease probability tenfold — base-rate neglect is that strong, and Bayes' theorem is the antidote." },
+  { topic_id: "d4", fact: "HNSW indexes find nearest neighbours among billions of vectors in milliseconds by navigating a small-world graph — the same maths as six degrees of separation." },
+];
 
 export function demoGrade(answer: string, keyPoints: string[]): { score: number; feedback: string; model_answer: string } {
   const a = answer.toLowerCase();

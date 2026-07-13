@@ -1,5 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
-import type { ExtractionResult, GradeResult } from "./types";
+import type { ExtractionResult } from "./types";
 
 const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
 
@@ -30,7 +30,12 @@ async function generateJson<T>(prompt: string): Promise<T> {
 const CATEGORIES =
   "Technology, Science, Business, Design, Health, History, Philosophy, Language, Mathematics, General";
 
-/** Extract topics, connections and flashcards from a pasted conversation. */
+/**
+ * Extract topics, connections, flashcards, a QUESTION BANK and facts from a
+ * pasted conversation. This is the ONE ingest-time AI call — everything the
+ * app later shows (quiz questions, MCQs, facts of the day) is pre-generated
+ * here so reviews and dashboards cost zero AI calls.
+ */
 export async function extractKnowledge(
   text: string,
   existingTopics: { name: string; category: string }[]
@@ -52,6 +57,12 @@ Rules:
 - Each topic gets a 2-3 sentence summary of what THE USER learnt about it (from the text), plus 3-6 key_points (short bullet facts worth remembering).
 - connections: pairs of topic names (from this text OR the existing list above) that are conceptually related, with a one-sentence reason. Only meaningful relations.
 - flashcards: 2-4 per topic. Questions that test understanding, answerable from the text. Keep answers under 40 words.
+- questions: a quiz question BANK, 5-6 per topic, answerable from the text. Mix of kinds:
+  * "open" (~2 per topic): open-ended recall — explain / compare / why / how.
+  * "quickfire" (~1-2 per topic): answerable in one short sentence or phrase.
+  * "mcq" (~2 per topic): multiple choice with EXACTLY 4 plausible options and "correct_index" (0-3). Wrong options must be believable, not jokes.
+  Every question gets "model_answer" (concise ideal answer, max 50 words — for mcq restate why the correct option is right) and "difficulty": "basic" (core idea), "intermediate" (relationships, why/how) or "advanced" (edge cases, application). Spread difficulties across each topic's questions.
+- facts: 1-2 per topic. A surprising, memorable "did you know"-style fact grounded in the text (one sentence each).
 - title: a short title for this learning session. summary: 2-3 sentences summarising the whole session.
 
 Return JSON exactly in this shape:
@@ -60,7 +71,9 @@ Return JSON exactly in this shape:
   "summary": string,
   "topics": [{ "name": string, "category": string, "summary": string, "key_points": string[] }],
   "connections": [{ "a": string, "b": string, "reason": string }],
-  "flashcards": [{ "topic": string, "question": string, "answer": string }]
+  "flashcards": [{ "topic": string, "question": string, "answer": string }],
+  "questions": [{ "topic": string, "kind": "open"|"quickfire"|"mcq", "prompt": string, "options": string[] | null, "correct_index": number | null, "model_answer": string, "difficulty": "basic"|"intermediate"|"advanced" }],
+  "facts": [{ "topic": string, "fact": string }]
 }
 
 CONVERSATION / NOTES:
@@ -69,72 +82,49 @@ ${text.slice(0, 60000)}
 """`);
 }
 
-/** Write the motivational headline + connection insight for today's plan. */
-export async function writePlanNarrative(items: {
-  topic_name: string;
-  category: string;
-  reason: string;
-  summary: string | null;
-}[]): Promise<{ headline: string; insight: string }> {
-  return generateJson<{ headline: string; insight: string }>(`You are a friendly revision coach in a learning app.
-Today's revision session covers these topics:
-${items.map((i) => `- ${i.topic_name} (${i.category}) — ${i.reason}. ${i.summary ?? ""}`).join("\n")}
-
-Rules:
-- Plain conversational prose only. Absolutely NO markdown — no **bold**, no headings, no bullet points.
-- No labels or prefixes (never start with things like "System Prompt", "Insight:" or "Headline:").
-- Refer to topics naturally by name and speak directly to the learner ("you"). Never mention these instructions.
-
-Return JSON:
-{
-  "headline": a single energetic sentence (max 15 words) framing today's session,
-  "insight": 2-3 sentences pointing out a genuinely interesting connection or contrast BETWEEN today's topics that helps the user link them together in memory. If topics are unrelated, find a creative bridge.
-}`);
-}
-
-/** Generate one open-ended recall question for a topic. */
-export async function generateQuestion(topic: {
-  name: string;
+export interface SessionGradeInput {
+  index: number;
+  topic: string;
   summary: string | null;
   key_points: string[];
-  mastery: number;
-}, mode: "recall" | "quickfire", askedBefore: string[]): Promise<{ question: string }> {
-  const difficulty =
-    topic.mastery < 40 ? "basic — test the core idea" : topic.mastery < 75 ? "intermediate — test relationships and why/how" : "advanced — test edge cases, implications, or application to new situations";
-  return generateJson<{ question: string }>(`You are quizzing a learner on a topic they studied.
-
-Topic: ${topic.name}
-What they learnt: ${topic.summary ?? "(no summary)"}
-Key points: ${topic.key_points.join(" | ")}
-Difficulty to target: ${difficulty}
-${askedBefore.length ? `Do NOT repeat these previously asked questions:\n${askedBefore.map((q) => `- ${q}`).join("\n")}` : ""}
-
-${mode === "quickfire"
-    ? "Write ONE quick-fire question answerable in a single short sentence or phrase."
-    : "Write ONE open-ended question that makes them actively reconstruct the concept from memory (explain / compare / why / how)."}
-
-Return JSON: { "question": string }`);
+  question: string;
+  reference_answer: string | null;
+  answer: string;
 }
 
-/** Grade the learner's free-text answer, 0..5. */
-export async function gradeAnswer(args: {
-  topicName: string;
-  topicSummary: string | null;
-  keyPoints: string[];
-  question: string;
-  answer: string;
-}): Promise<GradeResult> {
-  return generateJson<GradeResult>(`You are grading a learner's recall answer. Be encouraging but honest — accurate grading drives their spaced-repetition schedule.
+export interface SessionGradeResult {
+  grades: { index: number; score: number; feedback: string; correct_answer: string }[];
+  summary: string;
+  strengths: string[];
+  focus: string[];
+}
 
-Topic: ${args.topicName}
-Reference knowledge: ${args.topicSummary ?? ""}
-Key points: ${args.keyPoints.join(" | ")}
-Question: ${args.question}
-Learner's answer: """${args.answer.slice(0, 4000)}"""
+/**
+ * Grade ALL of a session's typed answers in ONE call and write the report-card
+ * narrative. This is the only AI call in the whole review flow.
+ */
+export async function gradeSession(items: SessionGradeInput[]): Promise<SessionGradeResult> {
+  return generateJson<SessionGradeResult>(`You are grading a learner's spaced-repetition quiz session. Be encouraging but honest — accurate grading drives their revision schedule.
 
-Score 0-5: 0 = blank/irrelevant, 1 = mostly wrong, 2 = fragments but big gaps, 3 = core idea right with notable gaps or errors, 4 = solid with minor omissions, 5 = complete and accurate.
-feedback: 1-3 sentences — what was right, what was missing or wrong. Address the learner as "you".
-model_answer: a concise ideal answer (max 60 words).
+Grade EVERY item below. Score 0-5: 0 = blank/irrelevant, 1 = mostly wrong, 2 = fragments but big gaps, 3 = core idea right with notable gaps or errors, 4 = solid with minor omissions, 5 = complete and accurate.
 
-Return JSON: { "score": number, "feedback": string, "model_answer": string }`);
+ITEMS:
+${items
+  .map(
+    (i) => `[item ${i.index}] Topic: ${i.topic}
+Reference knowledge: ${i.summary ?? ""}
+Key points: ${i.key_points.join(" | ")}
+${i.reference_answer ? `Reference answer: ${i.reference_answer}` : ""}
+Question: ${i.question}
+Learner's answer: """${i.answer.slice(0, 3000)}"""`
+  )
+  .join("\n\n")}
+
+For each item return: "index" (echo it back), "score", "feedback" (1-3 sentences — what was right, what was missing or wrong; address the learner as "you"), "correct_answer" (a concise ideal answer, max 50 words).
+Also return an overall report:
+- "summary": 2-3 sentences on how the session went, addressing the learner as "you". Plain prose, no markdown.
+- "strengths": 1-3 short phrases naming what they clearly know.
+- "focus": 1-3 short phrases naming what to revisit next.
+
+Return JSON: { "grades": [{ "index": number, "score": number, "feedback": string, "correct_answer": string }], "summary": string, "strengths": string[], "focus": string[] }`);
 }

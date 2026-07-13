@@ -105,6 +105,61 @@ export interface Review {
 
 export type ReviewMode = "recall" | "flashcard" | "quickfire";
 
+/** Kind of a pre-generated bank question. */
+export type QuestionKind = "open" | "quickfire" | "mcq";
+
+/** One question as sent to the client during a session — no answers included. */
+export interface SessionQuestion {
+  index: number; // position in the session (stable key for saving answers)
+  topic_id: string;
+  topic_name: string;
+  category: string;
+  kind: QuestionKind;
+  prompt: string;
+  options: string[] | null; // mcq only
+}
+
+export interface QuizSession {
+  id: string;
+  questions: SessionQuestion[];
+}
+
+/** One graded line of the end-of-session report card. */
+export interface ReportItem {
+  index: number;
+  topic_id: string;
+  topic_name: string;
+  kind: QuestionKind;
+  prompt: string;
+  answer: string | null; // what the learner typed / picked
+  skipped: boolean;
+  correct: boolean | null; // mcq only
+  score: number; // 0..5
+  feedback: string;
+  correct_answer: string;
+  options: string[] | null;
+  selected_index: number | null;
+  correct_index: number | null;
+}
+
+/** The single-AI-call report shown after all answers are submitted. */
+export interface ReportCard {
+  session_id: string;
+  date: string;
+  score_pct: number; // 0..100 over attempted questions
+  xp: number;
+  summary: string;
+  strengths: string[];
+  focus: string[];
+  items: ReportItem[];
+}
+
+/** Daily fact drawn from the pre-generated pool — zero AI calls. */
+export interface DailyFact {
+  text: string;
+  topic_name: string | null;
+}
+
 export interface PlanItem {
   topic_id: string;
   topic_name: string;
@@ -133,6 +188,16 @@ export interface ExtractionResult {
   }[];
   connections: { a: string; b: string; reason: string }[];
   flashcards: { topic: string; question: string; answer: string }[];
+  questions: {
+    topic: string;
+    kind: QuestionKind;
+    prompt: string;
+    options?: string[];
+    correct_index?: number;
+    model_answer: string;
+    difficulty: "basic" | "intermediate" | "advanced";
+  }[];
+  facts: { topic: string; fact: string }[];
 }
 
 export interface GradeResult {

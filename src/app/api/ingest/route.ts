@@ -209,6 +209,41 @@ export async function POST(request: Request) {
     .filter((f) => f.topic_id);
   if (cards.length) await supabase.from("flashcards").insert(cards);
 
+  // 5b. Question bank — pre-generated here so review sessions cost no AI calls.
+  const KINDS = new Set(["open", "quickfire", "mcq"]);
+  const DIFFICULTIES = new Set(["basic", "intermediate", "advanced"]);
+  const questions = (extraction.questions ?? [])
+    .map((q) => {
+      const isMcq = q.kind === "mcq";
+      const options = isMcq && Array.isArray(q.options) ? q.options.slice(0, 4) : null;
+      return {
+        user_id: user.id,
+        topic_id: nameToId.get(q.topic.toLowerCase()),
+        kind: KINDS.has(q.kind) ? q.kind : "open",
+        prompt: q.prompt,
+        options,
+        correct_index:
+          isMcq && options && typeof q.correct_index === "number"
+            ? Math.max(0, Math.min(options.length - 1, q.correct_index))
+            : null,
+        model_answer: q.model_answer,
+        difficulty: DIFFICULTIES.has(q.difficulty) ? q.difficulty : "basic",
+      };
+    })
+    // Drop malformed rows (missing topic, mcq without options, empty prompt).
+    .filter((q) => q.topic_id && q.prompt && q.model_answer && (q.kind !== "mcq" || (q.options && q.options.length >= 2)));
+  if (questions.length) await supabase.from("questions").insert(questions);
+
+  // 5c. Facts pool — feeds the zero-AI "fact of the day".
+  const facts = (extraction.facts ?? [])
+    .map((f) => ({
+      user_id: user.id,
+      topic_id: nameToId.get(f.topic.toLowerCase()),
+      fact: f.fact,
+    }))
+    .filter((f) => f.topic_id && f.fact);
+  if (facts.length) await supabase.from("facts").insert(facts);
+
   // 6. XP: 15 per new topic, 5 per refreshed one, 10 for logging at all.
   const xp = await awardXp(
     supabase,

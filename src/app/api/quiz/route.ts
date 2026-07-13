@@ -1,11 +1,53 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { generateQuestion, gradeAnswer } from "@/lib/gemini";
+import { gradeSession, type SessionGradeInput } from "@/lib/gemini";
 import { scheduleNext, updateMastery, xpForReview } from "@/lib/srs";
 import { awardXp } from "@/lib/progress";
-import type { Topic } from "@/lib/types";
+import type {
+  QuestionKind,
+  ReportCard,
+  ReportItem,
+  SessionQuestion,
+  Topic,
+} from "@/lib/types";
 
 export const maxDuration = 60;
+
+/**
+ * Quiz backend, redesigned to minimise AI calls:
+ * - "start":  builds a session from the PRE-GENERATED question bank (0 AI calls)
+ * - "answer": persists one answer as it is submitted (0 AI calls)
+ * - "finish": ONE batch Gemini call grades every typed answer and writes the
+ *             report card; MCQs are graded deterministically (0 AI calls)
+ * - "rate":   flashcard self-rating, unchanged (0 AI calls)
+ */
+
+/** Server-side snapshot of one session question (includes the answers). */
+interface SnapshotItem {
+  index: number;
+  question_id: string | null; // null = synthesized fallback (topic had no bank yet)
+  topic_id: string;
+  topic_name: string;
+  category: string;
+  kind: QuestionKind;
+  prompt: string;
+  options: string[] | null;
+  correct_index: number | null;
+  model_answer: string;
+}
+
+interface BankQuestion {
+  id: string;
+  topic_id: string;
+  kind: QuestionKind;
+  prompt: string;
+  options: string[] | null;
+  correct_index: number | null;
+  model_answer: string;
+  difficulty: string;
+  times_asked: number;
+  last_asked_at: string | null;
+}
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -13,102 +55,421 @@ export async function POST(request: Request) {
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
   const body = await request.json();
-  const { action, topicId } = body;
+  const { action } = body;
 
-  const { data: topicData } = await supabase
-    .from("topics")
-    .select("*")
-    .eq("id", topicId)
-    .single();
-  const topic = topicData as Topic | null;
-  if (!topic) return NextResponse.json({ error: "Topic not found" }, { status: 404 });
-
-  // ---- Generate a question ----
-  if (action === "question") {
-    const { data: recent } = await supabase
-      .from("reviews")
-      .select("question")
-      .eq("topic_id", topicId)
-      .not("question", "is", null)
-      .order("created_at", { ascending: false })
-      .limit(8);
-    try {
-      const q = await generateQuestion(
-        {
-          name: topic.name,
-          summary: topic.summary,
-          key_points: (topic.key_points as string[]) ?? [],
-          mastery: topic.mastery,
-        },
-        body.mode === "quickfire" ? "quickfire" : "recall",
-        (recent ?? []).map((r) => r.question as string)
-      );
-      return NextResponse.json(q);
-    } catch (e) {
-      console.error("Question generation failed", e);
-      return NextResponse.json(
-        { error: "Couldn't generate a question. Check your GEMINI_API_KEY." },
-        { status: 502 }
-      );
-    }
-  }
-
-  // ---- Grade a typed answer ----
-  if (action === "grade") {
-    const { question, answer, mode } = body;
-    if (!question || typeof answer !== "string") {
-      return NextResponse.json({ error: "Missing question or answer" }, { status: 400 });
-    }
-    let grade;
-    try {
-      grade = await gradeAnswer({
-        topicName: topic.name,
-        topicSummary: topic.summary,
-        keyPoints: (topic.key_points as string[]) ?? [],
-        question,
-        answer,
-      });
-    } catch (e) {
-      console.error("Grading failed", e);
-      return NextResponse.json(
-        { error: "Couldn't grade the answer. Check your GEMINI_API_KEY." },
-        { status: 502 }
-      );
-    }
-
-    const xp = await applyReview(supabase, user.id, topic, grade.score, {
-      mode: mode ?? "recall",
-      question,
-      answer,
-      feedback: grade.feedback,
-    });
-    return NextResponse.json({ ...grade, xp });
-  }
-
-  // ---- Self-rated flashcard ----
-  if (action === "rate") {
-    const quality = Math.max(0, Math.min(5, Number(body.quality)));
-    const xp = await applyReview(supabase, user.id, topic, quality, {
-      mode: "flashcard",
-    });
-    return NextResponse.json({ xp });
-  }
+  if (action === "start") return start(supabase, user.id, body);
+  if (action === "answer") return answer(supabase, user.id, body);
+  if (action === "finish") return finish(supabase, user.id, body);
+  if (action === "rate") return rate(supabase, user.id, body);
 
   return NextResponse.json({ error: "Unknown action" }, { status: 400 });
 }
 
-async function applyReview(
+// ---- start: pick one bank question per topic, no AI ----
+async function start(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
-  topic: Topic,
-  quality: number,
-  review: { mode: string; question?: string; answer?: string; feedback?: string }
+  body: { topicIds?: unknown }
 ) {
+  const topicIds = Array.isArray(body.topicIds)
+    ? (body.topicIds.filter((t) => typeof t === "string") as string[]).slice(0, 12)
+    : [];
+  if (!topicIds.length) {
+    return NextResponse.json({ error: "No topics to review" }, { status: 400 });
+  }
+
+  const { data: topicsData } = await supabase
+    .from("topics")
+    .select("*")
+    .eq("user_id", userId)
+    .in("id", topicIds);
+  const topics = (topicsData ?? []) as Topic[];
+  const topicById = new Map(topics.map((t) => [t.id, t]));
+
+  const { data: bankData } = await supabase
+    .from("questions")
+    .select("*")
+    .eq("user_id", userId)
+    .in("topic_id", topicIds);
+  const bank = (bankData ?? []) as BankQuestion[];
+  const bankByTopic = new Map<string, BankQuestion[]>();
+  for (const q of bank) {
+    const list = bankByTopic.get(q.topic_id) ?? [];
+    list.push(q);
+    bankByTopic.set(q.topic_id, list);
+  }
+
+  // Rotate desired kinds so every session mixes MCQ and typed questions.
+  const kindRotation: QuestionKind[] = ["open", "mcq", "quickfire"];
+  const snapshot: SnapshotItem[] = [];
+
+  topicIds.forEach((topicId, i) => {
+    const topic = topicById.get(topicId);
+    if (!topic) return;
+    const picked = pickQuestion(bankByTopic.get(topicId) ?? [], topic.mastery, kindRotation[i % kindRotation.length]);
+    if (picked) {
+      snapshot.push({
+        index: snapshot.length,
+        question_id: picked.id,
+        topic_id: topic.id,
+        topic_name: topic.name,
+        category: topic.category,
+        kind: picked.kind,
+        prompt: picked.prompt,
+        options: picked.kind === "mcq" ? picked.options : null,
+        correct_index: picked.kind === "mcq" ? picked.correct_index : null,
+        model_answer: picked.model_answer,
+      });
+    } else {
+      // Topic predates the question bank — synthesize a recall prompt locally.
+      snapshot.push({
+        index: snapshot.length,
+        question_id: null,
+        topic_id: topic.id,
+        topic_name: topic.name,
+        category: topic.category,
+        kind: "open",
+        prompt: `From memory, explain "${topic.name}" — the core idea and why it matters.`,
+        options: null,
+        correct_index: null,
+        model_answer: topic.summary ?? (topic.key_points as string[]).join(" "),
+      });
+    }
+  });
+
+  if (!snapshot.length) {
+    return NextResponse.json({ error: "Topics not found" }, { status: 404 });
+  }
+
+  const { data: session, error } = await supabase
+    .from("quiz_sessions")
+    .insert({ user_id: userId, items: snapshot })
+    .select("id")
+    .single();
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+  // Client gets the questions WITHOUT correct answers.
+  const questions: SessionQuestion[] = snapshot.map((s) => ({
+    index: s.index,
+    topic_id: s.topic_id,
+    topic_name: s.topic_name,
+    category: s.category,
+    kind: s.kind,
+    prompt: s.prompt,
+    options: s.options,
+  }));
+  return NextResponse.json({ id: session.id, questions });
+}
+
+/** Least-asked question of the preferred kind and mastery-matched difficulty. */
+function pickQuestion(pool: BankQuestion[], mastery: number, preferKind: QuestionKind): BankQuestion | null {
+  if (!pool.length) return null;
+  const tier = mastery < 40 ? "basic" : mastery < 75 ? "intermediate" : "advanced";
+  const freshness = (a: BankQuestion, b: BankQuestion) =>
+    a.times_asked - b.times_asked ||
+    (a.last_asked_at ?? "").localeCompare(b.last_asked_at ?? "");
+  const candidates = [
+    pool.filter((q) => q.kind === preferKind && q.difficulty === tier),
+    pool.filter((q) => q.kind === preferKind),
+    pool.filter((q) => q.difficulty === tier),
+    pool,
+  ].find((c) => c.length);
+  return candidates!.sort(freshness)[0];
+}
+
+// ---- answer: save one answer as it's submitted, no AI ----
+async function answer(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  body: { sessionId?: string; questionIndex?: number; answer?: string; selectedIndex?: number }
+) {
+  const { sessionId, questionIndex } = body;
+  if (!sessionId || typeof questionIndex !== "number") {
+    return NextResponse.json({ error: "Missing sessionId or questionIndex" }, { status: 400 });
+  }
+  const { data: session } = await supabase
+    .from("quiz_sessions")
+    .select("id, status, items")
+    .eq("id", sessionId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!session) return NextResponse.json({ error: "Session not found" }, { status: 404 });
+  if (session.status !== "active") {
+    return NextResponse.json({ error: "Session already graded" }, { status: 409 });
+  }
+  const item = (session.items as SnapshotItem[]).find((s) => s.index === questionIndex);
+  if (!item) return NextResponse.json({ error: "Unknown question" }, { status: 400 });
+
+  const { error } = await supabase.from("quiz_answers").upsert(
+    {
+      session_id: sessionId,
+      user_id: userId,
+      question_index: questionIndex,
+      topic_id: item.topic_id,
+      answer: typeof body.answer === "string" ? body.answer.slice(0, 4000) : null,
+      selected_index: typeof body.selectedIndex === "number" ? body.selectedIndex : null,
+    },
+    { onConflict: "session_id,question_index" }
+  );
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ ok: true });
+}
+
+// ---- finish: ONE batch AI call → report card, SRS updates, XP ----
+async function finish(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  body: { sessionId?: string }
+) {
+  const { sessionId } = body;
+  if (!sessionId) return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
+
+  const { data: session } = await supabase
+    .from("quiz_sessions")
+    .select("id, status, items, report, created_at")
+    .eq("id", sessionId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (!session) return NextResponse.json({ error: "Session not found" }, { status: 404 });
+  // Finishing twice (e.g. a retried request) returns the saved report.
+  if (session.status === "graded" && session.report) {
+    return NextResponse.json(session.report as ReportCard);
+  }
+
+  const snapshot = session.items as SnapshotItem[];
+  const { data: answersData } = await supabase
+    .from("quiz_answers")
+    .select("question_index, answer, selected_index")
+    .eq("session_id", sessionId);
+  const answerByIndex = new Map(
+    (answersData ?? []).map((a) => [a.question_index as number, a])
+  );
+
+  // Only items the learner actually saw (answered or explicitly skipped) are graded.
+  const presented = snapshot.filter((s) => answerByIndex.has(s.index));
+  if (!presented.length) {
+    return NextResponse.json({ error: "No answers submitted yet" }, { status: 400 });
+  }
+
+  // Topic reference material for the grading prompt.
+  const { data: topicsData } = await supabase
+    .from("topics")
+    .select("*")
+    .eq("user_id", userId)
+    .in("id", Array.from(new Set(presented.map((s) => s.topic_id))));
+  const topicById = new Map(((topicsData ?? []) as Topic[]).map((t) => [t.id, t]));
+
+  const toGrade: SessionGradeInput[] = [];
+  const items: ReportItem[] = presented.map((s) => {
+    const a = answerByIndex.get(s.index)!;
+    const base: ReportItem = {
+      index: s.index,
+      topic_id: s.topic_id,
+      topic_name: s.topic_name,
+      kind: s.kind,
+      prompt: s.prompt,
+      answer: null,
+      skipped: false,
+      correct: null,
+      score: 0,
+      feedback: "",
+      correct_answer: s.model_answer,
+      options: s.options,
+      selected_index: null,
+      correct_index: s.kind === "mcq" ? s.correct_index : null,
+    };
+
+    if (s.kind === "mcq") {
+      const sel = typeof a.selected_index === "number" ? a.selected_index : null;
+      base.selected_index = sel;
+      base.answer = sel !== null && s.options ? s.options[sel] ?? null : null;
+      if (sel === null) {
+        base.skipped = true;
+        base.feedback = "You skipped this one — no harm done, it'll come back around.";
+      } else {
+        base.correct = sel === s.correct_index;
+        base.score = base.correct ? 5 : 1;
+        base.feedback = base.correct
+          ? "Correct — you picked the right option."
+          : `Not quite — the right answer was "${s.options?.[s.correct_index ?? 0] ?? ""}".`;
+      }
+      if (s.options && s.correct_index !== null) {
+        base.correct_answer = s.options[s.correct_index] ?? s.model_answer;
+      }
+      return base;
+    }
+
+    const typed = (a.answer ?? "").trim();
+    base.answer = typed || null;
+    if (!typed) {
+      base.skipped = true;
+      base.feedback = "You skipped this one — no harm done, it'll come back around.";
+      return base;
+    }
+    const topic = topicById.get(s.topic_id);
+    toGrade.push({
+      index: s.index,
+      topic: s.topic_name,
+      summary: topic?.summary ?? null,
+      key_points: (topic?.key_points as string[]) ?? [],
+      question: s.prompt,
+      reference_answer: s.model_answer || null,
+      answer: typed,
+    });
+    return base;
+  });
+
+  // THE one AI call — skipped entirely if every answer was MCQ or skipped.
+  let summary = "";
+  let strengths: string[] = [];
+  let focus: string[] = [];
+  if (toGrade.length) {
+    try {
+      const graded = await gradeSession(toGrade);
+      for (const g of graded.grades) {
+        const item = items.find((i) => i.index === g.index);
+        if (!item) continue;
+        item.score = Math.max(0, Math.min(5, Math.round(g.score)));
+        item.feedback = g.feedback;
+        if (g.correct_answer) item.correct_answer = g.correct_answer;
+      }
+      summary = graded.summary;
+      strengths = graded.strengths ?? [];
+      focus = graded.focus ?? [];
+    } catch (e) {
+      // Keyword-overlap fallback keeps the session finishable without Gemini.
+      console.error("Batch grading failed, using heuristic fallback", e);
+      for (const g of toGrade) {
+        const item = items.find((i) => i.index === g.index)!;
+        item.score = heuristicScore(g.answer, g.key_points);
+        item.feedback =
+          item.score >= 4
+            ? "Strong answer — you hit the key ideas. (AI grading was unavailable, so this was scored by keyword match.)"
+            : "You've got part of it, but some key points seem missing. (AI grading was unavailable, so this was scored by keyword match.)";
+      }
+    }
+  }
+
+  const attempted = items.filter((i) => !i.skipped);
+  const scorePct = attempted.length
+    ? Math.round((attempted.reduce((s, i) => s + i.score, 0) / (attempted.length * 5)) * 100)
+    : 0;
+  if (!summary) {
+    summary =
+      scorePct >= 80
+        ? "Excellent session — your recall is sharp across the board. Keep the rhythm going."
+        : scorePct >= 50
+          ? "Solid session — the core ideas are there, with a few gaps worth another pass."
+          : "Tough session, and that's fine — effortful recall is exactly what rewires memory. These topics will come back sooner.";
+  }
+
+  // SRS: one update per topic from its average score this session.
+  const byTopic = new Map<string, number[]>();
+  for (const i of attempted) {
+    byTopic.set(i.topic_id, [...(byTopic.get(i.topic_id) ?? []), i.score]);
+  }
+  for (const [topicId, scores] of byTopic) {
+    const topic = topicById.get(topicId);
+    if (!topic) continue;
+    const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+    const srs = scheduleNext(
+      { ease: topic.ease, interval_days: topic.interval_days, review_count: topic.review_count },
+      avg
+    );
+    await supabase
+      .from("topics")
+      .update({
+        ease: srs.ease,
+        interval_days: srs.interval_days,
+        review_count: srs.review_count,
+        next_review_at: srs.next_review_at,
+        last_reviewed_at: new Date().toISOString(),
+        mastery: updateMastery(topic.mastery, avg),
+      })
+      .eq("id", topicId);
+  }
+
+  // Review history (drives the calendar/heatmap) — one row per attempted question.
+  if (attempted.length) {
+    await supabase.from("reviews").insert(
+      attempted.map((i) => ({
+        user_id: userId,
+        topic_id: i.topic_id,
+        mode: i.kind === "mcq" ? "quickfire" : i.kind === "quickfire" ? "quickfire" : "recall",
+        score: i.score,
+        question: i.prompt,
+        answer: i.answer,
+        feedback: i.feedback,
+      }))
+    );
+  }
+
+  // Rotate the bank: bump usage so the next session picks fresher questions.
+  const usedIds = presented.map((s) => s.question_id).filter(Boolean) as string[];
+  if (usedIds.length) {
+    const { data: used } = await supabase
+      .from("questions")
+      .select("id, times_asked")
+      .in("id", usedIds);
+    for (const q of used ?? []) {
+      await supabase
+        .from("questions")
+        .update({ times_asked: (q.times_asked ?? 0) + 1, last_asked_at: new Date().toISOString() })
+        .eq("id", q.id);
+    }
+  }
+
+  const xp = attempted.reduce((s, i) => s + xpForReview(i.score), 0);
+  if (xp > 0) await awardXp(supabase, userId, xp);
+
+  const report: ReportCard = {
+    session_id: sessionId,
+    date: new Date().toISOString().slice(0, 10),
+    score_pct: scorePct,
+    xp,
+    summary,
+    strengths,
+    focus,
+    items,
+  };
+
+  await supabase
+    .from("quiz_sessions")
+    .update({ status: "graded", report, graded_at: new Date().toISOString() })
+    .eq("id", sessionId);
+
+  return NextResponse.json(report);
+}
+
+function heuristicScore(answer: string, keyPoints: string[]): number {
+  const a = answer.toLowerCase();
+  const hits = keyPoints.filter((k) =>
+    k.toLowerCase().split(/\W+/).filter((w) => w.length > 4).some((w) => a.includes(w))
+  ).length;
+  const lengthOk = answer.trim().split(/\s+/).length >= 8;
+  return Math.min(5, Math.max(1, hits + (lengthOk ? 2 : 0)));
+}
+
+// ---- rate: flashcard self-rating (never used AI) ----
+async function rate(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  userId: string,
+  body: { topicId?: string; quality?: number }
+) {
+  const { data: topicData } = await supabase
+    .from("topics")
+    .select("*")
+    .eq("id", body.topicId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  const topic = topicData as Topic | null;
+  if (!topic) return NextResponse.json({ error: "Topic not found" }, { status: 404 });
+
+  const quality = Math.max(0, Math.min(5, Number(body.quality)));
   const srs = scheduleNext(
     { ease: topic.ease, interval_days: topic.interval_days, review_count: topic.review_count },
     quality
   );
-
   await supabase
     .from("topics")
     .update({
@@ -120,16 +481,12 @@ async function applyReview(
       mastery: updateMastery(topic.mastery, quality),
     })
     .eq("id", topic.id);
-
   await supabase.from("reviews").insert({
     user_id: userId,
     topic_id: topic.id,
-    mode: review.mode,
+    mode: "flashcard",
     score: Math.round(quality),
-    question: review.question ?? null,
-    answer: review.answer ?? null,
-    feedback: review.feedback ?? null,
   });
-
-  return awardXp(supabase, userId, xpForReview(quality));
+  const xp = await awardXp(supabase, userId, xpForReview(quality));
+  return NextResponse.json({ xp });
 }

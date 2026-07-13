@@ -101,6 +101,55 @@ create table if not exists public.reviews (
   created_at timestamptz not null default now()
 );
 
+-- ============ questions (pre-generated question bank, filled at ingest) ============
+create table if not exists public.questions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users on delete cascade,
+  topic_id uuid not null references public.topics on delete cascade,
+  kind text not null default 'open',           -- 'open' | 'quickfire' | 'mcq'
+  prompt text not null,
+  options jsonb,                               -- mcq only: array of 4 option strings
+  correct_index integer,                       -- mcq only: index into options
+  model_answer text not null,
+  difficulty text not null default 'basic',    -- 'basic' | 'intermediate' | 'advanced'
+  times_asked integer not null default 0,
+  last_asked_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+-- ============ facts (pre-generated "fact of the day" pool, filled at ingest) ============
+create table if not exists public.facts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users on delete cascade,
+  topic_id uuid not null references public.topics on delete cascade,
+  fact text not null,
+  created_at timestamptz not null default now()
+);
+
+-- ============ quiz_sessions (one row per review session; report filled on finish) ============
+create table if not exists public.quiz_sessions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users on delete cascade,
+  status text not null default 'active',       -- 'active' | 'graded'
+  items jsonb not null,                        -- server-side question snapshot (incl. answers)
+  report jsonb,                                -- ReportCard, set when graded
+  created_at timestamptz not null default now(),
+  graded_at timestamptz
+);
+
+-- ============ quiz_answers (each answer saved as it is submitted) ============
+create table if not exists public.quiz_answers (
+  id uuid primary key default gen_random_uuid(),
+  session_id uuid not null references public.quiz_sessions on delete cascade,
+  user_id uuid not null references auth.users on delete cascade,
+  question_index integer not null,             -- index into quiz_sessions.items
+  topic_id uuid not null references public.topics on delete cascade,
+  answer text,                                 -- typed answer ('' = skipped)
+  selected_index integer,                      -- mcq choice
+  created_at timestamptz not null default now(),
+  unique (session_id, question_index)
+);
+
 -- ============ daily_plans (one AI-generated plan per day) ============
 create table if not exists public.daily_plans (
   user_id uuid not null references auth.users on delete cascade,
@@ -119,6 +168,10 @@ alter table public.entry_topics enable row level security;
 alter table public.flashcards enable row level security;
 alter table public.reviews enable row level security;
 alter table public.daily_plans enable row level security;
+alter table public.questions enable row level security;
+alter table public.facts enable row level security;
+alter table public.quiz_sessions enable row level security;
+alter table public.quiz_answers enable row level security;
 
 create policy "own profile" on public.profiles
   for all using (auth.uid() = id) with check (auth.uid() = id);
@@ -148,7 +201,22 @@ create policy "own reviews" on public.reviews
 create policy "own plans" on public.daily_plans
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+create policy "own questions" on public.questions
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+create policy "own facts" on public.facts
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+create policy "own quiz_sessions" on public.quiz_sessions
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+create policy "own quiz_answers" on public.quiz_answers
+  for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
 -- Helpful indexes
 create index if not exists topics_user_next_review on public.topics (user_id, next_review_at);
 create index if not exists reviews_user_created on public.reviews (user_id, created_at);
 create index if not exists links_user on public.topic_links (user_id);
+create index if not exists questions_user_topic on public.questions (user_id, topic_id);
+create index if not exists facts_user on public.facts (user_id);
+create index if not exists quiz_answers_session on public.quiz_answers (session_id);
