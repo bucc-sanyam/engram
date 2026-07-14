@@ -91,7 +91,7 @@ export default function BrainPage() {
       <Nav />
       <main className="relative flex-1">
         {/* Brain fills the page */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0" data-tour="brain-canvas">
           {loaded && topics.length > 0 && (
             <BrainScene
               topics={visibleTopics}
@@ -116,7 +116,7 @@ export default function BrainPage() {
         {/* Search overlay */}
         <div className="pointer-events-none absolute inset-x-0 top-0 z-10 p-4 sm:p-6">
           <div className="pointer-events-auto mx-auto max-w-xl">
-            <div className="relative">
+            <div className="relative" data-tour="brain-search">
               <SearchIcon className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               <input
                 className="input !rounded-full pl-11"

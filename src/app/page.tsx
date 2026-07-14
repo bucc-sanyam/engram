@@ -87,7 +87,7 @@ export default function Dashboard() {
           {/* Left column */}
           <div className="space-y-6">
             {/* Today's plan */}
-            <section className="glass rise rise-1 relative overflow-hidden p-6 sm:p-7">
+            <section data-tour="plan" className="glass rise rise-1 relative overflow-hidden p-6 sm:p-7">
               <div className="absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[#ff7a5c]/[0.07] blur-3xl" />
               <div className="mb-5 flex items-center justify-between gap-3">
                 <div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
                   </h2>
                 </div>
                 {plan && plan.items.length > 0 && (
-                  <Link href="/review" className="btn-primary shrink-0">
+                  <Link href="/review" data-tour="review-cta" className="btn-primary shrink-0">
                     {plan.completed ? "See report" : "Start"} →
                   </Link>
                 )}
@@ -235,7 +235,7 @@ export default function Dashboard() {
             </section>
 
             {/* Personal notes — private reminders, not in the graph */}
-            <section className="glass rise rise-3 p-6 sm:p-7">
+            <section data-tour="notes" className="glass rise rise-3 p-6 sm:p-7">
               <div className="mb-5 flex items-center justify-between">
                 <div>
                   <p className="micro mb-1 !text-[#bfa8f5]">Personal margin</p>
@@ -292,7 +292,7 @@ export default function Dashboard() {
           <div className="space-y-6">
             {/* Fact of the day — pre-generated from the user's own knowledge graph */}
             {fact && (
-              <section className="rise rise-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#7fd0e8]/[0.08] via-transparent to-[#bfa8f5]/[0.05] p-6 sm:p-7">
+              <section data-tour="fact" className="rise rise-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#7fd0e8]/[0.08] via-transparent to-[#bfa8f5]/[0.05] p-6 sm:p-7">
                 <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-[#7fd0e8]/12 blur-3xl" />
                 <p className="micro mb-3 flex items-center gap-2 !text-[#7fd0e8]">
                   <BulbIcon /> Fact of the day
@@ -304,10 +304,18 @@ export default function Dashboard() {
               </section>
             )}
 
-            {profile && <ProgressMap profile={profile} reviews={reviews} />}
+            {profile && (
+              <div data-tour="momentum">
+                <ProgressMap profile={profile} reviews={reviews} />
+              </div>
+            )}
 
             {/* Rendered only after profile loads (client-side) so calendar dates never mismatch SSR */}
-            {profile && <ProgressCalendar reviews={reviews} />}
+            {profile && (
+              <div data-tour="calendar">
+                <ProgressCalendar reviews={reviews} />
+              </div>
+            )}
 
             {/* Stats — naked numbers, no boxes */}
             <div className="rise rise-2 py-3">

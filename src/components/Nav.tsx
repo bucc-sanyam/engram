@@ -54,7 +54,7 @@ export default function Nav() {
           </Link>
 
           {/* Desktop links — floating pill group */}
-          <nav className="hidden items-center gap-1 rounded-full bg-white/[0.035] p-1 backdrop-blur-xl md:flex">
+          <nav data-tour="nav" className="hidden items-center gap-1 rounded-full bg-white/[0.035] p-1 backdrop-blur-xl md:flex">
             {LINKS.map(({ href, label }) => (
               <Link
                 key={href}
@@ -111,7 +111,7 @@ export default function Nav() {
       </header>
 
       {/* Mobile bottom tabs */}
-      <nav className="fixed inset-x-3 bottom-3 z-40 rounded-[1.5rem] bg-[#14111a]/80 shadow-[0_18px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden">
+      <nav data-tour="nav" className="fixed inset-x-3 bottom-3 z-40 rounded-[1.5rem] bg-[#14111a]/80 shadow-[0_18px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl md:hidden">
         <div className="flex items-stretch justify-around pb-[env(safe-area-inset-bottom)]">
           {LINKS.map(({ href, label, icon: Icon }) => (
             <Link

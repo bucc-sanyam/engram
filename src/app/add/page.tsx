@@ -50,7 +50,7 @@ export default function AddPage() {
         </div>
 
         {phase !== "done" && (
-          <div className="glass rise rise-1 p-5 sm:p-6">
+          <div className="glass rise rise-1 p-5 sm:p-6" data-tour="add-form">
             {/* Mode toggle */}
             <div className="mb-4 inline-flex rounded-full bg-white/[0.045] p-1">
               {(["notes", "link"] as Mode[]).map((m) => (

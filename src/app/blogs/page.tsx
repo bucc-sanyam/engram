@@ -42,7 +42,7 @@ export default function BlogsPage() {
       <Nav />
       <main className="mx-auto w-full max-w-3xl flex-1 px-4 pb-32 pt-10 sm:px-6 md:pb-16">
         {/* Page header */}
-        <div className="rise mb-10">
+        <div className="rise mb-10" data-tour="blogs-intro">
           <p className="micro mb-3 !text-[#43d6b5]">Knowledge library</p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
             Your topic blogs

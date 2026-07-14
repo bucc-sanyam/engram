@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from "next/font/google";
 import Footer from "@/components/Footer";
+import TutorialTour from "@/components/TutorialTour";
 import "./globals.css";
 
 const inter = Inter({
@@ -53,6 +54,7 @@ export default function RootLayout({
         <div className="blob blob-gold" aria-hidden />
         {children}
         <Footer />
+        <TutorialTour />
       </body>
     </html>
   );

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { clearGuestMode, enableGuestMode } from "@/lib/demo";
+import { hasSeenTour, startTour } from "@/lib/tour";
 import { BrainIcon } from "@/components/Nav";
 
 
@@ -14,6 +15,30 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [firstVisit, setFirstVisit] = useState(true);
+
+  // A browser's very first visit gets the guided tour before anything else:
+  // demo mode powers the pages the tour points at, and the tour hands the
+  // visitor back here when it finishes or is skipped.
+  useEffect(() => {
+    if (!hasSeenTour()) {
+      enableGuestMode();
+      startTour("first");
+      window.location.assign("/");
+      return;
+    }
+    setFirstVisit(false);
+  }, []);
+
+  if (firstVisit) {
+    return (
+      <main className="flex min-h-screen items-center justify-center">
+        <span className="flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_48px_rgba(255,122,92,0.5)]">
+          <BrainIcon className="h-9 w-9 text-[#1a120e]" />
+        </span>
+      </main>
+    );
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -143,6 +168,8 @@ export default function LoginPage() {
             type="button"
             onClick={() => {
               enableGuestMode();
+              // Every demo entry replays the guided tour, per design.
+              startTour("demo");
               window.location.assign("/");
             }}
             className="font-medium text-muted hover:text-white transition-colors underline underline-offset-2"
