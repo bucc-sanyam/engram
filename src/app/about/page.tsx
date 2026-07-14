@@ -89,7 +89,7 @@ export default function AboutPage() {
           <p className="micro mb-3 !text-[#f5b95f]">Full disclosure</p>
           <p className="text-[15px] leading-relaxed text-white/85">
             There&apos;s no team page because there&apos;s no team — it&apos;s me,
-            an editor, and an amount of tea that my doctor would describe as
+            an editor, and an amount of coffee that my doctor would describe as
             &ldquo;a personality trait.&rdquo; If something breaks, I broke it.
             If something delights you, that was absolutely intentional and I
             planned it from the start.
