@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ReportCardView from "@/components/ReportCardView";
 import { getDayReport } from "@/lib/data";
+import { localDayKey } from "@/lib/dates";
 import type { Review, ReportCard } from "@/lib/types";
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -25,7 +26,9 @@ export default function ProgressCalendar({ reviews }: { reviews: Review[] }) {
   const counts = useMemo(() => {
     const m = new Map<string, number>();
     for (const r of reviews) {
-      const day = r.created_at.slice(0, 10);
+      // Bucket by the viewer's LOCAL day — a review at 1am IST belongs to that
+      // IST date, not the previous UTC date.
+      const day = localDayKey(new Date(r.created_at));
       m.set(day, (m.get(day) ?? 0) + 1);
     }
     return m;

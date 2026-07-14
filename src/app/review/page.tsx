@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Nav from "@/components/Nav";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
 import {
@@ -32,6 +33,34 @@ type Phase =
   | "already-done"; // topic already reviewed today
 
 export default function ReviewPage() {
+  // useSearchParams needs a Suspense boundary for prerendering.
+  return (
+    <Suspense fallback={<ReviewFallback />}>
+      <ReviewRunner />
+    </Suspense>
+  );
+}
+
+function ReviewFallback() {
+  return (
+    <>
+      <Nav />
+      <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-28 pt-8 sm:px-6 md:pb-16">
+        <div className="glass rise flex items-center justify-center gap-3 p-16 text-muted">
+          <Spinner /> Preparing your next challenge…
+        </div>
+      </main>
+    </>
+  );
+}
+
+function ReviewRunner() {
+  // The ?topic= param via the router — unlike a one-off window.location read,
+  // this re-triggers the init effect when the user navigates between
+  // /review?topic=A, /review?topic=B and /review while the page stays mounted.
+  const searchParams = useSearchParams();
+  const topicId = searchParams.get("topic");
+
   const [plan, setPlan] = useState<DailyPlan | null>(null);
   const [session, setSession] = useState<QuizSession | null>(null);
   const [index, setIndex] = useState(0);
@@ -60,6 +89,9 @@ export default function ReviewPage() {
   } | null>(null);
 
   const item: PlanItem | null = plan?.items[index] ?? null;
+
+  // Mirror of startError readable from the stable loadItem callback.
+  const startErrorRef = useRef<string | null>(null);
 
   const loadItem = useCallback(
     async (planData: DailyPlan, quiz: QuizSession | null, i: number) => {
@@ -94,31 +126,48 @@ export default function ReviewPage() {
         setPhase("question");
       } else {
         setError(
-          startError ??
+          startErrorRef.current ??
             "No question available for this topic yet — add more learnings to grow the bank."
         );
         setPhase("question");
       }
     },
-    [startError]
+    []
   );
 
   useEffect(() => {
     // Deep link from the dashboard: `/review?topic=<id>` runs just that one
     // task. No param → the full daily plan including all items (done ones shown
-    // as "already reviewed" so the user still sees every topic).
-    const topicId =
-      typeof window !== "undefined"
-        ? new URLSearchParams(window.location.search).get("topic")
-        : null;
+    // as "already reviewed" so the user still sees every topic). Re-runs on
+    // every ?topic= change, resetting the whole session state.
+    let cancelled = false;
+    setPlan(null);
+    setSession(null);
+    setIndex(0);
+    setPhase("loading");
+    setQuestion(null);
+    setAnswer("");
+    setSelected(null);
+    setMultiSelected([]);
+    setSaving(false);
+    setAnsweredCount(0);
+    setReport(null);
+    setError(null);
+    setStartError(null);
+    startErrorRef.current = null;
+    setSingleTask(false);
+    setDoneDetail(null);
+
     getPlan()
       .then(async (full) => {
+        if (cancelled) return;
         // If the plan is completed and no topicId parameter is specified, show
         // the merged report for today directly (every question asked today).
         if (full.completed && !topicId) {
           try {
             const latestReport = await getLatestReportToday();
             if (latestReport) {
+              if (cancelled) return;
               setReport(latestReport);
               setPhase("report");
               return;
@@ -132,11 +181,15 @@ export default function ReviewPage() {
           // Single-task deep link: just that one topic (regardless of done state)
           p = { ...full, items: full.items.filter((it) => it.topic_id === topicId) };
         } else {
-          // Full plan run: include ALL items, done ones get the "already-done"
-          // card so the user knows they've covered that topic today. Replay mode
-          // (everything already done) shows the full plan too.
-          p = { ...full, items: full.items };
+          // Full plan run: every item, PENDING ONES FIRST so the session never
+          // opens on an "already reviewed" card; done topics come after, so the
+          // user still steps through everything covered today.
+          p = {
+            ...full,
+            items: [...full.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)),
+          };
         }
+        if (cancelled) return;
         setSingleTask(matched);
         setPlan(p);
         if (p.items.length === 0) {
@@ -151,14 +204,22 @@ export default function ReviewPage() {
           try {
             quiz = await startQuiz(pendingIds);
           } catch (e) {
-            setStartError(e instanceof Error ? e.message : "Couldn't start the quiz session");
+            const msg = e instanceof Error ? e.message : "Couldn't start the quiz session";
+            if (!cancelled) setStartError(msg);
+            startErrorRef.current = msg;
           }
         }
+        if (cancelled) return;
         setSession(quiz);
         loadItem(p, quiz, 0);
       })
-      .catch(() => setPhase("empty"));
-  }, [loadItem]);
+      .catch(() => {
+        if (!cancelled) setPhase("empty");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [topicId, loadItem]);
 
   async function submitCurrent(skip = false) {
     if (!question || !session || saving) return;
@@ -217,6 +278,17 @@ export default function ReviewPage() {
       const r = await finishQuiz(session.id);
       setReport(r);
       setPhase("report");
+      // A single deep-linked task doesn't close the day by itself — but when it
+      // was the LAST pending topic, the day IS complete: mark it so the streak
+      // and the "See report" button behave without needing a full-plan replay.
+      if (singleTask) {
+        try {
+          const p = await getPlan();
+          if (p.items.length > 0 && p.items.every((it) => it.done) && !p.completed) {
+            await markPlanCompleted();
+          }
+        } catch { /* non-fatal — the next full run will close the day */ }
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : "Couldn't build your report card");
       setPhase("finished");

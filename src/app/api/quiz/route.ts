@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { gradeSession, type SessionGradeInput } from "@/lib/gemini";
 import { scheduleNext, xpForReview } from "@/lib/srs";
 import { awardXp } from "@/lib/progress";
+import { clampTz, localTodayForOffset } from "@/lib/dates";
+import { indexAnswers } from "@/lib/rag";
 import type {
   QuestionKind,
   ReportCard,
@@ -59,7 +61,12 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
-  const body = await request.json();
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
   const { action } = body;
 
   if (action === "start") return start(supabase, user.id, body);
@@ -226,7 +233,7 @@ async function answer(
   // Multi-select picks are serialised into the (otherwise unused) answer text
   // column, so the answers table needs no new columns.
   const multiPicks = Array.isArray(body.selectedIndices)
-    ? body.selectedIndices.filter((n) => typeof n === "number")
+    ? body.selectedIndices.filter((n) => typeof n === "number").slice(0, 20)
     : null;
   const { error } = await supabase.from("quiz_answers").upsert(
     {
@@ -249,7 +256,7 @@ async function answer(
 async function finish(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
-  body: { sessionId?: string }
+  body: { sessionId?: string; tz?: number }
 ) {
   const { sessionId } = body;
   if (!sessionId) return NextResponse.json({ error: "Missing sessionId" }, { status: 400 });
@@ -455,8 +462,10 @@ async function finish(
   }
 
   // Review history (drives the calendar/heatmap) — one row per attempted question.
+  // A failed insert here must not go unnoticed: the plan's done-tracking and the
+  // calendar both feed off these rows (last_reviewed_at is the safety net).
   if (attempted.length) {
-    await supabase.from("reviews").insert(
+    const { error: revErr } = await supabase.from("reviews").insert(
       attempted.map((i) => ({
         user_id: userId,
         topic_id: i.topic_id,
@@ -467,7 +476,17 @@ async function finish(
         feedback: i.feedback,
       }))
     );
+    if (revErr) {
+      console.error("reviews insert failed — calendar/history will miss this session", revErr);
+    }
   }
+
+  // RAG: index the learner's own typed answers so their recall becomes part of
+  // the retrievable knowledge base. Choice picks carry no prose, so skip them.
+  const typedAnswers = items
+    .filter((i) => !i.skipped && i.answer && (i.kind === "open" || i.kind === "quickfire"))
+    .map((i) => ({ text: i.answer as string, topicId: i.topic_id }));
+  if (typedAnswers.length) await indexAnswers(supabase, userId, typedAnswers);
 
   // Rotate the bank: bump usage so the next session picks fresher questions.
   const usedIds = presented.map((s) => s.question_id).filter(Boolean) as string[];
@@ -484,12 +503,14 @@ async function finish(
     }
   }
 
+  // XP is retired (xpForReview returns 0), but the streak must still advance on
+  // every session with at least one attempted answer.
   const xp = attempted.reduce((s, i) => s + xpForReview(i.score), 0);
-  if (xp > 0) await awardXp(supabase, userId, xp);
+  if (attempted.length) await awardXp(supabase, userId, xp, clampTz(body.tz));
 
   const report: ReportCard = {
     session_id: sessionId,
-    date: new Date().toISOString().slice(0, 10),
+    date: localTodayForOffset(clampTz(body.tz)),
     score_pct: scorePct,
     xp,
     summary,

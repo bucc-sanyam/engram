@@ -1,7 +1,36 @@
 import { GoogleGenAI } from "@google/genai";
 import type { ExtractionResult } from "./types";
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+/**
+ * Model fallback chain: when the primary model hits its free-tier quota
+ * (429 / RESOURCE_EXHAUSTED) or is overloaded (503), the call is retried on
+ * the next model. Override with GEMINI_MODEL (primary) and
+ * GEMINI_MODEL_FALLBACKS (comma-separated) without touching code.
+ */
+const MODEL_CHAIN: string[] = Array.from(
+  new Set(
+    [
+      process.env.GEMINI_MODEL || "gemini-2.5-flash",
+      ...(process.env.GEMINI_MODEL_FALLBACKS
+        ? process.env.GEMINI_MODEL_FALLBACKS.split(",").map((s) => s.trim())
+        : ["gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.0-flash-lite"]),
+    ].filter(Boolean)
+  )
+);
+
+/** Models that recently 429'd are skipped for a while (per warm instance). */
+const cooldownUntil = new Map<string, number>();
+const QUOTA_COOLDOWN_MS = 5 * 60_000;
+
+function isRetryableModelError(e: unknown): boolean {
+  const msg = e instanceof Error ? e.message : String(e);
+  const status = (e as { status?: number | string })?.status;
+  return (
+    status === 429 ||
+    status === 503 ||
+    /\b429\b|\b503\b|RESOURCE_EXHAUSTED|quota|rate.?limit|overloaded|UNAVAILABLE/i.test(msg)
+  );
+}
 
 function client() {
   const apiKey = process.env.GEMINI_API_KEY;
@@ -11,20 +40,38 @@ function client() {
 
 async function generateJson<T>(prompt: string): Promise<T> {
   const ai = client();
-  const res = await ai.models.generateContent({
-    model: MODEL,
-    contents: prompt,
-    config: { responseMimeType: "application/json", temperature: 0.4 },
-  });
-  const text = res.text ?? "";
-  try {
-    return JSON.parse(text) as T;
-  } catch {
-    // Occasionally models wrap JSON in fences despite the mime type.
-    const match = text.match(/\{[\s\S]*\}/);
-    if (match) return JSON.parse(match[0]) as T;
-    throw new Error("Gemini returned unparseable JSON");
+  const now = Date.now();
+  const available = MODEL_CHAIN.filter((m) => (cooldownUntil.get(m) ?? 0) <= now);
+  // If every model is cooling down, try them all anyway rather than fail cold.
+  const models = available.length ? available : MODEL_CHAIN;
+
+  let lastError: unknown = null;
+  for (const model of models) {
+    try {
+      const res = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: { responseMimeType: "application/json", temperature: 0.4 },
+      });
+      const text = res.text ?? "";
+      try {
+        return JSON.parse(text) as T;
+      } catch {
+        // Occasionally models wrap JSON in fences despite the mime type.
+        const match = text.match(/\{[\s\S]*\}/);
+        if (match) return JSON.parse(match[0]) as T;
+        throw new Error("Gemini returned unparseable JSON");
+      }
+    } catch (e) {
+      lastError = e;
+      if (!isRetryableModelError(e)) throw e;
+      cooldownUntil.set(model, Date.now() + QUOTA_COOLDOWN_MS);
+      console.warn(`Gemini model ${model} unavailable (quota/overload) — falling back`, e);
+    }
   }
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("All Gemini models exhausted their quota — try again later");
 }
 
 const CATEGORIES =
@@ -38,7 +85,8 @@ const CATEGORIES =
  */
 export async function extractKnowledge(
   text: string,
-  existingTopics: { name: string; category: string }[]
+  existingTopics: { name: string; category: string }[],
+  priorContext = ""
 ): Promise<ExtractionResult> {
   const existing = existingTopics.length
     ? `The user's knowledge base already contains these topics (reuse the EXACT same name if the content covers one of them, so knowledge accumulates instead of duplicating):\n${existingTopics
@@ -46,12 +94,17 @@ export async function extractKnowledge(
         .join("\n")}`
     : "The user's knowledge base is currently empty.";
 
+  const grounding = priorContext
+    ? `\nRELATED NOTES THE USER SAVED EARLIER (retrieved for grounding — use these to keep naming and framing consistent and to enrich connections; do NOT invent facts that aren't supported by the user's material):\n"""\n${priorContext}\n"""\n`
+    : "";
+
   return generateJson<ExtractionResult>(`You are the knowledge-extraction engine of a personal learning app.
 The user pastes a conversation they had with an AI (or reading notes). Extract structured knowledge from it.
 
 ${existing}
-
+${grounding}
 Rules:
+- Ground EVERYTHING in the CONVERSATION / NOTES provided below (and the user's earlier notes when shown). This is the source of truth — do not add facts, questions or answers that the user's material doesn't support.
 - Identify 1-6 distinct TOPICS actually discussed (not passing mentions). Topic names: short, canonical, title-case (e.g. "Transformer Architecture", not "how transformers work").
 - Each topic gets a category from exactly this list: ${CATEGORIES}.
 - Each topic gets a 2-3 sentence summary of what THE USER learnt about it (from the text), plus 3-6 key_points (short bullet facts worth remembering).
@@ -80,6 +133,55 @@ CONVERSATION / NOTES:
 """
 ${text.slice(0, 60000)}
 """`);
+}
+
+// ---- Embeddings (RAG) ----
+
+export const EMBED_MODEL = process.env.GEMINI_EMBED_MODEL || "gemini-embedding-001";
+export const EMBED_DIMS = Number(process.env.GEMINI_EMBED_DIMS || 768);
+
+type EmbedTaskType = "RETRIEVAL_DOCUMENT" | "RETRIEVAL_QUERY";
+
+/**
+ * Embed one or more texts with Gemini. Returns one vector per input (same
+ * order). `taskType` should be RETRIEVAL_DOCUMENT when indexing stored content
+ * and RETRIEVAL_QUERY when embedding a search query — asymmetric embeddings
+ * retrieve noticeably better. Vectors are L2-normalised so cosine === dot.
+ */
+export async function embedTexts(
+  texts: string[],
+  taskType: EmbedTaskType = "RETRIEVAL_DOCUMENT"
+): Promise<number[][]> {
+  const clean = texts.map((t) => (t ?? "").trim()).filter(Boolean);
+  if (!clean.length) return [];
+  const ai = client();
+  const res = await ai.models.embedContent({
+    model: EMBED_MODEL,
+    contents: clean,
+    config: { taskType, outputDimensionality: EMBED_DIMS },
+  });
+  const embeddings = res.embeddings ?? [];
+  return embeddings.map((e) => normalise((e.values as number[]) ?? []));
+}
+
+/** Embed a single text (query side by default). */
+export async function embedText(
+  text: string,
+  taskType: EmbedTaskType = "RETRIEVAL_QUERY"
+): Promise<number[] | null> {
+  const [v] = await embedTexts([text], taskType);
+  return v ?? null;
+}
+
+/**
+ * Gemini only auto-normalises the full 3072-dim output; truncated dimensions
+ * (e.g. 768) must be normalised client-side before cosine comparison.
+ */
+function normalise(v: number[]): number[] {
+  let sum = 0;
+  for (const x of v) sum += x * x;
+  const norm = Math.sqrt(sum);
+  return norm > 0 ? v.map((x) => x / norm) : v;
 }
 
 export interface SessionGradeInput {

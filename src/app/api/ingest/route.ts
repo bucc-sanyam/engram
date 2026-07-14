@@ -2,19 +2,81 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { extractKnowledge } from "@/lib/gemini";
 import { awardXp } from "@/lib/progress";
+import { indexContent, retrieveContext, formatContext } from "@/lib/rag";
 
 export const maxDuration = 60;
 
+/** Max ingests per user per day — protects the Gemini quota and storage. */
+const INGEST_DAILY_LIMIT = Number(process.env.INGEST_DAILY_LIMIT || 20);
+
+/**
+ * SSRF guard: only allow public http(s) hosts on default ports. Blocks
+ * loopback, private and link-local ranges (cloud metadata endpoints live
+ * there), IPv6 equivalents and internal-sounding hostnames. Applied to the
+ * initial URL AND to every redirect hop.
+ */
+function assertPublicHttpUrl(u: URL): void {
+  if (!/^https?:$/.test(u.protocol)) throw new Error("Only http(s) links are supported.");
+  if (u.username || u.password) throw new Error("Links with credentials aren't allowed.");
+  if (u.port && u.port !== "80" && u.port !== "443") {
+    throw new Error("Links on non-standard ports aren't allowed.");
+  }
+  const host = u.hostname.toLowerCase().replace(/\.$/, "");
+  if (!host.includes(".") || host === "localhost" || host.endsWith(".localhost")) {
+    throw new Error("That host can't be fetched.");
+  }
+  if (/\.(local|internal|intranet|home\.arpa)$/.test(host)) {
+    throw new Error("That host can't be fetched.");
+  }
+  // Literal IPv4
+  const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (v4) {
+    const [a, b] = [Number(v4[1]), Number(v4[2])];
+    const isPrivate =
+      a === 0 || a === 10 || a === 127 ||
+      (a === 100 && b >= 64 && b <= 127) || // CGNAT
+      (a === 169 && b === 254) ||           // link-local / cloud metadata
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) ||
+      a >= 224;                             // multicast/reserved
+    if (isPrivate) throw new Error("That address can't be fetched.");
+  }
+  // Literal IPv6 (URL hostname keeps brackets off)
+  if (host.includes(":")) {
+    const h = host.replace(/^\[|\]$/g, "");
+    if (
+      h === "::" || h === "::1" ||
+      /^(fe80|fc|fd)/i.test(h) ||           // link-local / ULA
+      /^::ffff:/i.test(h)                   // v4-mapped — re-check as v4 elsewhere
+    ) {
+      throw new Error("That address can't be fetched.");
+    }
+  }
+}
+
 /** Fetch an article and reduce it to readable plain text (title + body). */
 async function fetchReadable(url: string): Promise<{ pageTitle: string | null; text: string }> {
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent": "Mozilla/5.0 (compatible; EngramiaBot/1.0; +learning-app)",
-      Accept: "text/html,application/xhtml+xml",
-    },
-    signal: AbortSignal.timeout(15000),
-    redirect: "follow",
-  });
+  // Follow redirects manually so every hop is SSRF-checked too.
+  let current = new URL(url);
+  let res: Response | null = null;
+  for (let hop = 0; hop < 5; hop++) {
+    assertPublicHttpUrl(current);
+    res = await fetch(current.toString(), {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (compatible; EngramiaBot/1.0; +learning-app)",
+        Accept: "text/html,application/xhtml+xml",
+      },
+      signal: AbortSignal.timeout(15000),
+      redirect: "manual",
+    });
+    const location = res.headers.get("location");
+    if (res.status >= 300 && res.status < 400 && location) {
+      current = new URL(location, current);
+      continue;
+    }
+    break;
+  }
+  if (!res) throw new Error("Couldn't fetch that link.");
   if (!res.ok) throw new Error(`The page responded with ${res.status}.`);
   const type = res.headers.get("content-type") ?? "";
   if (!type.includes("html") && !type.includes("text")) {
@@ -58,19 +120,45 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
-  const { text: rawText, title, url } = await request.json();
+  let body: { text?: unknown; title?: unknown; url?: unknown };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+  const { text: rawText, url } = body;
+  const title = typeof body.title === "string" ? body.title.slice(0, 300) : undefined;
+
+  // Per-user daily cap: every ingest is one Gemini call, so an unthrottled
+  // account could burn the whole free-tier quota (and DB storage) alone.
+  const dayStart = new Date();
+  dayStart.setHours(0, 0, 0, 0);
+  const { count: todayCount } = await supabase
+    .from("entries")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .gte("created_at", dayStart.toISOString());
+  if ((todayCount ?? 0) >= INGEST_DAILY_LIMIT) {
+    return NextResponse.json(
+      { error: `Daily limit reached (${INGEST_DAILY_LIMIT} learnings/day) — come back tomorrow!` },
+      { status: 429 }
+    );
+  }
 
   // Link mode: fetch the article and use its content as the text to extract from.
-  let text = rawText as string | undefined;
+  let text = typeof rawText === "string" ? rawText : undefined;
   let sourceUrl: string | null = null;
   let pageTitle: string | null = null;
   if (url && typeof url === "string") {
     let parsed: URL;
     try {
       parsed = new URL(url.trim());
-      if (!/^https?:$/.test(parsed.protocol)) throw new Error();
-    } catch {
-      return NextResponse.json({ error: "That doesn't look like a valid link." }, { status: 400 });
+      assertPublicHttpUrl(parsed);
+    } catch (e) {
+      return NextResponse.json(
+        { error: e instanceof Error && e.message ? e.message : "That doesn't look like a valid link." },
+        { status: 400 }
+      );
     }
     try {
       const page = await fetchReadable(parsed.toString());
@@ -95,6 +183,8 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
+  // Bound what we store — pathological pastes shouldn't eat the DB.
+  text = text.slice(0, 120_000);
 
   // Give Gemini the existing topic names so knowledge accumulates per topic.
   const { data: existing } = await supabase
@@ -103,11 +193,21 @@ export async function POST(request: Request) {
     .eq("user_id", user.id);
   const existingTopics = existing ?? [];
 
+  // RAG grounding: retrieve the user's own earlier notes most relevant to this
+  // new text, so the extraction stays consistent with what they've saved
+  // before. Skipped on the very first ingest (nothing to retrieve).
+  let priorContext = "";
+  if (existingTopics.length) {
+    const hits = await retrieveContext(supabase, text.slice(0, 2000), 6);
+    priorContext = formatContext(hits);
+  }
+
   let extraction;
   try {
     extraction = await extractKnowledge(
       text,
-      existingTopics.map((t) => ({ name: t.name, category: t.category }))
+      existingTopics.map((t) => ({ name: t.name, category: t.category })),
+      priorContext
     );
   } catch (e) {
     console.error("Gemini extraction failed", e);
@@ -130,6 +230,15 @@ export async function POST(request: Request) {
     .select("id")
     .single();
   if (entryErr) return NextResponse.json({ error: entryErr.message }, { status: 500 });
+
+  // 1b. RAG index: chunk + embed this entry so future generation retrieves it.
+  // Best-effort — a missing RAG table or embedding hiccup never fails ingest.
+  await indexContent(supabase, {
+    userId: user.id,
+    entryId: entry.id,
+    source: "entry",
+    text,
+  });
 
   // 2. Upsert topics (merge into existing topics of the same name).
   const nameToId = new Map<string, string>();

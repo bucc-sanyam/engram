@@ -19,6 +19,7 @@ import {
   demoTopicSource,
 } from "./demo";
 import { xpForReview } from "./srs";
+import { localDayKey, localDayStartIso, localDayEndIso, tzOffsetMinutes } from "./dates";
 import type {
   DailyFact,
   DailyPlan,
@@ -48,15 +49,62 @@ interface DemoSession {
   answers: Map<number, { answer?: string; selectedIndex?: number; selectedIndices?: number[] }>;
 }
 
-// Demo-mode mutable state lives for the tab session.
+// Demo-mode mutable state. Persisted to localStorage so guest progress
+// survives reloads and hard navigations (done flags reset on a new day,
+// like the real backend; reviews/reports/streak carry over).
+const DEMO_STATE_KEY = "engramia.demo.v1";
+
 const demoState = {
   profile: { ...demoProfile },
   plan: JSON.parse(JSON.stringify(demoPlan)) as DailyPlan,
   done: new Set<string>(),
   reviews: [...demoReviews] as Review[],
   session: null as DemoSession | null,
-  reports: [] as ReportCard[], // graded reports from this tab (feeds day report cards)
+  reports: [] as ReportCard[], // graded reports (feeds day report cards)
 };
+
+function saveDemoState(): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(
+      DEMO_STATE_KEY,
+      JSON.stringify({
+        day: localDayKey(),
+        profile: demoState.profile,
+        completed: demoState.plan.completed,
+        done: Array.from(demoState.done),
+        reviews: demoState.reviews,
+        reports: demoState.reports,
+      })
+    );
+  } catch { /* storage full/blocked — demo stays in-memory */ }
+}
+
+function loadDemoState(): void {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = window.localStorage.getItem(DEMO_STATE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw) as {
+      day?: string;
+      profile?: Profile;
+      completed?: boolean;
+      done?: string[];
+      reviews?: Review[];
+      reports?: ReportCard[];
+    };
+    if (saved.profile) demoState.profile = { ...demoState.profile, ...saved.profile };
+    if (Array.isArray(saved.reviews) && saved.reviews.length) demoState.reviews = saved.reviews;
+    if (Array.isArray(saved.reports)) demoState.reports = saved.reports;
+    // Done flags and day-completion only carry within the same local day.
+    if (saved.day === localDayKey()) {
+      demoState.done = new Set(saved.done ?? []);
+      demoState.plan.completed = !!saved.completed;
+    }
+  } catch { /* corrupted blob — start fresh */ }
+}
+
+if (isDemo) loadDemoState();
 
 async function api<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(path, {
@@ -100,6 +148,7 @@ export async function getProfile(): Promise<Profile> {
 export async function updateProfile(fields: { display_name: string }): Promise<Profile> {
   if (isDemo) {
     demoState.profile = { ...demoState.profile, ...fields };
+    saveDemoState();
     return demoState.profile;
   }
   const supabase = createClient();
@@ -239,7 +288,7 @@ export async function getPlan(): Promise<DailyPlan> {
       })),
     };
   }
-  return api<DailyPlan>("/api/plan");
+  return api<DailyPlan>(`/api/plan?tz=${tzOffsetMinutes()}`);
 }
 
 export interface IngestResult {
@@ -477,7 +526,7 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
 
     const report: ReportCard = {
       session_id: sessionId,
-      date: new Date().toISOString().slice(0, 10),
+      date: localDayKey(),
       score_pct: scorePct,
       xp: 0,
       summary:
@@ -492,9 +541,10 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
     };
     // Keep the graded report so "See report" and calendar day clicks can replay it.
     demoState.reports.push(report);
+    saveDemoState();
     return report;
   }
-  return api("/api/quiz", { action: "finish", sessionId });
+  return api("/api/quiz", { action: "finish", sessionId, tz: tzOffsetMinutes() });
 }
 
 /**
@@ -528,9 +578,10 @@ export async function markPlanCompleted(): Promise<void> {
   if (isDemo) {
     if (!demoState.plan.completed) demoState.profile.streak += 1;
     demoState.plan.completed = true;
+    saveDemoState();
     return;
   }
-  await api("/api/plan", { action: "complete" });
+  await api("/api/plan", { action: "complete", tz: tzOffsetMinutes() });
 }
 
 export async function signOut(): Promise<void> {
@@ -546,10 +597,10 @@ export async function getTodayReviewDetail(topicId: string): Promise<{
   storedAnswer: string;
   feedback?: string;
 } | null> {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDayKey();
   if (isDemo) {
     const r = demoState.reviews.find(
-      (x) => x.topic_id === topicId && x.created_at.slice(0, 10) === today
+      (x) => x.topic_id === topicId && localDayKey(new Date(x.created_at)) === today
     );
     if (!r) return null;
     const q = demoQuestionBank.find(
@@ -568,7 +619,7 @@ export async function getTodayReviewDetail(topicId: string): Promise<{
     .from("reviews")
     .select("*")
     .eq("topic_id", topicId)
-    .gte("created_at", today + "T00:00:00Z")
+    .gte("created_at", localDayStartIso(today))
     .order("created_at", { ascending: false });
   if (!revs || !revs.length) return null;
   const r = revs[0];
@@ -664,7 +715,7 @@ export async function getDayReport(day: string): Promise<ReportCard | null> {
     const fromSessions = demoState.reports.filter((r) => r.date === day);
     if (fromSessions.length) return mergeReports(fromSessions, day);
     const dayReviews = demoState.reviews
-      .filter((r) => r.created_at.slice(0, 10) === day)
+      .filter((r) => localDayKey(new Date(r.created_at)) === day)
       .sort((a, b) => a.created_at.localeCompare(b.created_at));
     return reportFromReviews(dayReviews, day, (id) =>
       demoTopics.find((t) => t.id === id)?.name ?? "Topic"
@@ -672,16 +723,16 @@ export async function getDayReport(day: string): Promise<ReportCard | null> {
   }
 
   const supabase = createClient();
-  const nextDay = new Date(day + "T00:00:00Z");
-  nextDay.setUTCDate(nextDay.getUTCDate() + 1);
-  const until = nextDay.toISOString().slice(0, 10);
+  // `day` is a LOCAL calendar day — query the UTC instants it spans.
+  const startIso = localDayStartIso(day);
+  const endIso = localDayEndIso(day);
 
   const { data } = await supabase
     .from("quiz_sessions")
     .select("report")
     .eq("status", "graded")
-    .gte("graded_at", day + "T00:00:00Z")
-    .lt("graded_at", until + "T00:00:00Z")
+    .gte("graded_at", startIso)
+    .lt("graded_at", endIso)
     .order("graded_at", { ascending: true });
   const reports = (data ?? [])
     .map((r) => r.report as ReportCard)
@@ -692,8 +743,8 @@ export async function getDayReport(day: string): Promise<ReportCard | null> {
   const { data: revs } = await supabase
     .from("reviews")
     .select("id, topic_id, mode, score, question, answer, feedback, created_at")
-    .gte("created_at", day + "T00:00:00Z")
-    .lt("created_at", until + "T00:00:00Z")
+    .gte("created_at", startIso)
+    .lt("created_at", endIso)
     .order("created_at", { ascending: true });
   if (!revs?.length) return null;
   const topics = await getTopics();
@@ -702,5 +753,5 @@ export async function getDayReport(day: string): Promise<ReportCard | null> {
 }
 
 export async function getLatestReportToday(): Promise<ReportCard | null> {
-  return getDayReport(new Date().toISOString().slice(0, 10));
+  return getDayReport(localDayKey());
 }

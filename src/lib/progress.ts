@@ -1,10 +1,16 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import { localTodayForOffset } from "./dates";
 
-/** Award XP and keep the daily streak up to date. Returns the XP awarded. */
+/**
+ * Keep the daily streak up to date (XP itself is retired — always written as 0).
+ * `tzMin` is the client's timezone offset so "today" is the user's local day,
+ * not the server's UTC day.
+ */
 export async function awardXp(
   supabase: SupabaseClient,
   userId: string,
-  xp: number
+  xp: number,
+  tzMin = 0
 ): Promise<number> {
   const { data: profile } = await supabase
     .from("profiles")
@@ -13,8 +19,8 @@ export async function awardXp(
     .single();
   if (!profile) return 0;
 
-  const today = new Date().toISOString().slice(0, 10);
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const today = localTodayForOffset(tzMin);
+  const yesterday = localTodayForOffset(tzMin, Date.now() - 86400000);
 
   let streak = profile.streak;
   if (profile.last_active !== today) {

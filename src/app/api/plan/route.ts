@@ -1,23 +1,39 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { clampTz, dayStartUtcIso, localTodayForOffset } from "@/lib/dates";
 import type { DailyPlan, PlanItem, ReviewMode, Topic } from "@/lib/types";
 
 export const maxDuration = 60;
 
 const MAX_ITEMS = 10;
 
-/** Topics the user has already reviewed today — marks plan items as done. */
+/**
+ * Topics the user has already reviewed today — marks plan items as done.
+ * Reads BOTH today's `reviews` rows AND `topics.last_reviewed_at` (always
+ * written by quiz finish), so a failed reviews insert can't strand items
+ * as "not attempted".
+ */
 async function doneTopicsToday(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
-  today: string
+  dayStartIso: string
 ): Promise<Set<string>> {
-  const { data } = await supabase
-    .from("reviews")
-    .select("topic_id")
-    .eq("user_id", userId)
-    .gte("created_at", `${today}T00:00:00.000Z`);
-  return new Set((data ?? []).map((r) => r.topic_id as string));
+  const [{ data: revs }, { data: reviewedTopics }] = await Promise.all([
+    supabase
+      .from("reviews")
+      .select("topic_id")
+      .eq("user_id", userId)
+      .gte("created_at", dayStartIso),
+    supabase
+      .from("topics")
+      .select("id")
+      .eq("user_id", userId)
+      .gte("last_reviewed_at", dayStartIso),
+  ]);
+  return new Set([
+    ...(revs ?? []).map((r) => r.topic_id as string),
+    ...(reviewedTopics ?? []).map((t) => t.id as string),
+  ]);
 }
 
 function markDone(plan: DailyPlan, done: Set<string>): DailyPlan {
@@ -27,12 +43,15 @@ function markDone(plan: DailyPlan, done: Set<string>): DailyPlan {
   };
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
-  const today = new Date().toISOString().slice(0, 10);
+  // "Today" is the CLIENT's calendar day — the browser passes its tz offset.
+  const tz = clampTz(new URL(request.url).searchParams.get("tz"));
+  const today = localTodayForOffset(tz);
+  const dayStart = dayStartUtcIso(today, tz);
 
   // A plan is generated once per day and stays stable; the done flags are
   // recomputed from today's reviews on every read.
@@ -43,7 +62,7 @@ export async function GET() {
     .eq("plan_date", today)
     .maybeSingle();
   if (saved) {
-    const done = await doneTopicsToday(supabase, user.id, today);
+    const done = await doneTopicsToday(supabase, user.id, dayStart);
     return NextResponse.json({
       ...markDone(saved.plan as DailyPlan, done),
       completed: saved.completed,
@@ -127,7 +146,7 @@ export async function GET() {
     .from("daily_plans")
     .upsert({ user_id: user.id, plan_date: today, plan, completed: false });
 
-  const done = await doneTopicsToday(supabase, user.id, today);
+  const done = await doneTopicsToday(supabase, user.id, dayStart);
   return NextResponse.json(markDone(plan, done));
 }
 
@@ -185,9 +204,15 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
-  const { action } = await request.json();
+  let body: { action?: string; tz?: unknown };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+  }
+  const { action } = body;
   if (action === "complete") {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localTodayForOffset(clampTz(body.tz));
     await supabase
       .from("daily_plans")
       .update({ completed: true })

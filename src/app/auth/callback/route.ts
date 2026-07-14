@@ -7,7 +7,11 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+      // Don't silently drop the user on the dashboard without a session.
+      return NextResponse.redirect(`${origin}/login?error=auth`);
+    }
   }
 
   return NextResponse.redirect(origin);

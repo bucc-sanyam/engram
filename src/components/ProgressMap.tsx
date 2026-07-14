@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { localDayKey } from "@/lib/dates";
 import type { Profile, Review } from "@/lib/types";
 import { FlameIcon } from "./Nav";
 
@@ -78,7 +79,8 @@ function Heatmap({ reviews }: { reviews: Review[] }) {
   const cells = useMemo(() => {
     const counts = new Map<string, number>();
     for (const r of reviews) {
-      const day = r.created_at.slice(0, 10);
+      // Local-day bucketing, matching the plan's done-tracking and the calendar.
+      const day = localDayKey(new Date(r.created_at));
       counts.set(day, (counts.get(day) ?? 0) + 1);
     }
     const today = new Date();
@@ -87,7 +89,7 @@ function Heatmap({ reviews }: { reviews: Review[] }) {
     const out: { date: string; count: number }[] = [];
     const d = new Date(start);
     while (d <= today) {
-      const key = d.toISOString().slice(0, 10);
+      const key = localDayKey(d);
       out.push({ date: key, count: counts.get(key) ?? 0 });
       d.setDate(d.getDate() + 1);
     }
