@@ -163,7 +163,16 @@ export default function AddPage() {
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#43d6b5]/15 text-3xl">
               🧠
             </div>
-            <h2 className="mb-1 text-xl font-bold">&ldquo;{result.entryTitle}&rdquo; saved</h2>
+            <h2 className="mb-1 text-xl font-bold">
+              {result.duplicate ? (
+                <>You already added &ldquo;{result.entryTitle}&rdquo;</>
+              ) : (
+                <>&ldquo;{result.entryTitle}&rdquo; saved</>
+              )}
+            </h2>
+            {result.duplicate && result.message && (
+              <p className="mx-auto mb-1 max-w-sm text-sm text-muted">{result.message}</p>
+            )}
             {result.sourceUrl && (
               <a
                 href={result.sourceUrl}
@@ -174,9 +183,13 @@ export default function AddPage() {
                 {result.sourceUrl}
               </a>
             )}
-            <p className="display mb-5 text-lg font-semibold text-[#f5b95f]">+{result.xp} XP</p>
+            {!result.duplicate && (
+              <p className="display mb-5 text-lg font-semibold text-[#f5b95f]">+{result.xp} XP</p>
+            )}
 
-            <p className="mb-2 text-sm text-muted">Topics added to your brain:</p>
+            <p className="mb-2 text-sm text-muted">
+              {result.duplicate ? "Already part of your brain:" : "Topics added to your brain:"}
+            </p>
             <div className="mb-8 flex flex-wrap justify-center gap-2">
               {result.topicNames.map((n) => (
                 <span key={n} className="rounded-full bg-[#43d6b5]/12 px-3.5 py-1 text-sm text-[#7fe5cb]">

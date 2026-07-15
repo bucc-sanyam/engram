@@ -25,13 +25,13 @@
     "semantic_hash": "239f3ebf717465dc636818a1a619398d"
   },
   "src/app/add/page.tsx": {
-    "mtime": 1784087449.818441,
-    "ast_hash": "a6b7ede770285e0e2125036702d0d347",
+    "mtime": 1784122039.035476,
+    "ast_hash": "818a9664213d0d38eace6eaf584b5527",
     "semantic_hash": ""
   },
   "src/app/api/ingest/route.ts": {
-    "mtime": 1784098397.2225873,
-    "ast_hash": "8eeb17cbe99a9b25a51d2f8e7c0ae2cd",
+    "mtime": 1784122690.472688,
+    "ast_hash": "ae2bf49cb5a9c63d9006dfdfd5073e95",
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "src/lib/data.ts": {
-    "mtime": 1784098434.4596176,
-    "ast_hash": "8d5f45593de49a12b4ca49b3332225ef",
+    "mtime": 1784122662.1653097,
+    "ast_hash": "d8f7953b30efca316fcb405c1778d1d8",
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784098680.2146766,
-    "ast_hash": "908edc25b31d8aa815e9e7d2fd289570",
+    "mtime": 1784122078.5935261,
+    "ast_hash": "81e720a1dbf62feea6d3db4666258012",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784098719.570269,
-    "ast_hash": "b1c4766a8ef6ef882adc5803cf2249c7",
+    "mtime": 1784122741.803879,
+    "ast_hash": "facdb3ea4cf0cdc99126c42781f84653",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784098706.2410724,
-    "ast_hash": "d3f98337f8126b3a4731bce663a45067",
+    "mtime": 1784122096.1169968,
+    "ast_hash": "5c4b5e4398b01e35f515802e0b5b615f",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -330,8 +330,8 @@
     "semantic_hash": ""
   },
   "src/lib/rag.ts": {
-    "mtime": 1784055072.2685008,
-    "ast_hash": "b7873486ab7313033f965469962652b6",
+    "mtime": 1784121944.5397444,
+    "ast_hash": "df59100e6f5595727c15975ed13aa4c9",
     "semantic_hash": ""
   },
   "supabase/schema-rag.sql": {
@@ -347,6 +347,16 @@
   "src/lib/tour.ts": {
     "mtime": 1784098370.5717123,
     "ast_hash": "a0be73e039994665459e51fb2e5b84e7",
+    "semantic_hash": ""
+  },
+  "src/app/api/rag/reindex/route.ts": {
+    "mtime": 1784122169.2842743,
+    "ast_hash": "b887a609ea991063ceed176ab8a60363",
+    "semantic_hash": ""
+  },
+  "supabase/schema-rag-v2.sql": {
+    "mtime": 1784121821.7256994,
+    "ast_hash": "6fbb71fb1602c172958d18dff4d356a4",
     "semantic_hash": ""
   }
 }

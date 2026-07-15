@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { extractKnowledge } from "@/lib/gemini";
 import { awardXp } from "@/lib/progress";
-import { indexContent, retrieveContext, formatContext } from "@/lib/rag";
+import { indexContent, retrieveContext, formatContext, findDuplicateEntry, linkRetrievalLogToEntry } from "@/lib/rag";
 
 export const maxDuration = 60;
 
@@ -115,6 +115,47 @@ async function fetchReadable(url: string): Promise<{ pageTitle: string | null; t
   return { pageTitle, text };
 }
 
+/**
+ * Build the "you already added this" response, reusing the existing entry's
+ * title/topics/source. Wrapped in try/catch so a lookup hiccup can never
+ * crash the request — worst case it falls back to a bare duplicate notice.
+ */
+async function duplicateResponse(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  entryId: string,
+  message: string
+) {
+  try {
+    const [{ data: existingEntry }, { data: linkedTopics }] = await Promise.all([
+      supabase.from("entries").select("title, source_url").eq("id", entryId).maybeSingle(),
+      supabase.from("entry_topics").select("topics(name)").eq("entry_id", entryId),
+    ]);
+    const topicNames = (linkedTopics ?? []).flatMap((r: any) => {
+      const t = r.topics;
+      if (!t) return [];
+      return Array.isArray(t) ? t.map((x) => x?.name).filter(Boolean) : t.name ? [t.name] : [];
+    });
+    return NextResponse.json({
+      entryTitle: existingEntry?.title ?? "Untitled",
+      topicNames,
+      sourceUrl: existingEntry?.source_url ?? null,
+      xp: 0,
+      duplicate: true,
+      message,
+    });
+  } catch (e) {
+    console.error("Duplicate response lookup failed", e);
+    return NextResponse.json({
+      entryTitle: "Untitled",
+      topicNames: [],
+      sourceUrl: null,
+      xp: 0,
+      duplicate: true,
+      message,
+    });
+  }
+}
+
 export async function POST(request: Request) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -160,6 +201,22 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    // Fast path: this exact URL was already ingested — skip the network
+    // fetch AND the Gemini call entirely (re-fetching can yield slightly
+    // different text — ads/timestamps/related-post widgets — so this catches
+    // "same link" cases the later content-hash check might miss).
+    const normalizedUrl = parsed.toString();
+    const { data: existingByUrl } = await supabase
+      .from("entries")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("source_url", normalizedUrl)
+      .limit(1)
+      .maybeSingle();
+    if (existingByUrl) {
+      return duplicateResponse(supabase, existingByUrl.id, "You've already added this link — no new entry was created.");
+    }
+
     try {
       const page = await fetchReadable(parsed.toString());
       pageTitle = page.pageTitle;
@@ -186,6 +243,18 @@ export async function POST(request: Request) {
   // Bound what we store — pathological pastes shouldn't eat the DB.
   text = text.slice(0, 120_000);
 
+  // Exact-duplicate short-circuit: if this content was already ingested,
+  // reuse that entry instead of burning a Gemini call, a daily-cap slot, and
+  // creating duplicate chunks/questions.
+  const duplicate = await findDuplicateEntry(supabase, user.id, text);
+  if (duplicate) {
+    return duplicateResponse(
+      supabase,
+      duplicate.entryId,
+      "You've already added this exact content — no new entry was created."
+    );
+  }
+
   // Give Gemini the existing topic names so knowledge accumulates per topic.
   const { data: existing } = await supabase
     .from("topics")
@@ -197,9 +266,11 @@ export async function POST(request: Request) {
   // new text, so the extraction stays consistent with what they've saved
   // before. Skipped on the very first ingest (nothing to retrieve).
   let priorContext = "";
+  let retrievalLogId: string | null = null;
   if (existingTopics.length) {
-    const hits = await retrieveContext(supabase, text.slice(0, 2000), 6);
-    priorContext = formatContext(hits);
+    const retrieval = await retrieveContext(supabase, user.id, text.slice(0, 2000), 6);
+    priorContext = formatContext(retrieval.chunks);
+    retrievalLogId = retrieval.logId;
   }
 
   let extraction;
@@ -230,6 +301,9 @@ export async function POST(request: Request) {
     .select("id")
     .single();
   if (entryErr) return NextResponse.json({ error: entryErr.message }, { status: 500 });
+
+  // Backfill the grounding retrieval's log with the entry it fed, now that it exists.
+  if (retrievalLogId) await linkRetrievalLogToEntry(supabase, retrievalLogId, entry.id);
 
   // 1b. RAG index: chunk + embed this entry so future generation retrieves it.
   // Best-effort — a missing RAG table or embedding hiccup never fails ingest.

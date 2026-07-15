@@ -113,8 +113,13 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: res.statusText }));
-    throw new Error(err.error ?? "Request failed");
+    // `??` only falls back on null/undefined — over HTTP/2, res.statusText is
+    // ALWAYS "" (no reason phrases), so a non-JSON error body (platform crash
+    // or timeout) used to produce `new Error("")`, which the UI then rendered
+    // as nothing (`{error && ...}` is falsy for ""). Include res.status so the
+    // fallback is never blank.
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.error || `Request failed (${res.status})`);
   }
   return res.json();
 }
@@ -296,6 +301,9 @@ export interface IngestResult {
   topicNames: string[];
   sourceUrl?: string | null;
   xp: number;
+  /** True when this exact content was already ingested — the existing entry was reused, nothing new was created. */
+  duplicate?: boolean;
+  message?: string;
 }
 
 export async function ingestText(text: string): Promise<IngestResult> {
