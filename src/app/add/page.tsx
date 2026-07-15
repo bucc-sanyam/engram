@@ -15,11 +15,18 @@ export default function AddPage() {
   const [phase, setPhase] = useState<Phase>("input");
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<IngestResult | null>(null);
+  const [showDemoGate, setShowDemoGate] = useState(false);
   // Guest-cookie-dependent, so read after mount to keep hydration stable.
   const [demo, setDemo] = useState(false);
   useEffect(() => setDemo(isDemo), []);
 
   async function submit() {
+    if (demo) {
+      // Guests can look around but can't write real data — no simulated
+      // "success", just an honest gate pointing at sign-in.
+      setShowDemoGate(true);
+      return;
+    }
     setError(null);
     setPhase("processing");
     try {
@@ -118,9 +125,36 @@ export default function AddPage() {
             {error && <p className="mt-3 text-sm text-danger">{error}</p>}
             {demo && (
               <p className="mt-3 text-xs text-[#f5b95f]/80">
-                Demo mode — extraction is simulated. Add your Supabase & Gemini keys to save for real.
+                Demo mode — guests can look around but can&apos;t add real data. Sign in to save for real.
               </p>
             )}
+          </div>
+        )}
+
+        {showDemoGate && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+            <div
+              className="absolute inset-0 bg-[rgba(8,7,12,0.78)] backdrop-blur-sm"
+              onClick={() => setShowDemoGate(false)}
+            />
+            <div className="overlay-panel relative w-full max-w-sm p-7 text-center" data-allow-nav>
+              <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_36px_rgba(255,122,92,0.45)]">
+                <LockIcon className="h-7 w-7 text-[#1a120e]" />
+              </span>
+              <h3 className="mb-2 text-lg font-bold">This is a demo</h3>
+              <p className="mb-5 text-sm leading-relaxed text-muted">
+                Guest sessions can explore freely but can&apos;t add new data. Sign in — it&apos;s free — to
+                start building your own knowledge graph.
+              </p>
+              <div className="flex flex-col gap-2">
+                <Link href="/login" className="btn-primary w-full justify-center">
+                  Sign in
+                </Link>
+                <button onClick={() => setShowDemoGate(false)} className="btn-ghost w-full justify-center">
+                  Not now
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
@@ -178,6 +212,15 @@ export default function AddPage() {
         )}
       </main>
     </>
+  );
+}
+
+function LockIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+    </svg>
   );
 }
 

@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { BrainIcon } from "@/components/Nav";
+import { BigScoreRing } from "@/components/ReportCardView";
 import { clearGuestMode, isDemo } from "@/lib/demo";
 import {
+  DEMO_REVIEW_QUESTION,
   TOUR_STEPS,
   clearTourState,
   hasSeenTour,
@@ -18,6 +20,7 @@ type SpotRect = { top: number; left: number; width: number; height: number };
 
 const CARD_W = 400;
 const CARD_W_CENTERED = 440;
+const CARD_W_REVIEW = 460;
 const CARD_H_EST = 260;
 const GAP = 16;
 const DIM = "rgba(8,7,12,0.78)";
@@ -35,6 +38,26 @@ export default function TutorialTour() {
   const [rect, setRect] = useState<SpotRect | null>(null);
   const [ready, setReady] = useState(false);
   const [vp, setVp] = useState({ w: 0, h: 0 });
+  const tourActive = useRef(false);
+
+  // Block link navigation while the tour is active so a stray click on the
+  // Nav, a plan row, a blog card, etc. can't route the visitor away from the
+  // guided flow — the tour drives its own navigation via router.push.
+  // Everything that *isn't* a link (buttons, the brain canvas, inputs) is
+  // untouched, so spotlighted features stay genuinely clickable. Opt out
+  // with `data-allow-nav` on an ancestor (used by the demo-mode add gate).
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (!tourActive.current) return;
+      const target = e.target as HTMLElement | null;
+      const anchor = target?.closest("a");
+      if (!anchor || anchor.closest("[data-allow-nav]")) return;
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, []);
 
   // Pick up an armed tour after mount (storage is client-only). Visitors who
   // land straight in demo mode without ever finishing the tour still get it.
@@ -150,6 +173,8 @@ export default function TutorialTour() {
     return () => window.removeEventListener("keydown", onKey);
   });
 
+  tourActive.current = !!state;
+
   if (!state || vp.w === 0) return null;
 
   const step = TOUR_STEPS[state.step];
@@ -168,12 +193,14 @@ export default function TutorialTour() {
 
   // Place the card below the spotlight, above it when there's no room, or
   // floated near the bottom when the target fills the screen (3D brain).
-  const cardW = Math.min(spot ? CARD_W : CARD_W_CENTERED, vp.w - 32);
+  const centeredW = step.custom === "review-demo" ? CARD_W_REVIEW : CARD_W_CENTERED;
+  const cardW = Math.min(spot ? CARD_W : centeredW, vp.w - 32);
   let cardStyle: React.CSSProperties;
   if (!spot) {
+    const halfH = step.custom === "review-demo" ? 260 : 190;
     cardStyle = {
       left: Math.max(GAP, (vp.w - cardW) / 2),
-      top: Math.max(24, vp.h * 0.5 - 190),
+      top: Math.max(24, vp.h * 0.5 - halfH),
       width: cardW,
     };
   } else if (isMobile) {
@@ -192,17 +219,27 @@ export default function TutorialTour() {
   const centered = !spot;
 
   return (
-    <div className="fixed inset-0 z-[120]" role="dialog" aria-modal="true" aria-label="Guided tour">
-      {/* Click shield; also the dim layer on centered steps (spotlight steps
-          get their dim from the cut-out shadow below). */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: spot ? "transparent" : DIM,
-          backdropFilter: spot ? undefined : "blur(3px)",
-          WebkitBackdropFilter: spot ? undefined : "blur(3px)",
-        }}
-      />
+    <div
+      className="fixed inset-0 z-[120]"
+      style={{ pointerEvents: spot ? "none" : "auto" }}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Guided tour"
+    >
+      {/* Dim + click shield on centered steps (nothing underneath is meant to
+          be touched). Spotlight steps make the whole overlay pointer-events:
+          none, so the spotlighted feature underneath stays genuinely
+          clickable (calendar days, the brain canvas, search, …) — only the
+          tour card re-enables pointer-events on itself. Dimming there comes
+          from the cut-out shadow below, which is pointer-events-none too.
+          Link navigation is still blocked globally so a stray click can't
+          route away from the tour. */}
+      {!spot && (
+        <div
+          className="absolute inset-0"
+          style={{ background: DIM, backdropFilter: "blur(3px)", WebkitBackdropFilter: "blur(3px)" }}
+        />
+      )}
 
       {spot && (
         <div
@@ -230,55 +267,156 @@ export default function TutorialTour() {
             </button>
           </div>
 
-          {centered && (
-            <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_40px_rgba(255,122,92,0.5)]">
-              <BrainIcon className="h-8 w-8 text-[#1a120e]" />
-            </span>
-          )}
-
-          <h3 className="display mb-2 text-[19px] font-bold leading-snug">{step.title}</h3>
-          <p className="text-sm leading-relaxed text-muted">{body}</p>
-
-          <div className={`mt-5 flex items-center gap-3 ${centered ? "justify-center" : "justify-between"}`}>
-            {!centered && (
-              <div className="flex items-center gap-1.5" aria-hidden>
-                {TOUR_STEPS.map((_, i) => (
-                  <span
-                    key={i}
-                    className={`rounded-full transition-all duration-300 ${
-                      i === state.step
-                        ? "h-1.5 w-5 bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f]"
-                        : "h-1.5 w-1.5 bg-white/15"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
-            <div className="flex items-center gap-2">
-              {state.step > 0 && (
-                <button
-                  onClick={back}
-                  className="rounded-full bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:bg-white/[0.1] hover:text-white"
-                >
-                  Back
-                </button>
+          {step.custom === "review-demo" ? (
+            <ReviewDemoCard title={step.title} onBack={state.step > 0 ? back : undefined} onContinue={next} />
+          ) : (
+            <>
+              {centered && (
+                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_40px_rgba(255,122,92,0.5)]">
+                  <BrainIcon className="h-8 w-8 text-[#1a120e]" />
+                </span>
               )}
-              <button
-                onClick={next}
-                className="rounded-full bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f] px-5 py-2 text-[13px] font-semibold text-[#1a120e] shadow-[0_0_18px_rgba(255,122,92,0.35)] transition-all hover:shadow-[0_0_28px_rgba(255,122,92,0.55)]"
-              >
-                {state.step === total - 1
-                  ? state.mode === "first"
-                    ? "Create my account →"
-                    : "Start exploring →"
-                  : state.step === 0
-                    ? "Show me around →"
-                    : "Next →"}
-              </button>
-            </div>
-          </div>
+
+              <h3 className="display mb-2 text-[19px] font-bold leading-snug">{step.title}</h3>
+              <p className="text-sm leading-relaxed text-muted">{body}</p>
+
+              <div className={`mt-5 flex items-center gap-3 ${centered ? "justify-center" : "justify-between"}`}>
+                {!centered && (
+                  <div className="flex items-center gap-1.5" aria-hidden>
+                    {TOUR_STEPS.map((_, i) => (
+                      <span
+                        key={i}
+                        className={`rounded-full transition-all duration-300 ${
+                          i === state.step
+                            ? "h-1.5 w-5 bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f]"
+                            : "h-1.5 w-1.5 bg-white/15"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="flex items-center gap-2">
+                  {state.step > 0 && (
+                    <button
+                      onClick={back}
+                      className="rounded-full bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:bg-white/[0.1] hover:text-white"
+                    >
+                      Back
+                    </button>
+                  )}
+                  <button
+                    onClick={next}
+                    className="rounded-full bg-gradient-to-r from-[#ff7a5c] to-[#f5b95f] px-5 py-2 text-[13px] font-semibold text-[#1a120e] shadow-[0_0_18px_rgba(255,122,92,0.35)] transition-all hover:shadow-[0_0_28px_rgba(255,122,92,0.55)]"
+                  >
+                    {state.step === total - 1
+                      ? state.mode === "first"
+                        ? "Create my account →"
+                        : "Start exploring →"
+                      : state.step === 0
+                        ? "Show me around →"
+                        : "Next →"}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ * Self-contained mock review question, embedded directly in the tour card —
+ * never touches real quiz state or Supabase, so it works identically for
+ * every visitor regardless of demo progress. Submitting reveals a mocked
+ * report card, then "Continue" advances the tour like any other step.
+ */
+function ReviewDemoCard({
+  title,
+  onBack,
+  onContinue,
+}: {
+  title: string;
+  onBack?: () => void;
+  onContinue: () => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const q = DEMO_REVIEW_QUESTION;
+  const correct = selected === q.correctIndex;
+
+  if (!submitted) {
+    return (
+      <>
+        <h3 className="display mb-2 text-[19px] font-bold leading-snug">{title}</h3>
+        <p className="mb-4 text-sm leading-relaxed text-muted">
+          Here&apos;s a made-up question so you can feel the flow — pick an answer and submit it.
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] p-4">
+          <p className="micro mb-3 !text-[#f5b95f]">
+            {q.kind} · {q.topic}
+          </p>
+          <p className="mb-4 font-medium leading-relaxed">{q.prompt}</p>
+          <div className="space-y-1.5">
+            {q.options.map((opt, i) => (
+              <button
+                key={i}
+                onClick={() => setSelected(i)}
+                className={`w-full rounded-xl border px-3.5 py-2.5 text-left text-sm leading-relaxed transition-colors ${
+                  selected === i
+                    ? "border-[#f5b95f]/50 bg-[#f5b95f]/[0.1] text-white"
+                    : "border-white/[0.07] text-white/70 hover:bg-white/[0.04]"
+                }`}
+              >
+                <span className="mr-2 text-xs font-bold">{String.fromCharCode(65 + i)}</span>
+                {opt}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="mt-5 flex items-center justify-between gap-3">
+          {onBack ? (
+            <button
+              onClick={onBack}
+              className="rounded-full bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-muted transition-colors hover:bg-white/[0.1] hover:text-white"
+            >
+              Back
+            </button>
+          ) : (
+            <span />
+          )}
+          <button
+            onClick={() => setSubmitted(true)}
+            disabled={selected === null}
+            className="btn-primary disabled:opacity-40"
+          >
+            Submit answer
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="mb-4 flex items-center gap-4">
+        <BigScoreRing pct={correct ? 100 : 40} />
+        <div>
+          <p className="font-bold leading-snug">{correct ? "Nice — correct!" : "Close, not quite."}</p>
+          <p className="micro mt-0.5">demo report card</p>
+        </div>
+      </div>
+      <p className="mb-4 text-sm leading-relaxed text-white/85">
+        {correct ? q.correctFeedback : q.incorrectFeedback}
+      </p>
+      <div className="rounded-2xl bg-[#43d6b5]/[0.05] p-4">
+        <p className="micro mb-1.5 !text-[#43d6b5]">Correct answer</p>
+        <p className="text-sm leading-relaxed text-muted">{q.options[q.correctIndex]}</p>
+      </div>
+      <button onClick={onContinue} className="btn-primary mt-5 w-full justify-center">
+        Continue →
+      </button>
+    </>
   );
 }

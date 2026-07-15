@@ -208,6 +208,7 @@ h1, h2, h3, .display {
 .tour-card {
   position: fixed;
   z-index: 130;
+  pointer-events: auto;
   padding: 1.4rem 1.5rem 1.25rem;
   background: linear-gradient(170deg, rgba(24, 20, 28, 0.86), rgba(12, 10, 16, 0.8));
   backdrop-filter: blur(24px);

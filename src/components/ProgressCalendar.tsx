@@ -141,7 +141,7 @@ export default function ProgressCalendar({ reviews }: { reviews: Review[] }) {
       {/* Day report modal */}
       {openDay && (
         <div
-          className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#0b0a0e]/80 px-4 py-10 backdrop-blur-sm sm:py-14"
+          className="fixed inset-0 z-[125] flex items-start justify-center overflow-y-auto bg-[#0b0a0e]/80 px-4 py-10 backdrop-blur-sm sm:py-14"
           onClick={() => setOpenDay(null)}
         >
           <div

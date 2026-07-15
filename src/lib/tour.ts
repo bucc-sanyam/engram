@@ -21,6 +21,24 @@ export type TourStep = {
   body: string;
   /** Alternative body for demo-mode runs (used by the closing step). */
   bodyDemo?: string;
+  /** Swaps the title/body for a fully custom, self-contained interactive card. */
+  custom?: "review-demo";
+};
+
+/** A made-up question used purely to demonstrate the review flow inside the tour — never touches real quiz state. */
+export const DEMO_REVIEW_QUESTION = {
+  topic: "Spaced Repetition",
+  kind: "Quick-fire",
+  prompt: "What's the core idea behind spaced repetition?",
+  options: [
+    "Reviewing material right before you're about to forget it",
+    "Studying the same material for as many hours as possible",
+    "Only reviewing material you already know well",
+    "Switching topics every few minutes to stay alert",
+  ],
+  correctIndex: 0,
+  correctFeedback: "Exactly — timing the review just before the forgetting curve dips is what makes each pass stick.",
+  incorrectFeedback: "Not quite — the trick is timing: reviewing right before you'd naturally forget is what makes each pass stick.",
 };
 
 export const TOUR_STEPS: TourStep[] = [
@@ -46,6 +64,12 @@ export const TOUR_STEPS: TourStep[] = [
     target: "review-cta",
     title: "One-tap review",
     body: "Start runs the whole plan — open questions, quick-fire, MCQs, true/false and multi-select — all graded together at the end into a full report card.",
+  },
+  {
+    route: "/review",
+    custom: "review-demo",
+    title: "Try a review",
+    body: "This is what grading feels like.",
   },
   {
     route: "/",
