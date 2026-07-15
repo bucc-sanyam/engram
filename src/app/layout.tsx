@@ -28,9 +28,9 @@ const jetmono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Engramia — your second brain",
+  title: "Knovis — your second brain",
   description:
-    "From 'engram' — the physical trace a memory leaves in your brain. Log what you learn, watch it grow into a living knowledge graph, and revise it right before you'd forget.",
+    "Knowledge + vision — and yes, it sounds like 'novice' on purpose. Log what you learn, watch it grow into a living knowledge graph, and revise it right before you'd forget.",
 };
 
 export const viewport: Viewport = {

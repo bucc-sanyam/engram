@@ -37,9 +37,9 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isPublic = PUBLIC_PATHS.some((p) => path.startsWith(p));
   // Guest (demo) mode: the login page sets this cookie so visitors can explore
-  // We allow "demo mode" if the user has opted in via the `engramia_guest` cookie,
+  // We allow "demo mode" if the user has opted in via the `knovis_guest` cookie,
   // or if there is no Supabase URL configured.
-  const isGuest = request.cookies.get("engramia_guest")?.value === "1";
+  const isGuest = request.cookies.get("knovis_guest")?.value === "1";
 
   if (!user && !isPublic && !isGuest) {
     const url = request.nextUrl.clone();
@@ -50,13 +50,13 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/";
     const redirect = NextResponse.redirect(url);
-    if (isGuest) redirect.cookies.set("engramia_guest", "", { maxAge: 0, path: "/" });
+    if (isGuest) redirect.cookies.set("knovis_guest", "", { maxAge: 0, path: "/" });
     return redirect;
   }
   // A real session always wins over guest mode — drop the cookie so the
   // client data layer stops serving demo data.
   if (user && isGuest) {
-    response.cookies.set("engramia_guest", "", { maxAge: 0, path: "/" });
+    response.cookies.set("knovis_guest", "", { maxAge: 0, path: "/" });
   }
 
   return response;

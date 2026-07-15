@@ -1,4 +1,4 @@
-# 🧠 Engramia — your second brain
+# 🧠 Knovis — your second brain
 
 Log what you learn (AI conversations, reading notes), see it as a living knowledge graph,
 and let Gemini quiz you with spaced repetition before you forget it.

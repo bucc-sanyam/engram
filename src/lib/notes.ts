@@ -5,12 +5,12 @@ import type { Note } from "./types";
 /**
  * Personal notes live in localStorage — they're private reminders, kept out of
  * the knowledge graph and off the server on purpose. Every mutation dispatches
- * an `engramia:notes` event so any mounted view (the /notes page, the dashboard
+ * a `knovis:notes` event so any mounted view (the /notes page, the dashboard
  * section) can re-read in sync, even across tabs (via the native `storage` event).
  */
-const KEY = "engramia.notes.v1";
-const SEEDED_KEY = "engramia.notes.seeded.v1";
-export const NOTES_EVENT = "engramia:notes";
+const KEY = "knovis.notes.v1";
+const SEEDED_KEY = "knovis.notes.seeded.v1";
+export const NOTES_EVENT = "knovis:notes";
 
 function read(): Note[] {
   if (typeof window === "undefined") return [];

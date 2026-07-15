@@ -44,7 +44,7 @@ export const DEMO_REVIEW_QUESTION = {
 export const TOUR_STEPS: TourStep[] = [
   {
     route: "/",
-    title: "Welcome to Engramia",
+    title: "Welcome to Knovis",
     body: "Your second brain. Log what you learn, watch it grow into a living graph, and revise each memory right before it fades. Here's the one-minute walk-through.",
   },
   {
@@ -57,7 +57,7 @@ export const TOUR_STEPS: TourStep[] = [
     route: "/",
     target: "plan",
     title: "Today's revision plan",
-    body: "Engramia schedules each topic on the day you're about to forget it — spaced repetition, done for you. Every row is a topic due today; tap one to revise it on its own.",
+    body: "Knovis schedules each topic on the day you're about to forget it — spaced repetition, done for you. Every row is a topic due today; tap one to revise it on its own.",
   },
   {
     route: "/",
@@ -121,7 +121,7 @@ export const TOUR_STEPS: TourStep[] = [
   },
   {
     route: "/",
-    title: "That's Engramia",
+    title: "That's Knovis",
     body: "Ready to grow a brain of your own? Create a free account and log your first learning — it takes a minute.",
     bodyDemo: "You're in the demo — everything works, with seeded topics. Explore freely, and sign up whenever it clicks.",
   },
@@ -129,8 +129,8 @@ export const TOUR_STEPS: TourStep[] = [
 
 export type TourState = { mode: TourMode; step: number };
 
-const SEEN_KEY = "engramia.tour.seen.v1";
-const STATE_KEY = "engramia.tour.state.v1";
+const SEEN_KEY = "knovis.tour.seen.v1";
+const STATE_KEY = "knovis.tour.state.v1";
 
 export function hasSeenTour(): boolean {
   try {

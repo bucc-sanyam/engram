@@ -472,7 +472,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 3,
+      "community": 8,
       "norm_label": "page.tsx"
     },
     {
@@ -482,7 +482,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 3,
+      "community": 8,
       "norm_label": "metadata"
     },
     {
@@ -492,7 +492,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 3,
+      "community": 8,
       "norm_label": "aboutpage()"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_profile_page",
-      "community": 3,
+      "community": 8,
       "norm_label": "page.tsx"
     },
     {
@@ -1162,7 +1162,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_profile_page_profilepage",
-      "community": 3,
+      "community": 8,
       "norm_label": "profilepage()"
     },
     {
@@ -1172,7 +1172,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_app_profile_page_profilestat",
-      "community": 3,
+      "community": 8,
       "norm_label": "profilestat()"
     },
     {
@@ -1422,7 +1422,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_nav",
-      "community": 3,
+      "community": 8,
       "norm_label": "nav.tsx"
     },
     {
@@ -1432,7 +1432,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_nav_links",
-      "community": 3,
+      "community": 8,
       "norm_label": "links"
     },
     {
@@ -1442,7 +1442,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_nav_nav",
-      "community": 3,
+      "community": 8,
       "norm_label": "nav()"
     },
     {
@@ -1462,7 +1462,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_components_nav_sunicon",
-      "community": 3,
+      "community": 8,
       "norm_label": "sunicon()"
     },
     {
@@ -1472,7 +1472,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_components_nav_plusicon",
-      "community": 3,
+      "community": 8,
       "norm_label": "plusicon()"
     },
     {
@@ -1482,7 +1482,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_components_nav_bolticon",
-      "community": 3,
+      "community": 8,
       "norm_label": "bolticon()"
     },
     {
@@ -1492,7 +1492,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "src_components_nav_flameicon",
-      "community": 3,
+      "community": 0,
       "norm_label": "flameicon()"
     },
     {
@@ -1502,7 +1502,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "src_components_nav_bookicon",
-      "community": 3,
+      "community": 8,
       "norm_label": "bookicon()"
     },
     {
@@ -1512,7 +1512,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_components_nav_usericon",
-      "community": 3,
+      "community": 8,
       "norm_label": "usericon()"
     },
     {
@@ -1572,7 +1572,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progressmap",
-      "community": 3,
+      "community": 0,
       "norm_label": "progressmap.tsx"
     },
     {
@@ -1582,7 +1582,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progressmap_nextmilestone",
-      "community": 3,
+      "community": 0,
       "norm_label": "nextmilestone()"
     },
     {
@@ -1592,7 +1592,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_progressmap_progressmap",
-      "community": 3,
+      "community": 0,
       "norm_label": "progressmap()"
     },
     {
@@ -1602,7 +1602,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_components_progressmap_heatmap",
-      "community": 2,
+      "community": 0,
       "norm_label": "heatmap()"
     },
     {
@@ -1612,7 +1612,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -1622,7 +1622,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_reportcardview_kind_label",
-      "community": 8,
+      "community": 0,
       "norm_label": "kind_label"
     },
     {
@@ -1632,7 +1632,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportcardview()"
     },
     {
@@ -1642,7 +1642,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportitemcard()"
     },
     {
@@ -1652,7 +1652,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 8,
+      "community": 0,
       "norm_label": "bigscorering()"
     },
     {
@@ -1662,7 +1662,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 8,
+      "community": 0,
       "norm_label": "scorering()"
     },
     {
@@ -1862,7 +1862,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 3,
+      "community": 8,
       "norm_label": "getprofile()"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_lib_data_updateprofile",
-      "community": 3,
+      "community": 8,
       "norm_label": "updateprofile()"
     },
     {
@@ -1882,7 +1882,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_lib_data_getuseremail",
-      "community": 3,
+      "community": 8,
       "norm_label": "getuseremail()"
     },
     {
@@ -2052,7 +2052,7 @@
       "source_location": "L587",
       "_origin": "ast",
       "id": "src_lib_data_signout",
-      "community": 3,
+      "community": 8,
       "norm_label": "signout()"
     },
     {
@@ -2642,7 +2642,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 44,
+      "community": 2,
       "norm_label": "progress.ts"
     },
     {
@@ -2652,7 +2652,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_progress_awardxp",
-      "community": 44,
+      "community": 2,
       "norm_label": "awardxp()"
     },
     {
@@ -2822,7 +2822,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_supabase_client_createclient",
-      "community": 3,
+      "community": 8,
       "norm_label": "createclient()"
     },
     {
@@ -2992,7 +2992,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types",
-      "community": 8,
+      "community": 0,
       "norm_label": "types.ts"
     },
     {
@@ -3002,7 +3002,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types_category",
-      "community": 8,
+      "community": 0,
       "norm_label": "category"
     },
     {
@@ -3052,7 +3052,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_lib_types_topiclink",
-      "community": 8,
+      "community": 0,
       "norm_label": "topiclink"
     },
     {
@@ -3122,7 +3122,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_lib_types_topicquestion",
-      "community": 8,
+      "community": 0,
       "norm_label": "topicquestion"
     },
     {
@@ -3152,7 +3152,7 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportitem"
     },
     {
@@ -3172,7 +3172,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 7,
+      "community": 0,
       "norm_label": "dailyfact"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "src_lib_types_graderesult",
-      "community": 8,
+      "community": 0,
       "norm_label": "graderesult"
     },
     {
@@ -4256,14 +4256,14 @@
       "norm_label": "project_summary.md"
     },
     {
-      "label": "Engramia \u2014 Project Summary",
+      "label": "Knovis \u2014 Project Summary",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "project_summary_engramia_project_summary",
+      "id": "project_summary_knovis_project_summary",
       "community": 26,
-      "norm_label": "engramia \u2014 project summary"
+      "norm_label": "knovis \u2014 project summary"
     },
     {
       "label": "What it is",
@@ -4376,14 +4376,14 @@
       "norm_label": "readme.md"
     },
     {
-      "label": "\ud83e\udde0 Engramia \u2014 your second brain",
+      "label": "\ud83e\udde0 Knovis \u2014 your second brain",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_engramia_your_second_brain",
+      "id": "readme_knovis_your_second_brain",
       "community": 4,
-      "norm_label": "\ud83e\udde0 engramia \u2014 your second brain"
+      "norm_label": "\ud83e\udde0 knovis \u2014 your second brain"
     },
     {
       "label": "Features",
@@ -4496,10 +4496,20 @@
       "norm_label": "session log"
     },
     {
-      "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
+      "label": "2026-07-15 \u2014 Rebrand: Engramia \u2192 Knovis",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
       "source_location": "L5",
+      "_origin": "ast",
+      "id": "session_log_2026_07_15_rebrand_engramia_knovis",
+      "community": 28,
+      "norm_label": "2026-07-15 \u2014 rebrand: engramia \u2192 knovis"
+    },
+    {
+      "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "community": 28,
@@ -4509,7 +4519,7 @@
       "label": "2026-07-15 \u2014 Guided feature tour (first visit + every demo entry)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L23",
       "_origin": "ast",
       "id": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
       "community": 28,
@@ -4519,7 +4529,7 @@
       "label": "2026-07-15 \u2014 Attempted-tracking bug fix, security review, Gemini fallback, RAG pipeline, DB decision",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
       "community": 28,
@@ -4529,7 +4539,7 @@
       "label": "2026-07-14 \u2014 Quiz-kind overhaul, day-report calendar, blog Q&A, streak bar, footer + About",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L30",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
       "community": 28,
@@ -4539,7 +4549,7 @@
       "label": "2026-07-13 \u2014 Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L40",
+      "source_location": "L49",
       "_origin": "ast",
       "id": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
       "community": 28,
@@ -4549,7 +4559,7 @@
       "label": "2026-07-13 \u2014 Review bug fixes + /blogs page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L47",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "session_log_2026_07_13_review_bug_fixes_blogs_page",
       "community": 28,
@@ -4559,7 +4569,7 @@
       "label": "2026-07-13 \u2014 Guest mode fix, plan done-tracking, review error card, blog pills",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L54",
+      "source_location": "L63",
       "_origin": "ast",
       "id": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
       "community": 28,
@@ -4569,7 +4579,7 @@
       "label": "2026-07-13 \u2014 AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L61",
+      "source_location": "L70",
       "_origin": "ast",
       "id": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
       "community": 28,
@@ -4579,7 +4589,7 @@
       "label": "2026-07-13 \u2014 Personal notes feature + blog source attribution",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L71",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
       "community": 28,
@@ -4589,7 +4599,7 @@
       "label": "2026-07-13 \u2014 Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L78",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
       "community": 28,
@@ -4599,7 +4609,7 @@
       "label": "2026-07-13 \u2014 Vercel Migration & Nav Auth Fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L86",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
       "community": 28,
@@ -4609,7 +4619,7 @@
       "label": "2026-07-13 \u2014 Fix /profile infinite loading (missing profiles row)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L91",
+      "source_location": "L100",
       "_origin": "ast",
       "id": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
       "community": 28,
@@ -4619,7 +4629,7 @@
       "label": "2026-07-13 \u2014 Plan markdown fix, progress calendar, profile page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L97",
+      "source_location": "L106",
       "_origin": "ast",
       "id": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
       "community": 28,
@@ -4629,7 +4639,7 @@
       "label": "2026-07-13 \u2014 Brain label overhaul (clickable, Space Grotesk, declutter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L103",
+      "source_location": "L112",
       "_origin": "ast",
       "id": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
       "community": 28,
@@ -4639,7 +4649,7 @@
       "label": "Earlier (from git history)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L113",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "session_log_earlier_from_git_history",
       "community": 28,
@@ -4791,7 +4801,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -7335,6 +7345,17 @@
       "weight": 1.0,
       "source": "src_app_layout",
       "target": "src_components_footer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/layout.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_layout",
+      "target": "src_components_footer_footer",
       "confidence_score": 1.0
     },
     {
@@ -13534,7 +13555,7 @@
       "source_location": "L1",
       "weight": 1.0,
       "source": "project_summary",
-      "target": "project_summary_engramia_project_summary",
+      "target": "project_summary_knovis_project_summary",
       "confidence_score": 1.0
     },
     {
@@ -13543,7 +13564,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L37",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_ai_call_budget_deliberate_design_keep_it_this_way",
       "confidence_score": 1.0
     },
@@ -13553,7 +13574,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L91",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_conventions_gotchas",
       "confidence_score": 1.0
     },
@@ -13563,7 +13584,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L88",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_dates_today_fixed_2026_07_15",
       "confidence_score": 1.0
     },
@@ -13573,7 +13594,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L16",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_design_language",
       "confidence_score": 1.0
     },
@@ -13583,7 +13604,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L52",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_key_modules",
       "confidence_score": 1.0
     },
@@ -13593,7 +13614,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L44",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_rag_layer_added_2026_07_15_supabase_schema_rag_sql_must_be_run_to_activate",
       "confidence_score": 1.0
     },
@@ -13603,7 +13624,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L21",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_route_map",
       "confidence_score": 1.0
     },
@@ -13613,7 +13634,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L82",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_security_posture_reviewed_2026_07_15",
       "confidence_score": 1.0
     },
@@ -13623,7 +13644,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L8",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_stack_fixed_do_not_propose_alternatives",
       "confidence_score": 1.0
     },
@@ -13633,7 +13654,7 @@
       "source_file": "PROJECT_SUMMARY.md",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "project_summary_engramia_project_summary",
+      "source": "project_summary_knovis_project_summary",
       "target": "project_summary_what_it_is",
       "confidence_score": 1.0
     },
@@ -13644,7 +13665,7 @@
       "source_location": "L1",
       "weight": 1.0,
       "source": "readme",
-      "target": "readme_engramia_your_second_brain",
+      "target": "readme_knovis_your_second_brain",
       "confidence_score": 1.0
     },
     {
@@ -13653,7 +13674,7 @@
       "source_file": "README.md",
       "source_location": "L62",
       "weight": 1.0,
-      "source": "readme_engramia_your_second_brain",
+      "source": "readme_knovis_your_second_brain",
       "target": "readme_architecture",
       "confidence_score": 1.0
     },
@@ -13663,7 +13684,7 @@
       "source_file": "README.md",
       "source_location": "L54",
       "weight": 1.0,
-      "source": "readme_engramia_your_second_brain",
+      "source": "readme_knovis_your_second_brain",
       "target": "readme_deploy_to_vercel",
       "confidence_score": 1.0
     },
@@ -13673,7 +13694,7 @@
       "source_file": "README.md",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "readme_engramia_your_second_brain",
+      "source": "readme_knovis_your_second_brain",
       "target": "readme_features",
       "confidence_score": 1.0
     },
@@ -13683,7 +13704,7 @@
       "source_file": "README.md",
       "source_location": "L74",
       "weight": 1.0,
-      "source": "readme_engramia_your_second_brain",
+      "source": "readme_knovis_your_second_brain",
       "target": "readme_roadmap_ideas",
       "confidence_score": 1.0
     },
@@ -13693,7 +13714,7 @@
       "source_file": "README.md",
       "source_location": "L23",
       "weight": 1.0,
-      "source": "readme_engramia_your_second_brain",
+      "source": "readme_knovis_your_second_brain",
       "target": "readme_setup",
       "confidence_score": 1.0
     },
@@ -13751,7 +13772,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L61",
+      "source_location": "L70",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
@@ -13761,7 +13782,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L103",
+      "source_location": "L112",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
@@ -13771,7 +13792,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L78",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
@@ -13781,7 +13802,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L91",
+      "source_location": "L100",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
@@ -13791,7 +13812,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L54",
+      "source_location": "L63",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
@@ -13801,7 +13822,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L71",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
@@ -13811,7 +13832,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L97",
+      "source_location": "L106",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
@@ -13821,7 +13842,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L40",
+      "source_location": "L49",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
@@ -13831,7 +13852,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L47",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_review_bug_fixes_blogs_page",
@@ -13841,7 +13862,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L86",
+      "source_location": "L95",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
@@ -13851,7 +13872,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L30",
+      "source_location": "L39",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
@@ -13861,7 +13882,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
@@ -13871,7 +13892,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L23",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
@@ -13884,6 +13905,16 @@
       "source_location": "L5",
       "weight": 1.0,
       "source": "session_log_session_log",
+      "target": "session_log_2026_07_15_rebrand_engramia_knovis",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "session_log_session_log",
       "target": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "confidence_score": 1.0
     },
@@ -13891,7 +13922,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L113",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_earlier_from_git_history",
@@ -14009,5 +14040,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "cda3b6a0f6975aef3b24113922ba0d5005a4fe67"
+  "built_at_commit": "13f12671aa86478167ceb050143215b1d8b807a3"
 }

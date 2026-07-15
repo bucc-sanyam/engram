@@ -22,11 +22,12 @@ export default function Footer() {
         <div className="grid gap-8 sm:grid-cols-[1.4fr_1fr_1fr]">
           {/* Brand */}
           <div>
-            <p className="display text-lg font-bold tracking-tight">Engramia</p>
+            <p className="display text-lg font-bold tracking-tight">Knovis</p>
             <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-faint">
-              en·gram <span className="italic">(n.)</span> — the physical trace
-              a memory leaves in your brain. We help you make more of them, and
-              lose fewer.
+              kno·vis <span className="italic">(n.)</span>{" "}
+              — knowledge + vision, and yes, it sounds like
+              &ldquo;novice&rdquo; on purpose. We help you see what you know,
+              and keep seeing it.
             </p>
           </div>
 
@@ -80,7 +81,7 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.05] pt-6">
           <p className="text-xs text-faint">
-            © {new Date().getFullYear()} Engramia · Built by Sanyam Gupta
+            © {new Date().getFullYear()} Knovis · Built by Sanyam Gupta
           </p>
           <p className="text-xs text-faint">
             Made with an unhealthy respect for the forgetting curve.

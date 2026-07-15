@@ -52,7 +52,7 @@ interface DemoSession {
 // Demo-mode mutable state. Persisted to localStorage so guest progress
 // survives reloads and hard navigations (done flags reset on a new day,
 // like the real backend; reviews/reports/streak carry over).
-const DEMO_STATE_KEY = "engramia.demo.v1";
+const DEMO_STATE_KEY = "knovis.demo.v1";
 
 const demoState = {
   profile: { ...demoProfile },

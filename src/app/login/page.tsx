@@ -80,10 +80,12 @@ export default function LoginPage() {
           <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_48px_rgba(255,122,92,0.5)]">
             <BrainIcon className="h-9 w-9 text-[#1a120e]" />
           </span>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome to Engramia</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome to Knovis</h1>
           <p className="mt-2 max-w-sm text-sm text-faint">
-            An <em>engram</em> is the physical trace a memory leaves in your
-            brain. Engramia helps you grow yours — and keep them.
+            <em>Knovis</em>{" "}
+            — knowledge plus vision. It sounds like &ldquo;novice,&rdquo;
+            which is fitting: every real learner stays one. Knovis helps you
+            see what you know, and keep seeing it.
           </p>
         </div>
 

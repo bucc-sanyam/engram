@@ -63,7 +63,7 @@ async function fetchReadable(url: string): Promise<{ pageTitle: string | null; t
     assertPublicHttpUrl(current);
     res = await fetch(current.toString(), {
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; EngramiaBot/1.0; +learning-app)",
+        "User-Agent": "Mozilla/5.0 (compatible; KnovisBot/1.0; +learning-app)",
         Accept: "text/html,application/xhtml+xml",
       },
       signal: AbortSignal.timeout(15000),

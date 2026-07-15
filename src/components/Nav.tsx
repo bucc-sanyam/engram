@@ -41,9 +41,9 @@ export default function Nav() {
               <BrainIcon className="h-5 w-5 text-[#1a120e]" />
             </span>
             <span className="flex flex-col">
-              <span className="display text-lg font-bold leading-tight tracking-tight">Engramia</span>
+              <span className="display text-lg font-bold leading-tight tracking-tight">Knovis</span>
               <span className="hidden text-[9.5px] leading-tight tracking-wide text-faint sm:block">
-                en·gram — the trace a memory leaves in your brain
+                kno·vis — knowledge meets vision
               </span>
             </span>
             {demo && (

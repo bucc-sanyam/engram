@@ -2,8 +2,8 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 
 export const metadata = {
-  title: "About — Engramia",
-  description: "The human (singular) behind Engramia.",
+  title: "About — Knovis",
+  description: "The human (singular) behind Knovis.",
 };
 
 /**
@@ -25,7 +25,7 @@ export default function AboutPage() {
             About us · population: 1
           </p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.1] sm:text-5xl">
-            Hi, I&apos;m Sanyam. I built Engramia because my brain kept ghosting me.
+            Hi, I&apos;m Sanyam. I built Knovis because my brain kept ghosting me.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
             I&apos;m Sanyam Gupta — engineer, chronic learner, and former world
@@ -48,17 +48,27 @@ export default function AboutPage() {
             <p>
               A normal person would have made peace with this. I, instead, read a
               stack of memory-science papers (which, yes, I also started
-              forgetting — the irony was not lost on me) and learned about the{" "}
-              <span className="font-semibold text-white">engram</span>: the
-              physical trace a memory leaves in your brain. Memories aren&apos;t
-              files, they&apos;re footpaths — walk them again right before they
-              fade and they turn into roads.
+              forgetting — the irony was not lost on me) about how memories
+              aren&apos;t files, they&apos;re footpaths — walk them again right
+              before they fade and they turn into roads. What I actually wanted
+              wasn&apos;t a name for forgetting. It was a name for the opposite:
+              seeing what you know.
             </p>
             <p>
-              So I built the thing that walks them for me. Engramia takes whatever
-              you learn, wires it into a living knowledge graph, and quizzes you
-              at exactly the moment you were about to forget. It is, in essence,
-              a very polite nag with a PhD in timing.
+              So I landed on{" "}
+              <span className="font-semibold text-white">Knovis</span>
+              {" "}— knowledge plus vision. Say it out loud and it lands suspiciously
+              close to &ldquo;novice,&rdquo; which I decided was a feature, not a
+              bug. Because that&apos;s the secret nobody puts on the syllabus:
+              every real learner stays a novice forever. You just get better at
+              revisiting.
+            </p>
+            <p>
+              So I built the thing that keeps you a well-informed novice on
+              purpose. Knovis takes whatever you learn, wires it into a living
+              knowledge graph, and quizzes you at exactly the moment you were
+              about to forget. It is, in essence, a very polite nag with a PhD in
+              timing.
             </p>
           </div>
         </section>
@@ -101,7 +111,7 @@ export default function AboutPage() {
           <h2 className="mb-2 text-2xl font-bold">Come say hi</h2>
           <p className="mx-auto mb-6 max-w-md text-muted">
             Ideas, bugs, memory-science hot takes, or just proof that you
-            remembered something because of Engramia — my inbox is open.
+            remembered something because of Knovis — my inbox is open.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="mailto:sanyamgupta2307@gmail.com" className="btn-primary">
