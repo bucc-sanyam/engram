@@ -472,7 +472,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 3,
+      "community": 45,
       "norm_label": "page.tsx"
     },
     {
@@ -482,7 +482,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 3,
+      "community": 45,
       "norm_label": "metadata"
     },
     {
@@ -492,7 +492,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 3,
+      "community": 45,
       "norm_label": "aboutpage()"
     },
     {
@@ -502,7 +502,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_add_page",
-      "community": 0,
+      "community": 45,
       "norm_label": "page.tsx"
     },
     {
@@ -512,7 +512,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_app_add_page_phase",
-      "community": 0,
+      "community": 45,
       "norm_label": "phase"
     },
     {
@@ -522,7 +522,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_add_page_mode",
-      "community": 0,
+      "community": 45,
       "norm_label": "mode"
     },
     {
@@ -532,7 +532,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_app_add_page_addpage",
-      "community": 0,
+      "community": 45,
       "norm_label": "addpage()"
     },
     {
@@ -542,7 +542,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "src_app_add_page_lockicon",
-      "community": 0,
+      "community": 45,
       "norm_label": "lockicon()"
     },
     {
@@ -552,7 +552,7 @@
       "source_location": "L240",
       "_origin": "ast",
       "id": "src_app_add_page_tip",
-      "community": 0,
+      "community": 45,
       "norm_label": "tip()"
     },
     {
@@ -562,7 +562,7 @@
       "source_location": "L249",
       "_origin": "ast",
       "id": "src_app_add_page_spinner",
-      "community": 0,
+      "community": 45,
       "norm_label": "spinner()"
     },
     {
@@ -832,7 +832,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_blogs_id_page",
-      "community": 8,
+      "community": 0,
       "norm_label": "page.tsx"
     },
     {
@@ -842,7 +842,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_topicblogpage",
-      "community": 8,
+      "community": 0,
       "norm_label": "topicblogpage()"
     },
     {
@@ -852,7 +852,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_sourcelabel",
-      "community": 8,
+      "community": 0,
       "norm_label": "sourcelabel()"
     },
     {
@@ -862,7 +862,7 @@
       "source_location": "L291",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_linkicon",
-      "community": 8,
+      "community": 0,
       "norm_label": "linkicon()"
     },
     {
@@ -872,7 +872,7 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_texticon",
-      "community": 8,
+      "community": 0,
       "norm_label": "texticon()"
     },
     {
@@ -952,7 +952,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_layout",
-      "community": 9,
+      "community": 46,
       "norm_label": "layout.tsx"
     },
     {
@@ -962,7 +962,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_app_layout_inter",
-      "community": 9,
+      "community": 46,
       "norm_label": "inter"
     },
     {
@@ -972,7 +972,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_layout_fraunces",
-      "community": 9,
+      "community": 46,
       "norm_label": "fraunces"
     },
     {
@@ -982,7 +982,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_app_layout_grotesk",
-      "community": 9,
+      "community": 46,
       "norm_label": "grotesk"
     },
     {
@@ -992,7 +992,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_app_layout_jetmono",
-      "community": 9,
+      "community": 46,
       "norm_label": "jetmono"
     },
     {
@@ -1002,7 +1002,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_app_layout_metadata",
-      "community": 9,
+      "community": 46,
       "norm_label": "metadata"
     },
     {
@@ -1012,7 +1012,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_app_layout_viewport",
-      "community": 9,
+      "community": 46,
       "norm_label": "viewport"
     },
     {
@@ -1022,7 +1022,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_app_layout_rootlayout",
-      "community": 9,
+      "community": 46,
       "norm_label": "rootlayout()"
     },
     {
@@ -1112,7 +1112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 7,
+      "community": 0,
       "norm_label": "page.tsx"
     },
     {
@@ -1122,7 +1122,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_page_mode_label",
-      "community": 7,
+      "community": 0,
       "norm_label": "mode_label"
     },
     {
@@ -1132,7 +1132,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_page_dashboard",
-      "community": 7,
+      "community": 0,
       "norm_label": "dashboard()"
     },
     {
@@ -1142,7 +1142,7 @@
       "source_location": "L375",
       "_origin": "ast",
       "id": "src_app_page_stat",
-      "community": 7,
+      "community": 0,
       "norm_label": "stat()"
     },
     {
@@ -1152,7 +1152,7 @@
       "source_location": "L393",
       "_origin": "ast",
       "id": "src_app_page_divider",
-      "community": 7,
+      "community": 0,
       "norm_label": "divider()"
     },
     {
@@ -1162,7 +1162,7 @@
       "source_location": "L397",
       "_origin": "ast",
       "id": "src_app_page_bulbicon",
-      "community": 7,
+      "community": 0,
       "norm_label": "bulbicon()"
     },
     {
@@ -1172,7 +1172,7 @@
       "source_location": "L405",
       "_origin": "ast",
       "id": "src_app_page_sparkleicon",
-      "community": 7,
+      "community": 0,
       "norm_label": "sparkleicon()"
     },
     {
@@ -1182,7 +1182,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_profile_page",
-      "community": 3,
+      "community": 0,
       "norm_label": "page.tsx"
     },
     {
@@ -1192,7 +1192,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_profile_page_profilepage",
-      "community": 3,
+      "community": 0,
       "norm_label": "profilepage()"
     },
     {
@@ -1202,7 +1202,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_app_profile_page_profilestat",
-      "community": 3,
+      "community": 0,
       "norm_label": "profilestat()"
     },
     {
@@ -1372,7 +1372,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_footer",
-      "community": 9,
+      "community": 46,
       "norm_label": "footer.tsx"
     },
     {
@@ -1382,7 +1382,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_footer_explore",
-      "community": 9,
+      "community": 46,
       "norm_label": "explore"
     },
     {
@@ -1392,7 +1392,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_components_footer_connect",
-      "community": 9,
+      "community": 46,
       "norm_label": "connect"
     },
     {
@@ -1402,7 +1402,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_footer_footer",
-      "community": 9,
+      "community": 46,
       "norm_label": "footer()"
     },
     {
@@ -1462,7 +1462,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_nav",
-      "community": 3,
+      "community": 45,
       "norm_label": "nav.tsx"
     },
     {
@@ -1472,7 +1472,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_nav_links",
-      "community": 3,
+      "community": 45,
       "norm_label": "links"
     },
     {
@@ -1482,7 +1482,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_nav_nav",
-      "community": 3,
+      "community": 45,
       "norm_label": "nav()"
     },
     {
@@ -1502,7 +1502,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_components_nav_sunicon",
-      "community": 3,
+      "community": 45,
       "norm_label": "sunicon()"
     },
     {
@@ -1512,7 +1512,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_components_nav_plusicon",
-      "community": 3,
+      "community": 45,
       "norm_label": "plusicon()"
     },
     {
@@ -1522,7 +1522,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_components_nav_bolticon",
-      "community": 3,
+      "community": 45,
       "norm_label": "bolticon()"
     },
     {
@@ -1532,7 +1532,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "src_components_nav_flameicon",
-      "community": 3,
+      "community": 0,
       "norm_label": "flameicon()"
     },
     {
@@ -1542,7 +1542,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "src_components_nav_bookicon",
-      "community": 3,
+      "community": 45,
       "norm_label": "bookicon()"
     },
     {
@@ -1552,7 +1552,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_components_nav_usericon",
-      "community": 3,
+      "community": 45,
       "norm_label": "usericon()"
     },
     {
@@ -1612,7 +1612,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progressmap",
-      "community": 3,
+      "community": 0,
       "norm_label": "progressmap.tsx"
     },
     {
@@ -1622,7 +1622,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progressmap_nextmilestone",
-      "community": 3,
+      "community": 0,
       "norm_label": "nextmilestone()"
     },
     {
@@ -1632,7 +1632,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_progressmap_progressmap",
-      "community": 3,
+      "community": 0,
       "norm_label": "progressmap()"
     },
     {
@@ -1652,7 +1652,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -1662,7 +1662,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_reportcardview_kind_label",
-      "community": 8,
+      "community": 0,
       "norm_label": "kind_label"
     },
     {
@@ -1672,7 +1672,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportcardview()"
     },
     {
@@ -1682,7 +1682,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportitemcard()"
     },
     {
@@ -1692,7 +1692,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 8,
+      "community": 0,
       "norm_label": "bigscorering()"
     },
     {
@@ -1702,7 +1702,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 8,
+      "community": 0,
       "norm_label": "scorering()"
     },
     {
@@ -1712,7 +1712,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_richtext",
-      "community": 7,
+      "community": 6,
       "norm_label": "richtext.tsx"
     },
     {
@@ -1722,7 +1722,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_components_richtext_tidy",
-      "community": 7,
+      "community": 6,
       "norm_label": "tidy()"
     },
     {
@@ -1732,7 +1732,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_richtext_rules",
-      "community": 7,
+      "community": 6,
       "norm_label": "rules"
     },
     {
@@ -1742,7 +1742,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_components_richtext_parse",
-      "community": 7,
+      "community": 6,
       "norm_label": "parse()"
     },
     {
@@ -1752,7 +1752,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_components_richtext_richtext",
-      "community": 7,
+      "community": 6,
       "norm_label": "richtext()"
     },
     {
@@ -1902,7 +1902,7 @@
       "source_location": "L127",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 3,
+      "community": 0,
       "norm_label": "getprofile()"
     },
     {
@@ -1922,7 +1922,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "src_lib_data_getuseremail",
-      "community": 3,
+      "community": 0,
       "norm_label": "getuseremail()"
     },
     {
@@ -1932,7 +1932,7 @@
       "source_location": "L178",
       "_origin": "ast",
       "id": "src_lib_data_gettopics",
-      "community": 8,
+      "community": 0,
       "norm_label": "gettopics()"
     },
     {
@@ -1942,7 +1942,7 @@
       "source_location": "L185",
       "_origin": "ast",
       "id": "src_lib_data_gettopic",
-      "community": 8,
+      "community": 0,
       "norm_label": "gettopic()"
     },
     {
@@ -1952,7 +1952,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "src_lib_data_gettopicsource",
-      "community": 8,
+      "community": 0,
       "norm_label": "gettopicsource()"
     },
     {
@@ -1962,7 +1962,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_lib_data_getlinks",
-      "community": 8,
+      "community": 0,
       "norm_label": "getlinks()"
     },
     {
@@ -1972,7 +1972,7 @@
       "source_location": "L225",
       "_origin": "ast",
       "id": "src_lib_data_getentries",
-      "community": 7,
+      "community": 0,
       "norm_label": "getentries()"
     },
     {
@@ -1982,7 +1982,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "src_lib_data_gettopicquestions",
-      "community": 8,
+      "community": 0,
       "norm_label": "gettopicquestions()"
     },
     {
@@ -1992,7 +1992,7 @@
       "source_location": "L273",
       "_origin": "ast",
       "id": "src_lib_data_getreviews",
-      "community": 7,
+      "community": 0,
       "norm_label": "getreviews()"
     },
     {
@@ -2012,7 +2012,7 @@
       "source_location": "L299",
       "_origin": "ast",
       "id": "src_lib_data_ingestresult",
-      "community": 0,
+      "community": 45,
       "norm_label": "ingestresult"
     },
     {
@@ -2072,7 +2072,7 @@
       "source_location": "L562",
       "_origin": "ast",
       "id": "src_lib_data_getfactoftheday",
-      "community": 7,
+      "community": 0,
       "norm_label": "getfactoftheday()"
     },
     {
@@ -2092,7 +2092,7 @@
       "source_location": "L595",
       "_origin": "ast",
       "id": "src_lib_data_signout",
-      "community": 3,
+      "community": 0,
       "norm_label": "signout()"
     },
     {
@@ -2152,7 +2152,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 2,
+      "community": 0,
       "norm_label": "dates.ts"
     },
     {
@@ -2232,7 +2232,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_demo",
-      "community": 0,
+      "community": 9,
       "norm_label": "demo.ts"
     },
     {
@@ -2242,7 +2242,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_lib_demo_guestactive",
-      "community": 0,
+      "community": 9,
       "norm_label": "guestactive()"
     },
     {
@@ -2272,7 +2272,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_demo_daysago",
-      "community": 2,
+      "community": 9,
       "norm_label": "daysago()"
     },
     {
@@ -2282,7 +2282,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_demo_daysahead",
-      "community": 2,
+      "community": 9,
       "norm_label": "daysahead()"
     },
     {
@@ -2292,7 +2292,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_demo_t",
-      "community": 2,
+      "community": 9,
       "norm_label": "t()"
     },
     {
@@ -2302,7 +2302,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_lib_demo_demotopics",
-      "community": 0,
+      "community": 9,
       "norm_label": "demotopics"
     },
     {
@@ -2322,7 +2322,7 @@
       "source_location": "L136",
       "_origin": "ast",
       "id": "src_lib_demo_demolinks",
-      "community": 0,
+      "community": 9,
       "norm_label": "demolinks"
     },
     {
@@ -2332,7 +2332,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "src_lib_demo_demotopicsource",
-      "community": 0,
+      "community": 9,
       "norm_label": "demotopicsource"
     },
     {
@@ -2342,7 +2342,7 @@
       "source_location": "L165",
       "_origin": "ast",
       "id": "src_lib_demo_demoentries",
-      "community": 0,
+      "community": 9,
       "norm_label": "demoentries"
     },
     {
@@ -2352,7 +2352,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "src_lib_demo_demoprofile",
-      "community": 0,
+      "community": 9,
       "norm_label": "demoprofile"
     },
     {
@@ -2362,7 +2362,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_lib_demo_demoreviews",
-      "community": 0,
+      "community": 9,
       "norm_label": "demoreviews"
     },
     {
@@ -2372,7 +2372,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_lib_demo_demoplan",
-      "community": 0,
+      "community": 9,
       "norm_label": "demoplan"
     },
     {
@@ -2392,7 +2392,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "src_lib_demo_demoquestionbank",
-      "community": 0,
+      "community": 9,
       "norm_label": "demoquestionbank"
     },
     {
@@ -2402,7 +2402,7 @@
       "source_location": "L342",
       "_origin": "ast",
       "id": "src_lib_demo_demofacts",
-      "community": 0,
+      "community": 9,
       "norm_label": "demofacts"
     },
     {
@@ -2589,7 +2589,7 @@
       "label": "KEEP_CODES",
       "file_type": "code",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L55",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "src_lib_guardrails_keep_codes",
       "community": 44,
@@ -2599,7 +2599,7 @@
       "label": "CONTROL_CODES",
       "file_type": "code",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L56",
+      "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_guardrails_control_codes",
       "community": 44,
@@ -2609,7 +2609,7 @@
       "label": "CONTROL_CHARS",
       "file_type": "code",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L59",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_guardrails_control_chars",
       "community": 44,
@@ -2619,7 +2619,7 @@
       "label": "sanitizeField()",
       "file_type": "code",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L69",
+      "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_guardrails_sanitizefield",
       "community": 44,
@@ -2752,7 +2752,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_progress_awardxp",
-      "community": 44,
+      "community": 2,
       "norm_label": "awardxp()"
     },
     {
@@ -3072,7 +3072,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 9,
+      "community": 0,
       "norm_label": "client.ts"
     },
     {
@@ -3082,7 +3082,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_supabase_client_createclient",
-      "community": 8,
+      "community": 0,
       "norm_label": "createclient()"
     },
     {
@@ -3112,7 +3112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_text",
-      "community": 7,
+      "community": 0,
       "norm_label": "text.ts"
     },
     {
@@ -3122,7 +3122,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_lib_text_stripmarkdown",
-      "community": 7,
+      "community": 0,
       "norm_label": "stripmarkdown()"
     },
     {
@@ -3252,7 +3252,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types",
-      "community": 8,
+      "community": 0,
       "norm_label": "types.ts"
     },
     {
@@ -3262,7 +3262,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types_category",
-      "community": 8,
+      "community": 0,
       "norm_label": "category"
     },
     {
@@ -3362,7 +3362,7 @@
       "source_location": "L103",
       "_origin": "ast",
       "id": "src_lib_types_reviewmode",
-      "community": 8,
+      "community": 2,
       "norm_label": "reviewmode"
     },
     {
@@ -3382,7 +3382,7 @@
       "source_location": "L109",
       "_origin": "ast",
       "id": "src_lib_types_topicquestion",
-      "community": 8,
+      "community": 0,
       "norm_label": "topicquestion"
     },
     {
@@ -3412,7 +3412,7 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 8,
+      "community": 0,
       "norm_label": "reportitem"
     },
     {
@@ -3432,7 +3432,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 7,
+      "community": 0,
       "norm_label": "dailyfact"
     },
     {
@@ -3442,7 +3442,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_lib_types_planitem",
-      "community": 2,
+      "community": 0,
       "norm_label": "planitem"
     },
     {
@@ -3472,7 +3472,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "src_lib_types_graderesult",
-      "community": 8,
+      "community": 0,
       "norm_label": "graderesult"
     },
     {
@@ -4476,6 +4476,406 @@
       "norm_label": "for --cluster-only"
     },
     {
+      "label": "ARCHITECTURE.md",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "architecture",
+      "community": 3,
+      "norm_label": "architecture.md"
+    },
+    {
+      "label": "\ud83e\udde0 Knovis \u2014 System Architecture (HLD + LLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "architecture_knovis_system_architecture_hld_lld",
+      "community": 3,
+      "norm_label": "\ud83e\udde0 knovis \u2014 system architecture (hld + lld)"
+    },
+    {
+      "label": "\ud83d\udccc TL;DR \u2014 Where does the vector DB / vector search actually run?",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "architecture_tl_dr_where_does_the_vector_db_vector_search_actually_run",
+      "community": 3,
+      "norm_label": "\ud83d\udccc tl;dr \u2014 where does the vector db / vector search actually run?"
+    },
+    {
+      "label": "1. \ud83c\udfd7\ufe0f High-Level Design (HLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "architecture_1_high_level_design_hld",
+      "community": 3,
+      "norm_label": "1. \ud83c\udfd7\ufe0f high-level design (hld)"
+    },
+    {
+      "label": "1.1 System context diagram",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "architecture_1_1_system_context_diagram",
+      "community": 3,
+      "norm_label": "1.1 system context diagram"
+    },
+    {
+      "label": "1.2 The three planes",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L83",
+      "_origin": "ast",
+      "id": "architecture_1_2_the_three_planes",
+      "community": 3,
+      "norm_label": "1.2 the three planes"
+    },
+    {
+      "label": "1.3 Deployment topology",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "architecture_1_3_deployment_topology",
+      "community": 3,
+      "norm_label": "1.3 deployment topology"
+    },
+    {
+      "label": "2. \ud83d\uddc3\ufe0f Data Model (LLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "architecture_2_data_model_lld",
+      "community": 3,
+      "norm_label": "2. \ud83d\uddc3\ufe0f data model (lld)"
+    },
+    {
+      "label": "2.1 Entity-relationship diagram",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "architecture_2_1_entity_relationship_diagram",
+      "community": 3,
+      "norm_label": "2.1 entity-relationship diagram"
+    },
+    {
+      "label": "2.2 Table reference",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L233",
+      "_origin": "ast",
+      "id": "architecture_2_2_table_reference",
+      "community": 3,
+      "norm_label": "2.2 table reference"
+    },
+    {
+      "label": "2.3 Row-Level Security (RLS)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L254",
+      "_origin": "ast",
+      "id": "architecture_2_3_row_level_security_rls",
+      "community": 3,
+      "norm_label": "2.3 row-level security (rls)"
+    },
+    {
+      "label": "3. \ud83d\udd10 Auth & Session Management (LLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L267",
+      "_origin": "ast",
+      "id": "architecture_3_auth_session_management_lld",
+      "community": 3,
+      "norm_label": "3. \ud83d\udd10 auth & session management (lld)"
+    },
+    {
+      "label": "3.1 Auth flow",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L269",
+      "_origin": "ast",
+      "id": "architecture_3_1_auth_flow",
+      "community": 3,
+      "norm_label": "3.1 auth flow"
+    },
+    {
+      "label": "3.2 Key mechanics (`src/proxy.ts`)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L293",
+      "_origin": "ast",
+      "id": "architecture_3_2_key_mechanics_src_proxy_ts",
+      "community": 3,
+      "norm_label": "3.2 key mechanics (`src/proxy.ts`)"
+    },
+    {
+      "label": "3.3 Auth in API routes vs. direct browser reads",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L302",
+      "_origin": "ast",
+      "id": "architecture_3_3_auth_in_api_routes_vs_direct_browser_reads",
+      "community": 3,
+      "norm_label": "3.3 auth in api routes vs. direct browser reads"
+    },
+    {
+      "label": "4. \ud83d\udee1\ufe0f Security Posture",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L311",
+      "_origin": "ast",
+      "id": "architecture_4_security_posture",
+      "community": 3,
+      "norm_label": "4. \ud83d\udee1\ufe0f security posture"
+    },
+    {
+      "label": "4.1 Threat \u2192 mitigation map",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L315",
+      "_origin": "ast",
+      "id": "architecture_4_1_threat_mitigation_map",
+      "community": 3,
+      "norm_label": "4.1 threat \u2192 mitigation map"
+    },
+    {
+      "label": "4.2 Security review checklist (for new features)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L331",
+      "_origin": "ast",
+      "id": "architecture_4_2_security_review_checklist_for_new_features",
+      "community": 3,
+      "norm_label": "4.2 security review checklist (for new features)"
+    },
+    {
+      "label": "5. \u2728 AI / LLM Layer (LLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L341",
+      "_origin": "ast",
+      "id": "architecture_5_ai_llm_layer_lld",
+      "community": 3,
+      "norm_label": "5. \u2728 ai / llm layer (lld)"
+    },
+    {
+      "label": "5.1 AI-call budget \u2014 a deliberate design constraint",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L343",
+      "_origin": "ast",
+      "id": "architecture_5_1_ai_call_budget_a_deliberate_design_constraint",
+      "community": 3,
+      "norm_label": "5.1 ai-call budget \u2014 a deliberate design constraint"
+    },
+    {
+      "label": "5.2 Model client (`src/lib/gemini.ts`)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L358",
+      "_origin": "ast",
+      "id": "architecture_5_2_model_client_src_lib_gemini_ts",
+      "community": 3,
+      "norm_label": "5.2 model client (`src/lib/gemini.ts`)"
+    },
+    {
+      "label": "5.3 The two AI call sites in detail",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L379",
+      "_origin": "ast",
+      "id": "architecture_5_3_the_two_ai_call_sites_in_detail",
+      "community": 3,
+      "norm_label": "5.3 the two ai call sites in detail"
+    },
+    {
+      "label": "5.4 Embeddings (`gemini-embedding-001`)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L391",
+      "_origin": "ast",
+      "id": "architecture_5_4_embeddings_gemini_embedding_001",
+      "community": 3,
+      "norm_label": "5.4 embeddings (`gemini-embedding-001`)"
+    },
+    {
+      "label": "6. \ud83d\udd0d RAG Pipeline (LLD) \u2014 the detailed answer to \"where does this run?\"",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L399",
+      "_origin": "ast",
+      "id": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "community": 3,
+      "norm_label": "6. \ud83d\udd0d rag pipeline (lld) \u2014 the detailed answer to \"where does this run?\""
+    },
+    {
+      "label": "6.1 Design principle",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L401",
+      "_origin": "ast",
+      "id": "architecture_6_1_design_principle",
+      "community": 3,
+      "norm_label": "6.1 design principle"
+    },
+    {
+      "label": "6.2 Full pipeline \u2014 compute location per stage",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L407",
+      "_origin": "ast",
+      "id": "architecture_6_2_full_pipeline_compute_location_per_stage",
+      "community": 3,
+      "norm_label": "6.2 full pipeline \u2014 compute location per stage"
+    },
+    {
+      "label": "6.3 Stage-by-stage breakdown",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L447",
+      "_origin": "ast",
+      "id": "architecture_6_3_stage_by_stage_breakdown",
+      "community": 3,
+      "norm_label": "6.3 stage-by-stage breakdown"
+    },
+    {
+      "label": "a) Chunking \u2014 `src/lib/chunk.ts` (Vercel, pure JS, no network)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L449",
+      "_origin": "ast",
+      "id": "architecture_a_chunking_src_lib_chunk_ts_vercel_pure_js_no_network",
+      "community": 3,
+      "norm_label": "a) chunking \u2014 `src/lib/chunk.ts` (vercel, pure js, no network)"
+    },
+    {
+      "label": "b) Embedding \u2014 `embedTexts()` in `src/lib/gemini.ts` (Vercel \u2192 Gemini)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L455",
+      "_origin": "ast",
+      "id": "architecture_b_embedding_embedtexts_in_src_lib_gemini_ts_vercel_gemini",
+      "community": 3,
+      "norm_label": "b) embedding \u2014 `embedtexts()` in `src/lib/gemini.ts` (vercel \u2192 gemini)"
+    },
+    {
+      "label": "c) Storage \u2014 `knowledge_chunks` table (Supabase)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L459",
+      "_origin": "ast",
+      "id": "architecture_c_storage_knowledge_chunks_table_supabase",
+      "community": 3,
+      "norm_label": "c) storage \u2014 `knowledge_chunks` table (supabase)"
+    },
+    {
+      "label": "d) Document registry & dedup \u2014 `rag_documents` (Supabase) + `findDuplicateEntry()` (Vercel)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L463",
+      "_origin": "ast",
+      "id": "architecture_d_document_registry_dedup_rag_documents_supabase_findduplicateentry_vercel",
+      "community": 3,
+      "norm_label": "d) document registry & dedup \u2014 `rag_documents` (supabase) + `findduplicateentry()` (vercel)"
+    },
+    {
+      "label": "e) Index versioning (\"alias\" pattern) \u2014 `rag_index_pointers` (Supabase)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L469",
+      "_origin": "ast",
+      "id": "architecture_e_index_versioning_alias_pattern_rag_index_pointers_supabase",
+      "community": 3,
+      "norm_label": "e) index versioning (\"alias\" pattern) \u2014 `rag_index_pointers` (supabase)"
+    },
+    {
+      "label": "f) Hybrid retrieval \u2014 `match_knowledge_chunks_hybrid()` SQL function (Supabase, runs entirely in Postgres)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L496",
+      "_origin": "ast",
+      "id": "architecture_f_hybrid_retrieval_match_knowledge_chunks_hybrid_sql_function_supabase_runs_entirely_in_postgres",
+      "community": 3,
+      "norm_label": "f) hybrid retrieval \u2014 `match_knowledge_chunks_hybrid()` sql function (supabase, runs entirely in postgres)"
+    },
+    {
+      "label": "g) Observability \u2014 `rag_retrieval_logs` (Supabase) + aggregation (Vercel, in JS)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L502",
+      "_origin": "ast",
+      "id": "architecture_g_observability_rag_retrieval_logs_supabase_aggregation_vercel_in_js",
+      "community": 3,
+      "norm_label": "g) observability \u2014 `rag_retrieval_logs` (supabase) + aggregation (vercel, in js)"
+    },
+    {
+      "label": "6.4 Where RAG plugs into the ingest flow",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L509",
+      "_origin": "ast",
+      "id": "architecture_6_4_where_rag_plugs_into_the_ingest_flow",
+      "community": 3,
+      "norm_label": "6.4 where rag plugs into the ingest flow"
+    },
+    {
+      "label": "7. \ud83e\udde9 Backend API Surface (LLD)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L551",
+      "_origin": "ast",
+      "id": "architecture_7_backend_api_surface_lld",
+      "community": 3,
+      "norm_label": "7. \ud83e\udde9 backend api surface (lld)"
+    },
+    {
+      "label": "7.1 Quiz session sequence",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L561",
+      "_origin": "ast",
+      "id": "architecture_7_1_quiz_session_sequence",
+      "community": 3,
+      "norm_label": "7.1 quiz session sequence"
+    },
+    {
+      "label": "8. \ud83d\udce6 Tech Stack Reference",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L608",
+      "_origin": "ast",
+      "id": "architecture_8_tech_stack_reference",
+      "community": 3,
+      "norm_label": "8. \ud83d\udce6 tech stack reference"
+    },
+    {
+      "label": "9. \ud83d\uddfa\ufe0f File Map \u2014 Backend / AI / RAG / Auth / Security",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L626",
+      "_origin": "ast",
+      "id": "architecture_9_file_map_backend_ai_rag_auth_security",
+      "community": 3,
+      "norm_label": "9. \ud83d\uddfa\ufe0f file map \u2014 backend / ai / rag / auth / security"
+    },
+    {
+      "label": "10. \u26a0\ufe0f Known Gaps / Backlog (as of 2026-07-16)",
+      "file_type": "document",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L666",
+      "_origin": "ast",
+      "id": "architecture_10_known_gaps_backlog_as_of_2026_07_16",
+      "community": 3,
+      "norm_label": "10. \u26a0\ufe0f known gaps / backlog (as of 2026-07-16)"
+    },
+    {
       "label": "CLAUDE.md",
       "file_type": "document",
       "source_file": "CLAUDE.md",
@@ -4766,10 +5166,30 @@
       "norm_label": "session log"
     },
     {
-      "label": "2026-07-16 \u2014 Ingest guardrails: gibberish rejection, prompt-injection hardening, output validation, link-scheme XSS fix",
+      "label": "2026-07-16 \u2014 Fix false-positive gibberish rejection on real link ingests",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
       "source_location": "L5",
+      "_origin": "ast",
+      "id": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
+      "community": 28,
+      "norm_label": "2026-07-16 \u2014 fix false-positive gibberish rejection on real link ingests"
+    },
+    {
+      "label": "2026-07-16 \u2014 Team architecture doc (backend/AI/RAG/auth/security)",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
+      "community": 28,
+      "norm_label": "2026-07-16 \u2014 team architecture doc (backend/ai/rag/auth/security)"
+    },
+    {
+      "label": "2026-07-16 \u2014 Ingest guardrails: gibberish rejection, prompt-injection hardening, output validation, link-scheme XSS fix",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
       "community": 28,
@@ -4779,7 +5199,7 @@
       "label": "2026-07-15 \u2014 Fix silent link-ingest failure, URL-based fast-path dedup",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L25",
       "_origin": "ast",
       "id": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
       "community": 28,
@@ -4789,7 +5209,7 @@
       "label": "2026-07-15 \u2014 RAG pipeline hardening: document registry, hybrid search, observability",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L24",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
       "community": 28,
@@ -4799,7 +5219,7 @@
       "label": "2026-07-15 \u2014 Rebrand: Engramia \u2192 Knovis",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L33",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rebrand_engramia_knovis",
       "community": 28,
@@ -4809,7 +5229,7 @@
       "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L42",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "community": 28,
@@ -4819,7 +5239,7 @@
       "label": "2026-07-15 \u2014 Guided feature tour (first visit + every demo entry)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L51",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
       "community": 28,
@@ -4829,7 +5249,7 @@
       "label": "2026-07-15 \u2014 Attempted-tracking bug fix, security review, Gemini fallback, RAG pipeline, DB decision",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L58",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
       "community": 28,
@@ -4839,7 +5259,7 @@
       "label": "2026-07-14 \u2014 Quiz-kind overhaul, day-report calendar, blog Q&A, streak bar, footer + About",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L67",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
       "community": 28,
@@ -4849,7 +5269,7 @@
       "label": "2026-07-13 \u2014 Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L77",
+      "source_location": "L88",
       "_origin": "ast",
       "id": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
       "community": 28,
@@ -4859,7 +5279,7 @@
       "label": "2026-07-13 \u2014 Review bug fixes + /blogs page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L84",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "session_log_2026_07_13_review_bug_fixes_blogs_page",
       "community": 28,
@@ -4869,7 +5289,7 @@
       "label": "2026-07-13 \u2014 Guest mode fix, plan done-tracking, review error card, blog pills",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L91",
+      "source_location": "L102",
       "_origin": "ast",
       "id": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
       "community": 28,
@@ -4879,7 +5299,7 @@
       "label": "2026-07-13 \u2014 AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L98",
+      "source_location": "L109",
       "_origin": "ast",
       "id": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
       "community": 28,
@@ -4889,7 +5309,7 @@
       "label": "2026-07-13 \u2014 Personal notes feature + blog source attribution",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L108",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
       "community": 28,
@@ -4899,7 +5319,7 @@
       "label": "2026-07-13 \u2014 Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L115",
+      "source_location": "L126",
       "_origin": "ast",
       "id": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
       "community": 28,
@@ -4909,7 +5329,7 @@
       "label": "2026-07-13 \u2014 Vercel Migration & Nav Auth Fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L134",
       "_origin": "ast",
       "id": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
       "community": 28,
@@ -4919,7 +5339,7 @@
       "label": "2026-07-13 \u2014 Fix /profile infinite loading (missing profiles row)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L128",
+      "source_location": "L139",
       "_origin": "ast",
       "id": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
       "community": 28,
@@ -4929,7 +5349,7 @@
       "label": "2026-07-13 \u2014 Plan markdown fix, progress calendar, profile page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L134",
+      "source_location": "L145",
       "_origin": "ast",
       "id": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
       "community": 28,
@@ -4939,7 +5359,7 @@
       "label": "2026-07-13 \u2014 Brain label overhaul (clickable, Space Grotesk, declutter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L151",
       "_origin": "ast",
       "id": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
       "community": 28,
@@ -4949,7 +5369,7 @@
       "label": "Earlier (from git history)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L150",
+      "source_location": "L161",
       "_origin": "ast",
       "id": "session_log_earlier_from_git_history",
       "community": 28,
@@ -5101,7 +5521,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -12425,7 +12845,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L59",
+      "source_location": "L58",
       "weight": 1.0,
       "source": "src_lib_guardrails",
       "target": "src_lib_guardrails_control_chars",
@@ -12435,7 +12855,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L56",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "src_lib_guardrails",
       "target": "src_lib_guardrails_control_codes",
@@ -12445,7 +12865,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L55",
+      "source_location": "L54",
       "weight": 1.0,
       "source": "src_lib_guardrails",
       "target": "src_lib_guardrails_keep_codes",
@@ -12465,7 +12885,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/guardrails.ts",
-      "source_location": "L69",
+      "source_location": "L68",
       "weight": 1.0,
       "source": "src_lib_guardrails",
       "target": "src_lib_guardrails_sanitizefield",
@@ -14577,6 +14997,396 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "architecture",
+      "target": "architecture_knovis_system_architecture_hld_lld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L666",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_10_known_gaps_backlog_as_of_2026_07_16",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_1_high_level_design_hld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_2_data_model_lld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L267",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_3_auth_session_management_lld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L311",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_4_security_posture",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L341",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_5_ai_llm_layer_lld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L399",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L551",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_7_backend_api_surface_lld",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L608",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_8_tech_stack_reference",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L626",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_9_file_map_backend_ai_rag_auth_security",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "architecture_knovis_system_architecture_hld_lld",
+      "target": "architecture_tl_dr_where_does_the_vector_db_vector_search_actually_run",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "architecture_1_high_level_design_hld",
+      "target": "architecture_1_1_system_context_diagram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "architecture_1_high_level_design_hld",
+      "target": "architecture_1_2_the_three_planes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "architecture_1_high_level_design_hld",
+      "target": "architecture_1_3_deployment_topology",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "architecture_2_data_model_lld",
+      "target": "architecture_2_1_entity_relationship_diagram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L233",
+      "weight": 1.0,
+      "source": "architecture_2_data_model_lld",
+      "target": "architecture_2_2_table_reference",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L254",
+      "weight": 1.0,
+      "source": "architecture_2_data_model_lld",
+      "target": "architecture_2_3_row_level_security_rls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L269",
+      "weight": 1.0,
+      "source": "architecture_3_auth_session_management_lld",
+      "target": "architecture_3_1_auth_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L293",
+      "weight": 1.0,
+      "source": "architecture_3_auth_session_management_lld",
+      "target": "architecture_3_2_key_mechanics_src_proxy_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L302",
+      "weight": 1.0,
+      "source": "architecture_3_auth_session_management_lld",
+      "target": "architecture_3_3_auth_in_api_routes_vs_direct_browser_reads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L315",
+      "weight": 1.0,
+      "source": "architecture_4_security_posture",
+      "target": "architecture_4_1_threat_mitigation_map",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L331",
+      "weight": 1.0,
+      "source": "architecture_4_security_posture",
+      "target": "architecture_4_2_security_review_checklist_for_new_features",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L343",
+      "weight": 1.0,
+      "source": "architecture_5_ai_llm_layer_lld",
+      "target": "architecture_5_1_ai_call_budget_a_deliberate_design_constraint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L358",
+      "weight": 1.0,
+      "source": "architecture_5_ai_llm_layer_lld",
+      "target": "architecture_5_2_model_client_src_lib_gemini_ts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L379",
+      "weight": 1.0,
+      "source": "architecture_5_ai_llm_layer_lld",
+      "target": "architecture_5_3_the_two_ai_call_sites_in_detail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L391",
+      "weight": 1.0,
+      "source": "architecture_5_ai_llm_layer_lld",
+      "target": "architecture_5_4_embeddings_gemini_embedding_001",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L401",
+      "weight": 1.0,
+      "source": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "target": "architecture_6_1_design_principle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L407",
+      "weight": 1.0,
+      "source": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "target": "architecture_6_2_full_pipeline_compute_location_per_stage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L447",
+      "weight": 1.0,
+      "source": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "target": "architecture_6_3_stage_by_stage_breakdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L509",
+      "weight": 1.0,
+      "source": "architecture_6_rag_pipeline_lld_the_detailed_answer_to_where_does_this_run",
+      "target": "architecture_6_4_where_rag_plugs_into_the_ingest_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L449",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_a_chunking_src_lib_chunk_ts_vercel_pure_js_no_network",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L455",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_b_embedding_embedtexts_in_src_lib_gemini_ts_vercel_gemini",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L459",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_c_storage_knowledge_chunks_table_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L463",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_d_document_registry_dedup_rag_documents_supabase_findduplicateentry_vercel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L469",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_e_index_versioning_alias_pattern_rag_index_pointers_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L496",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_f_hybrid_retrieval_match_knowledge_chunks_hybrid_sql_function_supabase_runs_entirely_in_postgres",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L502",
+      "weight": 1.0,
+      "source": "architecture_6_3_stage_by_stage_breakdown",
+      "target": "architecture_g_observability_rag_retrieval_logs_supabase_aggregation_vercel_in_js",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "ARCHITECTURE.md",
+      "source_location": "L561",
+      "weight": 1.0,
+      "source": "architecture_7_backend_api_surface_lld",
+      "target": "architecture_7_1_quiz_session_sequence",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "CLAUDE.md",
       "source_location": "L12",
       "weight": 1.0,
@@ -14828,7 +15638,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L98",
+      "source_location": "L109",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
@@ -14838,7 +15648,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L151",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
@@ -14848,7 +15658,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L115",
+      "source_location": "L126",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
@@ -14858,7 +15668,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L128",
+      "source_location": "L139",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
@@ -14868,7 +15678,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L91",
+      "source_location": "L102",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
@@ -14878,7 +15688,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L108",
+      "source_location": "L119",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
@@ -14888,7 +15698,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L134",
+      "source_location": "L145",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
@@ -14898,7 +15708,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L77",
+      "source_location": "L88",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
@@ -14908,7 +15718,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L84",
+      "source_location": "L95",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_review_bug_fixes_blogs_page",
@@ -14918,7 +15728,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L134",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
@@ -14928,7 +15738,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L67",
+      "source_location": "L78",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
@@ -14938,7 +15748,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L58",
+      "source_location": "L69",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
@@ -14948,7 +15758,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L25",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
@@ -14958,7 +15768,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L51",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
@@ -14968,7 +15778,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L24",
+      "source_location": "L35",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
@@ -14978,7 +15788,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L33",
+      "source_location": "L44",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rebrand_engramia_knovis",
@@ -14988,7 +15798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L42",
+      "source_location": "L53",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
@@ -15001,6 +15811,16 @@
       "source_location": "L5",
       "weight": 1.0,
       "source": "session_log_session_log",
+      "target": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "session_log_session_log",
       "target": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
       "confidence_score": 1.0
     },
@@ -15008,7 +15828,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L150",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "session_log_session_log",
+      "target": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L161",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_earlier_from_git_history",
@@ -15126,5 +15956,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "3f057026d2203558acee477070dc23999cfe3d05"
+  "built_at_commit": "86faecf22d68d6b4be88ef6f50c6a5d652c4a8af"
 }

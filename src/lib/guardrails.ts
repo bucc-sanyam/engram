@@ -15,8 +15,15 @@ export function looksLikeGibberish(raw: string): boolean {
   if (text.length < 40) return false; // caller already enforces a minimum length
 
   // A short pattern (1-4 chars) repeated 10+ times in a row - "aaaaaaaa...",
-  // "hahahaha...", "asdasdasdasd...", ">>> >>> >>> ...".
-  if (/(.{1,4})\1{9,}/.test(text)) return true;
+  // "hahahaha...", "asdasdasdasd...". Require the repeated unit to contain a
+  // letter or digit: real technical writing routinely has long runs of pure
+  // punctuation (ASCII fraction bars, table borders, markdown "------"
+  // rules, box-drawing dividers like "──────"), and those shouldn't reject
+  // an otherwise-real article. Punctuation-only floods that ARE spam (e.g.
+  // ">>> >>> >>>" quote-chain garbage) still get caught below - the
+  // word-shape check flags them since none of their "words" contain a letter.
+  const flood = text.match(/(.{1,4})\1{9,}/);
+  if (flood && /[a-z0-9]/i.test(flood[1])) return true;
 
   const sample = text.slice(0, 4000); // bound the cost on huge pastes
 
@@ -26,14 +33,6 @@ export function looksLikeGibberish(raw: string): boolean {
   // whitespace, it also dodges the word-level checks below.
   const meaningful = sample.replace(/[^a-z0-9\s]/gi, "").length;
   if (sample.length >= 30 && meaningful / sample.length < 0.35) return true;
-
-  // Distinct-character ratio over letters/digits only - real prose has real
-  // variety; repeated/near-repeated text collapses this ratio.
-  const alnum = sample.toLowerCase().replace(/[^a-z0-9]/g, "");
-  if (alnum.length >= 30) {
-    const distinct = new Set(alnum).size;
-    if (distinct / alnum.length < 0.12) return true;
-  }
 
   // Word-level sanity: real writing has varied, letter-containing words.
   const words = sample.split(/\s+/).filter(Boolean);

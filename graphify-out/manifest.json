@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784144716.671069,
-    "ast_hash": "7d574511395edc4bdeb70738db5617ad",
+    "mtime": 1784200420.4849734,
+    "ast_hash": "376f6bbfe05b787a53eb1983ea79c5a8",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784144739.8030307,
-    "ast_hash": "c71053e9ef33bd6badd49dd5ed6eb83f",
+    "mtime": 1784201403.2197442,
+    "ast_hash": "5efa8b6889d4af67214ed907aafbc482",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784144753.984179,
-    "ast_hash": "e23f2d4a50b3c02b2e673bd2a5dcc516",
+    "mtime": 1784201411.0132053,
+    "ast_hash": "dd1e0cbd5e609d7a74ec8c30c43956c9",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -360,8 +360,13 @@
     "semantic_hash": ""
   },
   "src/lib/guardrails.ts": {
-    "mtime": 1784142197.7594,
-    "ast_hash": "9847bde5663dba7c3841fe979330849f",
+    "mtime": 1784200341.21092,
+    "ast_hash": "0760bfe80ac7684f5747a06016ce7da1",
+    "semantic_hash": ""
+  },
+  "ARCHITECTURE.md": {
+    "mtime": 1784192367.4205563,
+    "ast_hash": "17e856c9bb1b1c383567ef1d9f67d005",
     "semantic_hash": ""
   }
 }
