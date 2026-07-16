@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "src/app/api/ingest/route.ts": {
-    "mtime": 1784122690.472688,
-    "ast_hash": "ae2bf49cb5a9c63d9006dfdfd5073e95",
+    "mtime": 1784136669.9129636,
+    "ast_hash": "51f591626ecfe8a823c836973fd0e78c",
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
@@ -225,13 +225,13 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784122078.5935261,
-    "ast_hash": "81e720a1dbf62feea6d3db4666258012",
+    "mtime": 1784136722.943266,
+    "ast_hash": "824aed7698c9e77c7e5ae91d7ceb1f97",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784122741.803879,
-    "ast_hash": "facdb3ea4cf0cdc99126c42781f84653",
+    "mtime": 1784136709.7510753,
+    "ast_hash": "53620ea9317abda80e446f66f8a6d773",
     "semantic_hash": ""
   },
   "TASKS.md": {

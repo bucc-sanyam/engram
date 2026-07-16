@@ -7,6 +7,15 @@ import { Fragment, type ReactNode } from "react";
  * forgiving rather than spec-perfect.
  */
 
+// Only http(s)/mailto (or scheme-less relative) links render as clickable —
+// blocks javascript:/data:/vbscript: URI XSS from a pasted markdown link.
+function isSafeHref(href: string): boolean {
+  if (/^[/#?]/.test(href) || href.startsWith("//")) return true; // relative/protocol-relative
+  const scheme = href.match(/^([a-z][a-z0-9+.-]*):/i)?.[1]?.toLowerCase();
+  if (!scheme) return true; // no scheme at all — treat as relative
+  return scheme === "http" || scheme === "https" || scheme === "mailto";
+}
+
 // ---- inline (bold / italic / code / links) ----
 type InlineRule = {
   re: RegExp;
@@ -24,17 +33,20 @@ const INLINE: InlineRule[] = [
   },
   {
     re: /\[([^\]]+)\]\(([^)\s]+)\)/,
-    render: (m, key) => (
-      <a
-        key={key}
-        href={m[2]}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-[#f5b95f] underline decoration-[#f5b95f]/40 underline-offset-2 hover:decoration-[#f5b95f]"
-      >
-        {m[1]}
-      </a>
-    ),
+    render: (m, key) =>
+      isSafeHref(m[2]) ? (
+        <a
+          key={key}
+          href={m[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-[#f5b95f] underline decoration-[#f5b95f]/40 underline-offset-2 hover:decoration-[#f5b95f]"
+        >
+          {m[1]}
+        </a>
+      ) : (
+        <span key={key}>{m[1]}</span>
+      ),
   },
   {
     re: /\*\*([^*]+)\*\*/,

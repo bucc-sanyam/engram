@@ -1,8 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { extractKnowledge } from "@/lib/gemini";
 import { awardXp } from "@/lib/progress";
 import { indexContent, retrieveContext, formatContext, findDuplicateEntry, linkRetrievalLogToEntry } from "@/lib/rag";
+import { looksLikeGibberish, sanitizeField } from "@/lib/guardrails";
+import { CATEGORY_COLORS } from "@/lib/types";
 
 export const maxDuration = 60;
 
@@ -56,17 +58,22 @@ function assertPublicHttpUrl(u: URL): void {
 
 /** Fetch an article and reduce it to readable plain text (title + body). */
 async function fetchReadable(url: string): Promise<{ pageTitle: string | null; text: string }> {
-  // Follow redirects manually so every hop is SSRF-checked too.
+  // Follow redirects manually so every hop is SSRF-checked too. Bound the
+  // WHOLE chain (not a fresh timeout per hop) — 5 hops at 15s each could
+  // otherwise take up to 75s, blowing past the function's duration on its own.
+  const deadline = Date.now() + 20_000;
   let current = new URL(url);
   let res: Response | null = null;
   for (let hop = 0; hop < 5; hop++) {
     assertPublicHttpUrl(current);
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) throw new Error("That link took too long to load.");
     res = await fetch(current.toString(), {
       headers: {
         "User-Agent": "Mozilla/5.0 (compatible; KnovisBot/1.0; +learning-app)",
         Accept: "text/html,application/xhtml+xml",
       },
-      signal: AbortSignal.timeout(15000),
+      signal: AbortSignal.timeout(remaining),
       redirect: "manual",
     });
     const location = res.headers.get("location");
@@ -243,6 +250,15 @@ export async function POST(request: Request) {
   // Bound what we store — pathological pastes shouldn't eat the DB.
   text = text.slice(0, 120_000);
 
+  // Reject obvious junk (keyboard mashing, spam floods) before it burns a
+  // Gemini call, a daily-cap slot, and pollutes the knowledge base.
+  if (looksLikeGibberish(text)) {
+    return NextResponse.json(
+      { error: "That doesn't look like real content to learn from — try pasting actual notes or an article." },
+      { status: 400 }
+    );
+  }
+
   // Exact-duplicate short-circuit: if this content was already ingested,
   // reuse that entry instead of burning a Gemini call, a daily-cap slot, and
   // creating duplicate chunks/questions.
@@ -288,6 +304,38 @@ export async function POST(request: Request) {
     );
   }
 
+  // Validate/clamp everything Gemini returned before it touches the DB —
+  // defense in depth against a manipulated or hallucinating model. A
+  // successful prompt injection can still only produce valid-JSON-shaped
+  // output (responseMimeType is enforced), but nothing else bounds what's
+  // INSIDE those strings or which categories get used without this.
+  extraction.title = sanitizeField(extraction.title, 200);
+  extraction.summary = sanitizeField(extraction.summary, 1000);
+  extraction.topics = (extraction.topics ?? [])
+    .map((t) => ({
+      name: sanitizeField(t.name, 120),
+      category: t.category in CATEGORY_COLORS ? t.category : "General",
+      summary: sanitizeField(t.summary, 800),
+      key_points: (t.key_points ?? [])
+        .slice(0, 8)
+        .map((k) => sanitizeField(k, 300))
+        .filter(Boolean),
+    }))
+    .filter((t) => t.name);
+  extraction.connections = (extraction.connections ?? [])
+    .map((c) => ({ a: sanitizeField(c.a, 120), b: sanitizeField(c.b, 120), reason: sanitizeField(c.reason, 300) }))
+    .filter((c) => c.a && c.b);
+  extraction.questions = (extraction.questions ?? []).map((q) => ({
+    ...q,
+    topic: sanitizeField(q.topic, 120),
+    prompt: sanitizeField(q.prompt, 500),
+    model_answer: sanitizeField(q.model_answer, 400),
+    options: Array.isArray(q.options) ? q.options.map((o) => sanitizeField(o, 200)) : q.options,
+  }));
+  extraction.facts = (extraction.facts ?? [])
+    .map((f) => ({ topic: sanitizeField(f.topic, 120), fact: sanitizeField(f.fact, 400) }))
+    .filter((f) => f.topic && f.fact);
+
   // 1. Save the entry (keeping the source link when it came from one).
   const { data: entry, error: entryErr } = await supabase
     .from("entries")
@@ -302,16 +350,19 @@ export async function POST(request: Request) {
     .single();
   if (entryErr) return NextResponse.json({ error: entryErr.message }, { status: 500 });
 
-  // Backfill the grounding retrieval's log with the entry it fed, now that it exists.
-  if (retrievalLogId) await linkRetrievalLogToEntry(supabase, retrievalLogId, entry.id);
-
-  // 1b. RAG index: chunk + embed this entry so future generation retrieves it.
-  // Best-effort — a missing RAG table or embedding hiccup never fails ingest.
-  await indexContent(supabase, {
-    userId: user.id,
-    entryId: entry.id,
-    source: "entry",
-    text,
+  // 1b. RAG bookkeeping (grounding-log backfill + chunk/embed indexing) is
+  // strictly best-effort and never affects this response — deferred to run
+  // AFTER the response is sent (Next's after()) instead of blocking on it.
+  // This blocking work (embedding calls + several extra DB round-trips) was
+  // the root cause of a 504 FUNCTION_INVOCATION_TIMEOUT on link ingests.
+  after(async () => {
+    if (retrievalLogId) await linkRetrievalLogToEntry(supabase, retrievalLogId, entry.id);
+    await indexContent(supabase, {
+      userId: user.id,
+      entryId: entry.id,
+      source: "entry",
+      text,
+    });
   });
 
   // 2. Upsert topics (merge into existing topics of the same name).
