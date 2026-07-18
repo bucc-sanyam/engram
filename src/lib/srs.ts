@@ -50,8 +50,3 @@ export function scheduleNext(state: SrsState, quality: number, now = new Date())
 export function updateMastery(current: number, quality: number): number {
   return 0;
 }
-
-/** XP earned for a single answered question. */
-export function xpForReview(quality: number): number {
-  return 0;
-}

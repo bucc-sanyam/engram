@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { gradeSession, type SessionGradeInput } from "@/lib/gemini";
-import { scheduleNext, xpForReview } from "@/lib/srs";
-import { awardXp } from "@/lib/progress";
+import { scheduleNext } from "@/lib/srs";
+import { advanceStreak } from "@/lib/progress";
 import { clampTz, localTodayForOffset } from "@/lib/dates";
 import { indexAnswers } from "@/lib/rag";
 import type {
@@ -14,6 +14,17 @@ import type {
 } from "@/lib/types";
 
 export const maxDuration = 60;
+
+/**
+ * Max quiz sessions per user per day that get REAL AI grading (gradeSession()).
+ * Unlike the ingest cap, exceeding this never blocks finishing a session —
+ * it just falls back to the existing heuristic (keyword-overlap) grader, the
+ * same path already used when Gemini itself fails. Kept low deliberately:
+ * ingest's own cap (INGEST_DAILY_LIMIT) reserves the bulk of the daily Gemini
+ * budget for adding new material; this is the always-available slice held
+ * back specifically for the review flow so it's never starved by ingest use.
+ */
+const QUIZ_AI_DAILY_LIMIT = Number(process.env.QUIZ_AI_DAILY_LIMIT || 1);
 
 /**
  * Quiz backend, redesigned to minimise AI calls:
@@ -252,7 +263,7 @@ async function answer(
   return NextResponse.json({ ok: true });
 }
 
-// ---- finish: ONE batch AI call → report card, SRS updates, XP ----
+// ---- finish: ONE batch AI call → report card, SRS updates, streak ----
 async function finish(
   supabase: Awaited<ReturnType<typeof createClient>>,
   userId: string,
@@ -395,22 +406,42 @@ async function finish(
   let summary = "";
   let strengths: string[] = [];
   let focus: string[] = [];
+  let usedAi = false;
   if (toGrade.length) {
-    try {
-      const graded = await gradeSession(toGrade);
-      for (const g of graded.grades) {
-        const item = items.find((i) => i.index === g.index);
-        if (!item) continue;
-        item.score = Math.max(0, Math.min(5, Math.round(g.score)));
-        item.feedback = g.feedback;
-        if (g.correct_answer) item.correct_answer = g.correct_answer;
+    // Daily AI-grading budget: count today's sessions that already got a real
+    // gradeSession() call. Never blocks finishing — just silently downgrades
+    // to the same heuristic fallback used when Gemini itself fails.
+    const dayStart = new Date();
+    dayStart.setHours(0, 0, 0, 0);
+    const { count: aiGradedToday } = await supabase
+      .from("quiz_sessions")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userId)
+      .eq("ai_graded", true)
+      .gte("graded_at", dayStart.toISOString());
+    const budgetAvailable = (aiGradedToday ?? 0) < QUIZ_AI_DAILY_LIMIT;
+
+    if (budgetAvailable) {
+      try {
+        const graded = await gradeSession(toGrade);
+        for (const g of graded.grades) {
+          const item = items.find((i) => i.index === g.index);
+          if (!item) continue;
+          item.score = Math.max(0, Math.min(5, Math.round(g.score)));
+          item.feedback = g.feedback;
+          if (g.correct_answer) item.correct_answer = g.correct_answer;
+        }
+        summary = graded.summary;
+        strengths = graded.strengths ?? [];
+        focus = graded.focus ?? [];
+        usedAi = true;
+      } catch (e) {
+        console.error("Batch grading failed, using heuristic fallback", e);
       }
-      summary = graded.summary;
-      strengths = graded.strengths ?? [];
-      focus = graded.focus ?? [];
-    } catch (e) {
-      // Keyword-overlap fallback keeps the session finishable without Gemini.
-      console.error("Batch grading failed, using heuristic fallback", e);
+    }
+    if (!usedAi) {
+      // Either Gemini failed above, or today's AI-grading budget is spent —
+      // keyword-overlap fallback keeps the session finishable either way.
       for (const g of toGrade) {
         const item = items.find((i) => i.index === g.index)!;
         item.score = heuristicScore(g.answer, g.key_points);
@@ -503,16 +534,13 @@ async function finish(
     }
   }
 
-  // XP is retired (xpForReview returns 0), but the streak must still advance on
-  // every session with at least one attempted answer.
-  const xp = attempted.reduce((s, i) => s + xpForReview(i.score), 0);
-  if (attempted.length) await awardXp(supabase, userId, xp, clampTz(body.tz));
+  // The streak advances on every session with at least one attempted answer.
+  if (attempted.length) await advanceStreak(supabase, userId, clampTz(body.tz));
 
   const report: ReportCard = {
     session_id: sessionId,
     date: localTodayForOffset(clampTz(body.tz)),
     score_pct: scorePct,
-    xp,
     summary,
     strengths,
     focus,
@@ -521,7 +549,7 @@ async function finish(
 
   await supabase
     .from("quiz_sessions")
-    .update({ status: "graded", report, graded_at: new Date().toISOString() })
+    .update({ status: "graded", report, graded_at: new Date().toISOString(), ai_graded: usedAi })
     .eq("id", sessionId);
 
   return NextResponse.json(report);

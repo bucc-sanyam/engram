@@ -18,7 +18,6 @@ import {
   demoGrade,
   demoTopicSource,
 } from "./demo";
-import { xpForReview } from "./srs";
 import { localDayKey, localDayStartIso, localDayEndIso, tzOffsetMinutes } from "./dates";
 import type {
   DailyFact,
@@ -106,6 +105,18 @@ function loadDemoState(): void {
 
 if (isDemo) loadDemoState();
 
+/** Thrown by api() — carries the HTTP status so callers can branch on it (e.g. 429 rate limits) without parsing the message text. */
+export class ApiError extends Error {
+  status: number;
+  /** ISO instant of the client's next local midnight, when a 429 daily-limit error includes one. */
+  resetAt?: string;
+  constructor(message: string, status: number, resetAt?: string) {
+    super(message);
+    this.status = status;
+    this.resetAt = resetAt;
+  }
+}
+
 async function api<T>(path: string, body?: unknown): Promise<T> {
   const res = await fetch(path, {
     method: body === undefined ? "GET" : "POST",
@@ -119,7 +130,7 @@ async function api<T>(path: string, body?: unknown): Promise<T> {
     // as nothing (`{error && ...}` is falsy for ""). Include res.status so the
     // fallback is never blank.
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || `Request failed (${res.status})`);
+    throw new ApiError(err.error || `Request failed (${res.status})`, res.status, err.resetAt);
   }
   return res.json();
 }
@@ -300,7 +311,6 @@ export interface IngestResult {
   entryTitle: string;
   topicNames: string[];
   sourceUrl?: string | null;
-  xp: number;
   /** True when this exact content was already ingested — the existing entry was reused, nothing new was created. */
   duplicate?: boolean;
   message?: string;
@@ -309,14 +319,12 @@ export interface IngestResult {
 export async function ingestText(text: string): Promise<IngestResult> {
   if (isDemo) {
     await new Promise((r) => setTimeout(r, 1800));
-    demoState.profile.xp += 30;
     return {
       entryTitle: "Demo: knowledge extracted",
       topicNames: ["(Demo mode — add Supabase + Gemini keys to save real entries)"],
-      xp: 0,
     };
   }
-  return api("/api/ingest", { text });
+  return api("/api/ingest", { text, tz: tzOffsetMinutes() });
 }
 
 export async function ingestLink(url: string): Promise<IngestResult> {
@@ -330,10 +338,9 @@ export async function ingestLink(url: string): Promise<IngestResult> {
       entryTitle: `Demo: article from ${host}`,
       topicNames: ["(Demo mode — add Supabase + Gemini keys to fetch and save real articles)"],
       sourceUrl: url,
-      xp: 0,
     };
   }
-  return api("/api/ingest", { url });
+  return api("/api/ingest", { url, tz: tzOffsetMinutes() });
 }
 
 /**
@@ -508,8 +515,6 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
     const scorePct = attempted.length
       ? Math.round((attempted.reduce((sum, i) => sum + i.score, 0) / (attempted.length * 5)) * 100)
       : 0;
-    const xp = attempted.reduce((sum, i) => sum + xpForReview(i.score), 0);
-    demoState.profile.xp += xp;
     const strengths = attempted.filter((i) => i.score >= 4).map((i) => i.topic_name).slice(0, 3);
     const focus = attempted.filter((i) => i.score <= 2).map((i) => i.topic_name).slice(0, 3);
 
@@ -536,7 +541,6 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
       session_id: sessionId,
       date: localDayKey(),
       score_pct: scorePct,
-      xp: 0,
       summary:
         scorePct >= 80
           ? "Excellent session — your recall is sharp across the board. (Demo mode: add your Gemini key for real AI report cards.)"
@@ -661,7 +665,6 @@ function mergeReports(reports: ReportCard[], day: string): ReportCard {
     session_id: reports.map((r) => r.session_id).join("+"),
     date: day,
     score_pct: scorePct,
-    xp: reports.reduce((s, r) => s + (r.xp ?? 0), 0),
     summary:
       reports.length === 1
         ? reports[0].summary
@@ -705,7 +708,6 @@ function reportFromReviews(revs: Review[], day: string, topicName: (id: string) 
     session_id: `day-${day}`,
     date: day,
     score_pct: scorePct,
-    xp: 0,
     summary: `You answered ${items.length} question${items.length === 1 ? "" : "s"} this day — here's the full breakdown, questions and answers included.`,
     strengths: items.filter((i) => i.score >= 4).map((i) => i.topic_name).slice(0, 3),
     focus: items.filter((i) => i.score <= 2).map((i) => i.topic_name).slice(0, 3),

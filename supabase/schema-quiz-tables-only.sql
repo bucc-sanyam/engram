@@ -37,8 +37,12 @@ create table if not exists public.quiz_sessions (
   items jsonb not null,                        -- server-side question snapshot (incl. answers)
   report jsonb,                                -- ReportCard, set when graded
   created_at timestamptz not null default now(),
-  graded_at timestamptz
+  graded_at timestamptz,
+  ai_graded boolean not null default false     -- true iff gradeSession() (real Gemini call) ran, not the heuristic fallback
 );
+-- migration for databases created before the per-day AI-grading cap existed
+alter table public.quiz_sessions add column if not exists ai_graded boolean not null default false;
+create index if not exists quiz_sessions_ai_graded_idx on public.quiz_sessions (user_id, graded_at) where ai_graded;
 
 -- ============ quiz_answers (each answer saved as it is submitted) ============
 create table if not exists public.quiz_answers (

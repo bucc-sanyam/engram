@@ -30,7 +30,6 @@ export function categoryColor(category: string): string {
 export interface Profile {
   id: string;
   display_name: string | null;
-  xp: number;
   streak: number;
   longest_streak: number;
   last_active: string | null;
@@ -159,7 +158,6 @@ export interface ReportCard {
   session_id: string;
   date: string;
   score_pct: number; // 0..100 over attempted questions
-  xp: number;
   summary: string;
   strengths: string[];
   focus: string[];

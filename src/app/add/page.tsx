@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Nav from "@/components/Nav";
-import { ingestLink, ingestText, isDemo, type IngestResult } from "@/lib/data";
+import { ApiError, ingestLink, ingestText, isDemo, type IngestResult } from "@/lib/data";
 
 type Phase = "input" | "processing" | "done";
 type Mode = "notes" | "link";
@@ -16,6 +16,7 @@ export default function AddPage() {
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<IngestResult | null>(null);
   const [showDemoGate, setShowDemoGate] = useState(false);
+  const [limitResetAt, setLimitResetAt] = useState<string | null>(null);
   // Guest-cookie-dependent, so read after mount to keep hydration stable.
   const [demo, setDemo] = useState(false);
   useEffect(() => setDemo(isDemo), []);
@@ -34,7 +35,11 @@ export default function AddPage() {
       setResult(r);
       setPhase("done");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Something went wrong");
+      if (e instanceof ApiError && e.status === 429 && e.resetAt) {
+        setLimitResetAt(e.resetAt);
+      } else {
+        setError(e instanceof Error ? e.message : "Something went wrong");
+      }
       setPhase("input");
     }
   }
@@ -158,6 +163,30 @@ export default function AddPage() {
           </div>
         )}
 
+        {limitResetAt && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+            <div
+              className="absolute inset-0 bg-[rgba(8,7,12,0.78)] backdrop-blur-sm"
+              onClick={() => setLimitResetAt(null)}
+            />
+            <div className="overlay-panel relative w-full max-w-sm p-7 text-center">
+              <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#43d6b5] to-[#7fe5cb] shadow-[0_0_36px_rgba(67,214,181,0.4)]">
+                <ClockIcon className="h-7 w-7 text-[#0b1f1a]" />
+              </span>
+              <h3 className="mb-2 text-lg font-bold">You&apos;re all caught up for today</h3>
+              <p className="mb-1 text-sm leading-relaxed text-muted">
+                You&apos;ve hit today&apos;s limit on adding new learnings.
+              </p>
+              <p className="mb-5 text-sm font-medium text-[#7fe5cb]">
+                You can add more starting {formatResetTime(limitResetAt)}.
+              </p>
+              <button onClick={() => setLimitResetAt(null)} className="btn-primary w-full justify-center">
+                Got it
+              </button>
+            </div>
+          </div>
+        )}
+
         {phase === "done" && result && (
           <div className="glass rise p-8 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#43d6b5]/15 text-3xl">
@@ -183,11 +212,7 @@ export default function AddPage() {
                 {result.sourceUrl}
               </a>
             )}
-            {!result.duplicate && (
-              <p className="display mb-5 text-lg font-semibold text-[#f5b95f]">+{result.xp} XP</p>
-            )}
-
-            <p className="mb-2 text-sm text-muted">
+            <p className="mb-2 mt-5 text-sm text-muted">
               {result.duplicate ? "Already part of your brain:" : "Topics added to your brain:"}
             </p>
             <div className="mb-8 flex flex-wrap justify-center gap-2">
@@ -225,6 +250,28 @@ export default function AddPage() {
         )}
       </main>
     </>
+  );
+}
+
+/** "tomorrow at 12:00 AM" (falls back to a weekday name if resetAt isn't literally tomorrow). */
+function formatResetTime(iso: string): string {
+  const reset = new Date(iso);
+  const now = new Date();
+  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const isTomorrow =
+    reset.getFullYear() === tomorrow.getFullYear() &&
+    reset.getMonth() === tomorrow.getMonth() &&
+    reset.getDate() === tomorrow.getDate();
+  const time = reset.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  return isTomorrow ? `tomorrow at ${time}` : reset.toLocaleString([], { weekday: "long", hour: "numeric", minute: "2-digit" });
+}
+
+function ClockIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3.5 2" />
+    </svg>
   );
 }
 

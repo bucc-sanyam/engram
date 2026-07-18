@@ -35,7 +35,10 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const path = request.nextUrl.pathname;
-  const isPublic = PUBLIC_PATHS.some((p) => path.startsWith(p));
+  // Exact-or-segment match, not a raw prefix match: `startsWith` would also
+  // treat a future route like "/login-help" or "/authorize" as public just
+  // because it shares a text prefix with "/login"/"/auth".
+  const isPublic = PUBLIC_PATHS.some((p) => path === p || path.startsWith(p + "/"));
   // Guest (demo) mode: the login page sets this cookie so visitors can explore
   // We allow "demo mode" if the user has opted in via the `knovis_guest` cookie,
   // or if there is no Supabase URL configured.

@@ -1,21 +1,63 @@
 import { NextResponse, after } from "next/server";
+import dns from "node:dns";
+import { Agent } from "undici";
 import { createClient } from "@/lib/supabase/server";
 import { extractKnowledge } from "@/lib/gemini";
-import { awardXp } from "@/lib/progress";
+import { advanceStreak } from "@/lib/progress";
 import { indexContent, retrieveContext, formatContext, findDuplicateEntry, linkRetrievalLogToEntry } from "@/lib/rag";
 import { looksLikeGibberish, sanitizeField } from "@/lib/guardrails";
 import { CATEGORY_COLORS } from "@/lib/types";
+import { clampTz, localTodayForOffset, dayStartUtcIso } from "@/lib/dates";
 
 export const maxDuration = 60;
 
-/** Max ingests per user per day — protects the Gemini quota and storage. */
-const INGEST_DAILY_LIMIT = Number(process.env.INGEST_DAILY_LIMIT || 20);
+/**
+ * Max ingests per user per day — protects the Gemini quota and storage.
+ * Deliberately leaves the 10th daily Gemini-call "slot" unused by ingest:
+ * QUIZ_AI_DAILY_LIMIT (src/app/api/quiz/route.ts) always keeps 1 call/day
+ * reserved for AI quiz grading regardless of how much of this cap is used,
+ * so a heavy ingest day can never fully starve the review flow.
+ */
+const INGEST_DAILY_LIMIT = Number(process.env.INGEST_DAILY_LIMIT || 9);
+
+/** True if a resolved IPv4 address is loopback, private, link-local, CGNAT, or reserved/multicast. */
+function isBlockedIPv4(ip: string): boolean {
+  const m = ip.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (!m) return false;
+  const a = Number(m[1]);
+  const b = Number(m[2]);
+  return (
+    a === 0 || a === 10 || a === 127 ||
+    (a === 100 && b >= 64 && b <= 127) || // CGNAT
+    (a === 169 && b === 254) ||           // link-local / cloud metadata
+    (a === 172 && b >= 16 && b <= 31) ||
+    (a === 192 && b === 168) ||
+    a >= 224                              // multicast/reserved
+  );
+}
+
+/** True if a resolved IPv6 address is unspecified, loopback, link-local, or ULA. */
+function isBlockedIPv6(ip: string): boolean {
+  const h = ip.toLowerCase().replace(/^\[|\]$/, "").replace(/\]$/, "");
+  if (h === "::" || h === "::1") return true;
+  if (/^(fe80|fc|fd)/i.test(h)) return true; // link-local / unique local
+  const v4Mapped = h.match(/^::ffff:(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})$/i);
+  if (v4Mapped) return isBlockedIPv4(v4Mapped[1]);
+  return false;
+}
+
+function isBlockedIp(address: string, family: number): boolean {
+  return family === 6 ? isBlockedIPv6(address) : isBlockedIPv4(address);
+}
 
 /**
- * SSRF guard: only allow public http(s) hosts on default ports. Blocks
- * loopback, private and link-local ranges (cloud metadata endpoints live
- * there), IPv6 equivalents and internal-sounding hostnames. Applied to the
- * initial URL AND to every redirect hop.
+ * SSRF guard, part 1 — fast string-level pre-check (protocol, credentials,
+ * port, obviously-internal hostnames, literal IPs). Cheap and gives a clear
+ * error before any network activity, but is NOT the real security boundary:
+ * a hostname like "evil.example.com" passes this check even if its DNS
+ * record points at 127.0.0.1 or 169.254.169.254 — that gap is closed by
+ * `ssrfSafeDispatcher` below, which validates the address DNS *actually
+ * resolves to* at the moment of connection (see its comment).
  */
 function assertPublicHttpUrl(u: URL): void {
   if (!/^https?:$/.test(u.protocol)) throw new Error("Only http(s) links are supported.");
@@ -30,31 +72,64 @@ function assertPublicHttpUrl(u: URL): void {
   if (/\.(local|internal|intranet|home\.arpa)$/.test(host)) {
     throw new Error("That host can't be fetched.");
   }
-  // Literal IPv4
-  const v4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
-  if (v4) {
-    const [a, b] = [Number(v4[1]), Number(v4[2])];
-    const isPrivate =
-      a === 0 || a === 10 || a === 127 ||
-      (a === 100 && b >= 64 && b <= 127) || // CGNAT
-      (a === 169 && b === 254) ||           // link-local / cloud metadata
-      (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && b === 168) ||
-      a >= 224;                             // multicast/reserved
-    if (isPrivate) throw new Error("That address can't be fetched.");
-  }
-  // Literal IPv6 (URL hostname keeps brackets off)
-  if (host.includes(":")) {
-    const h = host.replace(/^\[|\]$/g, "");
-    if (
-      h === "::" || h === "::1" ||
-      /^(fe80|fc|fd)/i.test(h) ||           // link-local / ULA
-      /^::ffff:/i.test(h)                   // v4-mapped — re-check as v4 elsewhere
-    ) {
-      throw new Error("That address can't be fetched.");
-    }
-  }
+  const v4 = host.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/);
+  if (v4 && isBlockedIPv4(host)) throw new Error("That address can't be fetched.");
+  if (host.includes(":") && isBlockedIPv6(host)) throw new Error("That address can't be fetched.");
 }
+
+/**
+ * SSRF guard, part 2 — the real boundary. A hostname-string check alone is
+ * bypassable by DNS rebinding: register any domain, point its DNS record at
+ * an internal address, and a "check the hostname, then fetch(url)" pattern
+ * validates the harmless-looking domain string while `fetch()` performs its
+ * OWN separate DNS lookup and connects wherever that domain resolves *right
+ * now* — the two lookups can legitimately return different answers.
+ *
+ * This custom `lookup` plugs into undici's connection layer as the ONLY
+ * DNS resolution step for the actual TCP connect — there is no second,
+ * unvalidated lookup afterwards. It resolves the hostname, rejects the
+ * whole request if ANY returned address is private/loopback/link-local, and
+ * only then hands the validated address back to establish the connection.
+ * The original hostname is still used for the TLS SNI/Host header (Node
+ * derives those from the URL, not from what `lookup` returns), so normal
+ * HTTPS certificate validation is unaffected.
+ */
+type LookupCallback = (
+  err: NodeJS.ErrnoException | null,
+  address: string | dns.LookupAddress[],
+  family?: number
+) => void;
+
+// undici's connector calls this exactly like Node's own dns.lookup, including
+// its overloads: `lookup(hostname, callback)` (options omitted) or
+// `lookup(hostname, options, callback)` — and its Happy-Eyeballs (dual-stack)
+// logic requests `{ all: true }`, expecting an ARRAY back, not a single
+// address. Both shapes must be honored or real (non-malicious) requests break.
+function ssrfSafeLookup(
+  hostname: string,
+  optionsOrCallback: dns.LookupAllOptions | dns.LookupOneOptions | LookupCallback,
+  maybeCallback?: LookupCallback
+): void {
+  const callback = typeof optionsOrCallback === "function" ? optionsOrCallback : maybeCallback!;
+  const wantAll = typeof optionsOrCallback === "object" && !!optionsOrCallback?.all;
+
+  dns.lookup(hostname, { all: true, verbatim: true }, (err, addresses) => {
+    if (err) return callback(err, wantAll ? [] : "", 4);
+    if (!addresses.length) {
+      return callback(new Error(`DNS resolution for ${hostname} returned no addresses`), wantAll ? [] : "", 4);
+    }
+    for (const { address, family } of addresses) {
+      if (isBlockedIp(address, family)) {
+        return callback(new Error(`${hostname} resolves to a non-public address`), wantAll ? [] : "", 4);
+      }
+    }
+    if (wantAll) return callback(null, addresses);
+    const chosen = addresses[0];
+    callback(null, chosen.address, chosen.family);
+  });
+}
+
+const ssrfSafeDispatcher = new Agent({ connect: { lookup: ssrfSafeLookup } });
 
 /** Fetch an article and reduce it to readable plain text (title + body). */
 async function fetchReadable(url: string): Promise<{ pageTitle: string | null; text: string }> {
@@ -75,6 +150,10 @@ async function fetchReadable(url: string): Promise<{ pageTitle: string | null; t
       },
       signal: AbortSignal.timeout(remaining),
       redirect: "manual",
+      // @ts-expect-error -- `dispatcher` is a real, documented Node/undici fetch
+      // option (Node's global fetch accepts any undici-compatible Dispatcher)
+      // that TypeScript's bundled fetch types don't know about.
+      dispatcher: ssrfSafeDispatcher,
     });
     const location = res.headers.get("location");
     if (res.status >= 300 && res.status < 400 && location) {
@@ -146,7 +225,6 @@ async function duplicateResponse(
       entryTitle: existingEntry?.title ?? "Untitled",
       topicNames,
       sourceUrl: existingEntry?.source_url ?? null,
-      xp: 0,
       duplicate: true,
       message,
     });
@@ -156,7 +234,6 @@ async function duplicateResponse(
       entryTitle: "Untitled",
       topicNames: [],
       sourceUrl: null,
-      xp: 0,
       duplicate: true,
       message,
     });
@@ -168,7 +245,7 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
 
-  let body: { text?: unknown; title?: unknown; url?: unknown };
+  let body: { text?: unknown; title?: unknown; url?: unknown; tz?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -179,16 +256,24 @@ export async function POST(request: Request) {
 
   // Per-user daily cap: every ingest is one Gemini call, so an unthrottled
   // account could burn the whole free-tier quota (and DB storage) alone.
-  const dayStart = new Date();
-  dayStart.setHours(0, 0, 0, 0);
+  // "Today" is the CLIENT's calendar day (same convention as /api/plan and
+  // /api/quiz finish) so the reset time shown to the user is actually correct
+  // for their timezone, not the server's.
+  const tz = clampTz(body.tz);
+  const today = localTodayForOffset(tz);
+  const dayStart = dayStartUtcIso(today, tz);
+  const dayEnd = new Date(new Date(dayStart).getTime() + 86_400_000).toISOString();
   const { count: todayCount } = await supabase
     .from("entries")
     .select("id", { count: "exact", head: true })
     .eq("user_id", user.id)
-    .gte("created_at", dayStart.toISOString());
+    .gte("created_at", dayStart);
   if ((todayCount ?? 0) >= INGEST_DAILY_LIMIT) {
     return NextResponse.json(
-      { error: `Daily limit reached (${INGEST_DAILY_LIMIT} learnings/day) — come back tomorrow!` },
+      {
+        error: `Daily limit reached (${INGEST_DAILY_LIMIT} learnings/day) — come back tomorrow!`,
+        resetAt: dayEnd,
+      },
       { status: 429 }
     );
   }
@@ -367,7 +452,6 @@ export async function POST(request: Request) {
 
   // 2. Upsert topics (merge into existing topics of the same name).
   const nameToId = new Map<string, string>();
-  let newTopics = 0;
   for (const t of extraction.topics) {
     const match = existingTopics.find(
       (e) => e.name.toLowerCase() === t.name.toLowerCase()
@@ -400,7 +484,6 @@ export async function POST(request: Request) {
         .single();
       if (created) {
         nameToId.set(t.name.toLowerCase(), created.id);
-        newTopics++;
       }
     }
   }
@@ -497,17 +580,12 @@ export async function POST(request: Request) {
     .filter((f) => f.topic_id && f.fact);
   if (facts.length) await supabase.from("facts").insert(facts);
 
-  // 6. XP: 15 per new topic, 5 per refreshed one, 10 for logging at all.
-  const xp = await awardXp(
-    supabase,
-    user.id,
-    10 + newTopics * 15 + (extraction.topics.length - newTopics) * 5
-  );
+  // 6. Streak: advance on any successful ingest.
+  await advanceStreak(supabase, user.id);
 
   return NextResponse.json({
     entryTitle: pageTitle ?? extraction.title,
     topicNames: extraction.topics.map((t) => t.name),
     sourceUrl,
-    xp,
   });
 }

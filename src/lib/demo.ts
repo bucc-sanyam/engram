@@ -172,7 +172,6 @@ export const demoEntries: Entry[] = [
 export const demoProfile: Profile = {
   id: "demo",
   display_name: "Demo Learner",
-  xp: 0,
   streak: 6,
   longest_streak: 11,
   last_active: daysAgo(1).slice(0, 10),
