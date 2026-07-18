@@ -1,5 +1,7 @@
 import type { DsaProblem, DsaTopic } from "./types";
 import { arraysHashing } from "./topics/arrays-hashing";
+import { twoPointers } from "./topics/two-pointers";
+import { slidingWindow } from "./topics/sliding-window";
 
 export * from "./types";
 
@@ -7,7 +9,7 @@ export * from "./types";
  * The atlas, in reading order. Chapters are appended here as they are written;
  * every registered chapter is immediately live at /blogs/dsa.
  */
-export const DSA_TOPICS: DsaTopic[] = [arraysHashing];
+export const DSA_TOPICS: DsaTopic[] = [arraysHashing, twoPointers, slidingWindow];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
 
