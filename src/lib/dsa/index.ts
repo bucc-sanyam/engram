@@ -7,6 +7,8 @@ import { binarySearch } from "./topics/binary-search";
 import { linkedList } from "./topics/linked-list";
 import { trees } from "./topics/trees";
 import { heap } from "./topics/heap";
+import { backtracking } from "./topics/backtracking";
+import { tries } from "./topics/tries";
 
 export * from "./types";
 
@@ -23,6 +25,8 @@ export const DSA_TOPICS: DsaTopic[] = [
   linkedList,
   trees,
   heap,
+  backtracking,
+  tries,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
