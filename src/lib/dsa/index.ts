@@ -4,6 +4,7 @@ import { twoPointers } from "./topics/two-pointers";
 import { slidingWindow } from "./topics/sliding-window";
 import { stack } from "./topics/stack";
 import { binarySearch } from "./topics/binary-search";
+import { linkedList } from "./topics/linked-list";
 
 export * from "./types";
 
@@ -17,6 +18,7 @@ export const DSA_TOPICS: DsaTopic[] = [
   slidingWindow,
   stack,
   binarySearch,
+  linkedList,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
