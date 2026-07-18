@@ -73,6 +73,70 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* The Math behind the Magic */}
+        <section className="glass rise mb-6 p-6 sm:p-7">
+          <p className="micro mb-4 !text-[#3b82f6]">The math behind the nagging</p>
+          <div className="space-y-4 text-[15px] leading-relaxed text-white/85">
+            <p>
+              Under the hood, Knovis uses something called the <strong>SM-2 algorithm</strong>. It was invented in the 80s, which makes it older than the internet you are currently scrolling, but it remains the gold standard for spaced repetition.
+            </p>
+            <p>
+              Its entire job is to combat the <strong>Ebbinghaus Forgetting Curve</strong> — a rather depressing graph that illustrates how quickly your brain dumps information it doesn&apos;t think it needs.
+            </p>
+            
+            {/* Graph container */}
+            <div className="my-8 rounded-2xl bg-white/[0.02] p-4 sm:p-6 border border-white/[0.05]">
+              <svg viewBox="0 0 500 250" className="w-full h-auto text-white" aria-label="Ebbinghaus Forgetting Curve Graph">
+                {/* Axes */}
+                <line x1="40" y1="210" x2="480" y2="210" stroke="currentColor" strokeWidth="2" strokeOpacity="0.2" />
+                <line x1="40" y1="40" x2="40" y2="210" stroke="currentColor" strokeWidth="2" strokeOpacity="0.2" />
+                
+                {/* Labels */}
+                <text x="36" y="55" fill="currentColor" opacity="0.5" fontSize="12" textAnchor="end">100%</text>
+                <text x="36" y="215" fill="currentColor" opacity="0.5" fontSize="12" textAnchor="end">0%</text>
+                
+                <text x="260" y="240" fill="currentColor" opacity="0.5" fontSize="12" textAnchor="middle">Time (Days)</text>
+                <text x="12" y="125" fill="currentColor" opacity="0.5" fontSize="12" textAnchor="middle" transform="rotate(-90 12 125)">Retention</text>
+
+                {/* The sad forgetting curve (No reviews) */}
+                <path d="M 40 50 Q 80 190, 460 200" fill="none" stroke="#ef4444" strokeWidth="3" strokeDasharray="6 6" strokeLinecap="round" />
+                <text x="475" y="195" fill="#ef4444" fontSize="11" textAnchor="end">No review</text>
+
+                {/* The SM-2 negotiated curves */}
+                {/* Review 1 */}
+                <line x1="100" y1="165" x2="100" y2="50" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" strokeDasharray="4 2" />
+                <path d="M 100 50 Q 170 150, 460 170" fill="none" stroke="#f5b95f" strokeWidth="3" strokeLinecap="round" />
+                
+                {/* Review 2 */}
+                <line x1="220" y1="120" x2="220" y2="50" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" strokeDasharray="4 2" />
+                <path d="M 220 50 Q 320 120, 460 140" fill="none" stroke="#43d6b5" strokeWidth="3" strokeLinecap="round" />
+
+                {/* Review 3 */}
+                <line x1="360" y1="100" x2="360" y2="50" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.3" strokeDasharray="4 2" />
+                <path d="M 360 50 Q 420 90, 480 100" fill="none" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" />
+
+                {/* Data points */}
+                <circle cx="40" cy="50" r="4" fill="#ef4444" />
+                <circle cx="100" cy="50" r="4" fill="#f5b95f" />
+                <circle cx="220" cy="50" r="4" fill="#43d6b5" />
+                <circle cx="360" cy="50" r="4" fill="#3b82f6" />
+                
+                {/* Review Labels */}
+                <text x="100" y="38" fill="currentColor" opacity="0.6" fontSize="10" textAnchor="middle">Review 1</text>
+                <text x="220" y="38" fill="currentColor" opacity="0.6" fontSize="10" textAnchor="middle">Review 2</text>
+                <text x="360" y="38" fill="currentColor" opacity="0.6" fontSize="10" textAnchor="middle">Review 3</text>
+              </svg>
+            </div>
+
+            <p>
+              Notice how the curve gets flatter every time you review? That&apos;s what SM-2 does. It calculates your personal &ldquo;ease factor&rdquo; and grades your recall from 0 (total blackout) to 5 (perfect). 
+            </p>
+            <p>
+              If you bomb a question, it politely resets your interval and tests you again tomorrow. If you ace it, the algorithm aggressively kicks the can down the road, spacing out the reviews until the memory is basically superglued to your cortex. It&apos;s not magic — it&apos;s just very stubborn math.
+            </p>
+          </div>
+        </section>
+
         {/* Beliefs */}
         <section className="glass rise mb-6 p-6 sm:p-7">
           <p className="micro mb-4 !text-[#43d6b5]">Things I firmly believe</p>
