@@ -1,11 +1,11 @@
 # Graph Report - Learning  (2026-07-18)
 
 ## Corpus Check
-- 69 files · ~77,288 words
+- 69 files · ~77,032 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 572 nodes · 997 edges · 46 communities (23 shown, 23 thin omitted)
+- 571 nodes · 996 edges · 46 communities (23 shown, 23 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 14 edges (avg confidence: 0.67)
 - Token cost: 0 input · 0 output
 
@@ -63,7 +63,7 @@
 - Nav.tsx
 
 ## God Nodes (most connected - your core abstractions)
-1. `Session Log` - 25 edges
+1. `Session Log` - 24 edges
 2. `POST()` - 17 edges
 3. `createClient()` - 17 edges
 4. `compilerOptions` - 16 edges
@@ -105,8 +105,8 @@ Cohesion: 0.06
 Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+22 more)
 
 ### Community 2 - "AI Content Generation"
-Cohesion: 0.06
-Nodes (62): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+54 more)
+Cohesion: 0.07
+Nodes (51): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+43 more)
 
 ### Community 3 - "Nav.tsx"
 Cohesion: 0.05
@@ -125,12 +125,12 @@ Cohesion: 0.60
 Nodes (4): parse(), RichText(), RULES, tidy()
 
 ### Community 7 - "schema.sql"
-Cohesion: 0.13
-Nodes (23): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+15 more)
+Cohesion: 0.11
+Nodes (26): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, INLINE, InlineRule (+18 more)
 
 ### Community 8 - "BrainScene.tsx"
-Cohesion: 0.07
-Nodes (33): metadata, sourceLabel(), TopicBlogPage(), BlogsPage(), BrainPage(), ProfilePage(), brainPoint(), BrainScene() (+25 more)
+Cohesion: 0.08
+Nodes (30): metadata, sourceLabel(), TopicBlogPage(), BlogsPage(), BrainPage(), ProfilePage(), brainPoint(), BrainScene() (+22 more)
 
 ### Community 9 - "layout.tsx"
 Cohesion: 0.10
@@ -162,7 +162,7 @@ Nodes (5): For /graphify explain, For /graphify path, graphify reference: query,
 
 ### Community 28 - "Session Log"
 Cohesion: 0.08
-Nodes (25): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+17 more)
+Nodes (24): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+16 more)
 
 ### Community 29 - "Tasks"
 Cohesion: 0.40
@@ -181,32 +181,32 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 44 - "gemini.ts"
-Cohesion: 0.15
-Nodes (28): POST(), Chunk, chunkText(), segments(), embedText(), embedTexts(), DuplicateEntry, findDuplicateEntry() (+20 more)
+Cohesion: 0.10
+Nodes (39): POST(), Chunk, chunkText(), segments(), client(), cooldownUntil, EMBED_DIMS, EmbedTaskType (+31 more)
 
 ### Community 45 - "Nav.tsx"
 Cohesion: 0.18
 Nodes (6): AddPage(), formatResetTime(), Mode, Phase, ApiError, IngestResult
 
 ## Knowledge Gaps
-- **232 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+227 more)
+- **231 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+226 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Topic` connect `BrainScene.tsx` to `Review and Scoring System`, `AI Content Generation`, `schema.sql`?**
+- **Why does `Topic` connect `Review and Scoring System` to `BrainScene.tsx`, `AI Content Generation`, `schema.sql`?**
   _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **Why does `createClient()` connect `AI Content Generation` to `gemini.ts`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `t()` connect `AI Content Generation` to `BrainScene.tsx`, `Review and Scoring System`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _232 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _231 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Review and Scoring System` be split into smaller, more focused modules?**
-  _Cohesion score 0.0684811237928007 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06892010535557506 - nodes in this community are weakly interconnected._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.05821917808219178 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0726775956284153 - nodes in this community are weakly interconnected._
