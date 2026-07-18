@@ -52,6 +52,31 @@ export default function BlogsPage() {
           </p>
         </div>
 
+        {/* The Pattern Atlas — static DSA series */}
+        <Link
+          href="/blogs/dsa"
+          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
+        >
+          <div
+            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+            aria-hidden
+          />
+          <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
+          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+            The NeetCode 150, read as one story
+          </h2>
+          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+            18 pattern chapters, 150 question blogs, one continuous reading path — every
+            problem&apos;s insight, and the thread that hands you to the next.
+          </p>
+          <span
+            aria-hidden
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+          >
+            →
+          </span>
+        </Link>
+
         {/* Search + filter */}
         <div className="rise mb-8 space-y-3">
           <div className="relative">

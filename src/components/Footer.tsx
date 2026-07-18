@@ -4,6 +4,7 @@ const EXPLORE = [
   { href: "/", label: "Today" },
   { href: "/brain", label: "Brain" },
   { href: "/blogs", label: "Blogs" },
+  { href: "/blogs/dsa", label: "Pattern Atlas" },
   { href: "/notes", label: "Notes" },
   { href: "/review", label: "Review" },
 ];

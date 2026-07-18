@@ -3,7 +3,10 @@
 > One active milestone at a time. Move finished items to `SESSION_LOG.md`.
 
 ## Active milestone
-- [ ] No active milestone
+- [ ] **DSA Pattern Atlas** — static blog series covering the NeetCode 150 roadmap (18 umbrella "chapter" blogs + 150 question blogs, linear prev/next reading order). Content data in `src/lib/dsa/topics/*.ts` (one file per topic), registry in `src/lib/dsa/index.ts`, routes `/blogs/dsa`, `/blogs/dsa/[topic]`, `/blogs/dsa/[topic]/[slug]`. Question list verified against live neetcode.io 2026-07-19 (Stack=6, Backtracking=10 — Generate Parentheses moved). Zero AI, zero DB.
+  - [ ] Infra: types + registry + 3 routes + /blogs banner + footer link
+  - [ ] Chapter content: arrays-hashing, two-pointers, sliding-window, stack, binary-search, linked-list, trees, heap, backtracking, tries, graphs, advanced-graphs, dp-1d, dp-2d, greedy, intervals, math-geometry, bit-manipulation
+  - [ ] Verify in browser + build + graphify update + docs sync
 
 ## Backlog
 - [ ] **Run the `ai_graded` migration in Supabase:** `alter table public.quiz_sessions add column if not exists ai_graded boolean not null default false;` (in both `schema.sql` and `schema-quiz-tables-only.sql`, 2026-07-18) — required for the new `QUIZ_AI_DAILY_LIMIT` cap to actually track usage; until run, the count query against a missing column will error and quiz `finish` will fall back to heuristic grading every time (safe fail-mode, but no AI grading at all until applied).
