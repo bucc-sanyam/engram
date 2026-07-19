@@ -15,6 +15,8 @@ import { dp1d } from "./topics/dp-1d";
 import { dp2d } from "./topics/dp-2d";
 import { greedy } from "./topics/greedy";
 import { intervals } from "./topics/intervals";
+import { mathGeometry } from "./topics/math-geometry";
+import { bitManipulation } from "./topics/bit-manipulation";
 
 export * from "./types";
 
@@ -39,6 +41,8 @@ export const DSA_TOPICS: DsaTopic[] = [
   dp2d,
   greedy,
   intervals,
+  mathGeometry,
+  bitManipulation,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
