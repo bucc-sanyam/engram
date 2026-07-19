@@ -177,6 +177,7 @@ export default function BrainScene({
   path,
   onSelect,
   highlight,
+  topicColors,
 }: {
   topics: Topic[];
   links: TopicLink[];
@@ -187,6 +188,8 @@ export default function BrainScene({
    * `color` and everything else is dimmed. Null = normal category colouring.
    */
   highlight?: { topicIds: Set<string>; color: string } | null;
+  /** Custom base colours for specific topics (e.g. story colours). */
+  topicColors?: Map<string, string>;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const onSelectRef = useRef(onSelect);
@@ -287,7 +290,8 @@ export default function BrainScene({
       // story focus: highlighted nodes take the story colour, the rest dim out
       const inStory = highlight ? highlight.topicIds.has(t.id) : false;
       const dimK = highlight && !inStory ? 0.16 : 1;
-      const color = new THREE.Color(inStory ? highlight!.color : categoryColor(t.category));
+      const baseColor = topicColors?.get(t.id) ?? categoryColor(t.category);
+      const color = new THREE.Color(inStory ? highlight!.color : baseColor);
       const baseScale =
         0.06 + Math.min(0.045, (degree.get(t.id) ?? 0) * 0.01) + Math.min(0.018, (t.review_count / 10) * 0.018);
 

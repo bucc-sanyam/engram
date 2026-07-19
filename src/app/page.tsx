@@ -87,6 +87,12 @@ export default function Dashboard() {
     allPlanItems.some((i) => seriesByTopic.get(i.topic_id) === s.series_slug)
   );
 
+  const topicColors = new Map<string, string>();
+  for (const s of storySections) {
+    const color = stories.find(st => st.series_slug === s.series_slug)?.color;
+    if (color) topicColors.set(s.topic_id, color);
+  }
+
   return (
     <>
       <Nav />
@@ -397,20 +403,23 @@ export default function Dashboard() {
                 </p>
               </Link>
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {topics.slice(0, 8).map((t) => (
-                  <Link
-                    key={t.id}
-                    href={`/blogs/${t.id}`}
-                    className="rounded-full px-3 py-1 text-[11px] font-medium transition-all hover:-translate-y-0.5"
-                    style={{
-                      background: `${categoryColor(t.category)}14`,
-                      color: categoryColor(t.category),
-                      border: `1px solid ${categoryColor(t.category)}30`,
-                    }}
-                  >
-                    {t.name}
-                  </Link>
-                ))}
+                {topics.slice(0, 8).map((t) => {
+                  const color = topicColors.get(t.id) ?? categoryColor(t.category);
+                  return (
+                    <Link
+                      key={t.id}
+                      href={`/blogs/${t.id}`}
+                      className="rounded-full px-3 py-1 text-[11px] font-medium transition-all hover:-translate-y-0.5"
+                      style={{
+                        background: `${color}14`,
+                        color: color,
+                        border: `1px solid ${color}30`,
+                      }}
+                    >
+                      {t.name}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -66,6 +66,16 @@ export default function BrainPage() {
     return { topicIds: ids, color };
   }, [focusSeries, storySections, stories]);
 
+  // give every topic belonging to a story its story's colour as a baseline
+  const topicColors = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const sec of storySections) {
+      const color = stories.find((s) => s.series_slug === sec.series_slug)?.color;
+      if (color) map.set(sec.topic_id, color);
+    }
+    return map;
+  }, [storySections, stories]);
+
   // where "read the full topic" points: the static section blog for story
   // topics, the auto-generated topic blog otherwise
   const blogHref = useCallback(
@@ -147,6 +157,7 @@ export default function BrainPage() {
               path={path}
               onSelect={(id) => id && navigateTo(id)}
               highlight={highlight}
+              topicColors={topicColors}
             />
           )}
           {loaded && topics.length === 0 && (
@@ -190,7 +201,7 @@ export default function BrainPage() {
                     >
                       <span
                         className="h-2 w-2 shrink-0 rounded-full"
-                        style={{ background: categoryColor(t.category) }}
+                        style={{ background: topicColors.get(t.id) ?? categoryColor(t.category) }}
                       />
                       <span className="min-w-0 flex-1 truncate text-sm font-medium">{t.name}</span>
                       <span className="text-xs text-faint">{t.mastery}%</span>
@@ -270,7 +281,7 @@ export default function BrainPage() {
               const isCurrent = i === 0;
               // original index in the forward path (for jump-back)
               const originalIndex = path.length - 1 - i;
-              const color = categoryColor(t.category);
+              const color = topicColors.get(t.id) ?? categoryColor(t.category);
 
               if (!isCurrent) {
                 // a walked-past step — compact, click to return
@@ -363,12 +374,12 @@ export default function BrainPage() {
                                 >
                                   <span
                                     className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                                    style={{ background: categoryColor(c.topic.category) }}
+                                    style={{ background: topicColors.get(c.topic.id) ?? categoryColor(c.topic.category) }}
                                   />
                                   <span className="min-w-0 flex-1">
                                     <span
                                       className="text-sm font-medium"
-                                      style={{ color: categoryColor(c.topic.category) }}
+                                      style={{ color: topicColors.get(c.topic.id) ?? categoryColor(c.topic.category) }}
                                     >
                                       {c.topic.name}
                                     </span>
