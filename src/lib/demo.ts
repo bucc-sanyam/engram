@@ -365,3 +365,15 @@ export function demoGrade(answer: string, keyPoints: string[]): { score: number;
     model_answer: keyPoints.join(" "),
   };
 }
+
+// MOCKING FOR BRAINSCENE STRESS TEST
+const extraCats = ["Technology", "Science", "Health", "Business", "Philosophy", "History", "Design", "Mathematics"];
+const START = demoTopics.length;
+for (let i = START; i < 200; i++) {
+  demoTopics.push(t(`mock-${i}`, `Mock Topic ${i}`, extraCats[i % extraCats.length], "Mock summary", ["Mock point"], 50, 1, 1));
+  if (i > START) {
+    demoLinks.push(l(`ml-${i}`, `mock-${i-1}`, `mock-${i}`, "Mock link"));
+  } else {
+    demoLinks.push(l(`ml-${i}`, `d1`, `mock-${i}`, "Mock link"));
+  }
+}

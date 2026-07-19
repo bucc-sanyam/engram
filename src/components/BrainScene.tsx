@@ -117,8 +117,7 @@ function placeTopic(topic: Topic, rng: () => number, existingPoints: THREE.Vecto
   const lobeIdx = hashStr(topic.category || "") % LOBES.length;
   const lobe = LOBES[lobeIdx];
   const sign = rng() < 0.5 ? 1 : -1;
-  const part = lobe.name === 'Cerebellum' ? 'cerebellum' : 'cortex';
-  
+  const part: 'cortex' | 'cerebellum' = lobe.name === 'Cerebellum' ? 'cerebellum' : 'cortex';
   let bestPos = new THREE.Vector3();
   let bestDist = -1;
   let bestU = 0, bestV = 0;
@@ -243,6 +242,7 @@ interface NodeObj {
 }
 
 interface LinkObj {
+  id?: string;
   aId: string;
   bId: string;
   curve: THREE.QuadraticBezierCurve3;
@@ -265,6 +265,7 @@ interface LinkObj {
   targetVisK: number;
   labelCenterY: number;
   isVein?: boolean;
+  baseColor?: THREE.Color;
 }
 
 export default function BrainScene({
@@ -618,6 +619,7 @@ export default function BrainScene({
     const linkObjs: LinkObj[] = [];
     const baseLinkColor = new THREE.Color("#e8d5c4");
     const activeLinkColor = new THREE.Color("#ffb497");
+    const routeLinkColor = new THREE.Color("#ffffff");
     // ---------- spatial veins (leaf veins) ----------
     // Generate an organic mesh connecting spatial nearest neighbors
     const veinLinks: Array<{a: NodeObj, b: NodeObj}> = [];
@@ -680,6 +682,8 @@ export default function BrainScene({
         pulseSpeed: 0.05 + Math.random() * 0.02,
         label: linkLabel,
         labelMat: linkLabelMat,
+        targetLabel: 0,
+        route: false,
         baseColor: baseLinkColor.clone(),
         targetOpacity: idleOpacity * 0.25, // softer veins
         targetPulseScale: 0,

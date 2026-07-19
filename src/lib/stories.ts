@@ -21,6 +21,8 @@ import { COMP_ACT_CHAPTERS } from "./competition-act";
 import type { CompActQuestion } from "./competition-act/types";
 import { DSA_TOPICS } from "./dsa";
 import { SQL_TOPICS } from "./sql";
+import { SARFAESI_CHAPTERS } from "./sarfaesi-act";
+import type { SarfaesiQuestion } from "./sarfaesi-act/types";
 
 export interface UserStory {
   series_slug: string;
@@ -46,7 +48,7 @@ interface SeedSection {
   category: string;
   summary: string;
   keyPoints: string[];
-  questions: CompActQuestion[];
+  questions: CompActQuestion[] | SarfaesiQuestion[];
   facts: string[];
 }
 
@@ -123,10 +125,30 @@ function sqlSeed(): SeriesSeed {
   return { seriesSlug: "sql", title: "The Query Playbook", sections };
 }
 
+function sarfaesiSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const chapter of SARFAESI_CHAPTERS) {
+    for (const section of chapter.sections) {
+      sections.push({
+        chapterSlug: chapter.slug,
+        sectionSlug: section.slug,
+        name: section.title,
+        category: "Legal",
+        summary: section.summary,
+        keyPoints: [],
+        questions: section.questions ?? [],
+        facts: section.facts ?? [],
+      });
+    }
+  }
+  return { seriesSlug: "sarfaesi-act", title: "The SARFAESI Playbook", sections };
+}
+
 const SERIES: Record<string, () => SeriesSeed> = {
   "competition-act": compActSeed,
   "dsa": dsaSeed,
   "sql": sqlSeed,
+  "sarfaesi-act": sarfaesiSeed,
 };
 
 function getSeed(seriesSlug: string): SeriesSeed {

@@ -5,9 +5,9 @@
     "semantic_hash": "bf30ed2f19a263ec5a0c5ed53a1979be"
   },
   ".claude/settings.json": {
-    "mtime": 1783911801.1086018,
-    "ast_hash": "a3153860790f9cbd2ebd528b6770ad88",
-    "semantic_hash": "a3153860790f9cbd2ebd528b6770ad88"
+    "mtime": 1784439076.0721567,
+    "ast_hash": "3083050483fe9f448bcb4b768465948e",
+    "semantic_hash": ""
   },
   "next.config.ts": {
     "mtime": 1783868631.4342163,
@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "src/app/brain/page.tsx": {
-    "mtime": 1784056455.0227296,
-    "ast_hash": "18eb7defd0260059c7d1f90fa1ac00db",
+    "mtime": 1784440634.2706115,
+    "ast_hash": "af95f8dfc3f84216b0f59a200456b882",
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
@@ -65,18 +65,18 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1784056446.691262,
-    "ast_hash": "d9bb6ea98cae2a61fa5f11e435cc4687",
+    "mtime": 1784452325.359992,
+    "ast_hash": "af21bf099ebc62db4fbb214f02310677",
     "semantic_hash": ""
   },
   "src/app/review/page.tsx": {
-    "mtime": 1784054060.283814,
-    "ast_hash": "2d0e76bf2fa2fd3de702ccd876469985",
+    "mtime": 1784445119.4397314,
+    "ast_hash": "9f769d23b57d38cce4a91bbf9d438f09",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
-    "mtime": 1783965032.2779672,
-    "ast_hash": "298f495d32180d287b52d3e6f0f52a5b",
+    "mtime": 1784441111.8568993,
+    "ast_hash": "2addd1b517702958aced9b7c3d9abd31",
     "semantic_hash": ""
   },
   "src/components/Nav.tsx": {
@@ -90,8 +90,8 @@
     "semantic_hash": ""
   },
   "src/lib/data.ts": {
-    "mtime": 1784353693.0492992,
-    "ast_hash": "0346417c680fd6bf0f2cf9ded4fa1e58",
+    "mtime": 1784439633.8592007,
+    "ast_hash": "06a9cabfe00006d58249604c33a4fb31",
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
@@ -125,8 +125,8 @@
     "semantic_hash": "1cf9332fa62472d782bb7703f2f618a7"
   },
   "src/lib/types.ts": {
-    "mtime": 1784210039.2631245,
-    "ast_hash": "ed20dc03bf91868168992488441e70f4",
+    "mtime": 1784436210.4117832,
+    "ast_hash": "4713d0279318a0d0def2febdc68b07c3",
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784354898.8867517,
-    "ast_hash": "7853c813aa4a5475c1953b4417312a60",
+    "mtime": 1784435202.0588865,
+    "ast_hash": "b591e73c1b6cefb27a30bf9128bdd636",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784354912.4367666,
-    "ast_hash": "62fc7c58114e1d496c3e1f30b4305fe4",
+    "mtime": 1784452661.8936577,
+    "ast_hash": "5c62946c2a6f2ebaa9cee5c75fcf29d6",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784354101.8288865,
-    "ast_hash": "46bb64ba1d004940bc6e83567f259165",
+    "mtime": 1784435166.7459366,
+    "ast_hash": "049c5ebb8c3e033d2ed6eac1fbbc011b",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1784056456.9131784,
-    "ast_hash": "5a88646ff3f7d1f7ad0ff5626376a896",
+    "mtime": 1784452180.7109601,
+    "ast_hash": "210d14685488cdb58c8802f85c21fd96",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "src/components/Footer.tsx": {
-    "mtime": 1784098949.4523802,
-    "ast_hash": "65d7a16cddce1a2296e5b6119378cdfd",
+    "mtime": 1784400839.9294446,
+    "ast_hash": "c422ce863be567920a7ba042205dc202",
     "semantic_hash": ""
   },
   "src/components/ReportCardView.tsx": {
@@ -367,6 +367,336 @@
   "ARCHITECTURE.md": {
     "mtime": 1784192367.4205563,
     "ast_hash": "17e856c9bb1b1c383567ef1d9f67d005",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx": {
+    "mtime": 1784436418.7524178,
+    "ast_hash": "71fabf888d79e59f08aa28ac047cd53e",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/competition-act/[chapter]/page.tsx": {
+    "mtime": 1784410617.78979,
+    "ast_hash": "ab3cc349a24e9d8e15f2074d597dfffe",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/competition-act/page.tsx": {
+    "mtime": 1784438243.425168,
+    "ast_hash": "308ba0ff519cf7869b42fcb508aa2d16",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/dsa/[topic]/[slug]/page.tsx": {
+    "mtime": 1784439958.0153399,
+    "ast_hash": "c1dde7aa826e863a8c4af9980d5c1ea3",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/dsa/[topic]/page.tsx": {
+    "mtime": 1784400807.9379892,
+    "ast_hash": "3a29cb3f1354cd0dc727730dc5f5be1d",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/dsa/page.tsx": {
+    "mtime": 1784440023.083003,
+    "ast_hash": "987feea2fcfdd5af521f74dcac1caa5c",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/index.ts": {
+    "mtime": 1784410545.2556787,
+    "ast_hash": "75dfd67dc12871199a1eb0de0699c887",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/abuse-of-dominance.ts": {
+    "mtime": 1784439357.4213033,
+    "ast_hash": "a480fdc116691c24860dea90bac12cfa",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/advocacy-miscellaneous.ts": {
+    "mtime": 1784439594.5582314,
+    "ast_hash": "20884801b170f9c4d8abf93a804dd2cc",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/anti-competitive-agreements.ts": {
+    "mtime": 1784439320.3431182,
+    "ast_hash": "be257850b2aa7b90e3054293be9e0ace",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/combinations.ts": {
+    "mtime": 1784439390.222672,
+    "ast_hash": "14bbc0ade681b89e5c650800c3b45761",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/competition-commission.ts": {
+    "mtime": 1784439422.2746112,
+    "ast_hash": "9839f007004fe891f572ca57b49a6d23",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/director-general.ts": {
+    "mtime": 1784439521.2695947,
+    "ast_hash": "3846a937d0d8347d0bc699fe4f81fc36",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/inquiry-powers.ts": {
+    "mtime": 1784439461.7084258,
+    "ast_hash": "26677adb0159f09ab6458649a16354a3",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/orders-and-remedies.ts": {
+    "mtime": 1784439496.2866936,
+    "ast_hash": "ce143985d45c1eb03ab53b8528b0a73c",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/penalties.ts": {
+    "mtime": 1784439562.061962,
+    "ast_hash": "f8dee80bbf436efdff2c9ac48762fc0f",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/topics/preliminary.ts": {
+    "mtime": 1784436353.0391004,
+    "ast_hash": "40cd08f4c7000a040102d72ef25fcc1c",
+    "semantic_hash": ""
+  },
+  "src/lib/competition-act/types.ts": {
+    "mtime": 1784436201.9359798,
+    "ast_hash": "ee630193c6f89b059c4e48f844f5931e",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/index.ts": {
+    "mtime": 1784435035.9907036,
+    "ast_hash": "1879495157f2e7fcb26a4ea0a3c759ac",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/advanced-graphs.ts": {
+    "mtime": 1784434094.3077621,
+    "ast_hash": "7a7fa1858b4f6ae54e46675e6fc162ef",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/arrays-hashing.ts": {
+    "mtime": 1784400719.020611,
+    "ast_hash": "1cd630d4b7e3121833a399e3d6143291",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/backtracking.ts": {
+    "mtime": 1784402063.0574927,
+    "ast_hash": "3db876430387f78154120a755eb7bd06",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/binary-search.ts": {
+    "mtime": 1784401359.552725,
+    "ast_hash": "b30099e33105fa6aae12e1b7a046aaa4",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/bit-manipulation.ts": {
+    "mtime": 1784435030.7072737,
+    "ast_hash": "1edce86680f6cb75f6ec6983e6ed00bb",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/dp-1d.ts": {
+    "mtime": 1784434309.321193,
+    "ast_hash": "3e8393f994e978b9760323bcb6543685",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/dp-2d.ts": {
+    "mtime": 1784434519.3927906,
+    "ast_hash": "a0732afd18ea8139d1db0612bfe7f402",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/graphs.ts": {
+    "mtime": 1784402330.6033745,
+    "ast_hash": "b66693551bddfe2244d4b2529216b8dc",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/greedy.ts": {
+    "mtime": 1784434672.4072864,
+    "ast_hash": "9c2c7034b62907b6d56ee1d086f02bfb",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/heap.ts": {
+    "mtime": 1784401891.3887308,
+    "ast_hash": "7f0982f38a16cfca74fb7606289966fd",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/intervals.ts": {
+    "mtime": 1784434768.8095953,
+    "ast_hash": "305dbc21d5b8d405d1b9eb7c18874f52",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/linked-list.ts": {
+    "mtime": 1784401528.247536,
+    "ast_hash": "ad378278863339ae8483b30cc2e63a33",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/math-geometry.ts": {
+    "mtime": 1784434911.330253,
+    "ast_hash": "d675883dfbbcef6674b3a7dbd437ffd3",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/sliding-window.ts": {
+    "mtime": 1784401139.5205634,
+    "ast_hash": "bca2d9d5070512ea929828925754a79d",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/stack.ts": {
+    "mtime": 1784401254.4321487,
+    "ast_hash": "f63d23f9279d2ea04a5d581358d5f871",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/trees.ts": {
+    "mtime": 1784401769.4807441,
+    "ast_hash": "e52914b327bfb56604a4db02fca9ab0f",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/tries.ts": {
+    "mtime": 1784402125.1093445,
+    "ast_hash": "dc8f0d7a55e9b2654675cc51da77ca84",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/topics/two-pointers.ts": {
+    "mtime": 1784401049.465194,
+    "ast_hash": "3e10f5739eb078edf82068fdc2b9ae69",
+    "semantic_hash": ""
+  },
+  "src/lib/dsa/types.ts": {
+    "mtime": 1784400575.9597037,
+    "ast_hash": "2bb9b3a0c26646166f3250fd8c1cde4e",
+    "semantic_hash": ""
+  },
+  "clear_cache.js": {
+    "mtime": 1784444809.7588067,
+    "ast_hash": "72f94bcb2a2aa42e55c94cc1c0bf7095",
+    "semantic_hash": ""
+  },
+  "clear_cache.ts": {
+    "mtime": 1784444673.2781487,
+    "ast_hash": "a9003d12400ffc8e85a8568c78bc438d",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/layout.tsx": {
+    "mtime": 1784436879.1030006,
+    "ast_hash": "d60b6a05dd8c1ae38e8c9cd93fccb166",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/sql/[topic]/[slug]/page.tsx": {
+    "mtime": 1784439972.7431138,
+    "ast_hash": "c0817d22764dbaf9bad18f1fdb5fd599",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/sql/[topic]/page.tsx": {
+    "mtime": 1784436077.4288726,
+    "ast_hash": "fe8c613d054bf6075bd3b3ab6c0b575e",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/sql/page.tsx": {
+    "mtime": 1784440039.1319542,
+    "ast_hash": "1223c9d0f188d5cd49c859675ea42887",
+    "semantic_hash": ""
+  },
+  "src/components/PaperModeToggle.tsx": {
+    "mtime": 1784436592.4200168,
+    "ast_hash": "275b2ed198d6f7009433ac94f85a45d6",
+    "semantic_hash": ""
+  },
+  "src/components/QuestionWidget.tsx": {
+    "mtime": 1784442143.923274,
+    "ast_hash": "fb2be00ede9d805926a2019f163e3a05",
+    "semantic_hash": ""
+  },
+  "src/components/StoryLearnPanel.tsx": {
+    "mtime": 1784442124.923995,
+    "ast_hash": "99ea37cd90eff404d3fc163f52ee9307",
+    "semantic_hash": ""
+  },
+  "src/components/StoryStartControl.tsx": {
+    "mtime": 1784441127.5696743,
+    "ast_hash": "878d390da53914be5ae1244519f63287",
+    "semantic_hash": ""
+  },
+  "src/components/ThanosSnapCanvas.tsx": {
+    "mtime": 1784436891.158906,
+    "ast_hash": "5404ea8509c7fb2d02c303f923601533",
+    "semantic_hash": ""
+  },
+  "src/context/ReadingThemeContext.tsx": {
+    "mtime": 1784436568.1095216,
+    "ast_hash": "bfbcbf50ada3e6ead3aca43c32b643c2",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/index.ts": {
+    "mtime": 1784436005.306897,
+    "ast_hash": "87f5146e00d4041b5308c671a9ede156",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/advanced-joins-and-set-ops.ts": {
+    "mtime": 1784435938.0603971,
+    "ast_hash": "5e8326108d8f28c3ce8857bf0a08db15",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/aggregation.ts": {
+    "mtime": 1784435661.3956606,
+    "ast_hash": "dce5eb07829e980db51be6c9a5387dfc",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/basic-joins.ts": {
+    "mtime": 1784435608.8490977,
+    "ast_hash": "9ac17a7edde9f2f54d41c608c4bfc942",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/case-when.ts": {
+    "mtime": 1784435764.3864648,
+    "ast_hash": "ed9366303fe18e626f8adf87243db941",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/common-table-expressions.ts": {
+    "mtime": 1784435904.140274,
+    "ast_hash": "3c9e0f374cd8727673cc5a523e4848d8",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/data-transformation.ts": {
+    "mtime": 1784435980.4342015,
+    "ast_hash": "7a9920bdff2328299b829514ef181a65",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/select-and-filter.ts": {
+    "mtime": 1784435557.0350037,
+    "ast_hash": "ee967de3966ce103aaf9e3e8050556ec",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/sorting-and-limiting.ts": {
+    "mtime": 1784435694.4708457,
+    "ast_hash": "9fbdf45fa169075121415d4baef30ecb",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/string-and-date-functions.ts": {
+    "mtime": 1784435797.5133903,
+    "ast_hash": "36996768729ff3eb4748c8cd393478f9",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/subqueries.ts": {
+    "mtime": 1784435730.8116276,
+    "ast_hash": "5ca1bea404d4ecdc53f2d3e52a8c1967",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/window-functions-analytics.ts": {
+    "mtime": 1784435869.9627347,
+    "ast_hash": "7751c92c60bd066c452bf3b906332ce0",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/topics/window-functions-ranking.ts": {
+    "mtime": 1784435832.459067,
+    "ast_hash": "740065bb38bec177ec075d7a06f0de75",
+    "semantic_hash": ""
+  },
+  "src/lib/sql/types.ts": {
+    "mtime": 1784435499.9535296,
+    "ast_hash": "8a88c333548bd5f05d42da9e879ab570",
+    "semantic_hash": ""
+  },
+  "src/lib/stories.ts": {
+    "mtime": 1784452466.7114184,
+    "ast_hash": "f2e7f84d283877141a0c145ad584439d",
+    "semantic_hash": ""
+  },
+  "supabase/schema-stories.sql": {
+    "mtime": 1784436177.800336,
+    "ast_hash": "b16205de77988af697f96a038a8a7ad7",
     "semantic_hash": ""
   }
 }
