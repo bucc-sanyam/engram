@@ -79,88 +79,97 @@ export default function BlogsPage() {
                 storiesExpanded ? "rotate-180" : ""
               }`}
             >
-              ▼
+              <ChevronDownIcon className="h-4 w-4" />
             </span>
           </button>
 
-          {storiesExpanded && (
-            <div className="mt-3 space-y-3 pl-1">
-              {/* The Pattern Atlas — static DSA series */}
-              <Link
-                href="/blogs/dsa"
-                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
-              >
-                <div
-                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-                  aria-hidden
-                />
-                <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
-                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                  The NeetCode 150
-                </h3>
-                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                  18 pattern chapters, 150 question blogs, one continuous reading path — every
-                  problem&apos;s insight, and the thread that hands you to the next.
-                </p>
-                <span
-                  aria-hidden
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+          <div
+            className={`grid transition-all duration-500 cubic-bezier(0.22,1,0.36,1) ${
+              storiesExpanded
+                ? "grid-rows-[1fr] opacity-100 mt-3"
+                : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
+            }`}
+            style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
+          >
+            <div className="overflow-hidden">
+              <div className="space-y-3 pl-1 pb-1">
+                {/* The Pattern Atlas — static DSA series */}
+                <Link
+                  href="/blogs/dsa"
+                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
                 >
-                  →
-                </span>
-              </Link>
+                  <div
+                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                    aria-hidden
+                  />
+                  <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
+                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                    The NeetCode 150
+                  </h3>
+                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                    18 pattern chapters, 150 question blogs, one continuous reading path — every
+                    problem&apos;s insight, and the thread that hands you to the next.
+                  </p>
+                  <span
+                    aria-hidden
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                  >
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </span>
+                </Link>
 
-              {/* The Competition Code — static Competition Act series */}
-              <Link
-                href="/blogs/competition-act"
-                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
-              >
-                <div
-                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-                  aria-hidden
-                />
-                <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
-                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                  The Competition Act, 2002
-                </h3>
-                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                  10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
-                  insight, landmark cases, and the thread that hands you to the next.
-                </p>
-                <span
-                  aria-hidden
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                {/* The Competition Code — static Competition Act series */}
+                <Link
+                  href="/blogs/competition-act"
+                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
                 >
-                  →
-                </span>
-              </Link>
+                  <div
+                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                    aria-hidden
+                  />
+                  <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
+                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                    The Competition Act, 2002
+                  </h3>
+                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                    10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
+                    insight, landmark cases, and the thread that hands you to the next.
+                  </p>
+                  <span
+                    aria-hidden
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                  >
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </span>
+                </Link>
 
-              {/* The Query Playbook — static SQL series */}
-              <Link
-                href="/blogs/sql"
-                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
-              >
-                <div
-                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-                  aria-hidden
-                />
-                <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
-                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                  The SQL Query Playbook
-                </h3>
-                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                  12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
-                  to window functions to pivoting, with practice links on every problem.
-                </p>
-                <span
-                  aria-hidden
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                {/* The Query Playbook — static SQL series */}
+                <Link
+                  href="/blogs/sql"
+                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
                 >
-                  →
-                </span>
-              </Link>
+                  <div
+                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                    aria-hidden
+                  />
+                  <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
+                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                    The SQL Query Playbook
+                  </h3>
+                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                    12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
+                    to window functions to pivoting, with practice links on every problem.
+                  </p>
+                  <span
+                    aria-hidden
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                  >
+                    <ArrowRightIcon className="h-4 w-4" />
+                  </span>
+                </Link>
+              </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Search + filter */}
@@ -304,6 +313,22 @@ function SearchIcon({ className = "h-4 w-4" }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <circle cx="11" cy="11" r="7" />
       <path d="M20 20l-3.5-3.5" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  );
+}
+
+function ArrowRightIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   );
 }
