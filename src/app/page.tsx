@@ -10,7 +10,7 @@ import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics
 import { getAllStorySections, getStartedStories, type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
-import type { DailyFact, DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
+import type { DailyFact, DailyPlan, Entry, Note, PlanItem, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
 const MODE_LABEL: Record<string, string> = {
@@ -35,10 +35,8 @@ export default function Dashboard() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [fact, setFact] = useState<DailyFact | null>(null);
   const [planError, setPlanError] = useState(false);
-  const [showAllTasks, setShowAllTasks] = useState(false);
   const [stories, setStories] = useState<UserStory[]>([]);
   const [storySections, setStorySections] = useState<StorySection[]>([]);
-  const [sessionTab, setSessionTab] = useState<string | null>(null); // null = All
 
   useEffect(() => {
     getProfile().then(setProfile).catch(() => {});
@@ -72,25 +70,27 @@ export default function Dashboard() {
 
 
 
-  // Which story (if any) each plan topic belongs to — powers the session tabs.
+  // Which story (if any) each plan topic belongs to — powers the grouped session.
   const seriesByTopic = new Map(storySections.map((s) => [s.topic_id, s.series_slug]));
-  // Remaining tasks first, completed ones sink to the bottom; long plans
-  // collapse to 5 rows until expanded.
-  const allPlanItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
-  const planItems = sessionTab
-    ? allPlanItems.filter((i) => seriesByTopic.get(i.topic_id) === sessionTab)
-    : allPlanItems;
-  const visiblePlanItems = showAllTasks ? planItems : planItems.slice(0, 5);
+  // Remaining tasks first, completed ones sink to the bottom.
+  const planItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
   const remainingCount = planItems.filter((i) => !i.done).length;
-  // Only surface tabs for stories that actually have a topic in today's plan.
-  const sessionStories = stories.filter((s) =>
-    allPlanItems.some((i) => seriesByTopic.get(i.topic_id) === s.series_slug)
-  );
 
+  // Split the day into "General Knowledge" (your own topics) + one section per
+  // started story that has a topic due today, each quizzed independently.
+  const generalItems = planItems.filter((i) => !seriesByTopic.get(i.topic_id));
+  const storyGroups: { slug: string; color?: string; items: PlanItem[] }[] = [];
+  for (const s of stories) {
+    const items = planItems.filter((i) => seriesByTopic.get(i.topic_id) === s.series_slug);
+    if (items.length) storyGroups.push({ slug: s.series_slug, color: s.color, items });
+  }
+
+  // Story topics keep their chosen story colour on the brain-teaser pills.
+  const storyColorByStory = new Map(stories.map((s) => [s.series_slug, s.color]));
   const topicColors = new Map<string, string>();
   for (const s of storySections) {
-    const color = stories.find(st => st.series_slug === s.series_slug)?.color;
-    if (color) topicColors.set(s.topic_id, color);
+    const c = storyColorByStory.get(s.series_slug);
+    if (c) topicColors.set(s.topic_id, c);
   }
 
   return (
@@ -139,32 +139,6 @@ export default function Dashboard() {
                 )}
               </div>
 
-              {/* Session tabs — one per learnable story with topics due today */}
-              {sessionStories.length > 0 && (
-                <div className="mb-4 flex flex-wrap gap-2">
-                  <SessionTab
-                    label="All"
-                    active={sessionTab === null}
-                    onClick={() => {
-                      setSessionTab(null);
-                      setShowAllTasks(false);
-                    }}
-                  />
-                  {sessionStories.map((s) => (
-                    <SessionTab
-                      key={s.series_slug}
-                      label={SERIES_TITLES[s.series_slug] ?? s.series_slug}
-                      color={s.color}
-                      active={sessionTab === s.series_slug}
-                      onClick={() => {
-                        setSessionTab(s.series_slug);
-                        setShowAllTasks(false);
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
-
               {planError && (
                 <p className="text-sm text-danger">
                   Couldn&apos;t load today&apos;s plan. Check your Supabase & Gemini configuration.
@@ -180,113 +154,25 @@ export default function Dashboard() {
                 </div>
               )}
 
-              {(() => {
-                const renderPlanItem = (item: typeof visiblePlanItems[0]) => (
-                  <li key={item.topic_id}>
-                    <Link
-                      href={`/review?topic=${item.topic_id}`}
-                      className={`row-soft group flex items-center gap-3.5 px-4 py-3.5 ${
-                        item.done ? "opacity-55" : ""
-                      }`}
-                    >
-                      {item.done ? (
-                        <span
-                          aria-hidden
-                          className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[9px] font-bold text-white/60"
-                        >
-                          ✓
-                        </span>
-                      ) : (
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full"
-                          style={{ background: "#43d6b5", boxShadow: "0 0 10px #43d6b5" }}
-                        />
-                      )}
-                      <div className="min-w-0 flex-1">
-                        <div className={`truncate font-medium ${item.done ? "line-through decoration-white/30" : ""}`}>
-                          {item.topic_name}
-                        </div>
-                        <div className="truncate text-xs text-faint">
-                          {item.done ? "Completed today" : item.reason}
-                        </div>
-                      </div>
-                      <span className="micro shrink-0 rounded-full bg-white/[0.05] px-3 py-1.5 transition-colors group-hover:bg-white/[0.09]">
-                        {MODE_LABEL[item.mode]}
-                      </span>
-                      <span
-                        aria-hidden
-                        className="-ml-1 shrink-0 text-faint opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                      >
-                        →
-                      </span>
-                    </Link>
-                  </li>
-                );
-
-                if (sessionTab) {
-                  return (
-                    <ul className="space-y-2.5">
-                      {visiblePlanItems.map(renderPlanItem)}
-                    </ul>
-                  );
-                }
-
-                const generalItems = visiblePlanItems.filter(i => !seriesByTopic.get(i.topic_id));
-                const storyGroups = new Map<string, typeof visiblePlanItems>();
-                for (const item of visiblePlanItems) {
-                   const slug = seriesByTopic.get(item.topic_id);
-                   if (slug) {
-                     if (!storyGroups.has(slug)) storyGroups.set(slug, []);
-                     storyGroups.get(slug)!.push(item);
-                   }
-                }
-
-                return (
-                  <div className="space-y-6">
-                    {generalItems.length > 0 && (
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <h3 className="micro m-0 !text-white/40">General Knowledge</h3>
-                          <Link href={`/review?series=general`} className="text-xs font-semibold text-white/60 hover:text-white">
-                            Start Quiz →
-                          </Link>
-                        </div>
-                        <ul className="space-y-2.5">
-                          {generalItems.map(renderPlanItem)}
-                        </ul>
-                      </div>
-                    )}
-                    {Array.from(storyGroups.entries()).map(([slug, items]) => {
-                      const color = stories.find(s => s.series_slug === slug)?.color;
-                      return (
-                        <div key={slug}>
-                          <div className="flex items-center justify-between mb-3">
-                            <h3 className="micro m-0" style={{ color: color || "rgba(255,255,255,0.4)" }}>
-                              {SERIES_TITLES[slug] ?? slug}
-                            </h3>
-                            <Link href={`/review?series=${slug}`} className="text-xs font-semibold hover:underline" style={{ color: color || "white" }}>
-                              Start Quiz →
-                            </Link>
-                          </div>
-                          <ul className="space-y-2.5">
-                            {items.map(renderPlanItem)}
-                          </ul>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })()}
-
-              {planItems.length > 5 && (
-                <button
-                  onClick={() => setShowAllTasks((s) => !s)}
-                  className="mt-3 w-full rounded-full bg-white/[0.04] py-2.5 text-sm font-medium text-muted transition-colors hover:bg-white/[0.07] hover:text-white"
-                >
-                  {showAllTasks
-                    ? "Show less ↑"
-                    : `Show all ${planItems.length} tasks (${remainingCount} remaining) ↓`}
-                </button>
+              {plan && plan.items.length > 0 && (
+                <div className="space-y-6">
+                  {generalItems.length > 0 && (
+                    <PlanGroup
+                      title={storyGroups.length > 0 ? "General Knowledge" : undefined}
+                      href="/review?series=general"
+                      items={generalItems}
+                    />
+                  )}
+                  {storyGroups.map((g) => (
+                    <PlanGroup
+                      key={g.slug}
+                      title={SERIES_TITLES[g.slug] ?? g.slug}
+                      color={g.color}
+                      href={`/review?series=${g.slug}`}
+                      items={g.items}
+                    />
+                  ))}
+                </div>
               )}
 
               {plan?.completed && (
@@ -507,29 +393,90 @@ function Divider() {
   return <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/[0.12] to-transparent" />;
 }
 
-function SessionTab({
-  label,
-  active,
-  color = "#ff9a80",
-  onClick,
+/** One section of today's plan — General Knowledge or a story — with its own
+ * "Start quiz" deep link that opens just that group in /review. */
+function PlanGroup({
+  title,
+  href,
+  items,
+  color,
 }: {
-  label: string;
-  active: boolean;
+  title?: string;
+  href: string;
+  items: PlanItem[];
   color?: string;
-  onClick: () => void;
 }) {
+  const remaining = items.filter((i) => !i.done).length;
   return (
-    <button
-      onClick={onClick}
-      className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all"
-      style={{
-        background: active ? `${color}26` : "rgba(255,252,245,0.05)",
-        color: active ? color : "rgba(255,252,245,0.5)",
-      }}
-    >
-      <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
-      {label}
-    </button>
+    <div>
+      {title && (
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <h3 className="micro m-0" style={{ color: color || "rgba(255,255,255,0.42)" }}>
+            {title}
+            <span className="ml-2 !text-faint">
+              {remaining > 0 ? `${remaining} to review` : "done"}
+            </span>
+          </h3>
+          {remaining > 0 && (
+            <Link
+              href={href}
+              className="text-xs font-semibold transition-opacity hover:opacity-80"
+              style={{ color: color || "rgba(255,252,245,0.7)" }}
+            >
+              Start quiz →
+            </Link>
+          )}
+        </div>
+      )}
+      <ul className="space-y-2.5">
+        {items.map((item) => (
+          <PlanRow key={item.topic_id} item={item} accent={color} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function PlanRow({ item, accent }: { item: PlanItem; accent?: string }) {
+  const dot = accent || "#43d6b5";
+  return (
+    <li>
+      <Link
+        href={`/review?topic=${item.topic_id}`}
+        className={`row-soft group flex items-center gap-3.5 px-4 py-3.5 ${item.done ? "opacity-55" : ""}`}
+      >
+        {item.done ? (
+          <span
+            aria-hidden
+            className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-[9px] font-bold text-white/60"
+          >
+            ✓
+          </span>
+        ) : (
+          <span
+            className="h-2.5 w-2.5 shrink-0 rounded-full"
+            style={{ background: dot, boxShadow: `0 0 10px ${dot}` }}
+          />
+        )}
+        <div className="min-w-0 flex-1">
+          <div className={`truncate font-medium ${item.done ? "line-through decoration-white/30" : ""}`}>
+            {item.topic_name}
+          </div>
+          <div className="truncate text-xs text-faint">
+            {item.done ? "Completed today" : item.reason}
+          </div>
+        </div>
+        <span className="micro shrink-0 rounded-full bg-white/[0.05] px-3 py-1.5 transition-colors group-hover:bg-white/[0.09]">
+          {MODE_LABEL[item.mode]}
+        </span>
+        <span
+          aria-hidden
+          className="-ml-1 shrink-0 text-faint opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+        >
+          →
+        </span>
+      </Link>
+    </li>
   );
 }
 

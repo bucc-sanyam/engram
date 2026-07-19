@@ -7,12 +7,42 @@ import { getTopics } from "@/lib/data";
 import type { Topic } from "@/lib/types";
 import { categoryColor, CATEGORY_COLORS } from "@/lib/types";
 
+/** The pre-installed learnable series, rendered as one connected module. */
+const STORY_SERIES = [
+  {
+    href: "/blogs/dsa",
+    label: "The Pattern Atlas",
+    tag: "DSA",
+    color: "#f5b95f",
+    title: "The NeetCode 150",
+    meta: "18 chapters · 150 problems",
+    desc: "Every pattern, every problem, one continuous path.",
+  },
+  {
+    href: "/blogs/competition-act",
+    label: "The Competition Code",
+    tag: "Legal",
+    color: "#5ba4cf",
+    title: "The Competition Act, 2002",
+    meta: "10 chapters · 31 sections",
+    desc: "Definitions to enforcement, with landmark cases throughout.",
+  },
+  {
+    href: "/blogs/sql",
+    label: "The Query Playbook",
+    tag: "SQL",
+    color: "#22d3ee",
+    title: "SQL for interviews",
+    meta: "12 chapters · 41 problems",
+    desc: "SELECT to window functions, with practice links.",
+  },
+];
+
 export default function BlogsPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
-  const [storiesExpanded, setStoriesExpanded] = useState(true);
 
   useEffect(() => {
     getTopics()
@@ -53,124 +83,76 @@ export default function BlogsPage() {
           </p>
         </div>
 
-        {/* Pre-installed series grouped under expandable 'Read as one story' header */}
-        <div className="rise mb-8">
-          <button
-            type="button"
-            onClick={() => setStoriesExpanded(!storiesExpanded)}
-            className="group flex w-full items-center justify-between rounded-2xl bg-white/[0.03] px-4 py-3.5 text-left transition-all hover:bg-white/[0.06]"
-          >
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c]/20 to-[#f5b95f]/20 text-xs">
+        {/* Pre-installed learnable series — one connected module, not floating cards */}
+        <section className="rise mb-10">
+          <div className="glass relative overflow-hidden rounded-[1.75rem]">
+            {/* shared ambient wash so the whole block reads as one surface */}
+            <div
+              className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full opacity-[0.12] blur-3xl"
+              style={{ background: "linear-gradient(135deg,#ff7a5c,#f5b95f)" }}
+              aria-hidden
+            />
+            {/* header */}
+            <div className="flex items-center gap-3 border-b border-white/[0.06] px-5 py-4">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff7a5c]/25 to-[#f5b95f]/20 text-base">
                 📖
               </span>
-              <div>
-                <h2 className="text-base font-bold text-white/90 group-hover:text-white">
-                  Read as one story
-                </h2>
-                <p className="text-xs text-faint">Structured, linear learning series</p>
+              <div className="min-w-0 flex-1">
+                <h2 className="text-base font-bold text-white/90">Read as one story</h2>
+                <p className="text-xs text-faint">
+                  Structured, linear series — read them, or start one to learn it
+                </p>
               </div>
-              <span className="micro ml-2 rounded-full bg-white/[0.06] px-2.5 py-0.5 !text-muted">
-                3 series
+              <span className="micro shrink-0 rounded-full bg-white/[0.06] px-2.5 py-1 !text-muted">
+                {STORY_SERIES.length} series
               </span>
             </div>
-            <span
-              className={`text-faint transition-transform duration-300 group-hover:text-white ${
-                storiesExpanded ? "rotate-180" : ""
-              }`}
-            >
-              <ChevronDownIcon className="h-4 w-4" />
-            </span>
-          </button>
 
-          <div
-            className={`grid transition-all duration-500 cubic-bezier(0.22,1,0.36,1) ${
-              storiesExpanded
-                ? "grid-rows-[1fr] opacity-100 mt-3"
-                : "grid-rows-[0fr] opacity-0 mt-0 pointer-events-none"
-            }`}
-            style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)" }}
-          >
-            <div className="overflow-hidden">
-              <div className="space-y-3 pl-1 pb-1">
-                {/* The Pattern Atlas — static DSA series */}
+            {/* series as connected rows sharing one frame */}
+            <div className="divide-y divide-white/[0.05]">
+              {STORY_SERIES.map((s) => (
                 <Link
-                  href="/blogs/dsa"
-                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
+                  key={s.href}
+                  href={s.href}
+                  className="group relative flex items-center gap-4 px-5 py-4 transition-colors hover:bg-white/[0.03]"
                 >
-                  <div
-                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                  {/* accent spine ties each row to its series colour */}
+                  <span
+                    className="h-11 w-1 shrink-0 rounded-full transition-all group-hover:h-12"
+                    style={{ background: s.color, boxShadow: `0 0 12px ${s.color}66` }}
                     aria-hidden
                   />
-                  <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
-                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                    The NeetCode 150
-                  </h3>
-                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                    18 pattern chapters, 150 question blogs, one continuous reading path — every
-                    problem&apos;s insight, and the thread that hands you to the next.
-                  </p>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="micro" style={{ color: s.color }}>
+                        {s.label}
+                      </p>
+                      <span
+                        className="rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide"
+                        style={{ background: `${s.color}1f`, color: s.color }}
+                      >
+                        {s.tag}
+                      </span>
+                    </div>
+                    <h3 className="mt-0.5 text-[15px] font-bold text-white/90 transition-colors group-hover:text-white">
+                      {s.title}
+                    </h3>
+                    <p className="mt-0.5 truncate text-xs text-faint">
+                      <span style={{ color: `${s.color}cc` }}>{s.meta}</span> · {s.desc}
+                    </p>
+                  </div>
                   <span
                     aria-hidden
-                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                    className="shrink-0 opacity-40 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                    style={{ color: s.color }}
                   >
                     <ArrowRightIcon className="h-4 w-4" />
                   </span>
                 </Link>
-
-                {/* The Competition Code — static Competition Act series */}
-                <Link
-                  href="/blogs/competition-act"
-                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
-                >
-                  <div
-                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-                    aria-hidden
-                  />
-                  <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
-                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                    The Competition Act, 2002
-                  </h3>
-                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                    10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
-                    insight, landmark cases, and the thread that hands you to the next.
-                  </p>
-                  <span
-                    aria-hidden
-                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                  >
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </span>
-                </Link>
-
-                {/* The Query Playbook — static SQL series */}
-                <Link
-                  href="/blogs/sql"
-                  className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
-                >
-                  <div
-                    className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-                    aria-hidden
-                  />
-                  <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
-                  <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-                    The SQL Query Playbook
-                  </h3>
-                  <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-                    12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
-                    to window functions to pivoting, with practice links on every problem.
-                  </p>
-                  <span
-                    aria-hidden
-                    className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                  >
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </span>
-                </Link>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
         {/* Search + filter */}
         <div className="rise mb-8 space-y-3">
@@ -313,14 +295,6 @@ function SearchIcon({ className = "h-4 w-4" }: { className?: string }) {
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
       <circle cx="11" cy="11" r="7" />
       <path d="M20 20l-3.5-3.5" />
-    </svg>
-  );
-}
-
-function ChevronDownIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6 9l6 6 6-6" />
     </svg>
   );
 }

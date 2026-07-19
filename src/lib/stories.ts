@@ -191,7 +191,10 @@ export async function startStory(seriesSlug: string, color: string): Promise<voi
     .from("user_stories")
     .upsert({ user_id: user.id, series_slug: seriesSlug, color }, { onConflict: "user_id,series_slug" });
 
-  // 1. Seed dormant topics (idempotent on the unique (user_id,name)).
+  // 1. Seed dormant topics. `ignoreDuplicates` so we NEVER overwrite a topic the
+  // user already has with the same name — otherwise starting a story would reset
+  // that topic's mastery/schedule and wipe real progress. New topics are inserted;
+  // pre-existing same-named topics are left untouched and simply adopted below.
   const far = FAR_FUTURE();
   const topicRows = seed.sections.map((s) => ({
     user_id: user.id,
@@ -202,12 +205,23 @@ export async function startStory(seriesSlug: string, color: string): Promise<voi
     mastery: 0,
     next_review_at: far,
   }));
-  const { data: upserted, error: topicErr } = await supabase
+  const { error: topicErr } = await supabase
     .from("topics")
-    .upsert(topicRows, { onConflict: "user_id,name" })
-    .select("id,name");
+    .upsert(topicRows, { onConflict: "user_id,name", ignoreDuplicates: true });
   if (topicErr) throw topicErr;
-  const idByName = new Map((upserted ?? []).map((t) => [t.name as string, t.id as string]));
+
+  // Resolve ids for every seeded name (both freshly inserted and pre-existing),
+  // in name-batches so the `in()` filter stays within limits.
+  const idByName = new Map<string, string>();
+  const names = seed.sections.map((s) => s.name);
+  for (let i = 0; i < names.length; i += 200) {
+    const { data: rows } = await supabase
+      .from("topics")
+      .select("id,name")
+      .eq("user_id", user.id)
+      .in("name", names.slice(i, i + 200));
+    for (const t of rows ?? []) idByName.set(t.name as string, t.id as string);
+  }
 
   // 2. Record section membership (don't clobber a section already 'learned').
   const sectionRows = seed.sections
@@ -263,8 +277,14 @@ export async function updateStoryColor(seriesSlug: string, color: string): Promi
 }
 
 /**
- * End a story: deletes the story membership and completely deletes all seeded
- * topics (cascading to questions, facts, and links), wiping all progress.
+ * End a story: removes the story membership and deletes the topics this story
+ * seeded (cascading to their questions, facts, and links), wiping that progress.
+ *
+ * Safety: a topic that also has an `entry_topics` link was ingested by the user
+ * themselves (only real ingest creates entries — seeding never does). If such a
+ * topic happened to share a name with a story section and was adopted at start,
+ * we must NOT delete it, or we'd destroy the user's own knowledge. Those are
+ * filtered out; only purely story-seeded topics are removed.
  */
 export async function endStory(seriesSlug: string): Promise<void> {
   const { supabase, user } = await requireUser();
@@ -277,19 +297,34 @@ export async function endStory(seriesSlug: string): Promise<void> {
 
   const topicIds = (sections ?? []).map((s) => s.topic_id as string);
 
+  // Remove membership first (so the story disappears immediately even if a
+  // topic delete is skipped for safety below).
   await supabase
     .from("user_stories")
     .delete()
     .eq("user_id", user.id)
     .eq("series_slug", seriesSlug);
+  await supabase
+    .from("story_sections")
+    .delete()
+    .eq("user_id", user.id)
+    .eq("series_slug", seriesSlug);
 
-  if (topicIds.length > 0) {
-    for (let i = 0; i < topicIds.length; i += 100) {
-      await supabase
-        .from("topics")
-        .delete()
-        .in("id", topicIds.slice(i, i + 100));
-    }
+  if (topicIds.length === 0) return;
+
+  // Topics the user actually ingested (have an entry) must never be deleted.
+  const userOwned = new Set<string>();
+  for (let i = 0; i < topicIds.length; i += 200) {
+    const { data: owned } = await supabase
+      .from("entry_topics")
+      .select("topic_id")
+      .in("topic_id", topicIds.slice(i, i + 200));
+    for (const r of owned ?? []) userOwned.add(r.topic_id as string);
+  }
+  const deletable = topicIds.filter((id) => !userOwned.has(id));
+
+  for (let i = 0; i < deletable.length; i += 100) {
+    await supabase.from("topics").delete().in("id", deletable.slice(i, i + 100));
   }
 }
 
