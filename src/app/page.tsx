@@ -7,9 +7,11 @@ import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
 import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
+import { demoQuestionBank } from "@/lib/demo";
 import { getAllStorySections, getStartedStories, type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
+import QuestionWidget from "@/components/QuestionWidget";
 import type { DailyFact, DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
@@ -284,6 +286,17 @@ export default function Dashboard() {
                   ✓ Today&apos;s session complete — streak secured. Come back tomorrow!
                 </p>
               )}
+            </section>
+
+            {/* Flashcard Preview (Widget Stack) */}
+            <section className="glass rise rise-2 overflow-hidden p-6 sm:p-7">
+              <div className="mb-5">
+                <p className="micro mb-1 flex items-center gap-2 !text-[#bfa8f5]">
+                   Sneak Peek
+                </p>
+                <h2 className="text-xl font-bold">Try some flashcards</h2>
+              </div>
+              <QuestionWidget questions={demoQuestionBank.slice(0, 5)} color="#bfa8f5" />
             </section>
 
             {/* Connection insight */}

@@ -14,6 +14,8 @@ import {
   getTodayReviewDetail,
   getLatestReportToday,
 } from "@/lib/data";
+import { demoQuestionBank } from "@/lib/demo";
+import QuestionWidget from "@/components/QuestionWidget";
 import type {
   DailyPlan,
   PlanItem,
@@ -550,6 +552,17 @@ function ReviewRunner() {
         {phase === "report" && report && (
           <div className="rise">
             <ReportCardView report={report} />
+            
+            <section className="mt-8 glass rise overflow-hidden p-6 sm:p-7">
+              <div className="mb-5">
+                <p className="micro mb-1 flex items-center gap-2 !text-[#bfa8f5]">
+                   Review Deck
+                </p>
+                <h2 className="text-xl font-bold">Flip through your flashcards</h2>
+              </div>
+              <QuestionWidget questions={demoQuestionBank.slice(5, 10)} color="#bfa8f5" />
+            </section>
+
             <div className="mt-5 flex flex-wrap justify-center gap-3 pt-2">
               <Link href="/" className="btn-primary">Back to dashboard</Link>
               <Link href="/brain" className="btn-ghost">Explore your brain</Link>
