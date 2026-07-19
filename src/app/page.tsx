@@ -180,8 +180,8 @@ export default function Dashboard() {
                 </div>
               )}
 
-              <ul className="space-y-2.5">
-                {visiblePlanItems.map((item) => (
+              {(() => {
+                const renderPlanItem = (item: typeof visiblePlanItems[0]) => (
                   <li key={item.topic_id}>
                     <Link
                       href={`/review?topic=${item.topic_id}`}
@@ -221,8 +221,52 @@ export default function Dashboard() {
                       </span>
                     </Link>
                   </li>
-                ))}
-              </ul>
+                );
+
+                if (sessionTab) {
+                  return (
+                    <ul className="space-y-2.5">
+                      {visiblePlanItems.map(renderPlanItem)}
+                    </ul>
+                  );
+                }
+
+                const generalItems = visiblePlanItems.filter(i => !seriesByTopic.get(i.topic_id));
+                const storyGroups = new Map<string, typeof visiblePlanItems>();
+                for (const item of visiblePlanItems) {
+                   const slug = seriesByTopic.get(item.topic_id);
+                   if (slug) {
+                     if (!storyGroups.has(slug)) storyGroups.set(slug, []);
+                     storyGroups.get(slug)!.push(item);
+                   }
+                }
+
+                return (
+                  <div className="space-y-6">
+                    {generalItems.length > 0 && (
+                      <div>
+                        <h3 className="micro mb-3 !text-white/40">General Knowledge</h3>
+                        <ul className="space-y-2.5">
+                          {generalItems.map(renderPlanItem)}
+                        </ul>
+                      </div>
+                    )}
+                    {Array.from(storyGroups.entries()).map(([slug, items]) => {
+                      const color = stories.find(s => s.series_slug === slug)?.color;
+                      return (
+                        <div key={slug}>
+                          <h3 className="micro mb-3" style={{ color: color || "rgba(255,255,255,0.4)" }}>
+                            {SERIES_TITLES[slug] ?? slug}
+                          </h3>
+                          <ul className="space-y-2.5">
+                            {items.map(renderPlanItem)}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
 
               {planItems.length > 5 && (
                 <button
