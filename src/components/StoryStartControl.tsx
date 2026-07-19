@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { isDemo } from "@/lib/data";
-import { getStartedStories, getStorySections, startStory, updateStoryColor, endStory } from "@/lib/stories";
+import { getStartedStories, getStorySections, getResumeHref, startStory, updateStoryColor, endStory } from "@/lib/stories";
 
 /** Palette a learner can pick for this story's nodes on their brain. */
 const STORY_COLORS = ["#5ba4cf", "#f5b95f", "#43d6b5", "#ff8fb1", "#bfa8f5", "#ff7a5c"];
@@ -25,6 +25,7 @@ export default function StoryStartControl({
   const [state, setState] = useState<"unknown" | "guest" | "new" | "started">("unknown");
   const [learned, setLearned] = useState(0);
   const [color, setColor] = useState(STORY_COLORS[0]);
+  const [resumeHref, setResumeHref] = useState(firstSectionHref);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showQuit, setShowQuit] = useState(false);
@@ -36,12 +37,19 @@ export default function StoryStartControl({
       return;
     }
     Promise.all([getStartedStories(), getStorySections(seriesSlug)])
-      .then(([stories, sections]) => {
+      .then(async ([stories, sections]) => {
         const started = stories.find((s) => s.series_slug === seriesSlug);
         setLearned(sections.filter((s) => s.status === "learned").length);
         if (started) {
           setColor(started.color);
           setState("started");
+          // Resolve the resume point — first unlearned section in reading order
+          try {
+            const href = await getResumeHref(seriesSlug);
+            setResumeHref(href);
+          } catch {
+            // fall back to firstSectionHref
+          }
         } else {
           setState("new");
         }
@@ -97,7 +105,7 @@ export default function StoryStartControl({
             <Link href="/brain" className="btn-ghost whitespace-nowrap">
               See on brain
             </Link>
-            <Link href={firstSectionHref} className="btn-primary whitespace-nowrap">
+            <Link href={resumeHref} className="btn-primary whitespace-nowrap">
               Continue →
             </Link>
           </div>

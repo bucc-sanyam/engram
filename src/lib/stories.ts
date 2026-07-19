@@ -175,6 +175,31 @@ export function storySectionHref(s: Pick<StorySection, "series_slug" | "chapter_
   return `/blogs/${s.series_slug}/${s.chapter_slug}/${s.section_slug}`;
 }
 
+/**
+ * Find the resume point for a started story — the first section in reading
+ * order that is NOT "learned". Returns its deep href (e.g.
+ * `/blogs/dsa/arrays-hashing/two-sum`). Falls back to the first section if
+ * every section is learned (re-read from the top).
+ */
+export async function getResumeHref(seriesSlug: string): Promise<string> {
+  const seed = getSeed(seriesSlug);
+  const sections = await getStorySections(seriesSlug);
+  const learnedSlugs = new Set(
+    sections.filter((s) => s.status === "learned").map((s) => s.section_slug)
+  );
+  // Walk the seed in reading order — the first un-learned section wins.
+  for (const s of seed.sections) {
+    if (!learnedSlugs.has(s.sectionSlug)) {
+      return `/blogs/${seriesSlug}/${s.chapterSlug}/${s.sectionSlug}`;
+    }
+  }
+  // Everything learned → start from the top again.
+  const first = seed.sections[0];
+  return first
+    ? `/blogs/${seriesSlug}/${first.chapterSlug}/${first.sectionSlug}`
+    : `/blogs/${seriesSlug}`;
+}
+
 // ---------------------------------------------------------------- writes
 
 /**

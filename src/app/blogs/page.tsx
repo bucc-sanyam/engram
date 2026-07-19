@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Nav from "@/components/Nav";
 import { getTopics } from "@/lib/data";
+import { getStartedStories, getAllStorySections, type UserStory, type StorySection } from "@/lib/stories";
 import type { Topic } from "@/lib/types";
 import { categoryColor, CATEGORY_COLORS } from "@/lib/types";
 
@@ -43,12 +44,30 @@ export default function BlogsPage() {
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [stories, setStories] = useState<UserStory[]>([]);
+  const [storySections, setStorySections] = useState<StorySection[]>([]);
 
   useEffect(() => {
     getTopics()
       .then(setTopics)
       .finally(() => setLoaded(true));
+    getStartedStories().then(setStories).catch(() => {});
+    getAllStorySections().then(setStorySections).catch(() => {});
   }, []);
+
+  // Build per-series progress lookup
+  const seriesProgress = useMemo(() => {
+    const map = new Map<string, { total: number; learned: number; color: string }>();
+    for (const story of stories) {
+      const secs = storySections.filter((s) => s.series_slug === story.series_slug);
+      map.set(story.series_slug, {
+        total: secs.length,
+        learned: secs.filter((s) => s.status === "learned").length,
+        color: story.color,
+      });
+    }
+    return map;
+  }, [stories, storySections]);
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
@@ -110,7 +129,11 @@ export default function BlogsPage() {
 
             {/* series as connected rows sharing one frame */}
             <div className="divide-y divide-white/[0.05]">
-              {STORY_SERIES.map((s) => (
+              {STORY_SERIES.map((s) => {
+                // Extract the series slug from the href
+                const slug = s.href.split("/blogs/")[1];
+                const progress = slug ? seriesProgress.get(slug) : null;
+                return (
                 <Link
                   key={s.href}
                   href={s.href}
@@ -141,6 +164,20 @@ export default function BlogsPage() {
                       <span style={{ color: `${s.color}cc` }}>{s.meta}</span> · {s.desc}
                     </p>
                   </div>
+                  {/* Progress badge — shown when story is started */}
+                  {progress && progress.total > 0 && (
+                    <div className="flex shrink-0 items-center gap-2">
+                      <MiniRing
+                        size={32}
+                        stroke={3}
+                        pct={Math.round((progress.learned / progress.total) * 100)}
+                        color={progress.color}
+                      />
+                      <span className="text-xs tabular-nums text-faint">
+                        {progress.learned}/{progress.total}
+                      </span>
+                    </div>
+                  )}
                   <span
                     aria-hidden
                     className="shrink-0 opacity-40 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
@@ -149,7 +186,7 @@ export default function BlogsPage() {
                     <ArrowRightIcon className="h-4 w-4" />
                   </span>
                 </Link>
-              ))}
+              )})}
             </div>
           </div>
         </section>
@@ -303,6 +340,29 @@ function ArrowRightIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 12h14M12 5l7 7-7 7" />
+    </svg>
+  );
+}
+
+/** Tiny radial progress ring for inline use on series cards. */
+function MiniRing({ size, stroke, pct, color }: { size: number; stroke: number; pct: number; color: string }) {
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="-rotate-90">
+      <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(255,252,245,0.08)" strokeWidth={stroke} />
+      <circle
+        cx={size / 2}
+        cy={size / 2}
+        r={r}
+        fill="none"
+        stroke={color}
+        strokeWidth={stroke}
+        strokeLinecap="round"
+        strokeDasharray={c}
+        strokeDashoffset={c * (1 - pct / 100)}
+        style={{ filter: `drop-shadow(0 0 3px ${color}66)` }}
+      />
     </svg>
   );
 }

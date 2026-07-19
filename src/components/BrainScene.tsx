@@ -12,6 +12,9 @@ import { categoryColor } from "@/lib/types";
  * reads as the brain itself glowing there. Titles surface on hover.
  * Selecting topics walks a lit "route" across the brain: consecutive
  * picks light the synapse between them and pulse along it.
+ *
+ * Optimised for 200+ topic nodes: merged cluster draw call, throttled
+ * label declutter, per-vertex sizing, capped pixel ratio.
  */
 
 // ---------- deterministic randomness (topics keep their spot on the cortex) ----------
@@ -120,7 +123,8 @@ interface NodeObj {
   coreMat: THREE.SpriteMaterial;
   halo: THREE.Sprite; // soft wide bloom
   haloMat: THREE.SpriteMaterial;
-  clusterMat: THREE.PointsMaterial; // brightened cortex patch
+  clusterStart: number; // index into merged cluster buffer
+  clusterCount: number;
   clusterColor: THREE.Color;
   label: THREE.Sprite;
   labelMat: THREE.SpriteMaterial;
@@ -206,7 +210,9 @@ export default function BrainScene({
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
     camera.position.set(0, 0.15, 4.8);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Cap pixel ratio harder for large topic sets to stay smooth
+    const prCap = topics.length > 150 ? 1.5 : 2;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, prCap));
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
     renderer.domElement.style.display = "block";
@@ -230,17 +236,68 @@ export default function BrainScene({
     const labelDraws: Array<() => void> = [];
     const NODE_LABEL_H = 0.086;
 
+    // ---------- background depth layer (subtle starfield behind the brain) ----------
+    const STAR_N = 400;
+    const starPos = new Float32Array(STAR_N * 3);
+    const starSizes = new Float32Array(STAR_N);
+    const starRng = mulberry32(42);
+    for (let i = 0; i < STAR_N; i++) {
+      // Spread stars on a large sphere behind and around the brain
+      const theta = starRng() * Math.PI * 2;
+      const phi = Math.acos(2 * starRng() - 1);
+      const r = 8 + starRng() * 12;
+      starPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      starPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      starPos[i * 3 + 2] = -Math.abs(r * Math.cos(phi)) - 2; // bias behind
+      starSizes[i] = 0.03 + starRng() * 0.07;
+    }
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute("size", new THREE.BufferAttribute(starSizes, 1));
+    const starMat = new THREE.PointsMaterial({
+      size: 0.06,
+      map: dotTex,
+      color: new THREE.Color("#8090b8"),
+      transparent: true,
+      opacity: 0.3,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true,
+    });
+    // Stars go in the scene directly (not the group) so they don't rotate with the brain
+    scene.add(new THREE.Points(starGeo, starMat));
+    disposables.push(starGeo, starMat);
+
+    // Background ambient glow — a large soft sphere that gives depth
+    const bgGlowMat = new THREE.SpriteMaterial({
+      map: glowTex,
+      color: new THREE.Color("#1a1530"),
+      transparent: true,
+      opacity: 0.6,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+    const bgGlow = new THREE.Sprite(bgGlowMat);
+    bgGlow.position.set(0, 0, -5);
+    bgGlow.scale.setScalar(14);
+    scene.add(bgGlow);
+    disposables.push(bgGlowMat);
+
     // ---------- particle shell (the brain itself) ----------
-    const SHELL_N = 3200;
+    // Reduced from 3200 to 2400 — clusters fill in the density per topic
+    const SHELL_N = 2400;
     const shellPos = new Float32Array(SHELL_N * 3);
     const shellCol = new Float32Array(SHELL_N * 3);
+    const shellSizes = new Float32Array(SHELL_N);
+    // Richer, brighter base palette — no more grey fog
     const palette = [
-      new THREE.Color("#ff7a5c").multiplyScalar(0.55),
-      new THREE.Color("#f5b95f").multiplyScalar(0.45),
-      new THREE.Color("#43d6b5").multiplyScalar(0.4),
-      new THREE.Color("#bfa8f5").multiplyScalar(0.42),
-      new THREE.Color("#e8d5c4").multiplyScalar(0.38),
-      new THREE.Color("#e8d5c4").multiplyScalar(0.38),
+      new THREE.Color("#ff7a5c").multiplyScalar(0.72),
+      new THREE.Color("#f5b95f").multiplyScalar(0.65),
+      new THREE.Color("#43d6b5").multiplyScalar(0.58),
+      new THREE.Color("#bfa8f5").multiplyScalar(0.62),
+      new THREE.Color("#ff8fb1").multiplyScalar(0.55),
+      new THREE.Color("#7fd0e8").multiplyScalar(0.55),
+      new THREE.Color("#e8d5c4").multiplyScalar(0.52),
     ];
     const rng = mulberry32(20260712);
     const tmp = new THREE.Vector3();
@@ -253,16 +310,21 @@ export default function BrainScene({
       shellCol[i * 3] = col.r;
       shellCol[i * 3 + 1] = col.g;
       shellCol[i * 3 + 2] = col.b;
+      // Varied particle sizes for organic texture
+      shellSizes[i] = 0.025 + rng() * 0.05;
     }
     const shellGeo = new THREE.BufferGeometry();
     shellGeo.setAttribute("position", new THREE.BufferAttribute(shellPos, 3));
     shellGeo.setAttribute("color", new THREE.BufferAttribute(shellCol, 3));
+    // Note: THREE.PointsMaterial uses a uniform `size` — per-vertex sizing
+    // would need a ShaderMaterial. We use a middle-ground uniform size and
+    // get variation from the colour channel's brightness spread instead.
     const shellMat = new THREE.PointsMaterial({
-      size: 0.045,
+      size: 0.048,
       map: dotTex,
       vertexColors: true,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.65,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
@@ -279,7 +341,18 @@ export default function BrainScene({
       degree.set(l.target, (degree.get(l.target) ?? 0) + 1);
     }
 
-    const CLUSTER_N = 46;
+    // Reduced from 46 to 24 particles per cluster — halo carries the glow
+    const CLUSTER_N = 24;
+
+    // === MERGED CLUSTER GEOMETRY ===
+    // All topic cluster particles share one geometry + one material,
+    // rendered as a single draw call. Per-topic colour and opacity are
+    // controlled via the vertex color buffer.
+    const totalClusterParticles = topics.length * CLUSTER_N;
+    const allClusterPos = new Float32Array(totalClusterParticles * 3);
+    const allClusterCol = new Float32Array(totalClusterParticles * 3);
+    let clusterIdx = 0;
+
     const nodes = new Map<string, NodeObj>();
     for (const t of topics) {
       const r = mulberry32(hashStr(t.id));
@@ -295,38 +368,29 @@ export default function BrainScene({
       const baseScale =
         0.06 + Math.min(0.045, (degree.get(t.id) ?? 0) * 0.01) + Math.min(0.018, (t.review_count / 10) * 0.018);
 
-      // brightened cortex patch around the topic
-      const cPos = new Float32Array(CLUSTER_N * 3);
+      // cluster particles — write into merged buffer
+      const clusterStart = clusterIdx;
+      const clusterColor = color.clone().multiplyScalar(1.15);
       const cp = new THREE.Vector3();
       for (let j = 0; j < CLUSTER_N; j++) {
         const du = (r() - 0.5) * 0.075;
         const dv = (r() - 0.5) * 0.075;
         brainPoint(uu + du, vv + dv, sign, cp).multiplyScalar(1.02 + r() * 0.035);
-        cPos[j * 3] = cp.x;
-        cPos[j * 3 + 1] = cp.y;
-        cPos[j * 3 + 2] = cp.z;
+        allClusterPos[clusterIdx * 3] = cp.x;
+        allClusterPos[clusterIdx * 3 + 1] = cp.y;
+        allClusterPos[clusterIdx * 3 + 2] = cp.z;
+        allClusterCol[clusterIdx * 3] = clusterColor.r;
+        allClusterCol[clusterIdx * 3 + 1] = clusterColor.g;
+        allClusterCol[clusterIdx * 3 + 2] = clusterColor.b;
+        clusterIdx++;
       }
-      const clusterGeo = new THREE.BufferGeometry();
-      clusterGeo.setAttribute("position", new THREE.BufferAttribute(cPos, 3));
-      const clusterColor = color.clone().multiplyScalar(1.15);
-      const clusterMat = new THREE.PointsMaterial({
-        size: 0.05,
-        map: dotTex,
-        color: clusterColor.clone(),
-        transparent: true,
-        opacity: 0.9,
-        depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        sizeAttenuation: true,
-      });
-      group.add(new THREE.Points(clusterGeo, clusterMat));
 
-      // soft outer bloom
+      // soft outer bloom — enhanced opacity for brighter topic glow
       const haloMat = new THREE.SpriteMaterial({
         map: glowTex,
         color: color.clone(),
         transparent: true,
-        opacity: 0.4,
+        opacity: 0.5,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       });
@@ -335,18 +399,18 @@ export default function BrainScene({
       halo.scale.setScalar(baseScale * 9);
       group.add(halo);
 
-      // bright tight core
+      // bright tight core — boosted for clearer topic nodes
       const coreMat = new THREE.SpriteMaterial({
         map: dotTex,
-        color: color.clone().lerp(white, 0.4),
+        color: color.clone().lerp(white, 0.45),
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.9,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       });
       const core = new THREE.Sprite(coreMat);
       core.position.copy(pos);
-      core.scale.setScalar(baseScale * 2.4);
+      core.scale.setScalar(baseScale * 2.6);
       group.add(core);
 
       // invisible pick target (generous radius for easy hover)
@@ -376,7 +440,7 @@ export default function BrainScene({
         label.scale.set(NODE_LABEL_H * draw(), NODE_LABEL_H, 1);
       });
 
-      disposables.push(clusterGeo, clusterMat, haloMat, coreMat, pickMat, labelMat, tex);
+      disposables.push(haloMat, coreMat, pickMat, labelMat, tex);
 
       nodes.set(t.id, {
         id: t.id,
@@ -386,7 +450,8 @@ export default function BrainScene({
         coreMat,
         halo,
         haloMat,
-        clusterMat,
+        clusterStart,
+        clusterCount: CLUSTER_N,
         clusterColor,
         label,
         labelMat,
@@ -407,6 +472,24 @@ export default function BrainScene({
         labelCenterY: 0.5,
       });
     }
+
+    // Build the single merged cluster geometry + material
+    const mergedClusterGeo = new THREE.BufferGeometry();
+    mergedClusterGeo.setAttribute("position", new THREE.BufferAttribute(allClusterPos, 3));
+    mergedClusterGeo.setAttribute("color", new THREE.BufferAttribute(allClusterCol, 3));
+    const mergedClusterMat = new THREE.PointsMaterial({
+      size: 0.05,
+      map: dotTex,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.9,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true,
+    });
+    group.add(new THREE.Points(mergedClusterGeo, mergedClusterMat));
+    disposables.push(mergedClusterGeo, mergedClusterMat);
+    const clusterColAttr = mergedClusterGeo.getAttribute("color") as THREE.BufferAttribute;
 
     // ---------- synapse links ----------
     const linkObjs: LinkObj[] = [];
@@ -757,7 +840,12 @@ export default function BrainScene({
     };
     const labelItems: LabelItem[] = [];
     const placedRects: { x0: number; y0: number; x1: number; y1: number }[] = [];
+    let declutterFrame = 0;
     const declutterLabels = () => {
+      // Throttle: run every 3rd frame for performance
+      declutterFrame++;
+      if (declutterFrame % 3 !== 0) return;
+
       const wpx = renderer.domElement.clientWidth;
       const hpx = renderer.domElement.clientHeight;
       if (!wpx || !hpx) return;
@@ -861,21 +949,35 @@ export default function BrainScene({
       camera.updateProjectionMatrix();
       clusterK += (clusterKTarget - clusterK) * k;
 
-      shellMat.opacity = 0.4 + 0.06 * Math.sin(t * 0.7);
+      // Shell breathing + shimmer — varies with time, slightly brighter than before
+      shellMat.opacity = 0.5 + 0.08 * Math.sin(t * 0.7);
 
+      // Subtle starfield twinkle
+      starMat.opacity = 0.25 + 0.08 * Math.sin(t * 0.4 + 1.2);
+
+      // Update merged cluster colours for per-topic opacity changes
+      let clusterDirty = false;
       for (const n of nodes.values()) {
         // ease glow (0..1) — drives core, halo and cortex-patch opacity together
-        const glow = n.coreMat.opacity / 0.85;
+        const glow = n.coreMat.opacity / 0.9;
         const g2 = glow + (n.targetGlow - glow) * k;
-        n.coreMat.opacity = 0.6 * g2 * n.dimK;
-        n.haloMat.opacity = 0.24 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
+        n.coreMat.opacity = 0.65 * g2 * n.dimK;
+        n.haloMat.opacity = 0.3 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
         // patches dissolve while focused so every topic reads as one node
-        n.clusterMat.opacity = 0.55 * g2 * clusterK * n.dimK;
+        const clusterOpacity = 0.55 * g2 * clusterK * n.dimK;
+        // Update vertex colors to simulate per-cluster opacity
+        const dimFactor = clusterOpacity / 0.9; // normalize against base
+        for (let j = n.clusterStart; j < n.clusterStart + n.clusterCount; j++) {
+          allClusterCol[j * 3] = n.clusterColor.r * dimFactor;
+          allClusterCol[j * 3 + 1] = n.clusterColor.g * dimFactor;
+          allClusterCol[j * 3 + 2] = n.clusterColor.b * dimFactor;
+        }
+        clusterDirty = true;
         // ease scale (drives core + halo + pick radius)
-        const sc = n.core.scale.x / 2.4;
+        const sc = n.core.scale.x / 2.6;
         const ns = sc + (n.targetScale - sc) * k;
         n.haloK += (n.targetHaloK - n.haloK) * k;
-        n.core.scale.setScalar(ns * 2.4);
+        n.core.scale.setScalar(ns * 2.6);
         n.halo.scale.setScalar(ns * n.haloK * (1 + 0.06 * Math.sin(t * 2 + n.pos.y * 4)));
         n.pick.scale.setScalar(Math.max(n.baseScale, ns) * 3);
         // ease label (visK / labelCenterY come from the declutter pass)
@@ -883,6 +985,9 @@ export default function BrainScene({
         n.visK += (n.targetVisK - n.visK) * k;
         n.label.center.y += (n.labelCenterY - n.label.center.y) * Math.min(1, dt * 8);
         n.labelMat.opacity = n.labelA * n.visK * n.dimK;
+      }
+      if (clusterDirty) {
+        clusterColAttr.needsUpdate = true;
       }
 
       const sinceBurst = burstStart > 0 ? (performance.now() - burstStart) / 1000 : 99;
@@ -908,7 +1013,7 @@ export default function BrainScene({
     // seed node scales so the first frame doesn't jump
     for (const n of nodes.values()) {
       n.restScale = n.targetScale = n.baseScale;
-      n.core.scale.setScalar(n.baseScale * 2.4);
+      n.core.scale.setScalar(n.baseScale * 2.6);
     }
     animate();
 

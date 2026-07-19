@@ -6,6 +6,7 @@ import Nav from "@/components/Nav";
 import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
+import StoryJourney from "@/components/StoryJourney";
 import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
 import { getAllStorySections, getStartedStories, type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
@@ -307,6 +308,11 @@ export default function Dashboard() {
                   <p className="micro mt-3.5">from your topic · {fact.topic_name}</p>
                 )}
               </section>
+            )}
+
+            {/* Story journey — radial progress visualization */}
+            {stories.length > 0 && (
+              <StoryJourney stories={stories} storySections={storySections} />
             )}
 
             {profile && (
