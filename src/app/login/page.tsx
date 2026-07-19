@@ -56,7 +56,8 @@ export default function LoginPage() {
           options: { data: { name: name.trim() } },
         });
         if (error) throw error;
-        setMessage("Check your inbox to confirm your email, then sign in.");
+        clearGuestMode();
+        window.location.assign("/");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;

@@ -37,23 +37,113 @@ function mulberry32(a: number) {
 }
 
 /** Point on a stylised brain cortex. sign: +1 right hemisphere, -1 left. */
-function brainPoint(u: number, v: number, sign: number, out = new THREE.Vector3()) {
-  const phi = Math.acos(1 - 1.55 * u); // polar angle, biased to the upper dome
-  const lam = v * Math.PI; // half-turn per hemisphere
-  let x = 1.32 * Math.sin(phi) * Math.cos(lam); // front(-)/back(+)
-  let y = 0.92 * Math.cos(phi); // up/down
-  let z = 0.6 * Math.sin(phi) * Math.sin(lam); // outward, >= 0
-  // gyri-like organic bumps
-  const bump = 1 + 0.055 * Math.sin(7 * phi + 3 * lam) * Math.sin(5 * lam + 1.7 * phi);
-  x *= bump;
-  y *= bump;
-  z *= bump;
-  // taper the frontal lobe, widen the back
-  z *= 0.78 + 0.16 * ((x + 1.4) / 2.8);
-  // flatten the underside
-  if (y < -0.5) y = -0.5 + (y + 0.5) * 0.35;
-  out.set(x, y, sign * (z + 0.115)); // hemisphere gap along the fissure
-  return out;
+function brainPoint(u: number, v: number, sign: number, part: 'cortex' | 'cerebellum' = 'cortex', out = new THREE.Vector3()) {
+  let x = 0, y = 0, z = 0;
+  let crease = 0;
+  let isCerebellum = part === 'cerebellum';
+
+  if (part === 'cortex') {
+    const clampU = Math.max(-1, Math.min(1, 1 - 1.55 * u));
+    const phi = Math.acos(clampU);
+    const lam = v * Math.PI;
+    
+    // Base shape
+    x = 1.35 * Math.sin(phi) * Math.cos(lam);
+    y = 0.9 * Math.cos(phi);
+    z = 0.65 * Math.sin(phi) * Math.sin(lam);
+    
+    // Frontal taper (narrower front, wider back)
+    z *= 0.7 + 0.25 * ((x + 1.4) / 2.8);
+    
+    // Flatten underside
+    if (y < -0.4 && x < 0.4) {
+      y = -0.4 + (y + 0.4) * 0.4;
+    }
+    
+    // Geometric sulci
+    const f1 = Math.sin(8 * phi + 4 * lam);
+    const f2 = Math.sin(6 * lam + 2 * phi);
+    const f3 = Math.sin(10 * phi) * Math.sin(8 * lam);
+    
+    // Absolute value creates round bulbous ridges and sharp, deep valleys
+    const wave = Math.abs((f1 * f2) * 0.6 + f3 * 0.4);
+    
+    crease = wave; // values > 0 are valleys
+    
+    // Pull inwards aggressively in valleys (muscle folds)
+    const pull = 1 - 0.25 * crease;
+    x *= pull; y *= pull; z *= pull;
+    
+    // Medial gap
+    const medialGap = 0.06 + 0.02 * Math.max(0, y);
+    z += medialGap; // shift out from center
+  } 
+  else if (part === 'cerebellum') {
+    // Squashed ellipsoid tucked under rear
+    const theta = u * 2 * Math.PI;
+    const clampV = Math.max(-1, Math.min(1, 2 * v - 1));
+    const phi = Math.acos(clampV);
+    
+    x = 0.85 + 0.35 * Math.sin(phi) * Math.cos(theta); // rear
+    y = -0.65 + 0.25 * Math.cos(phi); // under
+    z = 0.45 * Math.sin(phi) * Math.sin(theta);
+    
+    // Horizontal striations
+    const rings = Math.abs(Math.sin(y * 45));
+    const rScale = 1 - 0.05 * rings;
+    
+    // apply striation radius modulation towards center of cerebellum
+    const cx = 0.85, cy = -0.65, cz = 0;
+    x = cx + (x - cx) * rScale;
+    y = cy + (y - cy) * rScale;
+    z = cz + (z - cz) * rScale;
+    
+    z += 0.03; // small medial gap
+  }
+  
+  out.set(x, y, sign * z);
+  return { pos: out, crease, isCerebellum };
+}
+
+const LOBES = [
+  { name: 'Frontal', uRange: [0.1, 0.8], vRange: [0.55, 0.95] },
+  { name: 'Parietal', uRange: [0.05, 0.45], vRange: [0.25, 0.6] },
+  { name: 'Temporal', uRange: [0.5, 0.9], vRange: [0.35, 0.85] },
+  { name: 'Occipital', uRange: [0.2, 0.7], vRange: [0.05, 0.3] },
+  { name: 'Cerebellum', uRange: [0.0, 1.0], vRange: [0.0, 1.0] },
+];
+
+function placeTopic(topic: Topic, rng: () => number, existingPoints: THREE.Vector3[]) {
+  const lobeIdx = hashStr(topic.category || "") % LOBES.length;
+  const lobe = LOBES[lobeIdx];
+  const sign = rng() < 0.5 ? 1 : -1;
+  const part = lobe.name === 'Cerebellum' ? 'cerebellum' : 'cortex';
+  
+  let bestPos = new THREE.Vector3();
+  let bestDist = -1;
+  let bestU = 0, bestV = 0;
+  
+  const CANDIDATES = 15;
+  for (let i = 0; i < CANDIDATES; i++) {
+    const u = lobe.uRange[0] + rng() * (lobe.uRange[1] - lobe.uRange[0]);
+    const v = lobe.vRange[0] + rng() * (lobe.vRange[1] - lobe.vRange[0]);
+    const { pos } = brainPoint(u, v, sign, part, new THREE.Vector3());
+    
+    let minDist = 999;
+    for (const ep of existingPoints) {
+      const d = pos.distanceToSquared(ep);
+      if (d < minDist) minDist = d;
+    }
+    if (minDist > bestDist) {
+      bestDist = minDist;
+      bestPos.copy(pos);
+      bestU = u;
+      bestV = v;
+    }
+  }
+  
+  existingPoints.push(bestPos.clone());
+  return { pos: bestPos, sign, u: bestU, v: bestV, part };
 }
 
 // ---------- sprite textures ----------
@@ -142,13 +232,14 @@ interface NodeObj {
   // point for neighbours while focused so nearby nodes stay readable
   haloK: number;
   targetHaloK: number;
+  // hover state properties
   hovered: boolean;
-  // screen-space declutter: labelA is the logical opacity; visK fades the
-  // label out when no clear spot exists; labelCenterY nudges it vertically
   labelA: number;
   visK: number;
   targetVisK: number;
   labelCenterY: number;
+  // animated flare when data pulse arrives
+  flashK: number;
 }
 
 interface LinkObj {
@@ -173,6 +264,7 @@ interface LinkObj {
   visK: number;
   targetVisK: number;
   labelCenterY: number;
+  isVein?: boolean;
 }
 
 export default function BrainScene({
@@ -217,6 +309,12 @@ export default function BrainScene({
     container.appendChild(renderer.domElement);
     renderer.domElement.style.display = "block";
     renderer.domElement.style.touchAction = "none";
+
+    const lodK = Math.min(1, Math.sqrt(30 / Math.max(1, topics.length)));
+    const CLUSTER_N = Math.max(4, Math.floor(24 * lodK));
+    const HALO_MULT = 9 * lodK;
+    const CORE_MULT = 2.6 * lodK;
+    const idleOpacity = 0.13 * Math.min(1, 40 / Math.max(1, links.length));
 
     const dotTex = makeCircleTexture();
     const glowTex = makeGlowTexture();
@@ -284,51 +382,80 @@ export default function BrainScene({
     disposables.push(bgGlowMat);
 
     // ---------- particle shell (the brain itself) ----------
-    // Reduced from 3200 to 2400 — clusters fill in the density per topic
-    const SHELL_N = 2400;
+    const SHELL_N = 7500;
     const shellPos = new Float32Array(SHELL_N * 3);
     const shellCol = new Float32Array(SHELL_N * 3);
     const shellSizes = new Float32Array(SHELL_N);
-    // Richer, brighter base palette — no more grey fog
     const palette = [
-      new THREE.Color("#ff7a5c").multiplyScalar(0.72),
-      new THREE.Color("#f5b95f").multiplyScalar(0.65),
-      new THREE.Color("#43d6b5").multiplyScalar(0.58),
-      new THREE.Color("#bfa8f5").multiplyScalar(0.62),
-      new THREE.Color("#ff8fb1").multiplyScalar(0.55),
-      new THREE.Color("#7fd0e8").multiplyScalar(0.55),
-      new THREE.Color("#e8d5c4").multiplyScalar(0.52),
+      new THREE.Color("#ff7a5c").multiplyScalar(0.68),
+      new THREE.Color("#f5b95f").multiplyScalar(0.60),
+      new THREE.Color("#43d6b5").multiplyScalar(0.52),
+      new THREE.Color("#bfa8f5").multiplyScalar(0.55),
+      new THREE.Color("#ff8fb1").multiplyScalar(0.50),
+      new THREE.Color("#7fd0e8").multiplyScalar(0.50),
+      new THREE.Color("#e8d5c4").multiplyScalar(0.48),
     ];
     const rng = mulberry32(20260712);
     const tmp = new THREE.Vector3();
     for (let i = 0; i < SHELL_N; i++) {
-      brainPoint(rng(), rng(), i % 2 === 0 ? 1 : -1, tmp);
+      const part: 'cortex' | 'cerebellum' = i < SHELL_N * 0.15 ? 'cerebellum' : 'cortex';
+      
+      const { crease, isCerebellum } = brainPoint(rng(), rng(), i % 2 === 0 ? 1 : -1, part, tmp);
       shellPos[i * 3] = tmp.x;
       shellPos[i * 3 + 1] = tmp.y;
       shellPos[i * 3 + 2] = tmp.z;
-      const col = palette[Math.floor(rng() * palette.length)];
+      const col = palette[Math.floor(rng() * palette.length)].clone();
+      if (crease > 0) {
+        col.lerp(new THREE.Color("#1a1530"), crease * 0.85); // darker deep in sulci
+      }
+      if (isCerebellum) {
+        col.multiplyScalar(0.7); // slightly subdued
+        // cooler tint for cerebellum
+        col.lerp(new THREE.Color("#4a5b7a"), 0.3);
+      }
       shellCol[i * 3] = col.r;
       shellCol[i * 3 + 1] = col.g;
       shellCol[i * 3 + 2] = col.b;
-      // Varied particle sizes for organic texture
       shellSizes[i] = 0.025 + rng() * 0.05;
     }
     const shellGeo = new THREE.BufferGeometry();
     shellGeo.setAttribute("position", new THREE.BufferAttribute(shellPos, 3));
     shellGeo.setAttribute("color", new THREE.BufferAttribute(shellCol, 3));
-    // Note: THREE.PointsMaterial uses a uniform `size` — per-vertex sizing
-    // would need a ShaderMaterial. We use a middle-ground uniform size and
-    // get variation from the colour channel's brightness spread instead.
     const shellMat = new THREE.PointsMaterial({
-      size: 0.048,
+      size: 0.045, // slightly larger to compensate for lower N
       map: dotTex,
       vertexColors: true,
       transparent: true,
-      opacity: 0.65,
+      opacity: 0.8,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
+    shellMat.onBeforeCompile = (shader) => {
+      shader.vertexShader = `
+        varying float vRim;
+        ${shader.vertexShader}
+      `.replace(
+        `#include <project_vertex>`,
+        `
+        #include <project_vertex>
+        vec3 worldNorm = normalize(mat3(modelMatrix) * position);
+        vec3 viewDir = normalize(cameraPosition - (modelMatrix * vec4(position, 1.0)).xyz);
+        float dotNV = 1.0 - max(0.0, dot(worldNorm, viewDir));
+        vRim = smoothstep(0.6, 0.95, dotNV);
+        `
+      );
+      shader.fragmentShader = `
+        varying float vRim;
+        ${shader.fragmentShader}
+      `.replace(
+        `#include <color_fragment>`,
+        `
+        #include <color_fragment>
+        diffuseColor.rgb += vec3(0.15, 0.05, 0.0) * vRim;
+        `
+      );
+    };
     group.add(new THREE.Points(shellGeo, shellMat));
     disposables.push(shellGeo, shellMat);
 
@@ -341,26 +468,20 @@ export default function BrainScene({
       degree.set(l.target, (degree.get(l.target) ?? 0) + 1);
     }
 
-    // Reduced from 46 to 24 particles per cluster — halo carries the glow
-    const CLUSTER_N = 24;
-
     // === MERGED CLUSTER GEOMETRY ===
-    // All topic cluster particles share one geometry + one material,
-    // rendered as a single draw call. Per-topic colour and opacity are
-    // controlled via the vertex color buffer.
     const totalClusterParticles = topics.length * CLUSTER_N;
     const allClusterPos = new Float32Array(totalClusterParticles * 3);
     const allClusterCol = new Float32Array(totalClusterParticles * 3);
     let clusterIdx = 0;
 
     const nodes = new Map<string, NodeObj>();
+    const placedPoints: THREE.Vector3[] = [];
+    
     for (const t of topics) {
       const r = mulberry32(hashStr(t.id));
-      const sign = r() < 0.5 ? 1 : -1;
-      const uu = 0.12 + r() * 0.74;
-      const vv = 0.08 + r() * 0.84;
-      const pos = brainPoint(uu, vv, sign).multiplyScalar(1.04);
-      // story focus: highlighted nodes take the story colour, the rest dim out
+      const { pos: bPos, sign, u: uu, v: vv, part } = placeTopic(t, r, placedPoints);
+      const pos = bPos.clone().multiplyScalar(1.04);
+      
       const inStory = highlight ? highlight.topicIds.has(t.id) : false;
       const dimK = highlight && !inStory ? 0.45 : 1;
       const baseColor = topicColors?.get(t.id) ?? categoryColor(t.category);
@@ -375,42 +496,43 @@ export default function BrainScene({
       for (let j = 0; j < CLUSTER_N; j++) {
         const du = (r() - 0.5) * 0.075;
         const dv = (r() - 0.5) * 0.075;
-        brainPoint(uu + du, vv + dv, sign, cp).multiplyScalar(1.02 + r() * 0.035);
-        allClusterPos[clusterIdx * 3] = cp.x;
-        allClusterPos[clusterIdx * 3 + 1] = cp.y;
-        allClusterPos[clusterIdx * 3 + 2] = cp.z;
+        const { pos: cPos } = brainPoint(uu + du, vv + dv, sign, part, cp);
+        cPos.multiplyScalar(1.02 + r() * 0.035);
+        allClusterPos[clusterIdx * 3] = cPos.x;
+        allClusterPos[clusterIdx * 3 + 1] = cPos.y;
+        allClusterPos[clusterIdx * 3 + 2] = cPos.z;
         allClusterCol[clusterIdx * 3] = clusterColor.r;
         allClusterCol[clusterIdx * 3 + 1] = clusterColor.g;
         allClusterCol[clusterIdx * 3 + 2] = clusterColor.b;
         clusterIdx++;
       }
 
-      // soft outer bloom — enhanced opacity for brighter topic glow
+      // soft outer bloom
       const haloMat = new THREE.SpriteMaterial({
         map: glowTex,
         color: color.clone(),
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.5 * lodK,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       });
       const halo = new THREE.Sprite(haloMat);
       halo.position.copy(pos);
-      halo.scale.setScalar(baseScale * 9);
+      halo.scale.setScalar(baseScale * HALO_MULT);
       group.add(halo);
 
-      // bright tight core — boosted for clearer topic nodes
+      // bright tight core
       const coreMat = new THREE.SpriteMaterial({
         map: dotTex,
         color: color.clone().lerp(white, 0.45),
         transparent: true,
-        opacity: 0.9,
+        opacity: 0.9 * lodK,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       });
       const core = new THREE.Sprite(coreMat);
       core.position.copy(pos);
-      core.scale.setScalar(baseScale * 2.6);
+      core.scale.setScalar(baseScale * CORE_MULT);
       group.add(core);
 
       // invisible pick target (generous radius for easy hover)
@@ -463,13 +585,14 @@ export default function BrainScene({
         targetScale: 1,
         targetGlow: 0.6,
         targetLabel: 0,
-        haloK: 9,
-        targetHaloK: 9,
+        haloK: HALO_MULT,
+        targetHaloK: HALO_MULT,
         hovered: false,
         labelA: 0,
         visK: 1,
         targetVisK: 1,
         labelCenterY: 0.5,
+        flashK: 0,
       });
     }
 
@@ -482,9 +605,9 @@ export default function BrainScene({
       map: dotTex,
       vertexColors: true,
       transparent: true,
-      opacity: 0.9,
+      opacity: 0.6, // reduced from 0.9
       depthWrite: false,
-      blending: THREE.AdditiveBlending,
+      blending: THREE.NormalBlending, // NormalBlending prevents the huge white blown-out clouds
       sizeAttenuation: true,
     });
     group.add(new THREE.Points(mergedClusterGeo, mergedClusterMat));
@@ -495,20 +618,93 @@ export default function BrainScene({
     const linkObjs: LinkObj[] = [];
     const baseLinkColor = new THREE.Color("#e8d5c4");
     const activeLinkColor = new THREE.Color("#ffb497");
-    const routeLinkColor = new THREE.Color("#ffd0a8");
+    // ---------- spatial veins (leaf veins) ----------
+    // Generate an organic mesh connecting spatial nearest neighbors
+    const veinLinks: Array<{a: NodeObj, b: NodeObj}> = [];
+    const connected = new Set<string>();
+    
+    for (const nA of nodes.values()) {
+      // Find 3 nearest spatial neighbors to form a delicate web
+      const neighbors = Array.from(nodes.values())
+        .filter(nB => nB.id !== nA.id)
+        .sort((n1, n2) => nA.pos.distanceToSquared(n1.pos) - nA.pos.distanceToSquared(n2.pos))
+        .slice(0, 3);
+        
+      for (const nB of neighbors) {
+        const pairId = [nA.id, nB.id].sort().join('-');
+        if (!connected.has(pairId)) {
+          connected.add(pairId);
+          veinLinks.push({a: nA, b: nB});
+        }
+      }
+    }
+    
+    let veinIdSeq = 0;
+    for (const v of veinLinks) {
+      const a = v.a;
+      const b = v.b;
+      const mid = a.pos.clone().add(b.pos).multiplyScalar(0.5);
+      // Veins hug the surface very tightly
+      const lift = 1.015 + Math.min(0.02, a.pos.distanceTo(b.pos) * 0.02);
+      mid.normalize().multiplyScalar(((a.pos.length() + b.pos.length()) / 2) * lift);
+      const curve = new THREE.QuadraticBezierCurve3(a.pos, mid, b.pos);
+      const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(12));
+      const mat = new THREE.LineBasicMaterial({
+        color: baseLinkColor.clone(),
+        transparent: true,
+        opacity: idleOpacity * 0.25, // softer veins
+        depthWrite: false,
+        blending: THREE.NormalBlending,
+      });
+      group.add(new THREE.Line(geo, mat));
+
+      // Veins don't have active travelling dots, just the lines themselves glow with the wave
+      const pulseMat = new THREE.SpriteMaterial({ visible: false });
+      const pulse = new THREE.Sprite(pulseMat);
+      
+      const linkLabelMat = new THREE.SpriteMaterial({ visible: false });
+      const linkLabel = new THREE.Sprite(linkLabelMat);
+      
+      disposables.push(geo, mat, pulseMat, linkLabelMat);
+      
+      linkObjs.push({
+        id: `vein-${veinIdSeq++}`,
+        aId: a.id,
+        bId: b.id,
+        dir: 1,
+        curve,
+        mat,
+        pulse,
+        pulseMat,
+        pulseOffset: Math.random(),
+        pulseSpeed: 0.05 + Math.random() * 0.02,
+        label: linkLabel,
+        labelMat: linkLabelMat,
+        baseColor: baseLinkColor.clone(),
+        targetOpacity: idleOpacity * 0.25, // softer veins
+        targetPulseScale: 0,
+        labelA: 0,
+        visK: 1,
+        targetVisK: 1,
+        labelCenterY: 0.5,
+        isVein: true,
+      });
+    }
+
+    // ---------- semantic synapse links (the real data edges) ----------
     for (const l of links) {
       const a = nodes.get(l.source);
       const b = nodes.get(l.target);
       if (!a || !b) continue;
       const mid = a.pos.clone().add(b.pos).multiplyScalar(0.5);
-      const lift = 1.18 + Math.min(0.5, a.pos.distanceTo(b.pos) * 0.28);
+      const lift = 1.03 + Math.min(0.05, a.pos.distanceTo(b.pos) * 0.05);
       mid.normalize().multiplyScalar(((a.pos.length() + b.pos.length()) / 2) * lift);
       const curve = new THREE.QuadraticBezierCurve3(a.pos, mid, b.pos);
       const geo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(48));
       const mat = new THREE.LineBasicMaterial({
         color: baseLinkColor.clone(),
         transparent: true,
-        opacity: 0.13,
+        opacity: 0, // semantic links are completely invisible in idle state to prevent mess
         depthWrite: false,
         blending: THREE.AdditiveBlending,
       });
@@ -542,7 +738,7 @@ export default function BrainScene({
         bId: l.target,
         curve,
         mat,
-        targetOpacity: 0.13,
+        targetOpacity: idleOpacity,
         pulse,
         pulseMat,
         pulseOffset: Math.random(),
@@ -557,6 +753,7 @@ export default function BrainScene({
         visK: 1,
         targetVisK: 1,
         labelCenterY: 0.5,
+        isVein: false,
       });
     }
 
@@ -600,29 +797,29 @@ export default function BrainScene({
           n.restScale = n.baseScale;
           n.restGlow = 0.6;
           n.restLabel = 0;
-          n.targetHaloK = 9;
+          n.targetHaloK = HALO_MULT;
         } else if (n.id === tail) {
           // the ONE bright bloom — everything else stays crisp
           n.restScale = n.baseScale * 1.5;
           n.restGlow = 1;
           n.restLabel = 1;
-          n.targetHaloK = 9;
+          n.targetHaloK = HALO_MULT;
         } else if (pathSet.has(n.id)) {
           n.restScale = n.baseScale * 1.05;
           n.restGlow = 0.6;
           n.restLabel = 0.85;
-          n.targetHaloK = 3.6;
+          n.targetHaloK = 3.6 * lodK;
         } else if (neigh.has(n.id)) {
           // name rides the connecting edge instead of floating at the node
           n.restScale = n.baseScale;
           n.restGlow = 0.55;
           n.restLabel = 0;
-          n.targetHaloK = 3.2;
+          n.targetHaloK = 3.2 * lodK;
         } else {
           n.restScale = n.baseScale * 0.82;
           n.restGlow = 0.1;
           n.restLabel = 0;
-          n.targetHaloK = 3;
+          n.targetHaloK = 3 * lodK;
         }
         if (!n.hovered) {
           n.targetScale = n.restScale;
@@ -650,7 +847,7 @@ export default function BrainScene({
           l.mat.color.copy(activeLinkColor);
           l.pulseSpeed = 0.2;
         } else {
-          l.targetOpacity = tail ? 0.03 : 0.13;
+          l.targetOpacity = tail ? 0.03 * lodK : idleOpacity;
           l.targetPulseScale = tail ? 0.02 : 0.045;
           l.mat.color.copy(baseLinkColor);
           l.pulseSpeed = 0.05 + Math.random() * 0.03;
@@ -924,36 +1121,88 @@ export default function BrainScene({
       const dt = Math.min(clock.getDelta(), 0.05);
       const t = clock.elapsedTime;
       const k = Math.min(1, dt * 5);
+      // Frame-rate independent smooth damping for camera/zoom
+      const smoothK = 1 - Math.exp(-dt * 4.5);
 
       // brain swells around the viewer on selection (dive-inside), settles back out on close
       scaleVec.setScalar(scaleTarget);
-      group.scale.lerp(scaleVec, Math.min(1, dt * 1.9));
+      group.scale.lerp(scaleVec, smoothK);
 
       if (tailId) {
         const diff = ((targetYaw - group.rotation.y + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
-        group.rotation.y += diff * Math.min(1, dt * 2.6);
-        group.rotation.x += (targetPitch - group.rotation.x) * Math.min(1, dt * 2.6);
+        group.rotation.y += diff * smoothK;
+        group.rotation.x += (targetPitch - group.rotation.x) * smoothK;
       } else {
         if (performance.now() - lastInteract > 3200 && !dragging) {
           group.rotation.y += dt * 0.12;
         }
-        group.rotation.x += (userPitch - group.rotation.x) * Math.min(1, dt * 4);
+        // User drag rotation is fast and snappy
+        group.rotation.x += (userPitch - group.rotation.x) * Math.min(1, dt * 8);
       }
 
       // camera: outside → orbit distance; inside → sit within the cortex,
       // widening the view so the selection's connections stay on screen
       const insideZ = camera.aspect < 0.9 ? 2.0 : 1.45;
       const camZ = tailId ? insideZ : zoomTarget;
-      camera.position.z += (camZ - camera.position.z) * Math.min(1, dt * 1.9);
-      camera.fov += (fovTarget - camera.fov) * Math.min(1, dt * 1.9);
+      
+      // Use the smooth dampening to make zoom buttery smooth
+      camera.position.z += (camZ - camera.position.z) * smoothK;
+      camera.fov += (fovTarget - camera.fov) * smoothK;
       camera.updateProjectionMatrix();
+      
       clusterK += (clusterKTarget - clusterK) * k;
 
       // Shell breathing + shimmer — varies with time, slightly brighter than before
       shellMat.opacity = 0.5 + 0.08 * Math.sin(t * 0.7);
 
-      // Subtle starfield twinkle
-      starMat.opacity = 0.25 + 0.08 * Math.sin(t * 0.4 + 1.2);
+      // First, update link pulses and trigger flashes on target nodes
+      const sinceBurst = burstStart > 0 ? (performance.now() - burstStart) / 1000 : 99;
+      for (const l of linkObjs) {
+        
+        // --- Edge Pulse Waves ---
+        // Light up edges as a global spatial wave passes through the brain
+        const nA = nodes.get(l.aId);
+        const nB = nodes.get(l.bId);
+        let waveEdgeGlow = 0;
+        if (nA && nB) {
+          const midX = (nA.pos.x + nB.pos.x) * 0.5;
+          const midY = (nA.pos.y + nB.pos.y) * 0.5;
+          const midZ = (nA.pos.z + nB.pos.z) * 0.5;
+          
+          // Origin at the base of the brain (brainstem)
+          const dist = Math.hypot(midX, midY + 4, midZ + 2);
+          // Very low frequency (0.45) so only ONE wave fits across the brain at a time
+          const wave = Math.sin(dist * 0.45 - t * 1.5);
+          // Sharpen it heavily (power of 8) so it's a distinct, singular pulse traveling outwards
+          waveEdgeGlow = Math.pow(Math.max(0, wave), 8.0) * 1.5;
+        }
+
+        // Apply waveEdgeGlow to edge opacity, boosting it as the wave passes
+        const baseEdgeOpacity = l.targetOpacity; // keep baseline very dim
+        // We only apply the sweeping light wave to the spatial veins in the idle state
+        const finalWaveGlow = (l.isVein && !highlight) ? waveEdgeGlow : 0;
+        l.mat.opacity += ((baseEdgeOpacity + finalWaveGlow) - l.mat.opacity) * k;
+        
+        l.labelA += (l.targetLabel - l.labelA) * k;
+        l.visK += (l.targetVisK - l.visK) * k;
+        l.label.center.y += (l.labelCenterY - l.label.center.y) * Math.min(1, dt * 8);
+        l.labelMat.opacity = l.labelA * l.visK;
+        
+        const prevOffset = l.pulseOffset;
+        l.pulseOffset = prevOffset + dt * l.pulseSpeed;
+        
+        // If a pulse reaches its destination (offset >= 1.0)
+        if (l.pulseOffset >= 1) {
+          l.pulseOffset -= 1;
+        }
+        
+        const p = l.curve.getPoint(l.dir > 0 ? l.pulseOffset : 1 - l.pulseOffset);
+        l.pulse.position.copy(p);
+        const burstBoost = sinceBurst < 0.9 ? (0.9 - sinceBurst) * 0.6 : 0;
+        const sc = l.targetPulseScale * (1 + burstBoost * 6);
+        l.pulse.scale.setScalar(l.pulse.scale.x + (sc - l.pulse.scale.x) * k);
+        l.pulseMat.opacity = Math.min(0.95, l.targetOpacity * 1.4 + burstBoost);
+      }
 
       // Update merged cluster colours for per-topic opacity changes
       let clusterDirty = false;
@@ -961,10 +1210,15 @@ export default function BrainScene({
         // ease glow (0..1) — drives core, halo and cortex-patch opacity together
         const glow = n.coreMat.opacity / 0.9;
         const g2 = glow + (n.targetGlow - glow) * k;
-        n.coreMat.opacity = 0.65 * g2 * n.dimK;
-        n.haloMat.opacity = 0.3 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
-        // patches dissolve while focused so every topic reads as one node
+        
+        // Nodes stay relatively dark and quiet, edges carry the light
+        n.coreMat.opacity = Math.min(1.0, 0.65 * g2) * n.dimK;
+        // Make halos very subtle to avoid blown-out blobs
+        n.haloMat.opacity = Math.min(1.0, 0.1 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5))) * n.dimK;
+        
+        // Cortex patches do NOT flash intensely, keeping the brain shape solid
         const clusterOpacity = 0.55 * g2 * clusterK * n.dimK;
+        
         // Update vertex colors to simulate per-cluster opacity
         const dimFactor = clusterOpacity / 0.9; // normalize against base
         for (let j = n.clusterStart; j < n.clusterStart + n.clusterCount; j++) {
@@ -977,6 +1231,7 @@ export default function BrainScene({
         const sc = n.core.scale.x / 2.6;
         const ns = sc + (n.targetScale - sc) * k;
         n.haloK += (n.targetHaloK - n.haloK) * k;
+        
         n.core.scale.setScalar(ns * 2.6);
         n.halo.scale.setScalar(ns * n.haloK * (1 + 0.06 * Math.sin(t * 2 + n.pos.y * 4)));
         n.pick.scale.setScalar(Math.max(n.baseScale, ns) * 3);
@@ -990,21 +1245,7 @@ export default function BrainScene({
         clusterColAttr.needsUpdate = true;
       }
 
-      const sinceBurst = burstStart > 0 ? (performance.now() - burstStart) / 1000 : 99;
-      for (const l of linkObjs) {
-        l.mat.opacity += (l.targetOpacity - l.mat.opacity) * k;
-        l.labelA += (l.targetLabel - l.labelA) * k;
-        l.visK += (l.targetVisK - l.visK) * k;
-        l.label.center.y += (l.labelCenterY - l.label.center.y) * Math.min(1, dt * 8);
-        l.labelMat.opacity = l.labelA * l.visK;
-        l.pulseOffset = (l.pulseOffset + dt * l.pulseSpeed) % 1;
-        const p = l.curve.getPoint(l.dir > 0 ? l.pulseOffset : 1 - l.pulseOffset);
-        l.pulse.position.copy(p);
-        const burstBoost = sinceBurst < 0.9 ? (0.9 - sinceBurst) * 0.6 : 0;
-        const sc = l.targetPulseScale * (1 + burstBoost * 6);
-        l.pulse.scale.setScalar(l.pulse.scale.x + (sc - l.pulse.scale.x) * k);
-        l.pulseMat.opacity = Math.min(0.95, l.targetOpacity * 1.4 + burstBoost);
-      }
+
 
       declutterLabels();
       renderer.render(scene, camera);
