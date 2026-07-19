@@ -9,7 +9,7 @@ import {
 } from "@/lib/dsa";
 
 export const metadata: Metadata = {
-  title: `${DSA_SERIES_TITLE} — DSA, read as one story · Knovis`,
+  title: `${DSA_SERIES_TITLE} — The NeetCode 150 · Knovis`,
   description:
     "The NeetCode 150 roadmap retold as a linear blog series: 18 pattern chapters, every question a full read, each one handing off to the next.",
 };
@@ -41,7 +41,7 @@ export default function DsaAtlasPage() {
           />
           <p className="micro mb-3 !text-[#f5b95f]">{DSA_SERIES_TITLE}</p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
-            DSA, read as one story
+            The NeetCode 150
           </h1>
           <p className="article-lead mt-6">
             Most people meet data structures and algorithms as a pile of disconnected puzzles.

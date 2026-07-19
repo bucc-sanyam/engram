@@ -10,7 +10,7 @@ import {
 } from "@/lib/competition-act";
 
 export const metadata: Metadata = {
-  title: `${COMP_ACT_SERIES_TITLE} — Competition Act, 2002, read as one story · Knovis`,
+  title: `${COMP_ACT_SERIES_TITLE} — Competition Act, 2002 · Knovis`,
   description:
     "India's Competition Act, 2002 retold as a linear blog series: 10 chapters, every section a full read, each one handing off to the next.",
 };
@@ -42,7 +42,7 @@ export default function CompetitionActPage() {
           />
           <p className="micro mb-3 !text-[#5ba4cf]">{COMP_ACT_SERIES_TITLE}</p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
-            Competition Act, 2002 — read as one story
+            Competition Act, 2002
           </h1>
           <p className="article-lead mt-6">
             Most people meet competition law as a maze of sections, provisos, and explanations.

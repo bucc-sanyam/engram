@@ -12,6 +12,7 @@ export default function BlogsPage() {
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [storiesExpanded, setStoriesExpanded] = useState(true);
 
   useEffect(() => {
     getTopics()
@@ -52,80 +53,115 @@ export default function BlogsPage() {
           </p>
         </div>
 
-        {/* The Pattern Atlas — static DSA series */}
-        <Link
-          href="/blogs/dsa"
-          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
-        >
-          <div
-            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-            aria-hidden
-          />
-          <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
-          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-            The NeetCode 150, read as one story
-          </h2>
-          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-            18 pattern chapters, 150 question blogs, one continuous reading path — every
-            problem&apos;s insight, and the thread that hands you to the next.
-          </p>
-          <span
-            aria-hidden
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+        {/* Pre-installed series grouped under expandable 'Read as one story' header */}
+        <div className="rise mb-8">
+          <button
+            type="button"
+            onClick={() => setStoriesExpanded(!storiesExpanded)}
+            className="group flex w-full items-center justify-between rounded-2xl bg-white/[0.03] px-4 py-3.5 text-left transition-all hover:bg-white/[0.06]"
           >
-            →
-          </span>
-        </Link>
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c]/20 to-[#f5b95f]/20 text-xs">
+                📖
+              </span>
+              <div>
+                <h2 className="text-base font-bold text-white/90 group-hover:text-white">
+                  Read as one story
+                </h2>
+                <p className="text-xs text-faint">Structured, linear learning series</p>
+              </div>
+              <span className="micro ml-2 rounded-full bg-white/[0.06] px-2.5 py-0.5 !text-muted">
+                3 series
+              </span>
+            </div>
+            <span
+              className={`text-faint transition-transform duration-300 group-hover:text-white ${
+                storiesExpanded ? "rotate-180" : ""
+              }`}
+            >
+              ▼
+            </span>
+          </button>
 
-        {/* The Competition Code — static Competition Act series */}
-        <Link
-          href="/blogs/competition-act"
-          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
-        >
-          <div
-            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-            aria-hidden
-          />
-          <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
-          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-            The Competition Act, 2002 — read as one story
-          </h2>
-          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-            10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
-            insight, landmark cases, and the thread that hands you to the next.
-          </p>
-          <span
-            aria-hidden
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-          >
-            →
-          </span>
-        </Link>
+          {storiesExpanded && (
+            <div className="mt-3 space-y-3 pl-1">
+              {/* The Pattern Atlas — static DSA series */}
+              <Link
+                href="/blogs/dsa"
+                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
+              >
+                <div
+                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#f5b95f] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                  aria-hidden
+                />
+                <p className="micro mb-2 !text-[#f5b95f]">The Pattern Atlas · DSA series</p>
+                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                  The NeetCode 150
+                </h3>
+                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                  18 pattern chapters, 150 question blogs, one continuous reading path — every
+                  problem&apos;s insight, and the thread that hands you to the next.
+                </p>
+                <span
+                  aria-hidden
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#f5b95f] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                >
+                  →
+                </span>
+              </Link>
 
-        {/* The Query Playbook — static SQL series */}
-        <Link
-          href="/blogs/sql"
-          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
-        >
-          <div
-            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
-            aria-hidden
-          />
-          <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
-          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
-            SQL, read as one story
-          </h2>
-          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
-            12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
-            to window functions to pivoting, with practice links on every problem.
-          </p>
-          <span
-            aria-hidden
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-          >
-            →
-          </span>
-        </Link>
+              {/* The Competition Code — static Competition Act series */}
+              <Link
+                href="/blogs/competition-act"
+                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
+              >
+                <div
+                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                  aria-hidden
+                />
+                <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
+                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                  The Competition Act, 2002
+                </h3>
+                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                  10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
+                  insight, landmark cases, and the thread that hands you to the next.
+                </p>
+                <span
+                  aria-hidden
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                >
+                  →
+                </span>
+              </Link>
+
+              {/* The Query Playbook — static SQL series */}
+              <Link
+                href="/blogs/sql"
+                className="glass glass-hover group relative block overflow-hidden rounded-[1.5rem] p-5"
+              >
+                <div
+                  className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+                  aria-hidden
+                />
+                <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
+                <h3 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+                  The SQL Query Playbook
+                </h3>
+                <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+                  12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
+                  to window functions to pivoting, with practice links on every problem.
+                </p>
+                <span
+                  aria-hidden
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                >
+                  →
+                </span>
+              </Link>
+            </div>
+          )}
+        </div>
 
         {/* Search + filter */}
         <div className="rise mb-8 space-y-3">

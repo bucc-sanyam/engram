@@ -9,7 +9,7 @@ import {
 } from "@/lib/sql";
 
 export const metadata: Metadata = {
-  title: `${SQL_SERIES_TITLE} — SQL, read as one story · Knovis`,
+  title: `${SQL_SERIES_TITLE} — SQL Roadmap · Knovis`,
   description:
     "A comprehensive SQL interview roadmap retold as a linear blog series: 12 pattern chapters, curated LeetCode problems, one continuous reading path.",
 };
@@ -41,7 +41,7 @@ export default function SqlPlaybookPage() {
           />
           <p className="micro mb-3 !text-[#22d3ee]">{SQL_SERIES_TITLE}</p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
-            SQL, read as one story
+            The SQL Query Playbook
           </h1>
           <p className="article-lead mt-6">
             Most people study SQL as a bag of disconnected syntax rules. This playbook retells
