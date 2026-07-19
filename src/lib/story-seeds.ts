@@ -4,6 +4,8 @@ import { DSA_TOPICS } from "./dsa";
 import { SQL_TOPICS } from "./sql";
 import { SARFAESI_CHAPTERS } from "./sarfaesi-act";
 import type { SarfaesiQuestion } from "./sarfaesi-act/types";
+import { MACROECONOMICS_CHAPTERS } from "./macroeconomics";
+import type { MacroQuestion } from "./macroeconomics/types";
 
 export interface SeedSection {
   chapterSlug: string;
@@ -13,7 +15,7 @@ export interface SeedSection {
   category: string;
   summary: string;
   keyPoints: string[];
-  questions: CompActQuestion[] | SarfaesiQuestion[];
+  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[];
   facts: string[];
 }
 
@@ -100,11 +102,31 @@ function sarfaesiSeed(): SeriesSeed {
   return { seriesSlug: "sarfaesi-act", title: "The SARFAESI Playbook", sections };
 }
 
+function macroeconomicsSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const chapter of MACROECONOMICS_CHAPTERS) {
+    for (const section of chapter.sections) {
+      sections.push({
+        chapterSlug: chapter.slug,
+        sectionSlug: section.slug,
+        name: section.title,
+        category: "Economics",
+        summary: section.summary,
+        keyPoints: [],
+        questions: section.questions ?? [],
+        facts: section.facts ?? [],
+      });
+    }
+  }
+  return { seriesSlug: "macroeconomics", title: "Macroeconomics: An Introduction", sections };
+}
+
 const SERIES: Record<string, () => SeriesSeed> = {
   "competition-act": compActSeed,
   "dsa": dsaSeed,
   "sql": sqlSeed,
   "sarfaesi-act": sarfaesiSeed,
+  "macroeconomics": macroeconomicsSeed,
 };
 
 export function getSeed(seriesSlug: string): SeriesSeed {
