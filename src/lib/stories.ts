@@ -366,13 +366,13 @@ export async function completeSection(
     .update({ next_review_at: new Date().toISOString() })
     .eq("id", topicId);
 
-  // Invalidate today's plan so the new topic is pulled in immediately
-  const today = new Date().toISOString().slice(0, 10);
+  // Invalidate today's plan so the new topic is pulled in immediately.
+  // We delete any uncompleted plan instead of guessing the timezone-specific date.
   await supabase
     .from("daily_plans")
     .delete()
     .eq("user_id", user.id)
-    .eq("plan_date", today);
+    .eq("completed", false);
 
   // Mark learned.
   await supabase
