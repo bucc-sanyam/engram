@@ -42,7 +42,7 @@ Consequently, they turn to informal finance: moneylenders, pawnbrokers, and chit
           ],
           correct_index: 1,
           model_answer: "Banks act as intermediaries and their primary profit engine is the 'spread' between the lending rate and the deposit rate.",
-          difficulty: "easy"
+          difficulty: "basic"
         }
       ],
       facts: [

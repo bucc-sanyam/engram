@@ -127,7 +127,7 @@ Because of this tight inter-sectoral linkage, an injection of money (e.g., gover
           ],
           correct_index: 1,
           model_answer: "The financial sector (banks, mutual funds) intermediates between those with surplus funds (savers) and those needing funds (borrowers).",
-          difficulty: "easy"
+          difficulty: "basic"
         }
       ],
       facts: [
