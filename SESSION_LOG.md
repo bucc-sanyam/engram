@@ -2,6 +2,15 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-19 — Organic "thought waves": flood-fill activation replaces mechanical sine wave
+- **Problem:** the brain's idle wave was `sin(dist·0.45 − t·1.5)` from a fixed origin — a perfect concentric ripple on a loop; plus globally-synced shell breathing and metronome pulse dots. Felt mechanical. Reference: A* pathfinding on a real map (golden flood crawling the street network).
+- **New system (all in `src/components/BrainScene.tsx`):**
+  - kNN graph (k=6, spatial-hash build) over the 7,500 shell particles; a wave = Dijkstra flood from a seed with ±28% jittered edge weights (ragged frontier) and 3.5× cost to cross the medial fissure (hemisphere-hugging spread). Per-particle arrival times → `aWave` vec2 buffer attribute (2 concurrent wave slots); brightness (sharp gold crest + ~2s ember tail + pre-arrival shimmer) computed entirely in the shell shader from `uWaveT/uWaveI` uniforms — zero per-frame CPU for the flood itself.
+  - Lifecycle: ambient wave every 4–9s seeded at a random topic (extent 30–70%, randomized speed); ~1-in-6 a slow full-brain "deep breath" from the cerebellum; selection spawns a wave AT the clicked topic; ambient suppressed during story highlight & selection. Hidden-tab clock jumps shift wave starts so floods resume, not skip.
+  - Chain reaction: topic nodes flare (`flashK` halo swell) the moment the front arrives; vein/link edges brighten in arrival order [tA→tB] then cool (replaces the radial `waveEdgeGlow`), veins blush gold as the front crosses.
+  - De-mechanized: global `0.5+0.08·sin` shell breathing → per-particle hash-phased shimmer in-shader; idle pulse dots now ease along curves and rest 1–4.5s between runs (focused/route dots still flow continuously).
+- **Verified:** tsc clean; 200-topic demo in browser — waves spawn (logged), flood organically with ragged gold frontier + ember tail, cerebellum nodes flare on arrival, no console errors; brightness tuned (cap 1.15, gold ×0.75) so the crest never blows out to white. Note: Browser-pane tab reports `document.hidden=true` between captures, freezing rAF — verified via burst captures; runs continuously in a real tab.
+
 ## 2026-07-19 — Post-prod fixes: greeting, brain brightness, review headers, learned-section surfacing
 - **Greeting stuck on "Good morning" (`src/app/page.tsx`):** the page is prerendered and `suppressHydrationWarning` makes React KEEP the server (build/UTC) text, so the greeting/date never updated to the viewer's local time. Now computed from a `now` state set in `useEffect` (client-only), so a real re-render corrects it. Verified: "Good afternoon" at local 15:00.
 - **Brain too bright when filled (`src/components/BrainScene.tsx`):** many additive glows summed to a white blob. Toned down the per-node loop opacities (core 0.85→0.6, halo 0.4→0.24, cluster 0.9→0.55), the cluster colour boost (1.45→1.15), the core white-lerp (0.55→0.4), and the shell base (0.5→0.4). Clusters read as distinct nodes again.

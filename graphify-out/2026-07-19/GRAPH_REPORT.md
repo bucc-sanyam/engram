@@ -1,16 +1,16 @@
 # Graph Report - Learning  (2026-07-19)
 
 ## Corpus Check
-- 135 files · ~196,969 words
+- 135 files · ~197,574 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 795 nodes · 1544 edges · 63 communities (39 shown, 24 thin omitted)
+- 798 nodes · 1547 edges · 59 communities (35 shown, 24 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.64)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eea402c7`
+- Built from commit: `47288f40`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,22 +65,18 @@
 - index.ts
 - page.tsx
 - page.tsx
-- types.ts
 - createClient
 - ProgressCalendar.tsx
-- page.tsx
 - stories.ts
 - route.ts
 - route.ts
 - ReadingThemeContext.tsx
 - gemini.ts
-- BrainScene.tsx
-- QuestionKind
 - clear_cache.js
 - clear_cache.ts
 
 ## God Nodes (most connected - your core abstractions)
-1. `Session Log` - 27 edges
+1. `Session Log` - 28 edges
 2. `createClient()` - 22 edges
 3. `DsaTopic` - 20 edges
 4. `POST()` - 17 edges
@@ -94,14 +90,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `GET()` --indirect_call--> `t()`  [INFERRED]
   src/app/api/plan/route.ts → src/lib/demo.ts
+- `start()` --indirect_call--> `t()`  [INFERRED]
+  src/app/api/quiz/route.ts → src/lib/demo.ts
+- `finish()` --indirect_call--> `t()`  [INFERRED]
+  src/app/api/quiz/route.ts → src/lib/demo.ts
 - `TopicBlogPage()` --indirect_call--> `t()`  [INFERRED]
   src/app/blogs/[id]/page.tsx → src/lib/demo.ts
 - `BrainPage()` --indirect_call--> `l()`  [INFERRED]
   src/app/brain/page.tsx → src/lib/demo.ts
-- `BrainPage()` --indirect_call--> `t()`  [INFERRED]
-  src/app/brain/page.tsx → src/lib/demo.ts
-- `Nav()` --calls--> `getProfile()`  [EXTRACTED]
-  src/components/Nav.tsx → src/lib/data.ts
 
 ## Import Cycles
 - None detected.
@@ -111,19 +107,19 @@
 - **Graphify Core Operations** — claude_skills_graphify_references_update_incremental, claude_skills_graphify_references_query_traversal, claude_skills_graphify_references_github_and_merge_merge [EXTRACTED 0.90]
 - **Graphify External Integrations** — claude_skills_graphify_references_exports_neo4j, claude_skills_graphify_references_exports_falkordb, claude_skills_graphify_references_exports_mcp [EXTRACTED 0.90]
 
-## Communities (63 total, 24 thin omitted)
+## Communities (59 total, 24 thin omitted)
 
 ### Community 0 - "Review and Scoring System"
-Cohesion: 0.18
-Nodes (17): DemoSession, demoState, demoEntries, demoFacts, demoGrade(), demoLinks, demoPlan, demoProfile (+9 more)
+Cohesion: 0.15
+Nodes (23): DemoSession, demoState, demoEntries, demoFacts, demoGrade(), demoLinks, demoPlan, demoProfile (+15 more)
 
 ### Community 1 - "TypeScript Configuration"
 Cohesion: 0.06
 Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+22 more)
 
 ### Community 2 - "AI Content Generation"
-Cohesion: 0.14
-Nodes (19): duplicateResponse(), answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicScore(), pickQuestion(), POST() (+11 more)
+Cohesion: 0.13
+Nodes (19): answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicScore(), pickQuestion(), POST(), QUIZ_AI_DAILY_LIMIT (+11 more)
 
 ### Community 3 - "Nav.tsx"
 Cohesion: 0.05
@@ -146,12 +142,12 @@ Cohesion: 0.21
 Nodes (19): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), parse(), RichText(), RULES, tidy() (+11 more)
 
 ### Community 8 - "BrainScene.tsx"
-Cohesion: 0.17
-Nodes (11): BlogsPage(), STORY_SERIES, BrainPage(), SERIES_TITLES, getLinks(), l(), getAllStorySections(), storySectionHref() (+3 more)
+Cohesion: 0.12
+Nodes (20): BlogsPage(), STORY_SERIES, BrainPage(), SERIES_TITLES, brainPoint(), BrainScene(), hashStr(), LinkObj (+12 more)
 
 ### Community 9 - "layout.tsx"
-Cohesion: 0.07
-Nodes (29): metadata, fraunces, grotesk, inter, jetmono, metadata, viewport, LoginPage() (+21 more)
+Cohesion: 0.06
+Nodes (32): metadata, fraunces, grotesk, inter, jetmono, metadata, viewport, LoginPage() (+24 more)
 
 ### Community 10 - "Engram Web Service"
 Cohesion: 0.50
@@ -179,7 +175,7 @@ Nodes (5): For /graphify explain, For /graphify path, graphify reference: query,
 
 ### Community 28 - "Session Log"
 Cohesion: 0.07
-Nodes (27): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+19 more)
+Nodes (28): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+20 more)
 
 ### Community 29 - "Tasks"
 Cohesion: 0.40
@@ -198,8 +194,8 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 44 - "gemini.ts"
-Cohesion: 0.15
-Nodes (27): POST(), Chunk, chunkText(), segments(), embedText(), DuplicateEntry, findDuplicateEntry(), getActiveIndexVersion() (+19 more)
+Cohesion: 0.16
+Nodes (26): POST(), Chunk, chunkText(), segments(), DuplicateEntry, findDuplicateEntry(), getActiveIndexVersion(), getIndexVersionCorrelation() (+18 more)
 
 ### Community 45 - "Nav.tsx"
 Cohesion: 0.18
@@ -214,80 +210,64 @@ Cohesion: 0.09
 Nodes (33): CompActChapterPage(), generateMetadata(), CompActSectionPage(), generateMetadata(), generateStaticParams(), CompetitionActPage(), metadata, INLINE (+25 more)
 
 ### Community 48 - "page.tsx"
-Cohesion: 0.19
-Nodes (14): ReviewRunner(), SERIES_TITLES, api(), finishQuiz(), getLatestReportToday(), getPlan(), ingestLink(), ingestText() (+6 more)
+Cohesion: 0.10
+Nodes (20): ReviewRunner(), SERIES_COLORS, SERIES_TITLES, BigScoreRing(), KIND_LABEL, api(), finishQuiz(), getPlan() (+12 more)
 
 ### Community 49 - "page.tsx"
-Cohesion: 0.15
-Nodes (8): MODE_LABEL, SERIES_TITLES, FlameIcon(), nextMilestone(), ProgressMap(), stripMarkdown(), Profile, Review
-
-### Community 50 - "types.ts"
 Cohesion: 0.18
-Nodes (8): BigScoreRing(), KIND_LABEL, Category, DailyFact, GradeResult, ReportCard, ReportItem, TopicQuestion
+Nodes (7): Dashboard(), MODE_LABEL, SERIES_TITLES, getEntries(), getFactOfTheDay(), getReviews(), stripMarkdown()
 
 ### Community 51 - "createClient"
-Cohesion: 0.31
-Nodes (11): Dashboard(), ProfilePage(), getEntries(), getFactOfTheDay(), getProfile(), getReviews(), getTopics(), getUserEmail() (+3 more)
+Cohesion: 0.23
+Nodes (13): sourceLabel(), TopicBlogPage(), ProfilePage(), getLinks(), getProfile(), getTopic(), getTopicQuestions(), getTopics() (+5 more)
 
 ### Community 52 - "ProgressCalendar.tsx"
-Cohesion: 0.21
-Nodes (13): QuizCarousel(), dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS, getDayReport(), getTodayReviewDetail(), loadDemoState() (+5 more)
-
-### Community 53 - "page.tsx"
-Cohesion: 0.39
-Nodes (5): sourceLabel(), TopicBlogPage(), getTopic(), getTopicQuestions(), getTopicSource()
+Cohesion: 0.20
+Nodes (14): QuizCarousel(), dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS, getDayReport(), getLatestReportToday(), getTodayReviewDetail() (+6 more)
 
 ### Community 54 - "stories.ts"
-Cohesion: 0.16
-Nodes (18): StoryLearnPanel(), STORY_COLORS, StoryStartControl(), CompActQuestion, completeSection(), endStory(), FAR_FUTURE(), getSeed() (+10 more)
+Cohesion: 0.19
+Nodes (16): StoryLearnPanel(), STORY_COLORS, StoryStartControl(), CompActQuestion, completeSection(), endStory(), FAR_FUTURE(), getSeed() (+8 more)
 
 ### Community 55 - "route.ts"
-Cohesion: 0.19
-Nodes (17): assertPublicHttpUrl(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback, POST() (+9 more)
+Cohesion: 0.15
+Nodes (21): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+13 more)
 
 ### Community 56 - "route.ts"
-Cohesion: 0.26
-Nodes (12): composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), GET(), clampTz(), dayStartUtcIso() (+4 more)
+Cohesion: 0.27
+Nodes (11): composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), GET(), clampTz(), dayStartUtcIso() (+3 more)
 
 ### Community 57 - "ReadingThemeContext.tsx"
 Cohesion: 0.19
 Nodes (8): PaperModeToggle(), Particle, ThanosSnapCanvas(), ThanosSnapCanvasProps, ReadingThemeContext, ReadingThemeContextType, ReadingThemeProvider(), useReadingTheme()
 
 ### Community 58 - "gemini.ts"
-Cohesion: 0.20
-Nodes (13): client(), cooldownUntil, EMBED_DIMS, EmbedTaskType, embedTexts(), extractKnowledge(), generateJson(), isRetryableModelError() (+5 more)
-
-### Community 59 - "BrainScene.tsx"
-Cohesion: 0.33
-Nodes (9): brainPoint(), BrainScene(), hashStr(), LinkObj, makeCircleTexture(), makeGlowTexture(), makeLabelTexture(), mulberry32() (+1 more)
-
-### Community 60 - "QuestionKind"
-Cohesion: 0.33
-Nodes (5): SnapshotItem, KIND_LABEL, Question, DemoBankQuestion, QuestionKind
+Cohesion: 0.18
+Nodes (15): client(), cooldownUntil, EMBED_DIMS, EmbedTaskType, embedText(), embedTexts(), extractKnowledge(), generateJson() (+7 more)
 
 ### Community 61 - "clear_cache.js"
 Cohesion: 0.40
 Nodes (4): { createClient }, env, fs, supabase
 
 ## Knowledge Gaps
-- **259 isolated node(s):** `fs`, `env`, `{ createClient }`, `supabase`, `supabase` (+254 more)
+- **261 isolated node(s):** `fs`, `env`, `{ createClient }`, `supabase`, `supabase` (+256 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Topic` connect `BrainScene.tsx` to `Review and Scoring System`, `AI Content Generation`, `page.tsx`, `types.ts`, `page.tsx`, `route.ts`, `BrainScene.tsx`?**
+- **Why does `Topic` connect `BrainScene.tsx` to `Review and Scoring System`, `AI Content Generation`, `page.tsx`, `createClient`, `route.ts`?**
   _High betweenness centrality (0.010) - this node is a cross-community bridge._
-- **Why does `QuestionKind` connect `QuestionKind` to `Review and Scoring System`, `AI Content Generation`, `types.ts`, `index.ts`?**
+- **Why does `QuestionKind` connect `AI Content Generation` to `Review and Scoring System`, `index.ts`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Why does `createClient()` connect `route.ts` to `AI Content Generation`, `gemini.ts`, `route.ts`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `fs`, `env`, `{ createClient }` to the rest of the system?**
-  _259 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _261 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.1422924901185771 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13405797101449277 - nodes in this community are weakly interconnected._
 - **Should `Nav.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.05 - nodes in this community are weakly interconnected._

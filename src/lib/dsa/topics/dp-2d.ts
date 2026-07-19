@@ -5,231 +5,996 @@ export const dp2d: DsaTopic = {
   slug: "dp-2d",
   title: "2-D Dynamic Programming",
   chapter: 14,
-  tagline: "Two strings, two choices, or a grid — when one index cannot describe where you stand.",
+  tagline:
+    "Two strings, two choices, or a grid — when one index cannot describe where you stand.",
   color: "#6fdfa8",
   prereqs: ["graphs", "dp-1d"],
   unlocks: [],
-  intro: `The last chapter's states fit in one number: a position, an amount. This chapter is what happens when *where you stand* takes two numbers to say. Sometimes literally — a robot at row i, column j of a grid. More often structurally: comparing two strings means a position in *each* (the great alignment family — Longest Common Subsequence, Edit Distance, Distinct Subsequences, Regular Expression Matching, the DNA-and-diff algorithms of the real world). Or one sequence with a second axis of *situation*: holding stock versus cooling down, choosing with a remaining capacity. The table becomes a plane; the recurrence becomes a cell looking at its neighbours — up, left, diagonal — and everything you practised in 1-D transfers cell by cell.
+  intro: `The last chapter's states fit in one number: a position, an amount. This chapter is what happens when *where you stand* takes two numbers to say. Sometimes literally — a robot at row i, column j of a grid. More often structurally: comparing two strings means a position in *each* (the great alignment family — Longest Common Subsequence, Edit Distance, Distinct Subsequences, Regular Expression Matching). Or one sequence with a second axis of *situation*: holding stock versus cooling down, choosing with a remaining capacity. The table becomes a plane; the recurrence becomes a cell looking at its neighbours — up, left, diagonal — and everything you practised in 1-D transfers cell by cell.
 
-The five-finger checklist survives untouched: state sentence, recurrence from the last decision, bases (now a whole first row and column — where most bugs live), fill order, answer cell. What is genuinely new is a small set of recurring *shapes* worth recognising on sight. The **grid walk**: paths counted or costs minimised from up-and-left neighbours (Unique Paths). The **alignment square**: characters match → extend the diagonal; mismatch → best of dropping a character from either side (LCS, and its harder cousins where matches can also be *skipped or repeated*). The **loop-order flip**: Coin Change II versus its 1-D sibling — iterating coins outside versus amounts outside is precisely the difference between counting combinations and counting permutations, the sharpest two-line lesson in all of DP. The **state-machine day**: With Cooldown models each day as a node in a tiny automaton — holding, cooling, free — and the "table" is one row per machine-state. **DFS + memo on a DAG**: Longest Increasing Path shows DP and graph traversal are one subject (increasing edges cannot cycle, so memoised DFS *is* the fill order). And the **interval shape**: Burst Balloons, where the trick is thinking about the *last* balloon, not the first, and states are spans.
-
-This chapter contains more genuinely hard problems than any other in the atlas — four Hards, all famous. Take them slowly; every one of them is some earlier problem with one twist. It is a leaf on the roadmap: nothing unlocks from here, because this is the far shore.`,
+The five-finger checklist survives untouched: state sentence, recurrence from the last decision, bases (now a whole first row and column), fill order, answer cell. What is genuinely new is a small set of recurring *shapes*: the **grid walk** (Unique Paths), the **alignment square** (LCS and its cousins), the **loop-order flip** (Coin Change II), the **state-machine day** (Stock With Cooldown), **DFS + memo on a DAG** (Longest Increasing Path), and the **interval shape** (Burst Balloons). Master each shape once and every new 2-D DP problem becomes a variation you recognise.`,
   problems: [
+    /* ------------------------------------------------------------------ */
+    /*  1. UNIQUE PATHS                                                   */
+    /* ------------------------------------------------------------------ */
     {
       slug: "unique-paths",
       title: "Unique Paths",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/count-paths",
-      summary: "Every cell is reachable from above or the left — so its path count is the sum of two neighbours.",
-      body: `**The problem.** A robot starts at the top-left of an m×n grid and moves only right or down. How many distinct paths reach the bottom-right? 3×7 → 28.
+      summary:
+        "Count paths in a grid where every cell is reachable from above or the left.",
+      body: `**Problem Statement**
+A robot starts at the top-left corner of an \`m × n\` grid and can only move **right** or **down**. Return the number of unique paths to the bottom-right corner.
 
-**The recurrence.** The last move into any cell came from above or from the left — the only two entrances. Paths arriving via different entrances are distinct families, so counts add: dp[i][j] = dp[i−1][j] + dp[i][j−1]. Climbing Stairs, verbatim, with the two doors rotated into two dimensions. Bases: the entire first row and first column are 1 — a robot confined to one direction has exactly one route. Fill left-to-right, top-to-bottom; answer in the far corner.
+*Example:*
+\`\`\`
+Input:  m = 3, n = 7
+Output: 28
+\`\`\`
 
-**The walk-through.** 3×3: first row 1 1 1, first column 1 1 1. Middle cell: 1+1 = 2. Then 1+2 = 3, 2+1 = 3, and the corner: 3+3 = 6. Six paths, and you can enumerate them by hand to believe it.
+---
 
-**The space squeeze, upgraded.** Each cell reads only the current row's left neighbour and the *previous row's* same column — so keep one row and overwrite it in place: dp[j] += dp[j−1]. The 1-D rolling-variable trick, promoted to a rolling *row*: O(n) space, and the standard expected polish.
+**Building Intuition (Brute Force)**
+From \`(0, 0)\` we branch into two choices — right or down — and from each of those cells we branch again. This recursive tree has depth \`m + n - 2\` and up to \`2^(m+n)\` leaves. The bottleneck: the same cell is visited from many different paths. Going Right-then-Down and Down-then-Right both land on \`(1, 1)\`, yet we recompute everything from there twice.
 
-**The closed form, for range.** A path is a sequence of (m−1) downs and (n−1) rights in some order — choose which slots are downs: C(m+n−2, m−1). Combinatorics answers in O(1) what the table answers in O(mn); the table wins the moment the problem grows warts (obstacles — the famous variant where blocked cells contribute 0; weighted cells; minimum path *sum* instead of count, where + becomes min exactly as Min Cost Climbing Stairs taught). Offering both, and knowing which survives which follow-up, is the complete answer.
+\`\`\`
+              (0,0)
+             /     \\
+         (0,1)     (1,0)
+         /   \\     /   \\
+      (0,2) (1,1) (1,1) (2,0)   ← (1,1) computed TWICE
+\`\`\`
 
-**Complexity.** O(mn) time, O(n) space.
+---
 
-**The thread.** A grid of *positions*. The next problem keeps the two-dimensional table but changes what the axes mean: a position in one string × a position in another — the alignment family opens with Longest Common Subsequence.`,
+**Finding the Pattern / Recurrence Relation**
+Since we can only arrive at \`(r, c)\` from above \`(r-1, c)\` or from the left \`(r, c-1)\`:
+
+\`\`\`
+dp[r][c] = dp[r-1][c] + dp[r][c-1]
+\`\`\`
+
+*Base cases:* The entire first row and first column are \`1\` — there is exactly one way to reach any cell in a straight line.
+
+---
+
+**Visualisation**
+\`3 × 3\` grid filled cell by cell:
+
+| | col 0 | col 1 | col 2 |
+|---|---|---|---|
+| **row 0** | 1 | 1 | 1 |
+| **row 1** | 1 | 2 | 3 |
+| **row 2** | 1 | 3 | **6** |
+
+- \`dp[1][1] = dp[0][1] + dp[1][0] = 1 + 1 = 2\`
+- \`dp[2][2] = dp[1][2] + dp[2][1] = 3 + 3 = 6\`
+
+---
+
+**The Walk-through (Space-Optimised Bottom-Up)**
+Each cell only reads the previous row (above) and the current row (left). We only need a single 1-D array of size \`n\`, updating it left-to-right for each row:
+
+\`\`\`
+row = [1, 1, 1]       ← row 0
+row = [1, 2, 3]       ← row 1  (row[j] += row[j-1])
+row = [1, 3, 6]       ← row 2
+Answer: row[-1] = 6
+\`\`\`
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def uniquePaths(m: int, n: int) -> int:
+    row = [1] * n
+    for i in range(1, m):
+        for j in range(1, n):
+            row[j] += row[j - 1]
+    return row[-1]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute-force recursion | O(2^(m+n)) | O(m+n) stack |
+| Bottom-up 2D table | O(m·n) | O(m·n) |
+| **Bottom-up 1D row** | **O(m·n)** | **O(n)** |
+
+**Bonus — Closed Form:** A path is \`(m-1)\` downs and \`(n-1)\` rights in some order → \`C(m+n-2, m-1)\`. Works in O(min(m,n)) but breaks the moment the grid gains obstacles.`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  2. LONGEST COMMON SUBSEQUENCE                                     */
+    /* ------------------------------------------------------------------ */
     {
       slug: "longest-common-subsequence",
       title: "Longest Common Subsequence",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-common-subsequence",
-      summary: "The alignment square: match extends the diagonal, mismatch takes the better of two drops.",
-      body: `**The problem.** The longest subsequence (ordered, gaps allowed) present in both strings. "abcde" and "ace" → 3 ("ace" itself). This is the mother of the alignment family — diff tools, DNA comparison, spell-correct suggestions all descend from this table.
+      summary:
+        "The alignment square: match extends the diagonal, mismatch takes the better of two drops.",
+      body: `**Problem Statement**
+Given two strings \`text1\` and \`text2\`, return the length of their longest common subsequence (LCS). A subsequence preserves relative order but can skip characters.
 
-**The state.** dp[i][j] = LCS length of the first i characters of one string and the first j of the other. Two prefixes, one number — the axes are positions in *different* strings, the leap this chapter exists to teach.
+*Example:*
+\`\`\`
+Input:  text1 = "abcde", text2 = "ace"
+Output: 3          # LCS is "ace"
+\`\`\`
 
-**The recurrence — look at the last characters.** If they **match**, they can safely end the common subsequence: dp[i][j] = 1 + dp[i−1][j−1] — extend the diagonal. (Safely: no optimal alignment loses by matching identical final characters; a cut-and-paste argument proves it, and "why is matching always safe?" is the classic probe.) If they **differ**, at least one of them is useless to the alignment — drop mine or drop yours, keep the better: dp[i][j] = max(dp[i−1][j], dp[i][j−1]). Bases: row zero and column zero are 0 — nothing shares anything with an empty prefix. That is the whole *alignment square*: diagonal on match, max-of-two on mismatch. Burn it in; three later problems are this square with modified corners.
+---
 
-**The walk-through.** "abcde" × "ace": the table grows 1 at the a-column, holds through b, steps to 2 at c, holds through d, steps to 3 at e. Every cell is a one-glance decision; the answer sits at the far corner.
+**Building Intuition (Brute Force)**
+Generate every subsequence of \`text1\` (there are \`2^m\` of them) and check each against \`text2\`. Time: \`O(2^m · n)\`. Far too slow, but it reveals the branching decision: at each character, we either include it or skip it.
 
-**Recovering the subsequence itself** — the standard follow-up — walks the table backwards from that corner: diagonal steps emit matched characters, max-steps follow the larger neighbour. The table *is* the alignment; the length was just its headline.
+---
 
-**Complexity.** O(mn) time; O(min(m, n)) space with a rolling row (though recovery needs the full table — say the trade). Fun fact with teeth: strongly subquadratic LCS would violate the Strong Exponential Time Hypothesis — this table is believed essentially optimal.
+**Finding the Pattern / Recurrence Relation**
+Compare the *last* characters of each prefix.
 
-**The thread.** Alignment opened. Before its harder cousins, a detour into a different 2-D shape: a *state machine* over days — Best Time to Buy and Sell Stock, now with a cooldown.`,
+\`\`\`
+If text1[i] == text2[j]:
+    dp[i][j] = 1 + dp[i-1][j-1]      ← match: extend the diagonal
+Else:
+    dp[i][j] = max(dp[i-1][j],        ← skip text1[i]
+                   dp[i][j-1])         ← skip text2[j]
+\`\`\`
+
+*Base cases:* Row 0 and column 0 are all \`0\` — an empty string shares nothing.
+
+---
+
+**Visualisation**
+\`text1 = "abcde"\`, \`text2 = "ace"\`:
+
+|   | ∅ | a | c | e |
+|---|---|---|---|---|
+| **∅** | 0 | 0 | 0 | 0 |
+| **a** | 0 | **1**↖ | 1 | 1 |
+| **b** | 0 | 1 | 1 | 1 |
+| **c** | 0 | 1 | **2**↖ | 2 |
+| **d** | 0 | 1 | 2 | 2 |
+| **e** | 0 | 1 | 2 | **3**↖ |
+
+↖ = diagonal (character matched). Every other cell copies the max of its top or left neighbour.
+
+---
+
+**The Walk-through**
+To **recover the actual subsequence**, trace backwards from the bottom-right:
+1. \`(e, e)\` → match → emit 'e', go diagonal
+2. \`(d, c)\` → no match → go up (larger neighbour)
+3. \`(c, c)\` → match → emit 'c', go diagonal
+4. \`(a, a)\` → match → emit 'a', go diagonal
+Result: "ace" ✓
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def longestCommonSubsequence(text1: str, text2: str) -> int:
+    m, n = len(text1), len(text2)
+    prev = [0] * (n + 1)
+    for i in range(1, m + 1):
+        curr = [0] * (n + 1)
+        for j in range(1, n + 1):
+            if text1[i-1] == text2[j-1]:
+                curr[j] = 1 + prev[j-1]
+            else:
+                curr[j] = max(prev[j], curr[j-1])
+        prev = curr
+    return prev[n]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute-force | O(2^m · n) | O(m) |
+| **Bottom-up rolling row** | **O(m·n)** | **O(min(m,n))** |`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  3. BEST TIME TO BUY/SELL STOCK WITH COOLDOWN                      */
+    /* ------------------------------------------------------------------ */
     {
       slug: "best-time-to-buy-and-sell-stock-with-cooldown",
       title: "Best Time to Buy and Sell Stock With Cooldown",
       difficulty: "Medium",
-      neetcodeUrl: "https://neetcode.io/problems/buy-and-sell-crypto-with-cooldown",
-      summary: "Model the day as a tiny automaton — holding, just-sold, free — and run one row of DP per machine state.",
-      body: `**The problem.** Trade a stock over n days, unlimited transactions, one share at a time — but after selling you must sit out one full day (cooldown). Maximise profit. [1, 2, 3, 0, 2] → 3 (buy 1, sell 2, cool, buy 0, sell 2).
+      neetcodeUrl:
+        "https://neetcode.io/problems/buy-and-sell-crypto-with-cooldown",
+      summary:
+        "Model each day as a tiny automaton — holding, just-sold, free — and run one row of DP per state.",
+      body: `**Problem Statement**
+You may complete as many stock transactions as you like, but after selling you must wait one full day (cooldown) before buying again. Find the maximum profit.
 
-**The insight — the second axis is a *mode*.** Chapter three's stock problem carried one number (min so far). The cooldown makes your options depend on *what situation yesterday left you in* — and situations here are exactly three: **holding** a share; **cooling** (sold today, tomorrow is frozen); **free** (no share, no freeze). That is a state machine, and the DP table is one row per machine state, one column per day: dp[state][day] = best cash position entering that state that day. This "small automaton × time" shape solves every stock variant (fees, transaction limits) and a swath of scheduling problems; learning to *draw the machine first* — nodes, allowed arrows — turns a confusing word problem into transcription.
+*Example:*
+\`\`\`
+Input:  prices = [1, 2, 3, 0, 2]
+Output: 3          # buy@1 sell@2, cool, buy@0 sell@2
+\`\`\`
 
-**The transitions.** Holding today: either held yesterday, or was free and bought today (free − price). Cooling today: held yesterday and sold (hold + price). Free today: was free yesterday, or finished cooling (cooling yesterday). Each is a max of two arithmetic options — three rolling variables, no table needed. Bases: day one — holding = −price, cooling = −∞ or 0-guarded, free = 0.
+---
 
-**The walk-through.** Prices [1, 2, 3, 0, 2]: the machine buys at 1, holds to sell at 2 or 3 — selling at 2 then cooling lets it buy the 0 and sell the final 2 (profit 1 + 2 = 3), while greedily riding to 3 (profit 2) strands it cooling as the 0 flies by. The DP holds both futures and lets the max decide; that is precisely what the cooldown was designed to break in greedy answers.
+**Building Intuition**
+Greedy "sell whenever price rises" fails: selling at 3 forces a cooldown on day 4, missing the buy-at-0 opportunity. We need to consider *all* possible hold/sell/wait decisions.
 
-**Complexity.** O(n) time, O(1) space — a "2-D" DP whose second dimension has size three.
+The key insight: your options on any day depend on **what state yesterday left you in**. There are exactly 3 states:
+\`\`\`
+  ┌─────────┐    sell     ┌─────────┐   wait    ┌─────────┐
+  │ HOLDING │ ──────────→ │ COOLING │ ────────→ │  FREE   │
+  └────┬────┘             └─────────┘           └────┬────┘
+       │  hold                                       │  buy
+       └──────────────────────────────────────────────┘
+\`\`\`
 
-**The thread.** A tiny second axis. Next it grows honest again: Coin Change II, where the axes are coins × amounts, and the *order of two loops* becomes the entire mathematics.`,
+---
+
+**Finding the Pattern / Recurrence Relation**
+Let \`hold[i]\`, \`cool[i]\`, \`free[i]\` = best cash in each state on day \`i\`.
+
+\`\`\`
+hold[i] = max(hold[i-1],              ← kept holding
+              free[i-1] - price[i])    ← was free, bought today
+
+cool[i] = hold[i-1] + price[i]        ← was holding, sold today
+
+free[i] = max(free[i-1],              ← stayed free
+              cool[i-1])              ← finished cooling
+\`\`\`
+
+*Base:* Day 0 → \`hold = -price[0]\`, \`cool = 0\`, \`free = 0\`.
+
+---
+
+**The Walk-through**
+\`prices = [1, 2, 3, 0, 2]\`:
+
+| Day | Price | hold | cool | free |
+|-----|-------|------|------|------|
+| 0   | 1     | -1   | 0    | 0    |
+| 1   | 2     | -1   | 1    | 0    |
+| 2   | 3     | -1   | 2    | 1    |
+| 3   | 0     |  1   | -1   | 2    |
+| 4   | 2     |  1   | **3**| 2    |
+
+Answer: \`max(cool[4], free[4]) = max(3, 2) = 3\` ✓
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def maxProfit(prices: list[int]) -> int:
+    if not prices:
+        return 0
+    hold, cool, free = -prices[0], 0, 0
+    for price in prices[1:]:
+        new_hold = max(hold, free - price)
+        new_cool = hold + price
+        new_free = max(free, cool)
+        hold, cool, free = new_hold, new_cool, new_free
+    return max(cool, free)
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **State-machine DP** | **O(n)** | **O(1)** |
+
+The "2-D" table has 3 × n cells, but the second dimension is only 3 states wide — so it collapses to three rolling variables.`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  4. COIN CHANGE II                                                 */
+    /* ------------------------------------------------------------------ */
     {
       slug: "coin-change-ii",
       title: "Coin Change II",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/coin-change-ii",
-      summary: "Count the combinations: coins in the outer loop, so each mix is built in one canonical order.",
-      body: `**The problem.** Same coins, unlimited supply — but now *count the combinations* that make the amount. Coins [1, 2, 5], amount 5 → 4 (5; 2+2+1; 2+1+1+1; 1×5). Combinations: {1, 2, 2} and {2, 1, 2} are the *same* answer, counted once.
+      summary:
+        "Count combinations, not permutations: put the coin loop outside the amount loop.",
+      body: `**Problem Statement**
+Given coins of different denominations and a total amount, return the number of **combinations** that make up that amount. You have an infinite supply of each coin.
 
-**Where the naive count goes wrong.** Take Coin Change's loop — for each amount, try every coin last — and swap min for sum: you get a real quantity, but the wrong one. dp[5] += dp[3] (via a 2) and dp[5] += dp[4] (via a 1) counts 2-then-...-then-1 and 1-then-...-then-2 endings separately: you have counted **permutations** (sequences of coins), not combinations. Not a bug — a different problem (it has its own name on other lists: combination sum IV, confusingly).
+*Example:*
+\`\`\`
+Input:  amount = 5, coins = [1, 2, 5]
+Output: 4          # {5}, {2+2+1}, {2+1+1+1}, {1+1+1+1+1}
+\`\`\`
 
-**The insight — impose an order, again.** You have met this exact disease twice: Combination Sum's duplicate paths, 3Sum's duplicate triplets — and the cure was always *canonical construction order*. Here the cure is astonishingly cheap: **put the coin loop outside**. Process coin 1 fully (dp[a] += dp[a − 1] for all amounts), then coin 2, then coin 5. Every combination is now built in exactly one order — all its 1s first, then its 2s, then its 5s — because a later coin can never precede an earlier one in the construction. Same two loops, swapped nesting: outer-coins counts combinations, outer-amounts counts permutations. Two lines of code apart, and being able to *say why* is the sharpest DP sentence you can own.
+---
 
-**The 2-D reading.** The honest table is dp[k][a] = ways to make a using only the first k coin types — each row a coin, filled from the row above (skip coin k) plus the same row shifted (use another copy: unbounded, so *same* row — high-to-low versus low-to-high sweeps being the once-versus-unlimited toggle from Partition Equal Subset Sum). The 1-D outer-coin loop is that table with rows compressed in place.
+**Building Intuition (The Permutation Trap)**
+A naive approach: for each amount \`a\`, try subtracting every coin \`c\` and sum up \`dp[a - c]\`. This *works*, but it counts **permutations** (ordered sequences), not combinations. \`{1,2,2}\` and \`{2,1,2}\` would be counted as different.
 
-**The walk-through.** Coins [1, 2, 5]: after coin 1, dp = all 1s. After coin 2: dp[5] = 3 (0, 1, or 2 twos). After coin 5: dp[5] = 4.
+---
 
-**Complexity.** O(coins × amount) time, O(amount) space.
+**Finding the Pattern / The Loop-Order Insight**
+The fix is elegant: **put coins in the outer loop**.
 
-**The thread.** Signs next: Target Sum hands every number a + or −, and the counting collapses onto this same subset-sum table through one line of algebra.`,
+\`\`\`
+for coin in coins:          ← process each coin denomination fully
+    for a in range(coin, amount+1):
+        dp[a] += dp[a - coin]
+\`\`\`
+
+Why? Once we process coin \`1\`, all combinations using only 1s are set. Then coin \`2\` is added on top. A combination \`{1,1,2}\` is built in exactly *one* canonical order — all 1s first, then 2s — so it's counted once.
+
+**Swap the loops** (amounts outer, coins inner) and you count *permutations* instead. Same code, opposite nesting, totally different answer. This is the sharpest two-line lesson in all of DP.
+
+---
+
+**Visualisation**
+\`coins = [1, 2, 5]\`, \`amount = 5\`:
+
+\`\`\`
+                 amount:  0   1   2   3   4   5
+ ─────────────────────────────────────────────────
+ After coin 1:           1   1   1   1   1   1
+ After coin 2:           1   1   2   2   3   3
+ After coin 5:           1   1   2   2   3   4  ← answer
+\`\`\`
+
+---
+
+**The Walk-through**
+Start with \`dp = [1, 0, 0, 0, 0, 0]\` (one way to make amount 0: use nothing).
+
+- **Coin 1:** Every amount gets exactly 1 way (all 1s). \`dp = [1,1,1,1,1,1]\`
+- **Coin 2:** \`dp[2] += dp[0]=1 → 2\`, \`dp[3] += dp[1]=1 → 2\`, \`dp[4] += dp[2]=2 → 3\`, \`dp[5] += dp[3]=2 → 3\`
+- **Coin 5:** \`dp[5] += dp[0]=1 → 4\`
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def change(amount: int, coins: list[int]) -> int:
+    dp = [0] * (amount + 1)
+    dp[0] = 1
+    for coin in coins:
+        for a in range(coin, amount + 1):
+            dp[a] += dp[a - coin]
+    return dp[amount]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Outer-coin DP** | **O(coins × amount)** | **O(amount)** |`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  5. TARGET SUM                                                     */
+    /* ------------------------------------------------------------------ */
     {
       slug: "target-sum",
       title: "Target Sum",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/target-sum",
-      summary: "Choosing signs is choosing a subset: one line of algebra turns ± assignments into subset-sum counting.",
-      body: `**The problem.** Put a + or − before every number so the expression hits a target; count the ways. [1, 1, 1, 1, 1], target 3 → 5. Two choices per element — 2ⁿ assignments — smells like Subsets; the counting smells like DP. Both instincts are right, and algebra is the bridge.
+      summary:
+        "Choosing + or − signs is choosing a subset. One line of algebra turns it into subset-sum counting.",
+      body: `**Problem Statement**
+Given an integer array \`nums\` and an integer \`target\`, assign \`+\` or \`-\` to each number so the expression equals \`target\`. Return the count of such assignments.
 
-**The reduction.** Split the numbers by the sign you give them: P gets +, N gets −. Then sum(P) − sum(N) = target, and sum(P) + sum(N) = total. Add the equations: **sum(P) = (total + target) / 2** — a plain number. So choosing signs *is* choosing the positive subset, and the question becomes: *how many subsets sum to exactly (total + target) / 2?* — Partition Equal Subset Sum's table, counting instead of testing. Two sanity gates fall out of the algebra free: if total + target is odd, or target's magnitude exceeds total, the answer is 0 before any DP runs. One line of high-school algebra deleted an exponential search space; this problem earns its place as the cleanest example of *reduce before you compute* in the whole atlas.
+*Example:*
+\`\`\`
+Input:  nums = [1,1,1,1,1], target = 3
+Output: 5
+\`\`\`
 
-**The DP.** dp[a] = number of subsets (so far) summing to a. Base dp[0] = 1 — the empty subset, the "one way to have done nothing" base for the third time. Per number x, sweep amounts **high-to-low** (once-each discipline, exactly as in Partition Equal Subset Sum) with dp[a] += dp[a − x]. Booleans became counts; the machinery didn't blink.
+---
 
-**The walk-through.** Five 1s, target 3: sum(P) = (5 + 3)/2 = 4 — choose which four 1s are positive: C(5, 4) = 5 ✓, and the table computes the same by accretion: after each 1, dp = rows of Pascal's triangle. (Subset-sum DP *is* binomial counting when all items are equal — a pleasing check.)
+**Building Intuition (Brute Force)**
+Try every \`+/-\` combination: 2^n assignments. For 5 elements that's 32 — fine. For 20 elements that's a million. We need DP.
 
-**Zeros, the classic wrinkle.** A zero can take either sign without changing any sum, so each zero doubles the count — and the recurrence handles it by itself: with x = 0, dp[a] += dp[a − 0] legitimately doubles every entry (the sweep direction is irrelevant for a zero — reading your own just-written value *is* the correct "use it or not" fork here). Trust the recurrence; the one real mistake is "optimising" zeros away as no-ops.
+---
 
-**Complexity.** O(n × sum) time, O(sum) space.
+**Finding the Pattern / The Algebraic Reduction**
+Split numbers into a positive set P and a negative set N:
+\`\`\`
+sum(P) - sum(N) = target
+sum(P) + sum(N) = totalSum
+────────────────────────────
+2 · sum(P)      = target + totalSum
+sum(P)          = (target + totalSum) / 2
+\`\`\`
 
-**The thread.** Numbers aligned to a target. Now strings braided together: Interleaving String, where two prefixes must weave into a third — the alignment square with a twist in what the axes *produce*.`,
+**Choosing signs = choosing the positive subset.** The problem reduces to: *"How many subsets of nums sum to exactly \`(target + totalSum) / 2\`?"* — a classic subset-sum count.
+
+*Quick exits:* If \`(target + totalSum)\` is odd or \`|target| > totalSum\`, the answer is 0.
+
+---
+
+**Visualisation**
+\`nums = [1,1,1,1,1]\`, \`target = 3\`:
+\`subsetSum = (3 + 5) / 2 = 4\` → How many subsets of five 1s sum to 4? → C(5,4) = 5.
+
+Subset-sum DP table (sweep high-to-low for each number):
+\`\`\`
+                sum:   0   1   2   3   4
+ ──────────────────────────────────────────
+ Start:                1   0   0   0   0
+ After 1st '1':        1   1   0   0   0
+ After 2nd '1':        1   2   1   0   0
+ After 3rd '1':        1   3   3   1   0
+ After 4th '1':        1   4   6   4   1
+ After 5th '1':        1   5  10  10   5  ← dp[4] = 5 ✓
+\`\`\`
+
+---
+
+**The Walk-through**
+For each number \`x\`, sweep from \`subsetSum\` down to \`x\`:
+\`dp[a] += dp[a - x]\`
+
+Sweeping **high-to-low** ensures each number is used at most once (the 0/1 knapsack discipline).
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def findTargetSumWays(nums: list[int], target: int) -> int:
+    total = sum(nums)
+    if (target + total) % 2 != 0 or abs(target) > total:
+        return 0
+    subset_sum = (target + total) // 2
+    dp = [0] * (subset_sum + 1)
+    dp[0] = 1
+    for x in nums:
+        for a in range(subset_sum, x - 1, -1):   # high-to-low
+            dp[a] += dp[a - x]
+    return dp[subset_sum]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| Brute force | O(2^n) | O(n) |
+| **Subset-sum DP** | **O(n × sum)** | **O(sum)** |`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  6. INTERLEAVING STRING                                            */
+    /* ------------------------------------------------------------------ */
     {
       slug: "interleaving-string",
       title: "Interleaving String",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/interleaving-string",
-      summary: "Can two strings braid into a third? dp[i][j] tracks whether prefixes i and j weave the first i+j characters.",
-      body: `**The problem.** Does s3 consist of s1 and s2 *interleaved* — both strings fully used, each keeping its internal order, characters woven together arbitrarily? s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac" → true; reshuffle s3's tail and it turns false. First gate: lengths must satisfy |s1| + |s2| = |s3|, or nothing can braid.
+      summary:
+        "Can two strings braid into a third? dp[i][j] tracks whether prefixes i and j weave the first i+j characters.",
+      body: `**Problem Statement**
+Given strings \`s1\`, \`s2\`, and \`s3\`, determine if \`s3\` is formed by interleaving \`s1\` and \`s2\`. Both strings must be used completely, and the relative order of characters within each string must be preserved.
 
-**Why greedy matching dies.** Walk s3, matching greedily against whichever source's next character fits: ambiguity kills you when *both* fit — s1 offers a, s2 offers a; committing to the wrong one strands letters far downstream, and no local rule sees that far. Ambiguous branching with shared sub-fates: the DP signature.
+*Example:*
+\`\`\`
+Input:  s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
+Output: true
+\`\`\`
 
-**The state.** dp[i][j] = true iff the first i characters of s1 and the first j of s2 can weave the first **i + j** characters of s3. That is the quiet elegance: the position in s3 is not a third dimension — it is *determined* as i + j, because weaving consumes exactly one source character per target character. A problem that looks 3-D collapses to the standard square; noticing forced coordinates is a state-design skill worth naming.
+---
 
-**The recurrence.** The last woven character, s3[i+j−1], came from one of two hands: from s1 (needs s1[i−1] to match it, and dp[i−1][j] true), or from s2 (s2[j−1] matches, dp[i][j−1] true). OR the two. Bases: dp[0][0] = true; first row and column are chains of single-source matching. The alignment square again — but where LCS *maxed* over choices, a feasibility braid **ORs** them; the shape survives the operator swap, which is exactly the point of learning shapes.
+**Building Intuition**
+Walk through \`s3\` greedily, matching against whichever source fits. But what if *both* \`s1\` and \`s2\` have the same next character? We can't decide locally — the wrong choice now could strand characters later. This ambiguity screams DP.
 
-**The walk-through.** At any tie — both sources offering the same letter — the table simply marks *both* successor cells reachable and lets the future decide; the stranded branch dies quietly in a false region, the good one threads to the corner. Ambiguity handled by breadth, not commitment.
+---
 
-**Complexity.** O(mn) time, O(n) with a rolling row.
+**Finding the Pattern / Recurrence Relation**
+\`dp[i][j] = true\` iff the first \`i\` chars of \`s1\` and first \`j\` chars of \`s2\` can interleave to form the first \`i+j\` chars of \`s3\`.
 
-**The thread.** From weaving to a grid with no strings at all: Longest Increasing Path in a Matrix — where DP meets DFS and the "fill order" is discovered by the recursion itself.`,
+Key insight: the position in \`s3\` is always \`i + j\` — no third dimension needed!
+
+\`\`\`
+k = i + j - 1   (current position in s3)
+
+dp[i][j] = (s1[i-1] == s3[k] AND dp[i-1][j])    ← last char came from s1
+         OR
+            (s2[j-1] == s3[k] AND dp[i][j-1])    ← last char came from s2
+\`\`\`
+
+*Base:* \`dp[0][0] = true\`. First row/col are chains of single-source matching.
+
+---
+
+**Visualisation**
+\`s1 = "aab"\`, \`s2 = "axy"\`, \`s3 = "aaxaby"\`:
+
+|     | ∅  | a  | x  | y  |
+|-----|----|----|----|----|
+| **∅**   | ✓  | ✓  | ✗  | ✗  |
+| **a**   | ✓  | ✓  | ✓  | ✗  |
+| **a**   | ✓  | ✓  | ✓  | ✗  |
+| **b**   | ✗  | ✗  | ✓  | **✓** |
+
+The path of ✓ cells from top-left to bottom-right traces a valid interleaving.
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def isInterleave(s1: str, s2: str, s3: str) -> bool:
+    m, n = len(s1), len(s2)
+    if m + n != len(s3):
+        return False
+    dp = [False] * (n + 1)
+    for i in range(m + 1):
+        for j in range(n + 1):
+            k = i + j - 1
+            if i == 0 and j == 0:
+                dp[j] = True
+            elif i == 0:
+                dp[j] = dp[j-1] and s2[j-1] == s3[k]
+            elif j == 0:
+                dp[j] = dp[j] and s1[i-1] == s3[k]
+            else:
+                dp[j] = (dp[j] and s1[i-1] == s3[k]) or \\
+                         (dp[j-1] and s2[j-1] == s3[k])
+    return dp[n]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Bottom-up rolling row** | **O(m·n)** | **O(n)** |`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  7. LONGEST INCREASING PATH IN A MATRIX                            */
+    /* ------------------------------------------------------------------ */
     {
       slug: "longest-increasing-path-in-a-matrix",
       title: "Longest Increasing Path in a Matrix",
       difficulty: "Hard",
-      neetcodeUrl: "https://neetcode.io/problems/longest-increasing-path-in-matrix",
-      summary: "Memoised DFS on the DAG of increasing moves — strictly increasing means no cycles, so no visited set.",
-      body: `**The problem.** In a grid of numbers, find the longest path moving up/down/left/right where values **strictly increase** at every step. No revisits are even possible — increase forbids them, and that observation is the key to everything.
+      neetcodeUrl:
+        "https://neetcode.io/problems/longest-increasing-path-in-matrix",
+      summary:
+        "Memoised DFS on the implicit DAG of increasing moves — strict increase means no cycles.",
+      body: `**Problem Statement**
+Given an \`m × n\` matrix of integers, find the length of the longest strictly increasing path. You can move in 4 directions: up, down, left, right.
 
-**The graph view.** Draw an edge from each cell to each larger orthogonal neighbour. Strict increase means edges only point "uphill" — no cycle can exist (a cycle would have to return to its own value). The grid's moves form a **DAG**, and longest-path-in-a-DAG is a classic DP; on general graphs it is NP-hard, and the acyclicity is the entire licence to proceed. Say that in an interview and the room changes temperature.
+*Example:*
+\`\`\`
+Input:  [[9, 9, 4],
+         [6, 6, 8],
+         [2, 1, 1]]
+Output: 4          # path: 1 → 2 → 6 → 9
+\`\`\`
 
-**The insight — memoised DFS *is* the DP.** Define longest(c) = the longest increasing path *starting* at cell c = 1 + max over larger neighbours of longest(neighbour). Recursion with a cache: first visit computes and stores; later visits — from any direction — return instantly. Two things usually demanded by DP dissolve here. No **visited set**: DFS cannot loop, because recursion only moves to strictly larger cells (the structure polices itself — contrast every Graphs-chapter DFS). No **fill order**: topological order is exactly what bottom-up tabulation would need, and the recursion *discovers it implicitly* — each cell completes only after its uphill dependencies have. Top-down memoisation is not a convenience here; it is the natural shape, and this problem is the cleanest demonstration in the atlas that **DP = DAG traversal with remembered results**. The two chapters this one requires — Graphs and 1-D DP — meet in a single function.
+---
 
-**The walk-through.** Grid rows 994 / 668 / 211. From 1: 1→2→6→9 — length 4. The memo means the 6→9 tail, computed once, is reused by every path funnelling through 6; total work stays one visit per cell despite exponentially many paths existing.
+**Building Intuition**
+From every cell we can try moving to strictly larger neighbours. This creates a branching tree. But many cells are revisited from different starting points — classic overlapping subproblems. DFS with memoisation is the natural shape.
 
-**The mechanics.** For each cell, if cached return it; else recurse into strictly-larger neighbours, cache 1 + best, return. Answer: max over all cells (paths can start anywhere).
+---
 
-**Complexity.** O(mn) time — each cell computed once, four edges each — O(mn) space for memo and recursion.
+**Finding the Pattern / Why No Visited Set**
+Draw an edge from each cell to each strictly larger orthogonal neighbour. **Strict increase means no cycle can exist** — you can never return to a value you've already visited. The grid's moves form a **Directed Acyclic Graph (DAG)**.
 
-**The thread.** Back to strings, and up a difficulty notch: Distinct Subsequences — the alignment square where matching no longer *ends* the story, because one character can be matched many ways.`,
+\`\`\`
+longest(cell) = 1 + max(longest(neighbour) for each LARGER neighbour)
+\`\`\`
+
+Two things that are normally mandatory in graph traversal are **not needed** here:
+1. **No visited set** — the structure prevents revisiting (values only increase).
+2. **No explicit topological sort** — memoised DFS discovers the order implicitly.
+
+This is the cleanest demonstration that **DP = DAG traversal with remembered results**.
+
+---
+
+**Visualisation**
+\`\`\`
+Matrix:          DAG of increasing edges:
+ 9  9  4         1 → 2 → 6 → 9
+ 6  6  8              ↗       ↑
+ 2  1  1         1 → 6    4 → 8
+
+Longest path: 1 → 2 → 6 → 9 (length 4)
+\`\`\`
+
+---
+
+**The Walk-through**
+Start DFS at cell \`(2,1)\` value 1:
+- Neighbours: \`(2,0)=2\` is larger → recurse
+  - \`(2,0)=2\`: neighbour \`(1,0)=6\` is larger → recurse
+    - \`(1,0)=6\`: neighbour \`(0,0)=9\` is larger → recurse
+      - \`(0,0)=9\`: no larger neighbour → return 1
+    - return 1 + 1 = 2
+  - return 1 + 2 = 3
+- return 1 + 3 = **4**
+
+Every cell computed once, then served from cache.
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def longestIncreasingPath(matrix: list[list[int]]) -> int:
+    m, n = len(matrix), len(matrix[0])
+    memo = {}
+    
+    def dfs(r, c):
+        if (r, c) in memo:
+            return memo[(r, c)]
+        best = 1
+        for dr, dc in [(0,1),(0,-1),(1,0),(-1,0)]:
+            nr, nc = r + dr, c + dc
+            if 0 <= nr < m and 0 <= nc < n and matrix[nr][nc] > matrix[r][c]:
+                best = max(best, 1 + dfs(nr, nc))
+        memo[(r, c)] = best
+        return best
+    
+    return max(dfs(r, c) for r in range(m) for c in range(n))
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Memoised DFS** | **O(m·n)** | **O(m·n)** |
+
+Each cell is computed exactly once (4 edges checked each). Stack depth is bounded by the longest path.`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  8. DISTINCT SUBSEQUENCES                                          */
+    /* ------------------------------------------------------------------ */
     {
       slug: "distinct-subsequences",
       title: "Distinct Subsequences",
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/count-subsequences",
-      summary: "Count the ways t appears in s as a subsequence: on a match, use the character — and also don't.",
-      body: `**The problem.** How many distinct ways does string t occur inside string s as a subsequence? s = "rabbbit", t = "rabbit" → 3 — three different choices of which letters of s spell it. Counting *ways of embedding*, not existence: the alignment family's counting face.
+      summary:
+        "Count the ways t appears in s as a subsequence: on a match, use the character AND also skip it.",
+      body: `**Problem Statement**
+Given two strings \`s\` and \`t\`, return the number of distinct subsequences of \`s\` which equal \`t\`.
 
-**The state.** dp[i][j] = the number of ways the first j characters of t can be embedded in the first i characters of s. Answer at the full corner.
+*Example:*
+\`\`\`
+Input:  s = "rabbbit", t = "rabbit"
+Output: 3
+\`\`\`
+The three b's in "rab**bbb**it" can fill t's two b-slots in C(3,2) = 3 ways.
 
-**The recurrence — the twist is on match.** Look at s[i−1] (the newest source character). If it *differs* from t[j−1], it is useless for the current target position: dp[i][j] = dp[i−1][j] — embeddings simply ignore it. If it **matches**, two disjoint families exist and — unlike LCS, where matching was safely final — both must be counted: embeddings that *use* this s-character for this t-position (dp[i−1][j−1] ways to have placed the rest) plus embeddings that *skip* it, saving the t-position for an equal character somewhere earlier — later — in s's prefix (dp[i−1][j]). Sum, not max: counting versus optimising, the operator swap you have now seen four times. Missing the skip-on-match term is *the* canonical error, and "why do you add dp[i−1][j] even on a match?" is the interview's favourite question. Answer: because distinct embeddings are distinguished by *which* source characters they consume, and declining a usable character is a real, different choice.
+---
 
-**Bases.** dp[i][0] = 1 — the empty target embeds exactly one way (consume nothing). dp[0][j>0] = 0 — a non-empty target cannot come from emptiness. The empty-target base is the same "one way to do nothing" convention as ever, now load-bearing for correctness of every match count.
+**Building Intuition**
+This is the LCS alignment square, but instead of finding the *longest* match, we *count* how many ways to embed \`t\` entirely within \`s\`.
 
-**The walk-through.** "rabbbit" × "rabbit": the three b's of s competing for t's two b-slots generate the multiplicity — the table quietly computes C-like counts through pure addition, and lands on 3.
+---
 
-**Complexity.** O(mn) time, rolling row O(n) — sweep j high-to-low to avoid clobbering, the once-per-character discipline echoing subset-sum.
+**Finding the Pattern / Recurrence Relation**
+\`dp[i][j]\` = number of ways to match \`t[0..j-1]\` within \`s[0..i-1]\`.
 
-**The thread.** Counting embeddings mastered. Now the alignment square's most famous member: Edit Distance — three operations, three neighbours, one number that ships in every spellchecker on earth.`,
+\`\`\`
+If s[i-1] != t[j-1]:
+    dp[i][j] = dp[i-1][j]             ← skip s[i-1], it can't help
+
+If s[i-1] == t[j-1]:
+    dp[i][j] = dp[i-1][j-1]           ← USE s[i-1] for t[j-1]
+             + dp[i-1][j]             ← SKIP s[i-1] anyway
+\`\`\`
+
+The critical insight: **even on a match, we add the skip case**. Different source characters used for the same target position create distinct embeddings.
+
+*Bases:* \`dp[i][0] = 1\` (empty target matches one way), \`dp[0][j>0] = 0\`.
+
+---
+
+**Visualisation**
+\`s = "babgbag"\`, \`t = "bag"\`:
+
+|     | ∅ | b | a | g |
+|-----|---|---|---|---|
+| **∅**   | 1 | 0 | 0 | 0 |
+| **b**   | 1 | 1 | 0 | 0 |
+| **a**   | 1 | 1 | 1 | 0 |
+| **b**   | 1 | 2 | 1 | 0 |
+| **g**   | 1 | 2 | 1 | 1 |
+| **b**   | 1 | 3 | 1 | 1 |
+| **a**   | 1 | 3 | 4 | 1 |
+| **g**   | 1 | 3 | 4 | **5** |
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def numDistinct(s: str, t: str) -> int:
+    m, n = len(s), len(t)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    for i in range(1, m + 1):
+        for j in range(n, 0, -1):   # sweep RIGHT to LEFT (0/1 knapsack)
+            if s[i-1] == t[j-1]:
+                dp[j] += dp[j-1]
+            # else: dp[j] stays the same (skip)
+    return dp[n]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Rolling-row DP** | **O(m·n)** | **O(n)** |
+
+The right-to-left sweep prevents clobbering — the same discipline as the subset-sum high-to-low sweep.`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  9. EDIT DISTANCE                                                  */
+    /* ------------------------------------------------------------------ */
     {
       slug: "edit-distance",
       title: "Edit Distance",
-      difficulty: "Medium",
+      difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/edit-distance",
-      summary: "Insert, delete, replace: each maps to a neighbour cell, and the table computes the cheapest transformation.",
-      body: `**The problem.** Minimum number of operations — insert a character, delete a character, replace a character — to turn one word into another. "horse" → "ros": 3. This is Levenshtein distance: the number under spellcheck suggestions, fuzzy search, and DNA alignment scoring. If one problem from this chapter follows you into industry, it is this one.
+      summary:
+        "Insert, delete, replace: each maps to a neighbour cell to compute the cheapest string transformation.",
+      body: `**Problem Statement**
+Given two strings \`word1\` and \`word2\`, return the minimum number of operations (insert, delete, or replace a character) to convert \`word1\` into \`word2\`.
 
-**The state.** dp[i][j] = minimum operations converting the first i characters of word1 into the first j of word2. Bases are the degenerate conversions and they *mean* something: dp[i][0] = i (delete everything), dp[0][j] = j (insert everything) — reciting their meaning is how you never botch them.
+*Example:*
+\`\`\`
+Input:  word1 = "horse", word2 = "ros"
+Output: 3          # horse → rorse → rose → ros
+\`\`\`
 
-**The recurrence — three operations, three neighbours.** Compare the last characters. **Match:** they cost nothing; inherit the diagonal, dp[i−1][j−1]. **Mismatch:** three ways to fix the ending, each leaving a smaller instance. *Replace* word1's last with word2's last → diagonal + 1. *Delete* word1's last → dp[i−1][j] + 1 (still must reach j). *Insert* word2's last onto word1 → dp[i][j−1] + 1 (that insertion consumed target character j). Take the min of the three, plus one. The geometric mnemonic — replace = diagonal, delete = up, insert = left — makes the code write itself; the understanding that each arrow is *an operation on the word*, not table magic, is what survives follow-ups (operation costs? forbid replaces? the recurrence bends without breaking).
+---
 
-**The walk-through.** "horse" → "ros" lands on 3, and the table's min-arrows spell the script: replace h with r ("rorse"), match the o, delete the second r ("rose"), match the s, delete the e ("ros") — one replace, two deletes. Trace the arrows backwards from the corner and the actual edit script falls out, the same table-walk that recovered the LCS.
+**Building Intuition**
+Compare the last characters of the current prefixes. If they match, no operation is needed. If they don't, we have 3 options — each costs 1 operation and leaves a smaller subproblem.
 
-**Kinship worth saying.** With only insert/delete allowed, edit distance = m + n − 2·LCS — the two tables are cousins, and mentioning the identity is effortless depth.
+---
 
-**Complexity.** O(mn) time, O(n) rolling row (full table if the script must be recovered).
+**Finding the Pattern / Recurrence Relation**
+\`dp[i][j]\` = min operations to convert \`word1[0..i-1]\` to \`word2[0..j-1]\`.
 
-**The thread.** The alignment square is now fully yours. The last two problems leave it behind: first Burst Balloons — the interval shape, where the winning question is not "what happens first?" but "what happens **last**?"`,
+\`\`\`
+If word1[i-1] == word2[j-1]:
+    dp[i][j] = dp[i-1][j-1]                    ← match, no cost
+
+Else:
+    dp[i][j] = 1 + min(
+        dp[i-1][j-1],   ← Replace word1[i-1] with word2[j-1]
+        dp[i-1][j],     ← Delete  word1[i-1]
+        dp[i][j-1]      ← Insert  word2[j-1] into word1
+    )
+\`\`\`
+
+Geometric mnemonic: **Replace = diagonal ↖, Delete = up ↑, Insert = left ←**.
+
+*Bases:* \`dp[i][0] = i\` (delete all), \`dp[0][j] = j\` (insert all).
+
+---
+
+**Visualisation**
+\`word1 = "horse"\`, \`word2 = "ros"\`:
+
+|     | ∅ | r | o | s |
+|-----|---|---|---|---|
+| **∅**   | 0 | 1 | 2 | 3 |
+| **h**   | 1 | 1 | 2 | 3 |
+| **o**   | 2 | 2 | 1 | 2 |
+| **r**   | 3 | 2 | 2 | 2 |
+| **s**   | 4 | 3 | 3 | 2 |
+| **e**   | 5 | 4 | 4 | **3** |
+
+Trace back from \`dp[5][3] = 3\`:
+- \`(e,s)\`: mismatch → replace (diag) → cost 1
+- \`(s,o)\`: mismatch → delete (up) → cost 1
+- \`(r,o)\`: mismatch → delete (up) → cost 1
+- \`(o,o)\`: match → diagonal, free
+Total: 3 operations ✓
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def minDistance(word1: str, word2: str) -> int:
+    m, n = len(word1), len(word2)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1): dp[i][0] = i
+    for j in range(n + 1): dp[0][j] = j
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if word1[i-1] == word2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = 1 + min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Bottom-up DP** | **O(m·n)** | **O(m·n)** |
+
+Can be optimised to O(min(m,n)) with two rows, but full table is needed to recover the actual edit script.
+
+**Kinship:** With only insert/delete (no replace), edit distance = \`m + n - 2·LCS\`.`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  10. BURST BALLOONS                                                */
+    /* ------------------------------------------------------------------ */
     {
       slug: "burst-balloons",
       title: "Burst Balloons",
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/burst-balloons",
-      summary: "Think about the last balloon in each range: interval DP over spans, with padded 1s at the borders.",
-      body: `**The problem.** Balloons with numbers. Bursting balloon i pays left · i · right — its *current* neighbours at burst time. Burst them all; maximise total coins. [3, 1, 5, 8] → 167. The cruelty: every burst changes who neighbours whom, so early choices reshape every later payoff.
+      summary:
+        "Think about the LAST balloon in each range — interval DP over spans, with padded 1s at the borders.",
+      body: `**Problem Statement**
+You have \`n\` balloons, each with a number. Bursting balloon \`i\` earns \`nums[left] × nums[i] × nums[right]\` coins (using its *current* neighbours). After bursting, left and right become adjacent. Burst all balloons to maximise total coins.
 
-**Why "first" fails and "last" wins.** Condition on the *first* burst and the remaining problem is a mess — the array reglues, and subproblems overlap in unspeakable ways. The famous inversion: in any range, condition on the **last** balloon to burst there. When k bursts last in the range, every other balloon in the range is already gone — so k's payoff is *the borders themselves*: boundary-left · k · boundary-right, known constants. And the range splits into two independent subranges — everything left of k, everything right of k — each fully burst before k, and each bounded by walls that never move: the range's own boundary on one side and k itself (still standing until last) on the other. Choosing the last event, not the first, is what makes subproblems clean; this inversion is interval DP's master key (matrix-chain multiplication, polygon triangulation — same trick).
+*Example:*
+\`\`\`
+Input:  nums = [3, 1, 5, 8]
+Output: 167
+\`\`\`
 
-**The state.** Pad the array with 1s at both ends (virtual balloons that never burst — they exist to be walls). dp[l][r] = max coins from bursting everything strictly *between* walls l and r. Recurrence: try each k in the open interval as the last burst — dp[l][k] + wall(l)·k·wall(r) + dp[k][r] — take the max. Base: adjacent walls enclose nothing, dp = 0. Fill by increasing **span length** — small intervals feed large ones; the fill order is the third dimension of thought even though the table is 2-D.
+---
 
-**The walk-through.** [3, 1, 5, 8] padded to [1, 3, 1, 5, 8, 1]: length-1 spans score their own products (3·1·5 = 15 for the middle 1, etc.); spans grow; the full interval tries each survivor-to-the-end and lands on 167 (burst order 1, 5, 3, 8).
+**Building Intuition (Why "First" Fails)**
+If we pick balloon \`i\` to burst *first*, the remaining array "heals" — its neighbours merge. The subproblems become interdependent because the boundaries shift. This is the signature that we should think about the *last* element, not the first.
 
-**Complexity.** O(n³) time — O(n²) intervals × O(n) split points — O(n²) space. Cubic and proud; this is the honest cost of interval DP.
+---
 
-**The thread.** One summit remains — the alignment square pushed to its extreme, where one of the strings contains *wildcards that loop*: Regular Expression Matching.`,
+**Finding the Pattern / The "Last Balloon" Inversion**
+Pad the array with virtual \`1\`s: \`[1, 3, 1, 5, 8, 1]\`. Define \`dp[l][r]\` = max coins from bursting all balloons **strictly between** walls \`l\` and \`r\`.
+
+If balloon \`k\` is the **last** to burst in the range \`(l, r)\`:
+- Everything else between \`l\` and \`k\` is already gone → contributed \`dp[l][k]\`
+- Everything between \`k\` and \`r\` is already gone → contributed \`dp[k][r]\`
+- Balloon \`k\` pops last, so its neighbours are the walls: \`nums[l] × nums[k] × nums[r]\`
+
+\`\`\`
+dp[l][r] = max over all k in (l, r) of:
+           dp[l][k] + nums[l] * nums[k] * nums[r] + dp[k][r]
+\`\`\`
+
+*Base:* Adjacent walls enclose nothing → \`dp[l][l+1] = 0\`.
+
+---
+
+**Visualisation**
+\`nums = [1, 3, 1, 5, 8, 1]\` (padded):
+
+Fill by increasing **span length**:
+\`\`\`
+Span 2 (1 balloon between walls):
+  dp[0][2] = 1×3×1 = 3
+  dp[1][3] = 3×1×5 = 15
+  dp[2][4] = 1×5×8 = 40
+  dp[3][5] = 5×8×1 = 40
+
+Span 3 (2 balloons):
+  dp[0][3]: try k=1 → 0 + 1×3×5 + 15 = 30
+            try k=2 → 3 + 1×1×5 + 0  = 8    → 30
+  dp[1][4]: try k=2 → 0 + 3×1×8 + 40 = 64
+            try k=3 → 15 + 3×5×8 + 0 = 135  → 135
+  ...
+
+Full span dp[0][5] = 167
+\`\`\`
+
+---
+
+**The Walk-through (Fill Order)**
+Unlike grid DP, we don't fill row-by-row. We fill by **span length** — small intervals before large ones, because large intervals depend on smaller sub-intervals. The fill order is the third dimension of thought even though the table is 2-D.
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def maxCoins(nums: list[int]) -> int:
+    nums = [1] + nums + [1]
+    n = len(nums)
+    dp = [[0] * n for _ in range(n)]
+    
+    for span in range(2, n):           # span = distance between walls
+        for l in range(0, n - span):
+            r = l + span
+            for k in range(l + 1, r):  # try each balloon as last
+                dp[l][r] = max(
+                    dp[l][r],
+                    dp[l][k] + nums[l] * nums[k] * nums[r] + dp[k][r]
+                )
+    return dp[0][n - 1]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Interval DP** | **O(n³)** | **O(n²)** |
+
+Cubic because: O(n²) intervals × O(n) split points. This is the honest cost of interval DP — and it's optimal for this problem family (matrix-chain multiplication, polygon triangulation use the same shape).`,
     },
+    /* ------------------------------------------------------------------ */
+    /*  11. REGULAR EXPRESSION MATCHING                                   */
+    /* ------------------------------------------------------------------ */
     {
       slug: "regular-expression-matching",
       title: "Regular Expression Matching",
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/regular-expression-matching",
-      summary: "Dot matches anything; star means zero-or-more of the previous — two cases per cell, handled exactly.",
-      body: `**The problem.** Implement regex matching for two operators: . (any single character) and * (zero or more of the *preceding* element). The match must cover the **entire** string. s = "aab", p = "c*a*b" → true (zero c's, two a's, one b). The chapter's final boss, and the ancestor of every regex engine's core loop.
+      summary:
+        "Dot matches any single char; star means zero-or-more of the preceding element — two arms per cell.",
+      body: `**Problem Statement**
+Implement regex matching with \`.\` (matches any single character) and \`*\` (matches zero or more of the *preceding* element). The match must cover the **entire** string.
 
-**The state.** dp[i][j] = true iff the first i characters of s match the first j of p. The alignment square one last time — with OR as the operator (feasibility, like Interleaving String) and one element that reaches *two columns back*.
+*Example:*
+\`\`\`
+Input:  s = "aab", p = "c*a*b"
+Output: true       # zero c's, two a's, one b
+\`\`\`
 
-**The recurrence, by pattern character.** If p[j−1] is a normal letter or .: match iff the current characters agree (letter equality, or dot) *and* the diagonal dp[i−1][j−1] holds. The interesting case: p[j−1] is *, which forms a unit with p[j−2]. Two disjoint readings, OR-ed. **Zero copies:** the unit vanishes — dp[i][j−2], same string, pattern minus the pair. **One more copy:** legal only if s[i−1] agrees with p[j−2] (or it is a dot); then this string character is consumed *by the same unit* — dp[i−1][j], pattern **unchanged**, which is precisely how "or more" loops without looping. Every regex-star bug in history is a mangling of one of those two arms; there is no third arm.
+---
 
-**Bases — where the zeros live.** dp[0][0] = true. dp[0][j]: an empty string matches only patterns that can *evaporate* — alternating x* units — so dp[0][j] = p[j−1] is * and dp[0][j−2]. Non-empty string against empty pattern: false. Fill row by row; answer at the far corner.
+**Building Intuition**
+Without \`*\`, matching is a linear scan. The \`*\` operator creates branching: should \`a*\` match zero, one, or more a's? We can't decide greedily because a wrong choice now could fail later. This is the alignment square one final time.
 
-**The walk-through.** "aab" × "c*a*b": c* takes the zero arm immediately; a* takes the one-more arm twice, consuming both a's while the pattern stands still; b matches b. Corner: true. Each decision was one of the two arms — nothing else ever fires.
+---
 
-**Complexity.** O(mn) time and space. (Real engines compile to automata — Thompson NFA — but their state graph *is* this table with the string axis streamed; you have effectively derived it.)
+**Finding the Pattern / Recurrence Relation**
+\`dp[i][j] = true\` iff \`s[0..i-1]\` matches \`p[0..j-1]\`.
 
-**The thread.** The tables are conquered — grids, alignments, machines, intervals, wildcards. What remains of the atlas are the sharper, lighter arts: Greedy, where a single provable choice replaces the whole table; then Intervals, Math & Geometry, and Bit Manipulation. The long climb is over; the ridge walk begins.`,
+**Case 1 — Normal char or \`.\`:**
+\`\`\`
+dp[i][j] = dp[i-1][j-1] AND (s[i-1] == p[j-1] OR p[j-1] == '.')
+\`\`\`
+
+**Case 2 — \`p[j-1]\` is \`*\`:**
+The \`*\` and \`p[j-2]\` form a unit. Two arms:
+
+\`\`\`
+Zero copies:  dp[i][j-2]
+              The x* unit vanishes entirely.
+
+One+ copies:  dp[i-1][j] AND (s[i-1] matches p[j-2])
+              We consume one char from s, but the x* unit stays
+              (pattern index j stays put — this is how "more" loops).
+\`\`\`
+
+\`dp[i][j] = zero_arm OR one_plus_arm\`
+
+---
+
+**Visualisation**
+\`s = "aab"\`, \`p = "c*a*b"\`:
+
+|     | ∅ | c | * | a | * | b |
+|-----|---|---|---|---|---|---|
+| **∅**   | ✓ | ✗ | ✓ | ✗ | ✓ | ✗ |
+| **a**   | ✗ | ✗ | ✗ | ✓ | ✓ | ✗ |
+| **a**   | ✗ | ✗ | ✗ | ✗ | ✓ | ✗ |
+| **b**   | ✗ | ✗ | ✗ | ✗ | ✗ | **✓** |
+
+Row 0 (\`∅\` vs pattern): \`c*\` can vanish → ✓ at col 2; \`a*\` can vanish → ✓ at col 4.
+\`(a, a*)\`: \`a*\` matches one 'a' → \`dp[0][4] = ✓\` propagates down.
+
+---
+
+**The Walk-through**
+- \`(b, b)\`: \`b == b\` and \`dp[2][4] = ✓\` → ✓ at the corner.
+- Each decision was exactly one of the two arms (zero or one-more). No third case ever fires.
+
+---
+
+**Code & Complexity**
+\`\`\`python
+def isMatch(s: str, p: str) -> bool:
+    m, n = len(s), len(p)
+    dp = [[False] * (n + 1) for _ in range(m + 1)]
+    dp[0][0] = True
+    
+    # Base: empty string vs pattern with possible x* evaporations
+    for j in range(2, n + 1):
+        if p[j-1] == '*':
+            dp[0][j] = dp[0][j-2]
+    
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if p[j-1] == '*':
+                # Zero copies of p[j-2]
+                dp[i][j] = dp[i][j-2]
+                # One or more copies
+                if s[i-1] == p[j-2] or p[j-2] == '.':
+                    dp[i][j] = dp[i][j] or dp[i-1][j]
+            else:
+                # Normal char or '.'
+                if s[i-1] == p[j-1] or p[j-1] == '.':
+                    dp[i][j] = dp[i-1][j-1]
+    return dp[m][n]
+\`\`\`
+
+| Approach | Time | Space |
+|---|---|---|
+| **Bottom-up DP** | **O(m·n)** | **O(m·n)** |
+
+Real regex engines compile to Thompson NFAs — but the NFA's state graph *is* this table with the string axis streamed. You have effectively derived the engine.`,
     },
   ],
 };

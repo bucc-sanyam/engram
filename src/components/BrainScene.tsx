@@ -239,6 +239,10 @@ interface NodeObj {
   labelCenterY: number;
   // animated flare when data pulse arrives
   flashK: number;
+  // thought-wave plumbing: closest shell particle + per-slot arrival times
+  nearestShell: number;
+  waveArr: [number, number];
+  waveFired: [boolean, boolean];
 }
 
 interface LinkObj {
@@ -266,6 +270,8 @@ interface LinkObj {
   labelCenterY: number;
   isVein?: boolean;
   baseColor?: THREE.Color;
+  // idle pulses rest between runs so they don't read as a metronome
+  pulseWait?: number;
 }
 
 export default function BrainScene({
@@ -422,40 +428,83 @@ export default function BrainScene({
     const shellGeo = new THREE.BufferGeometry();
     shellGeo.setAttribute("position", new THREE.BufferAttribute(shellPos, 3));
     shellGeo.setAttribute("color", new THREE.BufferAttribute(shellCol, 3));
+    // per-particle wave arrival times (two concurrent wave slots) — rewritten
+    // whenever a wave spawns; the shader turns these into a moving front
+    const waveAttrArr = new Float32Array(SHELL_N * 2).fill(1e9);
+    const waveAttr = new THREE.BufferAttribute(waveAttrArr, 2);
+    waveAttr.setUsage(THREE.DynamicDrawUsage);
+    shellGeo.setAttribute("aWave", waveAttr);
+    // random phase per particle for desynchronised shimmer
+    const phaseArr = new Float32Array(SHELL_N);
+    for (let i = 0; i < SHELL_N; i++) phaseArr[i] = rng() * Math.PI * 2;
+    shellGeo.setAttribute("aPhase", new THREE.BufferAttribute(phaseArr, 1));
     const shellMat = new THREE.PointsMaterial({
       size: 0.045, // slightly larger to compensate for lower N
       map: dotTex,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.58,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       sizeAttenuation: true,
     });
+    // captured at compile time so the animate loop can drive the wave uniforms
+    let shellShader: { uniforms: Record<string, { value: number }> } | null = null;
     shellMat.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = { value: 0 };
+      shader.uniforms.uWaveT0 = { value: -1000 };
+      shader.uniforms.uWaveI0 = { value: 0 };
+      shader.uniforms.uWaveT1 = { value: -1000 };
+      shader.uniforms.uWaveI1 = { value: 0 };
       shader.vertexShader = `
+        uniform float uTime;
+        uniform float uWaveT0;
+        uniform float uWaveI0;
+        uniform float uWaveT1;
+        uniform float uWaveI1;
+        attribute vec2 aWave;
+        attribute float aPhase;
         varying float vRim;
+        varying float vWave;
+        varying float vFlick;
+        // flood-wave brightness: faint anticipation ahead of the front, a sharp
+        // luminous crest at arrival, then a long ember tail cooling behind it
+        float waveGlow(float ph) {
+          if (ph < -0.6) return 0.0;
+          if (ph < 0.0) return exp(ph * 16.0) * 0.25;
+          return 1.05 * exp(-ph * 6.5) + 0.38 * exp(-ph * 1.3);
+        }
         ${shader.vertexShader}
-      `.replace(
-        `#include <project_vertex>`,
-        `
+      `
+        .replace(
+          `#include <project_vertex>`,
+          `
         #include <project_vertex>
         vec3 worldNorm = normalize(mat3(modelMatrix) * position);
         vec3 viewDir = normalize(cameraPosition - (modelMatrix * vec4(position, 1.0)).xyz);
         float dotNV = 1.0 - max(0.0, dot(worldNorm, viewDir));
         vRim = smoothstep(0.6, 0.95, dotNV);
-        `
-      );
+        vWave = min(waveGlow(uWaveT0 - aWave.x) * uWaveI0 + waveGlow(uWaveT1 - aWave.y) * uWaveI1, 1.15);
+        // desynchronised per-particle shimmer (replaces the old global breathing)
+        vFlick = 0.88 + 0.12 * sin(uTime * (0.5 + fract(aPhase * 0.61803) * 1.1) + aPhase);
+        `,
+        )
+        .replace(`gl_PointSize = size;`, `gl_PointSize = size * (1.0 + min(vWave, 1.2) * 0.4);`);
       shader.fragmentShader = `
         varying float vRim;
+        varying float vWave;
+        varying float vFlick;
         ${shader.fragmentShader}
       `.replace(
         `#include <color_fragment>`,
         `
         #include <color_fragment>
+        diffuseColor.rgb *= vFlick;
         diffuseColor.rgb += vec3(0.15, 0.05, 0.0) * vRim;
-        `
+        diffuseColor.rgb += vec3(1.0, 0.84, 0.52) * vWave * 0.75;
+        `,
       );
+      shellShader = shader as unknown as { uniforms: Record<string, { value: number }> };
     };
     group.add(new THREE.Points(shellGeo, shellMat));
     disposables.push(shellGeo, shellMat);
@@ -594,6 +643,9 @@ export default function BrainScene({
         targetVisK: 1,
         labelCenterY: 0.5,
         flashK: 0,
+        nearestShell: -1,
+        waveArr: [1e9, 1e9],
+        waveFired: [true, true],
       });
     }
 
@@ -761,6 +813,167 @@ export default function BrainScene({
       });
     }
 
+    // ---------- thought waves (flood-fill activation, A*-map style) ----------
+    // A wave is a Dijkstra flood over a kNN graph of the shell particles:
+    // every particle gets an arrival time, and the shader draws a bright front
+    // crossing the cortex at that time with a cooling ember tail. Jittered
+    // edge weights make the frontier ragged; crossing the medial fissure
+    // costs extra, so activity mostly sweeps around a hemisphere before
+    // jumping across — like real interhemispheric transfer.
+    const WAVE_K = 6;
+    const nbrIdx = new Int32Array(SHELL_N * WAVE_K).fill(-1);
+    const nbrDist = new Float32Array(SHELL_N * WAVE_K);
+    const zSign = new Int8Array(SHELL_N);
+    {
+      const cell = 0.12;
+      const grid = new Map<number, number[]>();
+      const keyAt = (i: number) =>
+        (Math.floor(shellPos[i * 3] / cell) + 40) +
+        ((Math.floor(shellPos[i * 3 + 1] / cell) + 40) << 8) +
+        ((Math.floor(shellPos[i * 3 + 2] / cell) + 40) << 16);
+      for (let i = 0; i < SHELL_N; i++) {
+        zSign[i] = shellPos[i * 3 + 2] >= 0 ? 1 : -1;
+        const key = keyAt(i);
+        let bucket = grid.get(key);
+        if (!bucket) grid.set(key, (bucket = []));
+        bucket.push(i);
+      }
+      const candD = new Float32Array(WAVE_K);
+      for (let i = 0; i < SHELL_N; i++) {
+        const xi = shellPos[i * 3], yi = shellPos[i * 3 + 1], zi = shellPos[i * 3 + 2];
+        const cx = Math.floor(xi / cell), cy = Math.floor(yi / cell), cz = Math.floor(zi / cell);
+        candD.fill(Infinity);
+        for (let ox = -1; ox <= 1; ox++)
+          for (let oy = -1; oy <= 1; oy++)
+            for (let oz = -1; oz <= 1; oz++) {
+              const bucket = grid.get((cx + ox + 40) + ((cy + oy + 40) << 8) + ((cz + oz + 40) << 16));
+              if (!bucket) continue;
+              for (const j of bucket) {
+                if (j === i) continue;
+                const dx = shellPos[j * 3] - xi, dy = shellPos[j * 3 + 1] - yi, dz = shellPos[j * 3 + 2] - zi;
+                const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                if (d < candD[WAVE_K - 1]) {
+                  let p = WAVE_K - 1;
+                  while (p > 0 && candD[p - 1] > d) {
+                    candD[p] = candD[p - 1];
+                    nbrIdx[i * WAVE_K + p] = nbrIdx[i * WAVE_K + p - 1];
+                    p--;
+                  }
+                  candD[p] = d;
+                  nbrIdx[i * WAVE_K + p] = j;
+                }
+              }
+            }
+        for (let s = 0; s < WAVE_K; s++) nbrDist[i * WAVE_K + s] = candD[s] === Infinity ? 0 : candD[s];
+      }
+    }
+
+    // closest shell particle for every topic — waves ignite topics on arrival
+    for (const n of nodes.values()) {
+      let best = 0, bd = Infinity;
+      for (let i = 0; i < SHELL_N; i++) {
+        const dx = shellPos[i * 3] - n.pos.x, dy = shellPos[i * 3 + 1] - n.pos.y, dz = shellPos[i * 3 + 2] - n.pos.z;
+        const d = dx * dx + dy * dy + dz * dz;
+        if (d < bd) { bd = d; best = i; }
+      }
+      n.nearestShell = best;
+    }
+
+    type WaveSlot = { active: boolean; start: number; maxArr: number; intensity: number };
+    const waves: WaveSlot[] = [
+      { active: false, start: 0, maxArr: 0, intensity: 1 },
+      { active: false, start: 0, maxArr: 0, intensity: 1 },
+    ];
+    const waveAmp = [0, 0];
+    const waveAge = [-1000, -1000];
+    const waveGold = new THREE.Color("#ffd28a");
+    const smooth01 = (x: number) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    let lastT = 0; // clock time, refreshed every frame (spawns can happen between frames)
+
+    // scratch buffers reused by every flood — no per-spawn allocation
+    const dijDist = new Float32Array(SHELL_N);
+    const heapD = new Float32Array(SHELL_N * WAVE_K + 8);
+    const heapI = new Int32Array(SHELL_N * WAVE_K + 8);
+
+    const spawnWave = (slot: number, seedIdx: number, speed: number, maxDist: number, intensity: number) => {
+      const wrng = mulberry32((Math.random() * 0xffffffff) >>> 0);
+      dijDist.fill(Infinity);
+      dijDist[seedIdx] = 0;
+      heapD[0] = 0;
+      heapI[0] = seedIdx;
+      let hn = 1;
+      let maxReached = 0;
+      while (hn > 0) {
+        const d = heapD[0];
+        const i = heapI[0];
+        hn--;
+        heapD[0] = heapD[hn];
+        heapI[0] = heapI[hn];
+        let c = 0;
+        for (;;) {
+          const l2 = c * 2 + 1, r2 = c * 2 + 2;
+          let m = c;
+          if (l2 < hn && heapD[l2] < heapD[m]) m = l2;
+          if (r2 < hn && heapD[r2] < heapD[m]) m = r2;
+          if (m === c) break;
+          const td = heapD[c]; heapD[c] = heapD[m]; heapD[m] = td;
+          const ti = heapI[c]; heapI[c] = heapI[m]; heapI[m] = ti;
+          c = m;
+        }
+        if (d > dijDist[i]) continue;
+        if (d > maxReached) maxReached = d;
+        for (let s = 0; s < WAVE_K; s++) {
+          const j = nbrIdx[i * WAVE_K + s];
+          if (j < 0) continue;
+          // jittered edge cost → ragged, organic frontier (like streets of
+          // different speeds); fissure crossings pay a heavy toll
+          let w = nbrDist[i * WAVE_K + s] * (0.72 + 0.56 * wrng());
+          if (zSign[i] !== zSign[j]) w *= 3.5;
+          const nd = d + w;
+          if (nd < dijDist[j] && nd <= maxDist && hn < heapD.length - 1) {
+            dijDist[j] = nd;
+            let c2 = hn++;
+            heapD[c2] = nd;
+            heapI[c2] = j;
+            while (c2 > 0) {
+              const p = (c2 - 1) >> 1;
+              if (heapD[p] <= heapD[c2]) break;
+              const td = heapD[p]; heapD[p] = heapD[c2]; heapD[c2] = td;
+              const ti = heapI[p]; heapI[p] = heapI[c2]; heapI[c2] = ti;
+              c2 = p;
+            }
+          }
+        }
+      }
+      for (let i = 0; i < SHELL_N; i++) {
+        waveAttrArr[i * 2 + slot] = dijDist[i] === Infinity ? 1e9 : dijDist[i] / speed;
+      }
+      waveAttr.needsUpdate = true;
+      for (const n of nodes.values()) {
+        const d = dijDist[n.nearestShell];
+        n.waveArr[slot] = d === Infinity ? 1e9 : d / speed;
+        n.waveFired[slot] = false;
+      }
+      waves[slot] = { active: true, start: lastT, maxArr: maxReached / speed, intensity };
+    };
+
+    const spawnAmbientWave = (slot: number) => {
+      const topicSeeds = Array.from(nodes.values());
+      // rarely, a slow "deep breath" wave rises from the cerebellum and
+      // floods the whole brain; otherwise a thought sparks at a random topic
+      const deep = Math.random() < 0.16 || topicSeeds.length === 0;
+      const seedIdx = deep
+        ? Math.floor(Math.random() * Math.max(1, Math.floor(SHELL_N * 0.15)))
+        : topicSeeds[Math.floor(Math.random() * topicSeeds.length)].nearestShell;
+      const speed = deep ? 0.35 : 0.5 + Math.random() * 0.35;
+      const extent = deep ? 99 : 1.6 + Math.random() * 2.2;
+      spawnWave(slot, seedIdx, speed, extent, deep ? 0.8 : 1);
+    };
+    let nextWaveAt = 1.2 + Math.random() * 2;
+
     // ---------- highlight / path logic ----------
     let tailId: string | null = null;
     let targetYaw = 0;
@@ -903,6 +1116,12 @@ export default function BrainScene({
           burstStart = performance.now();
           for (const l of linkObjs) {
             if (l.route || l.aId === tail || l.bId === tail) l.pulseOffset = 0;
+          }
+          // a thought radiates outward from the chosen topic — steal the
+          // older wave slot if both are busy
+          if (n.nearestShell >= 0) {
+            const slot = !waves[0].active ? 0 : !waves[1].active ? 1 : waves[0].start <= waves[1].start ? 0 : 1;
+            spawnWave(slot, n.nearestShell, 1.05, 3.4, 1.15);
           }
         }
       } else {
@@ -1122,8 +1341,15 @@ export default function BrainScene({
     let raf = 0;
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      const dt = Math.min(clock.getDelta(), 0.05);
+      const rawDt = clock.getDelta();
+      const dt = Math.min(rawDt, 0.05);
       const t = clock.elapsedTime;
+      // tab was hidden: shift wave clocks forward so floods resume where
+      // they left off instead of skipping to their end
+      if (rawDt > 1) {
+        for (const w of waves) if (w.active) w.start += rawDt;
+        nextWaveAt += rawDt;
+      }
       const k = Math.min(1, dt * 5);
       // Frame-rate independent smooth damping for camera/zoom
       const smoothK = 1 - Math.exp(-dt * 4.5);
@@ -1156,69 +1382,124 @@ export default function BrainScene({
       
       clusterK += (clusterKTarget - clusterK) * k;
 
-      // Shell breathing + shimmer — varies with time, slightly brighter than before
-      shellMat.opacity = 0.5 + 0.08 * Math.sin(t * 0.7);
+      // ---------- thought-wave lifecycle ----------
+      lastT = t;
+      // ambient floods while idle; suppressed during story focus & selection
+      if (!highlight && !tailId && t >= nextWaveAt) {
+        nextWaveAt = t + 4 + Math.random() * 5;
+        const slot = !waves[0].active ? 0 : !waves[1].active ? 1 : -1;
+        if (slot >= 0) spawnAmbientWave(slot);
+      }
+      for (let s = 0; s < 2; s++) {
+        const w = waves[s];
+        if (w.active) {
+          const age = t - w.start;
+          waveAge[s] = age;
+          // gentle fade-in, sustained flood, slow fade once fully spread
+          waveAmp[s] = smooth01(age / 0.45) * (1 - smooth01((age - w.maxArr - 1.4) / 1.6)) * w.intensity;
+          if (age > w.maxArr + 3.2) {
+            w.active = false;
+            waveAmp[s] = 0;
+          }
+        } else {
+          waveAmp[s] = 0;
+          waveAge[s] = -1000;
+        }
+      }
+      if (shellShader) {
+        shellShader.uniforms.uTime.value = t;
+        shellShader.uniforms.uWaveT0.value = waveAge[0];
+        shellShader.uniforms.uWaveI0.value = waveAmp[0];
+        shellShader.uniforms.uWaveT1.value = waveAge[1];
+        shellShader.uniforms.uWaveI1.value = waveAmp[1];
+      }
 
       // First, update link pulses and trigger flashes on target nodes
       const sinceBurst = burstStart > 0 ? (performance.now() - burstStart) / 1000 : 99;
       for (const l of linkObjs) {
         
-        // --- Edge Pulse Waves ---
-        // Light up edges as a global spatial wave passes through the brain
+        // --- flood-wave edge glow ---
+        // Edges brighten in arrival order: the glow ramps while the front
+        // travels from the earlier endpoint to the later one, then cools —
+        // so the web visibly lights up ALONG the propagation direction.
         const nA = nodes.get(l.aId);
         const nB = nodes.get(l.bId);
         let waveEdgeGlow = 0;
-        if (nA && nB) {
-          const midX = (nA.pos.x + nB.pos.x) * 0.5;
-          const midY = (nA.pos.y + nB.pos.y) * 0.5;
-          const midZ = (nA.pos.z + nB.pos.z) * 0.5;
-          
-          // Origin at the base of the brain (brainstem)
-          const dist = Math.hypot(midX, midY + 4, midZ + 2);
-          // Very low frequency (0.45) so only ONE wave fits across the brain at a time
-          const wave = Math.sin(dist * 0.45 - t * 1.5);
-          // Sharpen it heavily (power of 8) so it's a distinct, singular pulse traveling outwards
-          waveEdgeGlow = Math.pow(Math.max(0, wave), 8.0) * 1.5;
+        if (nA && nB && !highlight) {
+          for (let s = 0; s < 2; s++) {
+            if (!waves[s].active || waveAmp[s] <= 0.01) continue;
+            const tA = nA.waveArr[s], tB = nB.waveArr[s];
+            if (tA > 1e8 || tB > 1e8) continue;
+            const t0 = Math.min(tA, tB), t1 = Math.max(tA, tB);
+            const wt = waveAge[s];
+            if (wt <= t0) continue;
+            const travel = Math.max(0.12, t1 - t0);
+            const g = wt < t1 ? (wt - t0) / travel : Math.exp(-(wt - t1) * 1.7);
+            waveEdgeGlow += g * waveAmp[s];
+          }
+          waveEdgeGlow *= l.isVein ? 0.5 : 0.22;
+          if (tailId) waveEdgeGlow *= 0.25; // focused view: selection owns the light
+        }
+        const baseEdgeOpacity = l.targetOpacity; // keep baseline very dim
+        l.mat.opacity += ((baseEdgeOpacity + waveEdgeGlow) - l.mat.opacity) * k;
+        if (l.isVein && l.baseColor && !tailId) {
+          // veins blush gold as the front crosses them
+          l.mat.color.copy(l.baseColor).lerp(waveGold, Math.min(1, waveEdgeGlow * 1.6));
         }
 
-        // Apply waveEdgeGlow to edge opacity, boosting it as the wave passes
-        const baseEdgeOpacity = l.targetOpacity; // keep baseline very dim
-        // We only apply the sweeping light wave to the spatial veins in the idle state
-        const finalWaveGlow = (l.isVein && !highlight) ? waveEdgeGlow : 0;
-        l.mat.opacity += ((baseEdgeOpacity + finalWaveGlow) - l.mat.opacity) * k;
-        
         l.labelA += (l.targetLabel - l.labelA) * k;
         l.visK += (l.targetVisK - l.visK) * k;
         l.label.center.y += (l.labelCenterY - l.label.center.y) * Math.min(1, dt * 8);
         l.labelMat.opacity = l.labelA * l.visK;
-        
-        const prevOffset = l.pulseOffset;
-        l.pulseOffset = prevOffset + dt * l.pulseSpeed;
-        
-        // If a pulse reaches its destination (offset >= 1.0)
-        if (l.pulseOffset >= 1) {
-          l.pulseOffset -= 1;
+
+        // travelling dots: only on semantic links. Idle dots rest a random
+        // beat between runs and ease along the curve, so they never read as
+        // a metronome; focused (route/selection) dots flow continuously.
+        if (!l.isVein) {
+          const focusedPulse = l.route || (tailId !== null && (l.aId === tailId || l.bId === tailId));
+          let resting = false;
+          if (!focusedPulse && (l.pulseWait ?? 0) > 0) {
+            l.pulseWait = (l.pulseWait ?? 0) - dt;
+            resting = true;
+          } else {
+            l.pulseOffset += dt * l.pulseSpeed;
+            if (l.pulseOffset >= 1) {
+              l.pulseOffset -= 1;
+              if (!focusedPulse) l.pulseWait = 1 + Math.random() * 3.5;
+            }
+          }
+          const o = l.pulseOffset;
+          const eased = o * o * (3 - 2 * o); // slow out of the node, coast, slow in
+          const p = l.curve.getPoint(l.dir > 0 ? eased : 1 - eased);
+          l.pulse.position.copy(p);
+          const burstBoost = sinceBurst < 0.9 ? (0.9 - sinceBurst) * 0.6 : 0;
+          const sc = l.targetPulseScale * (1 + burstBoost * 6);
+          l.pulse.scale.setScalar(l.pulse.scale.x + (sc - l.pulse.scale.x) * k);
+          const pulseTarget = resting ? 0 : Math.min(0.95, l.targetOpacity * 1.4 + burstBoost);
+          l.pulseMat.opacity += (pulseTarget - l.pulseMat.opacity) * k;
         }
-        
-        const p = l.curve.getPoint(l.dir > 0 ? l.pulseOffset : 1 - l.pulseOffset);
-        l.pulse.position.copy(p);
-        const burstBoost = sinceBurst < 0.9 ? (0.9 - sinceBurst) * 0.6 : 0;
-        const sc = l.targetPulseScale * (1 + burstBoost * 6);
-        l.pulse.scale.setScalar(l.pulse.scale.x + (sc - l.pulse.scale.x) * k);
-        l.pulseMat.opacity = Math.min(0.95, l.targetOpacity * 1.4 + burstBoost);
       }
 
       // Update merged cluster colours for per-topic opacity changes
       let clusterDirty = false;
       for (const n of nodes.values()) {
+        // wave-front ignition — flare briefly when a flood front arrives here
+        for (let s = 0; s < 2; s++) {
+          if (waves[s].active && !n.waveFired[s] && n.waveArr[s] < 1e8 && waveAge[s] >= n.waveArr[s]) {
+            n.waveFired[s] = true;
+            n.flashK = Math.min(1.3, n.flashK + 0.85 * waveAmp[s]);
+          }
+        }
+        n.flashK *= Math.exp(-dt * 2.1);
+
         // ease glow (0..1) — drives core, halo and cortex-patch opacity together
         const glow = n.coreMat.opacity / 0.9;
         const g2 = glow + (n.targetGlow - glow) * k;
-        
+
         // Nodes stay relatively dark and quiet, edges carry the light
-        n.coreMat.opacity = Math.min(1.0, 0.65 * g2) * n.dimK;
+        n.coreMat.opacity = Math.min(1.0, 0.65 * g2 + n.flashK * 0.3) * n.dimK;
         // Make halos very subtle to avoid blown-out blobs
-        n.haloMat.opacity = Math.min(1.0, 0.1 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5))) * n.dimK;
+        n.haloMat.opacity = Math.min(1.0, 0.1 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) + n.flashK * 0.3) * n.dimK;
         
         // Cortex patches do NOT flash intensely, keeping the brain shape solid
         const clusterOpacity = 0.55 * g2 * clusterK * n.dimK;
@@ -1237,7 +1518,7 @@ export default function BrainScene({
         n.haloK += (n.targetHaloK - n.haloK) * k;
         
         n.core.scale.setScalar(ns * 2.6);
-        n.halo.scale.setScalar(ns * n.haloK * (1 + 0.06 * Math.sin(t * 2 + n.pos.y * 4)));
+        n.halo.scale.setScalar(ns * n.haloK * (1 + 0.06 * Math.sin(t * 2 + n.pos.y * 4) + n.flashK * 0.45));
         n.pick.scale.setScalar(Math.max(n.baseScale, ns) * 3);
         // ease label (visK / labelCenterY come from the declutter pass)
         n.labelA += (n.targetLabel - n.labelA) * k;

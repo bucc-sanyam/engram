@@ -35,8 +35,8 @@
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
-    "mtime": 1784054617.9070334,
-    "ast_hash": "68bcb6e523cba2a0d17a6767ec90e3a2",
+    "mtime": 1784453514.7805011,
+    "ast_hash": "a869fe92ec20b4add9f7b16bf920df77",
     "semantic_hash": ""
   },
   "src/app/api/quiz/route.ts": {
@@ -65,18 +65,18 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1784452325.359992,
-    "ast_hash": "af21bf099ebc62db4fbb214f02310677",
+    "mtime": 1784453412.1748772,
+    "ast_hash": "076b8a4c26113ef31d44d135e68afadd",
     "semantic_hash": ""
   },
   "src/app/review/page.tsx": {
-    "mtime": 1784445119.4397314,
-    "ast_hash": "9f769d23b57d38cce4a91bbf9d438f09",
+    "mtime": 1784453547.4009478,
+    "ast_hash": "82587f123828d649d084a99e0ee25ecb",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
-    "mtime": 1784441111.8568993,
-    "ast_hash": "2addd1b517702958aced9b7c3d9abd31",
+    "mtime": 1784453438.534396,
+    "ast_hash": "ebaf30d9e888d5577e684f8487db9d80",
     "semantic_hash": ""
   },
   "src/components/Nav.tsx": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784452661.8936577,
-    "ast_hash": "5c62946c2a6f2ebaa9cee5c75fcf29d6",
+    "mtime": 1784453655.9732916,
+    "ast_hash": "8804320306d96d0f771d6c332220e793",
     "semantic_hash": ""
   },
   "TASKS.md": {
