@@ -11,6 +11,7 @@ import { backtracking } from "./topics/backtracking";
 import { tries } from "./topics/tries";
 import { graphs } from "./topics/graphs";
 import { advancedGraphs } from "./topics/advanced-graphs";
+import { dp1d } from "./topics/dp-1d";
 
 export * from "./types";
 
@@ -31,6 +32,7 @@ export const DSA_TOPICS: DsaTopic[] = [
   tries,
   graphs,
   advancedGraphs,
+  dp1d,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
