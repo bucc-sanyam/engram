@@ -308,7 +308,7 @@ export default function BrainScene({
       }
       const clusterGeo = new THREE.BufferGeometry();
       clusterGeo.setAttribute("position", new THREE.BufferAttribute(cPos, 3));
-      const clusterColor = color.clone().multiplyScalar(1.45);
+      const clusterColor = color.clone().multiplyScalar(1.15);
       const clusterMat = new THREE.PointsMaterial({
         size: 0.05,
         map: dotTex,
@@ -338,7 +338,7 @@ export default function BrainScene({
       // bright tight core
       const coreMat = new THREE.SpriteMaterial({
         map: dotTex,
-        color: color.clone().lerp(white, 0.55),
+        color: color.clone().lerp(white, 0.4),
         transparent: true,
         opacity: 0.85,
         depthWrite: false,
@@ -861,16 +861,16 @@ export default function BrainScene({
       camera.updateProjectionMatrix();
       clusterK += (clusterKTarget - clusterK) * k;
 
-      shellMat.opacity = 0.5 + 0.08 * Math.sin(t * 0.7);
+      shellMat.opacity = 0.4 + 0.06 * Math.sin(t * 0.7);
 
       for (const n of nodes.values()) {
         // ease glow (0..1) — drives core, halo and cortex-patch opacity together
         const glow = n.coreMat.opacity / 0.85;
         const g2 = glow + (n.targetGlow - glow) * k;
-        n.coreMat.opacity = 0.85 * g2 * n.dimK;
-        n.haloMat.opacity = 0.4 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
+        n.coreMat.opacity = 0.6 * g2 * n.dimK;
+        n.haloMat.opacity = 0.24 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
         // patches dissolve while focused so every topic reads as one node
-        n.clusterMat.opacity = 0.9 * g2 * clusterK * n.dimK;
+        n.clusterMat.opacity = 0.55 * g2 * clusterK * n.dimK;
         // ease scale (drives core + halo + pick radius)
         const sc = n.core.scale.x / 2.4;
         const ns = sc + (n.targetScale - sc) * k;

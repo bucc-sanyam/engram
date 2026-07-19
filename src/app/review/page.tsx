@@ -33,6 +33,29 @@ const SERIES_TITLES: Record<string, string> = {
   "general": "General Knowledge",
 };
 
+const SERIES_COLORS: Record<string, string> = {
+  "competition-act": "#5ba4cf",
+  "dsa": "#f5b95f",
+  "sql": "#22d3ee",
+  "general": "#9aa0aa",
+};
+
+/** On-brand section header for a review group (colour-coded per series). */
+function GroupHeader({ slug }: { slug: string }) {
+  const color = SERIES_COLORS[slug] ?? "#9aa0aa";
+  return (
+    <div className="flex items-center gap-2.5 border-b border-white/[0.08] pb-2.5">
+      <span
+        className="h-2 w-2 shrink-0 rounded-full"
+        style={{ background: color, boxShadow: `0 0 8px ${color}` }}
+      />
+      <h2 className="text-xs font-bold uppercase tracking-[0.14em]" style={{ color }}>
+        {SERIES_TITLES[slug] ?? slug}
+      </h2>
+    </div>
+  );
+}
+
 export default function ReviewPage() {
   return (
     <Suspense fallback={<ReviewFallback />}>
@@ -260,10 +283,8 @@ function ReviewRunner() {
             
             {Array.from(groupedItems.entries()).map(([slug, items]) => (
               <div key={slug} className="space-y-4">
-                <h2 className="text-2xl font-bold text-white/90 px-2 pb-2 border-b border-white/10">
-                  {SERIES_TITLES[slug] ?? slug}
-                </h2>
-                
+                {groupedItems.size > 1 && <GroupHeader slug={slug} />}
+
                 {completedGroups.has(slug) ? (
                   <div className="glass rise p-8 text-center">
                     <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-xl text-[#43d6b5]">
@@ -288,9 +309,7 @@ function ReviewRunner() {
           <div className="space-y-12 rise">
             {Array.from(groupedReports.entries()).map(([slug, rep]) => (
               <div key={slug} className="space-y-6">
-                <h2 className="text-2xl font-bold text-white/90 px-2 pb-2 border-b border-white/10">
-                  {SERIES_TITLES[slug] ?? slug}
-                </h2>
+                {groupedReports.size > 1 && <GroupHeader slug={slug} />}
                 <ReportCardView report={rep} />
               </div>
             ))}

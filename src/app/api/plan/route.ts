@@ -62,11 +62,29 @@ export async function GET(request: Request) {
     .eq("plan_date", today)
     .maybeSingle();
   if (saved) {
-    const done = await doneTopicsToday(supabase, user.id, dayStart);
-    return NextResponse.json({
-      ...markDone(saved.plan as DailyPlan, done),
-      completed: saved.completed,
-    });
+    // Reuse the cached plan UNLESS a topic has become due since it was built
+    // (e.g. the user just learned a story section, making its topic due now).
+    // A completed day is left alone. Otherwise a newly-due topic would never
+    // surface until tomorrow's fresh plan.
+    let reuse = true;
+    if (!saved.completed) {
+      const { data: dueRows } = await supabase
+        .from("topics")
+        .select("id")
+        .eq("user_id", user.id)
+        .lte("next_review_at", new Date().toISOString());
+      const savedIds = new Set((saved.plan as DailyPlan).items.map((i) => i.topic_id));
+      reuse = (dueRows ?? []).every((r) => savedIds.has(r.id as string));
+    }
+    if (reuse) {
+      const done = await doneTopicsToday(supabase, user.id, dayStart);
+      return NextResponse.json({
+        ...markDone(saved.plan as DailyPlan, done),
+        completed: saved.completed,
+      });
+    }
+    // Stale — rebuild below.
+    await supabase.from("daily_plans").delete().eq("user_id", user.id).eq("plan_date", today);
   }
 
   const { data: topicsData } = await supabase
@@ -97,13 +115,29 @@ export async function GET(request: Request) {
     }
   };
 
-  // 1. Due / overdue topics — most overdue first.
+  // 1. Due / overdue topics. Never-reviewed ones come FIRST (newest created
+  // first) so a just-learned story section — due "now" with 0 days overdue —
+  // isn't crowded out of the capped plan by older overdue topics; then the
+  // reviewed-but-overdue ones, most overdue first.
   topics
     .filter((t) => new Date(t.next_review_at).getTime() <= now)
-    .sort((a, b) => new Date(a.next_review_at).getTime() - new Date(b.next_review_at).getTime())
+    .sort((a, b) => {
+      const aNew = a.last_reviewed_at ? 1 : 0;
+      const bNew = b.last_reviewed_at ? 1 : 0;
+      if (aNew !== bNew) return aNew - bNew;
+      if (aNew === 0) {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      }
+      return new Date(a.next_review_at).getTime() - new Date(b.next_review_at).getTime();
+    })
     .forEach((t) => {
       const overdueDays = Math.floor((now - new Date(t.next_review_at).getTime()) / dayMs);
-      add(t, overdueDays > 1 ? `Overdue by ${overdueDays} days` : "Due for review today");
+      const reason = !t.last_reviewed_at
+        ? "New — ready for its first review"
+        : overdueDays > 1
+          ? `Overdue by ${overdueDays} days`
+          : "Due for review today";
+      add(t, reason);
     });
 
   // 2. Fresh topics from the last 3 days.

@@ -64,8 +64,17 @@ export default function Dashboard() {
 
   const topNotes = childrenOf(notes, null);
 
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
+  // Compute the clock on the client only. This page is prerendered, and with
+  // suppressHydrationWarning React KEEPS the server-rendered text on mismatch —
+  // so a build-time (UTC) "Good morning" would otherwise never update. Setting
+  // `now` in an effect forces a real re-render with the viewer's local time.
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => {
+    setNow(new Date());
+  }, []);
+  const hour = now?.getHours() ?? -1;
+  const greeting =
+    hour < 0 ? "Hello" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
   const firstName = profile?.display_name?.trim().split(/\s+/)[0] || "there";
 
 
@@ -99,9 +108,9 @@ export default function Dashboard() {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-32 pt-10 sm:px-6 md:pb-16">
         {/* Greeting */}
         <div className="rise mb-10">
-          {/* suppressHydrationWarning: date/greeting depend on the viewer's clock & locale */}
+          {/* Date/greeting depend on the viewer's clock & locale — client-only. */}
           <p className="micro mb-3" suppressHydrationWarning>
-            {new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })}
+            {now?.toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" }) ?? " "}
           </p>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.1] sm:text-5xl" suppressHydrationWarning>
             {greeting}, {firstName}
