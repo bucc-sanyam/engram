@@ -77,6 +77,56 @@ export default function BlogsPage() {
           </span>
         </Link>
 
+        {/* The Competition Code — static Competition Act series */}
+        <Link
+          href="/blogs/competition-act"
+          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
+        >
+          <div
+            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#5ba4cf] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+            aria-hidden
+          />
+          <p className="micro mb-2 !text-[#5ba4cf]">The Competition Code · Legal series</p>
+          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+            The Competition Act, 2002 — read as one story
+          </h2>
+          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+            10 chapters, 31 section blogs, one continuous reading path — every provision&apos;s
+            insight, landmark cases, and the thread that hands you to the next.
+          </p>
+          <span
+            aria-hidden
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#5ba4cf] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+          >
+            →
+          </span>
+        </Link>
+
+        {/* The Query Playbook — static SQL series */}
+        <Link
+          href="/blogs/sql"
+          className="glass glass-hover rise group relative mb-8 block overflow-hidden rounded-[1.5rem] p-5"
+        >
+          <div
+            className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#22d3ee] opacity-15 blur-3xl transition-opacity group-hover:opacity-25"
+            aria-hidden
+          />
+          <p className="micro mb-2 !text-[#22d3ee]">The Query Playbook · SQL series</p>
+          <h2 className="text-lg font-bold text-white/90 transition-colors group-hover:text-white">
+            SQL, read as one story
+          </h2>
+          <p className="mt-1.5 max-w-lg text-sm leading-relaxed text-faint">
+            12 chapters, 41 LeetCode problems, one continuous reading path — from SELECT
+            to window functions to pivoting, with practice links on every problem.
+          </p>
+          <span
+            aria-hidden
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-[#22d3ee] opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+          >
+            →
+          </span>
+        </Link>
+
         {/* Search + filter */}
         <div className="rise mb-8 space-y-3">
           <div className="relative">
