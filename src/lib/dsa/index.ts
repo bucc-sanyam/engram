@@ -9,6 +9,7 @@ import { trees } from "./topics/trees";
 import { heap } from "./topics/heap";
 import { backtracking } from "./topics/backtracking";
 import { tries } from "./topics/tries";
+import { graphs } from "./topics/graphs";
 
 export * from "./types";
 
@@ -27,6 +28,7 @@ export const DSA_TOPICS: DsaTopic[] = [
   heap,
   backtracking,
   tries,
+  graphs,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
