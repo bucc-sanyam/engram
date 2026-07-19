@@ -23,9 +23,9 @@ const MODE_LABEL: Record<string, string> = {
 
 /** Display titles for learnable story series (extend as series are added). */
 const SERIES_TITLES: Record<string, string> = {
-  "competition-act": "Competition Act",
-  "dsa": "Pattern Atlas",
-  "sql": "Query Playbook",
+  "competition-act": "Legal Series",
+  "dsa": "DSA Series",
+  "sql": "SQL Series",
 };
 
 export default function Dashboard() {
@@ -247,7 +247,12 @@ export default function Dashboard() {
                   <div className="space-y-6">
                     {generalItems.length > 0 && (
                       <div>
-                        <h3 className="micro mb-3 !text-white/40">General Knowledge</h3>
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="micro m-0 !text-white/40">General Knowledge</h3>
+                          <Link href={`/review?series=general`} className="text-xs font-semibold text-white/60 hover:text-white">
+                            Start Quiz →
+                          </Link>
+                        </div>
                         <ul className="space-y-2.5">
                           {generalItems.map(renderPlanItem)}
                         </ul>
@@ -257,9 +262,14 @@ export default function Dashboard() {
                       const color = stories.find(s => s.series_slug === slug)?.color;
                       return (
                         <div key={slug}>
-                          <h3 className="micro mb-3" style={{ color: color || "rgba(255,255,255,0.4)" }}>
-                            {SERIES_TITLES[slug] ?? slug}
-                          </h3>
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="micro m-0" style={{ color: color || "rgba(255,255,255,0.4)" }}>
+                              {SERIES_TITLES[slug] ?? slug}
+                            </h3>
+                            <Link href={`/review?series=${slug}`} className="text-xs font-semibold hover:underline" style={{ color: color || "white" }}>
+                              Start Quiz →
+                            </Link>
+                          </div>
                           <ul className="space-y-2.5">
                             {items.map(renderPlanItem)}
                           </ul>
