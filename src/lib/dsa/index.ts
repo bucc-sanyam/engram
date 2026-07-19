@@ -13,6 +13,8 @@ import { graphs } from "./topics/graphs";
 import { advancedGraphs } from "./topics/advanced-graphs";
 import { dp1d } from "./topics/dp-1d";
 import { dp2d } from "./topics/dp-2d";
+import { greedy } from "./topics/greedy";
+import { intervals } from "./topics/intervals";
 
 export * from "./types";
 
@@ -35,6 +37,8 @@ export const DSA_TOPICS: DsaTopic[] = [
   advancedGraphs,
   dp1d,
   dp2d,
+  greedy,
+  intervals,
 ];
 
 export const DSA_SERIES_TITLE = "The Pattern Atlas";
