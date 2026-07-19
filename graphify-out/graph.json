@@ -492,7 +492,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 8,
+      "community": 9,
       "norm_label": "page.tsx"
     },
     {
@@ -502,7 +502,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 8,
+      "community": 9,
       "norm_label": "metadata"
     },
     {
@@ -512,7 +512,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 8,
+      "community": 9,
       "norm_label": "aboutpage()"
     },
     {
@@ -942,7 +942,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_blogs_id_page",
-      "community": 8,
+      "community": 53,
       "norm_label": "page.tsx"
     },
     {
@@ -952,7 +952,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_topicblogpage",
-      "community": 8,
+      "community": 53,
       "norm_label": "topicblogpage()"
     },
     {
@@ -962,7 +962,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_sourcelabel",
-      "community": 8,
+      "community": 53,
       "norm_label": "sourcelabel()"
     },
     {
@@ -972,7 +972,7 @@
       "source_location": "L291",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_linkicon",
-      "community": 8,
+      "community": 53,
       "norm_label": "linkicon()"
     },
     {
@@ -982,8 +982,228 @@
       "source_location": "L300",
       "_origin": "ast",
       "id": "src_app_blogs_id_page_texticon",
-      "community": 8,
+      "community": 53,
       "norm_label": "texticon()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_slug_page",
+      "community": 47,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_slug_page_generatestaticparams",
+      "community": 47,
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_slug_page_generatemetadata",
+      "community": 47,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "CompActSectionPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "community": 47,
+      "norm_label": "compactsectionpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_page",
+      "community": 47,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_page_generatestaticparams",
+      "community": 47,
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_page_generatemetadata",
+      "community": 47,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "CompActChapterPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "community": 47,
+      "norm_label": "compactchapterpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_page",
+      "community": 47,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_page_metadata",
+      "community": 47,
+      "norm_label": "metadata"
+    },
+    {
+      "label": "CompetitionActPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "src_app_blogs_competition_act_page_competitionactpage",
+      "community": 47,
+      "norm_label": "competitionactpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_slug_page",
+      "community": 46,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_slug_page_generatestaticparams",
+      "community": 46,
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_slug_page_generatemetadata",
+      "community": 46,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "DsaProblemPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "community": 46,
+      "norm_label": "dsaproblempage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_page",
+      "community": 46,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "generateStaticParams()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_page_generatestaticparams",
+      "community": 46,
+      "norm_label": "generatestaticparams()"
+    },
+    {
+      "label": "generateMetadata()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_page_generatemetadata",
+      "community": 46,
+      "norm_label": "generatemetadata()"
+    },
+    {
+      "label": "DsaTopicPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "community": 46,
+      "norm_label": "dsatopicpage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_page",
+      "community": 46,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "metadata",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_page_metadata",
+      "community": 46,
+      "norm_label": "metadata"
+    },
+    {
+      "label": "DsaAtlasPage()",
+      "file_type": "code",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "src_app_blogs_dsa_page_dsaatlaspage",
+      "community": 46,
+      "norm_label": "dsaatlaspage()"
     },
     {
       "label": "page.tsx",
@@ -1009,7 +1229,7 @@
       "label": "SearchIcon()",
       "file_type": "code",
       "source_file": "src/app/blogs/page.tsx",
-      "source_location": "L191",
+      "source_location": "L241",
       "_origin": "ast",
       "id": "src_app_blogs_page_searchicon",
       "community": 8,
@@ -1222,7 +1442,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 7,
+      "community": 49,
       "norm_label": "page.tsx"
     },
     {
@@ -1232,7 +1452,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_page_mode_label",
-      "community": 7,
+      "community": 49,
       "norm_label": "mode_label"
     },
     {
@@ -1242,7 +1462,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_page_dashboard",
-      "community": 7,
+      "community": 51,
       "norm_label": "dashboard()"
     },
     {
@@ -1252,7 +1472,7 @@
       "source_location": "L375",
       "_origin": "ast",
       "id": "src_app_page_stat",
-      "community": 7,
+      "community": 49,
       "norm_label": "stat()"
     },
     {
@@ -1262,7 +1482,7 @@
       "source_location": "L393",
       "_origin": "ast",
       "id": "src_app_page_divider",
-      "community": 7,
+      "community": 49,
       "norm_label": "divider()"
     },
     {
@@ -1272,7 +1492,7 @@
       "source_location": "L397",
       "_origin": "ast",
       "id": "src_app_page_bulbicon",
-      "community": 7,
+      "community": 49,
       "norm_label": "bulbicon()"
     },
     {
@@ -1282,7 +1502,7 @@
       "source_location": "L405",
       "_origin": "ast",
       "id": "src_app_page_sparkleicon",
-      "community": 7,
+      "community": 49,
       "norm_label": "sparkleicon()"
     },
     {
@@ -1292,7 +1512,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_profile_page",
-      "community": 8,
+      "community": 51,
       "norm_label": "page.tsx"
     },
     {
@@ -1302,7 +1522,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_profile_page_profilepage",
-      "community": 8,
+      "community": 51,
       "norm_label": "profilepage()"
     },
     {
@@ -1312,7 +1532,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_app_profile_page_profilestat",
-      "community": 8,
+      "community": 51,
       "norm_label": "profilestat()"
     },
     {
@@ -1322,7 +1542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_review_page",
-      "community": 0,
+      "community": 48,
       "norm_label": "page.tsx"
     },
     {
@@ -1332,7 +1552,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_app_review_page_phase",
-      "community": 0,
+      "community": 48,
       "norm_label": "phase"
     },
     {
@@ -1342,7 +1562,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_app_review_page_reviewpage",
-      "community": 0,
+      "community": 48,
       "norm_label": "reviewpage()"
     },
     {
@@ -1352,7 +1572,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_app_review_page_reviewfallback",
-      "community": 0,
+      "community": 48,
       "norm_label": "reviewfallback()"
     },
     {
@@ -1362,7 +1582,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_app_review_page_reviewrunner",
-      "community": 0,
+      "community": 48,
       "norm_label": "reviewrunner()"
     },
     {
@@ -1372,7 +1592,7 @@
       "source_location": "L582",
       "_origin": "ast",
       "id": "src_app_review_page_spinner",
-      "community": 0,
+      "community": 48,
       "norm_label": "spinner()"
     },
     {
@@ -1499,7 +1719,7 @@
       "label": "CONNECT",
       "file_type": "code",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_footer_connect",
       "community": 9,
@@ -1509,7 +1729,7 @@
       "label": "Footer()",
       "file_type": "code",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_footer_footer",
       "community": 9,
@@ -1522,7 +1742,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_markdown",
-      "community": 7,
+      "community": 47,
       "norm_label": "markdown.tsx"
     },
     {
@@ -1532,7 +1752,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_markdown_issafehref",
-      "community": 7,
+      "community": 47,
       "norm_label": "issafehref()"
     },
     {
@@ -1542,7 +1762,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_components_markdown_inlinerule",
-      "community": 7,
+      "community": 47,
       "norm_label": "inlinerule"
     },
     {
@@ -1552,7 +1772,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_components_markdown_inline",
-      "community": 7,
+      "community": 47,
       "norm_label": "inline"
     },
     {
@@ -1562,7 +1782,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_components_markdown_markdown",
-      "community": 7,
+      "community": 47,
       "norm_label": "markdown()"
     },
     {
@@ -1572,7 +1792,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_nav",
-      "community": 8,
+      "community": 9,
       "norm_label": "nav.tsx"
     },
     {
@@ -1582,7 +1802,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_nav_links",
-      "community": 8,
+      "community": 9,
       "norm_label": "links"
     },
     {
@@ -1592,7 +1812,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_nav_nav",
-      "community": 8,
+      "community": 9,
       "norm_label": "nav()"
     },
     {
@@ -1612,7 +1832,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_components_nav_sunicon",
-      "community": 8,
+      "community": 9,
       "norm_label": "sunicon()"
     },
     {
@@ -1622,7 +1842,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_components_nav_plusicon",
-      "community": 8,
+      "community": 9,
       "norm_label": "plusicon()"
     },
     {
@@ -1632,7 +1852,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_components_nav_bolticon",
-      "community": 8,
+      "community": 9,
       "norm_label": "bolticon()"
     },
     {
@@ -1642,7 +1862,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "src_components_nav_flameicon",
-      "community": 8,
+      "community": 49,
       "norm_label": "flameicon()"
     },
     {
@@ -1652,7 +1872,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "src_components_nav_bookicon",
-      "community": 8,
+      "community": 9,
       "norm_label": "bookicon()"
     },
     {
@@ -1662,7 +1882,7 @@
       "source_location": "L200",
       "_origin": "ast",
       "id": "src_components_nav_usericon",
-      "community": 8,
+      "community": 9,
       "norm_label": "usericon()"
     },
     {
@@ -1672,7 +1892,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progresscalendar",
-      "community": 0,
+      "community": 52,
       "norm_label": "progresscalendar.tsx"
     },
     {
@@ -1682,7 +1902,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progresscalendar_weekdays",
-      "community": 0,
+      "community": 52,
       "norm_label": "weekdays"
     },
     {
@@ -1692,7 +1912,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_progresscalendar_daykey",
-      "community": 0,
+      "community": 52,
       "norm_label": "daykey()"
     },
     {
@@ -1702,7 +1922,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_components_progresscalendar_progresscalendar",
-      "community": 0,
+      "community": 52,
       "norm_label": "progresscalendar()"
     },
     {
@@ -1712,7 +1932,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_components_progresscalendar_dayclasses",
-      "community": 0,
+      "community": 52,
       "norm_label": "dayclasses()"
     },
     {
@@ -1722,7 +1942,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progressmap",
-      "community": 8,
+      "community": 49,
       "norm_label": "progressmap.tsx"
     },
     {
@@ -1732,7 +1952,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progressmap_nextmilestone",
-      "community": 8,
+      "community": 49,
       "norm_label": "nextmilestone()"
     },
     {
@@ -1742,7 +1962,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_progressmap_progressmap",
-      "community": 8,
+      "community": 49,
       "norm_label": "progressmap()"
     },
     {
@@ -1762,7 +1982,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 0,
+      "community": 50,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -1772,7 +1992,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_reportcardview_kind_label",
-      "community": 0,
+      "community": 50,
       "norm_label": "kind_label"
     },
     {
@@ -1782,7 +2002,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 0,
+      "community": 50,
       "norm_label": "reportcardview()"
     },
     {
@@ -1792,7 +2012,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 0,
+      "community": 50,
       "norm_label": "reportitemcard()"
     },
     {
@@ -1802,7 +2022,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 0,
+      "community": 50,
       "norm_label": "bigscorering()"
     },
     {
@@ -1812,7 +2032,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 0,
+      "community": 50,
       "norm_label": "scorering()"
     },
     {
@@ -1946,6 +2166,366 @@
       "norm_label": "chunktext()"
     },
     {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index",
+      "community": 47,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "COMP_ACT_CHAPTERS",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_comp_act_chapters",
+      "community": 47,
+      "norm_label": "comp_act_chapters"
+    },
+    {
+      "label": "getCompActChapter()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_getcompactchapter",
+      "community": 47,
+      "norm_label": "getcompactchapter()"
+    },
+    {
+      "label": "getCompActSection()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_getcompactsection",
+      "community": 47,
+      "norm_label": "getcompactsection()"
+    },
+    {
+      "label": "compActSectionCount()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactsectioncount",
+      "community": 47,
+      "norm_label": "compactsectioncount()"
+    },
+    {
+      "label": "CompActStop",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactstop",
+      "community": 47,
+      "norm_label": "compactstop"
+    },
+    {
+      "label": "compActReadingOrder()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactreadingorder",
+      "community": 47,
+      "norm_label": "compactreadingorder()"
+    },
+    {
+      "label": "compActStopHref()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L66",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactstophref",
+      "community": 47,
+      "norm_label": "compactstophref()"
+    },
+    {
+      "label": "compActStopTitle()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactstoptitle",
+      "community": 47,
+      "norm_label": "compactstoptitle()"
+    },
+    {
+      "label": "compActNeighbors()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactneighbors",
+      "community": 47,
+      "norm_label": "compactneighbors()"
+    },
+    {
+      "label": "compActSectionNumber()",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_index_compactsectionnumber",
+      "community": 47,
+      "norm_label": "compactsectionnumber()"
+    },
+    {
+      "label": "abuse-of-dominance.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/abuse-of-dominance.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_abuse_of_dominance",
+      "community": 47,
+      "norm_label": "abuse-of-dominance.ts"
+    },
+    {
+      "label": "abuseOfDominance",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/abuse-of-dominance.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_abuse_of_dominance_abuseofdominance",
+      "community": 47,
+      "norm_label": "abuseofdominance"
+    },
+    {
+      "label": "advocacy-miscellaneous.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/advocacy-miscellaneous.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_advocacy_miscellaneous",
+      "community": 47,
+      "norm_label": "advocacy-miscellaneous.ts"
+    },
+    {
+      "label": "advocacyMiscellaneous",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/advocacy-miscellaneous.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_advocacy_miscellaneous_advocacymiscellaneous",
+      "community": 47,
+      "norm_label": "advocacymiscellaneous"
+    },
+    {
+      "label": "anti-competitive-agreements.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/anti-competitive-agreements.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_anti_competitive_agreements",
+      "community": 47,
+      "norm_label": "anti-competitive-agreements.ts"
+    },
+    {
+      "label": "antiCompetitiveAgreements",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/anti-competitive-agreements.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_anti_competitive_agreements_anticompetitiveagreements",
+      "community": 47,
+      "norm_label": "anticompetitiveagreements"
+    },
+    {
+      "label": "combinations.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/combinations.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_combinations",
+      "community": 47,
+      "norm_label": "combinations.ts"
+    },
+    {
+      "label": "combinations",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/combinations.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_combinations_combinations",
+      "community": 47,
+      "norm_label": "combinations"
+    },
+    {
+      "label": "competition-commission.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/competition-commission.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_competition_commission",
+      "community": 47,
+      "norm_label": "competition-commission.ts"
+    },
+    {
+      "label": "competitionCommission",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/competition-commission.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_competition_commission_competitioncommission",
+      "community": 47,
+      "norm_label": "competitioncommission"
+    },
+    {
+      "label": "director-general.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/director-general.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_director_general",
+      "community": 47,
+      "norm_label": "director-general.ts"
+    },
+    {
+      "label": "directorGeneral",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/director-general.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_director_general_directorgeneral",
+      "community": 47,
+      "norm_label": "directorgeneral"
+    },
+    {
+      "label": "inquiry-powers.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/inquiry-powers.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_inquiry_powers",
+      "community": 47,
+      "norm_label": "inquiry-powers.ts"
+    },
+    {
+      "label": "inquiryPowers",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/inquiry-powers.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_inquiry_powers_inquirypowers",
+      "community": 47,
+      "norm_label": "inquirypowers"
+    },
+    {
+      "label": "orders-and-remedies.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/orders-and-remedies.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_orders_and_remedies",
+      "community": 47,
+      "norm_label": "orders-and-remedies.ts"
+    },
+    {
+      "label": "ordersAndRemedies",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/orders-and-remedies.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_orders_and_remedies_ordersandremedies",
+      "community": 47,
+      "norm_label": "ordersandremedies"
+    },
+    {
+      "label": "penalties.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/penalties.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_penalties",
+      "community": 47,
+      "norm_label": "penalties.ts"
+    },
+    {
+      "label": "penalties",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/penalties.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_penalties_penalties",
+      "community": 47,
+      "norm_label": "penalties"
+    },
+    {
+      "label": "preliminary.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/preliminary.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_preliminary",
+      "community": 47,
+      "norm_label": "preliminary.ts"
+    },
+    {
+      "label": "preliminary",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/topics/preliminary.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_topics_preliminary_preliminary",
+      "community": 47,
+      "norm_label": "preliminary"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_types",
+      "community": 47,
+      "norm_label": "types.ts"
+    },
+    {
+      "label": "CompActImportance",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_types_compactimportance",
+      "community": 47,
+      "norm_label": "compactimportance"
+    },
+    {
+      "label": "CompActSection",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_types_compactsection",
+      "community": 47,
+      "norm_label": "compactsection"
+    },
+    {
+      "label": "CompActChapter",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_types_compactchapter",
+      "community": 47,
+      "norm_label": "compactchapter"
+    },
+    {
+      "label": "IMPORTANCE_COLORS",
+      "file_type": "code",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "src_lib_competition_act_types_importance_colors",
+      "community": 47,
+      "norm_label": "importance_colors"
+    },
+    {
       "label": "data.ts",
       "file_type": "code",
       "source_file": "src/lib/data.ts",
@@ -1982,7 +2562,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_lib_data_savedemostate",
-      "community": 0,
+      "community": 48,
       "norm_label": "savedemostate()"
     },
     {
@@ -1992,7 +2572,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_lib_data_loaddemostate",
-      "community": 0,
+      "community": 52,
       "norm_label": "loaddemostate()"
     },
     {
@@ -2022,7 +2602,7 @@
       "source_location": "L120",
       "_origin": "ast",
       "id": "src_lib_data_api",
-      "community": 0,
+      "community": 48,
       "norm_label": "api()"
     },
     {
@@ -2032,7 +2612,7 @@
       "source_location": "L138",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 8,
+      "community": 51,
       "norm_label": "getprofile()"
     },
     {
@@ -2042,7 +2622,7 @@
       "source_location": "L164",
       "_origin": "ast",
       "id": "src_lib_data_updateprofile",
-      "community": 0,
+      "community": 51,
       "norm_label": "updateprofile()"
     },
     {
@@ -2052,7 +2632,7 @@
       "source_location": "L182",
       "_origin": "ast",
       "id": "src_lib_data_getuseremail",
-      "community": 8,
+      "community": 51,
       "norm_label": "getuseremail()"
     },
     {
@@ -2062,7 +2642,7 @@
       "source_location": "L189",
       "_origin": "ast",
       "id": "src_lib_data_gettopics",
-      "community": 8,
+      "community": 51,
       "norm_label": "gettopics()"
     },
     {
@@ -2072,7 +2652,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "src_lib_data_gettopic",
-      "community": 8,
+      "community": 53,
       "norm_label": "gettopic()"
     },
     {
@@ -2082,7 +2662,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_lib_data_gettopicsource",
-      "community": 8,
+      "community": 53,
       "norm_label": "gettopicsource()"
     },
     {
@@ -2102,7 +2682,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_lib_data_getentries",
-      "community": 7,
+      "community": 51,
       "norm_label": "getentries()"
     },
     {
@@ -2112,7 +2692,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_lib_data_gettopicquestions",
-      "community": 8,
+      "community": 53,
       "norm_label": "gettopicquestions()"
     },
     {
@@ -2122,7 +2702,7 @@
       "source_location": "L284",
       "_origin": "ast",
       "id": "src_lib_data_getreviews",
-      "community": 7,
+      "community": 51,
       "norm_label": "getreviews()"
     },
     {
@@ -2132,7 +2712,7 @@
       "source_location": "L297",
       "_origin": "ast",
       "id": "src_lib_data_getplan",
-      "community": 0,
+      "community": 48,
       "norm_label": "getplan()"
     },
     {
@@ -2152,7 +2732,7 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "src_lib_data_ingesttext",
-      "community": 0,
+      "community": 48,
       "norm_label": "ingesttext()"
     },
     {
@@ -2162,7 +2742,7 @@
       "source_location": "L330",
       "_origin": "ast",
       "id": "src_lib_data_ingestlink",
-      "community": 0,
+      "community": 48,
       "norm_label": "ingestlink()"
     },
     {
@@ -2172,7 +2752,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "src_lib_data_startquiz",
-      "community": 0,
+      "community": 48,
       "norm_label": "startquiz()"
     },
     {
@@ -2182,7 +2762,7 @@
       "source_location": "L405",
       "_origin": "ast",
       "id": "src_lib_data_savequizanswer",
-      "community": 0,
+      "community": 48,
       "norm_label": "savequizanswer()"
     },
     {
@@ -2192,7 +2772,7 @@
       "source_location": "L427",
       "_origin": "ast",
       "id": "src_lib_data_finishquiz",
-      "community": 0,
+      "community": 48,
       "norm_label": "finishquiz()"
     },
     {
@@ -2202,7 +2782,7 @@
       "source_location": "L566",
       "_origin": "ast",
       "id": "src_lib_data_getfactoftheday",
-      "community": 7,
+      "community": 51,
       "norm_label": "getfactoftheday()"
     },
     {
@@ -2212,7 +2792,7 @@
       "source_location": "L589",
       "_origin": "ast",
       "id": "src_lib_data_markplancompleted",
-      "community": 0,
+      "community": 48,
       "norm_label": "markplancompleted()"
     },
     {
@@ -2222,7 +2802,7 @@
       "source_location": "L599",
       "_origin": "ast",
       "id": "src_lib_data_signout",
-      "community": 8,
+      "community": 51,
       "norm_label": "signout()"
     },
     {
@@ -2232,7 +2812,7 @@
       "source_location": "L606",
       "_origin": "ast",
       "id": "src_lib_data_gettodayreviewdetail",
-      "community": 0,
+      "community": 48,
       "norm_label": "gettodayreviewdetail()"
     },
     {
@@ -2242,7 +2822,7 @@
       "source_location": "L655",
       "_origin": "ast",
       "id": "src_lib_data_mergereports",
-      "community": 0,
+      "community": 52,
       "norm_label": "mergereports()"
     },
     {
@@ -2252,7 +2832,7 @@
       "source_location": "L679",
       "_origin": "ast",
       "id": "src_lib_data_reportfromreviews",
-      "community": 0,
+      "community": 52,
       "norm_label": "reportfromreviews()"
     },
     {
@@ -2262,7 +2842,7 @@
       "source_location": "L723",
       "_origin": "ast",
       "id": "src_lib_data_getdayreport",
-      "community": 0,
+      "community": 52,
       "norm_label": "getdayreport()"
     },
     {
@@ -2272,7 +2852,7 @@
       "source_location": "L765",
       "_origin": "ast",
       "id": "src_lib_data_getlatestreporttoday",
-      "community": 0,
+      "community": 48,
       "norm_label": "getlatestreporttoday()"
     },
     {
@@ -2292,7 +2872,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_dates_localdaykey",
-      "community": 0,
+      "community": 52,
       "norm_label": "localdaykey()"
     },
     {
@@ -2302,7 +2882,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_dates_tzoffsetminutes",
-      "community": 0,
+      "community": 48,
       "norm_label": "tzoffsetminutes()"
     },
     {
@@ -2312,7 +2892,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_lib_dates_localdaystartiso",
-      "community": 0,
+      "community": 48,
       "norm_label": "localdaystartiso()"
     },
     {
@@ -2322,7 +2902,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_dates_localdayendiso",
-      "community": 0,
+      "community": 52,
       "norm_label": "localdayendiso()"
     },
     {
@@ -2546,13 +3126,533 @@
       "norm_label": "demograde()"
     },
     {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index",
+      "community": 46,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "DSA_TOPICS",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsa_topics",
+      "community": 46,
+      "norm_label": "dsa_topics"
+    },
+    {
+      "label": "getDsaTopic()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_getdsatopic",
+      "community": 46,
+      "norm_label": "getdsatopic()"
+    },
+    {
+      "label": "getDsaProblem()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_getdsaproblem",
+      "community": 46,
+      "norm_label": "getdsaproblem()"
+    },
+    {
+      "label": "dsaProblemCount()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsaproblemcount",
+      "community": 46,
+      "norm_label": "dsaproblemcount()"
+    },
+    {
+      "label": "DsaStop",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsastop",
+      "community": 46,
+      "norm_label": "dsastop"
+    },
+    {
+      "label": "dsaReadingOrder()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsareadingorder",
+      "community": 46,
+      "norm_label": "dsareadingorder()"
+    },
+    {
+      "label": "dsaStopHref()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsastophref",
+      "community": 46,
+      "norm_label": "dsastophref()"
+    },
+    {
+      "label": "dsaStopTitle()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L88",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsastoptitle",
+      "community": 46,
+      "norm_label": "dsastoptitle()"
+    },
+    {
+      "label": "dsaNeighbors()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsaneighbors",
+      "community": 46,
+      "norm_label": "dsaneighbors()"
+    },
+    {
+      "label": "dsaProblemNumber()",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "src_lib_dsa_index_dsaproblemnumber",
+      "community": 46,
+      "norm_label": "dsaproblemnumber()"
+    },
+    {
+      "label": "advanced-graphs.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/advanced-graphs.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_advanced_graphs",
+      "community": 46,
+      "norm_label": "advanced-graphs.ts"
+    },
+    {
+      "label": "advancedGraphs",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/advanced-graphs.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_advanced_graphs_advancedgraphs",
+      "community": 46,
+      "norm_label": "advancedgraphs"
+    },
+    {
+      "label": "arrays-hashing.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/arrays-hashing.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_arrays_hashing",
+      "community": 46,
+      "norm_label": "arrays-hashing.ts"
+    },
+    {
+      "label": "arraysHashing",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/arrays-hashing.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_arrays_hashing_arrayshashing",
+      "community": 46,
+      "norm_label": "arrayshashing"
+    },
+    {
+      "label": "backtracking.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/backtracking.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_backtracking",
+      "community": 46,
+      "norm_label": "backtracking.ts"
+    },
+    {
+      "label": "backtracking",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/backtracking.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_backtracking_backtracking",
+      "community": 46,
+      "norm_label": "backtracking"
+    },
+    {
+      "label": "binary-search.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/binary-search.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_binary_search",
+      "community": 46,
+      "norm_label": "binary-search.ts"
+    },
+    {
+      "label": "binarySearch",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/binary-search.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_binary_search_binarysearch",
+      "community": 46,
+      "norm_label": "binarysearch"
+    },
+    {
+      "label": "bit-manipulation.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/bit-manipulation.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_bit_manipulation",
+      "community": 46,
+      "norm_label": "bit-manipulation.ts"
+    },
+    {
+      "label": "bitManipulation",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/bit-manipulation.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_bit_manipulation_bitmanipulation",
+      "community": 46,
+      "norm_label": "bitmanipulation"
+    },
+    {
+      "label": "dp-1d.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/dp-1d.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_dp_1d",
+      "community": 46,
+      "norm_label": "dp-1d.ts"
+    },
+    {
+      "label": "dp1d",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/dp-1d.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_dp_1d_dp1d",
+      "community": 46,
+      "norm_label": "dp1d"
+    },
+    {
+      "label": "dp-2d.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/dp-2d.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_dp_2d",
+      "community": 46,
+      "norm_label": "dp-2d.ts"
+    },
+    {
+      "label": "dp2d",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/dp-2d.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_dp_2d_dp2d",
+      "community": 46,
+      "norm_label": "dp2d"
+    },
+    {
+      "label": "graphs.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/graphs.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_graphs",
+      "community": 46,
+      "norm_label": "graphs.ts"
+    },
+    {
+      "label": "graphs",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/graphs.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_graphs_graphs",
+      "community": 46,
+      "norm_label": "graphs"
+    },
+    {
+      "label": "greedy.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/greedy.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_greedy",
+      "community": 46,
+      "norm_label": "greedy.ts"
+    },
+    {
+      "label": "greedy",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/greedy.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_greedy_greedy",
+      "community": 46,
+      "norm_label": "greedy"
+    },
+    {
+      "label": "heap.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/heap.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_heap",
+      "community": 46,
+      "norm_label": "heap.ts"
+    },
+    {
+      "label": "heap",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/heap.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_heap_heap",
+      "community": 46,
+      "norm_label": "heap"
+    },
+    {
+      "label": "intervals.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/intervals.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_intervals",
+      "community": 46,
+      "norm_label": "intervals.ts"
+    },
+    {
+      "label": "intervals",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/intervals.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_intervals_intervals",
+      "community": 46,
+      "norm_label": "intervals"
+    },
+    {
+      "label": "linked-list.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/linked-list.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_linked_list",
+      "community": 46,
+      "norm_label": "linked-list.ts"
+    },
+    {
+      "label": "linkedList",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/linked-list.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_linked_list_linkedlist",
+      "community": 46,
+      "norm_label": "linkedlist"
+    },
+    {
+      "label": "math-geometry.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/math-geometry.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_math_geometry",
+      "community": 46,
+      "norm_label": "math-geometry.ts"
+    },
+    {
+      "label": "mathGeometry",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/math-geometry.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_math_geometry_mathgeometry",
+      "community": 46,
+      "norm_label": "mathgeometry"
+    },
+    {
+      "label": "sliding-window.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/sliding-window.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_sliding_window",
+      "community": 46,
+      "norm_label": "sliding-window.ts"
+    },
+    {
+      "label": "slidingWindow",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/sliding-window.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_sliding_window_slidingwindow",
+      "community": 46,
+      "norm_label": "slidingwindow"
+    },
+    {
+      "label": "stack.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/stack.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_stack",
+      "community": 46,
+      "norm_label": "stack.ts"
+    },
+    {
+      "label": "stack",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/stack.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_stack_stack",
+      "community": 46,
+      "norm_label": "stack"
+    },
+    {
+      "label": "trees.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/trees.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_trees",
+      "community": 46,
+      "norm_label": "trees.ts"
+    },
+    {
+      "label": "trees",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/trees.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_trees_trees",
+      "community": 46,
+      "norm_label": "trees"
+    },
+    {
+      "label": "tries.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/tries.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_tries",
+      "community": 46,
+      "norm_label": "tries.ts"
+    },
+    {
+      "label": "tries",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/tries.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_tries_tries",
+      "community": 46,
+      "norm_label": "tries"
+    },
+    {
+      "label": "two-pointers.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/two-pointers.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_two_pointers",
+      "community": 46,
+      "norm_label": "two-pointers.ts"
+    },
+    {
+      "label": "twoPointers",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/topics/two-pointers.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_lib_dsa_topics_two_pointers_twopointers",
+      "community": 46,
+      "norm_label": "twopointers"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_dsa_types",
+      "community": 46,
+      "norm_label": "types.ts"
+    },
+    {
+      "label": "DsaDifficulty",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "src_lib_dsa_types_dsadifficulty",
+      "community": 46,
+      "norm_label": "dsadifficulty"
+    },
+    {
+      "label": "DsaProblem",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "src_lib_dsa_types_dsaproblem",
+      "community": 46,
+      "norm_label": "dsaproblem"
+    },
+    {
+      "label": "DsaTopic",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "src_lib_dsa_types_dsatopic",
+      "community": 46,
+      "norm_label": "dsatopic"
+    },
+    {
+      "label": "DSA_DIFFICULTY_COLORS",
+      "file_type": "code",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "src_lib_dsa_types_dsa_difficulty_colors",
+      "community": 46,
+      "norm_label": "dsa_difficulty_colors"
+    },
+    {
       "label": "gemini.ts",
       "file_type": "code",
       "source_file": "src/lib/gemini.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_gemini",
-      "community": 2,
+      "community": 44,
       "norm_label": "gemini.ts"
     },
     {
@@ -2562,7 +3662,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_lib_gemini_model_chain",
-      "community": 2,
+      "community": 44,
       "norm_label": "model_chain"
     },
     {
@@ -2572,7 +3672,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_gemini_cooldownuntil",
-      "community": 2,
+      "community": 44,
       "norm_label": "cooldownuntil"
     },
     {
@@ -2582,7 +3682,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_gemini_isretryablemodelerror",
-      "community": 2,
+      "community": 44,
       "norm_label": "isretryablemodelerror()"
     },
     {
@@ -2592,7 +3692,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_gemini_client",
-      "community": 2,
+      "community": 44,
       "norm_label": "client()"
     },
     {
@@ -2602,7 +3702,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_gemini_generatejson",
-      "community": 2,
+      "community": 44,
       "norm_label": "generatejson()"
     },
     {
@@ -2612,7 +3712,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_lib_gemini_extractknowledge",
-      "community": 2,
+      "community": 44,
       "norm_label": "extractknowledge()"
     },
     {
@@ -2622,7 +3722,7 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "src_lib_gemini_embed_dims",
-      "community": 2,
+      "community": 44,
       "norm_label": "embed_dims"
     },
     {
@@ -2632,7 +3732,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtasktype",
-      "community": 2,
+      "community": 44,
       "norm_label": "embedtasktype"
     },
     {
@@ -2662,7 +3762,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_lib_gemini_normalise",
-      "community": 2,
+      "community": 44,
       "norm_label": "normalise()"
     },
     {
@@ -2672,7 +3772,7 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "src_lib_gemini_sessiongradeinput",
-      "community": 2,
+      "community": 44,
       "norm_label": "sessiongradeinput"
     },
     {
@@ -2682,7 +3782,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "src_lib_gemini_sessiongraderesult",
-      "community": 2,
+      "community": 44,
       "norm_label": "sessiongraderesult"
     },
     {
@@ -3072,7 +4172,7 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "src_lib_rag_linkretrievallogtoentry",
-      "community": 2,
+      "community": 44,
       "norm_label": "linkretrievallogtoentry()"
     },
     {
@@ -3202,7 +4302,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_supabase_client_createclient",
-      "community": 8,
+      "community": 51,
       "norm_label": "createclient()"
     },
     {
@@ -3232,7 +4332,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_text",
-      "community": 7,
+      "community": 49,
       "norm_label": "text.ts"
     },
     {
@@ -3242,7 +4342,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_lib_text_stripmarkdown",
-      "community": 7,
+      "community": 49,
       "norm_label": "stripmarkdown()"
     },
     {
@@ -3372,7 +4472,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types",
-      "community": 0,
+      "community": 50,
       "norm_label": "types.ts"
     },
     {
@@ -3382,7 +4482,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types_category",
-      "community": 0,
+      "community": 50,
       "norm_label": "category"
     },
     {
@@ -3412,7 +4512,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_types_profile",
-      "community": 0,
+      "community": 49,
       "norm_label": "profile"
     },
     {
@@ -3472,7 +4572,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_lib_types_review",
-      "community": 0,
+      "community": 49,
       "norm_label": "review"
     },
     {
@@ -3502,7 +4602,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_lib_types_topicquestion",
-      "community": 0,
+      "community": 50,
       "norm_label": "topicquestion"
     },
     {
@@ -3522,7 +4622,7 @@
       "source_location": "L131",
       "_origin": "ast",
       "id": "src_lib_types_quizsession",
-      "community": 0,
+      "community": 50,
       "norm_label": "quizsession"
     },
     {
@@ -3532,7 +4632,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 0,
+      "community": 50,
       "norm_label": "reportitem"
     },
     {
@@ -3542,7 +4642,7 @@
       "source_location": "L157",
       "_origin": "ast",
       "id": "src_lib_types_reportcard",
-      "community": 0,
+      "community": 50,
       "norm_label": "reportcard"
     },
     {
@@ -3552,7 +4652,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 0,
+      "community": 49,
       "norm_label": "dailyfact"
     },
     {
@@ -3562,7 +4662,7 @@
       "source_location": "L173",
       "_origin": "ast",
       "id": "src_lib_types_planitem",
-      "community": 0,
+      "community": 50,
       "norm_label": "planitem"
     },
     {
@@ -3582,7 +4682,7 @@
       "source_location": "L191",
       "_origin": "ast",
       "id": "src_lib_types_extractionresult",
-      "community": 2,
+      "community": 44,
       "norm_label": "extractionresult"
     },
     {
@@ -3592,7 +4692,7 @@
       "source_location": "L214",
       "_origin": "ast",
       "id": "src_lib_types_graderesult",
-      "community": 0,
+      "community": 50,
       "norm_label": "graderesult"
     },
     {
@@ -5089,7 +6189,7 @@
       "label": "AI-call budget (deliberate design \u2014 keep it this way)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L38",
+      "source_location": "L41",
       "_origin": "ast",
       "id": "project_summary_ai_call_budget_deliberate_design_keep_it_this_way",
       "community": 26,
@@ -5099,7 +6199,7 @@
       "label": "RAG layer (added 2026-07-15, hardened 2026-07-15 \u2014 `supabase/schema-rag.sql` THEN `schema-rag-v2.sql` must both be run to activate)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L45",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "project_summary_rag_layer_added_2026_07_15_hardened_2026_07_15_supabase_schema_rag_sql_then_schema_rag_v2_sql_must_both_be_run_to_activate",
       "community": 26,
@@ -5109,7 +6209,7 @@
       "label": "RAG v2 \u2014 document registry, index versioning, hybrid search, observability (added 2026-07-15, `supabase/schema-rag-v2.sql`)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L53",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "project_summary_rag_v2_document_registry_index_versioning_hybrid_search_observability_added_2026_07_15_supabase_schema_rag_v2_sql",
       "community": 26,
@@ -5119,7 +6219,7 @@
       "label": "Key modules",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L61",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "project_summary_key_modules",
       "community": 26,
@@ -5129,7 +6229,7 @@
       "label": "Security posture (reviewed 2026-07-15, hardened 2026-07-18)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L91",
+      "source_location": "L95",
       "_origin": "ast",
       "id": "project_summary_security_posture_reviewed_2026_07_15_hardened_2026_07_18",
       "community": 26,
@@ -5139,7 +6239,7 @@
       "label": "Dates / \"today\" (fixed 2026-07-15)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L100",
+      "source_location": "L104",
       "_origin": "ast",
       "id": "project_summary_dates_today_fixed_2026_07_15",
       "community": 26,
@@ -5149,7 +6249,7 @@
       "label": "Conventions / gotchas",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L103",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "project_summary_conventions_gotchas",
       "community": 26,
@@ -5286,10 +6386,20 @@
       "norm_label": "session log"
     },
     {
-      "label": "2026-07-18 \u2014 About page: SM-2/Ebbinghaus explainer section",
+      "label": "2026-07-19 \u2014 The Pattern Atlas: complete DSA blog series (NeetCode 150)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
       "source_location": "L5",
+      "_origin": "ast",
+      "id": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
+      "community": 28,
+      "norm_label": "2026-07-19 \u2014 the pattern atlas: complete dsa blog series (neetcode 150)"
+    },
+    {
+      "label": "2026-07-18 \u2014 About page: SM-2/Ebbinghaus explainer section",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
       "community": 28,
@@ -5299,7 +6409,7 @@
       "label": "2026-07-18 \u2014 Server-side security audit + fixes: SSRF DNS-rebinding, quiz Gemini-quota abuse, curl-hardening",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L11",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
       "community": 28,
@@ -5309,7 +6419,7 @@
       "label": "2026-07-16 \u2014 Remove the XP feature entirely",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "session_log_2026_07_16_remove_the_xp_feature_entirely",
       "community": 28,
@@ -5319,7 +6429,7 @@
       "label": "2026-07-16 \u2014 Fix false-positive gibberish rejection on real link ingests",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L26",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
       "community": 28,
@@ -5329,7 +6439,7 @@
       "label": "2026-07-16 \u2014 Team architecture doc (backend/AI/RAG/auth/security)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L32",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
       "community": 28,
@@ -5339,7 +6449,7 @@
       "label": "2026-07-16 \u2014 Ingest guardrails: gibberish rejection, prompt-injection hardening, output validation, link-scheme XSS fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L37",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
       "community": 28,
@@ -5349,7 +6459,7 @@
       "label": "2026-07-15 \u2014 Fix silent link-ingest failure, URL-based fast-path dedup",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L46",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
       "community": 28,
@@ -5359,7 +6469,7 @@
       "label": "2026-07-15 \u2014 RAG pipeline hardening: document registry, hybrid search, observability",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L56",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
       "community": 28,
@@ -5369,7 +6479,7 @@
       "label": "2026-07-15 \u2014 Rebrand: Engramia \u2192 Knovis",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L65",
+      "source_location": "L73",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rebrand_engramia_knovis",
       "community": 28,
@@ -5379,7 +6489,7 @@
       "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L74",
+      "source_location": "L82",
       "_origin": "ast",
       "id": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "community": 28,
@@ -5389,7 +6499,7 @@
       "label": "2026-07-15 \u2014 Guided feature tour (first visit + every demo entry)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L83",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
       "community": 28,
@@ -5399,7 +6509,7 @@
       "label": "2026-07-15 \u2014 Attempted-tracking bug fix, security review, Gemini fallback, RAG pipeline, DB decision",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L90",
+      "source_location": "L98",
       "_origin": "ast",
       "id": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
       "community": 28,
@@ -5409,7 +6519,7 @@
       "label": "2026-07-14 \u2014 Quiz-kind overhaul, day-report calendar, blog Q&A, streak bar, footer + About",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L99",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
       "community": 28,
@@ -5419,7 +6529,7 @@
       "label": "2026-07-13 \u2014 Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L109",
+      "source_location": "L117",
       "_origin": "ast",
       "id": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
       "community": 28,
@@ -5429,7 +6539,7 @@
       "label": "2026-07-13 \u2014 Review bug fixes + /blogs page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L116",
+      "source_location": "L124",
       "_origin": "ast",
       "id": "session_log_2026_07_13_review_bug_fixes_blogs_page",
       "community": 28,
@@ -5439,7 +6549,7 @@
       "label": "2026-07-13 \u2014 Guest mode fix, plan done-tracking, review error card, blog pills",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
       "community": 28,
@@ -5449,7 +6559,7 @@
       "label": "2026-07-13 \u2014 AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L130",
+      "source_location": "L138",
       "_origin": "ast",
       "id": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
       "community": 28,
@@ -5459,7 +6569,7 @@
       "label": "2026-07-13 \u2014 Personal notes feature + blog source attribution",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L148",
       "_origin": "ast",
       "id": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
       "community": 28,
@@ -5469,7 +6579,7 @@
       "label": "2026-07-13 \u2014 Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L147",
+      "source_location": "L155",
       "_origin": "ast",
       "id": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
       "community": 28,
@@ -5479,7 +6589,7 @@
       "label": "2026-07-13 \u2014 Vercel Migration & Nav Auth Fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L155",
+      "source_location": "L163",
       "_origin": "ast",
       "id": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
       "community": 28,
@@ -5489,7 +6599,7 @@
       "label": "2026-07-13 \u2014 Fix /profile infinite loading (missing profiles row)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L160",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
       "community": 28,
@@ -5499,7 +6609,7 @@
       "label": "2026-07-13 \u2014 Plan markdown fix, progress calendar, profile page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L166",
+      "source_location": "L174",
       "_origin": "ast",
       "id": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
       "community": 28,
@@ -5509,7 +6619,7 @@
       "label": "2026-07-13 \u2014 Brain label overhaul (clickable, Space Grotesk, declutter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L172",
+      "source_location": "L180",
       "_origin": "ast",
       "id": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
       "community": 28,
@@ -5519,7 +6629,7 @@
       "label": "Earlier (from git history)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L182",
+      "source_location": "L190",
       "_origin": "ast",
       "id": "session_log_earlier_from_git_history",
       "community": 28,
@@ -5671,7 +6781,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -8364,6 +9474,1024 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_app_blogs_competition_act_chapter_slug_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_app_blogs_competition_act_chapter_slug_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_components_markdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_comp_act_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_compactneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_compactsectioncount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_compactsectionnumber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_compactstophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_compactstoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_index_getcompactsection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page",
+      "target": "src_lib_competition_act_types_importance_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_generatestaticparams",
+      "target": "src_lib_competition_act_index_comp_act_chapters"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_generatemetadata",
+      "target": "src_lib_competition_act_index_getcompactsection"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_compactneighbors"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_compactsectioncount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_compactsectionnumber"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_compactstophref"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_compactstoptitle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_slug_page_compactsectionpage",
+      "target": "src_lib_competition_act_index_getcompactsection"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_app_blogs_competition_act_chapter_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_app_blogs_competition_act_chapter_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_components_markdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index_comp_act_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index_compactneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index_compactstophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index_compactstoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_index_getcompactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page",
+      "target": "src_lib_competition_act_types_importance_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page_generatemetadata",
+      "target": "src_lib_competition_act_index_getcompactchapter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "target": "src_lib_competition_act_index_compactneighbors"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "target": "src_lib_competition_act_index_compactstophref"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L173",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "target": "src_lib_competition_act_index_compactstoptitle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/[chapter]/page.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_chapter_page_compactchapterpage",
+      "target": "src_lib_competition_act_index_getcompactchapter"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_app_blogs_competition_act_page_competitionactpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_app_blogs_competition_act_page_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_lib_competition_act_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_lib_competition_act_index_comp_act_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_lib_competition_act_index_compactsectioncount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page",
+      "target": "src_lib_competition_act_types_importance_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/competition-act/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_app_blogs_competition_act_page_competitionactpage",
+      "target": "src_lib_competition_act_index_compactsectioncount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_app_blogs_dsa_topic_slug_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_app_blogs_dsa_topic_slug_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_components_markdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsa_topics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsaneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsaproblemcount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsaproblemnumber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsastophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_dsastoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_index_getdsaproblem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page",
+      "target": "src_lib_dsa_types_dsa_difficulty_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_generatestaticparams",
+      "target": "src_lib_dsa_index_dsa_topics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_generatemetadata",
+      "target": "src_lib_dsa_index_getdsaproblem"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_dsaneighbors"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_dsaproblemcount"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_dsaproblemnumber"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_dsastophref"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_dsastoptitle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/[slug]/page.tsx",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_slug_page_dsaproblempage",
+      "target": "src_lib_dsa_index_getdsaproblem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_app_blogs_dsa_topic_page_generatemetadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_app_blogs_dsa_topic_page_generatestaticparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_components_markdown",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index_dsa_topics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index_dsaneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index_dsastophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index_dsastoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_index_getdsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page",
+      "target": "src_lib_dsa_types_dsa_difficulty_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page_generatemetadata",
+      "target": "src_lib_dsa_index_getdsatopic"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "target": "src_lib_dsa_index_dsaneighbors"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "target": "src_lib_dsa_index_dsastophref"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L172",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "target": "src_lib_dsa_index_dsastoptitle"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/[topic]/page.tsx",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_topic_page_dsatopicpage",
+      "target": "src_lib_dsa_index_getdsatopic"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_app_blogs_dsa_page_dsaatlaspage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_app_blogs_dsa_page_metadata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_components_nav",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_lib_dsa_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_lib_dsa_index_dsa_topics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_lib_dsa_index_dsaproblemcount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page",
+      "target": "src_lib_dsa_types_dsa_difficulty_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/blogs/dsa/page.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "src_app_blogs_dsa_page_dsaatlaspage",
+      "target": "src_lib_dsa_index_dsaproblemcount"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/blogs/page.tsx",
       "source_location": "L10",
       "weight": 1.0,
@@ -8375,7 +10503,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/blogs/page.tsx",
-      "source_location": "L191",
+      "source_location": "L241",
       "weight": 1.0,
       "source": "src_app_blogs_page",
       "target": "src_app_blogs_page_searchicon",
@@ -8475,7 +10603,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/blogs/page.tsx",
-      "source_location": "L125",
+      "source_location": "L175",
       "weight": 1.0,
       "source": "src_app_blogs_page_blogspage",
       "target": "src_lib_types_categorycolor"
@@ -10415,7 +12543,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_components_footer",
       "target": "src_components_footer_connect",
@@ -10435,7 +12563,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/Footer.tsx",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "src_components_footer",
       "target": "src_components_footer_footer",
@@ -11367,6 +13495,763 @@
       "weight": 1.0,
       "source": "src_lib_rag_reindexdocument",
       "target": "src_lib_chunk_chunktext"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_comp_act_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactreadingorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactsectioncount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactsectionnumber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactstop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactstophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_compactstoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_getcompactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_index_getcompactsection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_abuse_of_dominance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_abuse_of_dominance_abuseofdominance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_advocacy_miscellaneous",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_advocacy_miscellaneous_advocacymiscellaneous",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_anti_competitive_agreements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_anti_competitive_agreements_anticompetitiveagreements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_combinations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_combinations_combinations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_competition_commission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_competition_commission_competitioncommission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_director_general",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_director_general_directorgeneral",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_inquiry_powers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_inquiry_powers_inquirypowers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_orders_and_remedies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_orders_and_remedies_ordersandremedies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_penalties",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_penalties_penalties",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_preliminary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_topics_preliminary_preliminary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index",
+      "target": "src_lib_competition_act_types_compactsection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index_compactsectioncount",
+      "target": "src_lib_competition_act_index_comp_act_chapters"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index_getcompactchapter",
+      "target": "src_lib_competition_act_index_comp_act_chapters"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index_getcompactsection",
+      "target": "src_lib_competition_act_index_getcompactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/index.ts",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_index_compactneighbors",
+      "target": "src_lib_competition_act_index_compactreadingorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/abuse-of-dominance.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_abuse_of_dominance",
+      "target": "src_lib_competition_act_topics_abuse_of_dominance_abuseofdominance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/abuse-of-dominance.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_abuse_of_dominance",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/abuse-of-dominance.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_abuse_of_dominance",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/advocacy-miscellaneous.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_advocacy_miscellaneous",
+      "target": "src_lib_competition_act_topics_advocacy_miscellaneous_advocacymiscellaneous",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/advocacy-miscellaneous.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_advocacy_miscellaneous",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/advocacy-miscellaneous.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_advocacy_miscellaneous",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/anti-competitive-agreements.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_anti_competitive_agreements",
+      "target": "src_lib_competition_act_topics_anti_competitive_agreements_anticompetitiveagreements",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/anti-competitive-agreements.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_anti_competitive_agreements",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/anti-competitive-agreements.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_anti_competitive_agreements",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/combinations.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_combinations",
+      "target": "src_lib_competition_act_topics_combinations_combinations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/combinations.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_combinations",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/combinations.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_combinations",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/competition-commission.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_competition_commission",
+      "target": "src_lib_competition_act_topics_competition_commission_competitioncommission",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/competition-commission.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_competition_commission",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/competition-commission.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_competition_commission",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/director-general.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_director_general",
+      "target": "src_lib_competition_act_topics_director_general_directorgeneral",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/director-general.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_director_general",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/director-general.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_director_general",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/inquiry-powers.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_inquiry_powers",
+      "target": "src_lib_competition_act_topics_inquiry_powers_inquirypowers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/inquiry-powers.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_inquiry_powers",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/inquiry-powers.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_inquiry_powers",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/orders-and-remedies.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_orders_and_remedies",
+      "target": "src_lib_competition_act_topics_orders_and_remedies_ordersandremedies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/orders-and-remedies.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_orders_and_remedies",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/orders-and-remedies.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_orders_and_remedies",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/penalties.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_penalties",
+      "target": "src_lib_competition_act_topics_penalties_penalties",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/penalties.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_penalties",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/penalties.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_penalties",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/preliminary.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_preliminary",
+      "target": "src_lib_competition_act_topics_preliminary_preliminary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/preliminary.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_preliminary",
+      "target": "src_lib_competition_act_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/topics/preliminary.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_topics_preliminary",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_types",
+      "target": "src_lib_competition_act_types_compactchapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_types",
+      "target": "src_lib_competition_act_types_compactimportance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_types",
+      "target": "src_lib_competition_act_types_compactsection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/competition-act/types.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_lib_competition_act_types",
+      "target": "src_lib_competition_act_types_importance_colors",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -12937,6 +15822,1195 @@
       "weight": 1.0,
       "source": "src_lib_demo_demobankquestion",
       "target": "src_lib_types_questionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsa_topics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L98",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsaneighbors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsaproblemcount",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsaproblemnumber",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsareadingorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsastop",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsastophref",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_dsastoptitle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_getdsaproblem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_index_getdsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_advanced_graphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_advanced_graphs_advancedgraphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_arrays_hashing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_arrays_hashing_arrayshashing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_backtracking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_backtracking_backtracking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_binary_search",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_binary_search_binarysearch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_bit_manipulation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_bit_manipulation_bitmanipulation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_dp_1d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_dp_1d_dp1d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_dp_2d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_dp_2d_dp2d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_graphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_graphs_graphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_greedy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_greedy_greedy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_heap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_heap_heap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_intervals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_intervals_intervals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_linked_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_linked_list_linkedlist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_math_geometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_math_geometry_mathgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_sliding_window",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_sliding_window_slidingwindow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_stack_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_trees",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_trees_trees",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_tries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_tries_tries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_two_pointers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_topics_two_pointers_twopointers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_types_dsaproblem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index_dsaproblemcount",
+      "target": "src_lib_dsa_index_dsa_topics"
+    },
+    {
+      "relation": "references",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index_getdsatopic",
+      "target": "src_lib_dsa_index_dsa_topics"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index_getdsaproblem",
+      "target": "src_lib_dsa_index_getdsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/index.ts",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "src_lib_dsa_index_dsaneighbors",
+      "target": "src_lib_dsa_index_dsareadingorder",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/advanced-graphs.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_advanced_graphs",
+      "target": "src_lib_dsa_topics_advanced_graphs_advancedgraphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/advanced-graphs.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_advanced_graphs",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/advanced-graphs.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_advanced_graphs",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/arrays-hashing.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_arrays_hashing",
+      "target": "src_lib_dsa_topics_arrays_hashing_arrayshashing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/arrays-hashing.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_arrays_hashing",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/arrays-hashing.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_arrays_hashing",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/backtracking.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_backtracking",
+      "target": "src_lib_dsa_topics_backtracking_backtracking",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/backtracking.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_backtracking",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/backtracking.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_backtracking",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/binary-search.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_binary_search",
+      "target": "src_lib_dsa_topics_binary_search_binarysearch",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/binary-search.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_binary_search",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/binary-search.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_binary_search",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/bit-manipulation.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_bit_manipulation",
+      "target": "src_lib_dsa_topics_bit_manipulation_bitmanipulation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/bit-manipulation.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_bit_manipulation",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/bit-manipulation.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_bit_manipulation",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-1d.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_1d",
+      "target": "src_lib_dsa_topics_dp_1d_dp1d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-1d.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_1d",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-1d.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_1d",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-2d.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_2d",
+      "target": "src_lib_dsa_topics_dp_2d_dp2d",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-2d.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_2d",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/dp-2d.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_dp_2d",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/graphs.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_graphs",
+      "target": "src_lib_dsa_topics_graphs_graphs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/graphs.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_graphs",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/graphs.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_graphs",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/greedy.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_greedy",
+      "target": "src_lib_dsa_topics_greedy_greedy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/greedy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_greedy",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/greedy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_greedy",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/heap.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_heap",
+      "target": "src_lib_dsa_topics_heap_heap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/heap.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_heap",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/heap.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_heap",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/intervals.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_intervals",
+      "target": "src_lib_dsa_topics_intervals_intervals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/intervals.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_intervals",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/intervals.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_intervals",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/linked-list.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_linked_list",
+      "target": "src_lib_dsa_topics_linked_list_linkedlist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/linked-list.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_linked_list",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/linked-list.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_linked_list",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/math-geometry.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_math_geometry",
+      "target": "src_lib_dsa_topics_math_geometry_mathgeometry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/math-geometry.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_math_geometry",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/math-geometry.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_math_geometry",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/sliding-window.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_sliding_window",
+      "target": "src_lib_dsa_topics_sliding_window_slidingwindow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/sliding-window.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_sliding_window",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/sliding-window.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_sliding_window",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/stack.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_stack",
+      "target": "src_lib_dsa_topics_stack_stack",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/stack.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_stack",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/stack.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_stack",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/trees.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_trees",
+      "target": "src_lib_dsa_topics_trees_trees",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/trees.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_trees",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/trees.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_trees",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/tries.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_tries",
+      "target": "src_lib_dsa_topics_tries_tries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/tries.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_tries",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/tries.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_tries",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/two-pointers.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_two_pointers",
+      "target": "src_lib_dsa_topics_two_pointers_twopointers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/two-pointers.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_two_pointers",
+      "target": "src_lib_dsa_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/topics/two-pointers.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_dsa_topics_two_pointers",
+      "target": "src_lib_dsa_types_dsatopic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "src_lib_dsa_types",
+      "target": "src_lib_dsa_types_dsa_difficulty_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_lib_dsa_types",
+      "target": "src_lib_dsa_types_dsadifficulty",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "src_lib_dsa_types",
+      "target": "src_lib_dsa_types_dsaproblem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/dsa/types.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "src_lib_dsa_types",
+      "target": "src_lib_dsa_types_dsatopic",
       "confidence_score": 1.0
     },
     {
@@ -15822,7 +19896,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L38",
+      "source_location": "L41",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_ai_call_budget_deliberate_design_keep_it_this_way",
@@ -15832,7 +19906,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L103",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_conventions_gotchas",
@@ -15842,7 +19916,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L100",
+      "source_location": "L104",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_dates_today_fixed_2026_07_15",
@@ -15862,7 +19936,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L61",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_key_modules",
@@ -15872,7 +19946,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L45",
+      "source_location": "L48",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_rag_layer_added_2026_07_15_hardened_2026_07_15_supabase_schema_rag_sql_then_schema_rag_v2_sql_must_both_be_run_to_activate",
@@ -15892,7 +19966,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L91",
+      "source_location": "L95",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_security_posture_reviewed_2026_07_15_hardened_2026_07_18",
@@ -15922,7 +19996,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L53",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "project_summary_rag_layer_added_2026_07_15_hardened_2026_07_15_supabase_schema_rag_sql_then_schema_rag_v2_sql_must_both_be_run_to_activate",
       "target": "project_summary_rag_v2_document_registry_index_versioning_hybrid_search_observability_added_2026_07_15_supabase_schema_rag_v2_sql",
@@ -16042,7 +20116,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L130",
+      "source_location": "L138",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
@@ -16052,7 +20126,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L172",
+      "source_location": "L180",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
@@ -16062,7 +20136,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L147",
+      "source_location": "L155",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
@@ -16072,7 +20146,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L160",
+      "source_location": "L168",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
@@ -16082,7 +20156,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L131",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
@@ -16092,7 +20166,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L148",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
@@ -16102,7 +20176,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L166",
+      "source_location": "L174",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
@@ -16112,7 +20186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L109",
+      "source_location": "L117",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
@@ -16122,7 +20196,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L116",
+      "source_location": "L124",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_review_bug_fixes_blogs_page",
@@ -16132,7 +20206,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L155",
+      "source_location": "L163",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
@@ -16142,7 +20216,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L99",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
@@ -16152,7 +20226,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L90",
+      "source_location": "L98",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
@@ -16162,7 +20236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L46",
+      "source_location": "L54",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
@@ -16172,7 +20246,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L83",
+      "source_location": "L91",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
@@ -16182,7 +20256,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L56",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
@@ -16192,7 +20266,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L65",
+      "source_location": "L73",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rebrand_engramia_knovis",
@@ -16202,7 +20276,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L74",
+      "source_location": "L82",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
@@ -16212,7 +20286,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L26",
+      "source_location": "L34",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
@@ -16222,7 +20296,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L37",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
@@ -16232,7 +20306,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_remove_the_xp_feature_entirely",
@@ -16242,7 +20316,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L32",
+      "source_location": "L40",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
@@ -16252,7 +20326,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L5",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
@@ -16262,7 +20336,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L11",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
@@ -16272,7 +20346,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L182",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "session_log_session_log",
+      "target": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L190",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_earlier_from_git_history",
@@ -16390,5 +20474,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "66d959590294375fb5c0e48aecb8d2d2d942fe7b"
+  "built_at_commit": "9674c889399f28449d509bddb297e397c30561f7"
 }

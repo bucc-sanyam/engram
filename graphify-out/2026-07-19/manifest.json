@@ -225,18 +225,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784435202.0588865,
-    "ast_hash": "b591e73c1b6cefb27a30bf9128bdd636",
+    "mtime": 1784354898.8867517,
+    "ast_hash": "7853c813aa4a5475c1953b4417312a60",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784435188.389556,
-    "ast_hash": "a77a63bb7fc8c680bc21a11eddf247d8",
+    "mtime": 1784354912.4367666,
+    "ast_hash": "62fc7c58114e1d496c3e1f30b4305fe4",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784435166.7459366,
-    "ast_hash": "049c5ebb8c3e033d2ed6eac1fbbc011b",
+    "mtime": 1784354101.8288865,
+    "ast_hash": "46bb64ba1d004940bc6e83567f259165",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1784410660.3236387,
-    "ast_hash": "2283bd7af2fcb8bd31235e052abab8e9",
+    "mtime": 1784056456.9131784,
+    "ast_hash": "5a88646ff3f7d1f7ad0ff5626376a896",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "src/components/Footer.tsx": {
-    "mtime": 1784400839.9294446,
-    "ast_hash": "c422ce863be567920a7ba042205dc202",
+    "mtime": 1784098949.4523802,
+    "ast_hash": "65d7a16cddce1a2296e5b6119378cdfd",
     "semantic_hash": ""
   },
   "src/components/ReportCardView.tsx": {
@@ -367,196 +367,6 @@
   "ARCHITECTURE.md": {
     "mtime": 1784192367.4205563,
     "ast_hash": "17e856c9bb1b1c383567ef1d9f67d005",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784410644.0186813,
-    "ast_hash": "c565e1b7511c8740f5a5be7abb2ad399",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/competition-act/[chapter]/page.tsx": {
-    "mtime": 1784410617.78979,
-    "ast_hash": "ab3cc349a24e9d8e15f2074d597dfffe",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/competition-act/page.tsx": {
-    "mtime": 1784410584.2540832,
-    "ast_hash": "2a2ae025000acb4024ae9fa91466ba2a",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/dsa/[topic]/[slug]/page.tsx": {
-    "mtime": 1784400828.4823244,
-    "ast_hash": "73d0bbc1818a976bf8c649d49f6b1a4e",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/dsa/[topic]/page.tsx": {
-    "mtime": 1784400807.9379892,
-    "ast_hash": "3a29cb3f1354cd0dc727730dc5f5be1d",
-    "semantic_hash": ""
-  },
-  "src/app/blogs/dsa/page.tsx": {
-    "mtime": 1784400780.745427,
-    "ast_hash": "6959f02b40ac9f857734466846518a3c",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/index.ts": {
-    "mtime": 1784410545.2556787,
-    "ast_hash": "75dfd67dc12871199a1eb0de0699c887",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/abuse-of-dominance.ts": {
-    "mtime": 1784409991.3677197,
-    "ast_hash": "c903055dbbdbda191aca6952e5d439c2",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/advocacy-miscellaneous.ts": {
-    "mtime": 1784410521.668459,
-    "ast_hash": "6e100cf60fd9eb8da8ec5c2af6db8140",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/anti-competitive-agreements.ts": {
-    "mtime": 1784409911.933586,
-    "ast_hash": "b01dc8356665b8d15f2b9ef7190bcdd7",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/combinations.ts": {
-    "mtime": 1784410066.5318537,
-    "ast_hash": "f2e87ea1bcb7adc9abff1a4417f19794",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/competition-commission.ts": {
-    "mtime": 1784410135.039951,
-    "ast_hash": "1b91e950fa6aea9cf19a5a2ae558ebdf",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/director-general.ts": {
-    "mtime": 1784410350.7932565,
-    "ast_hash": "8ee7cd5aa4c1b3e45f6d434859380f42",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/inquiry-powers.ts": {
-    "mtime": 1784410225.67824,
-    "ast_hash": "d323badb0bf6c755f06a5efb93e2c90c",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/orders-and-remedies.ts": {
-    "mtime": 1784410298.9849238,
-    "ast_hash": "234c35ba36446444a34f99d2f430a6ce",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/penalties.ts": {
-    "mtime": 1784410443.319133,
-    "ast_hash": "2ca9f4fa1e4d8258d7e7a08e8c7e7429",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/topics/preliminary.ts": {
-    "mtime": 1784409819.1242533,
-    "ast_hash": "fd71c909bb9a9da479e96df9d22e6774",
-    "semantic_hash": ""
-  },
-  "src/lib/competition-act/types.ts": {
-    "mtime": 1784409767.6479273,
-    "ast_hash": "6c91c3f9523de16ac1e94ddbbe67eceb",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/index.ts": {
-    "mtime": 1784435035.9907036,
-    "ast_hash": "1879495157f2e7fcb26a4ea0a3c759ac",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/advanced-graphs.ts": {
-    "mtime": 1784434094.3077621,
-    "ast_hash": "7a7fa1858b4f6ae54e46675e6fc162ef",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/arrays-hashing.ts": {
-    "mtime": 1784400719.020611,
-    "ast_hash": "1cd630d4b7e3121833a399e3d6143291",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/backtracking.ts": {
-    "mtime": 1784402063.0574927,
-    "ast_hash": "3db876430387f78154120a755eb7bd06",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/binary-search.ts": {
-    "mtime": 1784401359.552725,
-    "ast_hash": "b30099e33105fa6aae12e1b7a046aaa4",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/bit-manipulation.ts": {
-    "mtime": 1784435030.7072737,
-    "ast_hash": "1edce86680f6cb75f6ec6983e6ed00bb",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/dp-1d.ts": {
-    "mtime": 1784434309.321193,
-    "ast_hash": "3e8393f994e978b9760323bcb6543685",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/dp-2d.ts": {
-    "mtime": 1784434519.3927906,
-    "ast_hash": "a0732afd18ea8139d1db0612bfe7f402",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/graphs.ts": {
-    "mtime": 1784402330.6033745,
-    "ast_hash": "b66693551bddfe2244d4b2529216b8dc",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/greedy.ts": {
-    "mtime": 1784434672.4072864,
-    "ast_hash": "9c2c7034b62907b6d56ee1d086f02bfb",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/heap.ts": {
-    "mtime": 1784401891.3887308,
-    "ast_hash": "7f0982f38a16cfca74fb7606289966fd",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/intervals.ts": {
-    "mtime": 1784434768.8095953,
-    "ast_hash": "305dbc21d5b8d405d1b9eb7c18874f52",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/linked-list.ts": {
-    "mtime": 1784401528.247536,
-    "ast_hash": "ad378278863339ae8483b30cc2e63a33",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/math-geometry.ts": {
-    "mtime": 1784434911.330253,
-    "ast_hash": "d675883dfbbcef6674b3a7dbd437ffd3",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/sliding-window.ts": {
-    "mtime": 1784401139.5205634,
-    "ast_hash": "bca2d9d5070512ea929828925754a79d",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/stack.ts": {
-    "mtime": 1784401254.4321487,
-    "ast_hash": "f63d23f9279d2ea04a5d581358d5f871",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/trees.ts": {
-    "mtime": 1784401769.4807441,
-    "ast_hash": "e52914b327bfb56604a4db02fca9ab0f",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/tries.ts": {
-    "mtime": 1784402125.1093445,
-    "ast_hash": "dc8f0d7a55e9b2654675cc51da77ca84",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/topics/two-pointers.ts": {
-    "mtime": 1784401049.465194,
-    "ast_hash": "3e10f5739eb078edf82068fdc2b9ae69",
-    "semantic_hash": ""
-  },
-  "src/lib/dsa/types.ts": {
-    "mtime": 1784400575.9597037,
-    "ast_hash": "2bb9b3a0c26646166f3250fd8c1cde4e",
     "semantic_hash": ""
   }
 }
