@@ -32,6 +32,44 @@ The three sections ahead cover the CCI's establishment and composition, the appo
 **The walk-through.** The first CCI Chairperson, Dhanendra Kumar, took office in 2009. Under his and successive Chairpersons' leadership, the CCI evolved from an untested institution into one of the most active competition regulators in Asia. The Commission today operates with a full bench, a dedicated economics division, a law division, and a Director General's office for investigations. Its annual report for 2022–23 recorded over 60 new cases and 15 combination approvals, with penalties exceeding ₹3,000 crores imposed across cartel and abuse-of-dominance cases.
 
 **The thread.** Establishment and composition tell you *who* sits on the CCI. But how are they appointed, how long do they serve, and what rules prevent political capture? The governance framework — appointment process, tenure, removal safeguards — is the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "The Competition Commission of India (CCI) consists of a Chairperson and how many other Members?",
+          options: [
+            "Exactly three other members.",
+            "Not less than two and not more than six other members.",
+            "Ten other members.",
+            "Only one other member."
+          ],
+          correct_index: 1,
+          model_answer: "Section 8 specifies a Chairperson and between two to six other Members appointed by the Central Government.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The CCI functions solely as a court to penalise offenders and has no role in educating businesses or advising the government.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI has a deliberate dual character: it is an adjudicator (penalising cartels) and an advocate (educating businesses, issuing policy opinions).",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Why does the Act require CCI Members to have expertise in fields like economics or business, rather than restricting membership exclusively to former judges or lawyers?",
+          model_answer: "Competition law is a fusion of law and economics. Assessing a cartel or a merger requires legal evidentiary analysis combined with complex economic modelling (e.g., market concentration, oligopoly pricing). A multidisciplinary body ensures decisions are grounded in both legal process and market reality.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What type of body is the CCI described as?",
+          model_answer: "A quasi-judicial body (part regulator, part tribunal).",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "The CCI is a 'quasi-judicial' body — meaning it functions like a court (it can impose thousand-crore fines) but also acts as an active regulator and policy advocate.",
+      ],
     },
     {
       slug: "appointment-governance",
@@ -48,6 +86,52 @@ The three sections ahead cover the CCI's establishment and composition, the appo
 **The walk-through.** The Selection Committee process was tested when the government sought to appoint a new Chairperson in 2022. The Committee — chaired by the Chief Justice's nominee, with secretaries from two ministries and two domain experts — reviewed candidates with experience in competition law, economics, and public administration. The process, while not without criticism (some argued the expert nominations gave the government too much influence), represents a significant improvement over the old MRTP Commission, where the Chairperson was essentially a government appointee with no structural independence.
 
 **The thread.** Governance is the framework; now for the machinery. The CCI has specific administrative powers — managing finances, hiring staff, delegating functions — that enable it to operate as a functioning institution. These administrative powers, covered in the remaining sections of Chapter III, complete the picture of the CCI as an institution. But for the reader walking through this Act linearly, the more important story is what the CCI *does* with its powers — which is the subject of the next chapter: Inquiry & Investigation Powers.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How long is the tenure of the CCI Chairperson and Members?",
+          options: [
+            "Three years or until age 60.",
+            "Five years or until age 65, whichever is earlier.",
+            "Ten years.",
+            "Life tenure."
+          ],
+          correct_index: 1,
+          model_answer: "Section 10 sets the tenure at five years or until the age of 65, whichever is earlier.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "CCI Members can be reappointed for a second five-year term if they perform well and the government approves.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The Act explicitly makes them not eligible for reappointment, a crucial safeguard to protect their independence.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Explain how the 'no reappointment' rule protects the CCI from regulatory capture.",
+          model_answer: "If Members could be reappointed, they would have a career incentive to please the government or the industries they regulate to secure a second term. The non-renewable term ensures they can take aggressive action (like massive penalties on state monopolies) without fear of being 'punished' by non-renewal.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following individuals are part of the Selection Committee that recommends appointments to the CCI under Section 9? Select all that apply.",
+          options: [
+            "The Chief Justice of India (or a nominee)",
+            "The Secretary of the Ministry of Corporate Affairs",
+            "The Prime Minister of India",
+            "The Secretary of the Ministry of Law and Justice",
+            "The Governor of the Reserve Bank of India"
+          ],
+          correct_indices: [0, 1, 3],
+          model_answer: "The committee consists of the CJI/nominee, MCA Secretary, Law Secretary, and two domain experts nominated by the Central Government. The PM and RBI Governor are not members.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "To keep the CCI independent and fearless, its Members are given a strict 5-year term with absolutely no option for reappointment, ensuring they have no incentive to curry favor for a second term.",
+      ],
     },
     {
       slug: "administrative-powers",
@@ -71,6 +155,44 @@ The three sections ahead cover the CCI's establishment and composition, the appo
 **The walk-through.** The CCI's Combination Regulations (2011, amended 2016, 2019, and 2023) illustrate how Section 16 works in practice. The Act says combinations above certain thresholds must be notified and reviewed — but the Act does not specify the notification form, the timeline for CCI response, the information the parties must provide, or the conditions for the Green Channel. All of this is in the regulations. A lawyer advising a company on a merger deal spends more time with the Combination Regulations than with the Act itself — the regulations are the operating manual.
 
 **The thread.** The CCI is now fully constituted — members appointed, governance in place, administrative machinery operational. The next chapter enters the CCI's core function: how it receives complaints, initiates inquiries, conducts investigations, and arrives at orders. This is where the Act moves from institutional architecture to enforcement action.`,
+      questions: [
+        {
+          kind: "truefalse",
+          prompt: "If a Member position at the CCI is temporarily vacant, any orders passed by the CCI during that period are legally invalid.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. Section 14 explicitly states that acts of the CCI are not invalidated merely because of a vacancy or defect in its constitution, preventing parties from using vacancies to delay enforcement.",
+          difficulty: "basic",
+        },
+        {
+          kind: "mcq",
+          prompt: "Under Section 16, the CCI has the power to make its own regulations. Which of the following is typically governed by these regulations rather than the text of the Act itself?",
+          options: [
+            "The maximum penalty amount for a cartel.",
+            "The definition of 'dominant position'.",
+            "The detailed procedure for combination notification and the Green Channel.",
+            "The tenure of the Chairperson."
+          ],
+          correct_index: 2,
+          model_answer: "Procedural details — like the notification forms, Green Channel rules, and leniency procedures — are established via CCI regulations under Section 16, while substantive definitions and limits are in the Act.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "Why is the Chairperson's power to constitute benches (Section 17) practically important for the CCI's functioning?",
+          model_answer: "It allows the Chairperson to manage the caseload efficiently by matching cases to expertise. For example, a complex merger review can be assigned to a bench with deep economic expertise, while a cartel enforcement action can go to Members with stronger legal/evidentiary backgrounds.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Can a CCI Member legally hold another office of profit (like a corporate directorship) during their tenure?",
+          model_answer: "No, Section 15 restricts Members from holding any other office of profit.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "Most of the day-to-day procedural rules — like how to file a merger or get leniency — aren't in the Competition Act itself; they are in regulations written by the CCI using its Section 16 powers.",
+      ],
     },
   ],
 };

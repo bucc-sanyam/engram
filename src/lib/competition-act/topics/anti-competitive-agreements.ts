@@ -240,6 +240,58 @@ Factors (a)–(c) are anti-competitive harms; factors (d)–(f) are pro-competit
 **Complexity.** The AAEC test is the reason competition law is neither a simple checklist nor a subjective judgment call. It is a structured economic analysis wrapped in a legal framework. Master the six factors, and you have the analytical skeleton key for every non-per-se case under the Act.
 
 **The thread.** You have now seen the Act's first major prohibition — agreements that distort competition. The next chapter turns to a different kind of harm: what happens when a single enterprise becomes so powerful that it can *unilaterally* distort the market. Section 4, Abuse of Dominant Position, does not require an agreement between parties. It requires only one thing — power — and then asks how that power is used.`,
+      questions: [
+        {
+          kind: "multi",
+          prompt: "Under Section 19(3), which of the following are considered 'pro-competitive benefits' in the AAEC test? Select all that apply.",
+          options: [
+            "Accrual of benefits to consumers",
+            "Creation of barriers to new entrants",
+            "Improvements in production or distribution",
+            "Promotion of technical, scientific, and economic development",
+            "Foreclosure of competition by hindering entry"
+          ],
+          correct_indices: [0, 2, 3],
+          model_answer: "Factors (d)-(f) are benefits: consumer benefits, improvements in production/distribution, and promotion of technical/economic development. Barriers to entry and foreclosure are anti-competitive harms.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "truefalse",
+          prompt: "To prove an appreciable adverse effect on competition, there is a strict, bright-line market share threshold that must be crossed.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. There is no bright-line threshold. 'Appreciable' is a holistic assessment depending on market share, concentration, duration of agreement, and actual/likely effects on consumer choice.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "How did the CCI apply the AAEC balancing test in FICCI v. United Producers/Distributors Forum (the 2011 Multiplex case)?",
+          model_answer: "Film producers collectively withheld new releases from multiplexes to force a revenue-sharing formula. The CCI weighed the harms (barriers to entry for new multiplexes, consumers denied choice of where to watch) against claimed benefits (none found). The harms substantially outweighed benefits, resulting in a penalty for a Section 3(3)(a) collective price-fixing violation.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What does 'AAEC' stand for in Indian competition law?",
+          model_answer: "Appreciable Adverse Effect on Competition.",
+          difficulty: "basic",
+        },
+        {
+          kind: "mcq",
+          prompt: "Why is an exclusive supply deal between a corner shop and a local dairy unlikely to trigger the Act, while the same deal between a dominant e-commerce platform and a leading electronics brand might?",
+          options: [
+            "Because the Competition Act exempts the dairy industry.",
+            "Because corner shops are not considered 'enterprises'.",
+            "Because the restriction must be 'appreciable' (quantitatively or qualitatively significant) in a market context.",
+            "Because vertical restraints only apply to e-commerce."
+          ],
+          correct_index: 2,
+          model_answer: "The restriction must be 'appreciable'. The corner shop's deal lacks the market significance to appreciably affect competition in the broader market, whereas a dominant platform's exclusive deal could foreclose the entire online market.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "The AAEC test is an economic balancing act: the CCI weighs three statutory 'harms' (like creating barriers to entry) against three statutory 'benefits' (like improving production).",
+      ],
     },
   ],
 };

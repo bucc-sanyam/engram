@@ -36,6 +36,44 @@ The three sections ahead cover the three main categories of CCI orders: orders a
 **The walk-through.** In the **Cement Cartel case** (2016, COMPAT appeal), the CCI had originally imposed penalties of ₹6,307 crores on 11 cement companies. On appeal, the Competition Appellate Tribunal reduced the penalties to roughly ₹4,000 crores, adjusting the relevant turnover to cover only the cement business (not the companies' entire diversified operations). The Supreme Court later examined the penalty methodology. The case established that the CCI must: (a) use "relevant turnover" (turnover from the product affected by the cartel, not total company turnover) as the base; (b) calibrate the percentage based on the severity, duration, and nature of the contravention; and (c) provide reasons for the specific penalty amount chosen. These principles now guide every CCI penalty calculation.
 
 **The thread.** Orders against agreements address collective harm. But dominance abuse often requires a different kind of remedy — not just a penalty, but a *behavioural direction* that changes how a company operates. The orders the CCI can pass against dominant enterprises include mandatory access requirements, unbundling obligations, and pricing constraints. Those remedies are the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Under Section 27, what is the maximum penalty the CCI can generally impose for an anti-competitive agreement or abuse of dominance?",
+          options: [
+            "Up to ₹100 crores.",
+            "Up to 10% of the average turnover of the enterprise for the last three preceding financial years.",
+            "Up to 50% of the company's total assets.",
+            "Up to three times the total revenue of the company."
+          ],
+          correct_index: 1,
+          model_answer: "The standard maximum penalty is 10% of the average turnover for the preceding three financial years.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "For cartels specifically, the maximum penalty is strictly capped at 10% of turnover, regardless of how much profit the cartel actually made.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. For cartels, the penalty can be up to three times the profit made from the cartel OR 10% of turnover, whichever is higher. This ensures the penalty outweighs the illegal gain.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "Why does the Act primarily calculate penalties based on 'turnover' rather than 'profit'?",
+          model_answer: "Profits can be easily manipulated or depressed through accounting practices, making them an unreliable base for penalties. Turnover (revenue) is much harder to hide, ensuring the penalty acts as a massive, unavoidable deterrent.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "According to the Supreme Court in the Cement Cartel case, what specific type of turnover must the CCI use as the base for calculating penalties?",
+          model_answer: "'Relevant turnover' — the turnover strictly from the product/service affected by the contravention, not the company's entire diversified operations.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "To punish a cartel, the CCI can fine a company up to three times the profit it made from the illegal agreement — mathematically ensuring that crime literally does not pay.",
+      ],
     },
     {
       slug: "dominance-remedies",
@@ -54,6 +92,51 @@ This includes: directing the dominant enterprise to (a) cease the abusive practi
 **The walk-through.** In **Google/Android (2022)**, the CCI did not merely impose a ₹1,337.76-crore penalty. It also issued comprehensive behavioural directions: (a) Google must allow Android device manufacturers to install alternative app stores alongside the Play Store; (b) Google must not mandate pre-installation of its apps as a condition of licensing Play Store or Android; (c) Google must allow users to set any search engine as default during device setup; (d) Google must not offer financial incentives to OEMs conditional on exclusive pre-installation of Google Search; and (e) Google must allow sideloading of apps without warnings that discourage users. These directions were designed not just to punish past abuse, but to structurally alter Google's relationship with the Android ecosystem going forward.
 
 **The thread.** Agreements and dominance are ex-post enforcement — the CCI acts after the harm has occurred. Combination orders are different: they are ex-ante, shaping transactions *before* they close. The CCI's power to approve, modify, or block mergers — and the conditions it attaches to approvals — is the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Which of the following is an example of a 'structural remedy' that the CCI has the theoretical power to order against a dominant enterprise?",
+          options: [
+            "Mandating that the enterprise provide network access to rivals.",
+            "Ordering the division (breakup) of the enterprise.",
+            "Capping the prices the enterprise can charge.",
+            "Prohibiting the enterprise from offering bundled discounts."
+          ],
+          correct_index: 1,
+          model_answer: "Division or breakup is a structural remedy because it alters the actual physical/corporate structure of the firm. The others are behavioral remedies.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The CCI frequently uses its power to physically break up (structurally divide) dominant tech companies in India.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI has never used its power to break up a company. It overwhelmingly relies on behavioral remedies (like directing the company to change specific business practices).",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "What is the core difference between a behavioural remedy and a structural remedy in dominance cases?",
+          model_answer: "A behavioural remedy addresses the *conduct* (forcing the company to change its practices, like unbundling products, while staying intact). A structural remedy addresses the *power itself* (breaking up the company so it no longer has dominance).",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "In the Google/Android (2022) case, which of the following behavioural directions did the CCI issue? Select all that apply.",
+          options: [
+            "Allowing Android device manufacturers to install alternative app stores",
+            "Mandating Google to sell the Android operating system to a competitor",
+            "Prohibiting the mandatory pre-installation of Google apps as a condition for Play Store licensing",
+            "Forcing Google to hire a government-appointed CEO"
+          ],
+          correct_indices: [0, 2],
+          model_answer: "The CCI ordered Google to allow alternative app stores and stop mandating pre-installation of its own apps. It did not order structural changes like selling Android or replacing the CEO.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "In theory, the CCI has the power to legally break a dominant company into smaller pieces (a 'structural remedy'), though it has never actually used this nuclear option.",
+      ],
     },
     {
       slug: "combination-orders",
@@ -78,6 +161,44 @@ Section 31(11) provides that if the CCI does not pass any order within 210 days 
 **The walk-through.** In **PVR/INOX merger** (2022), the CCI reviewed the combination of India's two largest multiplex chains. The combined entity would have approximately 1,500+ screens across India, raising concerns about dominance in film exhibition in specific cities. The CCI approved the combination after analysing city-level market shares and concluding that: (a) sufficient competition existed from regional multiplex chains, single-screen theatres, and OTT platforms; (b) film distributors had countervailing bargaining power; and (c) entry barriers for new multiplex developers were moderate. The case illustrates a sophisticated geographic-market analysis — national market shares might have triggered concerns, but city-by-city analysis showed competition was preserved in most relevant geographic markets.
 
 **The thread.** The CCI's orders — against agreements, dominance, and combinations — need someone to gather the evidence that informs them. That someone is the Director General, the CCI's investigative arm. The next chapter is dedicated to the DG's role, powers, and duties — the machinery that turns suspicion into proof.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "If the CCI does not pass any order on a notified combination within 210 days, what is the legal consequence?",
+          options: [
+            "The combination is automatically blocked.",
+            "The parties must re-file their notification.",
+            "The combination is deemed to be approved.",
+            "The case is transferred to the Supreme Court."
+          ],
+          correct_index: 2,
+          model_answer: "Section 31(11) states that if no order is passed within 210 days, the combination is deemed approved (a mechanism to ensure regulatory certainty).",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "When the CCI finds that a merger raises competitive concerns, its only legal option is to block the transaction completely.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI has the option to 'approve with modifications' — imposing structural (selling off assets) or behavioral conditions to fix the competitive concerns without killing the deal.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Why is the 210-day 'deemed approval' rule considered a crucial regulatory innovation for mergers?",
+          model_answer: "Mergers involve financing, jobs, and market expectations. Indefinite regulatory limbo can destroy a deal's value even if it is eventually approved. The 210-day clock forces the CCI to decide quickly, guaranteeing companies commercial deal certainty.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What are the three broad options the CCI has when reviewing a combination under Section 31?",
+          model_answer: "Approve, Approve with modifications, or Block.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "To protect companies from endless government delays, the Competition Act includes a 'ticking clock': if the CCI doesn't decide on a merger within 210 days, the merger is automatically approved by law.",
+      ],
     },
   ],
 };

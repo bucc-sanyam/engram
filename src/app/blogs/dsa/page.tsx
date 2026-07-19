@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
+import StoryStartControl from "@/components/StoryStartControl";
 import {
   DSA_SERIES_TITLE,
   DSA_TOPICS,
@@ -70,9 +71,11 @@ export default function DsaAtlasPage() {
 
         {first && (
           <div className="rise mb-12">
-            <Link href={`/blogs/dsa/${first.slug}`} className="btn-primary">
-              Start reading — Chapter 1 →
-            </Link>
+            <StoryStartControl
+              seriesSlug="dsa"
+              total={total}
+              firstSectionHref={`/blogs/dsa/${first.slug}`}
+            />
           </div>
         )}
 

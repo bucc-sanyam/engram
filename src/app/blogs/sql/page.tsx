@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
+import StoryStartControl from "@/components/StoryStartControl";
 import {
   SQL_SERIES_TITLE,
   SQL_TOPICS,
@@ -70,9 +71,11 @@ export default function SqlPlaybookPage() {
 
         {first && (
           <div className="rise mb-12">
-            <Link href={`/blogs/sql/${first.slug}`} className="btn-primary">
-              Start reading — Chapter 1 →
-            </Link>
+            <StoryStartControl
+              seriesSlug="sql"
+              total={total}
+              firstSectionHref={`/blogs/sql/${first.slug}`}
+            />
           </div>
         )}
 

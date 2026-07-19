@@ -22,6 +22,8 @@ const MODE_LABEL: Record<string, string> = {
 /** Display titles for learnable story series (extend as series are added). */
 const SERIES_TITLES: Record<string, string> = {
   "competition-act": "Competition Act",
+  "dsa": "Pattern Atlas",
+  "sql": "Query Playbook",
 };
 
 export default function Dashboard() {

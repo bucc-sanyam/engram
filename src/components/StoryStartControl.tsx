@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { isDemo } from "@/lib/data";
-import { getStartedStories, getStorySections, startStory } from "@/lib/stories";
+import { getStartedStories, getStorySections, startStory, updateStoryColor, endStory } from "@/lib/stories";
 
 /** Palette a learner can pick for this story's nodes on their brain. */
 const STORY_COLORS = ["#5ba4cf", "#f5b95f", "#43d6b5", "#ff8fb1", "#bfa8f5", "#ff7a5c"];
@@ -100,7 +100,55 @@ export default function StoryStartControl({
             </Link>
           </div>
         </div>
-        <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+        <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-white/[0.06] pt-5">
+          <span className="micro">Brain colour</span>
+          <div className="flex gap-2">
+            {STORY_COLORS.map((c) => (
+              <button
+                key={c}
+                onClick={async () => {
+                  const old = color;
+                  setColor(c);
+                  setError(null);
+                  try {
+                    await updateStoryColor(seriesSlug, c);
+                  } catch (e) {
+                    setColor(old);
+                    setError(e instanceof Error ? e.message : "Could not update colour");
+                  }
+                }}
+                aria-label={`Pick colour ${c}`}
+                className={`h-6 w-6 rounded-full transition-transform ${color === c ? "scale-110 ring-2 ring-white/60" : "hover:scale-105"}`}
+                style={{ background: c }}
+              />
+            ))}
+          </div>
+          <div className="flex items-center gap-3 ml-auto">
+            <button
+              onClick={async () => {
+                if (confirm("Are you sure you want to end this learning path? All progress, questions, and brain nodes will be completely lost.")) {
+                  setBusy(true);
+                  setError(null);
+                  try {
+                    await endStory(seriesSlug);
+                    setState("new");
+                    setLearned(0);
+                  } catch (e) {
+                    setError(e instanceof Error ? e.message : "Could not end story");
+                  } finally {
+                    setBusy(false);
+                  }
+                }
+              }}
+              disabled={busy}
+              className="text-xs font-semibold text-[#ff7a5c] transition-colors hover:text-white"
+            >
+              {busy ? "Ending..." : "End story"}
+            </button>
+            {error && <span className="text-xs text-[#ff7a5c]">{error}</span>}
+          </div>
+        </div>
+        <div className="mt-5 h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
           <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
         </div>
       </div>

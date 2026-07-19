@@ -19,6 +19,8 @@ import { createClient } from "./supabase/client";
 import { isDemo } from "./demo";
 import { COMP_ACT_CHAPTERS } from "./competition-act";
 import type { CompActQuestion } from "./competition-act/types";
+import { DSA_TOPICS } from "./dsa";
+import { SQL_TOPICS } from "./sql";
 
 export interface UserStory {
   series_slug: string;
@@ -83,8 +85,48 @@ function compActSeed(): SeriesSeed {
   return { seriesSlug: "competition-act", title: "The Competition Code", sections };
 }
 
+function dsaSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const topic of DSA_TOPICS) {
+    for (const problem of topic.problems) {
+      sections.push({
+        chapterSlug: topic.slug,
+        sectionSlug: problem.slug,
+        name: problem.title,
+        category: "Computer Science",
+        summary: problem.summary,
+        keyPoints: [],
+        questions: [],
+        facts: [],
+      });
+    }
+  }
+  return { seriesSlug: "dsa", title: "The Pattern Atlas", sections };
+}
+
+function sqlSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const topic of SQL_TOPICS) {
+    for (const problem of topic.problems) {
+      sections.push({
+        chapterSlug: topic.slug,
+        sectionSlug: problem.slug,
+        name: problem.title,
+        category: "Data",
+        summary: problem.summary,
+        keyPoints: [],
+        questions: [],
+        facts: [],
+      });
+    }
+  }
+  return { seriesSlug: "sql", title: "The Query Playbook", sections };
+}
+
 const SERIES: Record<string, () => SeriesSeed> = {
   "competition-act": compActSeed,
+  "dsa": dsaSeed,
+  "sql": sqlSeed,
 };
 
 function getSeed(seriesSlug: string): SeriesSeed {
@@ -204,6 +246,50 @@ export async function startStory(seriesSlug: string, color: string): Promise<voi
   }
   if (linkRows.length) {
     await supabase.from("topic_links").upsert(linkRows, { onConflict: "user_id,source,target", ignoreDuplicates: true });
+  }
+}
+
+/**
+ * Update the colour of a started story.
+ */
+export async function updateStoryColor(seriesSlug: string, color: string): Promise<void> {
+  const { supabase, user } = await requireUser();
+  const { error } = await supabase
+    .from("user_stories")
+    .update({ color })
+    .eq("user_id", user.id)
+    .eq("series_slug", seriesSlug);
+  if (error) throw error;
+}
+
+/**
+ * End a story: deletes the story membership and completely deletes all seeded
+ * topics (cascading to questions, facts, and links), wiping all progress.
+ */
+export async function endStory(seriesSlug: string): Promise<void> {
+  const { supabase, user } = await requireUser();
+
+  const { data: sections } = await supabase
+    .from("story_sections")
+    .select("topic_id")
+    .eq("user_id", user.id)
+    .eq("series_slug", seriesSlug);
+
+  const topicIds = (sections ?? []).map((s) => s.topic_id as string);
+
+  await supabase
+    .from("user_stories")
+    .delete()
+    .eq("user_id", user.id)
+    .eq("series_slug", seriesSlug);
+
+  if (topicIds.length > 0) {
+    for (let i = 0; i < topicIds.length; i += 100) {
+      await supabase
+        .from("topics")
+        .delete()
+        .in("id", topicIds.slice(i, i + 100));
+    }
   }
 }
 

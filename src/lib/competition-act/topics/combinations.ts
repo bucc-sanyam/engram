@@ -38,6 +38,44 @@ The 2023 amendment added a **deal-value threshold**: any transaction where the v
 **The walk-through.** When Zomato acquired Blinkit (then Grofers) in 2022, the transaction crossed the enterprise-level threshold on assets. Zomato filed a notification with the CCI. The CCI assessed whether the combination of a food-delivery platform with a quick-commerce platform would create dominance in any relevant market. After examining overlaps and the competitive landscape (Swiggy Instamart, BigBasket, and others remained active), the CCI approved the combination unconditionally. Not every large deal raises concerns — but every large deal must be examined.
 
 **The thread.** Crossing the threshold triggers an obligation: the parties must *notify* the CCI and wait for approval. The notification process — timing, forms, green channels, and what happens during the waiting period — is the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "The 2023 amendment to the Competition Act introduced a new threshold for combination notification. What is it?",
+          options: [
+            "The market-share threshold",
+            "The deal-value threshold (transaction > ₹2,000 crores + substantial operations in India)",
+            "The foreign direct investment threshold",
+            "The employee headcount threshold"
+          ],
+          correct_index: 1,
+          model_answer: "The deal-value threshold was introduced to catch transactions where the target has high competitive significance (e.g., millions of users) but low assets/turnover.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "Most M&A activity in India is competitively harmless and falls below the CCI's mandatory notification thresholds.",
+          options: ["True", "False"],
+          correct_index: 0,
+          model_answer: "True. The thresholds act as a filter to ensure the CCI only reviews large transactions that could plausibly affect competition.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "What is a 'killer acquisition', and how does the new deal-value threshold address it?",
+          model_answer: "A killer acquisition is when a dominant firm buys a nascent competitor to eliminate it before it becomes a threat (e.g. Facebook/WhatsApp). Traditional asset/turnover thresholds missed these because startups have low revenue. The deal-value threshold (₹2,000 crores) catches them based on the high acquisition price.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What are the two traditional financial metrics used to define combination thresholds under Section 5?",
+          model_answer: "Assets and turnover (revenue).",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "In 2023, India added a 'deal-value threshold' to catch big tech acquisitions (like Facebook buying WhatsApp) where the target has low revenue but huge market significance.",
+      ],
     },
     {
       slug: "notification-process",
@@ -58,6 +96,44 @@ The CCI's Green Channel route (introduced via regulation in 2019) allows combina
 **The walk-through.** When Adani Group acquired Ambuja Cements and ACC in 2022 — one of the largest M&A transactions in Indian corporate history — the parties notified the CCI under Section 6(2). Because both Adani (through Adani Enterprises) and Ambuja/ACC operated in the cement market, the Green Channel was not available (horizontal overlap existed). The CCI reviewed the combination over several months, assessed market shares in regional cement markets across India, and ultimately approved the transaction after determining that sufficient competition remained post-merger from UltraTech, Shree Cement, and others. The standstill obligation ensured that the transaction did not close until the CCI was satisfied.
 
 **The thread.** Once the CCI receives a notification, it must *assess* whether the combination would cause an AAEC. The assessment framework — market shares, competitive effects, efficiencies, failing-firm defence — is the next section, and it determines whether the CCI approves, modifies, or blocks the deal.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the CCI's 'Green Channel' route for combinations?",
+          options: [
+            "A fast-track approval for environmentally friendly mergers.",
+            "An automatic approval route for combinations with no horizontal, vertical, or complementary overlaps.",
+            "A pre-clearance channel for government-owned enterprises.",
+            "A route that exempts foreign companies from notifying the CCI."
+          ],
+          correct_index: 1,
+          model_answer: "The Green Channel allows combinations with zero overlaps (e.g., a steel company buying a software firm) to be automatically approved upon filing.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The 'standstill obligation' allows merging parties to combine their operations immediately after notifying the CCI, provided they agree to separate later if the CCI objects.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The standstill obligation prohibits the combination from taking effect until the CCI approves it or 210 days elapse. Jumping the gun invites penalties.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Why is the standstill obligation (Section 6(2A)) critical to the CCI's merger review powers?",
+          model_answer: "It prevents companies from 'jumping the gun' — comingling their operations, firing staff, or sharing secrets. If they merged before approval, unwinding the transaction later would be practically impossible (a fait accompli).",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Under the deemed approval rule, what is the maximum number of days the CCI can hold a notified combination in standstill?",
+          model_answer: "210 days.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "Mergers in India cannot close immediately. The 'standstill obligation' forces companies to pause until the CCI approves the deal or 210 days pass.",
+      ],
     },
     {
       slug: "cci-review",
@@ -88,6 +164,51 @@ Under Section 31, the CCI may: (a) approve the combination; (b) approve with mod
 **The walk-through.** In the **Holcim/Lafarge** cement merger (2015, global transaction with Indian operations), the CCI required the merged entity to divest certain cement plants in regions where the combined market share would have exceeded competitive thresholds. The CCI did not block the merger outright — it modified it. The divested plants were sold to Birla Corporation, creating a new competitor to replace the competition lost through the merger. This "structural remedy" is the CCI's preferred approach: rather than blocking socially valuable transactions, modify them to preserve competition. The Holcim/Lafarge case established the CCI as a credible and sophisticated merger reviewer.
 
 **The thread.** You have now covered the Act's three substantive pillars: agreements, dominance, and combinations. The next chapter shifts from *what the law prohibits* to *who enforces it* — the Competition Commission of India itself. Understanding the institution, its composition, and its powers is essential because the CCI's effectiveness determines whether the prohibitions you have just learned are paper rules or living law.`,
+      questions: [
+        {
+          kind: "multi",
+          prompt: "Which of the following factors does the CCI consider under Section 20(4) when assessing a combination's competitive impact? Select all that apply.",
+          options: [
+            "Actual and potential competition in the market",
+            "Barriers to entry",
+            "The nature and extent of vertical integration",
+            "The personal wealth of the acquiring CEO"
+          ],
+          correct_indices: [0, 1, 2],
+          model_answer: "Competition, entry barriers, and vertical integration are all statutory factors. The CEO's personal wealth is irrelevant to the competition assessment.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Explain the 'failing-firm defence' in merger review.",
+          model_answer: "If the target company is genuinely failing (insolvent, no other buyer, and its assets would exit the market otherwise), the CCI may approve a competitively concerning merger. The logic is that the alternative — losing those assets from the market entirely — is worse for consumers than the merger.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "truefalse",
+          prompt: "If the CCI concludes a merger will harm competition, its only legal option is to block the transaction entirely.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI prefers 'structural remedies' — approving the merger subject to modifications, such as requiring the merged entity to sell off certain overlapping plants (as seen in the Holcim/Lafarge case).",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "mcq",
+          prompt: "What does the Herfindahl-Hirschman Index (HHI) measure in the context of CCI's merger review?",
+          options: [
+            "The profitability of the merging entities",
+            "Market concentration, calculated by summing the squares of market shares",
+            "The likelihood of the target firm going bankrupt",
+            "The volume of cross-border trade affected by the merger"
+          ],
+          correct_index: 1,
+          model_answer: "The HHI is a standard economic tool used by the CCI to measure market concentration. A post-merger HHI above 2,500 with a change of over 200 flags serious competitive concerns.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "Instead of blocking big mergers entirely, the CCI often uses 'structural remedies' — forcing the merging companies to sell off specific factories to a competitor to keep the market balanced.",
+      ],
     },
   ],
 };

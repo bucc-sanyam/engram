@@ -34,6 +34,59 @@ Market share, size and resources, size and importance of competitors, economic p
 **The walk-through.** In **Coal India Limited v. CCI** (2014), the CCI found Coal India dominant in the market for production and supply of non-coking coal in India. Coal India's market share exceeded 75%, but the dominance finding rested on more than that: Coal India was a state-owned monopoly, entry into coal mining required government licenses that were practically unavailable to private players, consumers (power plants, steel companies) had no alternative domestic supplier, and switching to imported coal involved prohibitive logistics costs. Every factor on the Section 19(4) list pointed the same way — a textbook case where dominance was as much about structural market conditions as about raw share.
 
 **The thread.** Finding dominance is only step one. The next question is: *did the dominant enterprise abuse that position?* Section 4(2) lists the specific acts that constitute abuse — and they range from unfair pricing to leveraging dominance from one market into another. That is the next read.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the primary conceptual difference between an offence under Section 3 (Anti-Competitive Agreements) and Section 4 (Abuse of Dominant Position)?",
+          options: [
+            "Section 3 applies only to goods; Section 4 applies to services.",
+            "Section 3 requires at least two parties conspiring; Section 4 requires only one enterprise abusing its power.",
+            "Section 3 is judged by the rule of reason; Section 4 is per se illegal.",
+            "Section 3 involves the CCI; Section 4 involves civil courts."
+          ],
+          correct_index: 1,
+          model_answer: "Section 3 requires an agreement between at least two parties. Dominance abuse under Section 4 is unilateral — it requires only one enterprise that has achieved a position of strength.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "If an enterprise captures over 50% market share, it is automatically considered to be violating Section 4 of the Competition Act.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. Dominance itself is perfectly legal (the Act does not punish success). What Section 4 prohibits is the *abuse* of that dominant position.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "How did the CCI establish dominance in the Coal India Limited (2014) case beyond just its 75% market share?",
+          model_answer: "The CCI relied on structural market conditions: Coal India was a state monopoly, entry required practically unavailable government licenses, domestic consumers had no alternative supplier, and imported coal had prohibitive logistics costs. Every factor under Section 19(4) pointed to dominance.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following are among the 13 factors the CCI considers when assessing dominance under Section 19(4)? Select all that apply.",
+          options: [
+            "Market share",
+            "Size and resources of the enterprise",
+            "Entry barriers (regulatory, financial, technological)",
+            "Number of employees",
+            "Dependence of consumers"
+          ],
+          correct_indices: [0, 1, 2, 4],
+          model_answer: "Market share, size/resources, entry barriers, and consumer dependence are all statutory factors under Section 19(4). The number of employees is not explicitly a factor.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Under Section 4, what defines a 'dominant position' in one sentence?",
+          model_answer: "A position of strength enabling an enterprise to operate independently of competitive forces or affect competitors/consumers in its favour.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "In Indian competition law, being a monopoly or holding a dominant position is perfectly legal — only the *abuse* of that position is prohibited.",
+        "The CCI uses a 13-factor test to determine dominance; market share is only the starting point, not the sole determinant.",
+      ],
     },
     {
       slug: "types-of-abuse",
@@ -56,6 +109,58 @@ Market share, size and resources, size and importance of competitors, economic p
 **The walk-through.** In **Google/Android (2022)**, the CCI found Google guilty of abuse of dominance under multiple clauses of Section 4(2). Google was found to have: (a) imposed unfair conditions by requiring Android device manufacturers to pre-install the entire Google Mobile Services suite as a condition of licensing the Play Store; (c) denied market access to competing app stores and search engines by making pre-installation mandatory; (d) tied the Play Store (dominant product) with Google Search and Chrome (supplementary obligations); and (e) leveraged its dominance in the app store market to protect its position in the online search market. The CCI imposed a penalty of ₹1,337.76 crores and ordered Google to allow users to choose their default search engine and uninstall pre-installed apps. The case is India's most comprehensive application of Section 4(2).
 
 **The thread.** Both dominance and abuse depend on one analytical foundation: the definition of the "relevant market." If the market is drawn too narrowly, every firm looks dominant; too broadly, none does. The next section unpacks how the CCI defines relevant markets — the single most consequential analytical step in any Section 4 case.`,
+      questions: [
+        {
+          kind: "multi",
+          prompt: "Which of the following are explicitly listed as types of abuse under Section 4(2)? Select all that apply.",
+          options: [
+            "Predatory pricing",
+            "Limiting or restricting production",
+            "Denial of market access",
+            "Tied selling / bundling",
+            "Lobbying the government for favorable regulations"
+          ],
+          correct_indices: [0, 1, 2, 3],
+          model_answer: "Section 4(2) lists unfair/predatory pricing, output restriction, market denial, tied selling, and leveraging. Lobbying is not an abuse of dominance under the Act.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "What is 'predatory pricing', and how does the CCI determine if a price is predatory?",
+          model_answer: "Predatory pricing is selling below cost to drive competitors out, with the intent of raising prices later. The CCI uses a modified Areeda-Turner test: pricing below average variable cost is presumptively predatory, while pricing between average variable cost and average total cost requires other evidence of exclusionary intent.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "mcq",
+          prompt: "In the Google/Android (2022) case, what practice was found to be an abuse of dominance via 'tied selling' (Section 4(2)(d))?",
+          options: [
+            "Paying Apple to be the default search engine on iOS.",
+            "Requiring device manufacturers to pre-install the entire Google Mobile Services suite to license the Play Store.",
+            "Banning third-party apps from using alternative payment systems.",
+            "Selling Android devices at a loss."
+          ],
+          correct_index: 1,
+          model_answer: "Google tied the licensing of its dominant product (Play Store) to the acceptance of a supplementary obligation — pre-installing the entire Google Mobile Services suite, including Search and Chrome.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "truefalse",
+          prompt: "Leveraging occurs when a dominant enterprise uses its position in one market to protect its position in that identical market.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. Leveraging (Section 4(2)(e)) is using dominance in *one* relevant market to enter or protect a position in *another* relevant market.",
+          difficulty: "basic",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What type of abuse is it when an enterprise makes a contract subject to unrelated supplementary obligations?",
+          model_answer: "Tied selling or bundling.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "In 2022, the CCI fined Google ₹1,337 crores for multiple abuses, including tying the Play Store to the pre-installation of Google Search and Chrome.",
+      ],
     },
     {
       slug: "relevant-market",
@@ -76,6 +181,52 @@ For the geographic market (Section 19(6)): regulatory trade barriers, local spec
 **The walk-through.** In **Matrimony.com v. Google** (2018), the question was whether Google's "dominant market" was (a) online search advertising, (b) all online advertising (including social media ads, display ads), or (c) all advertising (including print, TV, radio). Matrimony.com argued it was (a) — a narrow market where Google's share exceeded 90%. Google argued it was (c) — a broad market where Google competed with television and newspapers and held a modest share. The CCI sided with a narrow definition: online search advertising in India. The reasoning followed SSNIP logic — an advertiser wanting to reach users at the moment of search intent could not meaningfully substitute a newspaper ad or a television spot. The search is specific, the intent is immediate, and no other advertising medium provides the same thing. With the market drawn narrowly, Google's dominance was inescapable.
 
 **The thread.** Dominance analysis is complete — you can now define the market, assess dominance within it, and identify the specific abuse. But the Act does not only govern existing market power; it also governs the *creation* of market power through combinations (mergers and acquisitions). Chapter 4, Regulation of Combinations, is where the CCI acts as a gatekeeper *before* dominance is created, rather than a prosecutor *after* it is abused.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "The 'relevant market' is determined as the intersection of which two components?",
+          options: [
+            "Relevant product market and relevant consumer market",
+            "Relevant product market and relevant geographic market",
+            "Relevant domestic market and relevant export market",
+            "Relevant supplier market and relevant distributor market"
+          ],
+          correct_index: 1,
+          model_answer: "The relevant market is the intersection of the relevant product market (substitutable goods/services) and the relevant geographic market (area with homogeneous conditions of competition).",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Explain the logic of the SSNIP (hypothetical monopolist) test used for market definition.",
+          model_answer: "The SSNIP test asks: if a hypothetical monopolist of product X raised prices by a Small but Significant Non-transitory amount (5-10%), would enough consumers switch to product Y to make the increase unprofitable? If yes, X and Y are substitutes (same market). If no (consumers are locked in), X is its own relevant market.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "truefalse",
+          prompt: "In Matrimony.com v. Google (2018), the CCI agreed with Google that its relevant market was 'all advertising' (including print and TV) because all media compete for ad budgets.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI defined the market narrowly as 'online search advertising in India'. It reasoned that an advertiser wanting to reach users at the exact moment of search intent could not meaningfully substitute a TV or newspaper ad.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following factors does the CCI consider when defining the relevant geographic market under Section 19(6)? Select all that apply.",
+          options: [
+            "Regulatory trade barriers",
+            "Transport costs",
+            "Physical characteristics of the product",
+            "Language",
+            "Consumer preferences"
+          ],
+          correct_indices: [0, 1, 3, 4],
+          model_answer: "Regulatory barriers, transport costs, language, and consumer preferences are geographic market factors. Physical characteristics of the product are used to define the *product* market, not the geographic market.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "The SSNIP test (Small but Significant Non-transitory Increase in Price) is the global standard for defining a market: if a 5% price hike makes consumers switch, the markets are the same.",
+      ],
     },
   ],
 };

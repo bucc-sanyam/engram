@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
+import StoryLearnPanel from "@/components/StoryLearnPanel";
 import {
   DSA_SERIES_TITLE,
   DSA_TOPICS,
@@ -100,6 +101,15 @@ export default async function DsaProblemPage({
           <section className="article-body">
             <Markdown>{problem.body}</Markdown>
           </section>
+
+          {/* Learn this section — seeds its quiz bank into the reader's reviews */}
+          <StoryLearnPanel
+            seriesSlug="dsa"
+            chapterSlug={topic.slug}
+            sectionSlug={problem.slug}
+            questions={[]}
+            color={topic.color}
+          />
 
           {/* Linear nav — the whole series is one path */}
           <nav className="mt-12 grid gap-3 sm:grid-cols-2">

@@ -40,6 +40,44 @@ These penalties are *in addition* to the substantive penalties under Section 27 
 **The walk-through.** In **MCX-SX v. NSE** (2011), the CCI found that the National Stock Exchange (NSE) had abused its dominant position by waiving transaction fees on its currency derivatives segment to drive the competing MCX Stock Exchange out of the market (predatory pricing). The CCI imposed a penalty of ₹55.5 crores on NSE. When NSE delayed compliance with the CCI's behavioural directions (to stop zero-fee pricing), the CCI warned that Section 42's daily penalty would apply. NSE complied. The case demonstrated that the daily-penalty lever is often more effective than the headline penalty — it creates urgency rather than allowing leisurely litigation strategy.
 
 **The thread.** Monetary penalties hit the enterprise. But who within the enterprise bears personal responsibility? Section 48 extends liability to individuals — directors, managers, and officers — who were in charge when the violation occurred. Individual liability is the next section, and it is what makes competition law personally frightening rather than merely corporately inconvenient.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Under Section 42, what is the penalty for failing to comply with a corrective order issued by the CCI?",
+          options: [
+            "A flat fine of ₹1 lakh.",
+            "Up to ₹1 lakh per day of default, subject to a maximum of ₹10 crores.",
+            "Automatic cancellation of the company's registration.",
+            "A maximum fine of ₹50 crores."
+          ],
+          correct_index: 1,
+          model_answer: "The 'daily penalty' mechanism imposes up to ₹1 lakh per day to create mounting financial pressure against chronic non-compliance.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The only type of penalty the CCI can impose is a fine based on the turnover of the company for substantive competition violations (like cartels).",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The Act provides layered penalties: substantive fines (Sec 27), daily non-compliance fines (Sec 42), failure-to-notify fines (Sec 43), and false-information fines (Sec 44-45).",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "How does the 'daily penalty' mechanism under Section 42 prevent companies from simply treating CCI fines as a routine cost of doing business?",
+          model_answer: "A massive one-time fine can be budgeted for and absorbed. But a fine that grows every single day (up to ₹1 lakh/day) creates unavoidable, compounding financial pressure that makes continued defiance economically irrational.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What is the penalty under Section 43 for failing to notify the CCI about a combination (merger)?",
+          model_answer: "Up to 1% of the total turnover or assets of the combination, whichever is higher.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "If a company ignores a CCI order, it doesn't just get a one-time fine. The CCI can charge a 'daily penalty' of ₹1 lakh every single day until the company complies.",
+      ],
     },
     {
       slug: "individual-liability",
@@ -60,6 +98,51 @@ The section provides a defence: a person is not liable if they prove that the co
 **The walk-through.** In the **Cement Cartel case** (2012), the CCI not only penalised the 11 cement companies but also directed that the individual officers responsible for the coordination — senior executives who attended the Cement Manufacturers' Association meetings where production and pricing were discussed — were liable under Section 48. Several Managing Directors and Senior Vice Presidents were personally penalised. The COMPAT (now NCLAT) upheld the principle of individual liability but recalibrated the penalty amounts. The case sent a clear message to India Inc.: cartel participation is not just a corporate risk — it is a personal one.
 
 **The thread.** Penalties and individual liability punish. But what if a cartelist wants to *cooperate* — to break ranks, confess, and provide evidence against co-conspirators? The leniency programme, next, is the Act's carrot to complement its stick, and it is the single most effective tool for detecting cartels that would otherwise remain hidden.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Under Section 48, what is the maximum term of imprisonment an individual can face for failing to pay a penalty?",
+          options: [
+            "One year.",
+            "Three years.",
+            "Five years.",
+            "Life imprisonment."
+          ],
+          correct_index: 1,
+          model_answer: "Failure to pay personal penalties can result in imprisonment of up to three years or a massive fine (up to ₹25 crores), or both.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "Under Section 48, every single employee of a company is automatically held personally liable if the company engages in cartel behaviour.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. Liability is restricted to those who were 'in charge of and responsible to the company for the conduct of its business' (e.g., CEOs, senior VPs).",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "What defence is available to an individual corporate officer under Section 48 to avoid personal liability?",
+          model_answer: "The officer must prove that the contravention took place without their knowledge, or that they exercised all due diligence to prevent the contravention (e.g., implementing an active compliance program and being actively misled).",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following consequences can apply to a senior executive personally held liable for their company's anti-competitive conduct? Select all that apply.",
+          options: [
+            "Penalty of up to 10% of their personal average income",
+            "Imprisonment of up to 3 years if the penalty is unpaid",
+            "Forced transfer to a different department within the company",
+            "Confiscation of their private home by the CCI"
+          ],
+          correct_indices: [0, 1],
+          model_answer: "The Act allows for personal income-based fines and imprisonment for non-payment. The CCI cannot mandate internal HR transfers or physically confiscate real estate.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "Antitrust law isn't just a corporate problem. If a company forms a cartel, its CEO and senior executives can be personally fined up to 10% of their own income — and jailed if they don't pay.",
+      ],
     },
     {
       slug: "leniency-programme",
@@ -83,6 +166,44 @@ The applicant must: (a) cease participation in the cartel immediately; (b) not d
 **The walk-through.** In the **Car Parts Cartel** (auto components, multiple cases 2014–2017), the CCI received leniency applications from participants in international cartels that had rigged bids for automobile parts (bearings, ignition coils, spark plugs) supplied to Indian car manufacturers. The first applicants in each cartel received full immunity; subsequent applicants received reduced penalties. The evidence provided by the leniency applicants — internal emails, meeting minutes, pricing spreadsheets — was decisive: without it, the CCI would have struggled to prove the cartels' existence, as the conduct occurred largely outside India. The leniency programme turned co-conspirators into star witnesses.
 
 **The thread.** Leniency addresses cartels specifically. But what about non-cartel cases — abuse of dominance or vertical agreements — where a full-length investigation and adjudication might not be worth the CCI's resources? The 2023 amendment introduced settlement and commitment mechanisms for exactly this purpose. That is the final section of this chapter.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How does the Leniency Programme (Section 46) incentivize cartel members to come forward?",
+          options: [
+            "By offering a government job to the whistleblower.",
+            "By offering the first applicant who provides vital evidence up to a 100% reduction in penalties.",
+            "By guaranteeing that their company's stock price will go up.",
+            "By exempting them from paying corporate taxes for a year."
+          ],
+          correct_index: 1,
+          model_answer: "The first applicant to provide 'full, true, and vital disclosure' can receive up to complete immunity (100% penalty reduction), a massive incentive to defect.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "A cartel member who is the third to approach the CCI with evidence gets absolutely no reduction in their penalty.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The third applicant can still receive up to a 30% reduction, ensuring there is still some incentive to cooperate even if you aren't first.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Why is the 'first-in-the-door' race critical to the success of the leniency programme?",
+          model_answer: "Because only the first applicant gets 100% immunity, it creates fierce paranoia among cartel members. Knowing anyone could defect at any time makes cartels inherently unstable and prevents new ones from forming.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Can a company get leniency if it was the 'ringleader' that coerced other enterprises to join the cartel?",
+          model_answer: "No, a strict condition for leniency is that the applicant must not have coerced others to participate.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "The CCI uses a 'prisoner's dilemma' to bust cartels: the first company to betray the cartel and confess to the government gets 100% immunity, while the rest face massive fines.",
+      ],
     },
     {
       slug: "settlement-and-commitment",
@@ -105,6 +226,51 @@ Key limitations: (a) Settlement and commitment are **not available for cartels**
 **The walk-through.** While India's settlement/commitment framework is new (2023), the model is well-tested in Europe, where the European Commission has used commitment decisions under Article 9 of Regulation 1/2003 for two decades. The Google Shopping case in the EU (2017) was resolved partly through commitments — Google offered to display rival shopping comparison services alongside its own in search results. The EU accepted, avoiding a potentially longer proceeding. India's Section 48C is modelled on the same principle: give enterprises a path to resolve cases by addressing the competitive concern directly, rather than fighting a multi-year battle over whether the conduct technically constituted a "contravention."
 
 **The thread.** The penalty chapter is complete: monetary penalties, individual liability, leniency for cartel whistleblowers, and settlement for non-cartel cases. The last chapter of this story steps back from enforcement to survey the Act's broader mission — competition advocacy, the appellate mechanism, and the miscellaneous provisions that complete the statutory architecture.`,
+      questions: [
+        {
+          kind: "truefalse",
+          prompt: "Under the 2023 amendment, a company accused of participating in a hard-core cartel can apply to settle the case and avoid a formal finding of contravention.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The settlement and commitment mechanisms are explicitly NOT available for cartels. Cartelists must use the leniency programme.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "mcq",
+          prompt: "Why were the Settlement and Commitment mechanisms introduced in 2023?",
+          options: [
+            "To allow cartels to legally operate if they pay a fee.",
+            "To allow the CCI to quickly resolve less serious cases through negotiated behavioral changes, freeing up resources for major cases.",
+            "To replace the leniency programme completely.",
+            "To allow companies to bribe CCI officials legally."
+          ],
+          correct_index: 1,
+          model_answer: "They provide a fast-track way to resolve cases involving abuse of dominance or vertical agreements by securing behavioral changes without years of litigation.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "What is the procedural difference between the 'Settlement' mechanism (Section 48B) and the 'Commitment' mechanism (Section 48C)?",
+          model_answer: "Timing. A 'Commitment' is offered *before* the DG submits its investigation report (early stage). A 'Settlement' is offered *after* the DG submits its report but before the CCI passes a final order (late stage, usually involves a financial payment).",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following statements about Settlement and Commitment are true? Select all that apply.",
+          options: [
+            "They are not available for cartels.",
+            "The CCI is legally forced to accept any settlement offer a company makes.",
+            "Accepted settlements are binding and enforceable.",
+            "An enterprise can use these mechanisms in an abuse of dominance case."
+          ],
+          correct_indices: [0, 2, 3],
+          model_answer: "They apply to dominance/vertical agreements, they are binding, but they exclude cartels. The CCI has discretion and is never forced to accept an offer.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "Since 2023, companies accused of abusing their dominance can offer a 'settlement' — agreeing to change their behavior and pay a fee to close the case without a formal guilty verdict.",
+      ],
     },
   ],
 };

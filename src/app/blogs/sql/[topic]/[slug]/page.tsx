@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
+import StoryLearnPanel from "@/components/StoryLearnPanel";
 import {
   SQL_SERIES_TITLE,
   SQL_TOPICS,
@@ -113,6 +114,15 @@ export default async function SqlProblemPage({
               Practice this problem on LeetCode →
             </a>
           </div>
+
+          {/* Learn this section — seeds its quiz bank into the reader's reviews */}
+          <StoryLearnPanel
+            seriesSlug="sql"
+            chapterSlug={topic.slug}
+            sectionSlug={problem.slug}
+            questions={[]}
+            color={topic.color}
+          />
 
           {/* Linear nav — the whole series is one path */}
           <nav className="mt-12 grid gap-3 sm:grid-cols-2">

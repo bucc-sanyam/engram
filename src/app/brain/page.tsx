@@ -18,6 +18,8 @@ import { CATEGORY_COLORS, categoryColor } from "@/lib/types";
 /** Display titles for learnable story series (extend as series are added). */
 const SERIES_TITLES: Record<string, string> = {
   "competition-act": "The Competition Code",
+  "dsa": "The Pattern Atlas",
+  "sql": "The Query Playbook",
 };
 
 export default function BrainPage() {

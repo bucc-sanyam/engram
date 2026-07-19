@@ -32,6 +32,44 @@ The DG is appointed by the Central Government, not by the CCI — a deliberate s
 **The walk-through.** The DG's office currently operates from New Delhi with regional investigation teams. The Directorate is headed by a senior officer (typically a joint secretary–level IRS or IPS officer) and includes Additional DGs, Joint DGs, Deputy DGs, and Assistant DGs. Economic analysis is supported by the CCI's Economics Division, which works alongside the DG's investigation teams to prepare market studies, run regression analyses on pricing data, and model competitive effects. The forensic accounting unit specialises in tracing financial flows in cartel cases — following the money from inflated prices to cartel members' profits.
 
 **The thread.** The DG's role is institutional. But what specific *powers* does the DG have to compel evidence, enter premises, and seize documents? The investigation powers — particularly the enhanced search-and-seizure provisions introduced by the 2023 amendment — are the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "The Director General (DG) is appointed by which authority?",
+          options: [
+            "The Chairperson of the CCI",
+            "The Central Government",
+            "The Supreme Court of India",
+            "The President of India"
+          ],
+          correct_index: 1,
+          model_answer: "The DG is appointed by the Central Government, a deliberate structural choice to preserve independence between the investigator (DG) and the adjudicator (CCI).",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "If the DG's investigation report concludes that no cartel exists, the CCI is legally bound to accept that finding and close the case.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI is not bound by the DG's report. In cases like Re: Aluminium Phosphide Tablets, the CCI has explicitly overruled the DG's recommendation and found a contravention.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "Why does the Competition Act mandate a strict separation between the Director General (the investigator) and the CCI (the adjudicator)?",
+          model_answer: "To prevent institutional bias, rooted in the principle that no one should be a judge in their own cause. Separating the roles ensures the CCI encounters the evidence fresh and objectively, rather than having already formed a bias while collecting it.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Can the Director General initiate an antitrust investigation entirely independently?",
+          model_answer: "No, the DG can only investigate when directed by the CCI after it forms a prima facie opinion.",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "In competition law, the police and the judge are kept strictly separate: the Director General investigates the crime, but only the CCI decides if a company is actually guilty.",
+      ],
     },
     {
       slug: "investigation-powers",
@@ -53,6 +91,51 @@ The DG is appointed by the Central Government, not by the CCI — a deliberate s
 **The walk-through.** While India's post-2023 dawn-raid jurisprudence is still developing, the template is well-established internationally. A typical dawn raid proceeds as follows: (1) the DG obtains authorisation from the CCI, specifying the premises to be searched and the evidence sought; (2) a team of investigators, accompanied by digital forensic experts, arrives at the target's premises before business hours; (3) the team secures the premises (prevents destruction of evidence) and informs the enterprise's legal representative of the authorisation; (4) the team images computer systems, copies relevant physical documents, and interviews available personnel; (5) seized evidence is catalogued, sealed, and transported to the DG's office; (6) the enterprise receives a copy of the seizure inventory and has the right to claim privilege over specific documents. The entire process is subject to judicial review — the enterprise can challenge the authorisation in court if it was obtained improperly.
 
 **The thread.** The DG gathers the evidence; the CCI makes the finding. But what consequences follow the finding? The next chapter — Penalties & Enforcement — is where the Act shows its teeth: monetary penalties, individual criminal liability, leniency for cooperating cartelists, and the new settlement and commitment mechanism introduced in 2023.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why are 'dawn raids' considered critical for investigating cartels?",
+          options: [
+            "Because cartel members only meet at dawn.",
+            "Because they allow the DG to seize documents and digital evidence unannounced before cartelists can destroy them.",
+            "Because the Competition Act prohibits investigations during normal business hours.",
+            "Because they are the only way to arrest cartel executives."
+          ],
+          correct_index: 1,
+          model_answer: "Cartels operate secretly and often try to destroy evidence. Dawn raids (unannounced inspections) bypass this by securing evidence on the spot.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The 2023 amendment to the Competition Act explicitly granted the DG powers for dawn raids and digital forensics.",
+          options: ["True", "False"],
+          correct_index: 0,
+          model_answer: "True. The 2023 amendment explicitly empowered the DG to conduct unannounced searches and clone/recover digital evidence, aligning India with global regulators.",
+          difficulty: "basic",
+        },
+        {
+          kind: "open",
+          prompt: "Describe the typical sequence of a dawn raid conducted by the DG.",
+          model_answer: "The DG obtains CCI authorization, arrives unannounced before business hours, secures the premises to prevent evidence destruction, images computer systems and seizes physical documents, and provides the enterprise with a seizure inventory.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following powers does the Director General explicitly possess under the Act? Select all that apply.",
+          options: [
+            "Enter and search premises (with CCI authorization)",
+            "Summon and examine witnesses on oath",
+            "Arrest suspected cartel executives",
+            "Image hard drives and clone servers"
+          ],
+          correct_indices: [0, 1, 3],
+          model_answer: "The DG can search premises, summon witnesses, and image digital devices. The DG cannot arrest individuals (competition offences result in civil/monetary penalties, not police arrests).",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "Armed with new 2023 amendments, the Director General can conduct 'dawn raids' — showing up unannounced before business hours to clone servers and recover deleted WhatsApp messages.",
+      ],
     },
   ],
 };

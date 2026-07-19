@@ -36,6 +36,7 @@ import type {
 } from "./types";
 
 export { isDemo };
+export * from "./stories";
 
 /** Demo quiz session: the client-safe questions plus the hidden answer key. */
 interface DemoSession {

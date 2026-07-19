@@ -34,6 +34,44 @@ The CCI's opinion under Section 49 is advisory — it is not binding on the gove
 **The walk-through.** In 2020, the CCI published a landmark **Market Study on E-Commerce in India**, examining competitive dynamics in online retail and platform markets. The study identified concerns about: (a) platforms favouring their own private-label products over third-party sellers; (b) deep discounting funded by platform subsidies that independent retailers could not match; (c) exclusive arrangements between platforms and major brands; and (d) data advantages that platforms accumulated over sellers operating on their platform. The study's recommendations — on platform neutrality, data sharing, and transparency of search algorithms — influenced subsequent government policy discussions on e-commerce regulation. No penalty was imposed; no order was passed. But the study shifted the policy conversation — which is advocacy at its most effective.
 
 **The thread.** Advocacy shapes policy; enforcement shapes behaviour. But what happens when a company disagrees with the CCI's enforcement order? The appellate mechanism — the NCLAT and the Supreme Court — provides the check on CCI power. That is the next section.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Under Section 49, what is the legal effect of an opinion given by the CCI to the government regarding a proposed policy?",
+          options: [
+            "It is legally binding and the government must amend the policy.",
+            "It acts as a permanent veto over the policy.",
+            "It is purely advisory and not legally binding on the government.",
+            "It automatically triggers a Supreme Court review."
+          ],
+          correct_index: 2,
+          model_answer: "The CCI's advocacy opinions are advisory. The government doesn't have to follow them, though publishing the opinion creates public pressure.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The CCI can only review government policies if the government explicitly sends a formal 'reference' asking for the CCI's opinion.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The CCI can act reactively (answering references) but also proactively (conducting market studies and advocacy on its own initiative).",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "Why is the CCI's 'competition advocacy' role sometimes considered just as important as its enforcement role?",
+          model_answer: "Enforcement catches bad behaviour after the harm is done. Advocacy prevents the harm from happening in the first place by advising against government policies that would inadvertently create monopolies or distort markets.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "What type of report did the CCI publish in 2020 that significantly influenced policy discussions on online retail without imposing any penalties?",
+          model_answer: "A Market Study (specifically on E-Commerce in India).",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "The CCI doesn't just punish companies; it also acts as an advisor to the government, warning them if a proposed law or policy might accidentally create a monopoly.",
+      ],
     },
     {
       slug: "appeals-nclat",
@@ -56,6 +94,51 @@ The NCLAT has the power to: (a) hear fresh evidence if the CCI refused to admit 
 **The walk-through.** In **CCI v. Steel Authority of India Limited (SAIL)** (2010), the Supreme Court examined the scope of the COMPAT's (now NCLAT's) appellate power. SAIL challenged the CCI's interim order directing it to modify certain exclusive supply arrangements. The Supreme Court held that: (a) the appellate tribunal can review both findings of fact and questions of law; (b) interim orders of the CCI are appealable; (c) the tribunal must apply the principles of natural justice in its own proceedings; and (d) the tribunal's review is *de novo* on questions of law, meaning it is not bound by the CCI's legal interpretations. This judgment established the NCLAT's role as a genuine appellate check, not a deferential review body.
 
 **The thread.** Advocacy advises; the appellate mechanism reviews. The final section covers the miscellaneous provisions — the operational, transitional, and structural clauses that complete the Act's architecture and connect it to the broader legal system.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "To which body are appeals against the orders of the Competition Commission of India (CCI) currently filed?",
+          options: [
+            "The High Court of Delhi",
+            "The Competition Appellate Tribunal (COMPAT)",
+            "The National Company Law Appellate Tribunal (NCLAT)",
+            "The Supreme Court of India directly"
+          ],
+          correct_index: 2,
+          model_answer: "The Finance Act, 2017 dissolved COMPAT and transferred its appellate functions for competition cases to the NCLAT.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The NCLAT is a specialized tribunal that only hears competition law cases.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The NCLAT is a generalist tribunal that handles competition appeals as well as company law and insolvency cases.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "What did the Supreme Court establish regarding the NCLAT's review power in the SAIL (2010) case?",
+          model_answer: "The Court established that the appellate tribunal conducts a full merits review — it can review both findings of fact and questions of law, and is not bound to deferentially rubber-stamp the CCI's legal interpretations.",
+          difficulty: "advanced",
+        },
+        {
+          kind: "multi",
+          prompt: "Which of the following powers does the NCLAT possess when hearing an appeal from the CCI? Select all that apply.",
+          options: [
+            "Confirm, modify, or set aside the CCI's order",
+            "Stay (pause) the CCI's order during the appeal process",
+            "Hear fresh evidence if the CCI wrongly refused to admit it",
+            "Sentence the CCI Chairperson to jail for passing a bad order"
+          ],
+          correct_indices: [0, 1, 2],
+          model_answer: "The NCLAT has broad powers to review, stay, and modify orders, and admit evidence. It does not have punitive power over CCI officials for their decisions.",
+          difficulty: "intermediate",
+        }
+      ],
+      facts: [
+        "If a company is fined by the CCI, its first appeal goes to the NCLAT (National Company Law Appellate Tribunal). If they lose there, their final option is the Supreme Court.",
+      ],
     },
     {
       slug: "miscellaneous-provisions",
@@ -84,6 +167,44 @@ The NCLAT has the power to: (a) hear fresh evidence if the CCI refused to admit 
 **The walk-through.** The repeal of the MRTP Act (Section 66) is the Act's closing historical act. The MRTP Act, 1969 was born in an era of industrial licensing and state-directed economy. Its core concern was *preventing monopolies* — treating bigness itself as suspect. The Competition Act's core concern is *preventing anti-competitive conduct* — recognising that size is often the result of efficiency, innovation, and consumer preference. The repeal was not just a legal technicality; it was a philosophical statement: India's competition policy had grown up. From policing structure to policing behaviour, from suspecting success to protecting competition — the transition was complete.
 
 **The thread.** That closes the story. You have walked through the entire Competition Act, 2002 — from the definitions that set the vocabulary, through the three substantive prohibitions (agreements, dominance, combinations), the institutional architecture (CCI, DG), the enforcement machinery (inquiry, investigation, orders), the penalty framework (fines, leniency, settlement), and finally the Act's broader mission of advocacy and systemic reform. The Act is not just a statute; it is a framework for thinking about how markets should work, how power should be constrained, and how competition — the engine of consumer welfare, innovation, and economic growth — should be protected. If you have read this far, you now understand it, start to finish, as one continuous story.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What does Section 32 (Extra-territorial jurisdiction) allow the CCI to do?",
+          options: [
+            "Set up CCI branch offices in foreign countries.",
+            "Inquire into anti-competitive conduct that takes place outside India if it has an Appreciable Adverse Effect on Competition (AAEC) in India.",
+            "Extradite foreign CEOs to face trial in India.",
+            "Apply Indian competition law to domestic markets of other countries."
+          ],
+          correct_index: 1,
+          model_answer: "Section 32 allows the CCI to penalize foreign conduct (like an international cartel) if that conduct distorts competition within Indian markets.",
+          difficulty: "basic",
+        },
+        {
+          kind: "truefalse",
+          prompt: "The Competition Act of 2002 explicitly outlaws monopolies simply for being too big, following the exact same philosophy as the old MRTP Act.",
+          options: ["True", "False"],
+          correct_index: 1,
+          model_answer: "False. The Competition Act penalizes anti-competitive *conduct* (abuse of dominance), recognizing that simply being big or a monopoly is not illegal if achieved through efficiency and innovation.",
+          difficulty: "intermediate",
+        },
+        {
+          kind: "open",
+          prompt: "Why was the repeal of the MRTP Act and its replacement by the Competition Act considered a philosophical shift for India?",
+          model_answer: "It shifted the focus from 'policing structure' (suspecting size and preventing monopolies just for being big) to 'policing behavior' (stopping actual anti-competitive conduct while protecting efficient, innovative businesses).",
+          difficulty: "advanced",
+        },
+        {
+          kind: "quickfire",
+          prompt: "Under Section 54, who has the power to exempt a specific class of enterprises from the provisions of the Competition Act?",
+          model_answer: "The Central Government (usually for sovereignty, security, or public interest reasons).",
+          difficulty: "basic",
+        }
+      ],
+      facts: [
+        "Thanks to 'extra-territorial jurisdiction,' the CCI can punish international cartels operating entirely outside of India, so long as their price-fixing hurts Indian consumers.",
+      ],
     },
   ],
 };
