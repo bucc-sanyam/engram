@@ -109,6 +109,19 @@ export default function BrainPage() {
     [isLinked]
   );
 
+  // Esc backs out of the dive-inside view (same as the close button)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      // leave Esc alone while typing (search box handles its own escape)
+      const el = document.activeElement;
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) return;
+      setPath((prev) => (prev.length ? [] : prev));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const visibleTopics = useMemo(
     () => (categoryFilter ? topics.filter((t) => t.category === categoryFilter) : topics),
     [topics, categoryFilter]

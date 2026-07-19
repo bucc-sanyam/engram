@@ -2,7 +2,10 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
-## 2026-07-19 — Organic "thought waves": flood-fill activation replaces mechanical sine wave
+## 2026-07-20 — Esc exits the dive-inside view
+- **`src/app/brain/page.tsx`:** window `keydown` listener — Escape clears the walked path (`setPath([])`, same as the info-card close button), zooming the camera back out. Skipped while an input/textarea has focus so search keeps its own Esc behaviour. Verified in browser: search → select "Bayes' Theorem" → dive-inside → Esc → card closes, camera settles back to overview.
+
+## 2026-07-20 — Organic "thought waves": flood-fill activation replaces mechanical sine wave
 - **Problem:** the brain's idle wave was `sin(dist·0.45 − t·1.5)` from a fixed origin — a perfect concentric ripple on a loop; plus globally-synced shell breathing and metronome pulse dots. Felt mechanical. Reference: A* pathfinding on a real map (golden flood crawling the street network).
 - **New system (all in `src/components/BrainScene.tsx`):**
   - kNN graph (k=6, spatial-hash build) over the 7,500 shell particles; a wave = Dijkstra flood from a seed with ±28% jittered edge weights (ragged frontier) and 3.5× cost to cross the medial fissure (hemisphere-hugging spread). Per-particle arrival times → `aWave` vec2 buffer attribute (2 concurrent wave slots); brightness (sharp gold crest + ~2s ember tail + pre-arrival shimmer) computed entirely in the shell shader from `uWaveT/uWaveI` uniforms — zero per-frame CPU for the flood itself.
