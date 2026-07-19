@@ -17,12 +17,7 @@
  */
 import { createClient } from "./supabase/client";
 import { isDemo } from "./demo";
-import { COMP_ACT_CHAPTERS } from "./competition-act";
-import type { CompActQuestion } from "./competition-act/types";
-import { DSA_TOPICS } from "./dsa";
-import { SQL_TOPICS } from "./sql";
-import { SARFAESI_CHAPTERS } from "./sarfaesi-act";
-import type { SarfaesiQuestion } from "./sarfaesi-act/types";
+import { getSeed, type SeedSection, type SeriesSeed } from "./story-seeds";
 
 export interface UserStory {
   series_slug: string;
@@ -39,123 +34,9 @@ export interface StorySection {
   learned_at: string | null;
 }
 
-/** A section flattened into everything needed to seed it. */
-interface SeedSection {
-  chapterSlug: string;
-  sectionSlug: string;
-  /** Topic name — must be unique per user (topics.unique(user_id,name)). */
-  name: string;
-  category: string;
-  summary: string;
-  keyPoints: string[];
-  questions: CompActQuestion[] | SarfaesiQuestion[];
-  facts: string[];
-}
-
-interface SeriesSeed {
-  seriesSlug: string;
-  title: string;
-  /** Sections in reading order (drives the brain spine + linear links). */
-  sections: SeedSection[];
-}
-
 // A dormant seeded topic sits ~100 years out so it shows on the brain but never
 // enters the daily plan until the section is actually learned (plan = due topics).
 const FAR_FUTURE = () => new Date(Date.now() + 100 * 365 * 24 * 3600 * 1000).toISOString();
-
-/**
- * The Competition Code as seed data — built from the pure-data chapter files.
- * NB: this module imports competition-act (data only), never the reverse, so
- * the server-rendered blog pages never pull in this client module.
- */
-function compActSeed(): SeriesSeed {
-  const sections: SeedSection[] = [];
-  for (const chapter of COMP_ACT_CHAPTERS) {
-    for (const section of chapter.sections) {
-      sections.push({
-        chapterSlug: chapter.slug,
-        sectionSlug: section.slug,
-        name: section.title,
-        category: "Legal",
-        summary: section.summary,
-        keyPoints: [],
-        questions: section.questions ?? [],
-        facts: section.facts ?? [],
-      });
-    }
-  }
-  return { seriesSlug: "competition-act", title: "The Competition Code", sections };
-}
-
-function dsaSeed(): SeriesSeed {
-  const sections: SeedSection[] = [];
-  for (const topic of DSA_TOPICS) {
-    for (const problem of topic.problems) {
-      sections.push({
-        chapterSlug: topic.slug,
-        sectionSlug: problem.slug,
-        name: problem.title,
-        category: "Computer Science",
-        summary: problem.summary,
-        keyPoints: [],
-        questions: [],
-        facts: [],
-      });
-    }
-  }
-  return { seriesSlug: "dsa", title: "The Pattern Atlas", sections };
-}
-
-function sqlSeed(): SeriesSeed {
-  const sections: SeedSection[] = [];
-  for (const topic of SQL_TOPICS) {
-    for (const problem of topic.problems) {
-      sections.push({
-        chapterSlug: topic.slug,
-        sectionSlug: problem.slug,
-        name: problem.title,
-        category: "Data",
-        summary: problem.summary,
-        keyPoints: [],
-        questions: [],
-        facts: [],
-      });
-    }
-  }
-  return { seriesSlug: "sql", title: "The Query Playbook", sections };
-}
-
-function sarfaesiSeed(): SeriesSeed {
-  const sections: SeedSection[] = [];
-  for (const chapter of SARFAESI_CHAPTERS) {
-    for (const section of chapter.sections) {
-      sections.push({
-        chapterSlug: chapter.slug,
-        sectionSlug: section.slug,
-        name: section.title,
-        category: "Legal",
-        summary: section.summary,
-        keyPoints: [],
-        questions: section.questions ?? [],
-        facts: section.facts ?? [],
-      });
-    }
-  }
-  return { seriesSlug: "sarfaesi-act", title: "The SARFAESI Playbook", sections };
-}
-
-const SERIES: Record<string, () => SeriesSeed> = {
-  "competition-act": compActSeed,
-  "dsa": dsaSeed,
-  "sql": sqlSeed,
-  "sarfaesi-act": sarfaesiSeed,
-};
-
-function getSeed(seriesSlug: string): SeriesSeed {
-  const build = SERIES[seriesSlug];
-  if (!build) throw new Error(`Unknown story series: ${seriesSlug}`);
-  return build();
-}
 
 async function requireUser() {
   if (isDemo) throw new Error("Sign in to learn this story.");
@@ -411,35 +292,46 @@ export async function completeSection(
   const topicId = existing?.topic_id as string | undefined;
   if (!topicId) throw new Error("Could not seed this section.");
 
-  // Seed the bank only once (idempotent on re-complete).
-  const { count } = await supabase
+  // Fetch existing prompts and facts so we only seed missing ones.
+  // This ensures story questions are always seeded, even if the topic
+  // previously existed and contained user-ingested questions.
+  const { data: existingQs } = await supabase
     .from("questions")
-    .select("id", { count: "exact", head: true })
+    .select("prompt")
     .eq("topic_id", topicId);
+  const existingPrompts = new Set((existingQs ?? []).map((q) => q.prompt));
 
   let seededCount = 0;
-  if (!count) {
-    if (section.questions.length) {
-      const questionRows = section.questions.map((q) => ({
-        user_id: user.id,
-        topic_id: topicId,
-        kind: q.kind,
-        prompt: q.prompt,
-        options: q.options ?? null,
-        correct_index: q.correct_index ?? null,
-        correct_indices: q.correct_indices ?? null,
-        model_answer: q.model_answer,
-        difficulty: q.difficulty,
-      }));
-      const { error: qErr } = await supabase.from("questions").insert(questionRows);
-      if (qErr) throw qErr;
-      seededCount = questionRows.length;
-    }
-    if (section.facts.length) {
-      await supabase
-        .from("facts")
-        .insert(section.facts.map((fact) => ({ user_id: user.id, topic_id: topicId, fact })));
-    }
+
+  const toInsert = section.questions.filter((q) => !existingPrompts.has(q.prompt));
+  if (toInsert.length > 0) {
+    const questionRows = toInsert.map((q) => ({
+      user_id: user.id,
+      topic_id: topicId,
+      kind: q.kind,
+      prompt: q.prompt,
+      options: q.options ?? null,
+      correct_index: q.correct_index ?? null,
+      correct_indices: q.correct_indices ?? null,
+      model_answer: q.model_answer,
+      difficulty: q.difficulty,
+    }));
+    const { error: qErr } = await supabase.from("questions").insert(questionRows);
+    if (qErr) throw qErr;
+    seededCount = questionRows.length;
+  }
+
+  const { data: existingFacts } = await supabase
+    .from("facts")
+    .select("fact")
+    .eq("topic_id", topicId);
+  const existingFactTexts = new Set((existingFacts ?? []).map((f) => f.fact));
+
+  const factsToInsert = section.facts.filter((f) => !existingFactTexts.has(f));
+  if (factsToInsert.length > 0) {
+    await supabase
+      .from("facts")
+      .insert(factsToInsert.map((fact) => ({ user_id: user.id, topic_id: topicId, fact })));
   }
 
   // Make the topic due now so it enters today's plan + quiz.

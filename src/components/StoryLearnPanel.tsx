@@ -105,7 +105,7 @@ export default function StoryLearnPanel({
               >
                 ✓ Learned
               </span>
-              <Link href="/review" className="text-sm font-semibold text-faint transition-colors hover:text-white">
+              <Link href={`/review?series=${seriesSlug}`} className="text-sm font-semibold text-faint transition-colors hover:text-white">
                 Review →
               </Link>
             </div>

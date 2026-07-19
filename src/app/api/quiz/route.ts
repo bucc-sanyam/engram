@@ -12,6 +12,7 @@ import type {
   SessionQuestion,
   Topic,
 } from "@/lib/types";
+import { getSeed } from "@/lib/story-seeds";
 
 export const maxDuration = 60;
 
@@ -121,6 +122,30 @@ async function start(
     bankByTopic.set(q.topic_id, list);
   }
 
+  const { data: sectionsData } = await supabase
+    .from("story_sections")
+    .select("topic_id, series_slug, section_slug")
+    .eq("user_id", userId)
+    .in("topic_id", topicIds);
+  
+  const storyTopics = new Map((sectionsData ?? []).map(s => [s.topic_id, s]));
+
+  // Strict isolation: if a topic belongs to a story, its quiz pool must ONLY
+  // contain questions exactly matching the story's pre-authored seed questions.
+  // This prevents user-uploaded notes from leaking into the story's quiz
+  // even if they share a topic name.
+  for (const [topicId, storySection] of storyTopics.entries()) {
+    try {
+      const seed = getSeed(storySection.series_slug as string);
+      const section = seed.sections.find(s => s.sectionSlug === storySection.section_slug);
+      if (section) {
+        const validPrompts = new Set(section.questions.map(q => q.prompt));
+        const filteredList = (bankByTopic.get(topicId) ?? []).filter(q => validPrompts.has(q.prompt));
+        bankByTopic.set(topicId, filteredList);
+      }
+    } catch { /* ignore if seed not found */ }
+  }
+
   // Rotate desired kinds so every session mixes choice and typed questions.
   const kindRotation: QuestionKind[] = ["open", "mcq", "truefalse", "quickfire", "multi"];
   const snapshot: SnapshotItem[] = [];
@@ -145,6 +170,16 @@ async function start(
         model_answer: picked.model_answer,
       });
     } else {
+      const storySection = storyTopics.get(topic.id);
+      let fallbackSummary = topic.summary ?? (topic.key_points as string[]).join(" ");
+      if (storySection) {
+        try {
+          const seed = getSeed(storySection.series_slug as string);
+          const section = seed.sections.find(s => s.sectionSlug === storySection.section_slug);
+          if (section) fallbackSummary = section.summary;
+        } catch { /* ignore if seed not found */ }
+      }
+      
       // Topic predates the question bank — synthesize a recall prompt locally.
       snapshot.push({
         index: snapshot.length,
@@ -157,7 +192,7 @@ async function start(
         options: null,
         correct_index: null,
         correct_indices: null,
-        model_answer: topic.summary ?? (topic.key_points as string[]).join(" "),
+        model_answer: fallbackSummary,
       });
     }
   });
