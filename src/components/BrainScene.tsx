@@ -125,6 +125,8 @@ interface NodeObj {
   label: THREE.Sprite;
   labelMat: THREE.SpriteMaterial;
   baseScale: number;
+  // story-focus dim multiplier (1 = normal, <1 = dimmed while another story is focused)
+  dimK: number;
   // "rest" = where the highlight state wants this node; hover can override
   restScale: number;
   restGlow: number;
@@ -174,11 +176,17 @@ export default function BrainScene({
   links,
   path,
   onSelect,
+  highlight,
 }: {
   topics: Topic[];
   links: TopicLink[];
   path: string[];
   onSelect: (id: string | null) => void;
+  /**
+   * Story focus mode: nodes whose id is in `topicIds` are recoloured to
+   * `color` and everything else is dimmed. Null = normal category colouring.
+   */
+  highlight?: { topicIds: Set<string>; color: string } | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const onSelectRef = useRef(onSelect);
@@ -276,7 +284,10 @@ export default function BrainScene({
       const uu = 0.12 + r() * 0.74;
       const vv = 0.08 + r() * 0.84;
       const pos = brainPoint(uu, vv, sign).multiplyScalar(1.04);
-      const color = new THREE.Color(categoryColor(t.category));
+      // story focus: highlighted nodes take the story colour, the rest dim out
+      const inStory = highlight ? highlight.topicIds.has(t.id) : false;
+      const dimK = highlight && !inStory ? 0.16 : 1;
+      const color = new THREE.Color(inStory ? highlight!.color : categoryColor(t.category));
       const baseScale =
         0.06 + Math.min(0.045, (degree.get(t.id) ?? 0) * 0.01) + Math.min(0.018, (t.review_count / 10) * 0.018);
 
@@ -376,6 +387,7 @@ export default function BrainScene({
         label,
         labelMat,
         baseScale,
+        dimK,
         restScale: 1,
         restGlow: 0.6,
         restLabel: 0,
@@ -851,10 +863,10 @@ export default function BrainScene({
         // ease glow (0..1) — drives core, halo and cortex-patch opacity together
         const glow = n.coreMat.opacity / 0.85;
         const g2 = glow + (n.targetGlow - glow) * k;
-        n.coreMat.opacity = 0.85 * g2;
-        n.haloMat.opacity = 0.4 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5));
+        n.coreMat.opacity = 0.85 * g2 * n.dimK;
+        n.haloMat.opacity = 0.4 * g2 * (1 + 0.12 * Math.sin(t * 2 + n.pos.x * 5)) * n.dimK;
         // patches dissolve while focused so every topic reads as one node
-        n.clusterMat.opacity = 0.9 * g2 * clusterK;
+        n.clusterMat.opacity = 0.9 * g2 * clusterK * n.dimK;
         // ease scale (drives core + halo + pick radius)
         const sc = n.core.scale.x / 2.4;
         const ns = sc + (n.targetScale - sc) * k;
@@ -866,7 +878,7 @@ export default function BrainScene({
         n.labelA += (n.targetLabel - n.labelA) * k;
         n.visK += (n.targetVisK - n.visK) * k;
         n.label.center.y += (n.labelCenterY - n.label.center.y) * Math.min(1, dt * 8);
-        n.labelMat.opacity = n.labelA * n.visK;
+        n.labelMat.opacity = n.labelA * n.visK * n.dimK;
       }
 
       const sinceBurst = burstStart > 0 ? (performance.now() - burstStart) / 1000 : 99;
@@ -926,7 +938,7 @@ export default function BrainScene({
       container.removeChild(renderer.domElement);
       apiRef.current = null;
     };
-  }, [topics, links]);
+  }, [topics, links, highlight]);
 
   useEffect(() => {
     pathRef.current = path;

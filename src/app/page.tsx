@@ -7,6 +7,7 @@ import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
 import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
+import { getAllStorySections, getStartedStories, type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
 import type { DailyFact, DailyPlan, Entry, Note, Profile, Review, Topic } from "@/lib/types";
@@ -16,6 +17,11 @@ const MODE_LABEL: Record<string, string> = {
   recall: "Deep recall",
   flashcard: "Mixed quiz", // legacy cached plans only — no longer generated
   quickfire: "Quick-fire",
+};
+
+/** Display titles for learnable story series (extend as series are added). */
+const SERIES_TITLES: Record<string, string> = {
+  "competition-act": "Competition Act",
 };
 
 export default function Dashboard() {
@@ -28,6 +34,9 @@ export default function Dashboard() {
   const [fact, setFact] = useState<DailyFact | null>(null);
   const [planError, setPlanError] = useState(false);
   const [showAllTasks, setShowAllTasks] = useState(false);
+  const [stories, setStories] = useState<UserStory[]>([]);
+  const [storySections, setStorySections] = useState<StorySection[]>([]);
+  const [sessionTab, setSessionTab] = useState<string | null>(null); // null = All
 
   useEffect(() => {
     getProfile().then(setProfile).catch(() => {});
@@ -36,6 +45,8 @@ export default function Dashboard() {
     getEntries().then(setEntries).catch(() => {});
     getFactOfTheDay().then(setFact).catch(() => {});
     getPlan().then(setPlan).catch(() => setPlanError(true));
+    getStartedStories().then(setStories).catch(() => {});
+    getAllStorySections().then(setStorySections).catch(() => {});
   }, []);
 
   // Personal notes live in localStorage — read on mount, stay in sync with edits.
@@ -59,11 +70,20 @@ export default function Dashboard() {
 
 
 
+  // Which story (if any) each plan topic belongs to — powers the session tabs.
+  const seriesByTopic = new Map(storySections.map((s) => [s.topic_id, s.series_slug]));
   // Remaining tasks first, completed ones sink to the bottom; long plans
   // collapse to 5 rows until expanded.
-  const planItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
+  const allPlanItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
+  const planItems = sessionTab
+    ? allPlanItems.filter((i) => seriesByTopic.get(i.topic_id) === sessionTab)
+    : allPlanItems;
   const visiblePlanItems = showAllTasks ? planItems : planItems.slice(0, 5);
   const remainingCount = planItems.filter((i) => !i.done).length;
+  // Only surface tabs for stories that actually have a topic in today's plan.
+  const sessionStories = stories.filter((s) =>
+    allPlanItems.some((i) => seriesByTopic.get(i.topic_id) === s.series_slug)
+  );
 
   return (
     <>
@@ -110,6 +130,32 @@ export default function Dashboard() {
                   </Link>
                 )}
               </div>
+
+              {/* Session tabs — one per learnable story with topics due today */}
+              {sessionStories.length > 0 && (
+                <div className="mb-4 flex flex-wrap gap-2">
+                  <SessionTab
+                    label="All"
+                    active={sessionTab === null}
+                    onClick={() => {
+                      setSessionTab(null);
+                      setShowAllTasks(false);
+                    }}
+                  />
+                  {sessionStories.map((s) => (
+                    <SessionTab
+                      key={s.series_slug}
+                      label={SERIES_TITLES[s.series_slug] ?? s.series_slug}
+                      color={s.color}
+                      active={sessionTab === s.series_slug}
+                      onClick={() => {
+                        setSessionTab(s.series_slug);
+                        setShowAllTasks(false);
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
 
               {planError && (
                 <p className="text-sm text-danger">
@@ -392,6 +438,32 @@ function Stat({ label, value, description, accent }: { label: string; value: str
 
 function Divider() {
   return <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/[0.12] to-transparent" />;
+}
+
+function SessionTab({
+  label,
+  active,
+  color = "#ff9a80",
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  color?: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all"
+      style={{
+        background: active ? `${color}26` : "rgba(255,252,245,0.05)",
+        color: active ? color : "rgba(255,252,245,0.5)",
+      }}
+    >
+      <span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />
+      {label}
+    </button>
+  );
 }
 
 function BulbIcon() {

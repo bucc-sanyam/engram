@@ -8,6 +8,7 @@ export type Category =
   | "Philosophy"
   | "Language"
   | "Mathematics"
+  | "Legal"
   | "General";
 
 export const CATEGORY_COLORS: Record<string, string> = {
@@ -20,6 +21,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Philosophy: "#bfa8f5",
   Language: "#7fd0e8",
   Mathematics: "#ffd166",
+  Legal: "#5ba4cf",
   General: "#a8a29e",
 };
 

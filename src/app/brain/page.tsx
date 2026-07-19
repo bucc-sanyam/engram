@@ -5,8 +5,20 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Nav from "@/components/Nav";
 import BrainScene from "@/components/BrainScene";
 import { getLinks, getTopics } from "@/lib/data";
+import {
+  getAllStorySections,
+  getStartedStories,
+  storySectionHref,
+  type StorySection,
+  type UserStory,
+} from "@/lib/stories";
 import type { Topic, TopicLink } from "@/lib/types";
 import { CATEGORY_COLORS, categoryColor } from "@/lib/types";
+
+/** Display titles for learnable story series (extend as series are added). */
+const SERIES_TITLES: Record<string, string> = {
+  "competition-act": "The Competition Code",
+};
 
 export default function BrainPage() {
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -17,16 +29,50 @@ export default function BrainPage() {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [searchFocused, setSearchFocused] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [stories, setStories] = useState<UserStory[]>([]);
+  const [storySections, setStorySections] = useState<StorySection[]>([]);
+  const [focusSeries, setFocusSeries] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([getTopics(), getLinks()]).then(([t, l]) => {
-      setTopics(t);
-      setLinks(l);
-      setLoaded(true);
-    });
+    Promise.all([getTopics(), getLinks(), getStartedStories(), getAllStorySections()]).then(
+      ([t, l, s, ss]) => {
+        setTopics(t);
+        setLinks(l);
+        setStories(s);
+        setStorySections(ss);
+        setLoaded(true);
+      }
+    );
   }, []);
 
   const byId = useMemo(() => new Map(topics.map((t) => [t.id, t])), [topics]);
+
+  // topic_id → its story section (for "read the full topic" hrefs + focus set)
+  const storyByTopic = useMemo(
+    () => new Map(storySections.map((s) => [s.topic_id, s])),
+    [storySections]
+  );
+
+  // story-focus: recolour this story's nodes, dim the rest
+  const highlight = useMemo(() => {
+    if (!focusSeries) return null;
+    const ids = new Set(
+      storySections.filter((s) => s.series_slug === focusSeries).map((s) => s.topic_id)
+    );
+    if (!ids.size) return null;
+    const color = stories.find((s) => s.series_slug === focusSeries)?.color ?? "#5ba4cf";
+    return { topicIds: ids, color };
+  }, [focusSeries, storySections, stories]);
+
+  // where "read the full topic" points: the static section blog for story
+  // topics, the auto-generated topic blog otherwise
+  const blogHref = useCallback(
+    (t: Topic) => {
+      const sec = storyByTopic.get(t.id);
+      return sec ? storySectionHref(sec) : `/blogs/${t.id}`;
+    },
+    [storyByTopic]
+  );
 
   const isLinked = useCallback(
     (a: string, b: string) =>
@@ -98,6 +144,7 @@ export default function BrainPage() {
               links={links}
               path={path}
               onSelect={(id) => id && navigateTo(id)}
+              highlight={highlight}
             />
           )}
           {loaded && topics.length === 0 && (
@@ -169,6 +216,31 @@ export default function BrainPage() {
               )}
             </div>
 
+            {/* story focus — light up one learnable story, dim the rest */}
+            {stories.length > 0 && (
+              <div className="pointer-events-auto mt-3 flex flex-wrap justify-center gap-2">
+                {stories.map((s) => {
+                  const active = focusSeries === s.series_slug;
+                  return (
+                    <button
+                      key={s.series_slug}
+                      onClick={() => setFocusSeries(active ? null : s.series_slug)}
+                      className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-semibold backdrop-blur-xl transition-all"
+                      style={{
+                        background: active ? `${s.color}2e` : "rgba(18,15,20,0.6)",
+                        color: s.color,
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.35)",
+                      }}
+                    >
+                      <span className="h-2 w-2 rounded-full" style={{ background: s.color }} />
+                      {SERIES_TITLES[s.series_slug] ?? s.series_slug}
+                      {active && <span className="opacity-70">✕</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
             {/* active filter chip — the only thing that stays over the brain */}
             {categoryFilter && (
               <div className="mt-3 flex justify-center">
@@ -229,7 +301,7 @@ export default function BrainPage() {
                           {t.category}
                         </span>
                         <Link
-                          href={`/blogs/${t.id}`}
+                          href={blogHref(t)}
                           target="_blank"
                           rel="noopener"
                           className="text-lg font-bold leading-snug transition-colors hover:text-[#f5b95f]"
@@ -251,7 +323,7 @@ export default function BrainPage() {
                     <p className="mb-3 line-clamp-2 text-sm leading-relaxed text-white/80">{t.summary}</p>
 
                     <Link
-                      href={`/blogs/${t.id}`}
+                      href={blogHref(t)}
                       target="_blank"
                       rel="noopener"
                       className="group mb-5 inline-flex items-center gap-1.5 text-xs font-semibold"
