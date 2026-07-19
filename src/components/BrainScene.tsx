@@ -289,7 +289,7 @@ export default function BrainScene({
       const pos = brainPoint(uu, vv, sign).multiplyScalar(1.04);
       // story focus: highlighted nodes take the story colour, the rest dim out
       const inStory = highlight ? highlight.topicIds.has(t.id) : false;
-      const dimK = highlight && !inStory ? 0.16 : 1;
+      const dimK = highlight && !inStory ? 0.45 : 1;
       const baseColor = topicColors?.get(t.id) ?? categoryColor(t.category);
       const color = new THREE.Color(inStory ? highlight!.color : baseColor);
       const baseScale =

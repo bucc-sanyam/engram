@@ -27,6 +27,8 @@ export default function StoryStartControl({
   const [color, setColor] = useState(STORY_COLORS[0]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showQuit, setShowQuit] = useState(false);
+  const [quitText, setQuitText] = useState("");
 
   useEffect(() => {
     if (isDemo) {
@@ -124,27 +126,64 @@ export default function StoryStartControl({
             ))}
           </div>
           <div className="flex items-center gap-3 ml-auto">
-            <button
-              onClick={async () => {
-                if (confirm("Are you sure you want to end this learning path? All progress, questions, and brain nodes will be completely lost.")) {
-                  setBusy(true);
-                  setError(null);
-                  try {
-                    await endStory(seriesSlug);
-                    setState("new");
-                    setLearned(0);
-                  } catch (e) {
-                    setError(e instanceof Error ? e.message : "Could not end story");
-                  } finally {
-                    setBusy(false);
-                  }
-                }
-              }}
-              disabled={busy}
-              className="text-xs font-semibold text-[#ff7a5c] transition-colors hover:text-white"
-            >
-              {busy ? "Ending..." : "End story"}
-            </button>
+            {!showQuit ? (
+              <button
+                onClick={() => setShowQuit(true)}
+                className="text-xs font-semibold text-[#ff7a5c] transition-colors hover:text-white"
+              >
+                End story
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder='Type "I quit"'
+                  value={quitText}
+                  onChange={(e) => {
+                    setQuitText(e.target.value);
+                    setError(null);
+                  }}
+                  className="input !rounded-full px-3 py-1 text-xs w-32 bg-white/[0.04] border border-white/[0.1]"
+                  autoFocus
+                />
+                <button
+                  onClick={async () => {
+                    if (quitText !== "I quit") {
+                      setError("Type exactly 'I quit'");
+                      return;
+                    }
+                    setBusy(true);
+                    setError(null);
+                    try {
+                      await endStory(seriesSlug);
+                      setState("new");
+                      setLearned(0);
+                      setShowQuit(false);
+                      setQuitText("");
+                    } catch (e) {
+                      setError(e instanceof Error ? e.message : "Could not end story");
+                    } finally {
+                      setBusy(false);
+                    }
+                  }}
+                  disabled={busy}
+                  className="text-xs font-semibold text-[#ff7a5c] transition-colors hover:text-white"
+                >
+                  {busy ? "Ending..." : "Confirm"}
+                </button>
+                <button
+                  onClick={() => {
+                    setShowQuit(false);
+                    setQuitText("");
+                    setError(null);
+                  }}
+                  disabled={busy}
+                  className="text-xs text-faint hover:text-white transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
             {error && <span className="text-xs text-[#ff7a5c]">{error}</span>}
           </div>
         </div>
