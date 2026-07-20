@@ -6,7 +6,7 @@ const EXPLORE = [
   { href: "/blogs", label: "Blogs" },
   { href: "/blogs/dsa", label: "Pattern Atlas" },
   { href: "/notes", label: "Notes" },
-  { href: "/review", label: "Review" },
+  { href: "/recall", label: "Recall" },
 ];
 
 const CONNECT = [

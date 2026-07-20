@@ -20,13 +20,6 @@ const MODE_LABEL: Record<string, string> = {
   quickfire: "Quick-fire",
 };
 
-/** Display titles for learnable story series (extend as series are added). */
-const SERIES_TITLES: Record<string, string> = {
-  "competition-act": "Legal Series",
-  "dsa": "DSA Series",
-  "sql": "SQL Series",
-};
-
 export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [plan, setPlan] = useState<DailyPlan | null>(null);
@@ -80,20 +73,20 @@ export default function Dashboard() {
 
 
 
-  // Which story (if any) each plan topic belongs to — powers the grouped session.
+  // Which story (if any) each plan topic belongs to.
   const seriesByTopic = new Map(storySections.map((s) => [s.topic_id, s.series_slug]));
   // Remaining tasks first, completed ones sink to the bottom.
   const planItems = plan ? [...plan.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) : [];
   const remainingCount = planItems.filter((i) => !i.done).length;
 
-  // Split the day into "General Knowledge" (your own topics) + one section per
-  // started story that has a topic due today, each quizzed independently.
-  const generalItems = planItems.filter((i) => !seriesByTopic.get(i.topic_id));
-  const storyGroups: { slug: string; color?: string; items: PlanItem[] }[] = [];
-  for (const s of stories) {
-    const items = planItems.filter((i) => seriesByTopic.get(i.topic_id) === s.series_slug);
-    if (items.length) storyGroups.push({ slug: s.series_slug, color: s.color, items });
-  }
+  // Series with at least one non-done task today — used to surface the most
+  // relevant stories first in the journey panel (see dueSeriesSlugs below).
+  const dueSeriesSlugs = new Set(
+    planItems
+      .filter((i) => !i.done)
+      .map((i) => seriesByTopic.get(i.topic_id))
+      .filter((s): s is string => Boolean(s))
+  );
 
   // Story topics keep their chosen story colour on the brain-teaser pills.
   const storyColorByStory = new Map(stories.map((s) => [s.series_slug, s.color]));
@@ -133,7 +126,7 @@ export default function Dashboard() {
                     <span className="ping-dot text-[#ff7a5c]" /> Today&apos;s session
                   </p>
                   <h2 className="text-xl font-bold">
-                    Revision plan
+                    Today&apos;s recall
                     {plan && plan.items.length > 0 && (
                       <span className="ml-2 text-sm font-normal text-muted">
                         · {plan.items.length} topic{plan.items.length !== 1 ? "s" : ""}
@@ -143,7 +136,7 @@ export default function Dashboard() {
                   </h2>
                 </div>
                 {plan && plan.items.length > 0 && (
-                  <Link href="/review" data-tour="review-cta" className="btn-primary shrink-0">
+                  <Link href="/recall" data-tour="recall-cta" className="btn-primary shrink-0">
                     {plan.completed ? "See report" : "Start"} →
                   </Link>
                 )}
@@ -165,24 +158,11 @@ export default function Dashboard() {
               )}
 
               {plan && plan.items.length > 0 && (
-                <div className="space-y-6">
-                  {generalItems.length > 0 && (
-                    <PlanGroup
-                      title={storyGroups.length > 0 ? "General Knowledge" : undefined}
-                      href="/review?series=general"
-                      items={generalItems}
-                    />
-                  )}
-                  {storyGroups.map((g) => (
-                    <PlanGroup
-                      key={g.slug}
-                      title={SERIES_TITLES[g.slug] ?? g.slug}
-                      color={g.color}
-                      href={`/review?series=${g.slug}`}
-                      items={g.items}
-                    />
+                <ul className="space-y-2.5">
+                  {planItems.map((item) => (
+                    <PlanRow key={item.topic_id} item={item} accent={topicColors.get(item.topic_id)} />
                   ))}
-                </div>
+                </ul>
               )}
 
               {plan?.completed && (
@@ -312,7 +292,7 @@ export default function Dashboard() {
 
             {/* Story journey — radial progress visualization */}
             {stories.length > 0 && (
-              <StoryJourney stories={stories} storySections={storySections} />
+              <StoryJourney stories={stories} storySections={storySections} dueSeriesSlugs={dueSeriesSlugs} />
             )}
 
             {profile && (
@@ -408,56 +388,12 @@ function Divider() {
   return <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/[0.12] to-transparent" />;
 }
 
-/** One section of today's plan — General Knowledge or a story — with its own
- * "Start quiz" deep link that opens just that group in /review. */
-function PlanGroup({
-  title,
-  href,
-  items,
-  color,
-}: {
-  title?: string;
-  href: string;
-  items: PlanItem[];
-  color?: string;
-}) {
-  const remaining = items.filter((i) => !i.done).length;
-  return (
-    <div>
-      {title && (
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <h3 className="micro m-0" style={{ color: color || "rgba(255,255,255,0.42)" }}>
-            {title}
-            <span className="ml-2 !text-faint">
-              {remaining > 0 ? `${remaining} to review` : "done"}
-            </span>
-          </h3>
-          {remaining > 0 && (
-            <Link
-              href={href}
-              className="text-xs font-semibold transition-opacity hover:opacity-80"
-              style={{ color: color || "rgba(255,252,245,0.7)" }}
-            >
-              Start quiz →
-            </Link>
-          )}
-        </div>
-      )}
-      <ul className="space-y-2.5">
-        {items.map((item) => (
-          <PlanRow key={item.topic_id} item={item} accent={color} />
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 function PlanRow({ item, accent }: { item: PlanItem; accent?: string }) {
   const dot = accent || "#43d6b5";
   return (
     <li>
       <Link
-        href={`/review?topic=${item.topic_id}`}
+        href={`/recall?topic=${item.topic_id}`}
         className={`row-soft group flex items-center gap-3.5 px-4 py-3.5 ${item.done ? "opacity-55" : ""}`}
       >
         {item.done ? (

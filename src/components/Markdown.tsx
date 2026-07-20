@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from "react";
+import VizBlock from "./viz/VizBlock";
 
 /**
  * A small, dependency-free Markdown renderer — enough for personal notes:
@@ -75,7 +76,21 @@ function inline(text: string, keyBase = 0): ReactNode[] {
 }
 
 // ---- block level ----
-export default function Markdown({ children, className }: { children: string; className?: string }) {
+export default function Markdown({
+  children,
+  className,
+  vizAccent,
+  strictViz = false,
+}: {
+  children: string;
+  className?: string;
+  /** Accent colour passed through to `viz:*` diagrams (defaults per-primitive). */
+  vizAccent?: string;
+  /** Set by hand-authored story content — a malformed `viz:*` payload throws
+   * (fails the SSG build loudly) instead of rendering an inline error card.
+   * Never set for user-authored content (e.g. personal notes). */
+  strictViz?: boolean;
+}) {
   const lines = children.replace(/\r\n/g, "\n").split("\n");
   const blocks: ReactNode[] = [];
   let i = 0;
@@ -84,17 +99,24 @@ export default function Markdown({ children, className }: { children: string; cl
   while (i < lines.length) {
     const line = lines[i];
 
-    // fenced code
-    if (/^```/.test(line.trim())) {
+    // fenced code (and viz:* diagram blocks — same fence, an info-string tag)
+    const fence = line.trim().match(/^```(\S*)/);
+    if (fence) {
+      const lang = fence[1] ?? "";
       const buf: string[] = [];
       i++;
       while (i < lines.length && !/^```/.test(lines[i].trim())) buf.push(lines[i++]);
       i++; // closing fence
-      blocks.push(
-        <pre key={key++} className="my-3 overflow-x-auto rounded-xl bg-black/30 p-4 font-mono text-[0.85em] leading-relaxed text-white/85">
-          <code>{buf.join("\n")}</code>
-        </pre>
-      );
+      const content = buf.join("\n");
+      if (lang.startsWith("viz:")) {
+        blocks.push(<VizBlock key={key++} kind={lang.slice(4)} raw={content} accent={vizAccent} strict={strictViz} />);
+      } else {
+        blocks.push(
+          <pre key={key++} className="my-3 overflow-x-auto rounded-xl bg-black/30 p-4 font-mono text-[0.85em] leading-relaxed text-white/85">
+            <code>{content}</code>
+          </pre>
+        );
+      }
       continue;
     }
 

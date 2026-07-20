@@ -100,7 +100,7 @@ export default async function SqlProblemPage({
 
           {/* The read */}
           <section className="article-body">
-            <Markdown>{problem.body}</Markdown>
+            <Markdown vizAccent={topic.color} strictViz>{problem.body}</Markdown>
           </section>
 
           {/* Practice link */}

@@ -109,7 +109,7 @@ export default async function SarfaesiChapterPage({
 
           {/* The umbrella essay */}
           <section className="article-body mb-12">
-            <Markdown>{chapter.intro}</Markdown>
+            <Markdown vizAccent={chapter.color} strictViz>{chapter.intro}</Markdown>
           </section>
 
           {/* The sections, in reading order */}

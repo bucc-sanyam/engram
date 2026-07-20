@@ -3,7 +3,11 @@
 > One active milestone at a time. Move finished items to `SESSION_LOG.md`.
 
 ## Active milestone
-- [ ] No active milestone
+Redesign pass (4 parts, in order): 1. homepage story real estate ✅ → 2. rename Review→Recall → 3. content audit + visualizations (DSA/SQL/Macro) → 4. Paper Mode redesign.
+- [x] **1. Homepage story real estate** — flattened Today's plan back to one list (per-row series colour dot instead of per-story sections), capped `StoryJourney` to top 3 stories (due-today first, then most-recent) + dropped its chapter bead trail, added "All stories (N) →" link to `/blogs`; `/blogs`'s "Read as one story" module now floats started series to the top. (2026-07-20, see SESSION_LOG)
+- [x] **2. Rename "Review" → "Recall"** — route `/review` → `/recall` (+ permanent redirect), nav pill, dashboard/footer/tour copy. Kept `reviews` DB table / SM-2 "review" terminology unchanged. (2026-07-20, see SESSION_LOG)
+- [~] **3. Story content: accuracy pass + visualizations** — pause ✅, `viz:*` mechanism + 4 primitives ✅, pilot on 3 chapters ✅ (see SESSION_LOG). **Remaining:** full accuracy pass + viz rollout across the other ~15 DSA chapters (147 problems), 11 SQL chapters (38 problems), 5 Macro chapters — paused here for a visual sign-off checkpoint before committing to the full-volume rollout (per the plan's explicit pilot-then-rollout order).
+- [ ] **4. Paper Mode redesign** — replace the `!important` recolor cascade with a scoped `data-theme="paper"` token approach; structural (not just color) changes to glass cards/code blocks/grain texture on reading routes.
 
 ## Backlog
 - [ ] **Run the `ai_graded` migration in Supabase:** `alter table public.quiz_sessions add column if not exists ai_graded boolean not null default false;` (in both `schema.sql` and `schema-quiz-tables-only.sql`, 2026-07-18) — required for the new `QUIZ_AI_DAILY_LIMIT` cap to actually track usage; until run, the count query against a missing column will error and quiz `finish` will fall back to heuristic grading every time (safe fail-mode, but no AI grading at all until applied).

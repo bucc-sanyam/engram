@@ -31,6 +31,18 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
 
 **The walk-through.** Take [1, 2, 3, 1]. See 1 — bag is empty, add it. See 2 — not in the bag, add. See 3 — add. See 1 again — the bag says *yes, I know that one*, and you return true having touched each element exactly once.
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 0 }], "note": "Bag is empty. See 1 — not there, add it." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 1 }], "note": "See 2 — not in the bag, add it." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 2 }], "note": "See 3 — not in the bag, add it." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 3 }], "highlight": [0, 3], "note": "See 1 again — the bag already has it. Return true." }
+  ],
+  "caption": "Contains Duplicate — one pass, one hash set, one early exit."
+}
+\`\`\`
+
 **Complexity.** O(n) time, O(n) space. Compare that with the other honest option — sort first, then scan for equal neighbours — which is O(n log n) time but O(1) extra space. That pair of options is worth memorising as a *shape*: hashing buys speed with memory; sorting buys order with time. Interviewers love asking which you would pick and why (answer: it depends on whether memory or latency is the scarce resource — say that out loud).
 
 **The thread.** You just learned to remember *whether* you have seen something. The very next problem, Valid Anagram, asks a slightly richer question: not "have I seen this letter?" but "*how many times* have I seen it?" — and the set quietly grows up into a counter.`,

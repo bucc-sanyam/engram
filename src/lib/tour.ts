@@ -51,7 +51,7 @@ export const TOUR_STEPS: TourStep[] = [
     route: "/",
     target: "nav",
     title: "Getting around",
-    body: "Five rooms: Today is your dashboard, Brain the 3D graph, Blogs your library, Add feeds knowledge in, and Review runs your quiz sessions.",
+    body: "Five rooms: Today is your dashboard, Brain the 3D graph, Blogs your library, Add feeds knowledge in, and Recall runs your quiz sessions.",
   },
   {
     route: "/",
@@ -61,21 +61,21 @@ export const TOUR_STEPS: TourStep[] = [
   },
   {
     route: "/",
-    target: "review-cta",
-    title: "One-tap review",
+    target: "recall-cta",
+    title: "One-tap recall",
     body: "Start runs the whole plan — open questions, quick-fire, MCQs, true/false and multi-select — all graded together at the end into a full report card.",
   },
   {
-    route: "/review",
+    route: "/recall",
     custom: "review-demo",
-    title: "Try a review",
+    title: "Try a recall session",
     body: "This is what grading feels like.",
   },
   {
     route: "/",
     target: "momentum",
     title: "Momentum",
-    body: "Review on consecutive days to grow a streak. The bar tracks your next milestone; the heatmap shows sixteen weeks of practice at a glance.",
+    body: "Recall on consecutive days to grow a streak. The bar tracks your next milestone; the heatmap shows sixteen weeks of practice at a glance.",
   },
   {
     route: "/",

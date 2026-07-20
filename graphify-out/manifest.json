@@ -10,9 +10,9 @@
     "semantic_hash": ""
   },
   "next.config.ts": {
-    "mtime": 1783868631.4342163,
-    "ast_hash": "9b77af189a21a7a64e4bd7a426f64176",
-    "semantic_hash": "9b77af189a21a7a64e4bd7a426f64176"
+    "mtime": 1784529243.2772243,
+    "ast_hash": "b0002290e63639c270fba50e636a071c",
+    "semantic_hash": ""
   },
   "package.json": {
     "mtime": 1784353280.3762445,
@@ -65,13 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1784455176.1802053,
-    "ast_hash": "84450844a2967f7b2fd95f76e785ec72",
-    "semantic_hash": ""
-  },
-  "src/app/review/page.tsx": {
-    "mtime": 1784453547.4009478,
-    "ast_hash": "82587f123828d649d084a99e0ee25ecb",
+    "mtime": 1784529210.7998922,
+    "ast_hash": "ddbe689a787462b7e043df49a965f35c",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -80,8 +75,8 @@
     "semantic_hash": ""
   },
   "src/components/Nav.tsx": {
-    "mtime": 1784098335.8643003,
-    "ast_hash": "8dad2667385ebfacab03082161e54cfd",
+    "mtime": 1784529171.3766718,
+    "ast_hash": "6853efb208d9223fbb76edd41502ca00",
     "semantic_hash": ""
   },
   "src/components/ProgressMap.tsx": {
@@ -225,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784435202.0588865,
-    "ast_hash": "b591e73c1b6cefb27a30bf9128bdd636",
+    "mtime": 1784530599.5416393,
+    "ast_hash": "b9a8e8bc83e5fdacc69deda1a1811d54",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784528168.2524683,
-    "ast_hash": "c3475703bdc9468fd1f82f33894ef190",
+    "mtime": 1784530567.701761,
+    "ast_hash": "4a10ff5502cd86ea26731990e8bdf78c",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784435166.7459366,
-    "ast_hash": "049c5ebb8c3e033d2ed6eac1fbbc011b",
+    "mtime": 1784530542.5370617,
+    "ast_hash": "47dd37ee578e214b40c8f9efae425a27",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -270,8 +265,8 @@
     "semantic_hash": ""
   },
   "src/components/Markdown.tsx": {
-    "mtime": 1784142857.3143628,
-    "ast_hash": "87a769f3105b25d195dcd41b39eb95eb",
+    "mtime": 1784529640.6542258,
+    "ast_hash": "9cb987de9075b35330329f37b1af4cc5",
     "semantic_hash": ""
   },
   "src/components/RichText.tsx": {
@@ -295,13 +290,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1784490515.775629,
-    "ast_hash": "f17771928e2d45f315553db4d816aa39",
+    "mtime": 1784529721.5031722,
+    "ast_hash": "47893814207d6f37149b5c50db950e67",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
-    "mtime": 1783968684.9368196,
-    "ast_hash": "732467eb1fd4d208cd1099fcdd1c781e",
+    "mtime": 1784529194.464117,
+    "ast_hash": "99eead1a75b25305c3b9d5dcf8e362ff",
     "semantic_hash": ""
   },
   "src/app/about/page.tsx": {
@@ -310,13 +305,13 @@
     "semantic_hash": ""
   },
   "src/components/Footer.tsx": {
-    "mtime": 1784400839.9294446,
-    "ast_hash": "c422ce863be567920a7ba042205dc202",
+    "mtime": 1784529182.2545192,
+    "ast_hash": "d38da21b9e7538a6380a3ef3a8a7421c",
     "semantic_hash": ""
   },
   "src/components/ReportCardView.tsx": {
-    "mtime": 1783968524.3042798,
-    "ast_hash": "4ba4a6f2ba4d161190f83d3c197289ad",
+    "mtime": 1784529229.1908092,
+    "ast_hash": "3bdc2918d2e6cab3967ab3cb5d69d5f3",
     "semantic_hash": ""
   },
   "src/lib/chunk.ts": {
@@ -345,8 +340,8 @@
     "semantic_hash": ""
   },
   "src/lib/tour.ts": {
-    "mtime": 1784098370.5717123,
-    "ast_hash": "a0be73e039994665459e51fb2e5b84e7",
+    "mtime": 1784529126.0552137,
+    "ast_hash": "9761e8c2782e88d11d4cf13cf5b7d3f1",
     "semantic_hash": ""
   },
   "src/app/api/rag/reindex/route.ts": {
@@ -370,13 +365,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784436418.7524178,
-    "ast_hash": "71fabf888d79e59f08aa28ac047cd53e",
+    "mtime": 1784529696.7621799,
+    "ast_hash": "ffb67f7cfb86cda4f8bae290073f24f8",
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/[chapter]/page.tsx": {
-    "mtime": 1784410617.78979,
-    "ast_hash": "ab3cc349a24e9d8e15f2074d597dfffe",
+    "mtime": 1784529698.232158,
+    "ast_hash": "7147ea886a435f5051c9f4e7bb8c185d",
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/page.tsx": {
@@ -385,13 +380,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/[topic]/[slug]/page.tsx": {
-    "mtime": 1784439958.0153399,
-    "ast_hash": "c1dde7aa826e863a8c4af9980d5c1ea3",
+    "mtime": 1784529685.329745,
+    "ast_hash": "8a580441e21d9f2b95d24df91502430d",
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/[topic]/page.tsx": {
-    "mtime": 1784400807.9379892,
-    "ast_hash": "3a29cb3f1354cd0dc727730dc5f5be1d",
+    "mtime": 1784529689.029716,
+    "ast_hash": "57801447f36489db2cbd5c5e761888b5",
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/page.tsx": {
@@ -470,8 +465,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/arrays-hashing.ts": {
-    "mtime": 1784400719.020611,
-    "ast_hash": "1cd630d4b7e3121833a399e3d6143291",
+    "mtime": 1784530337.6627784,
+    "ast_hash": "cfd0f1b1c9ea6e2b23c82b34889d0820",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/backtracking.ts": {
@@ -565,13 +560,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/sql/[topic]/[slug]/page.tsx": {
-    "mtime": 1784439972.7431138,
-    "ast_hash": "c0817d22764dbaf9bad18f1fdb5fd599",
+    "mtime": 1784529686.5496428,
+    "ast_hash": "4a41018e4c2b0ae4779fab71628cc510",
     "semantic_hash": ""
   },
   "src/app/blogs/sql/[topic]/page.tsx": {
-    "mtime": 1784436077.4288726,
-    "ast_hash": "fe8c613d054bf6075bd3b3ab6c0b575e",
+    "mtime": 1784529690.2333918,
+    "ast_hash": "efa241d1c94cde1d558e9cd50fc543f9",
     "semantic_hash": ""
   },
   "src/app/blogs/sql/page.tsx": {
@@ -590,8 +585,8 @@
     "semantic_hash": ""
   },
   "src/components/StoryLearnPanel.tsx": {
-    "mtime": 1784464357.345847,
-    "ast_hash": "0794f6dd8516e825d3dd1d2881175be4",
+    "mtime": 1784529168.4115915,
+    "ast_hash": "1ddd3fbf9930a458adadf1127258c942",
     "semantic_hash": ""
   },
   "src/components/StoryStartControl.tsx": {
@@ -670,8 +665,8 @@
     "semantic_hash": ""
   },
   "src/lib/sql/topics/window-functions-ranking.ts": {
-    "mtime": 1784435832.459067,
-    "ast_hash": "740065bb38bec177ec075d7a06f0de75",
+    "mtime": 1784529800.7171078,
+    "ast_hash": "dc147cf001ff28af244e0d9ecb2f7447",
     "semantic_hash": ""
   },
   "src/lib/sql/types.ts": {
@@ -690,13 +685,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784463001.4142818,
-    "ast_hash": "e9bb31960af8ece80582f3613c3335db",
+    "mtime": 1784529693.5495408,
+    "ast_hash": "e1a3bb3e5c765182baf6c5f828fae10f",
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/[chapter]/page.tsx": {
-    "mtime": 1784462999.4028132,
-    "ast_hash": "072281462cb23c3527cc7e1b5363df05",
+    "mtime": 1784529695.1482363,
+    "ast_hash": "ec4fde76debffd61616b4ae0a3c64c4f",
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/page.tsx": {
@@ -705,8 +700,8 @@
     "semantic_hash": ""
   },
   "src/components/StoryJourney.tsx": {
-    "mtime": 1784455159.970587,
-    "ast_hash": "ca88b2b1a3ddc21b868e7f05d5a8094d",
+    "mtime": 1784528936.5031116,
+    "ast_hash": "36ea0b9c0d2f7fab29c2b2da6b302e7f",
     "semantic_hash": ""
   },
   "src/lib/sarfaesi-act/index.ts": {
@@ -915,8 +910,8 @@
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/what-is-economics.ts": {
-    "mtime": 1784476488.4129674,
-    "ast_hash": "8a5490fdb862cf547e617d8da21f0a5d",
+    "mtime": 1784529814.8768303,
+    "ast_hash": "5750a3e6a392b9d30b620bbc1e7d7299",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/types.ts": {
@@ -925,18 +920,53 @@
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784527900.1288269,
-    "ast_hash": "2bb4374384aa3a68a4f40caf2fa67532",
+    "mtime": 1784529687.9854891,
+    "ast_hash": "1b6697de7fe828fc04f7933acebf1d13",
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/[chapter]/page.tsx": {
-    "mtime": 1784527898.111589,
-    "ast_hash": "fb1ed4789687276515a9cf686b2527af",
+    "mtime": 1784529691.6796849,
+    "ast_hash": "061c3dcccf0cd17851049c19321ee792",
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/page.tsx": {
     "mtime": 1784527896.0970361,
     "ast_hash": "033e6e031d20fbe3ca3fc0c68dcd5f4c",
+    "semantic_hash": ""
+  },
+  "src/app/recall/page.tsx": {
+    "mtime": 1784453547.4009478,
+    "ast_hash": "82587f123828d649d084a99e0ee25ecb",
+    "semantic_hash": ""
+  },
+  "src/components/viz/ArrayViz.tsx": {
+    "mtime": 1784529560.3218296,
+    "ast_hash": "1cd3698f71936238dcd2bde463c1c211",
+    "semantic_hash": ""
+  },
+  "src/components/viz/FlowViz.tsx": {
+    "mtime": 1784529600.031502,
+    "ast_hash": "fda0a08e3c79c8a9fd56f00a9af9ff28",
+    "semantic_hash": ""
+  },
+  "src/components/viz/TableDiffViz.tsx": {
+    "mtime": 1784529586.714139,
+    "ast_hash": "bdb2443c098f51392badb4fe33882d9a",
+    "semantic_hash": ""
+  },
+  "src/components/viz/TreeViz.tsx": {
+    "mtime": 1784529573.4049551,
+    "ast_hash": "f1a250608e1fc92bac2449b21bfbf6a3",
+    "semantic_hash": ""
+  },
+  "src/components/viz/VizBlock.tsx": {
+    "mtime": 1784529613.140719,
+    "ast_hash": "a48def1c4162529350c30cd6158988ab",
+    "semantic_hash": ""
+  },
+  "src/components/viz/types.ts": {
+    "mtime": 1784529538.4166663,
+    "ast_hash": "a0ba5131fdaf84f07521df8620cbf605",
     "semantic_hash": ""
   }
 }

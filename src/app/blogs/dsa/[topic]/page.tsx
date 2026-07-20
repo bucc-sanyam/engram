@@ -109,7 +109,7 @@ export default async function DsaTopicPage({
 
           {/* The umbrella essay */}
           <section className="article-body mb-12">
-            <Markdown>{topic.intro}</Markdown>
+            <Markdown vizAccent={topic.color} strictViz>{topic.intro}</Markdown>
           </section>
 
           {/* The questions, in reading order */}

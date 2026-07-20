@@ -4,72 +4,70 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
 import {
-  SQL_SERIES_TITLE,
-  SQL_TOPICS,
-  SQL_DIFFICULTY_COLORS,
-  sqlNeighbors,
-  sqlStopHref,
-  sqlStopTitle,
-  getSqlTopic,
-} from "@/lib/sql";
+  MACRO_SERIES_TITLE,
+  MACROECONOMICS_CHAPTERS,
+  MACRO_IMPORTANCE_COLORS,
+  macroNeighbors,
+  macroStopHref,
+  macroStopTitle,
+  getMacroChapter,
+} from "@/lib/macroeconomics";
 
 export function generateStaticParams() {
-  return SQL_TOPICS.map((t) => ({ topic: t.slug }));
+  return MACROECONOMICS_CHAPTERS.map((c) => ({ chapter: c.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ topic: string }>;
+  params: Promise<{ chapter: string }>;
 }): Promise<Metadata> {
-  const { topic: slug } = await params;
-  const topic = getSqlTopic(slug);
-  if (!topic) return { title: `Chapter not found · ${SQL_SERIES_TITLE}` };
+  const { chapter: slug } = await params;
+  const chapter = getMacroChapter(slug);
+  if (!chapter) return { title: `Chapter not found · ${MACRO_SERIES_TITLE}` };
   return {
-    title: `${topic.title} — Chapter ${topic.chapter} · ${SQL_SERIES_TITLE} · Knovis`,
-    description: topic.tagline,
+    title: `${chapter.title} — Chapter ${chapter.chapter} · ${MACRO_SERIES_TITLE} · Knovis`,
+    description: chapter.tagline,
   };
 }
 
-/** A chapter of The Query Playbook — the umbrella blog for one SQL concept. */
-export default async function SqlTopicPage({
+export default async function MacroChapterPage({
   params,
 }: {
-  params: Promise<{ topic: string }>;
+  params: Promise<{ chapter: string }>;
 }) {
-  const { topic: slug } = await params;
-  const topic = getSqlTopic(slug);
-  if (!topic) notFound();
+  const { chapter: slug } = await params;
+  const chapter = getMacroChapter(slug);
+  if (!chapter) notFound();
 
-  const { prev, next } = sqlNeighbors(topic.slug);
-  const prereqs = topic.prereqs.map((s) => getSqlTopic(s)).filter((t) => t !== null);
-  const unlocks = topic.unlocks.map((s) => getSqlTopic(s)).filter((t) => t !== null);
+  const { prev, next } = macroNeighbors(chapter.slug);
+  const prereqs = chapter.prereqs.map((s) => getMacroChapter(s)).filter((c) => c !== null);
+  const unlocks = chapter.unlocks.map((s) => getMacroChapter(s)).filter((c) => c !== null);
 
   return (
     <>
       <Nav />
       <main className="mx-auto w-full max-w-2xl flex-1 px-5 pb-32 pt-8 sm:px-6 md:pb-24">
         <div className="rise relative z-10 mb-8 flex items-center gap-2 text-sm text-faint">
-          <Link href="/blogs/sql" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
-            ← {SQL_SERIES_TITLE}
+          <Link href="/blogs/macroeconomics" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
+            ← {MACRO_SERIES_TITLE}
           </Link>
         </div>
 
         <article className="rise">
-          {/* Header */}
           <header className="relative mb-9">
             <div
               className="pointer-events-none absolute -left-24 -top-16 h-56 w-56 rounded-full opacity-20 blur-3xl"
-              style={{ background: topic.color }}
+              style={{ background: chapter.color }}
               aria-hidden
             />
-            <p className="micro mb-4" style={{ color: topic.color }}>
-              Chapter {topic.chapter} · {topic.problems.length} problem{topic.problems.length === 1 ? "" : "s"}
+            <p className="micro mb-4" style={{ color: chapter.color }}>
+              Chapter {chapter.chapter} · {chapter.sections.length} section{chapter.sections.length === 1 ? "" : "s"}
             </p>
             <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
-              {topic.title}
+              {chapter.title}
             </h1>
-            <p className="mt-4 text-lg leading-relaxed text-muted">{topic.tagline}</p>
+            <p className="mt-4 text-lg leading-relaxed text-muted">{chapter.tagline}</p>
 
             {(prereqs.length > 0 || unlocks.length > 0) && (
               <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
@@ -79,7 +77,7 @@ export default async function SqlTopicPage({
                     {prereqs.map((p) => (
                       <Link
                         key={p.slug}
-                        href={`/blogs/sql/${p.slug}`}
+                        href={`/blogs/macroeconomics/${p.slug}`}
                         className="rounded-full px-2.5 py-0.5 text-[12px] font-semibold transition-transform hover:-translate-y-0.5"
                         style={{ background: `${p.color}1a`, color: p.color }}
                       >
@@ -94,7 +92,7 @@ export default async function SqlTopicPage({
                     {unlocks.map((p) => (
                       <Link
                         key={p.slug}
-                        href={`/blogs/sql/${p.slug}`}
+                        href={`/blogs/macroeconomics/${p.slug}`}
                         className="rounded-full px-2.5 py-0.5 text-[12px] font-semibold transition-transform hover:-translate-y-0.5"
                         style={{ background: `${p.color}1a`, color: p.color }}
                       >
@@ -107,50 +105,48 @@ export default async function SqlTopicPage({
             )}
           </header>
 
-          {/* The umbrella essay */}
           <section className="article-body mb-12">
-            <Markdown vizAccent={topic.color} strictViz>{topic.intro}</Markdown>
+            <Markdown vizAccent={chapter.color} strictViz>{chapter.intro}</Markdown>
           </section>
 
-          {/* The problems, in reading order */}
           <section className="border-t border-white/[0.07] pt-9">
-            <h2 className="micro mb-2" style={{ color: topic.color }}>
-              The problems, in order
+            <h2 className="micro mb-2" style={{ color: chapter.color }}>
+              The sections, in order
             </h2>
             <p className="mb-6 text-sm text-faint">
               Read them top to bottom — each one hands off to the next.
             </p>
             <ol className="space-y-2.5">
-              {topic.problems.map((p, i) => (
-                <li key={p.slug}>
+              {chapter.sections.map((s, i) => (
+                <li key={s.slug}>
                   <Link
-                    href={`/blogs/sql/${topic.slug}/${p.slug}`}
+                    href={`/blogs/macroeconomics/${chapter.slug}/${s.slug}`}
                     className="row-soft group flex items-start gap-4 px-4 py-3.5"
                   >
                     <span
                       className="display mt-0.5 shrink-0 text-lg font-bold tabular-nums opacity-40"
-                      style={{ color: topic.color }}
+                      style={{ color: chapter.color }}
                     >
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="font-medium text-white/90 transition-colors group-hover:text-white">
-                          {p.title}
+                          {s.title}
                         </span>
                         <span
                           className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
                           style={{
-                            background: `${SQL_DIFFICULTY_COLORS[p.difficulty]}1a`,
-                            color: SQL_DIFFICULTY_COLORS[p.difficulty],
+                            background: `${MACRO_IMPORTANCE_COLORS[s.importance]}1a`,
+                            color: MACRO_IMPORTANCE_COLORS[s.importance],
                           }}
                         >
-                          {p.difficulty}
+                          {s.importance}
                         </span>
-                        <span className="text-[10px] text-faint">LC #{p.leetcodeNumber}</span>
+                        <span className="text-[10px] text-faint">{s.sectionNumber}</span>
                       </span>
                       <span className="mt-0.5 block text-sm leading-snug text-faint">
-                        {p.summary}
+                        {s.summary}
                       </span>
                     </span>
                     <span
@@ -165,27 +161,26 @@ export default async function SqlTopicPage({
             </ol>
           </section>
 
-          {/* Linear nav */}
           <nav className="mt-12 grid gap-3 sm:grid-cols-2">
             {prev ? (
-              <Link href={sqlStopHref(prev)} className="glass glass-hover rounded-[1.5rem] p-4">
+              <Link href={macroStopHref(prev)} className="glass glass-hover rounded-[1.5rem] p-4">
                 <span className="micro !text-faint">← Previously</span>
-                <span className="mt-1 block font-medium text-white/85">{sqlStopTitle(prev)}</span>
+                <span className="mt-1 block font-medium text-white/85">{macroStopTitle(prev)}</span>
               </Link>
             ) : (
-              <Link href="/blogs/sql" className="glass glass-hover rounded-[1.5rem] p-4">
+              <Link href="/blogs/macroeconomics" className="glass glass-hover rounded-[1.5rem] p-4">
                 <span className="micro !text-faint">← Series</span>
-                <span className="mt-1 block font-medium text-white/85">{SQL_SERIES_TITLE}</span>
+                <span className="mt-1 block font-medium text-white/85">{MACRO_SERIES_TITLE}</span>
               </Link>
             )}
             {next && (
               <Link
-                href={sqlStopHref(next)}
+                href={macroStopHref(next)}
                 className="glass glass-hover rounded-[1.5rem] p-4 text-right"
               >
                 <span className="micro !text-faint">Begin the chapter →</span>
-                <span className="mt-1 block font-medium" style={{ color: topic.color }}>
-                  {sqlStopTitle(next)}
+                <span className="mt-1 block font-medium" style={{ color: chapter.color }}>
+                  {macroStopTitle(next)}
                 </span>
               </Link>
             )}

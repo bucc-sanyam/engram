@@ -13,7 +13,7 @@ export const KIND_LABEL: Record<string, string> = {
 /**
  * The full report card: score header + one detailed card per question
  * (prompt, the answer given, the correct answer, feedback). Shared by the
- * /review report phase and the calendar's day-report modal.
+ * /recall report phase and the calendar's day-report modal.
  */
 export default function ReportCardView({
   report,

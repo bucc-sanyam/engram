@@ -260,7 +260,7 @@ export default function TopicBlogPage() {
 
             {/* Study CTA */}
             <div className="mt-12 flex flex-wrap gap-3">
-              <Link href={`/review?topic=${topic.id}`} className="btn-primary">
+              <Link href={`/recall?topic=${topic.id}`} className="btn-primary">
                 Revise this topic →
               </Link>
               <Link href="/blogs" className="btn-ghost">

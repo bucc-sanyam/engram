@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { StorySection, UserStory } from "@/lib/stories";
 
 /** Display titles for each series. */
@@ -17,18 +17,32 @@ const SERIES_META: Record<string, { emoji: string; href: string }> = {
   sql: { emoji: "🔍", href: "/blogs/sql" },
 };
 
+/** Dashboard only shows this many stories — the rest live on /blogs. */
+const MAX_VISIBLE = 3;
+
 /**
- * Beautiful animated story journey visualization — shows radial progress
- * rings + chapter bead trail for each started story.
+ * Compact story journey preview — radial progress rings for the most
+ * relevant started stories (due-today first, then most recently started).
+ * The full list with per-chapter detail lives on /blogs.
  */
 export default function StoryJourney({
   stories,
   storySections,
+  dueSeriesSlugs,
 }: {
   stories: UserStory[];
   storySections: StorySection[];
+  dueSeriesSlugs?: Set<string>;
 }) {
   if (!stories.length) return null;
+
+  const sorted = [...stories].sort((a, b) => {
+    const aDue = dueSeriesSlugs?.has(a.series_slug) ? 1 : 0;
+    const bDue = dueSeriesSlugs?.has(b.series_slug) ? 1 : 0;
+    if (aDue !== bDue) return bDue - aDue;
+    return new Date(b.started_at).getTime() - new Date(a.started_at).getTime();
+  });
+  const visible = sorted.slice(0, MAX_VISIBLE);
 
   return (
     <section className="glass rise rise-2 relative overflow-hidden p-6 sm:p-7">
@@ -43,7 +57,7 @@ export default function StoryJourney({
       </div>
 
       <div className="space-y-5">
-        {stories.map((story) => {
+        {visible.map((story) => {
           const sections = storySections.filter(
             (s) => s.series_slug === story.series_slug
           );
@@ -56,6 +70,13 @@ export default function StoryJourney({
           );
         })}
       </div>
+
+      <Link
+        href="/blogs"
+        className="mt-5 flex items-center justify-center gap-1.5 rounded-full border-t border-white/[0.06] pt-4 text-xs font-semibold text-faint transition-colors hover:text-white"
+      >
+        All stories ({stories.length}) →
+      </Link>
     </section>
   );
 }
@@ -105,21 +126,6 @@ function StoryRing({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - animPct / 100);
-
-  // Group sections by chapter for bead trail
-  const chapters = useMemo(() => {
-    const map = new Map<
-      string,
-      { slug: string; sections: StorySection[] }
-    >();
-    for (const s of sections) {
-      if (!map.has(s.chapter_slug)) {
-        map.set(s.chapter_slug, { slug: s.chapter_slug, sections: [] });
-      }
-      map.get(s.chapter_slug)!.sections.push(s);
-    }
-    return Array.from(map.values());
-  }, [sections]);
 
   return (
     <Link
@@ -183,49 +189,6 @@ function StoryRing({
           <span style={{ color: story.color }}>{animCount}</span> / {total}{" "}
           sections learned
         </p>
-
-        {/* Chapter bead trail */}
-        {chapters.length > 0 && (
-          <div className="mt-2.5 flex flex-wrap gap-1">
-            {chapters.map((ch) => {
-              const chLearned = ch.sections.filter(
-                (s) => s.status === "learned"
-              ).length;
-              const chTotal = ch.sections.length;
-              const allDone = chLearned === chTotal;
-              const anyDone = chLearned > 0;
-              return (
-                <div
-                  key={ch.slug}
-                  title={`${ch.slug}: ${chLearned}/${chTotal}`}
-                  className="relative h-2 rounded-full transition-all"
-                  style={{
-                    width: `${Math.max(8, (chTotal / total) * 100)}%`,
-                    background: allDone
-                      ? story.color
-                      : anyDone
-                        ? `linear-gradient(90deg, ${story.color} ${(chLearned / chTotal) * 100}%, rgba(255,252,245,0.08) ${(chLearned / chTotal) * 100}%)`
-                        : "rgba(255,252,245,0.08)",
-                    boxShadow: allDone
-                      ? `0 0 8px ${story.color}44`
-                      : "none",
-                  }}
-                >
-                  {anyDone && !allDone && (
-                    <div
-                      className="absolute right-0 top-0 h-full w-[3px] rounded-full"
-                      style={{
-                        background: story.color,
-                        boxShadow: `0 0 4px ${story.color}`,
-                        animation: "pulseGlow 2.4s ease-in-out infinite",
-                      }}
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {/* Arrow */}

@@ -100,7 +100,7 @@ export default async function SarfaesiSectionPage({
 
           {/* The read */}
           <section className="article-body">
-            <Markdown>{section.body}</Markdown>
+            <Markdown vizAccent={chapter.color} strictViz>{section.body}</Markdown>
           </section>
 
           {/* Learn this section — seeds its quiz bank into the reader's reviews */}

@@ -34,6 +34,15 @@ ORDER BY score DESC;
 
 **Why it matters.** This is *the* problem that teaches the difference between RANK and DENSE_RANK. With scores [4.0, 4.0, 3.85, 3.65]: RANK gives [1, 1, 3, 4] (gap after tie); DENSE_RANK gives [1, 1, 2, 3] (no gap). The problem demands no gaps, so DENSE_RANK is correct.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["score", "rank"],
+  "before": [[4.0, null], [4.0, null], [3.85, null], [3.65, null]],
+  "after": [[4.0, 1], [4.0, 1], [3.85, 2], [3.65, 3]],
+  "caption": "The tied 4.0s share rank 1; the next distinct score gets rank 2, not 3 — no gap."
+}
+\`\`\`
+
 **The insight.** The three ranking functions: ROW_NUMBER() never ties (arbitrary tiebreaking), RANK() ties and skips (1,1,3), DENSE_RANK() ties without skipping (1,1,2). Memorise this — interviewers love asking which one to use and why.
 
 **The thread.** Global ranking. The next problem introduces PARTITION BY — ranking *within groups* rather than globally.`,
@@ -59,6 +68,26 @@ WHERE e.rk = 1;
 \`\`\`
 
 **Why it matters.** PARTITION BY departmentId creates a separate "window" for each department. Within each window, DENSE_RANK ranks by salary descending. Filtering WHERE rk = 1 keeps only the top-ranked employees in each department. This "rank-then-filter" pattern is the standard way to find "top N per group."
+
+\`\`\`viz:table-diff
+{
+  "columns": ["department", "employee", "salary", "rk"],
+  "before": [
+    ["IT", "Joe", 85000, null],
+    ["IT", "Jim", 85000, null],
+    ["Sales", "Sam", 60000, null],
+    ["Sales", "Max", 60000, null],
+    ["IT", "Henry", 80000, null]
+  ],
+  "after": [
+    ["IT", "Joe", 85000, 1],
+    ["IT", "Jim", 85000, 1],
+    ["Sales", "Sam", 60000, 1],
+    ["Sales", "Max", 60000, 1]
+  ],
+  "caption": "Two separate windows (IT, Sales) rank independently — Henry's rk=2 in IT drops him from the rk=1 filter."
+}
+\`\`\`
 
 **The insight.** You cannot use WHERE directly on a window function (because window functions are evaluated after WHERE in SQL's execution order). The solution is to compute the rank in a subquery or CTE, then filter in the outer query. This two-step pattern is essential.
 

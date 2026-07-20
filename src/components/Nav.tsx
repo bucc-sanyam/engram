@@ -10,7 +10,7 @@ const LINKS = [
   { href: "/brain", label: "Brain", icon: BrainIcon },
   { href: "/blogs", label: "Blogs", icon: BookIcon },
   { href: "/add", label: "Add", icon: PlusIcon },
-  { href: "/review", label: "Review", icon: BoltIcon },
+  { href: "/recall", label: "Recall", icon: BoltIcon },
 ];
 
 export default function Nav() {

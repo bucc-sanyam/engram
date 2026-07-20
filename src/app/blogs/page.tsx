@@ -19,15 +19,17 @@ const STORY_SERIES = [
     meta: "18 chapters · 150 problems",
     desc: "Every pattern, every problem, one continuous path.",
   },
-  {
-    href: "/blogs/competition-act",
-    label: "The Competition Code",
-    tag: "Legal",
-    color: "#5ba4cf",
-    title: "The Competition Act, 2002",
-    meta: "10 chapters · 31 sections",
-    desc: "Definitions to enforcement, with landmark cases throughout.",
-  },
+  // Competition Act paused from discovery for now (2026-07-20) — route/data/seed
+  // machinery all still intact for anyone who already started it.
+  // {
+  //   href: "/blogs/competition-act",
+  //   label: "The Competition Code",
+  //   tag: "Legal",
+  //   color: "#5ba4cf",
+  //   title: "The Competition Act, 2002",
+  //   meta: "10 chapters · 31 sections",
+  //   desc: "Definitions to enforcement, with landmark cases throughout.",
+  // },
   {
     href: "/blogs/sql",
     label: "The Query Playbook",
@@ -86,6 +88,17 @@ export default function BlogsPage() {
     }
     return map;
   }, [stories, storySections]);
+
+  // Started series first (most relevant to a returning user), static order preserved otherwise.
+  const sortedSeries = useMemo(() => {
+    return [...STORY_SERIES].sort((a, b) => {
+      const slugA = a.href.split("/blogs/")[1];
+      const slugB = b.href.split("/blogs/")[1];
+      const aStarted = slugA && seriesProgress.has(slugA) ? 1 : 0;
+      const bStarted = slugB && seriesProgress.has(slugB) ? 1 : 0;
+      return bStarted - aStarted;
+    });
+  }, [seriesProgress]);
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
@@ -147,7 +160,7 @@ export default function BlogsPage() {
 
             {/* series as connected rows sharing one frame */}
             <div className="divide-y divide-white/[0.05]">
-              {STORY_SERIES.map((s) => {
+              {sortedSeries.map((s) => {
                 // Extract the series slug from the href
                 const slug = s.href.split("/blogs/")[1];
                 const progress = slug ? seriesProgress.get(slug) : null;

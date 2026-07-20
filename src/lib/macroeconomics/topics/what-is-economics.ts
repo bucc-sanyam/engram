@@ -182,6 +182,21 @@ Crucially, the macroeconomy does not exist in a vacuum. It is an abstraction tha
 1. **Society:** Driven by community norms, history, and political institutions (e.g., caste, gender, class).
 2. **Ecology:** The natural environment which provides hard, binding physical limits on endless economic growth.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "ecology", "label": "Ecology", "row": 0, "col": 0 },
+    { "id": "society", "label": "Society", "row": 1, "col": 0 },
+    { "id": "economy", "label": "The Economy", "row": 2, "col": 0 }
+  ],
+  "edges": [
+    { "from": "ecology", "to": "society", "label": "embeds" },
+    { "from": "society", "to": "economy", "label": "embeds" }
+  ],
+  "caption": "The economy is a sub-system of society, which is itself a sub-system of ecology — not a closed loop floating free of either."
+}
+\`\`\`
+
 We theorise the economy as a distinct entity, but good economics must always reintegrate social and ecological constraints when translating theory into policy.`,
       questions: [
         {
