@@ -46,6 +46,15 @@ const STORY_SERIES = [
     meta: "6 chapters",
     desc: "NPA resolution, asset reconstruction, and enforcement of security interest.",
   },
+  {
+    href: "/blogs/macroeconomics",
+    label: "Macroeconomics: An Introduction",
+    tag: "Economics",
+    color: "#a3e635",
+    title: "Macroeconomics by Alex M. Thomas",
+    meta: "6 chapters",
+    desc: "A critical approach to understanding macroeconomics and the Indian economy.",
+  },
 ];
 
 export default function BlogsPage() {
