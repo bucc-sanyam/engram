@@ -57,6 +57,7 @@
   "55": "route.ts",
   "56": "route.ts",
   "57": "ReadingThemeContext.tsx",
+  "58": "page.tsx",
   "59": "Art, Design & UI/UX Story Creator Agent",
   "60": "Biology & Ecology Story Creator Agent",
   "61": "clear_cache.js",
@@ -81,5 +82,9 @@
   "80": "Science (Physics/Chemistry/Biology) Story Creator Agent",
   "81": "Self-Help & Personal Development Story Creator Agent",
   "82": "Sociology & Anthropology Story Creator Agent",
-  "83": "Tech & Engineering Story Creator Agent"
+  "83": "Tech & Engineering Story Creator Agent",
+  "84": "page.tsx",
+  "85": "route.ts",
+  "86": "route.ts",
+  "87": "gemini.ts"
 }

@@ -612,7 +612,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_ingest_route",
-      "community": 55,
+      "community": 44,
       "norm_label": "route.ts"
     },
     {
@@ -622,7 +622,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_ingest_daily_limit",
-      "community": 55,
+      "community": 44,
       "norm_label": "ingest_daily_limit"
     },
     {
@@ -632,7 +632,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_isblockedipv4",
-      "community": 55,
+      "community": 44,
       "norm_label": "isblockedipv4()"
     },
     {
@@ -642,7 +642,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_isblockedipv6",
-      "community": 55,
+      "community": 44,
       "norm_label": "isblockedipv6()"
     },
     {
@@ -652,7 +652,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_isblockedip",
-      "community": 55,
+      "community": 44,
       "norm_label": "isblockedip()"
     },
     {
@@ -662,7 +662,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_assertpublichttpurl",
-      "community": 55,
+      "community": 44,
       "norm_label": "assertpublichttpurl()"
     },
     {
@@ -672,7 +672,7 @@
       "source_location": "L97",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_lookupcallback",
-      "community": 55,
+      "community": 44,
       "norm_label": "lookupcallback"
     },
     {
@@ -682,7 +682,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_ssrfsafelookup",
-      "community": 55,
+      "community": 44,
       "norm_label": "ssrfsafelookup()"
     },
     {
@@ -692,7 +692,7 @@
       "source_location": "L132",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_ssrfsafedispatcher",
-      "community": 55,
+      "community": 44,
       "norm_label": "ssrfsafedispatcher"
     },
     {
@@ -702,7 +702,7 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_fetchreadable",
-      "community": 55,
+      "community": 44,
       "norm_label": "fetchreadable()"
     },
     {
@@ -712,7 +712,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_duplicateresponse",
-      "community": 55,
+      "community": 44,
       "norm_label": "duplicateresponse()"
     },
     {
@@ -722,7 +722,7 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_post",
-      "community": 55,
+      "community": 44,
       "norm_label": "post()"
     },
     {
@@ -782,7 +782,7 @@
       "source_location": "L236",
       "_origin": "ast",
       "id": "src_app_api_plan_route_post",
-      "community": 2,
+      "community": 44,
       "norm_label": "post()"
     },
     {
@@ -792,7 +792,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_quiz_route",
-      "community": 2,
+      "community": 44,
       "norm_label": "route.ts"
     },
     {
@@ -802,7 +802,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_quiz_ai_daily_limit",
-      "community": 2,
+      "community": 44,
       "norm_label": "quiz_ai_daily_limit"
     },
     {
@@ -822,7 +822,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_bankquestion",
-      "community": 2,
+      "community": 44,
       "norm_label": "bankquestion"
     },
     {
@@ -832,7 +832,7 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_choice_kinds",
-      "community": 2,
+      "community": 44,
       "norm_label": "choice_kinds"
     },
     {
@@ -842,7 +842,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_post",
-      "community": 2,
+      "community": 44,
       "norm_label": "post()"
     },
     {
@@ -852,7 +852,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_start",
-      "community": 2,
+      "community": 44,
       "norm_label": "start()"
     },
     {
@@ -862,7 +862,7 @@
       "source_location": "L235",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_pickquestion",
-      "community": 2,
+      "community": 44,
       "norm_label": "pickquestion()"
     },
     {
@@ -872,7 +872,7 @@
       "source_location": "L251",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_answer",
-      "community": 2,
+      "community": 44,
       "norm_label": "answer()"
     },
     {
@@ -882,7 +882,7 @@
       "source_location": "L302",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_finish",
-      "community": 2,
+      "community": 44,
       "norm_label": "finish()"
     },
     {
@@ -892,7 +892,7 @@
       "source_location": "L593",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_heuristicscore",
-      "community": 2,
+      "community": 44,
       "norm_label": "heuristicscore()"
     },
     {
@@ -922,7 +922,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_auth_callback_route",
-      "community": 56,
+      "community": 44,
       "norm_label": "route.ts"
     },
     {
@@ -932,7 +932,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_auth_callback_route_get",
-      "community": 56,
+      "community": 44,
       "norm_label": "get()"
     },
     {
@@ -1539,7 +1539,7 @@
       "label": "PathConnector()",
       "file_type": "code",
       "source_file": "src/app/brain/page.tsx",
-      "source_location": "L421",
+      "source_location": "L434",
       "_origin": "ast",
       "id": "src_app_brain_page_pathconnector",
       "community": 8,
@@ -1549,7 +1549,7 @@
       "label": "SearchIcon()",
       "file_type": "code",
       "source_file": "src/app/brain/page.tsx",
-      "source_location": "L429",
+      "source_location": "L442",
       "_origin": "ast",
       "id": "src_app_brain_page_searchicon",
       "community": 8,
@@ -1662,7 +1662,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_notes_page",
-      "community": 7,
+      "community": 8,
       "norm_label": "page.tsx"
     },
     {
@@ -1672,7 +1672,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_app_notes_page_notespage",
-      "community": 7,
+      "community": 8,
       "norm_label": "notespage()"
     },
     {
@@ -1682,7 +1682,7 @@
       "source_location": "L212",
       "_origin": "ast",
       "id": "src_app_notes_page_ancestorsinclude",
-      "community": 7,
+      "community": 8,
       "norm_label": "ancestorsinclude()"
     },
     {
@@ -1692,7 +1692,7 @@
       "source_location": "L222",
       "_origin": "ast",
       "id": "src_app_notes_page_noterow",
-      "community": 7,
+      "community": 8,
       "norm_label": "noterow()"
     },
     {
@@ -1702,7 +1702,7 @@
       "source_location": "L301",
       "_origin": "ast",
       "id": "src_app_notes_page_noteeditor",
-      "community": 7,
+      "community": 8,
       "norm_label": "noteeditor()"
     },
     {
@@ -1712,7 +1712,7 @@
       "source_location": "L438",
       "_origin": "ast",
       "id": "src_app_notes_page_trashicon",
-      "community": 7,
+      "community": 8,
       "norm_label": "trashicon()"
     },
     {
@@ -1822,7 +1822,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_profile_page",
-      "community": 8,
+      "community": 51,
       "norm_label": "page.tsx"
     },
     {
@@ -1832,7 +1832,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_profile_page_profilepage",
-      "community": 8,
+      "community": 51,
       "norm_label": "profilepage()"
     },
     {
@@ -1842,7 +1842,7 @@
       "source_location": "L166",
       "_origin": "ast",
       "id": "src_app_profile_page_profilestat",
-      "community": 8,
+      "community": 51,
       "norm_label": "profilestat()"
     },
     {
@@ -1852,7 +1852,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_review_page",
-      "community": 48,
+      "community": 7,
       "norm_label": "page.tsx"
     },
     {
@@ -1862,7 +1862,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_app_review_page_series_titles",
-      "community": 48,
+      "community": 7,
       "norm_label": "series_titles"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_app_review_page_series_colors",
-      "community": 48,
+      "community": 7,
       "norm_label": "series_colors"
     },
     {
@@ -1882,7 +1882,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_app_review_page_groupheader",
-      "community": 48,
+      "community": 7,
       "norm_label": "groupheader()"
     },
     {
@@ -1892,7 +1892,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_app_review_page_reviewpage",
-      "community": 48,
+      "community": 7,
       "norm_label": "reviewpage()"
     },
     {
@@ -1902,7 +1902,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_app_review_page_reviewfallback",
-      "community": 48,
+      "community": 7,
       "norm_label": "reviewfallback()"
     },
     {
@@ -1912,7 +1912,7 @@
       "source_location": "L80",
       "_origin": "ast",
       "id": "src_app_review_page_reviewrunner",
-      "community": 48,
+      "community": 8,
       "norm_label": "reviewrunner()"
     },
     {
@@ -1922,7 +1922,7 @@
       "source_location": "L345",
       "_origin": "ast",
       "id": "src_app_review_page_quizcarousel",
-      "community": 48,
+      "community": 7,
       "norm_label": "quizcarousel()"
     },
     {
@@ -1932,7 +1932,7 @@
       "source_location": "L647",
       "_origin": "ast",
       "id": "src_app_review_page_spinner",
-      "community": 48,
+      "community": 7,
       "norm_label": "spinner()"
     },
     {
@@ -1942,7 +1942,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brainscene",
-      "community": 8,
+      "community": 55,
       "norm_label": "brainscene.tsx"
     },
     {
@@ -1952,7 +1952,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_components_brainscene_hashstr",
-      "community": 8,
+      "community": 55,
       "norm_label": "hashstr()"
     },
     {
@@ -1962,7 +1962,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_components_brainscene_mulberry32",
-      "community": 8,
+      "community": 55,
       "norm_label": "mulberry32()"
     },
     {
@@ -1972,7 +1972,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_components_brainscene_brainpoint",
-      "community": 8,
+      "community": 55,
       "norm_label": "brainpoint()"
     },
     {
@@ -1982,7 +1982,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_components_brainscene_lobes",
-      "community": 8,
+      "community": 55,
       "norm_label": "lobes"
     },
     {
@@ -1992,7 +1992,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "src_components_brainscene_placetopic",
-      "community": 8,
+      "community": 55,
       "norm_label": "placetopic()"
     },
     {
@@ -2002,7 +2002,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_brainscene_makecircletexture",
-      "community": 8,
+      "community": 55,
       "norm_label": "makecircletexture()"
     },
     {
@@ -2012,7 +2012,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_components_brainscene_makeglowtexture",
-      "community": 8,
+      "community": 55,
       "norm_label": "makeglowtexture()"
     },
     {
@@ -2022,7 +2022,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "src_components_brainscene_makelabeltexture",
-      "community": 8,
+      "community": 55,
       "norm_label": "makelabeltexture()"
     },
     {
@@ -2032,7 +2032,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_components_brainscene_nodeobj",
-      "community": 8,
+      "community": 55,
       "norm_label": "nodeobj"
     },
     {
@@ -2042,7 +2042,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_components_brainscene_linkobj",
-      "community": 8,
+      "community": 55,
       "norm_label": "linkobj"
     },
     {
@@ -2052,7 +2052,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_components_brainscene_brainscene",
-      "community": 8,
+      "community": 55,
       "norm_label": "brainscene()"
     },
     {
@@ -2292,7 +2292,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progresscalendar",
-      "community": 52,
+      "community": 49,
       "norm_label": "progresscalendar.tsx"
     },
     {
@@ -2302,7 +2302,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progresscalendar_weekdays",
-      "community": 52,
+      "community": 49,
       "norm_label": "weekdays"
     },
     {
@@ -2312,7 +2312,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_progresscalendar_daykey",
-      "community": 52,
+      "community": 49,
       "norm_label": "daykey()"
     },
     {
@@ -2322,7 +2322,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_components_progresscalendar_progresscalendar",
-      "community": 52,
+      "community": 49,
       "norm_label": "progresscalendar()"
     },
     {
@@ -2332,7 +2332,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_components_progresscalendar_dayclasses",
-      "community": 52,
+      "community": 49,
       "norm_label": "dayclasses()"
     },
     {
@@ -2372,7 +2372,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_components_progressmap_heatmap",
-      "community": 2,
+      "community": 52,
       "norm_label": "heatmap()"
     },
     {
@@ -2432,7 +2432,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_reportcardview_kind_label",
-      "community": 49,
+      "community": 2,
       "norm_label": "kind_label"
     },
     {
@@ -2582,7 +2582,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_storylearnpanel",
-      "community": 8,
+      "community": 2,
       "norm_label": "storylearnpanel.tsx"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_storylearnpanel_storylearnpanel",
-      "community": 8,
+      "community": 2,
       "norm_label": "storylearnpanel()"
     },
     {
@@ -2602,7 +2602,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_storystartcontrol",
-      "community": 8,
+      "community": 2,
       "norm_label": "storystartcontrol.tsx"
     },
     {
@@ -2612,7 +2612,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_storystartcontrol_story_colors",
-      "community": 8,
+      "community": 2,
       "norm_label": "story_colors"
     },
     {
@@ -2622,7 +2622,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_storystartcontrol_storystartcontrol",
-      "community": 8,
+      "community": 2,
       "norm_label": "storystartcontrol()"
     },
     {
@@ -3132,7 +3132,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_lib_competition_act_types_compactquestion",
-      "community": 54,
+      "community": 2,
       "norm_label": "compactquestion"
     },
     {
@@ -3172,7 +3172,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_data",
-      "community": 0,
+      "community": 48,
       "norm_label": "data.ts"
     },
     {
@@ -3182,7 +3182,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_lib_data_demosession",
-      "community": 0,
+      "community": 7,
       "norm_label": "demosession"
     },
     {
@@ -3192,7 +3192,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_data_demostate",
-      "community": 0,
+      "community": 48,
       "norm_label": "demostate"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "src_lib_data_loaddemostate",
-      "community": 52,
+      "community": 48,
       "norm_label": "loaddemostate()"
     },
     {
@@ -3252,7 +3252,7 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 8,
+      "community": 51,
       "norm_label": "getprofile()"
     },
     {
@@ -3272,7 +3272,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "src_lib_data_getuseremail",
-      "community": 8,
+      "community": 51,
       "norm_label": "getuseremail()"
     },
     {
@@ -3282,7 +3282,7 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "src_lib_data_gettopics",
-      "community": 8,
+      "community": 51,
       "norm_label": "gettopics()"
     },
     {
@@ -3352,7 +3352,7 @@
       "source_location": "L298",
       "_origin": "ast",
       "id": "src_lib_data_getplan",
-      "community": 48,
+      "community": 8,
       "norm_label": "getplan()"
     },
     {
@@ -3442,7 +3442,7 @@
       "source_location": "L600",
       "_origin": "ast",
       "id": "src_lib_data_signout",
-      "community": 8,
+      "community": 51,
       "norm_label": "signout()"
     },
     {
@@ -3462,7 +3462,7 @@
       "source_location": "L656",
       "_origin": "ast",
       "id": "src_lib_data_mergereports",
-      "community": 52,
+      "community": 48,
       "norm_label": "mergereports()"
     },
     {
@@ -3472,7 +3472,7 @@
       "source_location": "L680",
       "_origin": "ast",
       "id": "src_lib_data_reportfromreviews",
-      "community": 52,
+      "community": 48,
       "norm_label": "reportfromreviews()"
     },
     {
@@ -3482,7 +3482,7 @@
       "source_location": "L724",
       "_origin": "ast",
       "id": "src_lib_data_getdayreport",
-      "community": 52,
+      "community": 48,
       "norm_label": "getdayreport()"
     },
     {
@@ -3502,7 +3502,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 52,
+      "community": 44,
       "norm_label": "dates.ts"
     },
     {
@@ -3512,7 +3512,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_dates_localdaykey",
-      "community": 52,
+      "community": 48,
       "norm_label": "localdaykey()"
     },
     {
@@ -3532,7 +3532,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_lib_dates_localdaystartiso",
-      "community": 52,
+      "community": 48,
       "norm_label": "localdaystartiso()"
     },
     {
@@ -3542,7 +3542,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_dates_localdayendiso",
-      "community": 52,
+      "community": 48,
       "norm_label": "localdayendiso()"
     },
     {
@@ -3552,7 +3552,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_lib_dates_clamptz",
-      "community": 2,
+      "community": 44,
       "norm_label": "clamptz()"
     },
     {
@@ -3562,7 +3562,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_dates_localtodayforoffset",
-      "community": 2,
+      "community": 44,
       "norm_label": "localtodayforoffset()"
     },
     {
@@ -3572,7 +3572,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_dates_daystartutciso",
-      "community": 56,
+      "community": 44,
       "norm_label": "daystartutciso()"
     },
     {
@@ -3622,7 +3622,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_demo_daysago",
-      "community": 2,
+      "community": 0,
       "norm_label": "daysago()"
     },
     {
@@ -3632,7 +3632,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_demo_daysahead",
-      "community": 2,
+      "community": 0,
       "norm_label": "daysahead()"
     },
     {
@@ -3642,7 +3642,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_demo_t",
-      "community": 2,
+      "community": 0,
       "norm_label": "t()"
     },
     {
@@ -3742,7 +3742,7 @@
       "source_location": "L227",
       "_origin": "ast",
       "id": "src_lib_demo_demoquestionbank",
-      "community": 0,
+      "community": 7,
       "norm_label": "demoquestionbank"
     },
     {
@@ -3762,7 +3762,7 @@
       "source_location": "L352",
       "_origin": "ast",
       "id": "src_lib_demo_demograde",
-      "community": 0,
+      "community": 48,
       "norm_label": "demograde()"
     },
     {
@@ -4302,7 +4302,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_gemini",
-      "community": 58,
+      "community": 44,
       "norm_label": "gemini.ts"
     },
     {
@@ -4312,7 +4312,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_lib_gemini_model_chain",
-      "community": 58,
+      "community": 44,
       "norm_label": "model_chain"
     },
     {
@@ -4322,7 +4322,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_gemini_cooldownuntil",
-      "community": 58,
+      "community": 44,
       "norm_label": "cooldownuntil"
     },
     {
@@ -4332,7 +4332,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_gemini_isretryablemodelerror",
-      "community": 58,
+      "community": 44,
       "norm_label": "isretryablemodelerror()"
     },
     {
@@ -4342,7 +4342,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_gemini_client",
-      "community": 58,
+      "community": 44,
       "norm_label": "client()"
     },
     {
@@ -4352,7 +4352,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_gemini_generatejson",
-      "community": 58,
+      "community": 44,
       "norm_label": "generatejson()"
     },
     {
@@ -4362,7 +4362,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_lib_gemini_extractknowledge",
-      "community": 55,
+      "community": 44,
       "norm_label": "extractknowledge()"
     },
     {
@@ -4372,7 +4372,7 @@
       "source_location": "L142",
       "_origin": "ast",
       "id": "src_lib_gemini_embed_dims",
-      "community": 58,
+      "community": 44,
       "norm_label": "embed_dims"
     },
     {
@@ -4382,7 +4382,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtasktype",
-      "community": 58,
+      "community": 44,
       "norm_label": "embedtasktype"
     },
     {
@@ -4412,7 +4412,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_lib_gemini_normalise",
-      "community": 58,
+      "community": 44,
       "norm_label": "normalise()"
     },
     {
@@ -4422,7 +4422,7 @@
       "source_location": "L188",
       "_origin": "ast",
       "id": "src_lib_gemini_sessiongradeinput",
-      "community": 58,
+      "community": 44,
       "norm_label": "sessiongradeinput"
     },
     {
@@ -4432,7 +4432,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "src_lib_gemini_sessiongraderesult",
-      "community": 58,
+      "community": 44,
       "norm_label": "sessiongraderesult"
     },
     {
@@ -4442,7 +4442,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "src_lib_gemini_gradesession",
-      "community": 2,
+      "community": 44,
       "norm_label": "gradesession()"
     },
     {
@@ -4452,7 +4452,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_guardrails",
-      "community": 55,
+      "community": 44,
       "norm_label": "guardrails.ts"
     },
     {
@@ -4462,7 +4462,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_guardrails_lookslikegibberish",
-      "community": 55,
+      "community": 44,
       "norm_label": "lookslikegibberish()"
     },
     {
@@ -4472,7 +4472,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_lib_guardrails_keep_codes",
-      "community": 55,
+      "community": 44,
       "norm_label": "keep_codes"
     },
     {
@@ -4482,7 +4482,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_guardrails_control_codes",
-      "community": 55,
+      "community": 44,
       "norm_label": "control_codes"
     },
     {
@@ -4492,7 +4492,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_guardrails_control_chars",
-      "community": 55,
+      "community": 44,
       "norm_label": "control_chars"
     },
     {
@@ -4502,8 +4502,208 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_guardrails_sanitizefield",
-      "community": 55,
+      "community": 44,
       "norm_label": "sanitizefield()"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_index",
+      "community": 2,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "MACROECONOMICS_CHAPTERS",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_index_macroeconomics_chapters",
+      "community": 2,
+      "norm_label": "macroeconomics_chapters"
+    },
+    {
+      "label": "conceptualising-the-macroeconomy.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy",
+      "community": 2,
+      "norm_label": "conceptualising-the-macroeconomy.ts"
+    },
+    {
+      "label": "conceptualisingTheMacroeconomy",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy_conceptualisingthemacroeconomy",
+      "community": 2,
+      "norm_label": "conceptualisingthemacroeconomy"
+    },
+    {
+      "label": "economic-growth.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/economic-growth.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_economic_growth",
+      "community": 2,
+      "norm_label": "economic-growth.ts"
+    },
+    {
+      "label": "economicGrowth",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/economic-growth.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_economic_growth_economicgrowth",
+      "community": 2,
+      "norm_label": "economicgrowth"
+    },
+    {
+      "label": "macroeconomic-policy.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/macroeconomic-policy.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_macroeconomic_policy",
+      "community": 2,
+      "norm_label": "macroeconomic-policy.ts"
+    },
+    {
+      "label": "macroeconomicPolicy",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/macroeconomic-policy.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_macroeconomic_policy_macroeconomicpolicy",
+      "community": 2,
+      "norm_label": "macroeconomicpolicy"
+    },
+    {
+      "label": "money-and-interest-rates.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/money-and-interest-rates.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_money_and_interest_rates",
+      "community": 2,
+      "norm_label": "money-and-interest-rates.ts"
+    },
+    {
+      "label": "moneyAndInterestRates",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/money-and-interest-rates.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_money_and_interest_rates_moneyandinterestrates",
+      "community": 2,
+      "norm_label": "moneyandinterestrates"
+    },
+    {
+      "label": "output-and-employment.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/output-and-employment.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_output_and_employment",
+      "community": 2,
+      "norm_label": "output-and-employment.ts"
+    },
+    {
+      "label": "outputAndEmployment",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/output-and-employment.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_output_and_employment_outputandemployment",
+      "community": 2,
+      "norm_label": "outputandemployment"
+    },
+    {
+      "label": "what-is-economics.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/what-is-economics.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_what_is_economics",
+      "community": 2,
+      "norm_label": "what-is-economics.ts"
+    },
+    {
+      "label": "whatIsEconomics",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/topics/what-is-economics.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_topics_what_is_economics_whatiseconomics",
+      "community": 2,
+      "norm_label": "whatiseconomics"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types",
+      "community": 2,
+      "norm_label": "types.ts"
+    },
+    {
+      "label": "MacroImportance",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types_macroimportance",
+      "community": 2,
+      "norm_label": "macroimportance"
+    },
+    {
+      "label": "MacroQuestion",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types_macroquestion",
+      "community": 2,
+      "norm_label": "macroquestion"
+    },
+    {
+      "label": "MacroSection",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types_macrosection",
+      "community": 2,
+      "norm_label": "macrosection"
+    },
+    {
+      "label": "MacroChapter",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types_macrochapter",
+      "community": 2,
+      "norm_label": "macrochapter"
+    },
+    {
+      "label": "MACRO_IMPORTANCE_COLORS",
+      "file_type": "code",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "src_lib_macroeconomics_types_macro_importance_colors",
+      "community": 2,
+      "norm_label": "macro_importance_colors"
     },
     {
       "label": "notes.ts",
@@ -4512,7 +4712,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_notes",
-      "community": 7,
+      "community": 8,
       "norm_label": "notes.ts"
     },
     {
@@ -4522,7 +4722,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_notes_read",
-      "community": 7,
+      "community": 8,
       "norm_label": "read()"
     },
     {
@@ -4532,7 +4732,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_notes_write",
-      "community": 7,
+      "community": 8,
       "norm_label": "write()"
     },
     {
@@ -4542,7 +4742,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_notes_uid",
-      "community": 7,
+      "community": 8,
       "norm_label": "uid()"
     },
     {
@@ -4552,7 +4752,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_notes_ensureseeded",
-      "community": 7,
+      "community": 8,
       "norm_label": "ensureseeded()"
     },
     {
@@ -4562,7 +4762,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_notes_getnotes",
-      "community": 7,
+      "community": 8,
       "norm_label": "getnotes()"
     },
     {
@@ -4572,7 +4772,7 @@
       "source_location": "L76",
       "_origin": "ast",
       "id": "src_lib_notes_createnote",
-      "community": 7,
+      "community": 8,
       "norm_label": "createnote()"
     },
     {
@@ -4582,7 +4782,7 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "src_lib_notes_updatenote",
-      "community": 7,
+      "community": 8,
       "norm_label": "updatenote()"
     },
     {
@@ -4592,7 +4792,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_lib_notes_deletenote",
-      "community": 7,
+      "community": 8,
       "norm_label": "deletenote()"
     },
     {
@@ -4602,7 +4802,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_lib_notes_childrenof",
-      "community": 7,
+      "community": 8,
       "norm_label": "childrenof()"
     },
     {
@@ -4612,7 +4812,7 @@
       "source_location": "L119",
       "_origin": "ast",
       "id": "src_lib_notes_countdescendants",
-      "community": 7,
+      "community": 8,
       "norm_label": "countdescendants()"
     },
     {
@@ -4622,7 +4822,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 2,
+      "community": 44,
       "norm_label": "progress.ts"
     },
     {
@@ -4632,7 +4832,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_progress_advancestreak",
-      "community": 2,
+      "community": 44,
       "norm_label": "advancestreak()"
     },
     {
@@ -4822,7 +5022,7 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "src_lib_rag_linkretrievallogtoentry",
-      "community": 55,
+      "community": 44,
       "norm_label": "linkretrievallogtoentry()"
     },
     {
@@ -4842,7 +5042,7 @@
       "source_location": "L520",
       "_origin": "ast",
       "id": "src_lib_rag_formatcontext",
-      "community": 55,
+      "community": 44,
       "norm_label": "formatcontext()"
     },
     {
@@ -5142,7 +5342,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_sarfaesi_act_types_sarfaesiquestion",
-      "community": 54,
+      "community": 2,
       "norm_label": "sarfaesiquestion"
     },
     {
@@ -5582,7 +5782,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_srs",
-      "community": 2,
+      "community": 44,
       "norm_label": "srs.ts"
     },
     {
@@ -5592,7 +5792,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_srs_srsstate",
-      "community": 2,
+      "community": 44,
       "norm_label": "srsstate"
     },
     {
@@ -5602,7 +5802,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_srs_srsresult",
-      "community": 2,
+      "community": 44,
       "norm_label": "srsresult"
     },
     {
@@ -5612,7 +5812,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_srs_schedulenext",
-      "community": 2,
+      "community": 44,
       "norm_label": "schedulenext()"
     },
     {
@@ -5622,7 +5822,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_srs_updatemastery",
-      "community": 2,
+      "community": 44,
       "norm_label": "updatemastery()"
     },
     {
@@ -5632,7 +5832,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_stories",
-      "community": 8,
+      "community": 2,
       "norm_label": "stories.ts"
     },
     {
@@ -5662,7 +5862,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_lib_stories_far_future",
-      "community": 8,
+      "community": 2,
       "norm_label": "far_future()"
     },
     {
@@ -5672,7 +5872,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_stories_requireuser",
-      "community": 8,
+      "community": 2,
       "norm_label": "requireuser()"
     },
     {
@@ -5692,7 +5892,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_stories_getstorysections",
-      "community": 8,
+      "community": 2,
       "norm_label": "getstorysections()"
     },
     {
@@ -5722,7 +5922,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_lib_stories_getresumehref",
-      "community": 8,
+      "community": 2,
       "norm_label": "getresumehref()"
     },
     {
@@ -5732,7 +5932,7 @@
       "source_location": "L114",
       "_origin": "ast",
       "id": "src_lib_stories_startstory",
-      "community": 8,
+      "community": 2,
       "norm_label": "startstory()"
     },
     {
@@ -5742,7 +5942,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_lib_stories_updatestorycolor",
-      "community": 8,
+      "community": 2,
       "norm_label": "updatestorycolor()"
     },
     {
@@ -5752,7 +5952,7 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "src_lib_stories_endstory",
-      "community": 8,
+      "community": 2,
       "norm_label": "endstory()"
     },
     {
@@ -5762,7 +5962,7 @@
       "source_location": "L265",
       "_origin": "ast",
       "id": "src_lib_stories_completesection",
-      "community": 8,
+      "community": 2,
       "norm_label": "completesection()"
     },
     {
@@ -5772,87 +5972,97 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_story_seeds",
-      "community": 54,
+      "community": 2,
       "norm_label": "story-seeds.ts"
     },
     {
       "label": "SeedSection",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L8",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seedsection",
-      "community": 54,
+      "community": 2,
       "norm_label": "seedsection"
     },
     {
       "label": "SeriesSeed",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L20",
+      "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seriesseed",
-      "community": 54,
+      "community": 2,
       "norm_label": "seriesseed"
     },
     {
       "label": "compActSeed()",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_story_seeds_compactseed",
-      "community": 54,
+      "community": 2,
       "norm_label": "compactseed()"
     },
     {
       "label": "dsaSeed()",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L46",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_story_seeds_dsaseed",
-      "community": 54,
+      "community": 2,
       "norm_label": "dsaseed()"
     },
     {
       "label": "sqlSeed()",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L65",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sqlseed",
-      "community": 54,
+      "community": 2,
       "norm_label": "sqlseed()"
     },
     {
       "label": "sarfaesiSeed()",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L84",
+      "source_location": "L86",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sarfaesiseed",
-      "community": 54,
+      "community": 2,
       "norm_label": "sarfaesiseed()"
+    },
+    {
+      "label": "macroeconomicsSeed()",
+      "file_type": "code",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L105",
+      "_origin": "ast",
+      "id": "src_lib_story_seeds_macroeconomicsseed",
+      "community": 2,
+      "norm_label": "macroeconomicsseed()"
     },
     {
       "label": "SERIES",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L103",
+      "source_location": "L124",
       "_origin": "ast",
       "id": "src_lib_story_seeds_series",
-      "community": 54,
+      "community": 2,
       "norm_label": "series"
     },
     {
       "label": "getSeed()",
       "file_type": "code",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L110",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "src_lib_story_seeds_getseed",
-      "community": 8,
+      "community": 2,
       "norm_label": "getseed()"
     },
     {
@@ -5862,7 +6072,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 8,
+      "community": 2,
       "norm_label": "client.ts"
     },
     {
@@ -5872,7 +6082,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_supabase_client_createclient",
-      "community": 8,
+      "community": 51,
       "norm_label": "createclient()"
     },
     {
@@ -5882,7 +6092,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 56,
+      "community": 44,
       "norm_label": "server.ts"
     },
     {
@@ -5892,7 +6102,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createclient",
-      "community": 56,
+      "community": 44,
       "norm_label": "createclient()"
     },
     {
@@ -6042,7 +6252,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types",
-      "community": 49,
+      "community": 56,
       "norm_label": "types.ts"
     },
     {
@@ -6052,7 +6262,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_types_category",
-      "community": 49,
+      "community": 56,
       "norm_label": "category"
     },
     {
@@ -6082,7 +6292,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_lib_types_profile",
-      "community": 0,
+      "community": 52,
       "norm_label": "profile"
     },
     {
@@ -6092,7 +6302,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_types_topic",
-      "community": 8,
+      "community": 56,
       "norm_label": "topic"
     },
     {
@@ -6102,7 +6312,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_types_topiclink",
-      "community": 8,
+      "community": 56,
       "norm_label": "topiclink"
     },
     {
@@ -6112,7 +6322,7 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "src_lib_types_topicsource",
-      "community": 0,
+      "community": 56,
       "norm_label": "topicsource"
     },
     {
@@ -6122,7 +6332,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_lib_types_note",
-      "community": 7,
+      "community": 8,
       "norm_label": "note"
     },
     {
@@ -6132,7 +6342,7 @@
       "source_location": "L83",
       "_origin": "ast",
       "id": "src_lib_types_entry",
-      "community": 0,
+      "community": 56,
       "norm_label": "entry"
     },
     {
@@ -6172,7 +6382,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_lib_types_topicquestion",
-      "community": 49,
+      "community": 56,
       "norm_label": "topicquestion"
     },
     {
@@ -6182,7 +6392,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_lib_types_sessionquestion",
-      "community": 0,
+      "community": 7,
       "norm_label": "sessionquestion"
     },
     {
@@ -6192,7 +6402,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_types_quizsession",
-      "community": 49,
+      "community": 7,
       "norm_label": "quizsession"
     },
     {
@@ -6222,7 +6432,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 49,
+      "community": 56,
       "norm_label": "dailyfact"
     },
     {
@@ -6252,7 +6462,7 @@
       "source_location": "L193",
       "_origin": "ast",
       "id": "src_lib_types_extractionresult",
-      "community": 58,
+      "community": 44,
       "norm_label": "extractionresult"
     },
     {
@@ -6262,7 +6472,7 @@
       "source_location": "L216",
       "_origin": "ast",
       "id": "src_lib_types_graderesult",
-      "community": 49,
+      "community": 56,
       "norm_label": "graderesult"
     },
     {
@@ -7956,20 +8166,30 @@
       "norm_label": "session log"
     },
     {
-      "label": "2026-07-19 \u2014 Organic \"thought waves\": flood-fill activation replaces mechanical sine wave",
+      "label": "2026-07-20 \u2014 Esc exits the dive-inside view",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "session_log_2026_07_19_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
+      "id": "session_log_2026_07_20_esc_exits_the_dive_inside_view",
       "community": 28,
-      "norm_label": "2026-07-19 \u2014 organic \"thought waves\": flood-fill activation replaces mechanical sine wave"
+      "norm_label": "2026-07-20 \u2014 esc exits the dive-inside view"
+    },
+    {
+      "label": "2026-07-20 \u2014 Organic \"thought waves\": flood-fill activation replaces mechanical sine wave",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "session_log_2026_07_20_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
+      "community": 28,
+      "norm_label": "2026-07-20 \u2014 organic \"thought waves\": flood-fill activation replaces mechanical sine wave"
     },
     {
       "label": "2026-07-19 \u2014 Post-prod fixes: greeting, brain brightness, review headers, learned-section surfacing",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "session_log_2026_07_19_post_prod_fixes_greeting_brain_brightness_review_headers_learned_section_surfacing",
       "community": 28,
@@ -7979,7 +8199,7 @@
       "label": "2026-07-19 \u2014 Learnable-stories polish: blogs \"one story\" module, grouped dashboard, seed-safety",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "session_log_2026_07_19_learnable_stories_polish_blogs_one_story_module_grouped_dashboard_seed_safety",
       "community": 28,
@@ -7989,7 +8209,7 @@
       "label": "2026-07-19 \u2014 The Pattern Atlas: complete DSA blog series (NeetCode 150)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L28",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
       "community": 28,
@@ -7999,7 +8219,7 @@
       "label": "2026-07-18 \u2014 About page: SM-2/Ebbinghaus explainer section",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L36",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
       "community": 28,
@@ -8009,7 +8229,7 @@
       "label": "2026-07-18 \u2014 Server-side security audit + fixes: SSRF DNS-rebinding, quiz Gemini-quota abuse, curl-hardening",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L42",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
       "community": 28,
@@ -8019,7 +8239,7 @@
       "label": "2026-07-16 \u2014 Remove the XP feature entirely",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L52",
+      "source_location": "L55",
       "_origin": "ast",
       "id": "session_log_2026_07_16_remove_the_xp_feature_entirely",
       "community": 28,
@@ -8029,7 +8249,7 @@
       "label": "2026-07-16 \u2014 Fix false-positive gibberish rejection on real link ingests",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L57",
+      "source_location": "L60",
       "_origin": "ast",
       "id": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
       "community": 28,
@@ -8039,7 +8259,7 @@
       "label": "2026-07-16 \u2014 Team architecture doc (backend/AI/RAG/auth/security)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L63",
+      "source_location": "L66",
       "_origin": "ast",
       "id": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
       "community": 28,
@@ -8049,7 +8269,7 @@
       "label": "2026-07-16 \u2014 Ingest guardrails: gibberish rejection, prompt-injection hardening, output validation, link-scheme XSS fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L68",
+      "source_location": "L71",
       "_origin": "ast",
       "id": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
       "community": 28,
@@ -8059,7 +8279,7 @@
       "label": "2026-07-15 \u2014 Fix silent link-ingest failure, URL-based fast-path dedup",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L77",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
       "community": 28,
@@ -8069,7 +8289,7 @@
       "label": "2026-07-15 \u2014 RAG pipeline hardening: document registry, hybrid search, observability",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L87",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
       "community": 28,
@@ -8079,7 +8299,7 @@
       "label": "2026-07-15 \u2014 Rebrand: Engramia \u2192 Knovis",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L96",
+      "source_location": "L99",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rebrand_engramia_knovis",
       "community": 28,
@@ -8089,7 +8309,7 @@
       "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L105",
+      "source_location": "L108",
       "_origin": "ast",
       "id": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "community": 28,
@@ -8099,7 +8319,7 @@
       "label": "2026-07-15 \u2014 Guided feature tour (first visit + every demo entry)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L114",
+      "source_location": "L117",
       "_origin": "ast",
       "id": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
       "community": 28,
@@ -8109,7 +8329,7 @@
       "label": "2026-07-15 \u2014 Attempted-tracking bug fix, security review, Gemini fallback, RAG pipeline, DB decision",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L121",
+      "source_location": "L124",
       "_origin": "ast",
       "id": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
       "community": 28,
@@ -8119,7 +8339,7 @@
       "label": "2026-07-14 \u2014 Quiz-kind overhaul, day-report calendar, blog Q&A, streak bar, footer + About",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L130",
+      "source_location": "L133",
       "_origin": "ast",
       "id": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
       "community": 28,
@@ -8129,7 +8349,7 @@
       "label": "2026-07-13 \u2014 Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L143",
       "_origin": "ast",
       "id": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
       "community": 28,
@@ -8139,7 +8359,7 @@
       "label": "2026-07-13 \u2014 Review bug fixes + /blogs page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L147",
+      "source_location": "L150",
       "_origin": "ast",
       "id": "session_log_2026_07_13_review_bug_fixes_blogs_page",
       "community": 28,
@@ -8149,7 +8369,7 @@
       "label": "2026-07-13 \u2014 Guest mode fix, plan done-tracking, review error card, blog pills",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L154",
+      "source_location": "L157",
       "_origin": "ast",
       "id": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
       "community": 28,
@@ -8159,7 +8379,7 @@
       "label": "2026-07-13 \u2014 AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L161",
+      "source_location": "L164",
       "_origin": "ast",
       "id": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
       "community": 28,
@@ -8169,7 +8389,7 @@
       "label": "2026-07-13 \u2014 Personal notes feature + blog source attribution",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L171",
+      "source_location": "L174",
       "_origin": "ast",
       "id": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
       "community": 28,
@@ -8179,7 +8399,7 @@
       "label": "2026-07-13 \u2014 Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L178",
+      "source_location": "L181",
       "_origin": "ast",
       "id": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
       "community": 28,
@@ -8189,7 +8409,7 @@
       "label": "2026-07-13 \u2014 Vercel Migration & Nav Auth Fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L186",
+      "source_location": "L189",
       "_origin": "ast",
       "id": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
       "community": 28,
@@ -8199,7 +8419,7 @@
       "label": "2026-07-13 \u2014 Fix /profile infinite loading (missing profiles row)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L191",
+      "source_location": "L194",
       "_origin": "ast",
       "id": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
       "community": 28,
@@ -8209,7 +8429,7 @@
       "label": "2026-07-13 \u2014 Plan markdown fix, progress calendar, profile page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L197",
+      "source_location": "L200",
       "_origin": "ast",
       "id": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
       "community": 28,
@@ -8219,7 +8439,7 @@
       "label": "2026-07-13 \u2014 Brain label overhaul (clickable, Space Grotesk, declutter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L203",
+      "source_location": "L206",
       "_origin": "ast",
       "id": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
       "community": 28,
@@ -8229,7 +8449,7 @@
       "label": "Earlier (from git history)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L213",
+      "source_location": "L216",
       "_origin": "ast",
       "id": "session_log_earlier_from_git_history",
       "community": 28,
@@ -9941,7 +10161,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -15126,7 +15346,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/brain/page.tsx",
-      "source_location": "L421",
+      "source_location": "L434",
       "weight": 1.0,
       "source": "src_app_brain_page",
       "target": "src_app_brain_page_pathconnector",
@@ -15136,7 +15356,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/app/brain/page.tsx",
-      "source_location": "L429",
+      "source_location": "L442",
       "weight": 1.0,
       "source": "src_app_brain_page",
       "target": "src_app_brain_page_searchicon",
@@ -15422,7 +15642,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/app/brain/page.tsx",
-      "source_location": "L204",
+      "source_location": "L217",
       "weight": 1.0,
       "source": "src_app_brain_page_brainpage",
       "target": "src_lib_types_categorycolor"
@@ -19799,7 +20019,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L16",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "src_lib_story_seeds_seedsection",
       "target": "src_lib_competition_act_types_compactquestion",
@@ -22988,6 +23208,489 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_index_macroeconomics_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy_conceptualisingthemacroeconomy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_economic_growth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_economic_growth_economicgrowth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_macroeconomic_policy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_macroeconomic_policy_macroeconomicpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_money_and_interest_rates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_money_and_interest_rates_moneyandinterestrates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_output_and_employment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_output_and_employment_outputandemployment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_what_is_economics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_topics_what_is_economics_whatiseconomics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/index.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_index",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_story_seeds",
+      "target": "src_lib_macroeconomics_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_lib_story_seeds",
+      "target": "src_lib_macroeconomics_index_macroeconomics_chapters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy",
+      "target": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy_conceptualisingthemacroeconomy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_conceptualising_the_macroeconomy",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/economic-growth.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_economic_growth",
+      "target": "src_lib_macroeconomics_topics_economic_growth_economicgrowth",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/economic-growth.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_economic_growth",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/economic-growth.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_economic_growth",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/macroeconomic-policy.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_macroeconomic_policy",
+      "target": "src_lib_macroeconomics_topics_macroeconomic_policy_macroeconomicpolicy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/macroeconomic-policy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_macroeconomic_policy",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/macroeconomic-policy.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_macroeconomic_policy",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/money-and-interest-rates.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_money_and_interest_rates",
+      "target": "src_lib_macroeconomics_topics_money_and_interest_rates_moneyandinterestrates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/money-and-interest-rates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_money_and_interest_rates",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/money-and-interest-rates.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_money_and_interest_rates",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/output-and-employment.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_output_and_employment",
+      "target": "src_lib_macroeconomics_topics_output_and_employment_outputandemployment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/output-and-employment.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_output_and_employment",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/output-and-employment.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_output_and_employment",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/what-is-economics.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_what_is_economics",
+      "target": "src_lib_macroeconomics_topics_what_is_economics_whatiseconomics",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/what-is-economics.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_what_is_economics",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/topics/what-is-economics.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_topics_what_is_economics",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_macroeconomics_types_macro_importance_colors",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_macroeconomics_types_macrochapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_macroeconomics_types_macroimportance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_macroeconomics_types_macroquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_macroeconomics_types_macrosection",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/macroeconomics/types.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "src_lib_macroeconomics_types",
+      "target": "src_lib_types_questionkind",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_story_seeds",
+      "target": "src_lib_macroeconomics_types",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "src_lib_story_seeds",
+      "target": "src_lib_macroeconomics_types_macroquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "src_lib_story_seeds_seedsection",
+      "target": "src_lib_macroeconomics_types_macroquestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/lib/notes.ts",
       "source_location": "L113",
       "weight": 1.0,
@@ -24386,7 +25089,7 @@
       "context": "field",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L16",
+      "source_location": "L18",
       "weight": 1.0,
       "source": "src_lib_story_seeds_seedsection",
       "target": "src_lib_sarfaesi_act_types_sarfaesiquestion",
@@ -25684,7 +26387,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L104",
+      "source_location": "L125",
       "weight": 1.0,
       "context": "collection",
       "source": "src_lib_story_seeds",
@@ -25695,7 +26398,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L105",
+      "source_location": "L126",
       "weight": 1.0,
       "context": "collection",
       "source": "src_lib_story_seeds",
@@ -25706,7 +26409,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L110",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "src_lib_story_seeds",
       "target": "src_lib_story_seeds_getseed",
@@ -25716,7 +26419,18 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L107",
+      "source_location": "L129",
+      "weight": 1.0,
+      "context": "collection",
+      "source": "src_lib_story_seeds",
+      "target": "src_lib_story_seeds_macroeconomicsseed",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "indirect_call",
+      "confidence": "INFERRED",
+      "source_file": "src/lib/story-seeds.ts",
+      "source_location": "L128",
       "weight": 1.0,
       "context": "collection",
       "source": "src_lib_story_seeds",
@@ -25727,7 +26441,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L8",
+      "source_location": "L10",
       "weight": 1.0,
       "source": "src_lib_story_seeds",
       "target": "src_lib_story_seeds_seedsection",
@@ -25737,7 +26451,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L103",
+      "source_location": "L124",
       "weight": 1.0,
       "source": "src_lib_story_seeds",
       "target": "src_lib_story_seeds_series",
@@ -25747,7 +26461,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L20",
+      "source_location": "L22",
       "weight": 1.0,
       "source": "src_lib_story_seeds",
       "target": "src_lib_story_seeds_seriesseed",
@@ -25757,7 +26471,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/lib/story-seeds.ts",
-      "source_location": "L106",
+      "source_location": "L127",
       "weight": 1.0,
       "context": "collection",
       "source": "src_lib_story_seeds",
@@ -27671,7 +28385,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L161",
+      "source_location": "L164",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
@@ -27681,7 +28395,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L203",
+      "source_location": "L206",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
@@ -27691,7 +28405,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L178",
+      "source_location": "L181",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
@@ -27701,7 +28415,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L191",
+      "source_location": "L194",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
@@ -27711,7 +28425,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L154",
+      "source_location": "L157",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
@@ -27721,7 +28435,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L171",
+      "source_location": "L174",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
@@ -27731,7 +28445,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L197",
+      "source_location": "L200",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
@@ -27741,7 +28455,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L140",
+      "source_location": "L143",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
@@ -27751,7 +28465,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L147",
+      "source_location": "L150",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_review_bug_fixes_blogs_page",
@@ -27761,7 +28475,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L186",
+      "source_location": "L189",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
@@ -27771,7 +28485,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L130",
+      "source_location": "L133",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
@@ -27781,7 +28495,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L121",
+      "source_location": "L124",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
@@ -27791,7 +28505,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L77",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
@@ -27801,7 +28515,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L114",
+      "source_location": "L117",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
@@ -27811,7 +28525,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L87",
+      "source_location": "L90",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
@@ -27821,7 +28535,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L96",
+      "source_location": "L99",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rebrand_engramia_knovis",
@@ -27831,7 +28545,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L105",
+      "source_location": "L108",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
@@ -27841,7 +28555,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L57",
+      "source_location": "L60",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
@@ -27851,7 +28565,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L68",
+      "source_location": "L71",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
@@ -27861,7 +28575,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L52",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_remove_the_xp_feature_entirely",
@@ -27871,7 +28585,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L63",
+      "source_location": "L66",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
@@ -27881,7 +28595,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L36",
+      "source_location": "L39",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
@@ -27891,7 +28605,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L42",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
@@ -27901,7 +28615,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L21",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_learnable_stories_polish_blogs_one_story_module_grouped_dashboard_seed_safety",
@@ -27911,17 +28625,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "session_log_session_log",
-      "target": "session_log_2026_07_19_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "SESSION_LOG.md",
-      "source_location": "L14",
+      "source_location": "L17",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_post_prod_fixes_greeting_brain_brightness_review_headers_learned_section_surfacing",
@@ -27931,7 +28635,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L28",
+      "source_location": "L31",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
@@ -27941,7 +28645,27 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L213",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "session_log_session_log",
+      "target": "session_log_2026_07_20_esc_exits_the_dive_inside_view",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "session_log_session_log",
+      "target": "session_log_2026_07_20_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L216",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_earlier_from_git_history",
@@ -29359,5 +30083,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "40d3a635caeadcfab5b398dbf7b25a4c7c8df478"
+  "built_at_commit": "b11c83f86d7fd6c70a0b2f30045955c3c98e0ac7"
 }
