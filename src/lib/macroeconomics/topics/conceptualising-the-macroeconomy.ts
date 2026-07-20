@@ -28,7 +28,7 @@ However, the NAS has two serious blind spots:
 2. **Ecological costs:** It does not account for the environmental damage and resource depletion caused by production.
 
 **2. Inter-sectoral Relations**
-The economy can be viewed as an interdependent network of sectors. François Quesnay's *Tableau Économique* (1765) first modelled this between agriculture and manufacturing. Karl Marx later divided the economy into departments producing 'consumption goods' and 'investment goods'. 
+The economy can be viewed as an interdependent network of sectors. François Quesnay's *Tableau Économique* (1758) first modelled this between agriculture and manufacturing. Karl Marx later divided the economy into departments producing 'consumption goods' and 'investment goods'. 
 
 In the 1930s, Wassily Leontief formalised this into the **Input-Output (I-O) framework**. It shows how the output of one sector (e.g., primary/agriculture) is used as an input in another (e.g., secondary/manufacturing). An ecological shock to agriculture cascades through manufacturing because of this structural interdependence.
 
@@ -114,7 +114,26 @@ To simplify, we divide the economy into five broad sectors:
 5. **Rest of the World (RoW):** The foreign sector, engaging in imports, exports, and international capital flows.
 
 **The Multiplier Effect**
-Because of this tight inter-sectoral linkage, an injection of money (e.g., government spending on a new road) does not stop at the first transaction. The construction company pays wages to workers, who then spend those wages at the local grocer, who then buys more stock from farmers. This chain reaction means that an initial expenditure generates multiple rounds of income across the economy—a phenomenon known as the **multiplier effect**.`,
+Because of this tight inter-sectoral linkage, an injection of money (e.g., government spending on a new road) does not stop at the first transaction. The construction company pays wages to workers, who then spend those wages at the local grocer, who then buys more stock from farmers. This chain reaction means that an initial expenditure generates multiple rounds of income across the economy—a phenomenon known as the **multiplier effect**.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "govt-spend", "label": "Government Spends on a Road", "row": 0, "col": 0 },
+    { "id": "wages", "label": "Contractor Pays Worker Wages", "row": 1, "col": 0 },
+    { "id": "local-spend", "label": "Workers Spend at the Local Grocer", "row": 2, "col": 0 },
+    { "id": "farmer-income", "label": "Grocer Buys Stock from Farmers", "row": 3, "col": 0 },
+    { "id": "multiplier", "label": "Multiple Rounds of Income Across the Economy", "row": 4, "col": 0 }
+  ],
+  "edges": [
+    { "from": "govt-spend", "to": "wages", "label": "initial injection" },
+    { "from": "wages", "to": "local-spend", "label": "induced consumption" },
+    { "from": "local-spend", "to": "farmer-income", "label": "induced consumption" },
+    { "from": "farmer-income", "to": "multiplier", "label": "further rounds" }
+  ],
+  "caption": "One sector's expenditure becomes another sector's income — the structural interdependence of the five-sector web means a single injection ripples on well beyond its first transaction."
+}
+\`\`\``,
       questions: [
         {
           kind: "mcq",

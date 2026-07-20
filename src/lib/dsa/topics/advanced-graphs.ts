@@ -23,19 +23,30 @@ This chapter is a leaf on the roadmap — nothing unlocks from it, because it is
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/network-delay-time",
       summary: "Dijkstra, cleanly: a heap always expanding the cheapest known node — settled means final.",
-      body: `**The problem.** A signal leaves node k and propagates along directed weighted edges (travel times). How long until *every* node has heard it — or −1 if some node never does? The answer is the largest shortest-distance from k: the last node to hear the signal heard it via its fastest route.
+      body: `**Signal.** "How long until *every* node has heard the signal" over directed **weighted** edges — weights breaking the "arrival order = cheapest order" promise BFS relied on is the tell for Dijkstra: expand the frontier by accumulated cost, not by hop count.
 
-**Why BFS dies here.** BFS settles nodes in *hop* order, but a 3-hop path of weight 1+1+1 beats a 1-hop path of weight 10. Arrival order and cheapness have come apart — the frontier must be expanded by *accumulated cost*, not depth.
+**Brute force.** Try every possible path from k to each node (or run BFS and hope hop count tracks cost) — BFS specifically fails here since a 3-hop path of weight 1+1+1 beats a 1-hop path of weight 10, so hop order and cost order have come apart.
 
-**Dijkstra's loop.** Keep best-known distances (infinity everywhere, 0 at the source) and a min-heap of (distance, node) candidates. Repeatedly pop the smallest: if the node is already settled, skip (a stale entry — see below); otherwise its popped distance is **final** — settle it, and *relax* each outgoing edge: if my distance + edge weight beats the neighbour's best known, update it and push the new candidate. The guarantee that popping means final: every other route into that node must pass through something still in the heap with a larger key, and weights are non-negative, so no future discovery can undercut it. That non-negativity clause is Dijkstra's entire fine print — remember it for two problems from now.
-
-**Lazy deletion.** A node improved twice sits in the heap twice; the settled-check on pop discards the stale copy. Cheaper than a decrease-key operation and the standard practical idiom — name it, it reads as experience.
+**Optimal approach.** Keep best-known distances (infinity everywhere, 0 at the source) and a min-heap of (distance, node) candidates. Repeatedly pop the smallest: if the node is already settled, skip (a stale entry from lazy deletion); otherwise its popped distance is **final** — settle it, and *relax* each outgoing edge: if my distance + edge weight beats the neighbour's best known, update it and push the new candidate. The guarantee that popping means final: every other route into that node must pass through something still in the heap with a larger key, and weights are non-negative, so no future discovery can undercut it. That non-negativity clause is Dijkstra's entire fine print — remember it for two problems from now.
 
 **The walk-through.** Edges k=2: 2→1 (1), 2→3 (1), 3→4 (1). Pop (0, 2) → relax 1 and 3 to distance 1. Pop (1, 1) → settled. Pop (1, 3) → relax 4 to 2. Pop (2, 4). All heard; answer = max(1, 1, 2) = 2.
 
-**Complexity.** O(E log V) time with the binary heap, O(V + E) space. Unreached nodes keep infinite distance → −1.
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "2", "label": "2 (source, dist 0)", "children": ["1", "3"] },
+    { "id": "1", "label": "1 (dist 1)" },
+    { "id": "3", "label": "3 (dist 1)", "children": ["4"] },
+    { "id": "4", "label": "4 (dist 2)", "highlight": true }
+  ],
+  "rootId": "2",
+  "caption": "Network Delay Time — Dijkstra's shortest-path tree from node 2; node 4 is farthest at distance 2, the signal's total delay."
+}
+\`\`\`
 
-**The thread.** One loop, one guarantee. Next problem keeps the loop and changes *what accumulates* — from summed distance to a completely different objective — but first, a detour with no distances at all: Reconstruct Itinerary, where the job is to spend every edge exactly once.`,
+**Complexity.** O(E log V) time with the binary heap, O(V + E) space — versus a BFS that gives wrong answers the moment weights are unequal. Unreached nodes keep infinite distance → −1.
+
+**Thread.** One loop, one guarantee. Next problem keeps the loop and changes *what accumulates* — from summed distance to a completely different objective — but first, a detour with no distances at all: Reconstruct Itinerary, where the job is to spend every edge exactly once.`,
     },
     {
       slug: "reconstruct-itinerary",
@@ -43,19 +54,28 @@ This chapter is a leaf on the roadmap — nothing unlocks from it, because it is
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/reconstruct-flight-path",
       summary: "Use every ticket exactly once: Hierholzer's post-order walk builds the Eulerian path backwards.",
-      body: `**The problem.** A pile of plane tickets (directed from→to pairs), all departing ultimately from JFK: reconstruct the full journey that **uses every ticket exactly once**, choosing the lexically smallest itinerary when several exist. Not shortest path — *exhaustive edge use*: an Eulerian path, the puzzle graph theory was literally founded on (Euler, Königsberg, 1736).
+      body: `**Signal.** "Reconstruct the journey that **uses every ticket exactly once**, lexically smallest when several exist" — exhaustive edge use, not shortest path, is the tell for an Eulerian path, and Hierholzer's post-order trick is the classic way to build one.
 
-**Why greedy-smallest fails.** Always flying to the alphabetically first destination can strand you: from JFK with tickets to A and B, where A is a dead end but B's loop returns to JFK, greedy picks A first and dies with unused tickets. Choices interact globally; naive backtracking works but explodes.
+**Brute force.** Backtrack over every ordering of tickets, checking at the end whether all were used — always flying to the alphabetically first destination greedily can strand you (from JFK with tickets to A and B, where A is a dead end but B loops back to JFK, greedy picks A first and dies with unused tickets), so a naive greedy-with-no-recovery fails, and full backtracking without the post-order insight explodes combinatorially.
 
-**Hierholzer's insight.** Walk greedily from the start, *consuming* tickets (delete each edge as you fly it — the "visited" discipline applied to **edges**, not nodes, which is the whole difference from ordinary DFS), always taking the smallest available destination. When you hit a node with no remaining departures, you are stuck — but here is the magic: **stuck means finished-with-this-node**. Every ticket into and out of it is spent (or unreachable from it), so it must come *last* among what remains. Record it in post-order — append to the route as the recursion *unwinds* — and let the backtracking resume from earlier nodes whose side-loops are still unspent. Those loops get walked and post-order-recorded the same way. Reverse the recorded list at the end: a complete Eulerian itinerary, and because each greedy choice took the smallest branch first, it is the lexically smallest one.
+**Optimal approach (Hierholzer's).** Walk greedily from the start, *consuming* tickets (delete each edge as you fly it — the "visited" discipline applied to **edges**, not nodes), always taking the smallest available destination. When you hit a node with no remaining departures, you are stuck — but **stuck means finished-with-this-node**: every ticket into and out of it is spent, so it must come *last* among what remains. Record it in post-order — append to the route as the recursion *unwinds* — and let the backtracking resume from earlier nodes whose side-loops are still unspent. Reverse the recorded list at the end: a complete Eulerian itinerary, and because each greedy choice took the smallest branch first, it is the lexically smallest one.
 
-**The mechanics.** Adjacency: each airport's destinations in a sorted structure consumed front-first (sort once, walk with an index — cleaner than a heap here). DFS(airport): while departures remain, take the smallest and recurse; then push airport onto the route. Reverse at the end.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [], "note": "Fly JFK→A greedily (A is alphabetically first). A has no departures — stuck. Post-order record: push \\"A\\"." },
+    { "cells": ["A"], "note": "Back at JFK, fly the only remaining ticket JFK→B." },
+    { "cells": ["A", "JFK"], "note": "At B, fly B→JFK. JFK now has no departures left — push \\"JFK\\"." },
+    { "cells": ["A", "JFK", "B"], "note": "B also has no more departures — push \\"B\\"." },
+    { "cells": ["A", "JFK", "B", "JFK"], "highlight": [0, 1, 2, 3], "note": "Back at the start, nothing left — push \\"JFK\\". Reverse the recorded list: JFK, B, JFK, A — the complete itinerary, using every ticket exactly once." }
+  ],
+  "caption": "Reconstruct Itinerary — a dead-end node is recorded in post-order; reversing the whole recording produces the itinerary, with the true dead end (A) correctly deferred to last."
+}
+\`\`\`
 
-**The walk-through.** Tickets JFK→A, JFK→B, B→JFK. Greedy tries A first: A is a dead end → A recorded. Back at JFK: fly B → JFK (no departures now → recorded) → B recorded → JFK recorded. Reverse: JFK, B, JFK, A. Every ticket used; A correctly deferred to last despite alphabetical priority.
+**Complexity.** O(E log E) for sorting, O(E) for the walk — each ticket consumed once — versus unbounded backtracking without the post-order insight.
 
-**Complexity.** O(E log E) for sorting, O(E) for the walk — each ticket consumed once.
-
-**The thread.** Edges as consumables, order from post-order. Now back to weights and the Dijkstra family: Min Cost to Connect All Points swaps "reach one node cheaply" for "wire *all* nodes cheaply" — Prim's algorithm, one word away.`,
+**Thread.** Edges as consumables, order from post-order. Now back to weights and the Dijkstra family: Min Cost to Connect All Points swaps "reach one node cheaply" for "wire *all* nodes cheaply" — Prim's algorithm, one word away.`,
     },
     {
       slug: "min-cost-to-connect-all-points",
@@ -106,6 +126,20 @@ This chapter is a leaf on the roadmap — nothing unlocks from it, because it is
 **Then it is chapter 11.** Nodes: every letter appearing anywhere (including letters with no constraints — they must still appear in the output; forgetting loners is the second classic bug). Edges: the extracted precedences. A valid alphabet is a **topological order** — Kahn's peeling or DFS finishing-order, your choice — and a cycle (evidence implying t < f and f < t) means no consistent alphabet: return failure via the order-shorter-than-node-count test. Multiple valid answers usually exist; any is accepted.
 
 **The walk-through.** Pairs: wrt/wrf → t→f; wrf/er → w→e; er/ett → r→t; ett/rftt → e→r. Nodes {w,e,r,t,f}. In-degrees: w:0 → take w; e frees → e; r → t → f. "wertf."
+
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "w", "label": "w", "children": ["e"] },
+    { "id": "e", "label": "e", "children": ["r"] },
+    { "id": "r", "label": "r", "children": ["t"] },
+    { "id": "t", "label": "t", "children": ["f"] },
+    { "id": "f", "label": "f", "highlight": true }
+  ],
+  "rootId": "w",
+  "caption": "Alien Dictionary — the four extracted precedence edges chain into one line; reading it off gives the alphabet: w, e, r, t, f."
+}
+\`\`\`
 
 **Complexity.** O(total characters) to extract, O(V + E) to sort — V ≤ 26, E ≤ word pairs.
 

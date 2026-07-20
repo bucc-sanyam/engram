@@ -31,6 +31,19 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
 
 **The walk-through.** [−2, 1, −3, 4, −1, 2, 1, −5, 4]: running best: −2, 1, −2, 4, 3, 5, 6, 1, 5. Global max 6. Watch index 3: the running −2 was dropped, not carried — the fresh start *is* the algorithm.
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 0 }], "highlight": [0], "note": "i=0: running sum = -2. Global max = -2 (nothing better yet)." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 1 }], "highlight": [1], "note": "i=1: the previous run was negative — drop it, start fresh at 1. Running sum = 1. Global max = 1." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 3 }], "highlight": [3], "note": "i=2 extended to -2 (negative again), so i=3 drops it and starts fresh at 4. Running sum = 4. Global max = 4." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 6 }], "highlight": [3, 4, 5, 6], "note": "i=4,5,6 all extend the run (each addition helps) — running sum climbs to 6. New global max = 6, subarray [4,-1,2,1]." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 8 }], "highlight": [3, 4, 5, 6], "note": "i=7 (-5) drags the run down to 1; i=8 rebuilds it to 5 — neither beats 6. Final answer: 6." }
+  ],
+  "caption": "Maximum Subarray — Kadane's rule: carry the run while it helps, drop it the instant it hurts."
+}
+\`\`\`
+
 **Complexity.** O(n) time, O(1) space. (Divide-and-conquer solves it in O(n log n) — worth one sentence as the "clever but beaten" alternative.)
 
 **The thread.** One carried value, one drop rule. Jump Game, next, carries a different single value — the furthest reachable index — and feasibility falls out of a one-pass maximum.`,
@@ -46,6 +59,19 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
 **The insight.** You do not need to know *which* jumps to take — only what is *reachable*. Sweep left to right carrying one number: **reach**, the furthest index attainable so far. At each index i: if i > reach, you are standing somewhere unreachable — the sweep has outrun every possible route, return false. Otherwise this cell is live, and standing on it extends possibility: reach = max(reach, i + nums[i]). Reach the end of the sweep (or reach ≥ last index) → true. The greedy justification is a dominance argument in one line: *the furthest-reachable frontier dominates every individual path — any index some route can reach is ≤ reach — so tracking the maximum loses nothing.* No path enumeration, no DP table over "can I stand here" (which works, O(n²), and is precisely what the greedy collapses).
 
 **The walk-through.** [2, 3, 1, 1, 4]: reach 0 → i 0: reach 2 → i 1: reach 4 → done, true. Now [3, 2, 1, 0, 4]: reach 3 after i 0; i 1: reach max(3, 3) = 3; i 2: 3; i 3: 3 (the 0 adds nothing); i 4: 4 > 3 → **false**. The zero never needed special-casing — it simply failed to move the frontier, and the frontier told the truth.
+
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 0 }], "highlight": [0, 1, 2, 3], "note": "i=0: reach = max(0, 0+3) = 3. Cells 0..3 are reachable so far." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 1 }], "highlight": [0, 1, 2, 3], "note": "i=1 <= reach(3): live. reach = max(3, 1+2) = 3 — no improvement." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1, 2, 3], "note": "i=2 <= reach(3): live. reach = max(3, 2+1) = 3 — no improvement." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 3 }], "highlight": [0, 1, 2, 3], "note": "i=3 <= reach(3): live, but nums[3]=0 adds nothing. reach stays 3." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 4 }], "highlight": [0, 1, 2, 3], "note": "i=4 > reach(3) — index 4 is unreachable. The sweep has outrun the frontier: false." }
+  ],
+  "caption": "Jump Game — the reach frontier stalls at 3 and the walk falls off the edge at index 4."
+}
+\`\`\`
 
 **Backwards greedy, the mirror.** Sweep right to left carrying "leftmost index that can finish": a cell is good if i + nums[i] reaches the current goal; goal slides to each good cell. Same O(n), pleasing symmetry, and a nice sanity check that greedy directions are often interchangeable when the argument is dominance.
 
@@ -84,6 +110,19 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
 **The mechanics.** One sweep: running tank, running total, candidate start. Tank goes negative → total keeps accumulating, tank resets to 0, candidate becomes i + 1. End of sweep: total negative → −1; otherwise the candidate stands — no second lap of verification needed, because the two facts together guarantee it (the surviving candidate banks enough surplus to cover the early stretch it skipped; the problem's uniqueness promise seals it).
 
 **The walk-through.** Net per station: −2, −2, −2, +3, +3. From 0: tank −2 → restart at 1 → −2 → restart… candidate settles at 3: tank +3, +6, then absorbs −2, −2, −2 → finishes at 0 exactly. Total = 0 ≥ 0 ✓ → answer 3.
+
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 0 }], "highlight": [0], "note": "Candidate = 0. Tank after station 0: 0 + (-2) = -2 — negative! Discard the prefix, candidate becomes 1." },
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 1 }], "highlight": [1], "note": "Candidate = 1. Tank: -2 again — negative. Candidate becomes 2." },
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 2 }], "highlight": [2], "note": "Candidate = 2. Tank: -2 again — negative. Candidate becomes 3." },
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 3 }], "highlight": [3, 4], "note": "Candidate = 3. Tank: +3, then +3 more at station 4 — tank climbs to 6, never dipping negative." },
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 3 }], "highlight": [0, 1, 2, 3, 4], "note": "Wrapping around: the tank absorbs -2, -2, -2 and lands at exactly 0. Total sum = 0 >= 0, so candidate 3 is confirmed." }
+  ],
+  "caption": "Gas Station — every failed stretch condemns its whole prefix; the surviving candidate banks enough surplus to finish."
+}
+\`\`\`
 
 **Complexity.** O(n) time, O(1) space — versus O(n²) simulate-every-start.
 
@@ -157,7 +196,7 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
 
 **The rules.** ( → both up. ) → both down. * → lo down (it might be a close), hi up (might be an open). Two clamps carry all the correctness: if **hi** ever goes negative, even all-stars-as-opens has too many closes — false immediately. And **lo** clamps at zero — a negative lo describes interpretations that already died (closed below zero); discard them, keep the range honest. At the end: valid iff **lo == 0** — some surviving interpretation balanced exactly.
 
-**The walk-through.** "(*))": ( → [1,1]. * → [0,2]. First ) → [0,1] — lo dipped to −1 and clamped to 0. Second ) → [0,0] — clamped again, hi now exactly 0. End: lo = 0 → true — the star spent itself as an open. For "))(": hi goes negative on the second ) → false, no interpretation survives.
+**The walk-through.** "(*))": ( → [1,1]. * → [0,2]. First ) → [0,1] — lo dipped to −1 and clamped to 0. Second ) → [0,0] — clamped again, hi now exactly 0. End: lo = 0 → true — the star spent itself as an open. For "))(": lo and hi both start at [0,0], and the very first ) drags hi to −1 immediately → false on the spot, no interpretation survives.
 
 **Complexity.** O(n) time, O(1) space — for a problem whose possibility space is exponential. Carrying the *envelope of all futures* instead of any single future: greedy's graduation exam.
 

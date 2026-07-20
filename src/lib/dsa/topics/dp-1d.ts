@@ -96,6 +96,16 @@ def climbStairs(n: int) -> int:
 
 - **Time:** O(n)
 - **Space:** O(1) — only two rolling variables`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What sequence does Climbing Stairs directly map to?",
+          options: ["The Fibonacci sequence", "The Catalan numbers", "The Harmonic series", "The Collatz conjecture"],
+          correct_index: 0,
+          model_answer: "The number of ways to reach step n is exactly the sum of ways to reach step n-1 and n-2.",
+          difficulty: "basic"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  2. MIN COST CLIMBING STAIRS                                       */
@@ -146,6 +156,20 @@ Answer: min(dp[9], dp[8]) = min(6, 104) = 6
 \`\`\`
 The optimal path zigzags over every 100.
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 100, "·", "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "dp[0]", "index": 0 }, { "label": "dp[1]", "index": 1 }], "note": "Base cases: dp[0]=cost[0]=1, dp[1]=cost[1]=100 — the toll just to stand on each starting step." },
+    { "cells": [1, 100, 2, "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1], "note": "dp[2] = cost[2] + min(dp[1], dp[0]) = 1 + min(100, 1) = 2 — the cheap step beats jumping from the costly one." },
+    { "cells": [1, 100, 2, 3, 3, "·", "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 4 }], "highlight": [2, 3], "note": "dp[3]=3 and dp[4]=3 — every predecessor here is cheap, so cost just climbs by 1 each step." },
+    { "cells": [1, 100, 2, 3, 3, 103, "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 5 }], "highlight": [3, 4], "note": "dp[5] = cost[5] + min(dp[4], dp[3]) = 100 + 3 = 103 — standing on step 5 is expensive no matter which predecessor you arrive from." },
+    { "cells": [1, 100, 2, 3, 3, 103, 4, 5, 104, 6], "pointers": [{ "label": "i", "index": 9 }], "highlight": [7, 8], "note": "dp[9] = cost[9] + min(dp[8], dp[7]) = 1 + min(104, 5) = 6 — arriving from dp[7] is a 2-step jump straight over step 8's toll." },
+    { "cells": [1, 100, 2, 3, 3, 103, 4, 5, 104, 6], "highlight": [8, 9], "note": "Answer = min(dp[9], dp[8]) = min(6, 104) = 6. The optimal path never stands on either 100 — it zigzags over both." }
+  ],
+  "caption": "Min Cost Climbing Stairs — dp[i] = cost[i] + min(dp[i-1], dp[i-2]), filled left to right."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -161,6 +185,16 @@ def minCostClimbingStairs(cost: list[int]) -> int:
 
 - **Time:** O(n)
 - **Space:** O(1) with rolling variables`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In Min Cost Climbing Stairs, what does dp[i] typically represent?",
+          options: ["The cost of the step itself.", "The minimum total cost to reach the top starting from step i.", "The maximum possible cost avoided.", "The cost to reach step i from the bottom."],
+          correct_index: 1,
+          model_answer: "Usually, dp[i] is defined as the minimum cost to climb to the top starting from step i, computing backwards from the top.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  3. HOUSE ROBBER                                                   */
@@ -218,6 +252,19 @@ dp:      2    7   11   11   12
 - \`dp[3] = max(11, 3+7) = 10 → 11\` → skipping house 3 wins
 - \`dp[4] = max(11, 1+11) = 12\` → taking house 4 wins
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [2, 7, "·", "·", "·"], "pointers": [{ "label": "dp[0]", "index": 0 }, { "label": "dp[1]", "index": 1 }], "note": "Base cases: dp[0]=nums[0]=2 (one house, just take it). dp[1]=max(nums[0],nums[1])=max(2,7)=7 — rob the richer of the first two." },
+    { "cells": [2, 7, 11, "·", "·"], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1], "note": "dp[2] = max(dp[1], nums[2]+dp[0]) = max(7, 9+2) = 11 — taking house 2 plus house 0's loot beats skipping it." },
+    { "cells": [2, 7, 11, 11, "·"], "pointers": [{ "label": "i", "index": 3 }], "highlight": [1, 2], "note": "dp[3] = max(dp[2], nums[3]+dp[1]) = max(11, 3+7) = 11 — skipping house 3 wins this time." },
+    { "cells": [2, 7, 11, 11, 12], "pointers": [{ "label": "i", "index": 4 }], "highlight": [2, 3], "note": "dp[4] = max(dp[3], nums[4]+dp[2]) = max(11, 1+11) = 12 — taking house 4 plus house 2's total edges it out." },
+    { "cells": [2, 7, 11, 11, 12], "highlight": [0, 2, 4], "note": "Final answer dp[4] = 12, achieved by robbing houses 0, 2, 4 → 2 + 9 + 1 = 12." }
+  ],
+  "caption": "House Robber — dp[i] = max(dp[i-1], nums[i] + dp[i-2])."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -235,6 +282,14 @@ def rob(nums: list[int]) -> int:
 
 - **Time:** O(n)
 - **Space:** O(1)`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "What is the core recurrence relation for House Robber?",
+          model_answer: "dp[i] = max(rob_current + dp[i+2], skip_current + dp[i+1]). We choose the maximum between robbing the current house and adding the max from two houses down, or skipping it and keeping the max from the next house.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  4. HOUSE ROBBER II                                                */
@@ -304,6 +359,16 @@ def rob(nums: list[int]) -> int:
 
 - **Time:** O(n) — two linear passes
 - **Space:** O(1)`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How do we handle the circular street in House Robber II?",
+          options: ["By using a 2D DP array.", "By running the standard House Robber algorithm twice: once skipping the first house, and once skipping the last house.", "By duplicating the array.", "By always skipping the first house."],
+          correct_index: 1,
+          model_answer: "Because the first and last houses are adjacent, you cannot rob both. Therefore, the maximum profit is the max of robbing houses[0 to n-2] or houses[1 to n-1].",
+          difficulty: "basic"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  5. LONGEST PALINDROMIC SUBSTRING                                  */
@@ -385,6 +450,14 @@ def longestPalindrome(s: str) -> str:
 | Brute force | O(n³) | O(1) |
 | DP table | O(n²) | O(n²) |
 | **Centre expansion** | **O(n²)** | **O(1)** |`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "Why is expanding around the center better than a 2D DP table for Longest Palindromic Substring?",
+          model_answer: "Expanding from the center achieves the same O(N^2) time complexity as the DP approach but only requires O(1) space, whereas the DP table requires O(N^2) space.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  6. PALINDROMIC SUBSTRINGS                                         */
@@ -448,6 +521,16 @@ def countSubstrings(s: str) -> int:
 
 - **Time:** O(n²)
 - **Space:** O(1)`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How many possible centers are there for palindromes in a string of length N?",
+          options: ["N", "2N", "2N - 1", "N^2"],
+          correct_index: 2,
+          model_answer: "There are N single-character centers and N-1 between-character centers (for even-length palindromes), totaling 2N - 1 centers.",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  7. DECODE WAYS                                                    */
@@ -520,6 +603,16 @@ def numDecodings(s: str) -> int:
 
 - **Time:** O(n)
 - **Space:** O(1)`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In Decode Ways, what is the special edge case you must always handle?",
+          options: ["Negative numbers.", "Numbers larger than 26.", "Leading zeros (like '06').", "Empty strings."],
+          correct_index: 2,
+          model_answer: "A string starting with '0' cannot be decoded into a letter (since 'A' is '1', not '0'). Any sequence starting with '0' contributes 0 ways to decode.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  8. COIN CHANGE                                                    */
@@ -579,6 +672,21 @@ dp[6] = 1 + min(dp[5]=2, dp[3]=1, dp[2]=2) = 1 + 1 = 2
 - \`dp[4] = 1 + min(dp[3]=1, dp[1]=1, dp[0]=0) = 1\` (coin 4 directly)
 - \`dp[6] = 1 + min(dp[5]=2, dp[3]=1, dp[2]=2) = 2\` → **3+3**
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [0, "·", "·", "·", "·", "·", "·"], "note": "Base case: dp[0] = 0 — zero coins needed to make amount 0." },
+    { "cells": [0, 1, "·", "·", "·", "·", "·"], "pointers": [{ "label": "a", "index": 1 }], "highlight": [0], "note": "dp[1] = 1 + dp[0] = 1 — one coin of value 1." },
+    { "cells": [0, 1, 2, "·", "·", "·", "·"], "pointers": [{ "label": "a", "index": 2 }], "highlight": [1], "note": "dp[2] = 1 + dp[1] = 2 — two 1-coins; coins 3 and 4 don't fit yet." },
+    { "cells": [0, 1, 2, 1, "·", "·", "·"], "pointers": [{ "label": "a", "index": 3 }], "highlight": [0, 2], "note": "dp[3] = 1 + min(dp[2]=2, dp[0]=0) = 1 — a single coin of value 3 beats three 1s." },
+    { "cells": [0, 1, 2, 1, 1, "·", "·"], "pointers": [{ "label": "a", "index": 4 }], "highlight": [0, 1, 3], "note": "dp[4] = 1 + min(dp[3]=1, dp[1]=1, dp[0]=0) = 1 — coin 4 directly." },
+    { "cells": [0, 1, 2, 1, 1, 2, "·"], "pointers": [{ "label": "a", "index": 5 }], "highlight": [1, 2, 4], "note": "dp[5] = 1 + min(dp[4]=1, dp[2]=2, dp[1]=1) = 2." },
+    { "cells": [0, 1, 2, 1, 1, 2, 2], "pointers": [{ "label": "a", "index": 6 }], "highlight": [2, 3, 5], "note": "dp[6] = 1 + min(dp[5]=2, dp[3]=1, dp[2]=2) = 2 — two coins of value 3 (3+3). Answer: 2." }
+  ],
+  "caption": "Coin Change — dp[a] = 1 + min(dp[a-c]) over each coin c, filled from amount 0 up."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -595,6 +703,14 @@ def coinChange(coins: list[int], amount: int) -> int:
 
 - **Time:** O(amount × coins) — *pseudo-polynomial*
 - **Space:** O(amount)`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "Why do we initialize the DP array with 'amount + 1' in Coin Change?",
+          model_answer: "Because 'amount + 1' acts as infinity. The maximum possible number of coins needed is 'amount' (all 1-value coins), so 'amount + 1' ensures we can reliably use Math.min() and check for impossible amounts at the end.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  9. MAXIMUM PRODUCT SUBARRAY                                       */
@@ -669,6 +785,16 @@ def maxProduct(nums: list[int]) -> int:
 
 - **Time:** O(n)
 - **Space:** O(1)`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must we track both the maximum and minimum product ending at each position?",
+          options: ["To find the range of possible products.", "Because a negative minimum multiplied by a negative number becomes the new maximum.", "To avoid dividing by zero.", "Because it's required for a sliding window."],
+          correct_index: 1,
+          model_answer: "A very large negative number (the minimum) can instantly flip into a massive positive number if multiplied by another negative number.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  10. WORD BREAK                                                    */
@@ -746,6 +872,14 @@ def wordBreak(s: str, wordDict: list[str]) -> bool:
 
 - **Time:** O(n² · k) where k = average word length for substring hashing
 - **Space:** O(n)`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "What does dp[i] store in the bottom-up DP solution for Word Break?",
+          model_answer: "dp[i] stores a boolean indicating whether the substring starting at index i (to the end of the string) can be successfully segmented into words from the dictionary.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  11. LONGEST INCREASING SUBSEQUENCE                                */
@@ -831,6 +965,16 @@ def lengthOfLIS(nums: list[int]) -> int:
 |---|---|---|
 | DP (look-back) | O(n²) | O(n) |
 | **Patience sorting** | **O(n log n)** | **O(n)** |`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What makes Patience Sorting (Binary Search) superior to standard 1D DP for LIS?",
+          options: ["It uses less space.", "It is easier to implement.", "It reduces the time complexity from O(N^2) to O(N log N).", "It can handle negative numbers."],
+          correct_index: 2,
+          model_answer: "By maintaining a sorted array of the smallest tails of all increasing subsequences of length i, we can binary search where to place the next element, dropping time to O(N log N).",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  12. PARTITION EQUAL SUBSET SUM                                    */
@@ -882,6 +1026,19 @@ for a in range(target, x-1, -1):
  After num=11:         ✓  ✓  ✗  ✗  ✗  ✓  ✓  ✗  ✗  ✗  ✗  ✓ ← dp[11]=✓!
 \`\`\`
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": ["✓", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·"], "note": "Start: only sum 0 is reachable — the empty subset." },
+    { "cells": ["✓", "✓", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "x=1", "index": 1 }], "highlight": [0], "note": "After num=1: dp[1] = dp[1] OR dp[0] → sum 1 becomes reachable." },
+    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "·"], "pointers": [{ "label": "x=5", "index": 5 }], "highlight": [0, 1], "note": "After num=5, swept high-to-low: dp[6] picks up dp[1] and dp[5] picks up dp[0] — 5 alone, or 5+1." },
+    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "✓"], "pointers": [{ "label": "x=11", "index": 11 }], "highlight": [0], "note": "After num=11: dp[11] = dp[11] OR dp[0] → sum 11 is reachable on its own. Target hit." },
+    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "✓"], "highlight": [11], "note": "dp[target] = dp[11] = true → the array splits into {11} and {1,5,5}, both summing to 11." }
+  ],
+  "caption": "Partition Equal Subset Sum — dp[a]: can some subset sum to exactly a? Swept high-to-low per number so each is used once."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -901,6 +1058,16 @@ def canPartition(nums: list[int]) -> bool:
 
 - **Time:** O(n × target) — pseudo-polynomial
 - **Space:** O(target)`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What must be true about the sum of the array for Partition Equal Subset Sum to be possible?",
+          options: ["It must be zero.", "It must be even.", "It must be a prime number.", "It must be greater than the maximum element."],
+          correct_index: 1,
+          model_answer: "If the total sum is odd, it is impossible to divide the array into two subsets with equal integer sums.",
+          difficulty: "basic"
+        }
+      ]
     },
   ],
 };

@@ -32,6 +32,24 @@ ORDER BY employee_id;
 
 **Why it matters.** This is effectively a FULL OUTER JOIN problem — you want rows from Employees with no match in Salaries AND rows from Salaries with no match in Employees. MySQL doesn't support FULL OUTER JOIN, so the standard approach is two anti-joins combined with UNION.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["employee_id", "in_employees", "in_salaries"],
+  "before": [
+    [90, "yes", "no"],
+    [85, "no", "yes"],
+    [1, "yes", "yes"],
+    [7, "yes", "yes"],
+    [11, "yes", "yes"]
+  ],
+  "after": [
+    [90, "yes", "no"],
+    [85, "no", "yes"]
+  ],
+  "caption": "The two anti-joins + UNION keep only ids missing from one side (90, 85); ids present in both tables are filtered out."
+}
+\`\`\`
+
 **The insight.** In PostgreSQL or SQL Server, the direct approach is: \`SELECT COALESCE(e.employee_id, s.employee_id) FROM Employees e FULL OUTER JOIN Salaries s ON e.employee_id = s.employee_id WHERE e.employee_id IS NULL OR s.employee_id IS NULL\`. Know the UNION workaround for MySQL and the direct approach for other databases.
 
 **The thread.** Missing-data detection using set operations. The next problem uses CROSS JOIN to generate all possible combinations.`,
@@ -58,6 +76,23 @@ JOIN (
 
 **Why it matters.** This is the "join back to get full row details for an aggregate" pattern. The subquery finds the minimum year per product; the JOIN retrieves all columns for those specific rows. This is more efficient than a correlated subquery and more readable than a window function approach for this use case.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["product_id", "year", "quantity", "price"],
+  "before": [
+    [1, 2019, 10, 5000],
+    [2, 2019, 15, 9000],
+    [1, 2020, 20, 5500],
+    [2, 2020, 30, 9500]
+  ],
+  "after": [
+    [1, 2019, 10, 5000],
+    [2, 2019, 15, 9000]
+  ],
+  "caption": "The join keeps only each product's earliest-year row (min_year match); later-year rows for the same product are dropped."
+}
+\`\`\`
+
 **The insight.** An alternative approach uses window functions: \`RANK() OVER (PARTITION BY product_id ORDER BY year) = 1\`. Both are valid; the subquery-join approach is often more intuitive and can be easier to optimise with indexes.
 
 **The thread.** Joining back to aggregates. The next problem combines multiple advanced techniques: CTEs, window functions, and self-joins.`,
@@ -83,6 +118,23 @@ ORDER BY e1.employee_id;
 \`\`\`
 
 **Why it matters.** This combines self-join (employee table joined to itself via reports_to) with aggregation (COUNT and AVG). The INNER JOIN naturally filters to only managers (those who appear as someone's reports_to). GROUP BY the manager produces one row per manager with their report statistics.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["employee_id", "name", "reports_to", "age", "reports_count", "average_age"],
+  "before": [
+    [1, "Boss", null, 50, null, null],
+    [2, "Alice", 1, 30, null, null],
+    [3, "Bob", 1, 40, null, null],
+    [4, "Carol", 2, 35, null, null]
+  ],
+  "after": [
+    [1, "Boss", null, null, 2, 35],
+    [2, "Alice", null, null, 1, 35]
+  ],
+  "caption": "The self-join + GROUP BY collapses each manager's raw row into a summary row (reports_count, average_age); non-manager rows (Bob, Carol) drop out entirely."
+}
+\`\`\`
 
 **The insight.** ROUND(AVG(e2.age)) rounds to the nearest integer — a common requirement. Some databases default to integer division; using ROUND explicitly ensures consistent behaviour across dialects.
 

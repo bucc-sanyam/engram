@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784529424.5219612,
-    "ast_hash": "282ca441de47cffef822b82eabb94f01",
+    "mtime": 1784530599.5416393,
+    "ast_hash": "b9a8e8bc83e5fdacc69deda1a1811d54",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784529367.6651483,
-    "ast_hash": "e8756db0be4850195c157fa7e585c892",
+    "mtime": 1784563829.2870932,
+    "ast_hash": "a27c6c4b597bc82b27e56266ecfe48f9",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784529353.5191383,
-    "ast_hash": "0313454d2d5c24213dd4e370125223d9",
+    "mtime": 1784563806.671335,
+    "ast_hash": "78983a451075ac2cc8c2ffc217d5b8b1",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "src/components/Markdown.tsx": {
-    "mtime": 1784142857.3143628,
-    "ast_hash": "87a769f3105b25d195dcd41b39eb95eb",
+    "mtime": 1784529640.6542258,
+    "ast_hash": "9cb987de9075b35330329f37b1af4cc5",
     "semantic_hash": ""
   },
   "src/components/RichText.tsx": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1784528943.298886,
-    "ast_hash": "aadd5127d7046e8a9d00cb07c3924911",
+    "mtime": 1784529721.5031722,
+    "ast_hash": "47893814207d6f37149b5c50db950e67",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -365,13 +365,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784436418.7524178,
-    "ast_hash": "71fabf888d79e59f08aa28ac047cd53e",
+    "mtime": 1784529696.7621799,
+    "ast_hash": "ffb67f7cfb86cda4f8bae290073f24f8",
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/[chapter]/page.tsx": {
-    "mtime": 1784410617.78979,
-    "ast_hash": "ab3cc349a24e9d8e15f2074d597dfffe",
+    "mtime": 1784529698.232158,
+    "ast_hash": "7147ea886a435f5051c9f4e7bb8c185d",
     "semantic_hash": ""
   },
   "src/app/blogs/competition-act/page.tsx": {
@@ -380,13 +380,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/[topic]/[slug]/page.tsx": {
-    "mtime": 1784439958.0153399,
-    "ast_hash": "c1dde7aa826e863a8c4af9980d5c1ea3",
+    "mtime": 1784529685.329745,
+    "ast_hash": "8a580441e21d9f2b95d24df91502430d",
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/[topic]/page.tsx": {
-    "mtime": 1784400807.9379892,
-    "ast_hash": "3a29cb3f1354cd0dc727730dc5f5be1d",
+    "mtime": 1784529689.029716,
+    "ast_hash": "57801447f36489db2cbd5c5e761888b5",
     "semantic_hash": ""
   },
   "src/app/blogs/dsa/page.tsx": {
@@ -465,8 +465,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/arrays-hashing.ts": {
-    "mtime": 1784400719.020611,
-    "ast_hash": "1cd630d4b7e3121833a399e3d6143291",
+    "mtime": 1784531236.5719688,
+    "ast_hash": "cfd0f1b1c9ea6e2b23c82b34889d0820",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/backtracking.ts": {
@@ -475,8 +475,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/binary-search.ts": {
-    "mtime": 1784475763.3681092,
-    "ast_hash": "00b72b5300804294cb08144a980c7fe2",
+    "mtime": 1784545840.846858,
+    "ast_hash": "fd0c24ceda9600bbaeaa7533343659ab",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/bit-manipulation.ts": {
@@ -485,8 +485,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/dp-1d.ts": {
-    "mtime": 1784473585.729432,
-    "ast_hash": "8a76e54f845094af4f4ae5b0ccf62449",
+    "mtime": 1784546643.8879879,
+    "ast_hash": "caf590c4b6b42a4762f1ee2a89db0bad",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/dp-2d.ts": {
@@ -495,8 +495,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/graphs.ts": {
-    "mtime": 1784402330.6033745,
-    "ast_hash": "b66693551bddfe2244d4b2529216b8dc",
+    "mtime": 1784546698.6273193,
+    "ast_hash": "f438e6a69b2b2c11d93cd573e64f093d",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/greedy.ts": {
@@ -530,8 +530,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/stack.ts": {
-    "mtime": 1784401254.4321487,
-    "ast_hash": "f63d23f9279d2ea04a5d581358d5f871",
+    "mtime": 1784546685.0103378,
+    "ast_hash": "f87ea624c74176c85752138338955920",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/trees.ts": {
@@ -540,8 +540,8 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/tries.ts": {
-    "mtime": 1784402125.1093445,
-    "ast_hash": "dc8f0d7a55e9b2654675cc51da77ca84",
+    "mtime": 1784545865.6073422,
+    "ast_hash": "3fd95f185e2078d061a58c6e99c0d154",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/two-pointers.ts": {
@@ -560,13 +560,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/sql/[topic]/[slug]/page.tsx": {
-    "mtime": 1784439972.7431138,
-    "ast_hash": "c0817d22764dbaf9bad18f1fdb5fd599",
+    "mtime": 1784529686.5496428,
+    "ast_hash": "4a41018e4c2b0ae4779fab71628cc510",
     "semantic_hash": ""
   },
   "src/app/blogs/sql/[topic]/page.tsx": {
-    "mtime": 1784436077.4288726,
-    "ast_hash": "fe8c613d054bf6075bd3b3ab6c0b575e",
+    "mtime": 1784529690.2333918,
+    "ast_hash": "efa241d1c94cde1d558e9cd50fc543f9",
     "semantic_hash": ""
   },
   "src/app/blogs/sql/page.tsx": {
@@ -610,23 +610,23 @@
     "semantic_hash": ""
   },
   "src/lib/sql/topics/advanced-joins-and-set-ops.ts": {
-    "mtime": 1784435938.0603971,
-    "ast_hash": "5e8326108d8f28c3ce8857bf0a08db15",
+    "mtime": 1784545846.4606905,
+    "ast_hash": "102399369468ac32027aaf406a675099",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/aggregation.ts": {
-    "mtime": 1784435661.3956606,
-    "ast_hash": "dce5eb07829e980db51be6c9a5387dfc",
+    "mtime": 1784546642.545835,
+    "ast_hash": "03c62a9a80e88842636aeaccff17c769",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/basic-joins.ts": {
-    "mtime": 1784435608.8490977,
-    "ast_hash": "9ac17a7edde9f2f54d41c608c4bfc942",
+    "mtime": 1784546677.135919,
+    "ast_hash": "4a6606a389501b7966f21d2f0a84b881",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/case-when.ts": {
-    "mtime": 1784435764.3864648,
-    "ast_hash": "ed9366303fe18e626f8adf87243db941",
+    "mtime": 1784546068.0942726,
+    "ast_hash": "987ead92a6547e732ad812fbdcfa05a0",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/common-table-expressions.ts": {
@@ -640,18 +640,18 @@
     "semantic_hash": ""
   },
   "src/lib/sql/topics/select-and-filter.ts": {
-    "mtime": 1784435557.0350037,
-    "ast_hash": "ee967de3966ce103aaf9e3e8050556ec",
+    "mtime": 1784546692.7108655,
+    "ast_hash": "9f10a5a9cae016378f82d7ae58eafbab",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/sorting-and-limiting.ts": {
-    "mtime": 1784435694.4708457,
-    "ast_hash": "9fbdf45fa169075121415d4baef30ecb",
+    "mtime": 1784545865.7226357,
+    "ast_hash": "0793a5278072449ccda1c5d31e7f60e1",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/string-and-date-functions.ts": {
-    "mtime": 1784435797.5133903,
-    "ast_hash": "36996768729ff3eb4748c8cd393478f9",
+    "mtime": 1784546635.3748868,
+    "ast_hash": "8b9c39e13f1bbb971187c5220b8dff02",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/subqueries.ts": {
@@ -665,8 +665,8 @@
     "semantic_hash": ""
   },
   "src/lib/sql/topics/window-functions-ranking.ts": {
-    "mtime": 1784435832.459067,
-    "ast_hash": "740065bb38bec177ec075d7a06f0de75",
+    "mtime": 1784529800.7171078,
+    "ast_hash": "dc147cf001ff28af244e0d9ecb2f7447",
     "semantic_hash": ""
   },
   "src/lib/sql/types.ts": {
@@ -685,13 +685,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784463001.4142818,
-    "ast_hash": "e9bb31960af8ece80582f3613c3335db",
+    "mtime": 1784529693.5495408,
+    "ast_hash": "e1a3bb3e5c765182baf6c5f828fae10f",
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/[chapter]/page.tsx": {
-    "mtime": 1784462999.4028132,
-    "ast_hash": "072281462cb23c3527cc7e1b5363df05",
+    "mtime": 1784529695.1482363,
+    "ast_hash": "ec4fde76debffd61616b4ae0a3c64c4f",
     "semantic_hash": ""
   },
   "src/app/blogs/sarfaesi-act/page.tsx": {
@@ -885,8 +885,8 @@
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts": {
-    "mtime": 1784478702.536307,
-    "ast_hash": "56080cfe3b1de76005a484ea83c4cbf4",
+    "mtime": 1784546737.944159,
+    "ast_hash": "1e78335b1cd757e3fa86e3e5b9e415d1",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/economic-growth.ts": {
@@ -895,13 +895,13 @@
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/macroeconomic-policy.ts": {
-    "mtime": 1784477001.7199485,
-    "ast_hash": "962e26330fb2a44f251dca9c73a8e055",
+    "mtime": 1784545763.2438872,
+    "ast_hash": "1debf4e245a3314a4613ca717d309815",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/money-and-interest-rates.ts": {
-    "mtime": 1784478760.9967191,
-    "ast_hash": "80b3902393d39dd5fe286092c8fae8dc",
+    "mtime": 1784545758.2508693,
+    "ast_hash": "a3fe3592503bc08a20bcb6f39f999127",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/output-and-employment.ts": {
@@ -910,8 +910,8 @@
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/what-is-economics.ts": {
-    "mtime": 1784476488.4129674,
-    "ast_hash": "8a5490fdb862cf547e617d8da21f0a5d",
+    "mtime": 1784529814.8768303,
+    "ast_hash": "5750a3e6a392b9d30b620bbc1e7d7299",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/types.ts": {
@@ -920,13 +920,13 @@
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/[chapter]/[slug]/page.tsx": {
-    "mtime": 1784527900.1288269,
-    "ast_hash": "2bb4374384aa3a68a4f40caf2fa67532",
+    "mtime": 1784529687.9854891,
+    "ast_hash": "1b6697de7fe828fc04f7933acebf1d13",
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/[chapter]/page.tsx": {
-    "mtime": 1784527898.111589,
-    "ast_hash": "fb1ed4789687276515a9cf686b2527af",
+    "mtime": 1784529691.6796849,
+    "ast_hash": "061c3dcccf0cd17851049c19321ee792",
     "semantic_hash": ""
   },
   "src/app/blogs/macroeconomics/page.tsx": {
@@ -937,6 +937,41 @@
   "src/app/recall/page.tsx": {
     "mtime": 1784453547.4009478,
     "ast_hash": "82587f123828d649d084a99e0ee25ecb",
+    "semantic_hash": ""
+  },
+  "src/components/viz/ArrayViz.tsx": {
+    "mtime": 1784529560.3218296,
+    "ast_hash": "1cd3698f71936238dcd2bde463c1c211",
+    "semantic_hash": ""
+  },
+  "src/components/viz/FlowViz.tsx": {
+    "mtime": 1784529600.031502,
+    "ast_hash": "fda0a08e3c79c8a9fd56f00a9af9ff28",
+    "semantic_hash": ""
+  },
+  "src/components/viz/TableDiffViz.tsx": {
+    "mtime": 1784529586.714139,
+    "ast_hash": "bdb2443c098f51392badb4fe33882d9a",
+    "semantic_hash": ""
+  },
+  "src/components/viz/TreeViz.tsx": {
+    "mtime": 1784529573.4049551,
+    "ast_hash": "f1a250608e1fc92bac2449b21bfbf6a3",
+    "semantic_hash": ""
+  },
+  "src/components/viz/VizBlock.tsx": {
+    "mtime": 1784529613.140719,
+    "ast_hash": "a48def1c4162529350c30cd6158988ab",
+    "semantic_hash": ""
+  },
+  "src/components/viz/types.ts": {
+    "mtime": 1784529538.4166663,
+    "ast_hash": "a0ba5131fdaf84f07521df8620cbf605",
+    "semantic_hash": ""
+  },
+  "scripts/validate-viz.mts": {
+    "mtime": 1784563719.37446,
+    "ast_hash": "4ffb1b86ab9bc0c23fa2255ce74fbd82",
     "semantic_hash": ""
   }
 }

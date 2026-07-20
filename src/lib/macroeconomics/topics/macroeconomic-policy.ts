@@ -29,6 +29,25 @@ For example, it is financially prudent for a single household to cut spending an
 
 Keynes exposed this flaw with the **Paradox of Thrift** (methodological holism). If *all* households simultaneously decide to save more, they cut consumption. Firms can't sell goods, so they fire workers. Aggregate income falls, which means total aggregate savings actually *decrease*. The logic of the system is different from the logic of the individual.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "save", "label": "Households Save More", "row": 0, "col": 0 },
+    { "id": "consume", "label": "Consumption Falls", "row": 1, "col": 0 },
+    { "id": "fire", "label": "Firms Cut Output & Jobs", "row": 2, "col": 0 },
+    { "id": "income", "label": "Aggregate Income Falls", "row": 3, "col": 0 },
+    { "id": "savings", "label": "Aggregate Savings Fall", "row": 4, "col": 0 }
+  ],
+  "edges": [
+    { "from": "save", "to": "consume", "label": "cut spending" },
+    { "from": "consume", "to": "fire", "label": "firms can't sell goods" },
+    { "from": "fire", "to": "income", "label": "job losses" },
+    { "from": "income", "to": "savings", "label": "less income to save" }
+  ],
+  "caption": "The Paradox of Thrift: what is prudent for a single household (saving more) becomes self-defeating for the whole economy when everyone does it at once — the logic of the individual differs from the logic of the system."
+}
+\`\`\`
+
 **The Danger of Exogenous Money**
 Marginalist theories also assume the money supply is exogenous and savings determine investment. This leads them to fear that government borrowing will "crowd out" private investment by soaking up limited savings. 
 Conversely, the Keynesian/Endogenous money view recognizes that loans create deposits, and capital is not strictly scarce. Therefore, government expenditure aimed at building capacity actually *crowds in* private investment by boosting aggregate demand.`,

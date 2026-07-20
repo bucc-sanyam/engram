@@ -34,6 +34,24 @@ ORDER BY rating DESC;
 
 **Why it matters.** This bridges filtering and the aggregation chapter by introducing the modulo operator (% for odd/even) and compound WHERE conditions. It's also your first encounter with ORDER BY DESC — sorting results by a numeric column in descending order.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "movie", "description", "rating"],
+  "before": [
+    [5, "House card", "Interesting", 9.1],
+    [1, "War", "great 3D", 8.9],
+    [2, "Science", "fiction", 8.5],
+    [4, "Ice song", "Fantacy", 8.6],
+    [3, "irish", "boring", 6.2]
+  ],
+  "after": [
+    [5, "House card", "Interesting", 9.1],
+    [1, "War", "great 3D", 8.9]
+  ],
+  "caption": "Even ids (2, 4) and the boring description (3) are filtered out; the two survivors are already in rating-descending order."
+}
+\`\`\`
+
 **The insight.** The modulo trick for odd/even (\`id % 2 = 1\` for odd, \`id % 2 = 0\` for even) is a pattern that appears in many SQL problems. Some databases use MOD(id, 2) instead of %. Know both.
 
 **The thread.** Filtering on computed values. The next problem introduces the real star of this chapter: GROUP BY with COUNT to find duplicates.`,
@@ -56,6 +74,21 @@ HAVING COUNT(*) > 1;
 \`\`\`
 
 **Why it matters.** This is *the* canonical GROUP BY + HAVING problem. GROUP BY email collapses all rows with the same email into one group. HAVING COUNT(*) > 1 keeps only groups with more than one row — i.e., duplicates. This two-line pattern is the standard way to find duplicates in any column, and it appears in some form in almost every SQL interview.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["email"],
+  "before": [
+    ["a@b.com"],
+    ["a@b.com"],
+    ["c@d.com"]
+  ],
+  "after": [
+    ["a@b.com"]
+  ],
+  "caption": "a@b.com appears twice, so GROUP BY collapses it into one output row; c@d.com is a singleton (COUNT = 1) and HAVING drops it entirely."
+}
+\`\`\`
 
 **The insight.** HAVING is the WHERE of the grouped world. WHERE runs before GROUP BY (it filters individual rows); HAVING runs after GROUP BY (it filters groups). You cannot write \`WHERE COUNT(*) > 1\` because COUNT doesn't exist until the rows are grouped. This is the single most important WHERE-vs-HAVING distinction to memorise.
 
@@ -82,6 +115,23 @@ GROUP BY p.product_id;
 \`\`\`
 
 **Why it matters.** This problem combines JOIN, GROUP BY, and a *weighted average* — not just AVG(price), but SUM(price × units) / SUM(units). The weighted average is the correct calculation when different prices apply to different quantities, and it's a pattern that appears constantly in financial and e-commerce analytics.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["product_id", "price", "units", "average_price"],
+  "before": [
+    [1, 5, 100, null],
+    [1, 20, 15, null],
+    [2, 15, 200, null],
+    [2, 30, 30, null]
+  ],
+  "after": [
+    [1, null, null, 6.96],
+    [2, null, null, 16.96]
+  ],
+  "caption": "Each sale is already matched to the price active on its purchase date; GROUP BY collapses the matched sales per product into one weighted-average row."
+}
+\`\`\`
 
 **The insight.** The LEFT JOIN with a date range condition in ON is crucial. Each sale must be matched to the price that was active on the sale date. The BETWEEN in the ON clause is the lookup — a temporal join that says "this sale happened during this price period." IFNULL handles products with no sales, defaulting to 0.
 
@@ -110,6 +160,24 @@ GROUP BY DATE_FORMAT(trans_date, '%Y-%m'), country;
 
 **Why it matters.** This introduces **conditional aggregation** — using CASE WHEN inside SUM or COUNT to aggregate only rows that meet a condition. Instead of writing two separate queries (one for all transactions, one for approved), you do it in one pass by embedding the condition inside the aggregate. This is a critical pattern for dashboards and reports.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["month", "country", "state", "amount", "trans_count", "trans_total_amount"],
+  "before": [
+    ["2018-12", "US", "approved", 1000, null, null],
+    ["2018-12", "US", "declined", 2000, null, null],
+    ["2019-01", "US", "approved", 2000, null, null],
+    ["2019-01", "DE", "approved", 2000, null, null]
+  ],
+  "after": [
+    ["2018-12", "US", null, null, 2, 3000],
+    ["2019-01", "US", null, null, 1, 2000],
+    ["2019-01", "DE", null, null, 1, 2000]
+  ],
+  "caption": "Four raw transactions collapse into three (month, country) groups; state and amount feed the counts and sums (the same CASE WHEN pattern also drives approved_count and approved_total_amount, omitted here for space)."
+}
+\`\`\`
+
 **The insight.** \`SUM(CASE WHEN condition THEN 1 ELSE 0 END)\` is equivalent to \`COUNT with a filter\` — it counts only rows where the condition is true. This trick is the backbone of pivot-style queries and is far more efficient than multiple self-joins or subqueries.
 
 **The thread.** You can now group, count, sum, average, and conditionally aggregate. The next problem pushes aggregation to its limit with a HAVING condition that uses a percentage threshold — a real-world analytics pattern.`,
@@ -134,6 +202,24 @@ GROUP BY query_name;
 \`\`\`
 
 **Why it matters.** This combines multiple aggregation patterns in a single query: a computed-column average (rating/position), conditional counting (ratings below 3), and percentage calculation (conditional count / total count × 100). Each technique alone is simple; combining them in one GROUP BY is the reality of analytics SQL.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["query_name", "rating", "position", "quality", "poor_query_percentage"],
+  "before": [
+    ["Dog", 5, 1, null, null],
+    ["Dog", 5, 2, null, null],
+    ["Dog", 1, 3, null, null],
+    ["Cat", 2, 1, null, null],
+    ["Cat", 4, 2, null, null]
+  ],
+  "after": [
+    ["Dog", null, null, 2.61, 33.33],
+    ["Cat", null, null, 2.00, 50.00]
+  ],
+  "caption": "Five raw rows collapse into two groups; quality averages rating/position per group, poor_query_percentage is the share of ratings under 3 (Dog's one low rating out of three; Cat's one low rating out of two)."
+}
+\`\`\`
 
 **The insight.** Multiply by 100.0 (not 100) to force floating-point division. In many SQL dialects, integer / integer truncates to integer: 1/3 = 0, not 0.33. Using 100.0 ensures at least one operand is a float, producing the correct decimal result. This is a classic interview trap.
 

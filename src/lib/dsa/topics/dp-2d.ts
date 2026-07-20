@@ -83,6 +83,17 @@ row = [1, 3, 6]       ← row 2
 Answer: row[-1] = 6
 \`\`\`
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 1, 1], "note": "Row 0: every cell in the top row is reachable only by moving right, so the whole row is 1s — the base case." },
+    { "cells": [1, 2, 3], "highlight": [1, 2], "note": "Row 1: row[j] += row[j-1] for j=1,2. row[1] = 1+1 = 2 (down from row 0, plus left neighbour). row[2] = 1+2 = 3." },
+    { "cells": [1, 3, 6], "highlight": [1, 2], "pointers": [{ "label": "answer", "index": 2 }], "note": "Row 2: row[1] = 1+2 = 3, row[2] = 3+3 = 6. row[-1] = 6 is the answer — 6 unique paths across a 3×3 grid." }
+  ],
+  "caption": "Unique Paths (3×3 grid) — the 2-D table collapses to one 1-D row, updated left to right for each grid row."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -102,6 +113,16 @@ def uniquePaths(m: int, n: int) -> int:
 | **Bottom-up 1D row** | **O(m·n)** | **O(n)** |
 
 **Bonus — Closed Form:** A path is \`(m-1)\` downs and \`(n-1)\` rights in some order → \`C(m+n-2, m-1)\`. Works in O(min(m,n)) but breaks the moment the grid gains obstacles.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In Unique Paths, what is the value of the cells in the top row and left column?",
+          options: ["0", "1", "-1", "Depends on the input."],
+          correct_index: 1,
+          model_answer: "There is exactly 1 way to reach any cell in the top row (by moving strictly right) and the left column (by moving strictly down).",
+          difficulty: "basic"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  2. LONGEST COMMON SUBSEQUENCE                                     */
@@ -190,6 +211,14 @@ def longestCommonSubsequence(text1: str, text2: str) -> int:
 |---|---|---|
 | Brute-force | O(2^m · n) | O(m) |
 | **Bottom-up rolling row** | **O(m·n)** | **O(min(m,n))** |`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "If text1[i] !== text2[j], what is the recurrence relation for LCS?",
+          model_answer: "dp[i][j] = Math.max(dp[i+1][j], dp[i][j+1]). If the characters do not match, we take the maximum LCS of ignoring either the current character of text1 or text2.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  3. BEST TIME TO BUY/SELL STOCK WITH COOLDOWN                      */
@@ -257,6 +286,19 @@ free[i] = max(free[i-1],              ← stayed free
 
 Answer: \`max(cool[4], free[4]) = max(3, 2) = 3\` ✓
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [-1, 0, 0], "pointers": [{ "label": "hold", "index": 0 }, { "label": "cool", "index": 1 }, { "label": "free", "index": 2 }], "note": "Day 0 (price=1): hold = -price[0] = -1 (bought immediately). cool = free = 0 — base state." },
+    { "cells": [-1, 1, 0], "highlight": [1], "note": "Day 1 (price=2): cool = hold(-1) + 2 = 1 — sell today's holding for a paper profit." },
+    { "cells": [-1, 2, 1], "highlight": [1, 2], "note": "Day 2 (price=3): cool = hold(-1) + 3 = 2. free = max(free(0), cool(1)) = 1 — yesterday's cooldown finishes." },
+    { "cells": [1, -1, 2], "highlight": [0, 2], "note": "Day 3 (price=0): hold = max(hold(-1), free(1) - 0) = 1 — rebuy on the dip. free = max(free(1), cool(2)) = 2." },
+    { "cells": [1, 3, 2], "highlight": [1], "pointers": [{ "label": "answer", "index": 1 }], "note": "Day 4 (price=2): cool = hold(1) + 2 = 3 — sell the day-3 dip-buy. Answer = max(cool, free) = max(3, 2) = 3." }
+  ],
+  "caption": "Stock With Cooldown — three rolling states (hold / cool / free) replace the 2-D table; each day reads only yesterday's three values."
+}
+\`\`\`
+
 ---
 
 **Code & Complexity**
@@ -278,6 +320,16 @@ def maxProfit(prices: list[int]) -> int:
 | **State-machine DP** | **O(n)** | **O(1)** |
 
 The "2-D" table has 3 × n cells, but the second dimension is only 3 states wide — so it collapses to three rolling variables.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What are the three main states needed for the state machine approach?",
+          options: ["Buy, Sell, Hold", "Held, Sold, Reset", "Min_Price, Max_Profit, Cooldown", "Day1, Day2, Day3"],
+          correct_index: 1,
+          model_answer: "We track the maximum profit we can have while currently holding a stock (Held), the profit right after selling (Sold), and the profit when resting/ready to buy (Reset).",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  4. COIN CHANGE II                                                 */
@@ -331,6 +383,18 @@ Why? Once we process coin \`1\`, all combinations using only 1s are set. Then co
  After coin 5:           1   1   2   2   3   4  ← answer
 \`\`\`
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 0, 0, 0, 0, 0], "note": "Start: dp[0] = 1 (one way to make amount 0 — use no coins)." },
+    { "cells": [1, 1, 1, 1, 1, 1], "highlight": [1, 2, 3, 4, 5], "note": "After coin 1: every amount 0-5 now has exactly one way (all 1s)." },
+    { "cells": [1, 1, 2, 2, 3, 3], "highlight": [2, 3, 4, 5], "note": "After coin 2: dp[2]+=dp[0]→2, dp[3]+=dp[1]→2, dp[4]+=dp[2]→3, dp[5]+=dp[3]→3." },
+    { "cells": [1, 1, 2, 2, 3, 4], "highlight": [5], "pointers": [{ "label": "answer", "index": 5 }], "note": "After coin 5: dp[5] += dp[0] = 3+1 = 4. Final answer: 4 combinations." }
+  ],
+  "caption": "Coin Change II — coins in the OUTER loop. Each denomination is fully processed before the next begins, so combinations (not permutations) are counted."
+}
+\`\`\`
+
 ---
 
 **The Walk-through**
@@ -356,6 +420,14 @@ def change(amount: int, coins: list[int]) -> int:
 | Approach | Time | Space |
 |---|---|---|
 | **Outer-coin DP** | **O(coins × amount)** | **O(amount)** |`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "Why must the outer loop iterate over coins rather than the amount?",
+          model_answer: "Iterating over coins in the outer loop computes combinations (order does not matter). If the amount is in the outer loop, it computes permutations (different sequences of the same coins).",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  5. TARGET SUM                                                     */
@@ -415,6 +487,20 @@ Subset-sum DP table (sweep high-to-low for each number):
  After 5th '1':        1   5  10  10   5  ← dp[4] = 5 ✓
 \`\`\`
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 0, 0, 0, 0], "note": "Start: dp[0] = 1 (one way to make sum 0 — pick nothing)." },
+    { "cells": [1, 1, 0, 0, 0], "highlight": [1], "note": "After the 1st '1': sweeping HIGH to LOW (a=4 down to 1), dp[1] += dp[0] → 1." },
+    { "cells": [1, 2, 1, 0, 0], "highlight": [1, 2], "note": "After the 2nd '1': dp[2] += dp[1]=1 → 1, dp[1] += dp[0]=1 → 2." },
+    { "cells": [1, 3, 3, 1, 0], "highlight": [1, 2, 3], "note": "After the 3rd '1': dp[3] += dp[2]=1 → 1, dp[2] += dp[1]=2 → 3, dp[1] += dp[0]=1 → 3." },
+    { "cells": [1, 4, 6, 4, 1], "highlight": [1, 2, 3, 4], "note": "After the 4th '1': dp[4] += dp[3]=1 → 1, dp[3] += dp[2]=3 → 4, dp[2] += dp[1]=3 → 6, dp[1] += dp[0]=1 → 4." },
+    { "cells": [1, 5, 10, 10, 5], "highlight": [4], "pointers": [{ "label": "answer", "index": 4 }], "note": "After the 5th '1': dp[4] += dp[3]=4 → 5. dp[4] = 5 matches C(5,4) — the five ways to choose which single '1' is negative." }
+  ],
+  "caption": "Target Sum — subset-sum DP swept HIGH to LOW per number, the 0/1-knapsack discipline that keeps each number used at most once."
+}
+\`\`\`
+
 ---
 
 **The Walk-through**
@@ -444,6 +530,16 @@ def findTargetSumWays(nums: list[int], target: int) -> int:
 |---|---|---|
 | Brute force | O(2^n) | O(n) |
 | **Subset-sum DP** | **O(n × sum)** | **O(sum)** |`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How can Target Sum be transformed into a subset sum problem?",
+          options: ["By sorting the array.", "By finding a subset of numbers that sum to (total_sum + target) / 2.", "By taking the absolute value of all elements.", "It cannot be transformed."],
+          correct_index: 1,
+          model_answer: "If P is the sum of positive elements and N is the negative, P - N = target and P + N = sum. Adding gives 2P = target + sum, so we just need to find subsets that sum to (target + sum) / 2.",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  6. INTERLEAVING STRING                                            */
@@ -495,7 +591,7 @@ dp[i][j] = (s1[i-1] == s3[k] AND dp[i-1][j])    ← last char came from s1
 |-----|----|----|----|----|
 | **∅**   | ✓  | ✓  | ✗  | ✗  |
 | **a**   | ✓  | ✓  | ✓  | ✗  |
-| **a**   | ✓  | ✓  | ✓  | ✗  |
+| **a**   | ✓  | ✗  | ✓  | ✗  |
 | **b**   | ✗  | ✗  | ✓  | **✓** |
 
 The path of ✓ cells from top-left to bottom-right traces a valid interleaving.
@@ -527,6 +623,14 @@ def isInterleave(s1: str, s2: str, s3: str) -> bool:
 | Approach | Time | Space |
 |---|---|---|
 | **Bottom-up rolling row** | **O(m·n)** | **O(n)** |`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "What does dp[i][j] represent in Interleaving String?",
+          model_answer: "dp[i][j] is true if the first i characters of s1 and the first j characters of s2 can interleave to form the first i+j characters of s3.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  7. LONGEST INCREASING PATH IN A MATRIX                            */
@@ -623,6 +727,16 @@ def longestIncreasingPath(matrix: list[list[int]]) -> int:
 | **Memoised DFS** | **O(m·n)** | **O(m·n)** |
 
 Each cell is computed exactly once (4 edges checked each). Stack depth is bounded by the longest path.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why is a visited set not strictly necessary for the DFS in this problem?",
+          options: ["Because it's a DAG (Directed Acyclic Graph).", "Because the matrix is small.", "Because the path must strictly increase, preventing cycles.", "Because we can backtrack."],
+          correct_index: 2,
+          model_answer: "Since we only move to strictly greater neighbors, it is mathematically impossible to loop back to a cell we've already visited.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  8. DISTINCT SUBSEQUENCES                                          */
@@ -704,6 +818,14 @@ def numDistinct(s: str, t: str) -> int:
 | **Rolling-row DP** | **O(m·n)** | **O(n)** |
 
 The right-to-left sweep prevents clobbering — the same discipline as the subset-sum high-to-low sweep.`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "What is the recurrence relation when s[i] matches t[j]?",
+          model_answer: "dp[i][j] = dp[i+1][j+1] + dp[i+1][j]. We can either use the matching character (dp[i+1][j+1]) OR choose not to use it and look for another match later in s (dp[i+1][j]).",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  9. EDIT DISTANCE                                                  */
@@ -765,11 +887,12 @@ Geometric mnemonic: **Replace = diagonal ↖, Delete = up ↑, Insert = left ←
 | **e**   | 5 | 4 | 4 | **3** |
 
 Trace back from \`dp[5][3] = 3\`:
-- \`(e,s)\`: mismatch → replace (diag) → cost 1
-- \`(s,o)\`: mismatch → delete (up) → cost 1
+- \`(e,s)\`: mismatch — the cheapest predecessor is **delete** (up), not replace: \`1 + dp[4][3] = 1 + 2 = 3\`
+- \`(s,s)\`: match → diagonal, free
 - \`(r,o)\`: mismatch → delete (up) → cost 1
 - \`(o,o)\`: match → diagonal, free
-Total: 3 operations ✓
+- \`(h,r)\`: mismatch → replace (diag) → cost 1
+Total: 3 operations ✓ — delete 'e', delete 'r', replace 'h'→'r': \`horse → hors → hos → ros\`
 
 ---
 
@@ -796,6 +919,16 @@ def minDistance(word1: str, word2: str) -> int:
 Can be optimised to O(min(m,n)) with two rows, but full table is needed to recover the actual edit script.
 
 **Kinship:** With only insert/delete (no replace), edit distance = \`m + n - 2·LCS\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In Edit Distance, what does dp[i+1][j] represent relative to dp[i][j]?",
+          options: ["Inserting a character.", "Deleting a character from word1.", "Replacing a character.", "A match."],
+          correct_index: 1,
+          model_answer: "Moving horizontally/vertically in the DP table represents insertions and deletions. Skipping a character in word1 corresponds to a deletion.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  10. BURST BALLOONS                                                */
@@ -891,6 +1024,14 @@ def maxCoins(nums: list[int]) -> int:
 | **Interval DP** | **O(n³)** | **O(n²)** |
 
 Cubic because: O(n²) intervals × O(n) split points. This is the honest cost of interval DP — and it's optimal for this problem family (matrix-chain multiplication, polygon triangulation use the same shape).`,
+      questions: [
+        {
+          kind: "open",
+          prompt: "Why is it crucial to think about which balloon is burst LAST rather than FIRST in a given interval?",
+          model_answer: "If we pick the first balloon to burst, it changes the adjacent balloons for future choices, breaking independent subproblems. If we pick the LAST balloon to burst, its neighbors are firmly fixed (the boundaries of the interval), allowing us to cleanly split the interval into two independent subproblems.",
+          difficulty: "advanced"
+        }
+      ]
     },
     /* ------------------------------------------------------------------ */
     /*  11. REGULAR EXPRESSION MATCHING                                   */
@@ -995,6 +1136,16 @@ def isMatch(s: str, p: str) -> bool:
 | **Bottom-up DP** | **O(m·n)** | **O(m·n)** |
 
 Real regex engines compile to Thompson NFAs — but the NFA's state graph *is* this table with the string axis streamed. You have effectively derived the engine.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How does the DP table handle the '*' character?",
+          options: ["By ignoring the previous character.", "By checking if the character matches, and if so, branching into 0 uses or 1+ uses.", "By automatically matching any character.", "By skipping 2 indices backward in the pattern string."],
+          correct_index: 1,
+          model_answer: "When checking an asterisk, we look at the character before it. If it doesn't match, we treat it as 0 uses (dp[i][j+2]). If it does match, we can either use it (dp[i+1][j]) or skip it (0 uses).",
+          difficulty: "advanced"
+        }
+      ]
     },
   ],
 };

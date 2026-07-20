@@ -72,7 +72,24 @@ In a monetary production economy, money is created from the "inside" (endogenous
 If this is true, what does the central bank do? The RBI does not fix the *quantity* of money; instead, it fixes the **price of money** (the policy interest rate, or repo rate). It supplies whatever quantity of reserves the banking system needs at that target interest rate to maintain financial stability.
 
 **The Monetary Transmission Mechanism**
-When the RBI changes its policy repo rate, it acts as an anchor. Commercial banks adjust their lending and deposit rates accordingly, which then cascades into the bond and equity markets. This is how the central bank influences aggregate investment and consumption.`,
+When the RBI changes its policy repo rate, it acts as an anchor. Commercial banks adjust their lending and deposit rates accordingly, which then cascades into the bond and equity markets. This is how the central bank influences aggregate investment and consumption.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "repo", "label": "RBI Repo Rate (Policy Rate)", "row": 0, "col": 0 },
+    { "id": "bank-rates", "label": "Bank Lending & Deposit Rates", "row": 1, "col": 0 },
+    { "id": "markets", "label": "Bond & Equity Markets", "row": 2, "col": 0 },
+    { "id": "demand", "label": "Aggregate Investment & Consumption", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "repo", "to": "bank-rates", "label": "anchors" },
+    { "from": "bank-rates", "to": "markets", "label": "cascades into" },
+    { "from": "markets", "to": "demand", "label": "shapes" }
+  ],
+  "caption": "The RBI does not fix the quantity of money — it fixes the price of money (the repo rate), which cascades through bank rates and financial markets to shape real economic activity."
+}
+\`\`\``,
       questions: [
         {
           kind: "mcq",

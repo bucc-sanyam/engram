@@ -1,6 +1,7 @@
 import { COMP_ACT_CHAPTERS } from "./competition-act";
 import type { CompActQuestion } from "./competition-act/types";
 import { DSA_TOPICS } from "./dsa";
+import type { DsaQuestion } from "./dsa/types";
 import { SQL_TOPICS } from "./sql";
 import { SARFAESI_CHAPTERS } from "./sarfaesi-act";
 import type { SarfaesiQuestion } from "./sarfaesi-act/types";
@@ -15,7 +16,7 @@ export interface SeedSection {
   category: string;
   summary: string;
   keyPoints: string[];
-  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[];
+  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[] | DsaQuestion[];
   facts: string[];
 }
 
@@ -56,7 +57,7 @@ function dsaSeed(): SeriesSeed {
         category: "Computer Science",
         summary: problem.summary,
         keyPoints: [],
-        questions: [],
+        questions: problem.questions ?? [],
         facts: [],
       });
     }

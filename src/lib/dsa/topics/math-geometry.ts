@@ -101,6 +101,18 @@ The chapter's roadmap position — after Graphs and Bit Manipulation — reflect
 
 **The walk-through.** [1, 2, 9, 9]: rightmost 9 → 0, carry; next 9 → 0, carry; next 2 → 3, done → [1, 3, 0, 0]. And [9, 9]: 9→0, 9→0, carry falls off → prepend 1 → [1, 0, 0].
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [1, 2, 9, 9], "pointers": [{ "label": "i", "index": 3 }], "note": "Start at the rightmost digit." },
+    { "cells": [1, 2, 9, 0], "pointers": [{ "label": "i", "index": 3 }], "highlight": [3], "note": "9 → 0, carry moves left." },
+    { "cells": [1, 2, 0, 0], "pointers": [{ "label": "i", "index": 2 }], "highlight": [2], "note": "Next digit is also 9 → 0, carry continues." },
+    { "cells": [1, 3, 0, 0], "pointers": [{ "label": "i", "index": 1 }], "highlight": [1], "note": "2 → 3. Carry absorbed — done." }
+  ],
+  "caption": "Plus One — [1, 2, 9, 9] increments to [1, 3, 0, 0]; the carry ripples left until it meets a digit below 9."
+}
+\`\`\`
+
 **Why arrays of digits at all?** Because numbers outgrow machine integers — this is arbitrary-precision arithmetic's smallest operation, the same reason Add Two Numbers stored digits in a linked list (chapter six; that problem is this one with pointers and two operands). Big-integer libraries, cryptography, and your language's own bignum type all run carry ripples over digit arrays; you are writing their first instruction.
 
 **Complexity.** O(n) worst case (all nines), O(1) typical — the early exit fires immediately on a random number; amortised over sequential increments the cost per increment is O(1), a cute aside from amortised-analysis land.

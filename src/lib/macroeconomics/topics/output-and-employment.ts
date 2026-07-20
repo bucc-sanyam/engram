@@ -29,8 +29,25 @@ Originating from J.B. Say and developed by Marshall and Pigou, this theory opera
 In the 1930s, John Maynard Keynes and Michał Kalecki inverted this logic with the **Principle of Effective Demand**.
 - **The Core Idea:** **Aggregate demand determines aggregate output.** Firms only produce what they expect to sell. If households decide to save more and consume less, firms will see inventory pile up and will cut back production and fire workers. 
 - **The Mechanism:** Planned investment determines planned saving via variations in aggregate income. (Investment → Output/Income → Savings).
-- **The Labour Market:** Workers cannot negotiate real wages, only nominal wages. A fall in wages reduces consumption, further depressing aggregate demand. 
+- **The Labour Market:** Workers cannot negotiate real wages, only nominal wages. A fall in wages reduces consumption, further depressing aggregate demand.
 - **The Conclusion:** There is **no tendency toward full employment**. The economy can be stuck in a permanent state of unemployment. Active government intervention (expenditure) is required to boost demand.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "investment", "label": "Planned Investment (I)", "row": 0, "col": 0 },
+    { "id": "produce", "label": "Firms Produce to Meet Expected Demand", "row": 1, "col": 0 },
+    { "id": "output", "label": "Aggregate Output & Income (Y) Adjusts", "row": 2, "col": 0 },
+    { "id": "outcome", "label": "Employment & Savings Adjust to Match I", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "investment", "to": "produce", "label": "signals expected demand" },
+    { "from": "produce", "to": "output", "label": "output responds" },
+    { "from": "output", "to": "outcome", "label": "income induces saving/jobs" }
+  ],
+  "caption": "The Keynesian reversal of Say's Law: instead of saving determining investment, planned investment drives output and income, and employment and saving simply adjust to match it."
+}
+\`\`\`
 
 **The Keynesian Multiplier**
 If the government spends INR 1,000 trillion to build a highway, aggregate output (Y) increases by *more* than 1,000 trillion. Why? 

@@ -34,6 +34,22 @@ ORDER BY employee_id;
 
 **Why it matters.** This is a classic NOT IN subquery — "find rows where a value doesn't exist in another set." The subquery \`SELECT employee_id FROM Employees\` builds the set of all current employee IDs; NOT IN checks whether each employee's manager_id is absent from that set.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["employee_id", "salary", "manager_id"],
+  "before": [
+    [101, 25000, 999],
+    [102, 28000, null],
+    [103, 45000, 999],
+    [104, 15000, 101]
+  ],
+  "after": [
+    [101, 25000, 999]
+  ],
+  "caption": "102 fails (no manager to lose), 103 fails (salary too high), 104 fails (manager 101 still exists). Only 101's manager (999) is absent from the employee_id set."
+}
+\`\`\`
+
 **The insight.** NOT IN has a dangerous NULL trap: if the subquery returns any NULL value, NOT IN returns UNKNOWN for *every* row, and you get zero results. Always ensure the subquery column is NOT NULL, or use NOT EXISTS instead (which handles NULLs correctly). In this problem, employee_id is a primary key (no NULLs), so NOT IN is safe.
 
 **The thread.** NOT IN uses a subquery as a lookup set. The next problem introduces a scalar subquery — one that returns a single value used as a comparison target.`,
@@ -61,6 +77,27 @@ ORDER BY id;
 \`\`\`
 
 **Why it matters.** This combines CASE WHEN with a scalar subquery. The subquery \`SELECT MAX(id) FROM Seat\` computes the total number of rows. The CASE logic uses it to handle the edge case: if id is odd and it's the last row, don't swap (keep the same id). The subquery runs once and its result is used in every row's CASE evaluation.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "student"],
+  "before": [
+    [1, "Abbot"],
+    [2, "Doris"],
+    [3, "Emerson"],
+    [4, "Green"],
+    [5, "Jeames"]
+  ],
+  "after": [
+    [1, "Doris"],
+    [2, "Abbot"],
+    [3, "Green"],
+    [4, "Emerson"],
+    [5, "Jeames"]
+  ],
+  "caption": "Seats 1-2 and 3-4 swap. Seat 5 (odd, and MAX(id)) keeps Jeames in place — the CASE's edge-case branch."
+}
+\`\`\`
 
 **The insight.** Scalar subqueries in SELECT or WHERE clauses are evaluated once (or once per outer row if correlated). They're the simplest way to inject a computed value (count, max, average) into a row-level expression. Think of them as "computed constants."
 
@@ -94,6 +131,21 @@ UNION ALL
 \`\`\`
 
 **Why it matters.** This is two independent queries combined with UNION ALL. Each query answers a different question, and UNION ALL stacks them vertically. The trick is that each subquery has its own ORDER BY and LIMIT — you must wrap them in parentheses in MySQL for the ORDER BY to apply to the subquery (not the entire UNION).
+
+\`\`\`viz:table-diff
+{
+  "columns": ["query", "results"],
+  "before": [
+    ["most-rated user", null],
+    ["top-rated movie (Feb 2020)", null]
+  ],
+  "after": [
+    ["most-rated user", "Alice"],
+    ["top-rated movie (Feb 2020)", "Coco"]
+  ],
+  "caption": "Alice rated 2 movies vs. Bob's 1. Inception and Coco tie at avg rating 4.0 in Feb 2020, so the alphabetically-first title, Coco, wins."
+}
+\`\`\`
 
 **The insight.** UNION ALL keeps duplicates; UNION removes them. Use UNION ALL when you know the results are already distinct or when duplicates are meaningful. UNION ALL is always faster because it skips the deduplication step.
 

@@ -30,6 +30,15 @@ SET sex = CASE WHEN sex = 'm' THEN 'f' ELSE 'm' END;
 
 **Why it matters.** This is the simplest possible CASE WHEN in an UPDATE. The beauty is that CASE evaluates the *original* value before any changes — so you don't need a temporary variable or multiple statements. All swaps happen "simultaneously" within the single UPDATE.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "sex"],
+  "before": [[1, "m"], [2, "f"], [3, "m"]],
+  "after": [[1, "f"], [2, "m"], [3, "f"]],
+  "caption": "Every row's sex value flips in place — CASE reads the pre-update value, so there's no risk of a double-swap."
+}
+\`\`\`
+
 **The insight.** CASE WHEN in UPDATE is transactional — the old value is read, the CASE evaluated, and the new value written. There's no risk of 'm' → 'f' → 'm' double-swap because the CASE reads from the pre-update state, not the mid-update state.
 
 **The thread.** CASE in UPDATE transforms data in place. The next problem uses CASE in SELECT to create a computed column — categorising data on the fly without changing the underlying table.`,
@@ -56,6 +65,27 @@ ORDER BY employee_id;
 
 **Why it matters.** This combines CASE WHEN with modulo (odd/even check) and LIKE (pattern matching). The compound condition (AND) inside WHEN demonstrates that WHEN clauses can contain any valid boolean expression — not just simple equality checks.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["employee_id", "name", "salary", "bonus"],
+  "before": [
+    [2, "Meir", 3000, null],
+    [3, "Michael", 3800, null],
+    [7, "Addilyn", 7400, null],
+    [8, "Juan", 6100, null],
+    [9, "Kannon", 7700, null]
+  ],
+  "after": [
+    [2, "Meir", 3000, 0],
+    [3, "Michael", 3800, 0],
+    [7, "Addilyn", 7400, 7400],
+    [8, "Juan", 6100, 0],
+    [9, "Kannon", 7700, 7700]
+  ],
+  "caption": "Only odd employee_ids whose name doesn't start with 'M' get the full salary as bonus (7, 9) — even ids and 'M' names get 0, even though 3 is odd."
+}
+\`\`\`
+
 **The insight.** CASE WHEN evaluates top-to-bottom and short-circuits at the first TRUE condition. Order your WHEN clauses from most specific to most general. If you put ELSE first (which you can't, but conceptually), you'd mask all the specific conditions.
 
 **The thread.** CASE for calculation. The next problem uses CASE inside GROUP BY to create a pivot — transforming row values into column headers.`,
@@ -81,6 +111,27 @@ FROM Tree;
 \`\`\`
 
 **Why it matters.** This combines CASE WHEN with a subquery. The root check is simple (p_id IS NULL). The leaf check requires knowing whether this node's id appears as anyone else's p_id — which requires a subquery. The ELSE catches everything that's neither root nor leaf — inner nodes.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "p_id", "type"],
+  "before": [
+    [1, null, null],
+    [2, 1, null],
+    [3, 1, null],
+    [4, 2, null],
+    [5, 2, null]
+  ],
+  "after": [
+    [1, null, "Root"],
+    [2, 1, "Inner"],
+    [3, 1, "Leaf"],
+    [4, 2, "Leaf"],
+    [5, 2, "Leaf"]
+  ],
+  "caption": "Node 2 is both someone's child and someone's parent, so it's Inner; nodes 3, 4, 5 have no children of their own, so they're Leaf."
+}
+\`\`\`
 
 **The insight.** The order of WHEN clauses matters logically here: check root first (it has no parent), then leaf (it's not anyone's parent), then inner (everything else). Re-ordering would still work because the conditions are mutually exclusive, but the logical flow is clearest in this order.
 

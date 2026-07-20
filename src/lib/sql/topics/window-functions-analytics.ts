@@ -36,6 +36,25 @@ WHERE l.num = l.next1 AND l.num = l.next2;
 
 **Why it matters.** LEAD(num, 1) looks one row ahead; LEAD(num, 2) looks two rows ahead (both ordered by id). If all three — current, next, and next-next — are equal, we found three consecutive occurrences. This is cleaner than a triple self-join approach.
 
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "num", "next1", "next2"],
+  "before": [
+    [1, 1, null, null],
+    [2, 1, null, null],
+    [3, 1, null, null],
+    [4, 2, null, null],
+    [5, 1, null, null],
+    [6, 2, null, null],
+    [7, 2, null, null]
+  ],
+  "after": [
+    [1, 1, 1, 1]
+  ],
+  "caption": "Only id=1 has num = next1 = next2 (three 1's in a row, ids 1-3). SELECT DISTINCT then reports ConsecutiveNums = 1."
+}
+\`\`\`
+
 **The insight.** LEAD(column, offset) and LAG(column, offset) are the go-to tools for comparing a row with its neighbours. LAG looks backward; LEAD looks forward. The offset parameter (default 1) controls how far ahead/behind to look. A third optional parameter sets the default value when there is no neighbour (e.g., at the edge of the result set).
 
 **The thread.** Looking ahead with LEAD. The next problem uses running SUM to compute cumulative totals — the foundation of time-series analysis.`,
@@ -63,6 +82,25 @@ LIMIT 1;
 \`\`\`
 
 **Why it matters.** SUM(weight) OVER (ORDER BY turn) is a *running total* — for each row, it sums the weight of all rows up to and including the current one (in turn order). This turns a row-level value (individual weight) into a cumulative value. Filtering WHERE cumulative_weight <= 1000 keeps everyone who can fit; ORDER BY DESC + LIMIT 1 gives the last person who fit.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["person_name", "weight", "cumulative_weight"],
+  "before": [
+    ["Alice", 250, null],
+    ["Bob", 175, null],
+    ["Alex", 400, null],
+    ["John", 350, null]
+  ],
+  "after": [
+    ["Alice", 250, 250],
+    ["Bob", 175, 425],
+    ["Alex", 400, 825],
+    ["John", 350, 1175]
+  ],
+  "caption": "The running total crosses 1000 at John (1175). Filtering to <= 1000, ordering DESC, and taking LIMIT 1 leaves Alex (825) as the last person who fits."
+}
+\`\`\`
 
 **The insight.** SUM OVER (ORDER BY ...) with no PARTITION BY computes a running total over the entire result set. Adding PARTITION BY would restart the running total for each group. The window frame defaults to ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW — meaning "sum everything from the start up to here."
 
@@ -98,6 +136,29 @@ ORDER BY h.id;
 \`\`\`
 
 **Why it matters.** This is the famous **gaps and islands** pattern — one of the hardest and most useful SQL patterns. The trick: filter to only high-traffic rows, then compute \`id - ROW_NUMBER()\`. For consecutive rows, this difference is constant (an "island" shares the same group number). Non-consecutive rows break the pattern (creating "gaps"). Group by this computed value and keep only groups with 3+ rows.
+
+\`\`\`viz:table-diff
+{
+  "columns": ["id", "visit_date", "people"],
+  "before": [
+    [1, "2017-01-01", 10],
+    [2, "2017-01-02", 109],
+    [3, "2017-01-03", 150],
+    [4, "2017-01-04", 99],
+    [5, "2017-01-05", 145],
+    [6, "2017-01-06", 1455],
+    [7, "2017-01-07", 199],
+    [8, "2017-01-09", 188]
+  ],
+  "after": [
+    [5, "2017-01-05", 145],
+    [6, "2017-01-06", 1455],
+    [7, "2017-01-07", 199],
+    [8, "2017-01-09", 188]
+  ],
+  "caption": "id=4 (99 people) breaks the island: ids 2-3 form a group of only 2 (dropped), while ids 5-8 form a group of 4 (kept)."
+}
+\`\`\`
 
 **The insight.** Why does \`id - ROW_NUMBER()\` work? In consecutive rows, both id and ROW_NUMBER increase by 1 per row, so their difference stays constant. When there's a gap in id (a low-traffic day was filtered out), the difference changes, starting a new island. This is the most elegant algorithm in all of SQL analytics, and understanding it deeply is a genuine interview differentiator.
 

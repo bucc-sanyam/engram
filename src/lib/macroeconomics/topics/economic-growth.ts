@@ -30,7 +30,26 @@ Originating from Keynes, Kalecki, and Sraffian economics (e.g., Garegnani, Serra
 - **The Core Idea:** Economic growth is determined by the growth of the **autonomous elements of aggregate demand** (autonomous consumption, autonomous investment, government expenditure, and exports).
 - **The Mechanism:** Production responds to demand. Capital is simply "produced means of production"—if firms expect higher demand, they will invest to build more capital. 
 - **The Assumptions:** There is **no tendency to full employment**. Growth is path-dependent and historical. Capital is not scarce; surplus labour exists.
-- **Policy Implication:** Active and systematic government intervention is required to generate autonomous demand and attain full employment. 
+- **Policy Implication:** Active and systematic government intervention is required to generate autonomous demand and attain full employment.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "demand", "label": "Autonomous Demand Rises (Exports, Govt Spending)", "row": 0, "col": 0 },
+    { "id": "expect", "label": "Firms Expect Higher Future Demand", "row": 1, "col": 0 },
+    { "id": "invest", "label": "Firms Invest to Expand Capacity", "row": 2, "col": 0 },
+    { "id": "capital", "label": "Capital Stock Grows", "row": 3, "col": 0 },
+    { "id": "growth", "label": "Output & Employment Grow", "row": 4, "col": 0 }
+  ],
+  "edges": [
+    { "from": "demand", "to": "expect", "label": "signals opportunity" },
+    { "from": "expect", "to": "invest", "label": "induces investment" },
+    { "from": "invest", "to": "capital", "label": "produced means of production" },
+    { "from": "capital", "to": "growth", "label": "expands capacity" }
+  ],
+  "caption": "In demand-led growth theory, capital accumulation is not the ultimate driver — it is itself induced by expected demand, reversing the supply-side story where growth is limited only by diminishing returns to capital."
+}
+\`\`\`
 
 **3. Classical Growth Theories (Smith, Ricardo, Marx)**
 The demand-led models draw heavily from the Classicals. Adam Smith identified the 'division of labour' (technological progress) constrained by the 'extent of the market' (aggregate demand) as the engine of growth. Ricardo highlighted the ecological limit of diminishing returns on land. Marx warned that capitalism's tendency to depress wages leads to *underconsumption*, causing recurrent crises of unsold goods.`,

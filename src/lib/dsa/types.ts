@@ -1,3 +1,5 @@
+import type { QuestionKind } from "@/lib/types";
+
 /**
  * The Pattern Atlas — static content types for the DSA blog series.
  *
@@ -8,6 +10,16 @@
  */
 
 export type DsaDifficulty = "Easy" | "Medium" | "Hard";
+
+export type DsaQuestion = {
+  kind: QuestionKind;
+  prompt: string;
+  options?: string[];
+  correct_index?: number;
+  correct_indices?: number[];
+  model_answer: string;
+  difficulty: "basic" | "intermediate" | "advanced";
+};
 
 export type DsaProblem = {
   /** URL segment under the chapter, e.g. "two-sum" */
@@ -20,6 +32,8 @@ export type DsaProblem = {
   summary: string;
   /** The blog itself — markdown rendered by src/components/Markdown.tsx */
   body: string;
+  /** Domain-specific questions for this algorithm */
+  questions?: DsaQuestion[];
 };
 
 export type DsaTopic = {

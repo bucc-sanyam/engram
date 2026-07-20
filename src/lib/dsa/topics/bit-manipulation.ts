@@ -29,6 +29,19 @@ On the roadmap, Bit Manipulation hangs off 1-D DP and unlocks Math & Geometry. I
 
 **The walk-through.** [4, 1, 2, 1, 2]: running XOR — 4, then 4^1 = 5, 5^2 = 7, 7^1 = 6, 6^2 = **4**. The intermediate values look like noise — they are; only the final cancellation pattern matters, and regrouped it reads 4 ^ (1^1) ^ (2^2) = 4 ^ 0 ^ 0 = 4.
 
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [4, 1, 2, 1, 2], "pointers": [{ "label": "i", "index": 0 }], "note": "Running XOR = 4." },
+    { "cells": [4, 1, 2, 1, 2], "pointers": [{ "label": "i", "index": 1 }], "note": "4 ^ 1 = 5." },
+    { "cells": [4, 1, 2, 1, 2], "pointers": [{ "label": "i", "index": 2 }], "note": "5 ^ 2 = 7." },
+    { "cells": [4, 1, 2, 1, 2], "pointers": [{ "label": "i", "index": 3 }], "highlight": [1, 3], "note": "7 ^ 1 = 6 — the two 1's have now cancelled." },
+    { "cells": [4, 1, 2, 1, 2], "pointers": [{ "label": "i", "index": 4 }], "highlight": [0, 2, 4], "note": "6 ^ 2 = 4 — the two 2's cancel too, leaving the loner 4." }
+  ],
+  "caption": "Single Number — one running XOR accumulator; every pair cancels, only the loner survives."
+}
+\`\`\`
+
 **Why this beats its rivals.** Sorting first: O(n log n) and mutates. Hash set (add on first sight, remove on second — the survivor remains): O(n) space. Sum trick (2 × sum-of-distinct − sum): needs the distinct set anyway. XOR: one accumulator, one pass, no arithmetic overflow concerns even in fixed-width languages — XOR never carries.
 
 **The famous follow-ups, named.** Every element thrice except one: count each bit position modulo 3 (XOR generalised to a per-bit counter). *Two* loners: XOR gives their combined signature; split all numbers into two groups by any set bit of that signature and recurse the cancellation per group. Both are standard sequels; knowing they exist marks the territory.
@@ -50,6 +63,18 @@ On the roadmap, Bit Manipulation hangs off 1-D DP and unlocks Math & Geometry. I
 **The trick — n & (n − 1).** Subtracting 1 from a binary number flips the lowest set bit to 0 and every bit *below* it to 1 (the borrow ripples up to the first 1 and stops): 1011 0100 − 1 = 1011 0011. AND that with the original and everything below the lowest set bit was already 0, the lowest set bit meets a 0 — the result is the original **with its lowest 1 deleted**, all higher bits untouched. So loop: n = n & (n − 1), count++, until n is 0. The loop runs *once per set bit* — three iterations for 1011, one for a power of two — not once per position. For sparse numbers that is a real win; as an interview artifact it is a handshake: fluency in one line.
 
 **The walk-through.** n = 1011₂: & with 1010 → 1010 (count 1); & with 1001 → 1000 (count 2); & with 0111 → 0 (count 3). Done — three ones, three iterations.
+
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": ["1", "0", "1", "1"], "highlight": [3], "note": "n = 1011 — lowest set bit is the rightmost 1." },
+    { "cells": ["1", "0", "1", "0"], "highlight": [2], "note": "n & (n - 1) = 1010 — lowest bit cleared, count = 1." },
+    { "cells": ["1", "0", "0", "0"], "highlight": [0], "note": "n & (n - 1) = 1000 — count = 2." },
+    { "cells": ["0", "0", "0", "0"], "note": "n & (n - 1) = 0000 — count = 3, loop ends." }
+  ],
+  "caption": "Number of 1 Bits — n & (n - 1) deletes the lowest set bit each round; three deletions, three set bits."
+}
+\`\`\`
 
 **Where popcount actually matters.** Hamming distance (XOR two values, popcount the result — how many positions differ, the metric behind error-correcting codes), bitboards in chess engines, bloom filters, compressed bitmaps in databases. Modern CPUs ship it as a single instruction — POPCNT — and most languages expose an intrinsic; mentioning that you would call the intrinsic in production, and implement the trick in interviews, is exactly the right register.
 

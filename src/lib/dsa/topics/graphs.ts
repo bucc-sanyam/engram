@@ -25,19 +25,38 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/count-number-of-islands",
       summary: "Flood fill: every unvisited land cell you trip over is a new island — sink it whole and keep scanning.",
-      body: `**The problem.** A grid of 1s (land) and 0s (water): count the islands — maximal groups of land connected up/down/left/right. The hello-world of graph problems, and the template a dozen later problems reuse.
+      body: `**Signal.** "Count the islands — maximal groups of land connected up/down/left/right" — connectivity over a grid is the tell that cells are nodes, adjacency is edges, and an island is a **connected component**: "how many connected components does this graph have?"
 
-**The modelling step first.** Nobody hands you nodes and edges. *You* declare them: each cell is a node; orthogonal neighbours are edges. An island is then precisely a **connected component** — a set of nodes mutually reachable — and the question becomes "how many connected components does this graph have?" Saying that sentence out loud in an interview is worth as much as the code.
+**Brute force.** For every land cell, run a fresh search to find all cells reachable from it and record the resulting set — massively redundant, since every cell in the same island re-derives the same component from scratch: O((rows·cols)²) in the worst case.
 
-**The insight.** Scan the grid cell by cell. Water: skip. Land you have *already visited*: skip — it belongs to an island you have counted. Land you have never seen: you have discovered a brand-new island — count it, and immediately **flood-fill** from it: DFS (or BFS) to every reachable land cell, marking each visited, so the rest of this island can never trigger the counter again. The count increments exactly once per component, at its first-discovered cell; the fill is what enforces "exactly once."
+**Optimal approach.** Scan the grid cell by cell. Water: skip. Land already visited: skip — it belongs to an island already counted. Land never seen: a brand-new island — count it, and immediately **flood-fill** from it: DFS (or BFS) to every reachable land cell, marking each visited, so the rest of this island can never trigger the counter again. Marking can be a visited set or the common trick of overwriting the cell to 0, "sinking" the island into the grid itself.
 
-**The mechanics.** DFS from a cell: bounds-check, water-check, visited-check — return on any; otherwise mark and recurse in four directions. Marking can be a visited set or — the common trick — overwriting the cell to 0, "sinking" the island into the grid itself (mutation traded for memory; mention the trade). This is Word Search's mark-and-explore made permanent: no unchoose, because visited means *globally done*, not "in my current path" — the deep difference between component exploration and backtracking.
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "r0c0", "label": "1", "row": 0, "col": 0 },
+    { "id": "r0c1", "label": "1", "row": 0, "col": 1 },
+    { "id": "r0c2", "label": "0", "row": 0, "col": 2 },
+    { "id": "r1c0", "label": "1", "row": 1, "col": 0 },
+    { "id": "r1c1", "label": "1", "row": 1, "col": 1 },
+    { "id": "r1c2", "label": "0", "row": 1, "col": 2 },
+    { "id": "r2c0", "label": "0", "row": 2, "col": 0 },
+    { "id": "r2c1", "label": "0", "row": 2, "col": 1 },
+    { "id": "r2c2", "label": "1 (island 2)", "row": 2, "col": 2 }
+  ],
+  "edges": [
+    { "from": "r0c0", "to": "r0c1" },
+    { "from": "r0c0", "to": "r1c0" },
+    { "from": "r0c1", "to": "r1c1" },
+    { "from": "r1c0", "to": "r1c1" }
+  ],
+  "caption": "Two connected components: the top-left 2×2 block (island 1, fully flood-filled) and the isolated cell at (2,2) (island 2). The scan counts each exactly once, at first discovery."
+}
+\`\`\`
 
-**The walk-through.** Grid rows 110 / 110 / 001. Cell (0,0): new land → count 1, flood sinks the four connected 1s. Scan continues over sunk cells silently. Cell (2,2): new land → count 2. Answer 2.
+**Complexity.** O(rows × cols) time — each cell touched a constant number of times — O(rows × cols) space worst case (recursion depth) — versus the brute force's quadratic re-derivation of the same components.
 
-**Complexity.** O(rows × cols) time — each cell touched a constant number of times — O(rows × cols) space worst case (recursion depth on an all-land grid; an explicit stack or BFS queue dodges deep-recursion limits, a practical aside worth one sentence).
-
-**The thread.** Counting components was a yes/no per cell. Next problem asks the fill to *measure* what it sinks — same traversal, now with a return value.`,
+**Thread.** Counting components was a yes/no per cell. Next problem asks the fill to *measure* what it sinks — same traversal, now with a return value.`,
     },
     {
       slug: "max-area-of-island",
@@ -45,19 +64,29 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/max-area-of-island",
       summary: "The same flood fill, now counting as it sinks — traversals that measure, not just visit.",
-      body: `**The problem.** Same grid, new question: the *area* of the largest island. Zero if there is no land.
+      body: `**Signal.** "The *area* of the largest island" — the same connected-component structure as Number of Islands, but now the traversal must return a measurement instead of just a yes/no discovery, which is the tell that the flood fill needs a return value, not just a visited mark.
 
-**The insight.** Identical skeleton to Number of Islands — scan, discover, flood — but the fill now *returns a number*. Define it recursively, exactly the way Trees taught you: the area claimed from this cell is 0 if out-of-bounds, water, or visited; otherwise 1 (me) plus whatever the four recursive neighbour calls claim. Sink cells as you count so nothing is claimed twice. The outer scan keeps a running maximum of the areas its discoveries report. That is the entire change — and that is the lesson: the traversal is a *chassis*, and what you bolt on (a counter, a max, a collected list, a painted colour) varies freely without touching the chassis. Interviewers love follow-ups precisely because they test whether you built the chassis or memorised one assembly.
+**Brute force.** Flood-fill each island as in Number of Islands purely to mark it, then in a separate pass count how many cells belong to each labeled island — works, but does the counting in a second pass instead of folding it into the same walk.
 
-**The walk-through.** Grid rows 0110 / 0100 / 0011. Discovery at (0,1): the fill claims (0,1), (0,2)… wait — (0,2) is 1, (1,1) is 1: total 3. Discovery at (2,2): claims (2,2), (2,3): total 2. Max: 3.
+**Optimal approach.** Identical skeleton to Number of Islands — scan, discover, flood — but the fill now *returns a number*. Define it recursively, exactly the way Trees taught you: the area claimed from this cell is 0 if out-of-bounds, water, or visited; otherwise 1 (me) plus whatever the four recursive neighbour calls claim. Sink cells as you count so nothing is claimed twice. The outer scan keeps a running maximum of the areas its discoveries report.
 
-**The recursion-shape note.** The return-a-count fill is *structurally* Maximum Depth of Binary Tree — combine children's answers with mine — except "children" are the four neighbours and the visited-check prevents infinite loops where the tree's shape used to. Once you see grid-DFS as tree-DFS plus a visited set, every one of these problems is ten minutes.
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "c01", "label": "(0,1): 1 + area(0,2) + area(1,1)", "children": ["c02", "c11"], "highlight": true },
+    { "id": "c02", "label": "(0,2): 1 (leaf — neighbours are water/out of bounds)", "highlight": true },
+    { "id": "c11", "label": "(1,1): 1 (leaf)", "highlight": true }
+  ],
+  "rootId": "c01",
+  "caption": "area(0,1) = 1 + area(0,2) + area(1,1) = 3 — the same combine-children-with-mine shape as Maximum Depth of Binary Tree, with grid neighbours standing in for tree children."
+}
+\`\`\`
 
-**Variations to expect.** Diagonals count as connected (eight directions instead of four — one array change). Perimeter instead of area (count exposed edges: contribute 1 for each neighbour that is water or out of bounds). Number of *distinct island shapes* (serialize each fill's path — chapter seven's serialization trick, sideways). All the same chassis.
+**The recursion-shape note.** Once you see grid-DFS as tree-DFS plus a visited set, every one of these problems is ten minutes. Variations to expect: eight-directional connectivity (diagonals count), perimeter instead of area (contribute 1 per water/out-of-bounds neighbour), or distinct island shapes (serialize each fill's path).
 
-**Complexity.** O(rows × cols) time and space, as before.
+**Complexity.** O(rows × cols) time and space, as before — versus the brute force's extra full pass to tally areas after the fact.
 
-**The thread.** Grids two, abstract graphs zero. Clone Graph, next, hands you honest nodes and pointers — and asks you to deep-copy a structure that may loop back on itself mid-copy.`,
+**Thread.** Grids two, abstract graphs zero. Clone Graph, next, hands you honest nodes and pointers — and asks you to deep-copy a structure that may loop back on itself mid-copy.`,
     },
     {
       slug: "clone-graph",
@@ -65,19 +94,26 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/clone-graph",
       summary: "Deep-copy a cyclic structure: the old-to-new map is both your correspondence and your visited set.",
-      body: `**The problem.** Given a node of a connected, undirected graph (each node: a value and a neighbour list), return a deep copy — new nodes, wired identically, no references into the original.
+      body: `**Signal.** "Return a deep copy — new nodes, wired identically" of a graph that may contain **cycles** — the possibility of a cycle is the tell that naive recursive copying (clone a node, then recursively clone its neighbours) will loop forever, the way it never could on a tree.
 
-**Why naive copying loops forever.** Copy a node, then recursively copy its neighbours: in a graph with a cycle — even a simple triangle — the recursion returns to where it started, copies it *again*, and never terminates. The tree version of this problem is trivial precisely because trees cannot do that. The cycle is the problem.
+**Brute force (why it fails).** Copy a node, then recursively copy its neighbours — in a graph with a cycle, even a simple triangle, the recursion returns to where it started, copies it *again*, and never terminates. Not a slower solution, a non-terminating one.
 
-**The insight.** You met this exact difficulty in Copy List with Random Pointer, and the same cure works: a hash map from original → clone. On visiting a node, check the map first: **already cloned → return the existing clone** — this both breaks the infinite loop *and* wires cycles correctly, because the second visitor links to the same clone the first visitor made, recreating the cycle in the copy. Not in the map → create the clone, *register it immediately* (before touching neighbours — registration order is the entire correctness argument), then fill its neighbour list with recursive clones of the original's neighbours. The map plays two roles at once: correspondence table and visited set. Realising those are the same object here is the aha.
+**Optimal approach.** A hash map from original → clone, the same cure as Copy List with Random Pointer. On visiting a node, check the map first: **already cloned → return the existing clone** — this both breaks the infinite loop *and* wires cycles correctly, because the second visitor links to the same clone the first visitor made. Not in the map → create the clone, *register it immediately* (before touching neighbours — registration order is the entire correctness argument), then fill its neighbour list with recursive clones of the original's neighbours.
 
-**The walk-through.** Triangle 1–2, 2–3, 3–1. Clone 1, register. Neighbour 2: clone, register; its neighbour 3: clone, register; *its* neighbour 1 — in the map → link to clone-1, cycle closed cleanly; 3's list done; back up, 2's list done; 1's list done. Every node cloned once, every edge wired twice (undirected), recursion terminated by the map alone.
+\`\`\`viz:table-diff
+{
+  "columns": ["Original node", "Clone (map entry)"],
+  "before": [[1, "clone-1 (registered before recursing)"], [2, "clone-2 (registered before recursing into 3)"]],
+  "after": [[3, "clone-3 registered; its neighbour 1 is already in the map → link to clone-1, closing the cycle"]],
+  "caption": "Clone Graph on a triangle 1–2–3–1 — registering each clone before recursing into its neighbours is what lets the third visitor close the cycle instead of recursing forever."
+}
+\`\`\`
 
-**Register-before-recursing** is the line to get right: register after, and a cycle re-enters the unregistered node and recurses forever. Same discipline as marking BFS nodes at *enqueue* time — commit at first contact.
+**Register-before-recursing** is the line to get right: register after, and a cycle re-enters the unregistered node and recurses forever — the same discipline as marking BFS nodes at *enqueue* time.
 
-**Complexity.** O(V + E) time — each node cloned once, each edge walked from both ends — O(V) space for the map plus recursion. BFS with the same map works identically; the map, not the traversal, is the algorithm.
+**Complexity.** O(V + E) time — each node cloned once, each edge walked from both ends — O(V) space for the map plus recursion. BFS with the same map works identically.
 
-**The thread.** DFS has had three wins. Time for BFS to show what only it can do: Walls and Gates — distances rippling outward from *many* sources at once.`,
+**Thread.** DFS has had three wins. Time for BFS to show what only it can do: Walls and Gates — distances rippling outward from *many* sources at once.`,
     },
     {
       slug: "walls-and-gates",
@@ -85,19 +121,26 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/islands-and-treasure",
       summary: "Multi-source BFS: start the wave from every gate at once, and each cell's first touch is its true distance.",
-      body: `**The problem.** A grid of gates (0), walls (−1), and open rooms (infinity): fill each room with the distance to its *nearest* gate. Unreachable rooms stay infinite. (NeetCode dresses it as islands and treasure; the structure is identical.)
+      body: `**Signal.** "Fill each room with the distance to its *nearest* gate" — multiple sources competing for "nearest," in an unweighted grid, is the tell for multi-source BFS: let the sources broadcast outward together instead of asking each room to search for one.
 
-**The wrong direction.** BFS from each room outward, looking for a gate? Correct answers, ruinous cost — every room repeats work over the same terrain: O(rooms × cells). The reflex to build instead: **flip the direction**. Do not ask each consumer to find its nearest source; let the sources *broadcast*.
+**Brute force.** BFS from each room outward, looking for the nearest gate — correct, but every room repeats work over the same terrain: O(rooms × cells) in the worst case.
 
-**The insight — multi-source BFS.** Seed the queue with **every gate simultaneously**, all at distance 0, then run one ordinary BFS. The wave expands in lockstep rings: first every cell at distance 1 from *some* gate, then distance 2, and so on. When the wave first touches a room, that touch is — provably — from its nearest gate: no closer gate exists, or its ring would have arrived earlier. Nearest-gate competition, which sounded like it needed per-room comparisons, is resolved automatically by *arrival order*. One traversal, every answer.
+**Optimal approach.** Seed the queue with **every gate simultaneously**, all at distance 0, then run one ordinary BFS. The wave expands in lockstep rings: first every cell at distance 1 from *some* gate, then distance 2, and so on. When the wave first touches a room, that touch is — provably — from its nearest gate: no closer gate exists, or its ring would have arrived earlier. Enqueue all gates; pop a cell; for each orthogonal neighbour that is an open room still marked infinite, write distance = mine + 1 and enqueue it. Walls never enter the queue.
 
-**The mechanics.** Enqueue all gates. Pop a cell; for each orthogonal neighbour that is an open room still marked infinite (that check doubles as the visited set — already-filled cells are claimed), write distance = mine + 1 and enqueue it. Walls never enter the queue. Mark at *enqueue* time, as always — two gates flanking one room must not both claim it.
-
-**The walk-through.** Row: gate, room, room, wall, room, gate. The wave: both gates enqueue. Ring 1: the rooms adjacent to each gate get 1. Ring 2: the middle-left room gets 2. The wall stops propagation; the room beyond it was reached from the right gate at distance 1, not from the left at distance 4 — arrival order did the min() for free.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [0, "INF", "INF", -1, "INF", 0], "note": "Seed: both gates (ends) enqueued at distance 0. Room cells start at infinity; the wall (-1) never joins the queue." },
+    { "cells": [0, 1, "INF", -1, 1, 0], "highlight": [1, 4], "note": "Ring 1: the rooms adjacent to each gate get distance 1." },
+    { "cells": [0, 1, 2, -1, 1, 0], "highlight": [2], "note": "Ring 2: the middle-left room reaches distance 2 (the wall blocks propagation from that side). The room right of the wall was already claimed at distance 1 from the right gate — arrival order resolved the nearest-gate competition for free." }
+  ],
+  "caption": "Walls and Gates — multi-source BFS: every gate broadcasts at once, and first-touch is always shortest-distance."
+}
+\`\`\`
 
 **Complexity.** O(cells) time, O(cells) space — versus the per-room version's O(cells²) in the worst case.
 
-**The thread.** Multi-source BFS with distances as rings. Rotting Oranges, next, is the same wave wearing a stopwatch — rings become *minutes*, and the question becomes "how long until the wave has touched everything it ever will?"`,
+**Thread.** Multi-source BFS with distances as rings. Rotting Oranges, next, is the same wave wearing a stopwatch — rings become *minutes*, and the question becomes "how long until the wave has touched everything it ever will?"`,
     },
     {
       slug: "rotting-oranges",
@@ -105,17 +148,29 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/rotting-fruit",
       summary: "BFS rings as time steps: rot spreads one minute per ring, and leftovers mean minus one.",
-      body: `**The problem.** A grid of empty cells, fresh oranges, and rotten oranges. Every minute, rot spreads to orthogonally adjacent fresh oranges. How many minutes until nothing fresh remains — or −1 if some orange can never be reached?
+      body: `**Signal.** "Every minute, rot spreads to adjacent fresh oranges — how many minutes until none remain" — synchronized, step-wise spreading from multiple existing sources is the tell that this is Walls and Gates with the story changed: rotten oranges are the sources, and BFS depth is literally elapsed time.
 
-**The insight.** This is Walls and Gates with the story changed: rotten oranges are the sources, rot-spread is the BFS wave, and **each BFS ring is one minute of simulated time**. Multi-source seed (all initially rotten oranges at minute 0), expand ring by ring, and the answer is the number of the last ring that actually rotted something. The mapping "BFS depth = elapsed time" is the transferable idea — any synchronised, step-wise spreading process (fire, infection, signal propagation) is this exact algorithm.
+**Brute force.** Simulate minute by minute with a full grid rescan each time, checking every cell for a rotten neighbour — O(cells) work per minute, and the number of minutes isn't known up front, so this restarts the scan far more than a queue-driven wave needs to.
 
-**The bookkeeping that decides correctness.** Two details carry the problem. First, ring boundaries: process the queue level-by-level (snapshot its size per round — the Level Order Traversal loop from Trees, back again) so minutes tick once per ring, not once per orange. Second, count the fresh oranges up front; decrement as they rot. When the wave dies out, leftover fresh count > 0 → −1: some orange was walled off by empty cells. Edge cases interviewers watch for: zero fresh oranges at the start → answer 0 (no time passes — do not report the seed round as a minute); no rotten oranges but fresh ones exist → −1 immediately.
+**Optimal approach.** Multi-source seed (all initially rotten oranges at minute 0), expand ring by ring — process the queue level-by-level (snapshot its size per round, the Level Order Traversal loop from Trees) so minutes tick once per ring, not once per orange. Count the fresh oranges up front; decrement as they rot. When the wave dies out, leftover fresh count > 0 means some orange was walled off by empty cells → −1.
 
-**The walk-through.** Rows: rotten-fresh-fresh / fresh-fresh-empty / empty-fresh-fresh. Minute 1: the two oranges beside the source rot. Minute 2: two more. Minute 3: one more. Minute 4: the last one. Queue empties, fresh count 0 → answer 4. Wall off the bottom-right pair with empties instead, and they never rot → −1.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [5], "note": "Minute 0: one rotten orange seeds the queue. 5 fresh oranges remain." },
+    { "cells": [3], "note": "Minute 1 (BFS ring 1): the oranges adjacent to the source rot. Fresh remaining: 3." },
+    { "cells": [1], "note": "Minute 2 (ring 2): two more rot. Fresh remaining: 1." },
+    { "cells": [0], "highlight": [0], "note": "Minute 3 (ring 3): the last orange rots. Fresh remaining: 0 — answer: 3 minutes." }
+  ],
+  "caption": "Rotting Oranges — each BFS ring is exactly one minute of simulated time; the answer is the ring number of the last cell that rotted."
+}
+\`\`\`
 
-**Complexity.** O(cells) time and space — every cell enqueued at most once; each minute is a queue generation, not a grid rescan.
+**Edge cases interviewers watch for:** zero fresh oranges at the start → answer 0 (don't count the seed round as a minute); no rotten oranges but fresh ones exist → −1 immediately.
 
-**The thread.** Two waves outward from sources. Pacific Atlantic, next, inverts the flow direction *again* — water that must reach two oceans, solved by walking uphill from the coastlines and intersecting.`,
+**Complexity.** O(cells) time and space — versus the repeated-full-rescan brute force's higher constant factor per minute.
+
+**Thread.** Two waves outward from sources. Pacific Atlantic, next, inverts the flow direction *again* — water that must reach two oceans, solved by walking uphill from the coastlines and intersecting.`,
     },
     {
       slug: "pacific-atlantic-water-flow",
@@ -123,19 +178,33 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/pacific-atlantic-water-flow",
       summary: "Reverse the flow: climb from each coastline, take the intersection of the two reachable sets.",
-      body: `**The problem.** A height grid; rain flows from any cell to orthogonal neighbours of **equal or lower** height. The Pacific touches the top and left edges, the Atlantic the bottom and right. Which cells can send water to *both* oceans?
+      body: `**Signal.** "Which cells can send water to *both* oceans" — a from-every-cell reachability question over a large grid is the tell to reverse it: ask what the oceans can reach by climbing, instead of what every cell can reach by descending.
 
-**The forward trap.** From each cell, search downhill for both coastlines: O(cells) work per cell, O(cells²) total, with wild re-exploration — the same per-consumer waste as Walls and Gates, and the same cure.
+**Brute force.** From each cell, search downhill for both coastlines — O(cells) work per cell, O(cells²) total, with wild re-exploration since neighbouring cells re-walk almost the same downhill paths.
 
-**The insight — run the river backwards.** Instead of asking "which cells reach the Pacific?", ask "which cells can the Pacific reach, *climbing*?" Start from every Pacific-edge cell (multi-source again) and traverse with the rule inverted: you may step to a neighbour whose height is **greater than or equal to** yours — walking uphill traces exactly the paths water would have run down. The visited set of that traversal *is* the full pacific-reachable set, computed in one sweep. Do the same from the Atlantic edges. The answer is the **intersection** of the two sets. Two linear traversals and a set intersection replace a quadratic forward search — and "reverse the direction of a reachability question, then intersect" is a trick that transfers to dependency and escape problems everywhere.
+**Optimal approach.** Instead of asking "which cells reach the Pacific?", ask "which cells can the Pacific reach, *climbing*?" Start from every Pacific-edge cell (multi-source again) and traverse with the rule inverted: step to a neighbour whose height is **greater than or equal to** yours — walking uphill traces exactly the paths water would have run down. The visited set of that traversal *is* the full Pacific-reachable set, computed in one sweep. Do the same from the Atlantic edges. The answer is the **intersection** of the two sets.
 
-**The mechanics.** Either DFS or BFS works; seed all edge cells of one ocean, expand with the uphill rule, collect. Keep the two visited sets separate — two boolean grids — and read off cells marked in both. The equal-height case matters (water flows across plateaus); ≥, not >.
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "r0c0", "label": "h=1 (Pacific only)", "row": 0, "col": 0 },
+    { "id": "r0c1", "label": "h=2 (Pacific only)", "row": 0, "col": 1 },
+    { "id": "r0c2", "label": "h=2 (Pacific only)", "row": 0, "col": 2 },
+    { "id": "r1c0", "label": "h=3 (Pacific only)", "row": 1, "col": 0 },
+    { "id": "r1c1", "label": "h=5 (BOTH)", "row": 1, "col": 1 },
+    { "id": "r1c2", "label": "h=3 (Atlantic only)", "row": 1, "col": 2 },
+    { "id": "r2c0", "label": "h=2 (Pacific only)", "row": 2, "col": 0 },
+    { "id": "r2c1", "label": "h=4 (Atlantic only)", "row": 2, "col": 1 },
+    { "id": "r2c2", "label": "h=1 (Atlantic only)", "row": 2, "col": 2 }
+  ],
+  "edges": [],
+  "caption": "The Pacific climb (from top+left edges, uphill) and the Atlantic climb (from bottom+right edges, uphill) each reach most of the grid — but only the ridge cell (h=5) is reachable from both, the answer."
+}
+\`\`\`
 
-**The walk-through.** Classic 5×5 height grid: the crest cells — e.g. the 5s sitting on the ridge from top-right to bottom-left — appear in both climbs and form the answer; the low northwest corner reaches only the Pacific climb.
+**Complexity.** O(rows × cols) time and space — each traversal touches each cell at most once — versus the O(cells²) forward search.
 
-**Complexity.** O(rows × cols) time and space — each traversal touches each cell at most once.
-
-**The thread.** Reachability *from* the border turns out to be the key to the next problem too — Surrounded Regions, where the regions that survive are exactly the ones the border can touch.`,
+**Thread.** Reachability *from* the border turns out to be the key to the next problem too — Surrounded Regions, where the regions that survive are exactly the ones the border can touch.`,
     },
     {
       slug: "surrounded-regions",
@@ -143,19 +212,30 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/surrounded-regions",
       summary: "Don't find the captured — find the safe: flood from the border, then flip everyone unmarked.",
-      body: `**The problem.** A grid of X and O: capture (flip to X) every region of Os that is *fully surrounded* by Xs. A region touching the board's edge escapes — it is not surrounded.
+      body: `**Signal.** "Capture every region of Os fully surrounded by Xs; a region touching the edge escapes" — "surrounded" is a global negative (no escape exists anywhere along the frontier), which is the tell to compute its complement instead: find what touches the border, which is a local positive reachable by one flood.
 
-**The inversion.** Directly testing "is this region surrounded?" means flooding a region while watching for edge contact, then flipping or not — doable, but bookkeeping-heavy and easy to fumble. Flip the question, exactly as Pacific Atlantic just taught: a region is captured **unless it touches the border**, so find the *survivors* instead. Survivors are precisely the Os reachable from some border O — one multi-source flood from all border Os marks every safe cell (temporarily relabel them, say to T). Then a single sweep finishes it: every O still unmarked is provably surrounded → flip to X; every T is a survivor → restore to O. No per-region analysis ever happens; the border flood settles all regions at once.
+**Brute force.** For each O region, flood-fill it while checking whether any cell in the fill touches the border, then decide to flip or not — correct, but redoes border-adjacency bookkeeping per region instead of resolving it once.
 
-**Why complement-thinking wins.** "Surrounded" is a *global negative* — it asserts no escape exists anywhere along the region's frontier, which is awkward to verify incrementally. "Touches the border" is a *local positive* — one flood from known-safe seeds. When a property is hard to confirm and its complement is easy to reach, compute the complement. This is the second consecutive problem built on that reflex; it is now yours.
+**Optimal approach.** A region is captured **unless it touches the border**, so find the *survivors* instead. Survivors are precisely the Os reachable from some border O — one multi-source flood from all border Os marks every safe cell (temporarily relabel them, say to T). Then a single sweep finishes it: every O still unmarked is provably surrounded → flip to X; every T is a survivor → restore to O.
 
-**The walk-through.** Grid rows XXXX / XOOX / XXOX / XOXX. Border scan finds one border O at (3,1) → flood marks it T (its only neighbours are X — the region is just itself). Sweep: the interior Os at (1,1), (1,2), (2,2) are unmarked → flipped to X; (3,1) restores to O. Exactly the textbook answer.
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "o11", "label": "O (1,1) → flipped to X", "row": 1, "col": 1 },
+    { "id": "o12", "label": "O (1,2) → flipped to X", "row": 1, "col": 2 },
+    { "id": "o22", "label": "O (2,2) → flipped to X", "row": 2, "col": 2 },
+    { "id": "o31", "label": "O (3,1) → border-connected, stays O", "row": 3, "col": 1 }
+  ],
+  "edges": [],
+  "caption": "Grid XXXX/XOOX/XXOX/XOXX — the border flood only reaches (3,1); the interior Os at (1,1), (1,2), (2,2) are never marked safe, so the sweep flips all three to X."
+}
+\`\`\`
 
-**The in-place bonus.** The T-relabel uses the grid itself as the visited set and the safe-set simultaneously — no extra structures beyond the flood's stack/queue. Interviewers read the three-symbol dance (O → T → O, unmarked O → X) as fluency.
+**Why complement-thinking wins.** When a property is hard to confirm and its complement is easy to reach, compute the complement — the second consecutive problem built on that reflex.
 
-**Complexity.** O(rows × cols) time, O(rows × cols) worst-case stack.
+**Complexity.** O(rows × cols) time, O(rows × cols) worst-case stack — versus the per-region border-check brute force's redundant bookkeeping.
 
-**The thread.** Six problems of undirected terrain. Now the edges grow arrowheads: Course Schedule — directed graphs, dependencies, and the question "does a legal order even exist?"`,
+**Thread.** Six problems of undirected terrain. Now the edges grow arrowheads: Course Schedule — directed graphs, dependencies, and the question "does a legal order even exist?"`,
     },
     {
       slug: "course-schedule",
@@ -163,19 +243,26 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/course-schedule",
       summary: "Prerequisites form a directed graph — you can finish them all if and only if it has no cycle.",
-      body: `**The problem.** n courses, and prerequisite pairs (a, b): b must be taken before a. Can every course be completed? [[1, 0]] → yes (0 then 1). [[1, 0], [0, 1]] → no — each requires the other first.
+      body: `**Signal.** "b must be taken before a — can every course be completed?" — a directed dependency graph where the question is "does a valid order exist" is the tell for cycle detection: the schedule is impossible exactly when some chain of prerequisites loops back on itself.
 
-**The modelling.** Courses are nodes; each prerequisite is a directed edge b → a. A moment's thought turns the question structural: the schedule is impossible exactly when some chain of prerequisites loops back on itself — you can finish all courses **iff the directed graph has no cycle**. The problem *is* cycle detection, and saying that transformation aloud is half the interview.
+**Brute force.** Repeatedly scan for a course whose prerequisites are all already scheduled, remove it, and repeat — this is actually Kahn's algorithm in disguise (correct and reasonable!), but a naive version without in-degree bookkeeping rescans the whole prerequisite list each round: O(V·E) instead of O(V+E).
 
-**Why undirected tricks fail.** In directed graphs, "I reached a node I have seen before" no longer implies a cycle — two prerequisite chains merging on a shared course revisit a node with no loop anywhere. Detection needs to distinguish *seen ever* from *seen on my current path*.
+**Optimal approach.** In directed graphs, "I reached a node I have seen before" no longer implies a cycle — two prerequisite chains merging on a shared course revisit a node with no loop anywhere. Give each node one of three states: unvisited; **in progress** (its DFS has started and not finished — on the current recursion path); done (its entire subtree explored, provably cycle-free). DFS along edges: meeting a *done* node is harmless — skip. Meeting an **in-progress** node means you walked back into your own active path: a cycle. Finish a node (mark done) only after all its outgoing edges are explored. Run from every unvisited node (the graph may be disconnected).
 
-**The insight — three colours.** Give each node one of three states: unvisited; **in progress** (its DFS has started and not finished — it is on the current recursion path); done (its entire subtree explored, provably cycle-free). DFS along edges: meeting a *done* node is harmless — skip. Meeting an **in-progress** node means you walked back into your own active path: a cycle, report failure. Finish a node (mark done) only after all its outgoing edges are explored. Run from every unvisited node (the graph may be disconnected). The in-progress state is exactly "the current root-to-here path" — Backtracking's path-awareness, fused onto Graphs' visited set.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": ["W", "W", "W", "W"], "note": "All nodes start White (unvisited). Edges: 0→1→2→3 and 3→1." },
+    { "cells": ["G", "G", "G", "G"], "highlight": [0, 1, 2, 3], "note": "DFS enters 0, then follows 0→1→2→3, marking each Gray (in-progress on the current path) as it descends." },
+    { "cells": ["G", "G", "G", "G"], "highlight": [1], "note": "From node 3, follow edge 3→1 — node 1 is still Gray (in-progress, on the current path) → a back-edge into an active ancestor → CYCLE detected, return false." }
+  ],
+  "caption": "Course Schedule — the three-colour DFS: a Gray node revisited mid-path is proof of a cycle."
+}
+\`\`\`
 
-**The walk-through.** Edges 0→1→2→3 and 3→1: DFS enters 0, 1, 2, 3; from 3, the edge to 1 finds 1 *in progress* → cycle → false. Remove 3→1: 3 finishes, 2 finishes, 1, 0 — all done, true.
+**Complexity.** O(V + E) time and space — versus a naive round-by-round rescan's O(V·E).
 
-**Complexity.** O(V + E) time and space. (The BFS alternative — Kahn's algorithm, repeatedly removing zero-prerequisite courses — detects cycles as "nodes left over," and is next problem's star.)
-
-**The thread.** Yes/no answered. Course Schedule II asks for the *actual order* — and the finishing sequence of this very DFS, reversed, turns out to be one.`,
+**Thread.** Yes/no answered. Course Schedule II asks for the *actual order* — and the finishing sequence of this very DFS, reversed, turns out to be one.`,
     },
     {
       slug: "course-schedule-ii",
@@ -183,17 +270,28 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/course-schedule-ii",
       summary: "Topological sort: peel zero-prerequisite courses layer by layer, or reverse DFS finishing order.",
-      body: `**The problem.** Same setup — return an actual valid ordering of all courses, or an empty list if none exists. The name for such an ordering: a **topological sort** — every edge points forward in it. Build systems, package managers, spreadsheet recalculation, task pipelines: all of them are this problem wearing work clothes.
+      body: `**Signal.** "Return an actual valid ordering of all courses" — not just yes/no but the order itself is the tell for topological sort: peeling nodes with no remaining unmet prerequisites, layer by layer.
 
-**Kahn's algorithm (BFS flavour).** Track each node's **in-degree** — how many unmet prerequisites it has. Any node at in-degree zero is takeable *right now*; queue them all. Repeatedly: pop one, append it to the order, and — the key move — *delete it from the graph* by decrementing every successor's in-degree; successors hitting zero join the queue. The order grows in dependency-respecting layers, like peeling an onion from the outside. And the cycle check falls out free: nodes in a cycle can never reach in-degree zero (each waits on another), so if the final order is shorter than n, a cycle exists → return empty. Count-processed-versus-n *is* the detector.
+**Brute force.** Repeatedly scan all remaining courses for one whose prerequisites are already scheduled, append it, remove it, repeat — correct, but re-scanning the full remaining set every round costs O(V²) instead of tracking in-degrees directly.
 
-**DFS flavour, one insight.** Run last problem's three-colour DFS, and record each node **at the moment it finishes** — when everything it points to is fully explored. A node finishes only after its dependents… careful, after its *successors* — everything it must precede — are done. So finishing order is reverse-topological: collect finishes, reverse at the end. Two very different traversals, same certificate; knowing both, and that Kahn's gives you incremental "what can run now" semantics while DFS composes with other passes, is the senior-level garnish.
+**Optimal approach (Kahn's, BFS flavour).** Track each node's **in-degree** — how many unmet prerequisites it has. Any node at in-degree zero is takeable *right now*; queue them all. Repeatedly: pop one, append it to the order, and *delete it from the graph* by decrementing every successor's in-degree; successors hitting zero join the queue. The cycle check falls out free: nodes in a cycle can never reach in-degree zero, so if the final order is shorter than n, a cycle exists → return empty. (DFS flavour: record each node at the moment it finishes in the three-colour DFS, then reverse the finish order — a node finishes only after everything it must precede is done, so finish order is reverse-topological.)
 
-**The walk-through (Kahn's).** 4 courses, edges 0→1, 0→2, 1→3, 2→3. In-degrees: 0, 1, 1, 2. Queue [0] → take 0; 1 and 2 drop to zero → take 1 (3 drops to 1), take 2 (3 drops to 0) → take 3. Order [0, 1, 2, 3] — [0, 2, 1, 3] equally valid; the queue's tie order decides, and *multiple correct answers* is a stated feature.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [0, 1, 1, 2], "pointers": [{ "label": "take", "index": 0 }], "note": "In-degrees for courses 0,1,2,3. Only course 0 starts at zero — queue it." },
+    { "cells": [0, 0, 0, 2], "highlight": [1, 2], "note": "Take 0, append to order. Successors 1 and 2 drop to in-degree zero — both join the queue. Order: [0]." },
+    { "cells": [0, 0, 0, 1], "pointers": [{ "label": "take", "index": 1 }], "highlight": [3], "note": "Take 1. Its only successor, course 3, drops from 2 to 1 — not yet queueable. Order: [0, 1]." },
+    { "cells": [0, 0, 0, 0], "pointers": [{ "label": "take", "index": 2 }], "highlight": [3], "note": "Take 2. Course 3 drops to zero — queue it. Order: [0, 1, 2]." },
+    { "cells": [0, 0, 0, 0], "pointers": [{ "label": "take", "index": 3 }], "note": "Take 3 — nothing left to decrement. Final order: [0, 1, 2, 3]." }
+  ],
+  "caption": "Course Schedule II — Kahn's algorithm: cells are each course's remaining in-degree, peeled to zero layer by layer."
+}
+\`\`\`
 
-**Complexity.** O(V + E) time and space, both flavours.
+**Complexity.** O(V + E) time and space, both flavours — versus the naive O(V²) full-rescan approach.
 
-**The thread.** Directed dependencies handled. The chapter now shifts to its fourth tool — union-find — with Graph Valid Tree: connectivity plus the *no-cycle* condition, checked by merging.`,
+**Thread.** Directed dependencies handled. The chapter now shifts to its fourth tool — union-find — with Graph Valid Tree: connectivity plus the *no-cycle* condition, checked by merging.`,
     },
     {
       slug: "graph-valid-tree",
@@ -201,19 +299,24 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/valid-tree",
       summary: "A tree is n−1 edges, no cycle, one component — union-find verifies all three while merging.",
-      body: `**The problem.** n nodes and a list of undirected edges: do they form a valid tree? A tree, structurally: **connected** (one piece) and **acyclic** (no loops). Two conditions, one lovely counting fact between them.
+      body: `**Signal.** "Do these edges form a valid tree" — connected AND acyclic is the tell for union-find: process edges one at a time, and an edge connecting two nodes already in the same component is instantly a cycle.
 
-**The counting fact first.** A tree on n nodes has *exactly* n − 1 edges. Fewer → cannot be connected. More → must contain a cycle (each edge beyond n − 1 closes a loop somewhere). So check the count up front: wrong → false immediately. Right count → the two conditions collapse into one: with n − 1 edges, acyclic *implies* connected (and vice versa) — verify either, get both. This little theorem does half the problem before any traversal starts.
+**Brute force.** Build an adjacency list and run DFS from any node, checking that it reaches all n nodes (connected) and never revisits a node except via its immediate parent (acyclic) — entirely valid, O(V+E), but requires building and walking a full adjacency structure for a question union-find answers with pure arithmetic.
 
-**Union-find, introduced properly.** The structure this problem showcases maintains a partition of nodes into components under one operation: **union(a, b)** merges the components containing a and b; **find(x)** names x's component (its root representative). Implementation: each node points toward a parent; roots point to themselves; find follows parents to the root; union links one root under the other. Two standard optimisations — *path compression* (find re-points every node it walks directly at the root) and *union by rank/size* (attach the shorter tree under the taller) — flatten the forest until each operation is effectively O(1) (inverse-Ackermann, a function that never exceeds 5 in this universe; cite it, don't prove it).
+**Optimal approach.** A tree on n nodes has *exactly* n − 1 edges — fewer can't be connected, more must contain a cycle. Check the count up front: wrong → false immediately. Right count → acyclic implies connected (and vice versa), so verify either. Union-find maintains a partition of nodes into components: **union(a, b)** merges the components containing a and b; **find(x)** names x's component root. Feed the edges through it: for each edge, if find(a) equals find(b), the two nodes are *already* connected — this edge closes a **cycle** → false. Otherwise union them.
 
-**The insight.** Feed the edges through union-find. For each edge (a, b): if find(a) equals find(b), the two nodes are *already* connected — this edge closes a **cycle** → false. Otherwise union them. Survive all edges (with the count pre-checked) → true. The cycle test is one comparison per edge; no DFS, no visited set, no recursion.
+\`\`\`viz:table-diff
+{
+  "columns": ["Edge", "find(a)", "find(b)", "Result"],
+  "before": [["(0,1)", "0", "1", "different roots — union, merge"], ["(0,2)", "0", "2", "different roots — union, merge"], ["(0,3)", "0", "3", "different roots — union, merge"], ["(1,4)", "0", "4", "different roots — union, merge → 4 edges = n-1, VALID TREE"]],
+  "after": [["(0,1)", "0", "1", "different roots — union, merge"], ["(0,2)", "0", "2", "different roots — union, merge"], ["(0,3)", "0", "3", "different roots — union, merge"], ["(1,2)", "0", "0", "SAME ROOT — cycle → NOT a tree"]],
+  "caption": "n=5. Left: edges (0,1),(0,2),(0,3),(1,4) — every union merges strangers, so it's a valid tree. Right: swapping the last edge to (1,2) finds both endpoints already share root 0 — a cycle, not a tree."
+}
+\`\`\`
 
-**The walk-through.** n = 5, edges (0,1), (0,2), (0,3), (1,4): four edges = n − 1 ✓; each union merges strangers ✓ → tree. Swap (1,4) for (1,2): find(1) and find(2) already agree → cycle → false.
+**Complexity.** O(E · α(n)) ≈ O(E) time, O(n) space — versus the DFS approach's identical asymptotics but with an adjacency list to build and maintain.
 
-**Complexity.** O(E · α(n)) ≈ O(E) time, O(n) space. (DFS works too — detect cycles and count reached nodes — same asymptotics; union-find needs no adjacency list at all.)
-
-**The thread.** Union-find just detected one cycle. Connected Components, next, uses it as a *counter* — and the DFS-versus-union-find choice becomes the interview conversation itself.`,
+**Thread.** Union-find just detected one cycle. Connected Components, next, uses it as a *counter* — and the DFS-versus-union-find choice becomes the interview conversation itself.`,
     },
     {
       slug: "number-of-connected-components",
@@ -221,19 +324,29 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/count-connected-components",
       summary: "Start at n islands and merge: every successful union is two components becoming one.",
-      body: `**The problem.** n nodes, a list of undirected edges: how many connected components? Number of Islands asked this about a grid; here the graph is abstract — and the freedom of input format makes it the cleanest stage for comparing the chapter's two connectivity tools head-to-head.
+      body: `**Signal.** "n nodes, a list of undirected edges: how many connected components" — a pure counting question over an abstract (not grid) graph is the tell to compare the chapter's two connectivity tools head-to-head: DFS flood-fill versus union-find's incremental merge count.
 
-**The union-find way.** Begin with the truth before any edges: n nodes, n components, everyone alone. Process each edge with a union — and notice the accounting: a union of two nodes *already sharing* a component changes nothing (the edge is redundant); a union of two strangers **fuses two components into one**. So: components = n − (number of unions that actually merged). Have union return whether it merged, count the successes, subtract. No traversal, no adjacency list, no visited set — three lines of arithmetic wrapped around the structure from last problem. And it is **incremental**: edges could arrive as a stream (think: friendships forming) and the count stays live at every moment — the capability DFS fundamentally lacks.
+**Brute force.** Build an adjacency list, then run Number of Islands' scan-and-flood loop over abstract nodes instead of grid cells — entirely valid, O(V+E), the right call when the graph is given whole and you're already building adjacency for other reasons.
 
-**The DFS way.** Build an adjacency list, then the Number of Islands loop: scan all nodes; each unvisited one is a fresh component — count it, flood its component with DFS. O(V + E), entirely solid — the right answer when the graph is *given whole* and you are already building adjacency for other reasons.
+**Optimal approach (union-find).** Begin with the truth before any edges: n nodes, n components, everyone alone. Process each edge with a union: a union of two nodes *already sharing* a component changes nothing (the edge is redundant); a union of two strangers **fuses two components into one**. So components = n − (number of unions that actually merged). No traversal, no adjacency list, no visited set. And it is **incremental**: edges could arrive as a stream and the count stays live at every moment — a capability DFS fundamentally lacks.
 
-**The comparison, which is the real content.** Static graph, need paths or structure too → DFS. Edges arriving over time, only connectivity questions → union-find, no contest. Saying *when each wins* is worth more than either implementation; this problem exists to let you say it.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [5], "note": "Start: 5 nodes, 5 components (everyone alone)." },
+    { "cells": [4], "note": "union(0,1): strangers merge → 4 components." },
+    { "cells": [3], "note": "union(1,2): strangers merge → 3 components." },
+    { "cells": [2], "highlight": [0], "note": "union(3,4): strangers merge → 2 components. Final answer: 2 — {0,1,2} and {3,4}." }
+  ],
+  "caption": "Number of Connected Components — start at n and subtract one for every union that actually merges two strangers."
+}
+\`\`\`
 
-**The walk-through.** n = 5, edges (0,1), (1,2), (3,4). Start: 5 components. Union(0,1): merge → 4. Union(1,2): merge → 3. Union(3,4): merge → 2. Answer 2 — node set {0,1,2}, {3,4}.
+**The comparison, which is the real content.** Static graph, need paths or structure too → DFS. Edges arriving over time, only connectivity questions → union-find, no contest.
 
 **Complexity.** Union-find: O(E · α(n)) time, O(n) space. DFS: O(V + E) both.
 
-**The thread.** Union-find's merge-refusal — "these two are already connected" — was a cycle alarm in Graph Valid Tree and a no-op here. Redundant Connection, next, makes it the *entire answer*: find the one edge that closes the loop.`,
+**Thread.** Union-find's merge-refusal — "these two are already connected" — was a cycle alarm in Graph Valid Tree and a no-op here. Redundant Connection, next, makes it the *entire answer*: find the one edge that closes the loop.`,
     },
     {
       slug: "redundant-connection",
@@ -241,19 +354,27 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/redundant-connection",
       summary: "Feed edges through union-find; the first edge joining two already-connected nodes is the culprit.",
-      body: `**The problem.** A graph that *was* a tree until exactly one extra edge was added. Find that edge — if several candidates would restore treehood, return the one appearing **last** in the input. n nodes, n edges (one too many for a tree — the counting fact from Graph Valid Tree, felt from the other side).
+      body: `**Signal.** "A graph that *was* a tree until exactly one extra edge was added — find it; if several candidates work, return the one appearing last" — n nodes and n edges (one too many for a tree) is the tell that union-find's cycle-detection, run in input order, finds exactly this edge with no extra bookkeeping.
 
-**The insight.** One extra edge on a tree creates exactly one cycle, and the redundant edge is *an* edge of that cycle. Process the input edges in order through union-find: each edge either merges two components (fine — tree-building proceeding normally) or arrives to find its endpoints **already connected** — meaning a path between them existed before this edge, so this edge closes the cycle. Report it. The tie-breaking rule dissolves on inspection: processing in input order means the closing edge you trip over is automatically the *latest* cycle edge in the input — every earlier cycle edge merged innocently before the loop existed. The requirement that looked like extra logic is satisfied by the processing order itself; noticing that is the little joy of the problem.
+**Brute force.** Remove each edge one at a time and check whether the remaining graph is a valid tree (Graph Valid Tree's check) — O(E) checks, each O(V+E), and doesn't naturally respect the "return the one appearing last" tie-break without extra care.
 
-**The walk-through.** Edges (1,2), (1,3), (2,3). Union(1,2): merge. Union(1,3): merge. Union(2,3): find(2) and find(3) already agree — the path 2–1–3 exists → answer (2,3). Reorder input as (2,3), (1,2), (1,3): now (1,3) is the closer → answer (1,3) — same cycle, different culprit, exactly per the rule.
+**Optimal approach.** One extra edge on a tree creates exactly one cycle, and the redundant edge is *an* edge of that cycle. Process the input edges in order through union-find: each edge either merges two components (tree-building proceeding normally) or arrives to find its endpoints **already connected** — meaning a path between them existed before this edge, so this edge closes the cycle. Report it. Processing in input order means the closing edge you trip over is automatically the *latest* cycle edge in the input — every earlier cycle edge merged innocently before the loop existed.
 
-**Why union-find over DFS here.** A DFS could find the cycle after building the graph — but then which cycle edge is "last in input"? You would re-derive input positions awkwardly. Union-find *is* an input-order streamer by nature; the algorithm and the tie-break speak the same language. Choosing the tool whose native behaviour matches the problem's quirk: that is the skill on display.
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": ["1", "2", "3"], "note": "Edges (1,2), (1,3), (2,3). Process (1,2): different roots → union. Process (1,3): different roots → union." },
+    { "cells": ["1", "2", "3"], "highlight": [1, 2], "note": "Process (2,3): find(2) and find(3) already agree (both connect through 1) — this edge closes the cycle. Answer: (2,3)." }
+  ],
+  "caption": "Redundant Connection — the first edge union-find refuses to merge (same root already) is the answer, and input order guarantees it's the last such edge."
+}
+\`\`\`
 
-**The follow-up worth knowing exists.** Directed version (Redundant Connection II) is genuinely harder — two-parent nodes versus cycles, case analysis. Name it; don't volunteer to solve it.
+**Why union-find over DFS here.** Union-find *is* an input-order streamer by nature; the algorithm and the tie-break speak the same language, unlike a post-hoc cycle search that would need to re-derive input positions.
 
-**Complexity.** O(E · α(n)) time, O(n) space.
+**Complexity.** O(E · α(n)) time, O(n) space — versus the brute force's O(E) full tree-validity checks.
 
-**The thread.** Union-find's trilogy closes. The chapter's finale returns to BFS for its purest calling — shortest transformation paths — in a graph whose edges you must *imagine*: Word Ladder.`,
+**Thread.** Union-find's trilogy closes. The chapter's finale returns to BFS for its purest calling — shortest transformation paths — in a graph whose edges you must *imagine*: Word Ladder.`,
     },
     {
       slug: "word-ladder",
@@ -261,19 +382,31 @@ On the roadmap, Graphs unlocks Advanced Graphs (weights, and algorithms with nam
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/word-ladder",
       summary: "Words are nodes, one-letter changes are edges — BFS the implicit graph, generating neighbours by pattern.",
-      body: `**The problem.** Transform beginWord into endWord, one letter at a time, every intermediate step a real word from the given list. Return the length of the *shortest* transformation sequence (counting both ends), or 0. hit → cog via hit, hot, dot, dog, cog: length 5.
+      body: `**Signal.** "Return the length of the *shortest* transformation sequence" through single-letter word changes — shortest path in an unweighted graph is the tell for BFS, no deliberation needed; the real difficulty is that nobody hands you the edges.
 
-**The modelling, one more time.** Words are nodes; an edge joins words differing in exactly one letter. "Shortest sequence" in an unweighted graph → **BFS**, no deliberation needed — depth of first arrival is the answer, the guarantee BFS has carried since Walls and Gates. The interest is entirely in the edges: nobody gives them to you, and *computing* them is where the problem's difficulty actually lives.
+**Brute force.** Compare every pair of words in the dictionary for a one-letter difference to build the adjacency list — O(n² · wordLength): 50k words is 2.5 billion comparisons, dead on arrival.
 
-**The neighbour-generation trade.** Comparing all word pairs for one-letter difference: O(n² · wordLength) — 50k words is 2.5 billion comparisons, dead on arrival. Generate instead: from the current word, try all wordLength × 25 single-letter mutations and keep those present in a hash set of the dictionary — O(wordLength · 26) per node, independent of dictionary size. Chapter one's "membership is O(1)" reflex, deciding a graph problem's feasibility. (The elegant alternative: bucket words by wildcard patterns — h*t, *ot — so each bucket *is* an adjacency list; either works, and mentioning both is range.)
+**Optimal approach.** From the current word, generate all wordLength × 25 single-letter mutations and keep those present in a hash set of the dictionary — O(wordLength · 26) per node, independent of dictionary size. Remove words from the set (or mark visited) *as you enqueue them*: any later path reaching the same word is necessarily no shorter, so revisits are pure waste. BFS's ring-by-ring expansion guarantees the first arrival at endWord is the shortest.
 
-**The essential pruning.** Remove words from the set (or mark visited) *as you enqueue them*. Any later path reaching the same word is necessarily no shorter — BFS's rings guarantee it — so revisits are pure waste, and without the removal the frontier explodes. This is the visited-at-enqueue discipline under maximum load.
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "hit", "label": "hit", "children": ["hot"] },
+    { "id": "hot", "label": "hot", "children": ["dot", "lot"] },
+    { "id": "dot", "label": "dot", "children": ["dog"] },
+    { "id": "lot", "label": "lot", "children": ["log"] },
+    { "id": "dog", "label": "dog", "children": ["cog"] },
+    { "id": "log", "label": "log" },
+    { "id": "cog", "label": "cog", "highlight": true }
+  ],
+  "rootId": "hit",
+  "caption": "Word Ladder — each edge is a one-letter mutation; BFS depth of first arrival at cog is the answer (5 words)."
+}
+\`\`\`
 
-**The walk-through.** hit: mutations find hot. hot: dot, lot. Ring 3: dot→dog, lot→log. Ring 4: dog→cog ✓ → 5 words. Every arrival was first-arrival; every first-arrival was optimal.
+**Complexity.** O(n · wordLength² · 26) time with the set — versus O(n² · wordLength) for pairwise comparison — O(n · wordLength) space. Bidirectional BFS (expand from both ends, meet in the middle) cuts the exponent in half; it is the standard follow-up.
 
-**Complexity.** O(n · wordLength · 26) time with the set, O(n) space. Bidirectional BFS — expand from both ends, always growing the smaller frontier, meet in the middle — cuts the exponent in half; it is the follow-up and the phrase to say.
-
-**The thread.** Thirteen problems: flood fills, waves, orderings, mergers, imagined edges. The territory ahead adds *weights* — edges that cost — where plain BFS breaks and the named algorithms live: Dijkstra, Prim, Kruskal. Advanced Graphs is next.`,
+**Thread.** Thirteen problems: flood fills, waves, orderings, mergers, imagined edges. The territory ahead adds *weights* — edges that cost — where plain BFS breaks and the named algorithms live: Dijkstra, Prim, Kruskal. Advanced Graphs is next.`,
     },
   ],
 };

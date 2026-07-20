@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784530599.5416393,
-    "ast_hash": "b9a8e8bc83e5fdacc69deda1a1811d54",
+    "mtime": 1784564930.4368627,
+    "ast_hash": "61d2a4ec82d8d046929f570f50e6eaba",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784530567.701761,
-    "ast_hash": "4a10ff5502cd86ea26731990e8bdf78c",
+    "mtime": 1784564904.3148122,
+    "ast_hash": "9b6cc37159aa8512d5024ce53e30f543",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784530542.5370617,
-    "ast_hash": "47dd37ee578e214b40c8f9efae425a27",
+    "mtime": 1784564876.6423535,
+    "ast_hash": "4d12c536bf98c15f4f6bec1655e8d338",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -460,53 +460,53 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/advanced-graphs.ts": {
-    "mtime": 1784434094.3077621,
-    "ast_hash": "7a7fa1858b4f6ae54e46675e6fc162ef",
+    "mtime": 1784564453.5696266,
+    "ast_hash": "49c95a5a4502c1f4b128df7b11ae534d",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/arrays-hashing.ts": {
-    "mtime": 1784530337.6627784,
+    "mtime": 1784531236.5719688,
     "ast_hash": "cfd0f1b1c9ea6e2b23c82b34889d0820",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/backtracking.ts": {
-    "mtime": 1784402063.0574927,
-    "ast_hash": "3db876430387f78154120a755eb7bd06",
+    "mtime": 1784564522.2138026,
+    "ast_hash": "4c6d9a144b69303057d3c768417c65cd",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/binary-search.ts": {
-    "mtime": 1784475763.3681092,
-    "ast_hash": "00b72b5300804294cb08144a980c7fe2",
+    "mtime": 1784545840.846858,
+    "ast_hash": "fd0c24ceda9600bbaeaa7533343659ab",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/bit-manipulation.ts": {
-    "mtime": 1784435030.7072737,
-    "ast_hash": "1edce86680f6cb75f6ec6983e6ed00bb",
+    "mtime": 1784564437.4558692,
+    "ast_hash": "ae1b29c9d53987fc71b3dfd9a9a0cad4",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/dp-1d.ts": {
-    "mtime": 1784473585.729432,
-    "ast_hash": "8a76e54f845094af4f4ae5b0ccf62449",
+    "mtime": 1784546643.8879879,
+    "ast_hash": "caf590c4b6b42a4762f1ee2a89db0bad",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/dp-2d.ts": {
-    "mtime": 1784473408.8217938,
-    "ast_hash": "aeab3a3eb885a4fb5c7423ca0cacf4d7",
+    "mtime": 1784564565.4004679,
+    "ast_hash": "81d4f91e3eccd33b149ec1c17ca40455",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/graphs.ts": {
-    "mtime": 1784402330.6033745,
-    "ast_hash": "b66693551bddfe2244d4b2529216b8dc",
+    "mtime": 1784546698.6273193,
+    "ast_hash": "f438e6a69b2b2c11d93cd573e64f093d",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/greedy.ts": {
-    "mtime": 1784434672.4072864,
-    "ast_hash": "9c2c7034b62907b6d56ee1d086f02bfb",
+    "mtime": 1784564444.7473845,
+    "ast_hash": "67c77e0e1e44a80d4a0ec5a739f68d51",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/heap.ts": {
-    "mtime": 1784401891.3887308,
-    "ast_hash": "7f0982f38a16cfca74fb7606289966fd",
+    "mtime": 1784564419.2460017,
+    "ast_hash": "fd00d79a6fdc42c6dbe3ca20352bfcc4",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/intervals.ts": {
@@ -515,38 +515,38 @@
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/linked-list.ts": {
-    "mtime": 1784401528.247536,
-    "ast_hash": "ad378278863339ae8483b30cc2e63a33",
+    "mtime": 1784564474.9594445,
+    "ast_hash": "629ab06e55bf2dee8c20057c7e32d40f",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/math-geometry.ts": {
-    "mtime": 1784434911.330253,
-    "ast_hash": "d675883dfbbcef6674b3a7dbd437ffd3",
+    "mtime": 1784564462.1697059,
+    "ast_hash": "da9645853f367b4cedac82d2e725d752",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/sliding-window.ts": {
-    "mtime": 1784401139.5205634,
-    "ast_hash": "bca2d9d5070512ea929828925754a79d",
+    "mtime": 1784564594.1968439,
+    "ast_hash": "0994b23333f8d67cc5b44d6c07dbd193",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/stack.ts": {
-    "mtime": 1784401254.4321487,
-    "ast_hash": "f63d23f9279d2ea04a5d581358d5f871",
+    "mtime": 1784546685.0103378,
+    "ast_hash": "f87ea624c74176c85752138338955920",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/trees.ts": {
-    "mtime": 1784401769.4807441,
-    "ast_hash": "e52914b327bfb56604a4db02fca9ab0f",
+    "mtime": 1784564557.0945985,
+    "ast_hash": "f44213ad3c075114c5837e60044c0578",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/tries.ts": {
-    "mtime": 1784402125.1093445,
-    "ast_hash": "dc8f0d7a55e9b2654675cc51da77ca84",
+    "mtime": 1784545865.6073422,
+    "ast_hash": "3fd95f185e2078d061a58c6e99c0d154",
     "semantic_hash": ""
   },
   "src/lib/dsa/topics/two-pointers.ts": {
-    "mtime": 1784473673.7156885,
-    "ast_hash": "6c69c68201015d9b5b2f5e17d9d5db3d",
+    "mtime": 1784564523.597554,
+    "ast_hash": "20d4e9b44faf261013dbe7e3d1ceeef8",
     "semantic_hash": ""
   },
   "src/lib/dsa/types.ts": {
@@ -610,58 +610,58 @@
     "semantic_hash": ""
   },
   "src/lib/sql/topics/advanced-joins-and-set-ops.ts": {
-    "mtime": 1784435938.0603971,
-    "ast_hash": "5e8326108d8f28c3ce8857bf0a08db15",
+    "mtime": 1784545846.4606905,
+    "ast_hash": "102399369468ac32027aaf406a675099",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/aggregation.ts": {
-    "mtime": 1784435661.3956606,
-    "ast_hash": "dce5eb07829e980db51be6c9a5387dfc",
+    "mtime": 1784546642.545835,
+    "ast_hash": "03c62a9a80e88842636aeaccff17c769",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/basic-joins.ts": {
-    "mtime": 1784435608.8490977,
-    "ast_hash": "9ac17a7edde9f2f54d41c608c4bfc942",
+    "mtime": 1784546677.135919,
+    "ast_hash": "4a6606a389501b7966f21d2f0a84b881",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/case-when.ts": {
-    "mtime": 1784435764.3864648,
-    "ast_hash": "ed9366303fe18e626f8adf87243db941",
+    "mtime": 1784546068.0942726,
+    "ast_hash": "987ead92a6547e732ad812fbdcfa05a0",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/common-table-expressions.ts": {
-    "mtime": 1784435904.140274,
-    "ast_hash": "3c9e0f374cd8727673cc5a523e4848d8",
+    "mtime": 1784564455.13616,
+    "ast_hash": "d99147d742055e751d184b6429b202d3",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/data-transformation.ts": {
-    "mtime": 1784435980.4342015,
-    "ast_hash": "7a9920bdff2328299b829514ef181a65",
+    "mtime": 1784564405.2441132,
+    "ast_hash": "e4a420b1ef194ca4a4318b7da3c62d20",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/select-and-filter.ts": {
-    "mtime": 1784435557.0350037,
-    "ast_hash": "ee967de3966ce103aaf9e3e8050556ec",
+    "mtime": 1784564240.0237663,
+    "ast_hash": "6cce153816d23abfa9f197fad296e2dd",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/sorting-and-limiting.ts": {
-    "mtime": 1784435694.4708457,
-    "ast_hash": "9fbdf45fa169075121415d4baef30ecb",
+    "mtime": 1784545865.7226357,
+    "ast_hash": "0793a5278072449ccda1c5d31e7f60e1",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/string-and-date-functions.ts": {
-    "mtime": 1784435797.5133903,
-    "ast_hash": "36996768729ff3eb4748c8cd393478f9",
+    "mtime": 1784546635.3748868,
+    "ast_hash": "8b9c39e13f1bbb971187c5220b8dff02",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/subqueries.ts": {
-    "mtime": 1784435730.8116276,
-    "ast_hash": "5ca1bea404d4ecdc53f2d3e52a8c1967",
+    "mtime": 1784564424.315689,
+    "ast_hash": "f3f87bb8e3c0b46247bdf9b8dc83e3d1",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/window-functions-analytics.ts": {
-    "mtime": 1784435869.9627347,
-    "ast_hash": "7751c92c60bd066c452bf3b906332ce0",
+    "mtime": 1784564381.6583807,
+    "ast_hash": "bcc73e0fe110084f5f86d352accc45af",
     "semantic_hash": ""
   },
   "src/lib/sql/topics/window-functions-ranking.ts": {
@@ -885,28 +885,28 @@
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/conceptualising-the-macroeconomy.ts": {
-    "mtime": 1784478702.536307,
-    "ast_hash": "56080cfe3b1de76005a484ea83c4cbf4",
+    "mtime": 1784564318.8579245,
+    "ast_hash": "b0b18a572aefb0255ff70b15d5ed7ad2",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/economic-growth.ts": {
-    "mtime": 1784476877.9696379,
-    "ast_hash": "24a4a56f8153688d6d3199e1df1d21b7",
+    "mtime": 1784564340.2490823,
+    "ast_hash": "433fdb549f4edf5b18d03d8eff8079b2",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/macroeconomic-policy.ts": {
-    "mtime": 1784477001.7199485,
-    "ast_hash": "962e26330fb2a44f251dca9c73a8e055",
+    "mtime": 1784545763.2438872,
+    "ast_hash": "1debf4e245a3314a4613ca717d309815",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/money-and-interest-rates.ts": {
-    "mtime": 1784478760.9967191,
-    "ast_hash": "80b3902393d39dd5fe286092c8fae8dc",
+    "mtime": 1784545758.2508693,
+    "ast_hash": "a3fe3592503bc08a20bcb6f39f999127",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/output-and-employment.ts": {
-    "mtime": 1784476773.8703418,
-    "ast_hash": "4fce48448bff5c1504cf0855020b9c0f",
+    "mtime": 1784564331.0621033,
+    "ast_hash": "ae4b33da4cab52703842c15c8c568376",
     "semantic_hash": ""
   },
   "src/lib/macroeconomics/topics/what-is-economics.ts": {
@@ -967,6 +967,11 @@
   "src/components/viz/types.ts": {
     "mtime": 1784529538.4166663,
     "ast_hash": "a0ba5131fdaf84f07521df8620cbf605",
+    "semantic_hash": ""
+  },
+  "scripts/validate-viz.mts": {
+    "mtime": 1784563719.37446,
+    "ast_hash": "4ffb1b86ab9bc0c23fa2255ce74fbd82",
     "semantic_hash": ""
   }
 }

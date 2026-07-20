@@ -386,7 +386,10 @@ export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
           topic_name: topic.name,
           category: topic.category,
           kind: "open",
-          prompt: `From memory, explain "${topic.name}" — the core idea and why it matters.`,
+          prompt:
+            topic.category === "Computer Science"
+              ? `For the algorithm "${topic.name}", explain the core pattern or recurrence relation used to solve it, and state the time and space complexity of the optimal approach.`
+              : `From memory, explain "${topic.name}" — the core idea and why it matters.`,
           options: null,
         });
         key.set(index, {
