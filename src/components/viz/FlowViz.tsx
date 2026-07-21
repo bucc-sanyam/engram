@@ -1,7 +1,11 @@
+"use client";
+
 import type { FlowVizPayload } from "./types";
+import { useVizPalette } from "@/lib/viz-theme";
 
 /** Labeled nodes + directed edges on an explicit row/col grid — for Macroeconomics concept/flow diagrams. */
 export default function FlowViz({ payload, accent = "#a3e635" }: { payload: FlowVizPayload; accent?: string }) {
+  const pal = useVizPalette(accent);
   const colW = 160;
   const rowH = 96;
   const boxW = 132;
@@ -23,7 +27,7 @@ export default function FlowViz({ payload, accent = "#a3e635" }: { payload: Flow
       <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block">
         <defs>
           <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill={accent} />
+            <path d="M0,0 L10,5 L0,10 z" fill={pal.accent} />
           </marker>
         </defs>
         {payload.edges.map((e, i) => {
@@ -36,9 +40,9 @@ export default function FlowViz({ payload, accent = "#a3e635" }: { payload: Flow
           const midY = (a.y + b.y) / 2;
           return (
             <g key={i}>
-              <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={accent} strokeWidth={1.5} opacity={0.65} markerEnd="url(#flow-arrow)" />
+              <line x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={pal.accent} strokeWidth={1.5} opacity={0.65} markerEnd="url(#flow-arrow)" />
               {e.label && (
-                <text x={midX} y={midY - 6} textAnchor="middle" fontSize="10.5" fill="rgba(255,252,245,0.65)">
+                <text x={midX} y={midY - 6} textAnchor="middle" fontSize="10.5" fill={pal.muted}>
                   {e.label}
                 </text>
               )}
@@ -55,11 +59,11 @@ export default function FlowViz({ payload, accent = "#a3e635" }: { payload: Flow
                 width={boxW}
                 height={boxH}
                 rx={14}
-                fill="rgba(255,252,245,0.04)"
-                stroke={accent}
+                fill={pal.cellFill}
+                stroke={pal.accent}
                 strokeWidth={1.2}
               />
-              <text x={c.x} y={c.y + 4} textAnchor="middle" fontSize="12.5" fontWeight={600} fill="rgba(255,252,245,0.9)">
+              <text x={c.x} y={c.y + 4} textAnchor="middle" fontSize="12.5" fontWeight={600} fill={pal.ink}>
                 {n.label}
               </text>
             </g>

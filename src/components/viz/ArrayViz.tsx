@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { ArrayVizPayload } from "./types";
+import { useVizPalette } from "@/lib/viz-theme";
 
 /**
  * Array/pointer state diagram — one or more frames a reader can step through.
@@ -9,6 +10,7 @@ import type { ArrayVizPayload } from "./types";
  */
 export default function ArrayViz({ payload, accent = "#f5b95f" }: { payload: ArrayVizPayload; accent?: string }) {
   const [i, setI] = useState(0);
+  const pal = useVizPalette(accent);
   const frame = payload.frames[Math.min(i, payload.frames.length - 1)];
   const cellSize = 44;
   const gap = 6;
@@ -36,8 +38,8 @@ export default function ArrayViz({ payload, accent = "#f5b95f" }: { payload: Arr
                 width={cellSize}
                 height={cellSize}
                 rx={10}
-                fill={isHi ? `${accent}26` : "rgba(255,252,245,0.04)"}
-                stroke={isHi ? accent : "rgba(255,252,245,0.14)"}
+                fill={isHi ? pal.accentFill : pal.cellFill}
+                stroke={isHi ? pal.accent : pal.gridStroke}
                 strokeWidth={isHi ? 1.6 : 1}
               />
               <text
@@ -46,12 +48,12 @@ export default function ArrayViz({ payload, accent = "#f5b95f" }: { payload: Arr
                 textAnchor="middle"
                 fontSize="15"
                 fontFamily="var(--font-jetmono), monospace"
-                fill={isHi ? accent : "rgba(255,252,245,0.85)"}
+                fill={isHi ? pal.accent : pal.ink}
               >
                 {String(cell)}
               </text>
               {pointersByIndex.get(idx) && (
-                <text x={x + cellSize / 2} y={20} textAnchor="middle" fontSize="10" fontWeight={700} fill={accent}>
+                <text x={x + cellSize / 2} y={20} textAnchor="middle" fontSize="10" fontWeight={700} fill={pal.accent}>
                   {pointersByIndex.get(idx)!.join(" ")}
                 </text>
               )}

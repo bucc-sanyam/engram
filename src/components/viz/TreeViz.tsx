@@ -1,7 +1,11 @@
+"use client";
+
 import type { TreeVizPayload } from "./types";
+import { useVizPalette } from "@/lib/viz-theme";
 
 /** Simple tree/graph diagram — explicit node ids/children, BFS-level layout (no auto-layout engine). */
 export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: TreeVizPayload; accent?: string }) {
+  const pal = useVizPalette(accent);
   const byId = new Map(payload.nodes.map((n) => [n.id, n]));
   const levels: string[][] = [];
   const depthOf = new Map<string, number>();
@@ -46,7 +50,7 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
         {edges.map((e, i) => {
           const a = pos.get(e.from)!;
           const b = pos.get(e.to)!;
-          return <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke="rgba(255,252,245,0.18)" strokeWidth={1.5} />;
+          return <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} stroke={pal.edgeStroke} strokeWidth={1.5} />;
         })}
         {payload.nodes.map((n) => {
           const p = pos.get(n.id);
@@ -57,8 +61,8 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
                 cx={p.x}
                 cy={p.y}
                 r={nodeR}
-                fill={n.highlight ? `${accent}26` : "rgba(255,252,245,0.04)"}
-                stroke={n.highlight ? accent : "rgba(255,252,245,0.16)"}
+                fill={n.highlight ? pal.accentFill : pal.cellFill}
+                stroke={n.highlight ? pal.accent : pal.gridStroke}
                 strokeWidth={n.highlight ? 1.6 : 1}
               />
               <text
@@ -67,7 +71,7 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
                 textAnchor="middle"
                 fontSize="13"
                 fontFamily="var(--font-jetmono), monospace"
-                fill={n.highlight ? accent : "rgba(255,252,245,0.85)"}
+                fill={n.highlight ? pal.accent : pal.ink}
               >
                 {n.label}
               </text>

@@ -1,8 +1,13 @@
+"use client";
+
 import type { TableDiffVizPayload } from "./types";
+import { useReadingTheme } from "@/context/ReadingThemeContext";
+import { darkenForPaper, tintForPaper } from "@/lib/viz-theme";
 
 /** Before/after row table — index-aligned diff (added/removed/changed rows), for SQL problems. */
 export default function TableDiffViz({ payload, accent = "#f5b95f" }: { payload: TableDiffVizPayload; accent?: string }) {
   const { columns, before, after, caption } = payload;
+  const { isPaperMode } = useReadingTheme();
 
   function rowState(idx: number): "added" | "removed" | "changed" | "same" {
     const b = before[idx];
@@ -13,10 +18,18 @@ export default function TableDiffViz({ payload, accent = "#f5b95f" }: { payload:
   }
 
   const rowCount = Math.max(before.length, after.length);
+  const paint = (hex: string) => (isPaperMode ? darkenForPaper(hex) : hex);
+  const tint = (hex: string) => (isPaperMode ? tintForPaper(hex, 0.14) : `${hex}14`);
   const stateColor: Record<string, string> = {
-    added: "#43d6b5",
-    removed: "#ff7a5c",
-    changed: accent,
+    added: paint("#43d6b5"),
+    removed: paint("#ff7a5c"),
+    changed: paint(accent),
+    same: "transparent",
+  };
+  const stateBg: Record<string, string> = {
+    added: tint("#43d6b5"),
+    removed: tint("#ff7a5c"),
+    changed: tint(accent),
     same: "transparent",
   };
 
@@ -42,7 +55,7 @@ export default function TableDiffViz({ payload, accent = "#f5b95f" }: { payload:
                 return (
                   <tr
                     key={ri}
-                    style={relevant ? { background: `${stateColor[state]}14`, borderLeft: `2px solid ${stateColor[state]}` } : undefined}
+                    style={relevant ? { background: stateBg[state], borderLeft: `2px solid ${stateColor[state]}` } : undefined}
                   >
                     {row.map((cell, ci) => (
                       <td key={ci} className="whitespace-nowrap px-3 py-1.5 font-mono text-white/85">
