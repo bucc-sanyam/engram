@@ -59,7 +59,9 @@ const demoState = {
   plan: JSON.parse(JSON.stringify(demoPlan)) as DailyPlan,
   done: new Set<string>(),
   reviews: [...demoReviews] as Review[],
-  session: null as DemoSession | null,
+  // Keyed by session id so several series groups can each run their own
+  // independent session concurrently (per-group report cards).
+  sessions: new Map<string, DemoSession>(),
   reports: [] as ReportCard[], // graded reports (feeds day report cards)
 };
 
@@ -399,8 +401,9 @@ export async function startQuiz(topicIds: string[]): Promise<QuizSession> {
         });
       }
     });
-    demoState.session = { id: `demo-${Date.now()}`, questions, key, answers: new Map() };
-    return { id: demoState.session.id, questions };
+    const id = `demo-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    demoState.sessions.set(id, { id, questions, key, answers: new Map() });
+    return { id, questions };
   }
   return api("/api/quiz", { action: "start", topicIds });
 }
@@ -414,7 +417,7 @@ export async function saveQuizAnswer(args: {
   selectedIndices?: number[];
 }): Promise<void> {
   if (isDemo) {
-    demoState.session?.answers.set(args.questionIndex, {
+    demoState.sessions.get(args.sessionId)?.answers.set(args.questionIndex, {
       answer: args.answer,
       selectedIndex: args.selectedIndex,
       selectedIndices: args.selectedIndices,
@@ -431,8 +434,8 @@ export async function saveQuizAnswer(args: {
 export async function finishQuiz(sessionId: string): Promise<ReportCard> {
   if (isDemo) {
     await new Promise((r) => setTimeout(r, 1200));
-    const s = demoState.session;
-    if (!s || s.id !== sessionId) throw new Error("Session not found");
+    const s = demoState.sessions.get(sessionId);
+    if (!s) throw new Error("Session not found");
     const items: ReportItem[] = [];
     for (const q of s.questions) {
       const a = s.answers.get(q.index);

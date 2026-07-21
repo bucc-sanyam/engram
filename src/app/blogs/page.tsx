@@ -75,6 +75,8 @@ export default function BlogsPage() {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [stories, setStories] = useState<UserStory[]>([]);
   const [storySections, setStorySections] = useState<StorySection[]>([]);
+  const [expertsOpen, setExpertsOpen] = useState(false);
+  const [writeOpen, setWriteOpen] = useState(false);
 
   useEffect(() => {
     getTopics()
@@ -142,7 +144,8 @@ export default function BlogsPage() {
           </p>
         </div>
 
-        {/* Pre-installed learnable series — one connected module, not floating cards */}
+        {/* Learn from our experts — collapsible so the library stays compact
+            as more series ship */}
         <section className="rise mb-10">
           <div className="glass relative overflow-hidden rounded-[1.75rem]">
             {/* shared ambient wash so the whole block reads as one surface */}
@@ -151,83 +154,120 @@ export default function BlogsPage() {
               style={{ background: "linear-gradient(135deg,#ff7a5c,#f5b95f)" }}
               aria-hidden
             />
-            {/* header */}
-            <div className="flex items-center gap-3 border-b border-white/[0.06] px-5 py-4">
+            {/* header — click to expand/collapse */}
+            <button
+              onClick={() => setExpertsOpen((v) => !v)}
+              className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-white/[0.03]"
+              aria-expanded={expertsOpen}
+            >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff7a5c]/25 to-[#f5b95f]/20 text-base">
-                📖
+                🎓
               </span>
               <div className="min-w-0 flex-1">
-                <h2 className="text-base font-bold text-white/90">Read as one story</h2>
+                <h2 className="text-base font-bold text-white/90">Learn from our experts</h2>
                 <p className="text-xs text-faint">
-                  Structured, linear series — read them, or start one to learn it
+                  Structured, linear series — hand-crafted, read them or start one to learn it
                 </p>
               </div>
               <span className="micro shrink-0 rounded-full bg-white/[0.06] px-2.5 py-1 !text-muted">
                 {STORY_SERIES.length} series
               </span>
-            </div>
+              <ChevronDownIcon
+                className={`h-4 w-4 shrink-0 text-faint transition-transform ${expertsOpen ? "rotate-180" : ""}`}
+              />
+            </button>
 
-            {/* series as connected rows sharing one frame */}
-            <div className="divide-y divide-white/[0.05]">
-              {sortedSeries.map((s) => {
-                // Extract the series slug from the href
-                const slug = s.href.split("/blogs/")[1];
-                const progress = slug ? seriesProgress.get(slug) : null;
-                return (
-                <Link
-                  key={s.href}
-                  href={s.href}
-                  className="group relative flex items-center gap-4 px-5 py-4 transition-colors hover:bg-white/[0.03]"
-                >
-                  {/* accent spine ties each row to its series colour */}
-                  <span
-                    className="h-11 w-1 shrink-0 rounded-full transition-all group-hover:h-12"
-                    style={{ background: s.color, boxShadow: `0 0 12px ${s.color}66` }}
-                    aria-hidden
-                  />
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="micro" style={{ color: s.color }}>
-                        {s.label}
-                      </p>
+            {/* series as connected rows sharing one frame — collapsed by default */}
+            {expertsOpen && (
+              <>
+                <div className="divide-y divide-white/[0.05] border-t border-white/[0.06]">
+                  {sortedSeries.map((s) => {
+                    // Extract the series slug from the href
+                    const slug = s.href.split("/blogs/")[1];
+                    const progress = slug ? seriesProgress.get(slug) : null;
+                    return (
+                    <Link
+                      key={s.href}
+                      href={s.href}
+                      className="group relative flex items-center gap-4 px-5 py-4 transition-colors hover:bg-white/[0.03]"
+                    >
+                      {/* accent spine ties each row to its series colour */}
                       <span
-                        className="rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide"
-                        style={{ background: `${s.color}1f`, color: s.color }}
-                      >
-                        {s.tag}
-                      </span>
-                    </div>
-                    <h3 className="mt-0.5 text-[15px] font-bold text-white/90 transition-colors group-hover:text-white">
-                      {s.title}
-                    </h3>
-                    <p className="mt-0.5 truncate text-xs text-faint">
-                      <span style={{ color: `${s.color}cc` }}>{s.meta}</span> · {s.desc}
-                    </p>
-                  </div>
-                  {/* Progress badge — shown when story is started */}
-                  {progress && progress.total > 0 && (
-                    <div className="flex shrink-0 items-center gap-2">
-                      <MiniRing
-                        size={32}
-                        stroke={3}
-                        pct={Math.round((progress.learned / progress.total) * 100)}
-                        color={progress.color}
+                        className="h-11 w-1 shrink-0 rounded-full transition-all group-hover:h-12"
+                        style={{ background: s.color, boxShadow: `0 0 12px ${s.color}66` }}
+                        aria-hidden
                       />
-                      <span className="text-xs tabular-nums text-faint">
-                        {progress.learned}/{progress.total}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="micro" style={{ color: s.color }}>
+                            {s.label}
+                          </p>
+                          <span
+                            className="rounded-full px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wide"
+                            style={{ background: `${s.color}1f`, color: s.color }}
+                          >
+                            {s.tag}
+                          </span>
+                        </div>
+                        <h3 className="mt-0.5 text-[15px] font-bold text-white/90 transition-colors group-hover:text-white">
+                          {s.title}
+                        </h3>
+                        <p className="mt-0.5 truncate text-xs text-faint">
+                          <span style={{ color: `${s.color}cc` }}>{s.meta}</span> · {s.desc}
+                        </p>
+                      </div>
+                      {/* Progress badge — shown when story is started */}
+                      {progress && progress.total > 0 && (
+                        <div className="flex shrink-0 items-center gap-2">
+                          <MiniRing
+                            size={32}
+                            stroke={3}
+                            pct={Math.round((progress.learned / progress.total) * 100)}
+                            color={progress.color}
+                          />
+                          <span className="text-xs tabular-nums text-faint">
+                            {progress.learned}/{progress.total}
+                          </span>
+                        </div>
+                      )}
+                      <span
+                        aria-hidden
+                        className="shrink-0 opacity-40 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                        style={{ color: s.color }}
+                      >
+                        <ArrowRightIcon className="h-4 w-4" />
                       </span>
-                    </div>
-                  )}
-                  <span
-                    aria-hidden
-                    className="shrink-0 opacity-40 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                    style={{ color: s.color }}
+                    </Link>
+                  )})}
+                </div>
+
+                {/* Request a dedicated story CTA */}
+                <div className="border-t border-white/[0.06] px-5 py-4">
+                  <button
+                    onClick={() => setWriteOpen(true)}
+                    className="group flex w-full items-center gap-3 rounded-2xl border border-dashed border-white/[0.14] bg-white/[0.02] px-4 py-3 text-left transition-all hover:border-[#f5b95f]/40 hover:bg-[#f5b95f]/[0.04]"
                   >
-                    <ArrowRightIcon className="h-4 w-4" />
-                  </span>
-                </Link>
-              )})}
-            </div>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f5b95f]/[0.12] text-sm">
+                      ✍️
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-white/90">
+                        Want a dedicated story to share with others?
+                      </p>
+                      <p className="text-xs text-faint">
+                        Have expertise or material worth turning into a series? Write to us.
+                      </p>
+                    </div>
+                    <span
+                      aria-hidden
+                      className="shrink-0 text-[#f5b95f] opacity-50 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+                    >
+                      <ArrowRightIcon className="h-4 w-4" />
+                    </span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </section>
 
@@ -237,7 +277,7 @@ export default function BlogsPage() {
             <SearchIcon className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
             <input
               id="blogs-search"
-              className="input !rounded-full pl-11"
+              className="input !rounded-full !pl-11"
               placeholder="Search topics…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -363,7 +403,90 @@ export default function BlogsPage() {
           </p>
         )}
       </main>
+
+      {/* Write-to-us modal — request a dedicated story */}
+      {writeOpen && (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4"
+          onClick={() => setWriteOpen(false)}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" aria-hidden />
+          <div
+            className="glass relative w-full max-w-lg overflow-hidden rounded-[1.75rem] p-6 sm:p-7"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-[0.14] blur-3xl"
+              style={{ background: "linear-gradient(135deg,#ff7a5c,#f5b95f)" }}
+              aria-hidden
+            />
+            <button
+              onClick={() => setWriteOpen(false)}
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/[0.06] text-faint transition-colors hover:bg-white/[0.12] hover:text-white"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+
+            <div className="mb-4 flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5b95f]/[0.14] text-lg">
+                ✍️
+              </span>
+              <div>
+                <p className="micro !text-[#f5b95f]">Contribute a series</p>
+                <h2 className="text-lg font-bold text-white/95">Want a dedicated story?</h2>
+              </div>
+            </div>
+
+            <p className="mb-4 text-sm leading-relaxed text-muted">
+              We turn well-structured material into linear, chapter-by-chapter stories others can
+              read and learn from. If you have expertise or a resource worth sharing, send it our way.
+            </p>
+
+            <div className="mb-5 rounded-2xl border border-white/[0.07] bg-white/[0.02] p-4">
+              <p className="micro mb-2.5 !text-faint">What to include</p>
+              <ul className="space-y-2 text-sm text-white/80">
+                {[
+                  "A clear subject and the audience it's for (beginner, interview prep, etc.).",
+                  "A proper document or a public link for reference — Google Doc, PDF, article, or a repo.",
+                  "The rough structure or table of contents, if you already have one.",
+                  "Any must-cover examples, cases, or diagrams you'd like included.",
+                ].map((t, i) => (
+                  <li key={i} className="flex gap-2.5">
+                    <span className="mt-[0.5em] h-1 w-1 shrink-0 rounded-full bg-[#f5b95f]/70" />
+                    <span className="flex-1 leading-relaxed">{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <a
+                href={`mailto:sanyamgupta2307@gmail.com?subject=${encodeURIComponent(
+                  "Knovis — dedicated story request"
+                )}&body=${encodeURIComponent(
+                  "Subject / topic:\nAudience:\nReference document or link:\nRough structure:\nMust-cover examples or cases:\n"
+                )}`}
+                className="btn-primary"
+              >
+                Write to us
+              </a>
+              <button onClick={() => setWriteOpen(false)} className="btn-ghost">
+                Maybe later
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
+  );
+}
+
+function ChevronDownIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
   );
 }
 

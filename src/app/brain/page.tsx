@@ -192,7 +192,7 @@ export default function BrainPage() {
             <div className="relative" data-tour="brain-search">
               <SearchIcon className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               <input
-                className="input !rounded-full pl-11"
+                className="input !rounded-full !pl-11"
                 style={{ background: "rgba(18,15,20,0.7)", backdropFilter: "blur(20px)", boxShadow: "0 18px 50px rgba(0,0,0,0.45)" }}
                 placeholder="Search your brain…"
                 value={query}

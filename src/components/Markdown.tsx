@@ -17,13 +17,128 @@ function isSafeHref(href: string): boolean {
   return scheme === "http" || scheme === "https" || scheme === "mailto";
 }
 
-// ---- inline (bold / italic / code / links) ----
+// ---- inline math ($…$) — lightweight LaTeX-ish renderer ----
+// The hand-authored DSA/SQL content is peppered with inline math like
+// `$O(N^2)$`, `$O(1)$`, `$O(N \log K)$`, `$2^N$`, `$A_{left}$`. Without this
+// they render as literal `$O(1)$` text. We don't pull in KaTeX (keeps the
+// zero-dependency Markdown renderer) — instead we translate the common command
+// set to Unicode + real <sup>/<sub> nodes, which covers everything used here.
+const MATH_SYMBOLS: [RegExp, string][] = [
+  [/\\cdot/g, "·"], [/\\times/g, "×"], [/\\div/g, "÷"],
+  [/\\leq|\\le\b/g, "≤"], [/\\geq|\\ge\b/g, "≥"], [/\\neq|\\ne\b/g, "≠"],
+  [/\\approx/g, "≈"], [/\\equiv/g, "≡"], [/\\pm/g, "±"], [/\\mp/g, "∓"],
+  [/\\infty/g, "∞"], [/\\ldots|\\cdots|\\dots/g, "…"],
+  [/\\in\b/g, "∈"], [/\\notin\b/g, "∉"], [/\\forall/g, "∀"], [/\\exists/g, "∃"],
+  [/\\subseteq/g, "⊆"], [/\\subset/g, "⊂"], [/\\cup/g, "∪"], [/\\cap/g, "∩"],
+  [/\\emptyset|\\varnothing/g, "∅"],
+  [/\\Rightarrow/g, "⇒"], [/\\Leftarrow/g, "⇐"], [/\\rightarrow|\\to\b/g, "→"], [/\\leftarrow/g, "←"],
+  [/\\sum/g, "∑"], [/\\prod/g, "∏"], [/\\sqrt/g, "√"], [/\\partial/g, "∂"], [/\\nabla/g, "∇"],
+  [/\\log\b/g, "log"], [/\\ln\b/g, "ln"], [/\\lg\b/g, "lg"], [/\\bmod\b/g, "mod"],
+  [/\\Theta/g, "Θ"], [/\\theta/g, "θ"], [/\\Omega/g, "Ω"], [/\\omega/g, "ω"],
+  [/\\alpha/g, "α"], [/\\beta/g, "β"], [/\\gamma/g, "γ"], [/\\delta/g, "δ"],
+  [/\\lambda/g, "λ"], [/\\mu/g, "μ"], [/\\pi/g, "π"], [/\\sigma/g, "σ"], [/\\phi/g, "φ"],
+  [/\\lfloor/g, "⌊"], [/\\rfloor/g, "⌋"], [/\\lceil/g, "⌈"], [/\\rceil/g, "⌉"],
+  [/\\%/g, "%"], [/\\&/g, "&"], [/\\#/g, "#"], [/\\_/g, "_"],
+  [/\\,|\\;|\\:|\\!/g, " "], [/\\ /g, " "], [/\\left|\\right/g, ""],
+];
+
+// Distinguishes an inline-math span from a stray currency pair like
+// "$1 billion … $3 billion" (real in the Competition Act content). Math is
+// short, and either has a math operator/command or has no internal spaces.
+function looksLikeMath(content: string): boolean {
+  if (content.length > 60) return false; // long → prose, not a formula
+  if (/[₹]|\b(billion|million|trillion|crore|lakh|USD|INR|dollars?)\b/i.test(content)) return false;
+  return /[\\^_=<>≤≥≠+\-/·×∑∏√]|O\(|Θ\(|Ω\(/.test(content) || !/\s/.test(content);
+}
+
+// Parse `^`/`_` runs (with optional {…} grouping) into <sup>/<sub> nodes.
+function tokenizeScripts(s: string, keyBase: number): ReactNode[] {
+  const nodes: ReactNode[] = [];
+  let buf = "";
+  let k = 0;
+  const flush = () => { if (buf) { nodes.push(buf); buf = ""; } };
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+    if (ch === "^" || ch === "_") {
+      flush();
+      let content: string;
+      if (s[i + 1] === "{") {
+        const end = s.indexOf("}", i + 2);
+        content = end === -1 ? s.slice(i + 1) : s.slice(i + 2, end);
+        i = end === -1 ? s.length : end;
+      } else {
+        content = s[i + 1] ?? "";
+        i += 1;
+      }
+      content = content.replace(/[{}]/g, "");
+      nodes.push(
+        ch === "^"
+          ? <sup key={`${keyBase}-s-${k++}`}>{content}</sup>
+          : <sub key={`${keyBase}-s-${k++}`}>{content}</sub>
+      );
+    } else if (ch === "{" || ch === "}") {
+      // drop grouping braces
+    } else {
+      buf += ch;
+    }
+  }
+  flush();
+  return nodes;
+}
+
+function renderMath(tex: string, keyBase: number): ReactNode {
+  let s = tex;
+  for (const [re, rep] of MATH_SYMBOLS) s = s.replace(re, rep);
+  // \frac{a}{b} → a⁄b
+  s = s.replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, "$1⁄$2");
+  // Split out upright text runs (\text/\mathrm/\operatorname/…) from math runs;
+  // words read upright, single-letter variables stay italic for a real math feel.
+  const parts: ReactNode[] = [];
+  const re = /\\(?:text|textrm|textbf|textit|mathrm|mathbf|mathit|operatorname|mbox)\{([^{}]*)\}/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let k = 0;
+  while ((m = re.exec(s)) !== null) {
+    if (m.index > last) {
+      parts.push(
+        <em key={`${keyBase}-m-${k++}`} className="italic">
+          {tokenizeScripts(s.slice(last, m.index), keyBase * 31 + k)}
+        </em>
+      );
+    }
+    parts.push(
+      <span key={`${keyBase}-t-${k++}`} className="not-italic">
+        {tokenizeScripts(m[1], keyBase * 37 + k)}
+      </span>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < s.length) {
+    parts.push(
+      <em key={`${keyBase}-m-${k++}`} className="italic">
+        {tokenizeScripts(s.slice(last), keyBase * 31 + k)}
+      </em>
+    );
+  }
+  return (
+    <span key={keyBase} className="font-serif tracking-tight text-white/90">
+      {parts}
+    </span>
+  );
+}
+
+// ---- inline (math / bold / italic / code / links) ----
 type InlineRule = {
   re: RegExp;
   render: (m: RegExpMatchArray, key: number) => ReactNode;
 };
 
 const INLINE: InlineRule[] = [
+  {
+    re: /\$([^$\n]+)\$/,
+    render: (m, key) =>
+      looksLikeMath(m[1]) ? renderMath(m[1], key) : <Fragment key={key}>{m[0]}</Fragment>,
+  },
   {
     re: /`([^`]+)`/,
     render: (m, key) => (

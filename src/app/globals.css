@@ -516,6 +516,29 @@ h1, h2, h3, .display {
   border-color: rgba(58, 50, 38, 0.14) !important;
 }
 
+/* Inline near-white text colours (blog-series hub titles etc. use
+   style={{ color: "rgba(255,252,245,.92)" }} which the class remaps miss) */
+.paper-mode-active [style*="color:rgba(255,252,245"],
+.paper-mode-active [style*="color: rgba(255,252,245"],
+.paper-mode-active [style*="color:rgba(255, 252, 245"] {
+  color: var(--ink) !important;
+}
+
+/* viz:* reading diagrams — SVG uses near-white presentation `fill`/`stroke`
+   attributes that vanish on cream. CSS fill/stroke override those attributes. */
+.paper-mode-active svg text[fill^="rgba(255,252,245"] {
+  fill: var(--ink) !important;
+}
+.paper-mode-active svg [fill="rgba(255,252,245,0.04)"],
+.paper-mode-active svg [fill="rgba(255,252,245,0.05)"],
+.paper-mode-active svg [fill="rgba(255,252,245,0.06)"],
+.paper-mode-active svg [fill="rgba(255,252,245,0.08)"] {
+  fill: rgba(58, 50, 38, 0.05) !important;
+}
+.paper-mode-active svg [stroke^="rgba(255,252,245"] {
+  stroke: rgba(58, 50, 38, 0.22) !important;
+}
+
 /* Remap dark-mode neon accent text — class form */
 .paper-mode-active [class*="text-[#43d6b5]"],
 .paper-mode-active [class*="text-[#7fe5cb]"] { color: var(--teal) !important; }

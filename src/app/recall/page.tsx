@@ -5,8 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Nav from "@/components/Nav";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
-import QuestionWidget from "@/components/QuestionWidget";
-import { demoQuestionBank } from "@/lib/demo";
 import {
   finishQuiz,
   getPlan,
@@ -84,15 +82,17 @@ function ReviewRunner() {
   const seriesParam = searchParams.get("series");
   const topicId = searchParams.get("topic"); // Legacy deep link support
 
-  const [plan, setPlan] = useState<DailyPlan | null>(null);
-  const [session, setSession] = useState<QuizSession | null>(null);
-  const [phase, setPhase] = useState<"loading" | "quizzing" | "finishing" | "report" | "finished" | "empty">("loading");
-  
+  const [phase, setPhase] = useState<"loading" | "quizzing" | "report" | "empty">("loading");
+
+  // Live flow: each series group runs its OWN independent session so a report
+  // card appears the moment THAT section is submitted (topic-wise reports).
   const [groupedItems, setGroupedItems] = useState<Map<string, PlanItem[]>>(new Map());
+  const [sessionsByGroup, setSessionsByGroup] = useState<Map<string, QuizSession | null>>(new Map());
   const [completedGroups, setCompletedGroups] = useState<Set<string>>(new Set());
-  
+
+  // Revisit flow: day already done → show the merged report, grouped by series.
   const [groupedReports, setGroupedReports] = useState<Map<string, ReportCard>>(new Map());
-  
+
   const [error, setError] = useState<string | null>(null);
   const [singleTask, setSingleTask] = useState(false);
 
@@ -101,17 +101,18 @@ function ReviewRunner() {
     setPhase("loading");
     setError(null);
     setCompletedGroups(new Set());
+    setGroupedReports(new Map());
 
     Promise.all([getPlan(), getAllStorySections()])
       .then(async ([full, sections]) => {
         if (cancelled) return;
-        
+
         const seriesByTopicId = new Map<string, string>();
         for (const s of sections) {
           if (s.topic_id) seriesByTopicId.set(s.topic_id, s.series_slug);
         }
 
-        // Handle full report check
+        // Revisit: whole day already complete → show grouped merged report
         if (full.completed && !topicId && !seriesParam) {
           try {
             const latestReport = await getLatestReportToday();
@@ -125,16 +126,16 @@ function ReviewRunner() {
         }
 
         let p: DailyPlan = full;
-        const isMatched = !!topicId && full.items.some(it => it.topic_id === topicId);
-        
+        const isMatched = !!topicId && full.items.some((it) => it.topic_id === topicId);
+
         if (isMatched) {
           p = { ...full, items: full.items.filter((it) => it.topic_id === topicId) };
           setSingleTask(true);
         } else if (seriesParam) {
           if (seriesParam === "general") {
-            p = { ...full, items: full.items.filter(it => !seriesByTopicId.get(it.topic_id)) };
+            p = { ...full, items: full.items.filter((it) => !seriesByTopicId.get(it.topic_id)) };
           } else {
-            p = { ...full, items: full.items.filter(it => seriesByTopicId.get(it.topic_id) === seriesParam) };
+            p = { ...full, items: full.items.filter((it) => seriesByTopicId.get(it.topic_id) === seriesParam) };
           }
           setSingleTask(true); // Don't complete the full day if just doing one series
         } else {
@@ -142,48 +143,52 @@ function ReviewRunner() {
           p = { ...full, items: [...full.items].sort((a, b) => Number(!!a.done) - Number(!!b.done)) };
           setSingleTask(false);
         }
-        
-        setPlan(p);
+
         if (p.items.length === 0) {
           setPhase("empty");
           return;
         }
 
-        // Group items
+        // Group items by series
         const groups = new Map<string, PlanItem[]>();
         for (const item of p.items) {
           const slug = seriesByTopicId.get(item.topic_id) || "general";
           if (!groups.has(slug)) groups.set(slug, []);
           groups.get(slug)!.push(item);
         }
-        setGroupedItems(groups);
 
-        const pendingIds = p.items.filter(it => !it.done).map(it => it.topic_id);
-        let quiz: QuizSession | null = null;
-        if (pendingIds.length > 0) {
+        // Start an independent session per group (its pending topics only), so
+        // each section can be finished + graded on its own.
+        const sessions = new Map<string, QuizSession | null>();
+        for (const [slug, items] of Array.from(groups.entries())) {
+          const pendingIds = items.filter((it) => !it.done).map((it) => it.topic_id);
+          if (pendingIds.length === 0) {
+            sessions.set(slug, null);
+            continue;
+          }
           try {
-            quiz = await startQuiz(pendingIds);
+            sessions.set(slug, await startQuiz(pendingIds));
           } catch (e) {
-            if (!cancelled) {
-              setError(e instanceof Error ? e.message : "Couldn't start the quiz session");
-              // Even if it failed, we can still show 'already done' items if any, 
-              // but if all are pending, it's an error.
-            }
+            sessions.set(slug, null);
+            if (!cancelled) setError(e instanceof Error ? e.message : "Couldn't start a quiz session");
           }
         }
-        
+
         if (cancelled) return;
-        setSession(quiz);
+        setGroupedItems(groups);
+        setSessionsByGroup(sessions);
         setPhase("quizzing");
       })
-      .catch((e) => {
+      .catch(() => {
         if (!cancelled) {
           setError("Failed to load plan.");
           setPhase("empty");
         }
       });
-      
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+    };
   }, [seriesParam, topicId]);
 
   function groupAndSetReport(rep: ReportCard, seriesByTopicId: Map<string, string>) {
@@ -195,63 +200,35 @@ function ReviewRunner() {
       }
       groups.get(slug)!.items.push(item);
     }
-    
+
     // Recalculate score per group
-    for (const [slug, group] of Array.from(groups.entries())) {
-      group.score_pct = Math.round(group.items.reduce((acc, it) => acc + (it.score || 0), 0) / group.items.length * 20);
-      group.strengths = group.items.filter(it => (it.score || 0) >= 4).map(it => it.topic_name);
-      group.focus = group.items.filter(it => (it.score || 0) < 4).map(it => it.topic_name);
+    for (const [, group] of Array.from(groups.entries())) {
+      group.score_pct = Math.round((group.items.reduce((acc, it) => acc + (it.score || 0), 0) / group.items.length) * 20);
+      group.strengths = group.items.filter((it) => (it.score || 0) >= 4).map((it) => it.topic_name);
+      group.focus = group.items.filter((it) => (it.score || 0) < 4).map((it) => it.topic_name);
     }
-    
+
     setGroupedReports(groups);
   }
 
-  const handleGroupComplete = useCallback(async (slug: string, answeredCount: number) => {
-    setCompletedGroups(prev => {
-      const next = new Set(prev);
-      next.add(slug);
-      return next;
-    });
+  const handleGroupDone = useCallback((slug: string) => {
+    setCompletedGroups((prev) => new Set(prev).add(slug));
   }, []);
-  
-  // Watch for all groups completed
-  useEffect(() => {
-    if (phase !== "quizzing") return;
-    if (groupedItems.size === 0) return;
-    if (completedGroups.size === groupedItems.size) {
-      finalize();
-    }
-  }, [completedGroups, groupedItems, phase]);
 
-  async function finalize() {
-    setPhase("finishing");
-    try {
-      if (session) {
-        const r = await finishQuiz(session.id);
-        const sections = await getAllStorySections();
-        const seriesByTopicId = new Map<string, string>();
-        for (const s of sections) {
-          if (s.topic_id) seriesByTopicId.set(s.topic_id, s.series_slug);
+  const allGroupsDone = groupedItems.size > 0 && completedGroups.size >= groupedItems.size;
+
+  // Close the day once every group is finished (full-plan runs only).
+  useEffect(() => {
+    if (phase !== "quizzing" || singleTask || !allGroupsDone) return;
+    (async () => {
+      try {
+        const p = await getPlan();
+        if (p.items.length > 0 && p.items.every((it) => it.done) && !p.completed) {
+          await markPlanCompleted();
         }
-        groupAndSetReport(r, seriesByTopicId);
-        setPhase("report");
-      } else {
-        setPhase("finished"); // all were already done
-      }
-      
-      if (!singleTask) {
-        try {
-          const p = await getPlan();
-          if (p.items.length > 0 && p.items.every(it => it.done) && !p.completed) {
-            await markPlanCompleted();
-          }
-        } catch {}
-      }
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Couldn't build your report card");
-      setPhase("finished");
-    }
-  }
+      } catch {}
+    })();
+  }, [allGroupsDone, phase, singleTask]);
 
   return (
     <>
@@ -271,42 +248,6 @@ function ReviewRunner() {
           </div>
         )}
 
-        {phase === "finishing" && (
-          <div className="glass rise flex flex-col items-center justify-center gap-3 p-16 text-muted">
-            <Spinner />
-            <p className="font-medium text-white/85">Building your report card…</p>
-            <p className="text-sm">One pass over all your answers — grading, feedback, the lot.</p>
-          </div>
-        )}
-
-        {phase === "quizzing" && plan && (
-          <div className="space-y-12 rise">
-            {error && !session && <p className="text-danger text-center">{error}</p>}
-            
-            {Array.from(groupedItems.entries()).map(([slug, items]) => (
-              <div key={slug} className="space-y-4">
-                {groupedItems.size > 1 && <GroupHeader slug={slug} />}
-
-                {completedGroups.has(slug) ? (
-                  <div className="glass rise p-8 text-center">
-                    <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-xl text-[#43d6b5]">
-                      ✓
-                    </div>
-                    <h3 className="text-lg font-bold">Section Complete</h3>
-                    <p className="text-sm text-muted">You have finished {SERIES_TITLES[slug] ?? slug} for today.</p>
-                  </div>
-                ) : (
-                  <QuizCarousel 
-                    items={items}
-                    session={session}
-                    onComplete={(ansCount) => handleGroupComplete(slug, ansCount)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-
         {phase === "report" && (
           <div className="space-y-12 rise">
             {Array.from(groupedReports.entries()).map(([slug, rep]) => (
@@ -315,7 +256,7 @@ function ReviewRunner() {
                 <ReportCardView report={rep} />
               </div>
             ))}
-            
+
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link href="/" className="btn-primary">Back to dashboard</Link>
               <Link href="/brain" className="btn-ghost">Explore your brain</Link>
@@ -323,24 +264,114 @@ function ReviewRunner() {
           </div>
         )}
 
-        {phase === "finished" && (
-          <div className="glass rise p-10 text-center">
-            <div className="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] text-4xl shadow-[0_0_50px_rgba(255,122,92,0.5)]">
-              🏆
-            </div>
-            <h1 className="mb-2 text-2xl font-bold">Session complete!</h1>
-            {error && <p className="mb-3 text-sm text-danger">{error}</p>}
-            <p className="mb-8 text-muted">
-              Every recall today just made the forgetting curve flatter.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Link href="/" className="btn-primary">Back to dashboard</Link>
-              <Link href="/brain" className="btn-ghost">Explore your brain</Link>
-            </div>
+        {phase === "quizzing" && (
+          <div className="space-y-12 rise">
+            {error && sessionsByGroup.size === 0 && <p className="text-danger text-center">{error}</p>}
+
+            {Array.from(groupedItems.entries()).map(([slug, items]) => (
+              <GroupRunner
+                key={slug}
+                slug={slug}
+                items={items}
+                session={sessionsByGroup.get(slug) ?? null}
+                showHeader={groupedItems.size > 1}
+                onDone={() => handleGroupDone(slug)}
+              />
+            ))}
+
+            {allGroupsDone && (
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Link href="/" className="btn-primary">Back to dashboard</Link>
+                <Link href="/brain" className="btn-ghost">Explore your brain</Link>
+              </div>
+            )}
           </div>
         )}
       </main>
     </>
+  );
+}
+
+/**
+ * One series group: runs its carousel, then finishes ITS OWN session and shows
+ * ITS OWN report card inline — independent of the other groups on the page.
+ */
+function GroupRunner({
+  slug,
+  items,
+  session,
+  showHeader,
+  onDone,
+}: {
+  slug: string;
+  items: PlanItem[];
+  session: QuizSession | null;
+  showHeader: boolean;
+  onDone: () => void;
+}) {
+  const [phase, setPhase] = useState<"quizzing" | "finishing" | "report" | "done">("quizzing");
+  const [report, setReport] = useState<ReportCard | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const doneCalled = useRef(false);
+
+  const notifyDone = useCallback(() => {
+    if (!doneCalled.current) {
+      doneCalled.current = true;
+      onDone();
+    }
+  }, [onDone]);
+
+  const finishGroup = useCallback(async () => {
+    if (session) {
+      setPhase("finishing");
+      try {
+        const r = await finishQuiz(session.id);
+        setReport(r);
+        setPhase("report");
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Couldn't build your report card");
+        setPhase("done");
+      }
+    } else {
+      setPhase("done"); // every item in this group was already reviewed today
+    }
+    notifyDone();
+  }, [session, notifyDone]);
+
+  return (
+    <div className="space-y-6">
+      {showHeader && <GroupHeader slug={slug} />}
+
+      {phase === "quizzing" && (
+        <QuizCarousel items={items} session={session} onComplete={finishGroup} />
+      )}
+
+      {phase === "finishing" && (
+        <div className="glass rise flex flex-col items-center justify-center gap-3 p-12 text-muted">
+          <Spinner />
+          <p className="font-medium text-white/85">Building your report card…</p>
+          <p className="text-sm">Grading this section — feedback, the lot.</p>
+        </div>
+      )}
+
+      {phase === "report" && report && <ReportCardView report={report} />}
+
+      {phase === "done" && (
+        <div className="glass rise p-8 text-center">
+          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-xl text-[#43d6b5]">
+            ✓
+          </div>
+          <h3 className="text-lg font-bold">Section complete</h3>
+          {error ? (
+            <p className="text-sm text-danger">{error}</p>
+          ) : (
+            <p className="text-sm text-muted">
+              You&apos;ve finished {SERIES_TITLES[slug] ?? slug} for today.
+            </p>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -351,18 +382,17 @@ function QuizCarousel({
 }: {
   items: PlanItem[];
   session: QuizSession | null;
-  onComplete: (answeredCount: number) => void;
+  onComplete: () => void;
 }) {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState<"loading" | "question" | "already-done">("loading");
-  
+
   const [question, setQuestion] = useState<SessionQuestion | null>(null);
   const [answer, setAnswer] = useState("");
   const [selected, setSelected] = useState<number | null>(null);
   const [multiSelected, setMultiSelected] = useState<number[]>([]);
   const [saving, setSaving] = useState(false);
-  const [answeredCount, setAnsweredCount] = useState(0);
-  
+
   const [error, setError] = useState<string | null>(null);
   const [doneDetail, setDoneDetail] = useState<{
     question: string;
@@ -370,13 +400,13 @@ function QuizCarousel({
     storedAnswer: string;
     feedback?: string;
   } | null>(null);
-  
+
   const item = items[index];
 
   const loadItem = useCallback(async (i: number) => {
     const it = items[i];
     if (!it) return;
-    
+
     setError(null);
     setAnswer("");
     setSelected(null);
@@ -418,7 +448,7 @@ function QuizCarousel({
       setIndex(index + 1);
       loadItem(index + 1);
     } else {
-      onComplete(answeredCount);
+      onComplete();
     }
   }
 
@@ -426,10 +456,10 @@ function QuizCarousel({
     if (!question || !session || saving) return;
     setSaving(true);
     setError(null);
-    
+
     const isSingleChoice = question.kind === "mcq" || question.kind === "truefalse";
     const isMulti = question.kind === "multi";
-    
+
     try {
       await saveQuizAnswer({
         sessionId: session.id,
@@ -438,7 +468,6 @@ function QuizCarousel({
         selectedIndex: isSingleChoice && !skip ? selected ?? undefined : undefined,
         selectedIndices: isMulti && !skip && multiSelected.length ? [...multiSelected].sort((a, b) => a - b) : undefined,
       });
-      setAnsweredCount(c => c + 1);
       setSaving(false);
       next();
     } catch (e) {
@@ -455,7 +484,7 @@ function QuizCarousel({
     ? selected !== null
     : question.kind === "multi" ? multiSelected.length > 0 : answer.trim().length > 0);
 
-  const pendingCount = items.filter(it => !it.done).length;
+  const pendingCount = items.filter((it) => !it.done).length;
   const progress = items.length ? (index / items.length) * 100 : 0;
 
   if (!item) return null;
@@ -634,7 +663,7 @@ function QuizCarousel({
           </div>
         </div>
       )}
-      
+
       {phase === "question" && !question && (
         <div className="glass rise p-8 text-center">
           <h2 className="mb-2 text-lg font-bold">Couldn&apos;t load this question</h2>

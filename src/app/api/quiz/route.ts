@@ -24,8 +24,13 @@ export const maxDuration = 60;
  * ingest's own cap (INGEST_DAILY_LIMIT) reserves the bulk of the daily Gemini
  * budget for adding new material; this is the always-available slice held
  * back specifically for the review flow so it's never starved by ingest use.
+ *
+ * Since /recall now runs ONE session per series group, the effective daily cap
+ * is per-user dynamic: this base (the "General Knowledge" section) PLUS one slot
+ * per story the user has started — so every section they can submit gets a real
+ * AI-graded report card. See the finish handler.
  */
-const QUIZ_AI_DAILY_LIMIT = Number(process.env.QUIZ_AI_DAILY_LIMIT || 1);
+const QUIZ_AI_DAILY_BASE = Number(process.env.QUIZ_AI_DAILY_LIMIT || 1);
 
 /**
  * Quiz backend, redesigned to minimise AI calls:
@@ -457,7 +462,14 @@ async function finish(
       .eq("user_id", userId)
       .eq("ai_graded", true)
       .gte("graded_at", dayStart.toISOString());
-    const budgetAvailable = (aiGradedToday ?? 0) < QUIZ_AI_DAILY_LIMIT;
+    // Daily budget = base (General Knowledge section) + one slot per started
+    // story, so each series section a user submits can get a real AI grade.
+    const { count: startedStories } = await supabase
+      .from("user_stories")
+      .select("series_slug", { count: "exact", head: true })
+      .eq("user_id", userId);
+    const dailyLimit = QUIZ_AI_DAILY_BASE + (startedStories ?? 0);
+    const budgetAvailable = (aiGradedToday ?? 0) < dailyLimit;
 
     if (budgetAvailable) {
       try {
