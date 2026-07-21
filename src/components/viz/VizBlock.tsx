@@ -1,8 +1,9 @@
-import { parseVizPayload, type ArrayVizPayload, type FlowVizPayload, type TableDiffVizPayload, type TreeVizPayload } from "./types";
+import { parseVizPayload, type ArrayVizPayload, type FlowVizPayload, type TableDiffVizPayload, type TreeVizPayload, type ComplexityVizPayload } from "./types";
 import ArrayViz from "./ArrayViz";
 import TreeViz from "./TreeViz";
 import TableDiffViz from "./TableDiffViz";
 import FlowViz from "./FlowViz";
+import ComplexityViz from "./ComplexityViz";
 
 /**
  * Dispatches a `viz:<kind>` fenced block (see Markdown.tsx) to its primitive.
@@ -32,8 +33,10 @@ export default function VizBlock({
         return <TableDiffViz payload={payload as TableDiffVizPayload} accent={accent} />;
       case "flow":
         return <FlowViz payload={payload as FlowVizPayload} accent={accent} />;
+      case "complexity":
+        return <ComplexityViz payload={payload as ComplexityVizPayload} accent={accent} />;
       default:
-        throw new Error(`viz:${kind} — unknown diagram kind (expected array | tree | table-diff | flow)`);
+        throw new Error(`viz:${kind} — unknown diagram kind (expected array | tree | table-diff | flow | complexity)`);
     }
   } catch (e) {
     if (strict) throw e;

@@ -170,13 +170,35 @@ The nine problems here are sequenced like a story. You start by remembering **wh
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/anagram-groups",
       summary: "Canonical forms as hash keys: everything 'the same' lands in the same bucket.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners attempt to compare every string against every other string using the Valid Anagram helper function, building groups incrementally.
-*Why this shatters*: Comparing $N$ strings pairwise takes $O(N^2 \\cdot K)$ time (where $K$ is max string length). For 10,000 strings, $N^2 = 100,000,000$ comparisons!
+      body: `**The problem in one line.** You are given a list of words. Group together the ones that are anagrams of each other (same letters, any order). For \`["eat","tea","tan","ate","nat","bat"]\` the answer is \`[["eat","tea","ate"], ["tan","nat"], ["bat"]]\`.
 
-**The Structural Invariant & Canonical Key.** All anagrams, when transformed into a normalized **canonical signature**, produce identical keys.
-- *Sorting Key*: Sorting characters of \`"eat"\`, \`"tea"\`, \`"ate"\` all produce \`"aet"\`. Map key takes $O(K \\log K)$.
-- *Count Signature Key (Optimal $O(K)$)*: Build a 26-integer tuple/string representing character counts: \`#1#0#0...#1\` (1 'a', 1 'e', 1 't').
-- *Bucketing Invariant*: Map stores \`canonical_key -> List[original_strings]\`.
+**Beginner Intuition & The Naive Fallacy.** The obvious idea: take each word and compare it against every other word using an "is-anagram?" check, then glue the matches into groups.
+*Why this shatters*: comparing $N$ words pairwise is $O(N^2 \\cdot K)$ (where $K$ is the longest word). At 10,000 words that is 100,000,000 comparisons — and you still have to manage which group each word already belongs to. The real problem is that you keep *re-deciding* sameness. You never write down a word's identity so you can look it up instantly.
+
+**The key idea — a canonical signature.** Every set of anagrams shares one thing: the same multiset of letters. If we can turn a word into a **canonical fingerprint** that is identical for all its anagrams, then grouping becomes trivial — words with the same fingerprint go in the same bucket. A hash map does the bucketing for us in $O(1)$ per word:
+
+> \`signature(word)  →  list of original words\`
+
+There are two ways to build that fingerprint:
+
+- **(a) Sort the letters.** \`sorted("eat") = "aet"\`, \`sorted("tea") = "aet"\`, \`sorted("ate") = "aet"\` — same key. Costs $O(K \\log K)$ per word.
+- **(b) Count the letters (optimal).** Build a 26-slot count of the letters, then turn it into a string like \`"1#0#0#0#1#…#1"\` (one 'a', one 'e', one 't'). Costs $O(K)$ per word — no sorting.
+
+**Building the count signature (step through it).** Below we build the fingerprint for \`"eat"\`. The three slots stand for the counts of \`a\`, \`e\`, \`t\`. \`"tea"\` and \`"ate"\` walk different orders but land on the exact same final counts — which is *why* they collide into one bucket.
+
+\`\`\`viz:array
+{
+  "frames": [
+    { "cells": [0, 0, 0], "note": "Signature = how many of each letter. Slots shown here: [a, e, t]. Start at all zeros." },
+    { "cells": [0, 1, 0], "pointers": [{ "label": "read 'e'", "index": 1 }], "highlight": [1], "note": "First char of 'eat' is 'e' → bump the e-slot to 1." },
+    { "cells": [1, 1, 0], "pointers": [{ "label": "read 'a'", "index": 0 }], "highlight": [0], "note": "Next char 'a' → bump the a-slot to 1." },
+    { "cells": [1, 1, 1], "pointers": [{ "label": "read 't'", "index": 2 }], "highlight": [2], "note": "Last char 't' → key string becomes 'a1e1t1'. 'tea' and 'ate' produce this SAME key." }
+  ],
+  "caption": "Group Anagrams — the count signature is order-independent, so all anagrams share one key. (Real key uses all 26 letters.)"
+}
+\`\`\`
+
+**Everything drops into its bucket.** Once each word owns a signature, one pass over the input is enough: compute the key, append the word to \`map[key]\`. Hover a word below to see which bucket it falls into.
 
 \`\`\`viz:flow
 {
@@ -186,8 +208,8 @@ The nine problems here are sequenced like a story. You start by remembering **wh
     { "id": "ate", "label": "ate", "row": 2, "col": 0 },
     { "id": "tan", "label": "tan", "row": 3, "col": 0 },
     { "id": "nat", "label": "nat", "row": 4, "col": 0 },
-    { "id": "key1", "label": "Bucket 'a1e1t1'", "row": 1, "col": 1 },
-    { "id": "key2", "label": "Bucket 'a1n1t1'", "row": 3.5, "col": 1 }
+    { "id": "key1", "label": "bucket a1e1t1", "row": 1, "col": 1 },
+    { "id": "key2", "label": "bucket a1n1t1", "row": 3.5, "col": 1 }
   ],
   "edges": [
     { "from": "eat", "to": "key1" },
@@ -196,13 +218,41 @@ The nine problems here are sequenced like a story. You start by remembering **wh
     { "from": "tan", "to": "key2" },
     { "from": "nat", "to": "key2" }
   ],
-  "caption": "Group Anagrams — strings map directly into canonical frequency buckets."
+  "caption": "Strings map directly into canonical frequency buckets — same signature, same bucket."
+}
+\`\`\`
+
+**The optimal solution (count-key, $O(N \\cdot K)$).**
+
+\`\`\`python
+def group_anagrams(words):
+    buckets = {}                      # signature -> list of words
+    for w in words:
+        count = [0] * 26              # counts for 'a'..'z'
+        for ch in w:
+            count[ord(ch) - ord('a')] += 1
+        key = "#".join(map(str, count))   # value-based, hashable key
+        buckets.setdefault(key, []).append(w)
+    return list(buckets.values())
+\`\`\`
+
+**Complexity — and why each approach costs what it does.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (pairwise anagram check)", "time": "O(N² · K)", "space": "O(N · K)", "note": "Re-checks sameness for every pair — quadratic blow-up." },
+    { "approach": "Sort each word for the key", "time": "O(N · K log K)", "space": "O(N · K)", "note": "Simplest to write; sorting per word is the bottleneck." },
+    { "approach": "Count signature (26-slot key)", "time": "O(N · K)", "space": "O(N · K)", "note": "Linear per word — no sort. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of words, K = length of the longest word. Space stores every character across all buckets."
 }
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Empty Strings*: Inputs like \`[""]\` should map to key \`"#0#0..."\` and return \`[[""]]\`.
-- *Hash Key Serialization*: In languages like JavaScript/Python, array objects are compared by reference, not value! You must join frequency arrays into strings (e.g., \`count.join("#")\`) so map lookups compare by value.`,
+- *Empty strings*: \`[""]\` produces the all-zero key \`"0#0#…#0"\` and correctly returns \`[[""]]\`.
+- *Hash key must compare by value*: in JavaScript and Python, arrays/lists compared as object keys use *reference* identity, so two identical count arrays are treated as different keys. Always serialise to a primitive (\`count.join("#")\` or a tuple) so the map buckets by value.
+- *Uppercase / Unicode*: the 26-slot trick assumes lowercase \`a\`–\`z\`. For arbitrary characters, swap the fixed array for a \`Map<char, int>\` and build the key from its sorted entries.`,
       questions: [
         {
           kind: "mcq",

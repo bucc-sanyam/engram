@@ -110,6 +110,7 @@ export function useVizPalette(accentHex: string): VizPalette {
       gridStroke: "rgba(58,50,38,0.32)",
       edgeStroke: "rgba(58,50,38,0.34)",
       muted: "#544d42",
+      panel: "#eee8dd",
     };
   }
   return {
@@ -120,6 +121,7 @@ export function useVizPalette(accentHex: string): VizPalette {
     gridStroke: "rgba(255,252,245,0.16)",
     edgeStroke: "rgba(255,252,245,0.18)",
     muted: "rgba(255,252,245,0.65)",
+    panel: "#0b0a0e",
   };
 }
 
@@ -128,4 +130,5 @@ export function useAccentColor(hex: string): string {
   const { isPaperMode } = useReadingTheme();
   return isPaperMode ? darkenForPaper(hex) : hex;
 }
+
 

@@ -52,7 +52,24 @@ export interface FlowVizPayload {
   caption?: string;
 }
 
-export type VizKind = "array" | "tree" | "table-diff" | "flow";
+export interface ComplexityRow {
+  /** Name of the approach, e.g. "Brute force", "Sort key", "Count key (optimal)" */
+  approach: string;
+  /** Big-O time, e.g. "O(N·K log K)" */
+  time: string;
+  /** Big-O space, e.g. "O(N·K)" */
+  space: string;
+  /** Optional one-line trade-off note */
+  note?: string;
+  /** Marks the recommended / interview-optimal row */
+  best?: boolean;
+}
+export interface ComplexityVizPayload {
+  rows: ComplexityRow[];
+  caption?: string;
+}
+
+export type VizKind = "array" | "tree" | "table-diff" | "flow" | "complexity";
 
 function fail(msg: string): never {
   throw new Error(msg);
@@ -114,7 +131,17 @@ export function parseVizPayload(kind: string, raw: string): unknown {
       }
       return d as unknown as FlowVizPayload;
     }
+    case "complexity": {
+      if (!Array.isArray(d.rows) || d.rows.length === 0) fail("viz:complexity — needs a non-empty \"rows\" array");
+      for (const [i, r] of (d.rows as unknown[]).entries()) {
+        const row = r as Record<string, unknown>;
+        if (typeof row.approach !== "string" || typeof row.time !== "string" || typeof row.space !== "string") {
+          fail(`viz:complexity — row ${i} needs string "approach", "time" and "space"`);
+        }
+      }
+      return d as unknown as ComplexityVizPayload;
+    }
     default:
-      fail(`viz:${kind} — unknown diagram kind (expected array | tree | table-diff | flow)`);
+      fail(`viz:${kind} — unknown diagram kind (expected array | tree | table-diff | flow | complexity)`);
   }
 }
