@@ -11,11 +11,7 @@ export const linkedList: DsaTopic = {
   unlocks: ["trees"],
   intro: `An array is a neighbourhood — everyone has an address, and you can knock on door 40,000 instantly. A linked list is a conga line in the dark: each node knows exactly one thing, who comes next, and to reach anyone you walk the whole chain. That trade sounds terrible until you need to splice: inserting or removing someone mid-line is one pointer rewrite, no mass eviction of neighbours. Caches, schedulers, allocators and every structure that reorders itself constantly are built on this.
 
-For interviews, linked lists are really a test of **pointer discipline** — can you rewire next-references without dropping the rest of the chain on the floor? Two techniques carry the entire chapter. The first is the three-pointer shuffle from Reverse Linked List: hold *previous*, *current*, and a saved *next* while you turn an arrow around, because the moment you overwrite a next-pointer, whatever it pointed to is gone unless someone is holding it. The second is the **fast and slow pointer** family — two runners on the same track at different speeds. A runner going twice as fast finds the middle when it hits the end (Reorder List), meets the slow runner if and only if the track loops (Linked List Cycle, via Floyd's algorithm), and — offset by n instead of speed — finds the nth-from-end (Remove Nth Node). This is Two Pointers, chapter two of this atlas, reborn without indexes.
-
-The sequence builds from single moves to full surgery: reverse, merge, detect a cycle, then combinations — Reorder List is literally find-middle + reverse + interleave. Copy List with Random Pointer and Add Two Numbers stretch you sideways (interleaved cloning, digit arithmetic as list-walking). Find the Duplicate Number is the chapter's sleeper twist: an *array* problem that becomes a cycle-detection problem once you read values as pointers. LRU Cache is the payoff — hash map plus doubly linked list composing into the most-implemented data structure in industry. Merge K Sorted Lists and Reverse Nodes in K-Group close it at hard difficulty: divide-and-conquer merging, and reversal performed in windowed bursts without ever losing the chain.
-
-On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *two* next-pointers instead of one.`,
+For interviews, linked lists are really a test of **pointer discipline** — can you rewire next-references without dropping the rest of the chain on the floor? Two techniques carry the entire chapter: the three-pointer shuffle and Floyd's fast-and-slow runners.`,
   problems: [
     {
       slug: "reverse-linked-list",
@@ -23,29 +19,53 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/reverse-a-linked-list",
       summary: "The three-pointer shuffle: save next, flip the arrow, shift the trio — the chapter's atomic move.",
-      body: `**Signal.** "Reverse a singly linked list" — no lookup, no target, purely a structural inversion of next-pointers — is the tell for the three-pointer shuffle, the chapter's atomic move.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to reverse a linked list by iterating and immediately setting \`curr.next = prev\`.
+*Why this shatters*: Overwriting \`curr.next\` instantly **destroys your only link to the rest of the list**! Node \`curr.next\` becomes garbage collected or un-reachable, severing the chain.
 
-**Brute force.** Copy every value into an array, reverse the array, then walk the list again overwriting each node's value in order — O(n) time, O(n) space, and it cheats: it never actually rewires a single pointer, so it fails the moment the problem asks you to reverse the *structure*, not just what's printed.
-
-**Optimal approach.** You cannot just walk along flipping arrows — the moment you point node 1's next at null, node 2 and the entire rest of the list is unreachable unless someone was already holding it. Walk with three pointers. *prev* starts as null (the new tail's destination), *curr* at the head. Each step is a fixed four-beat bar: save curr.next into a temp (protect the rest of the list); point curr.next at prev (the flip); slide prev up to curr; slide curr up to the saved temp. When curr runs off the end, prev is standing on the old tail — the new head.
+**The Structural Invariant: The Four-Beat Pointer Shuffle.**
+We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially \`head\`), and \`temp\` (to save the onward link).
+- **Beat 1 (Save)**: \`temp = curr.next\` (protect the rest of the list!).
+- **Beat 2 (Flip)**: \`curr.next = prev\` (reverse the arrow).
+- **Beat 3 (Advance prev)**: \`prev = curr\`.
+- **Beat 4 (Advance curr)**: \`curr = temp\`.
+- Loop until \`curr == null\`. Return \`prev\` (the new head!).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3], "pointers": [{ "label": "curr", "index": 0 }], "note": "prev = null, curr = head (1). Nothing reversed yet." },
-    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 0 }, { "label": "curr", "index": 1 }], "highlight": [0], "note": "Beat one: save curr.next (2), flip 1's arrow to null, prev advances to 1, curr advances to 2." },
-    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 1 }, { "label": "curr", "index": 2 }], "highlight": [0, 1], "note": "Beat two: save curr.next (3), flip 2's arrow back to 1, prev advances to 2, curr advances to 3." },
-    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 2 }], "highlight": [0, 1, 2], "note": "Beat three: flip 3's arrow back to 2, prev advances to 3, curr runs off the end. Return prev — the list is now 3→2→1→null." }
+    { "cells": [1, 2, 3], "pointers": [{ "label": "curr", "index": 0 }], "note": "prev = null, curr = head (1). Initial list: 1 -> 2 -> 3 -> null." },
+    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 0 }, { "label": "curr", "index": 1 }], "highlight": [0], "note": "Save temp=2. Flip 1.next=null. Advance prev=1, curr=2. List: null <- 1, 2 -> 3." },
+    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 1 }, { "label": "curr", "index": 2 }], "highlight": [0, 1], "note": "Save temp=3. Flip 2.next=1. Advance prev=2, curr=3. List: null <- 1 <- 2, 3." },
+    { "cells": [1, 2, 3], "pointers": [{ "label": "prev", "index": 2 }], "highlight": [0, 1, 2], "note": "Save temp=null. Flip 3.next=2. Advance prev=3, curr=null. Return prev (3) -> 3 -> 2 -> 1." }
   ],
-  "caption": "Reverse Linked List — the three-pointer shuffle, one flipped arrow per beat."
+  "caption": "Reverse Linked List — In-place pointer reversal in O(N) time & O(1) space."
 }
 \`\`\`
 
-**The recursive version.** Reverse the rest of the list first, then attach yourself behind it: head.next.next = head; head.next = null. Elegant, O(n) stack space, and a beautiful warm-up for Trees, where recursion stops being optional. Know both; lead with the iterative one.
-
-**Complexity.** O(n) time, O(1) space iteratively — versus the value-copy brute force's O(n) space, which doesn't even solve the real problem.
-
-**Thread.** That four-beat bar is this chapter's atomic move — you will replay it inside Reorder List and Reverse Nodes in K-Group. First, though, a gentler skill: weaving two lists together while breaking neither.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty or 1-Node List*: If \`head == null\` or \`head.next == null\`, return \`head\` directly in $O(1)$.
+- *Recursive Variant*: Reverses recursively: \`newHead = reverse(head.next); head.next.next = head; head.next = null;\` ($O(N)$ stack space).`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must we store curr.next in a temporary variable 'temp' BEFORE executing curr.next = prev?",
+          options: [
+            "Because JavaScript requires temporary variables for string conversion.",
+            "Because setting curr.next = prev overwrites the next pointer, severing our only reference to the remainder of the linked list.",
+            "To calculate the total length of the list.",
+            "To prevent memory leaks in the browser."
+          ],
+          correct_index: 1,
+          model_answer: "Overwriting `curr.next` severs the forward pointer to the rest of the list. Storing `curr.next` in `temp` beforehand preserves access to subsequent nodes.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the return value of the iterative Reverse Linked List algorithm when curr becomes null?",
+          model_answer: "The algorithm returns `prev`, which sits at the last non-null node of the original list (now the head of the reversed list).",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "merge-two-sorted-lists",
@@ -53,28 +73,52 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/merge-two-sorted-linked-lists",
       summary: "Two sorted chains, one dummy head, and a tail that always grabs the smaller front.",
-      body: `**Signal.** "Merge two sorted linked lists into one sorted list, reusing the existing nodes" — two already-sorted sequences combining into one is the merge step of merge sort, and "reusing nodes" rules out just collecting values into an array.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to handle special cases for setting the initial new \`head\` pointer before starting the merging loop.
+*Why this shatters*: Writing special conditional logic for setting the new head leads to messy, error-prone code with duplicate branches.
 
-**Brute force.** Collect every value from both lists into an array, sort the array, then build a brand-new list from it — O((m+n) log(m+n)) time, and it throws away the fact that both inputs were already sorted, plus it doesn't reuse the original nodes as the problem asks.
-
-**Optimal approach.** Both lists present their heads; the smaller one is, by sortedness, the smallest element anywhere — it must come next in the output. Detach it, append it to the result's tail, and advance that list. Repeat until one list empties; then the survivor — already sorted, already chained — is appended *whole* in O(1). The dummy-head trick removes the "is this the first node?" special case: start with a throwaway dummy node, keep a tail pointer at it, and append normally forever — dummy.next is the real head when you finish.
+**The Structural Invariant: Dummy Head Node & Tail Splice.**
+- **The Dummy Node Pattern**: Create a sentinel \`dummy = new ListNode(0)\` and \`tail = dummy\`.
+- Compare \`l1.val\` vs \`l2.val\`:
+  - Attach smaller node to \`tail.next\`.
+  - Advance the pointer of the list that contributed the smaller value.
+  - Advance \`tail = tail.next\`.
+- **O(1) Residual Splice**: When one list reaches \`null\`, attach the remaining non-null list directly to \`tail.next\` in $O(1)$!
+- Return \`dummy.next\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1], "note": "Heads: list1=1, list2=1. Tie — take list1's 1. Result so far: [1]." },
-    { "cells": [1, 1], "note": "Heads: list1=2, list2=1. Take list2's 1. Result: [1, 1]." },
-    { "cells": [1, 1, 2], "note": "Heads: list1=2, list2=3. Take list1's 2. Result: [1, 1, 2]." },
-    { "cells": [1, 1, 2, 3], "note": "Heads: list1=4, list2=3. Take list2's 3. Result: [1, 1, 2, 3]." },
-    { "cells": [1, 1, 2, 3, 4, 4], "highlight": [4, 5], "note": "list2 empties — splice the rest of list1 (just node 4) on whole, in O(1). Result: [1, 1, 2, 3, 4, 4]." }
+    { "cells": [1, 2, 4], "pointers": [{ "label": "l1", "index": 0 }, { "label": "l2", "index": 0 }], "note": "l1: 1->2->4, l2: 1->3->4. Dummy tail at 0. Compare l1(1) vs l2(1) -> Attach l1(1). l1=2." },
+    { "cells": [1, 1, 2], "pointers": [{ "label": "l1", "index": 1 }, { "label": "l2", "index": 1 }], "note": "Compare l1(2) vs l2(1) -> Attach l2(1). l2=3. Tail at 1." },
+    { "cells": [1, 1, 2, 3, 4, 4], "highlight": [0, 1, 2, 3, 4, 5], "note": "Continue weaving... l2 reaches null. Splice remaining l1 directly to tail. Return dummy.next." }
   ],
-  "caption": "Merge Two Sorted Lists — the smaller front always wins the next slot; the survivor is appended whole when the other list runs out."
+  "caption": "Merge Two Sorted Lists — In-place pointer weaving using a sentinel dummy node."
 }
 \`\`\`
 
-**Complexity.** O(m + n) time, O(1) extra space — the merge is a re-threading, not a copy — versus the O((m+n) log(m+n)) sort-everything brute force.
-
-**Thread.** You can reverse; you can weave. Next question: what if the chain is dishonest — what if, somewhere down the line, it loops back on itself? Detecting that without any memory is one of the prettiest algorithms ever found.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty Inputs*: If \`l1 == null\`, return \`l2\`. If \`l2 == null\`, return \`l1\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the primary benefit of using a Dummy Sentinel Node when merging linked lists?",
+          options: [
+            "It automatically sorts the list elements.",
+            "It eliminates special-case logic for initializing the result head pointer.",
+            "It reduces time complexity from O(N) to O(1).",
+            "It converts singly linked lists into doubly linked lists."
+          ],
+          correct_index: 1,
+          model_answer: "A dummy node acts as a fixed anchor. We can append nodes to `tail.next` uniformly without checking if the list head has been assigned.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "Why can the remaining non-null list be attached in O(1) time when one list runs out of nodes?",
+          model_answer: "Because linked list nodes are already chained together! When one list empties, the rest of the other list is already sorted and linked, so we just set `tail.next = remaining_list`.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "linked-list-cycle",
@@ -82,29 +126,50 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/linked-list-cycle-detection",
       summary: "Floyd's tortoise and hare: on a looped track, a runner at 2x must lap a runner at 1x.",
-      body: `**Signal.** "Does this list loop back on itself — answer in O(1) space" — the O(1) space bar rules out remembering visited nodes, which is the tell for two runners at different speeds instead of a memory of the past.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Set to store visited node references as they walk the list ($O(N)$ time, $O(N)$ space).
+*Why this shatters*: Storing node references requires $O(N)$ auxiliary memory. The problem challenges us to solve cycle detection in **$O(1)$ constant space**!
 
-**Brute force.** A hash set of visited nodes: walk, and if you ever revisit a node, cycle. O(n) time, O(n) space — completely correct, say it in one breath, but it's exactly the memory the follow-up asks you to give up.
-
-**Optimal approach.** Two runners on the same track: a tortoise moving one node per tick, a hare moving two. If the track ends, the hare falls off — no cycle, done. If the track loops, both runners eventually get swept into the loop and circle forever — and inside the loop, the hare gains on the tortoise by exactly one node per tick. A gap that shrinks by one each tick must reach zero: they *collide*. Not "probably meet" — provably, within one lap of the tortoise entering. The collision is the proof of the cycle; no memory of the past required, because the runners' relative motion encodes it.
+**The Structural Invariant: Floyd's Tortoise & Hare Algorithm.**
+Place two runners at \`head\`:
+- \`slow\` moves 1 step per tick (\`slow = slow.next\`).
+- \`fast\` moves 2 steps per tick (\`fast = fast.next.next\`).
+- **Proof of Collision**: If no cycle exists, \`fast\` will hit \`null\` and terminate. If a cycle of length $C$ exists, once both runners enter the cycle, the relative distance between \`fast\` and \`slow\` decreases by **1 node per tick**. They are guaranteed to collide (\`slow == fast\`)!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow", "index": 0 }, { "label": "fast", "index": 0 }], "note": "Start: both runners at node 1. Remember: node 5's next points back to node 3, not to null." },
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow", "index": 1 }, { "label": "fast", "index": 2 }], "note": "Tick 1: slow steps once to 2; fast steps twice to 3." },
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow", "index": 2 }, { "label": "fast", "index": 4 }], "note": "Tick 2: slow steps once to 3; fast steps twice to 5." },
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow", "index": 3 }, { "label": "fast", "index": 3 }], "highlight": [3], "note": "Tick 3: slow steps to 4. Fast's two steps go 5 -> 3 (via the loop) -> 4. Both land on 4 — collision confirms the cycle." }
+    { "cells": [3, 2, 0, -4], "pointers": [{ "label": "slow", "index": 0 }, { "label": "fast", "index": 0 }], "note": "List: 3 -> 2 -> 0 -> -4 -> (loops back to 2). Both start at 3." },
+    { "cells": [3, 2, 0, -4], "pointers": [{ "label": "slow", "index": 1 }, { "label": "fast", "index": 2 }], "note": "Tick 1: slow at 2 (idx 1), fast at 0 (idx 2)." },
+    { "cells": [3, 2, 0, -4], "pointers": [{ "label": "slow", "index": 2 }, { "label": "fast", "index": 1 }], "note": "Tick 2: slow at 0 (idx 2), fast wraps 2->0->-4->2 (idx 1)." },
+    { "cells": [3, 2, 0, -4], "pointers": [{ "label": "slow", "index": 3 }, { "label": "fast", "index": 3 }], "highlight": [3], "note": "Tick 3: slow at -4, fast at -4. COLLISION! Cycle detected -> return true." }
   ],
-  "caption": "Linked List Cycle — Floyd's tortoise and hare converge inside the loop after node 5 wraps back to node 3."
+  "caption": "Linked List Cycle — Floyd's fast/slow pointer collision in O(N) time & O(1) space."
 }
 \`\`\`
 
-**The famous part two.** After colliding, reset one runner to the head and advance both at speed one: they meet again exactly at the *cycle's entrance*. That is Floyd's full algorithm, and the arithmetic behind it (distances before and inside the loop cancelling) is worth working through once on paper — the next time you will need it is two problems from now, wearing an array costume in Find the Duplicate Number.
-
-**Complexity.** O(n) time, O(1) space — versus the hash-set approach's O(n) space.
-
-**Thread.** Fast and slow runners can do more than detect loops — run the hare to the end and the tortoise is standing on the *middle*. Reorder List, next, uses exactly that, then folds the list in half like a hand of cards.`,
+**Boundary Traps & Execution Blueprint.**
+- *Fast Null Checks*: Always verify \`while (fast != null && fast.next != null)\` before advancing \`fast.next.next\` to prevent \`NullPointerExceptions\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why are fast (2x) and slow (1x) pointers mathematically guaranteed to collide if a cycle exists?",
+          options: [
+            "Because fast skips every odd node.",
+            "Because inside a cycle, fast reduces the distance to slow by 1 node per step, reducing the gap to 0.",
+            "Because fast resets to head when hitting the loop.",
+            "Because linked lists have finite nodes."
+          ],
+          correct_index: 1,
+          model_answer: "With relative speed (2 - 1 = 1 node per step), the gap between fast and slow decreases monotonically by 1 each iteration until collision.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the maximum number of steps fast and slow will take before colliding once slow enters a cycle of length C?",
+          model_answer: "At most C steps, since the gap between fast and slow is strictly less than C and decreases by 1 on every step.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "reorder-list",
@@ -112,28 +177,49 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/reorder-linked-list",
       summary: "Find the middle, reverse the back half, interleave — three known moves composed into surgery.",
-      body: `**Signal.** "Rearrange into first, last, second, second-to-last…" — a fold-in-half-and-riffle pattern is the tell that this is a *composition* problem: find-the-middle plus reverse plus merge, three moves you already own, chained together.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners copy all nodes into an array, then use two pointers on the array to re-link nodes ($O(N)$ space).
+*Why this shatters*: The problem requires reordering **in-place without allocating extra array space** ($O(1)$ space).
 
-**Brute force.** Walk the list once to copy every node into an array, then use two pointers from both ends of the array to rebuild the list in the new order — O(n) time, but O(n) space for the array, which the O(1)-space version below avoids entirely.
-
-**Optimal approach.** Step one: find the middle — tortoise and hare, hare at double speed; when the hare hits the end, the tortoise stands at the midpoint. Step two: split there and **reverse the back half** — the three-pointer shuffle from the chapter's opening, verbatim. Step three: **interleave** — alternately splice one node from each list, a cousin of the merge two problems ago, except the rule is "take turns" instead of "take smaller." Each splice overwrites two next-pointers, so each iteration must save both onward nodes before rewiring — the protect-before-flip reflex again, and don't forget to null-terminate the final node.
+**The Structural Invariant: Three-Phase List Surgery.**
+Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes three atomic operations:
+1. **Find Middle**: Use Fast & Slow pointers to locate the list midpoint.
+2. **Reverse Second Half**: Split the list at midpoint and reverse the right sub-list using the Three-Pointer Shuffle.
+3. **Interleave (Zip)**: Merge the first half and reversed second half by alternating pointers!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow", "index": 2 }], "highlight": [2], "note": "Fast/slow find the middle: fast hits the end, slow lands on 3 (index 2)." },
-    { "cells": [1, 2, 3, 4, 5], "highlight": [3, 4], "note": "Split after the middle: front 1→2→3, back 4→5. Reverse the back half with the three-pointer shuffle: 5→4." },
-    { "cells": [1, 5, 2, 4, 3], "highlight": [0, 1, 2, 3, 4], "note": "Interleave front and reversed back, alternating one node from each: 1, 5, 2, 4, 3." }
+    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "slow (mid)", "index": 2 }], "highlight": [2], "note": "Phase 1: Find middle. Slow lands on node 3. Split: [1->2->3] and [4->5]." },
+    { "cells": [1, 2, 3, 5, 4], "highlight": [3, 4], "note": "Phase 2: Reverse second half [4->5] to get [5->4]." },
+    { "cells": [1, 5, 2, 4, 3], "highlight": [0, 1, 2, 3, 4], "note": "Phase 3: Interleave [1->2->3] and [5->4] alternatingly -> 1 -> 5 -> 2 -> 4 -> 3." }
   ],
-  "caption": "Reorder List — find middle, reverse the back half, then splice the two halves together in alternating order."
+  "caption": "Reorder List — In-place composition: Midpoint + Reverse + Interleave in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — versus the array-based cheat's O(n) space.
-
-**Why interviewers love it.** It is a *composition test*: no new idea anywhere, only fluency under pointer pressure. People who learned patterns as isolated tricks stall here; people who learned them as reusable moves finish in minutes.
-
-**Thread.** The runners so far differed in *speed*. Next problem they differ in *head start* — and n-apart runners find the nth node from the end in a single pass.`,
+**Boundary Traps & Execution Blueprint.**
+- *Severing Middle Link*: Remember to set \`slow.next = null\` when splitting the first half from the second half to avoid cyclic pointer references!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What three fundamental linked list operations compose the optimal O(1) space solution for Reorder List?",
+          options: [
+            "Sort, Filter, Map",
+            "Find Midpoint (Fast/Slow), Reverse Second Half, Interleave/Zip",
+            "Binary Search, Insertion Sort, Deletion",
+            "Hash Map indexing, Quick Sort, Array Merge"
+          ],
+          correct_index: 1,
+          model_answer: "Reorder List is a composite problem combining midpoint finding, list reversal, and alternate node weaving in O(N) time and O(1) space.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What bug occurs if you forget to set `slow.next = null` after splitting the list into two halves?",
+          model_answer: "The end of the first half will still point to the start of the second half, causing infinite cyclic loops during the interleaving phase.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "remove-nth-node-from-end-of-list",
@@ -141,27 +227,50 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/remove-node-from-end-of-linked-list",
       summary: "Two pointers locked n apart: when the leader falls off the end, the trailer stands before the victim.",
-      body: `**Signal.** "Delete the nth node from the *end*, in one pass" — distance-from-the-end is exactly what a singly linked list cannot see directly, and "one pass" rules out the honest two-pass fix, pointing at a fixed-offset pointer pair instead.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners count the total length $L$ of the list in one pass, then calculate the target node's 1-based index $(L - N + 1)$ and perform a second pass to delete it.
+*Why this shatters*: While $O(N)$ time, it requires **two full passes** over the list. Can we delete the $N$-th node from the end in a **single pass**?
 
-**Brute force.** Two passes: walk once to measure the list's length, then walk again to position length − n and splice. Correct, simple, and explicitly what the "one pass" requirement is steering you away from.
-
-**Optimal approach.** You cannot measure from the end, but you can *carry the measurement with you*. Send a lead pointer ahead exactly n + 1 nodes from a dummy placed before the head. Then advance lead and trail together, in lockstep, gap fixed. When lead steps off the end of the list, trail is standing exactly one node *before* the victim, because the fixed gap converts "position relative to an end you haven't seen" into "position relative to a partner you can see." The deletion is one splice: trail.next = trail.next.next. The dummy-head idiom handles the case where the victim is the head itself — n equal to the list's length — with zero special-casing.
+**The Structural Invariant: Two Pointers Locked with Fixed Gap $(N+1)$.**
+- Use a \`dummy\` node preceding \`head\`. Place \`left = dummy\` and \`right = dummy\`.
+- **Advance \`right\` Pointer**: Move \`right\` forward by $N + 1$ steps.
+- **Maintain Gap**: Move both \`left\` and \`right\` forward at equal speed until \`right == null\`.
+- *The Result*: When \`right\` reaches the end (\`null\`), \`left\` is standing **EXACTLY one node before the victim**!
+- **Splice Out Victim**: \`left.next = left.next.next\`. Return \`dummy.next\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "lead", "index": 2 }], "note": "Lead advances n+1=3 nodes from the dummy (before node 1). Lead is now at node 3 (index 2); trail is still back at the dummy." },
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "lead", "index": 4 }, { "label": "trail", "index": 1 }], "note": "March together: when lead reaches node 5 (index 4, the last node), trail has moved up to node 2 (index 1)." },
-    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "trail", "index": 2 }], "highlight": [2, 3], "note": "Lead steps off the end (null). Trail now sits at node 3 (index 2) — exactly one before the victim, node 4 (index 3)." },
-    { "cells": [1, 2, 3, 5], "highlight": [2], "note": "Splice: trail.next = trail.next.next, skipping node 4. Result: 1→2→3→5." }
+    { "cells": [0, 1, 2, 3, 4, 5], "pointers": [{ "label": "left", "index": 0 }, { "label": "right", "index": 3 }], "note": "Dummy (idx 0). N=2. Advance right by N+1 = 3 steps (to idx 3)." },
+    { "cells": [0, 1, 2, 3, 4, 5], "pointers": [{ "label": "left", "index": 3 }, { "label": "right (null)", "index": 6 }], "note": "Advance left & right together until right is null. left lands at idx 3 (node 3)." },
+    { "cells": [0, 1, 2, 3, 5], "highlight": [3], "note": "Victim is node 4 (idx 4). Splice: left.next = left.next.next (3.next = 5). Result: 1->2->3->5." }
   ],
-  "caption": "Remove Nth Node From End — a fixed n+1 gap between lead and trail means trail lands one before the victim exactly when lead falls off the end."
+  "caption": "Remove Nth Node From End — Single pass with (N+1) fixed pointer gap."
 }
 \`\`\`
 
-**Complexity.** O(n) time, one traversal, O(1) space — versus the two-pass approach's two traversals of the same data.
-
-**Thread.** Every problem so far rewired a single chain. Copy List with Random Pointer, next, asks you to *clone* one — including pointers that jump anywhere — and the slick solution interleaves the copy into the original.`,
+**Boundary Traps & Execution Blueprint.**
+- *Removing Head Node*: If $N$ equals the list length, deleting the head node is handled seamlessly because \`dummy\` ensures \`left\` points to \`dummy\`, setting \`dummy.next = head.next\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why do we advance the right pointer by N + 1 steps instead of N steps initially?",
+          options: [
+            "To account for 0-based indexing.",
+            "So that when right reaches null, left stops at the node IMMEDIATELY BEFORE the victim node, allowing direct link splicing.",
+            "To skip non-integer node values.",
+            "Because dummy nodes take two spaces."
+          ],
+          correct_index: 1,
+          model_answer: "To delete a node in a singly linked list, we must modify the `next` pointer of the *previous* node. Gap of N+1 positions `left` directly at that previous node.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "How does using a dummy node simplify deleting the head node of the list?",
+          model_answer: "If the head node is deleted, `left` remains at `dummy`. We update `dummy.next = head.next`, avoiding special-case if-statements for head deletion.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "copy-list-with-random-pointer",
@@ -169,27 +278,52 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/copy-linked-list-with-random-pointer",
       summary: "Deep-copy a list whose nodes point anywhere: a map from old to new — or clones woven between originals.",
-      body: `**Signal.** "Each node has a next pointer *and* a random pointer aiming at any node" — a pointer that can aim "ahead" of wherever a single sweep currently is means one pass can't resolve every wire; you need either a lookup table or a place to stash the correspondence.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to clone the list in a single pass.
+*Why this shatters*: A node's \`random\` pointer might point to a node far ahead in the list that has **not been created yet**!
 
-**Brute force (why a single pass fails).** Walking and cloning as you go handles next fine, but when you meet a random pointer aimed at a node you haven't cloned yet, there is nothing to point at. Any order you pick, some pointer aims "ahead" — the dependency graph is arbitrary.
-
-**Optimal approach (two passes and a map).** Separate *creating* nodes from *wiring* them. Pass one: clone every node, wiring nothing, but record old → new in a hash map — the same "remember what you have seen" reflex as chapter one, now storing correspondences rather than presence. Pass two: for each original node, set copy.next = map[original.next] and copy.random = map[original.random]. Every lookup succeeds because *all* nodes exist before *any* wiring happens. O(n) time, O(n) space for the map. **The follow-up (O(1) extra space):** store the correspondence *in the list's own geometry* instead of a map. Pass one: after each original node, splice in its clone: A→A'→B→B'→… Now "the clone of X" is simply X.next. Pass two: for each original, copy.random = original.random.next — one hop finds the partner. Pass three: unzip the two lists, restoring the original perfectly.
+**The Structural Invariant: Interleaved Splicing ($O(1)$ Auxiliary Space).**
+We can perform a deep copy in 3 linear passes without a Hash Map:
+1. **Pass 1 (Interleave Clones)**: For each original node $X$, create clone $X'$ and insert it directly after $X$: $X \\rightarrow X' \\rightarrow Y \\rightarrow Y'$.
+2. **Pass 2 (Wire Random Pointers)**: For each original node $X$, its clone's random pointer is:
+   $$X'.\\text{random} = X.\\text{random}.\\text{next}$$
+3. **Pass 3 (Unweave Lists)**: Separate the interleaved list back into original list and cloned list!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["A", "B"], "note": "Original list: A → B. A.random = B, B.random = B." },
-    { "cells": ["A", "A'", "B", "B'"], "highlight": [1, 3], "note": "Pass 1: splice a clone directly after each original: A → A' → B → B'." },
-    { "cells": ["A", "A'", "B", "B'"], "highlight": [1], "note": "Pass 2: copy.random = original.random.next. A'.random = A.random.next = B.next = B' — one hop finds the clone." },
-    { "cells": ["A", "B"], "note": "Pass 3: unzip — restore the original A → B, leaving the cloned A' → B' as a fully wired, separate list." }
+    { "cells": ["A", "B"], "note": "Original list: A -> B. A.random = B, B.random = B." },
+    { "cells": ["A", "A'", "B", "B'"], "highlight": [1, 3], "note": "Pass 1: Interleave clones: A -> A' -> B -> B'." },
+    { "cells": ["A", "A'", "B", "B'"], "highlight": [1], "note": "Pass 2: Wire random: A'.random = A.random.next = B.next = B'." },
+    { "cells": ["A'", "B'"], "highlight": [0, 1], "note": "Pass 3: Unweave cloned nodes into standalone list A' -> B'." }
   ],
-  "caption": "Copy List With Random Pointer — interleaving the clone into the original turns \\"find my clone\\" into a single .next hop."
+  "caption": "Copy List with Random Pointer — Interleaved cloning in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time either way; O(n) vs O(1) auxiliary space.
-
-**Thread.** You have now cloned structure. Next, Add Two Numbers has you *computing* with lists — grade-school addition where each node is a digit and the carry rides along the walk.`,
+**Boundary Traps & Execution Blueprint.**
+- *Null Random Pointers*: If \`X.random == null\`, set \`X'.random = null\`.
+- *Hash Map Alternative*: Store \`Map<OriginalNode, ClonedNode>\` in Pass 1, wire \`next\` and \`random\` in Pass 2 ($O(N)$ space).`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In the O(1) space interleaved approach for Copy List with Random Pointer, why does X'.random = X.random.next correctly locate the cloned node?",
+          options: [
+            "Because random pointers are always sorted.",
+            "Because Pass 1 inserted every cloned node X' directly after its original node X, so X.random.next IS the clone of X.random.",
+            "Because arrays store references sequentially.",
+            "Because next pointers are reversed."
+          ],
+          correct_index: 1,
+          model_answer: "Interleaving places clone X' immediately after X. Thus, X.random's clone is stored at X.random.next.",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "Why must Pass 3 unweave the original list back to its exact initial state?",
+          model_answer: "The problem requires deep-copying without mutating or corrupting the original input linked list structure.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "add-two-numbers",
@@ -197,29 +331,53 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/add-two-numbers",
       summary: "Grade-school addition down two chains: sum digits, emit node, carry the overflow forward.",
-      body: `**Signal.** "Two numbers stored as linked lists, one digit per node, least significant first — return their sum" — least-significant-first storage is the tell that grade-school column addition applies directly, walking both lists in lockstep with a carry.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to convert the linked lists into integers (e.g., \`2->4->3\` $\\rightarrow$ \`342\`), add them (\`342 + 465 = 807\`), and convert the result back to a list.
+*Why this shatters*: Linked lists can contain **thousands of digits**, far exceeding 64-bit integer limits (\`BigInt\` overflow!).
 
-**Brute force.** Convert each list to an actual integer (or string), add them with native arithmetic, then build a new list from the digits of the result — works for small numbers, but breaks down for arbitrarily large ones that don't fit a machine integer, which is the entire reason this problem stores numbers as lists in the first place.
-
-**Optimal approach.** Walk both lists in lockstep with a *carry* riding along. Each step: sum = digitA + digitB + carry; emit a node holding sum mod 10; carry becomes sum ÷ 10 (always 0 or 1 — two digits plus a carry max out at 19). The subtleties are all endings: the lists may have different lengths (treat a missing node as digit 0 and keep walking), and after both lists end, a surviving carry mints one final node — forgetting it is *the* classic bug, the 999 + 1 case where the answer grows a digit.
+**The Structural Invariant: Digit-by-Digit Carry Column Addition.**
+Because digits are stored in **reverse order** (least significant digit first), we can simulate grade-school column addition directly while traversing the lists!
+- Maintain scalar \`carry = 0\`.
+- Loop while \`l1 != null || l2 != null || carry > 0\`:
+  - \`v1 = l1 ? l1.val : 0\`
+  - \`v2 = l2 ? l2.val : 0\`
+  - \`sum = v1 + v2 + carry\`
+  - \`carry = Math.floor(sum / 10)\`
+  - Attach new node \`new ListNode(sum % 10)\` to \`tail.next\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["_", "_", "_"], "pointers": [{ "label": "col", "index": 0 }], "note": "List A: 2→4→3 (342). List B: 5→6→4 (465). Column 0 (ones): 2 + 5 + carry 0 = 7." },
-    { "cells": [7, "_", "_"], "pointers": [{ "label": "col", "index": 1 }], "highlight": [0], "note": "Emit 7, carry 0. Column 1 (tens): 4 + 6 + carry 0 = 10." },
-    { "cells": [7, 0, "_"], "pointers": [{ "label": "col", "index": 2 }], "highlight": [1], "note": "Emit 0, carry 1. Column 2 (hundreds): 3 + 4 + carry 1 = 8." },
-    { "cells": [7, 0, 8], "pointers": [{ "label": "col", "index": 2 }], "highlight": [2], "note": "Emit 8, carry 0. Both lists exhausted and carry is 0 — done: 7→0→8 = 807." }
+    { "cells": [2, 4, 3], "pointers": [{ "label": "l1 (2)", "index": 0 }, { "label": "l2 (5)", "index": 0 }], "note": "l1=2, l2=5, carry=0. sum = 2+5+0 = 7. Emit 7, carry=0." },
+    { "cells": [7, 0], "pointers": [{ "label": "l1 (4)", "index": 1 }, { "label": "l2 (6)", "index": 1 }], "highlight": [1], "note": "l1=4, l2=6, carry=0. sum = 4+6+0 = 10. Emit 0, carry=1." },
+    { "cells": [7, 0, 8], "pointers": [{ "label": "l1 (3)", "index": 2 }, { "label": "l2 (4)", "index": 2 }], "highlight": [2], "note": "l1=3, l2=4, carry=1. sum = 3+4+1 = 8. Emit 8, carry=0. Result: 7 -> 0 -> 8." }
   ],
-  "caption": "Add Two Numbers — 342 + 465 = 807, one digit column at a time, carry riding along."
+  "caption": "Add Two Numbers — Column addition handling arbitrary-length numbers in O(N) time."
 }
 \`\`\`
 
-**The idioms.** Dummy head for clean construction (third appearance in this chapter), and a loop condition of "while either list has nodes *or* carry is nonzero" — that single or-clause encodes both edge cases without special-case code.
-
-**Complexity.** O(max(m, n)) time, output-sized space — versus the native-arithmetic brute force, which is only correct up to machine-integer size.
-
-**Thread.** Next comes the chapter's practical joke: a problem with no linked list in sight — an array of numbers — that collapses the moment you *read the values as pointers* and set the tortoise and hare loose on it.`,
+**Boundary Traps & Execution Blueprint.**
+- *Trailing Carry*: If \`l1\` and \`l2\` end but \`carry == 1\` (e.g. \`99 + 1 = 100\`), the \`carry > 0\` condition in the loop ensures the final \`1\` node is appended!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must the loop condition for Add Two Numbers include `carry > 0` alongside `l1 != null || l2 != null`?",
+          options: [
+            "To prevent negative numbers.",
+            "Because an addition like 99 + 1 produces a final carry that requires creating an extra node after both lists are exhausted.",
+            "To reset the dummy node.",
+            "Because linked lists are 1-indexed."
+          ],
+          correct_index: 1,
+          model_answer: "When two N-digit numbers sum to an (N+1)-digit number (e.g., 99 + 1 = 100), the leftover carry creates the most significant digit node.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "How does storing numbers in reverse order (least significant digit first) simplify linked list addition?",
+          model_answer: "Addition naturally starts at the least significant digit (ones place) and carries over to higher places. Reversal allows us to process digits head-to-tail without needing to reverse the list first.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "find-the-duplicate-number",
@@ -227,28 +385,50 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/find-duplicate-integer",
       summary: "An array where values are pointers in disguise — the duplicate is a cycle entrance, and Floyd finds it.",
-      body: `**Signal.** "n+1 integers, each in 1..n, find the repeat — without modifying the array, in O(1) space" — those two constraints assassinate sorting (mutation) and a hash set (space), which is the tell that the array secretly encodes a linked structure Floyd's algorithm can exploit.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \\log N)$ time) or use a Hash Set ($O(N)$ space).
+*Why this shatters*: The problem strictly forbids modifying the array and requires **$O(1)$ extra space** and **$O(N)$ time**!
 
-**Brute force.** Sort the array and scan for adjacent equal values (O(n log n), but mutates), or use a hash set to spot the first repeat (O(n) time, O(n) space) — both explicitly forbidden by the constraints, but worth naming before the real trick.
-
-**Optimal approach.** Read each value as an *instruction*: standing at index i, go to index nums[i]. Every cell points somewhere in-range, so from index 0 this walk goes on forever through a finite space — it must eventually revisit somewhere and loop. **A repeated value is exactly a shared incoming pointer:** if the duplicate is d, at least two different indexes point at index d — two arrows converging on one node. A walk that has a tail funnelling into a converging node is precisely a rho shape: a linked list with a cycle, and *the cycle's entrance is the duplicate value*. The array was a linked list all along. Run Floyd exactly as in Linked List Cycle: phase one, tortoise and hare from index 0 until they collide; phase two, reset one runner to the start, advance both at speed one — their meeting point is d.
+**The Structural Invariant: Mapping Array to a Cyclic Linked List.**
+- Since numbers are in range $[1, n]$ for array of size $n + 1$, every value \`nums[i]\` is a **valid index pointer** to \`nums[nums[i]]\`!
+- **The Core Aha!**: Multiple indices containing the SAME value means **multiple pointers entering the SAME node**. This creates a **cycle**, and the **duplicate number IS the entrance to the cycle**!
+- **Floyd's Cycle Algorithm**:
+  - **Phase 1 (Collision)**: \`slow = nums[slow]\`, \`fast = nums[nums[fast]]\` until \`slow == fast\`.
+  - **Phase 2 (Find Entrance)**: Reset \`slow2 = 0\`. Move \`slow\` and \`slow2\` at 1 step per tick. The index where they meet IS the duplicate number!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 0 }, { "label": "fast", "index": 0 }], "note": "nums = [1,3,4,2,2]. Both runners start at index 0. \\"Go to index nums[i]\\" defines the walk." },
-    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 1 }, { "label": "fast", "index": 3 }], "note": "Tick: slow takes one step (0→1). Fast takes two steps (0→1→3)." },
-    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 3 }, { "label": "fast", "index": 4 }], "note": "Tick: slow steps (1→3). Fast double-steps (3→2→4)." },
-    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 2 }, { "label": "fast", "index": 4 }], "note": "Tick: slow steps (3→2). Fast double-steps (4→2→4), landing back on 4." },
-    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 4 }, { "label": "fast", "index": 4 }], "highlight": [4], "note": "Tick: slow steps (2→4). Fast double-steps (4→2→4)=4. Collision at index 4 — cycle confirmed. Phase two (reset-and-walk) then finds the entrance: duplicate = 2." }
+    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 0 }, { "label": "fast", "index": 0 }], "note": "nums=[1,3,4,2,2]. Read index i -> nums[i] as pointer. Phase 1: Run slow & fast." },
+    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 4 }, { "label": "fast", "index": 4 }], "highlight": [4], "note": "Phase 1 Collision at val=2 (idx 4). Phase 2: Set slow2=0. Advance slow & slow2." },
+    { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 2 }, { "label": "slow2", "index": 2 }], "highlight": [2, 4], "note": "Phase 2 Meeting at val=2! Duplicate number = 2 found in O(N) time & O(1) space." }
   ],
-  "caption": "Find the Duplicate Number — indexes 3 and 4 both point at value 2, so the array's pointer-walk has a cycle whose entrance is the duplicate."
+  "caption": "Find the Duplicate Number — Array treated as Linked List cycle entrance problem."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — versus O(n log n) sort-based or O(n) space hash-set approaches, both of which violate the stated constraints. (Binary search on *value ranges* — count how many elements are ≤ mid — also solves it in O(n log n): a lovely echo of the Koko trick, worth one sentence in an interview.)
-
-**Thread.** That is the chapter's mind-bender. Now the crown jewel of practical design: LRU Cache, where a hash map and a doubly linked list snap together into the structure half the industry runs on.`,
+**Boundary Traps & Execution Blueprint.**
+- *Zero Index Start*: Always start Phase 1 from index 0 (\`slow = nums[0]\`, \`fast = nums[nums[0]]\`).`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why can the array in Find the Duplicate Number be treated as a Linked List with a cycle?",
+          options: [
+            "Because the array elements are sorted.",
+            "Because array elements are in range [1, n] matching valid array indices, and duplicate values represent multiple pointers pointing to the same index (cycle entrance).",
+            "Because Floyd's algorithm only works on arrays.",
+            "Because index 0 is always negative."
+          ],
+          correct_index: 1,
+          model_answer: "Values in [1, n] act as next-pointers. A duplicate value means two different indices point to the same destination index, creating a loop.",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "In Phase 2 of Floyd's Algorithm, why does resetting one pointer to 0 and advancing both pointers at speed 1 guarantee meeting at the cycle entrance?",
+          model_answer: "Mathematically, the distance from head to cycle entrance equals the distance from collision point to cycle entrance modulo cycle length. Moving both at 1x speed causes them to meet at the entrance.",
+          difficulty: "advanced"
+        }
+      ]
     },
     {
       slug: "lru-cache",
@@ -256,27 +436,54 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/lru-cache",
       summary: "Hash map for finding, doubly linked list for ordering — O(1) get and put, and eviction for free.",
-      body: `**Signal.** "get and put both in O(1), evict the least recently used when full" — needing fast lookup *and* fast reordering-by-recency at the same time is the tell that no single structure suffices; you compose a hash map with a doubly linked list.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Map + Timestamp array. On \`put\`, they scan the array for the oldest timestamp to evict ($O(N)$ time).
+*Why this shatters*: The problem requires **$O(1)$ time complexity for BOTH \`get\` and \`put\`**!
 
-**Brute force.** An array or plain list of (key, value, lastUsed) entries: get is a linear scan, and eviction requires scanning for the minimum lastUsed — O(n) per operation, which fails the O(1) requirement outright.
-
-**Optimal approach.** A **doubly linked list** holds the entries in recency order — most recent at the head, stalest at the tail. Doubly, because the core move is *unlink this node from wherever it is* (then re-insert at head), and unlinking in O(1) requires knowing your predecessor without walking: node.prev.next = node.next; node.next.prev = node.prev. The **hash map** points keys straight at their list nodes — teleporting you to the node so the list never needs searching. get: map lookup → miss returns −1; hit unlinks the node, re-inserts at head, returns the value. put: existing key updates and moves to head; new key inserts at head, and if capacity is exceeded, the tail node is unlinked and its key deleted from the map — cleaning the *map* on eviction is the bug everyone ships. Two sentinel nodes (permanent head and tail) erase every null-check on the list edges.
+**The Structural Invariant: Hash Map + Doubly Linked List Composition.**
+- **Doubly Linked List (DLL)**: Stores cache items ordered by recency.
+  - Head \`left\` = Least Recently Used (LRU) candidate.
+  - Tail \`right\` = Most Recently Used (MRU).
+  - *Why Doubly Linked?* Unlinking an arbitrary node takes $O(1)$ because every node knows its \`prev\` and \`next\`!
+- **Hash Map**: Stores \`key -> NodePointer\` for $O(1)$ instant node lookup.
+- **Operations**:
+  - \`get(key)\`: Look up node in map ($O(1)$). Remove node from current DLL position ($O(1)$), re-insert at MRU tail ($O(1)$).
+  - \`put(key, val)\`: If key exists, update value & move to MRU tail. If new key and capacity full, remove LRU head node from DLL ($O(1)$) and delete key from Hash Map ($O(1)$).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1], "note": "put(1,1): insert at head. Order (most-recent → stalest): [1]." },
-    { "cells": [2, 1], "note": "put(2,2): insert at head. Order: [2, 1]." },
-    { "cells": [1, 2], "highlight": [0], "note": "get(1): map finds node 1 instantly, unlinks it, moves it to head. Order: [1, 2]. Returns 1." },
-    { "cells": [3, 1], "highlight": [0], "note": "put(3,3) at capacity 2: evict the tail (2), delete its map entry, insert 3 at head. Order: [3, 1]." }
+    { "cells": ["left (dummy)", "key:1, val:1", "right (dummy)"], "note": "put(1,1): DLL: [LRU dummy <-> (1,1) <-> MRU dummy]. Map: {1: Node(1,1)}." },
+    { "cells": ["left", "(1,1)", "(2,2)", "right"], "note": "put(2,2): Insert at MRU tail. DLL: [ (1,1) <-> (2,2) ]." },
+    { "cells": ["left", "(2,2)", "(1,1)", "right"], "highlight": [2], "note": "get(1): Access key 1! Unlink (1,1) and move to MRU tail. DLL: [ (2,2) <-> (1,1) ]." },
+    { "cells": ["left", "(1,1)", "(3,3)", "right"], "highlight": [2], "note": "put(3,3) at capacity 2: Evict LRU (2,2)! Remove from DLL & Map. Insert (3,3) at MRU tail." }
   ],
-  "caption": "LRU Cache — the doubly linked list tracks recency order; the hash map makes every node reachable in O(1) without a scan."
+  "caption": "LRU Cache — Hash Map + Doubly Linked List achieving O(1) get & put operations."
 }
 \`\`\`
 
-**Complexity.** O(1) per operation, O(capacity) space — versus the O(n)-per-operation array/list brute force.
-
-**Thread.** One list per problem so far. Merge K Sorted Lists, next, hands you a whole pile of them — and the interesting question is not *how* to merge but in what *shape*: one-by-one, tournament, or heap.`,
+**Boundary Traps & Execution Blueprint.**
+- *Dummy Sentinel Head/Tail*: Using sentinel \`left\` and \`right\` dummy nodes eliminates all null pointer checks during node insertions and deletions!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must a Doubly Linked List be used instead of a Singly Linked List for LRU Cache?",
+          options: [
+            "Because doubly linked lists use less memory.",
+            "Because unlinking an arbitrary node in O(1) requires access to node.prev, which is only available in doubly linked lists.",
+            "Because singly linked lists cannot store key-value pairs.",
+            "Because hash maps only accept double pointers."
+          ],
+          correct_index: 1,
+          model_answer: "To move a node to the MRU position in O(1) time, we must remove it from its current position. Removing a node requires updating `node.prev.next`, which requires a double link.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What critical step is often forgotten when evicting the LRU node from the Doubly Linked List?",
+          model_answer: "Deleting the corresponding key from the Hash Map! Forgetting to delete `map.delete(lruNode.key)` causes stale memory references and incorrect capacity checks.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "merge-k-sorted-lists",
@@ -284,20 +491,24 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/merge-k-sorted-linked-lists",
       summary: "Pairwise tournament merging turns k lists into one in O(n log k) — divide and conquer over streams.",
-      body: `**Signal.** "k sorted linked lists, merge them into one" — generalizing a two-way merge to k inputs is a scaling question, and the interesting content is entirely in *how* you scale it, not in a new merging idea.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners merge lists one-by-one sequentially: merge list 1 and 2, then merge result with 3, then with 4...
+*Why this shatters*: Merging $K$ lists sequentially results in $O(N \\cdot K)$ total time complexity (where $N$ is total number of nodes across all lists). For 10,000 lists, this is quadratic TLE!
 
-**Brute force (fold).** Merge list 1 into list 2, the result into list 3, and so on. Correct — and quietly quadratic: the growing accumulator is re-walked in almost every merge, totalling O(n·k) node visits for n total nodes.
-
-**Optimal approach (tournament).** Merge lists in *pairs*: k lists become k/2, then k/4, halving each round. Every round touches each node at most once — O(n) per round — and there are log k rounds: **O(n log k)** total. Same two-list merge subroutine from earlier in the chapter, arranged as a balanced tree instead of a chain — identical work, different shape, a log factor saved. (A third shape, a k-way min-heap of the current front nodes, is also O(n log k), O(k) space, and the right answer when the "lists" are *streams* arriving over time rather than fully available up front — Heap, the next chapter, is entirely about this machine.)
+**The Structural Invariant: Pairwise Divide & Conquer Tournament.**
+Instead of sequential merging, merge lists **in pairs** hierarchically (like a tournament bracket):
+- Round 1: Merge $K$ lists pairwise into $K / 2$ lists.
+- Round 2: Merge $K / 2$ lists pairwise into $K / 4$ lists.
+- ... Continue until 1 merged list remains.
+- **Complexity**: Each round processes all $N$ nodes in $O(N)$ time. The number of rounds is $\\log_2 K$. Total time = **$O(N \\log K)$**!
 
 \`\`\`viz:flow
 {
   "nodes": [
-    { "id": "l1", "label": "[1,4,5]", "row": 0, "col": 0 },
-    { "id": "l2", "label": "[1,3,4]", "row": 1, "col": 0 },
-    { "id": "l3", "label": "[2,6]", "row": 2, "col": 0 },
-    { "id": "m12", "label": "[1,1,3,4,4,5]", "row": 0.5, "col": 1 },
-    { "id": "final", "label": "[1,1,2,3,4,4,5,6]", "row": 1, "col": 2 }
+    { "id": "l1", "label": "List 1 [1,4,5]", "row": 0, "col": 0 },
+    { "id": "l2", "label": "List 2 [1,3,4]", "row": 1, "col": 0 },
+    { "id": "l3", "label": "List 3 [2,6]", "row": 2, "col": 0 },
+    { "id": "m12", "label": "Merged [1,1,3,4,4,5]", "row": 0.5, "col": 1 },
+    { "id": "final", "label": "Final Merged [1,1,2,3,4,4,5,6]", "row": 1, "col": 2 }
   ],
   "edges": [
     { "from": "l1", "to": "m12" },
@@ -305,13 +516,33 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
     { "from": "m12", "to": "final" },
     { "from": "l3", "to": "final" }
   ],
-  "caption": "Merge K Sorted Lists — pairwise tournament merging: 3 lists collapse in 2 rounds (log₂ 3 rounded up), each round touching every remaining node once."
+  "caption": "Merge K Sorted Lists — Pairwise Divide & Conquer in O(N log K) time."
 }
 \`\`\`
 
-**Complexity.** O(n log k) time; O(1) extra space for iterative pairwise merging (heap version O(k)) — versus the fold approach's O(n·k).
-
-**Thread.** One hard problem remains — reversal, the chapter's first move, now performed in fixed-size bursts down the chain, with the leftovers left untouched: Reverse Nodes in K-Group, the final exam in pointer discipline.`,
+**Boundary Traps & Execution Blueprint.**
+- *Min-Heap Alternative*: Insert the head node of each of the $K$ lists into a Min-Heap of size $K$. Pop minimum node, attach to output, push \`popped.next\` into heap. Time: $O(N \\log K)$, Space: $O(K)$.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the time complexity of merging K sorted lists with total N nodes using Divide & Conquer pairwise merging?",
+          options: [
+            "O(N * K)",
+            "O(N log K)",
+            "O(N^2)",
+            "O(K log N)"
+          ],
+          correct_index: 1,
+          model_answer: "Pairwise merging reduces the list count by half each round (log K rounds). Each round processes all N nodes in linear time, yielding O(N log K).",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "When is the Min-Heap approach preferable over Divide & Conquer for merging K sorted lists?",
+          model_answer: "When streaming data where lists arrive dynamically over time, or when K sorted streams are read from disk/network, allowing continuous O(1) memory streaming.",
+          difficulty: "advanced"
+        }
+      ]
     },
     {
       slug: "reverse-nodes-in-k-group",
@@ -319,27 +550,54 @@ On the roadmap, Linked List (with Binary Search) unlocks Trees — a node with *
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/reverse-nodes-in-k-group",
       summary: "Reverse the list k nodes at a time, re-splicing each reversed block seamlessly — the pointer final exam.",
-      body: `**Signal.** "Reverse in blocks of k, leaving a short final block untouched" — nothing conceptually new here, which is exactly the point: it's execution, chaining the chapter's reverse and splice moves under pressure, block after block.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners reverse the entire list and try to fix sub-group links afterwards.
+*Why this shatters*: Reversing in groups of $K$ requires modifying pointer connections **block by block**, leaving any leftover sub-group smaller than $K$ untouched.
 
-**Brute force.** Convert the whole list to an array, reverse each length-k slice in place, then rebuild the list from the array — O(n) time, O(n) space for the array, sidestepping the in-place pointer surgery the problem is really testing.
-
-**Optimal approach.** Per block, four duties. **Scout:** walk ahead to confirm k nodes remain — if not, stop; the tail stays as-is. **Reverse:** run the three-pointer shuffle from Reverse Linked List across exactly k nodes. **Splice:** reversing a block turns its first node into its *last* — so the node *before* the block must now point at the block's new head, and the block's new tail (the old first node) must point at whatever follows the block. Keep two handles before reversing: *prevBlockTail* (the connector behind you) and the block's original first node (your future tail). **Advance:** the old first node — now the block's tail — is the next block's prevBlockTail. The dummy-head idiom (fourth appearance this chapter) makes the very first block identical to every other block.
+**The Structural Invariant: Four-Step Block Reversal.**
+Use a \`dummy\` node. For each block of $K$ nodes:
+1. **Scout Phase**: Check if there are at least $K$ nodes remaining. If fewer than $K$ nodes remain, **STOP** (leave remaining nodes unchanged).
+2. **Identify Boundaries**: Let \`groupPrev\` be the node before the group, \`kth\` be the $K$-th node, and \`groupNext = kth.next\`.
+3. **Reverse Group**: Reverse the $K$ nodes between \`groupPrev.next\` and \`groupNext\` using Three-Pointer Shuffle.
+4. **Reconnect Splice**:
+   - Save \`tmp = groupPrev.next\` (which is now the tail of reversed group).
+   - Set \`groupPrev.next = kth\` (point previous group tail to new group head).
+   - Set \`groupPrev = tmp\` (advance pointer for next group).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4, 5], "highlight": [0, 1], "note": "Scout finds k=2 nodes (1, 2). Reverse this block with the three-pointer shuffle: 1↔2 become 2→1." },
-    { "cells": [2, 1, 3, 4, 5], "highlight": [1, 3], "note": "Splice: dummy→2 (new block head); old head 1 (now the block's tail) → next block. Advance: the next block starts at 3." },
-    { "cells": [2, 1, 3, 4, 5], "highlight": [2, 3], "note": "Scout finds k=2 nodes (3, 4). Reverse: 3↔4 become 4→3." },
-    { "cells": [2, 1, 4, 3, 5], "highlight": [1, 4], "note": "Splice: 1→4 (previous tail to new block head), 3→5 (new tail to remainder). Scout from 5 finds only 1 node (<k) — leave it as-is. Final: 2→1→4→3→5." }
+    { "cells": [1, 2, 3, 4, 5], "pointers": [{ "label": "groupPrev", "index": 0 }, { "label": "kth=2", "index": 1 }], "note": "K=2. Group 1: nodes [1, 2]. Scout confirms >= 2 nodes exist. Reverse [1,2] -> [2,1]." },
+    { "cells": [2, 1, 3, 4, 5], "highlight": [0, 1], "note": "Reconnect: dummy -> 2 -> 1 -> 3. Advance groupPrev to node 1." },
+    { "cells": [2, 1, 4, 3, 5], "highlight": [2, 3], "note": "Group 2: nodes [3, 4]. Scout confirms >= 2 nodes. Reverse -> [4,3]. Reconnect 1 -> 4 -> 3 -> 5." },
+    { "cells": [2, 1, 4, 3, 5], "highlight": [4], "note": "Group 3: node [5]. Scout finds < 2 nodes -> Leave 5 unchanged! Final: 2->1->4->3->5." }
   ],
-  "caption": "Reverse Nodes in K-Group — each block is reversed and re-spliced independently; a short trailing block is left untouched."
+  "caption": "Reverse Nodes in K-Group — Grouped reversal with tail preservation in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time — each node reversed once, scouted once — O(1) space (recursion gives a prettier O(n/k)-stack version; offer it as the alternative) — versus the array-rebuild brute force's O(n) space.
-
-**Thread.** Chapter complete: you can now bend chains into any shape without dropping them. Next, the pointer grows a sibling — every node holding *two* onward references — and the atlas enters its largest territory: Trees, where recursion becomes the native language.`,
-    },
-  ],
+**Boundary Traps & Execution Blueprint.**
+- *Leftover Nodes*: The problem specifically states that if the number of nodes is not a multiple of $K$, remaining nodes at the end should remain in their original order.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What occurs if fewer than K nodes remain at the end of the list in Reverse Nodes in K-Group?",
+          options: [
+            "The remaining nodes are reversed anyway.",
+            "The remaining nodes are deleted.",
+            "The algorithm stops and leaves the remaining nodes in their original order.",
+            "The list is padded with zero nodes."
+          ],
+          correct_index: 2,
+          model_answer: "The problem rule specifies that any trailing group with length < K must remain unreversed in its original order.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the role of the scout phase before reversing each K-group?",
+          model_answer: "The scout phase advances K steps forward to verify if K nodes exist. If null is encountered before counting K nodes, we break early without reversing.",
+          difficulty: "intermediate"
+        }
+      ]
+    }
+  ]
 };

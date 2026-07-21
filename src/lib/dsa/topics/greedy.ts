@@ -11,11 +11,7 @@ export const greedy: DsaTopic = {
   unlocks: [],
   intro: `Dynamic programming wins by *keeping every option alive* until the table settles. Greedy is the opposite bet: at each step, make one choice — the locally best one — commit forever, and throw the alternatives away. When it is valid, nothing beats it: no table, no recursion, usually one pass and O(1) space. When it is invalid, it fails silently on inputs you didn't try. That makes this chapter less about algorithms than about **arguments** — a greedy solution is only as good as the sentence that justifies it.
 
-Two proof-shapes carry almost every greedy argument, and you have already used both. The **exchange argument**: take any optimal solution that disagrees with the greedy choice, swap in the greedy choice, and show the result got no worse — so a greedy-agreeing optimum exists (this justified always-move-the-shorter-wall in Container With Most Water, and Prim's cheapest-crossing-edge). And **dominance**: show the greedy's state is *at least as good* in every respect, so anything the alternative could achieve, the greedy's position can too — "my reach is further; any square you can jump to, I can as well." When you cannot construct either argument, treat greed as a hypothesis, hunt a counterexample, and fall back to DP: Coin Change already showed you a greedy that feels right and is wrong.
-
-The eight problems are a tour of what commitment looks like. Maximum Subarray is Kadane's algorithm — one running decision, drop-the-past-or-carry-it, and the bridge from DP to greedy (it *is* a collapsed DP). The Jump Game pair moves from feasibility (track the furthest reach) to optimality (expand in reach-layers — BFS thinking without a queue). Gas Station adds the elegant restart argument: when you stall, no start inside the failed stretch could have survived either. Hand of Straights greedily anchors runs at the smallest card (with a heap or sorted map — the prerequisite chapter earning its keep). Merge Triplets inverts greed into *filtering* — discard anything poisoned, keep the harmless. Partition Labels grows a window to the last occurrence of everything inside it. And Valid Parenthesis String closes with the chapter's cleverest trick: tracking a whole *range* of possible open-bracket counts, greedily collapsing uncertainty to two numbers.
-
-On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for judgment more than a toolbox.`,
+Two proof-shapes carry almost every greedy argument: the **exchange argument** (swapping in greedy choice maintains optimality) and **dominance** (greedy state dominates all alternatives).`,
   problems: [
     {
       slug: "maximum-subarray",
@@ -23,28 +19,50 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/maximum-subarray",
       summary: "Kadane's algorithm: a negative running sum helps nobody — drop it and start fresh.",
-      body: `**Signal.** "Find the contiguous subarray with the largest sum" — a running value where carrying negative history can only hurt is the tell for Kadane's algorithm: the cleanest bridge between the DP chapter you left and the greedy mindset you're entering.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate the sum of all $O(N^2)$ possible contiguous subarrays.
+*Why this shatters*: $O(N^2)$ brute-force iteration for $N = 100,000$ executes 5 billion operations.
 
-**Brute force.** Check every contiguous subarray's sum — O(n²) with a running sum per start, or O(n³) recomputing sums from scratch — redoing overlapping work the running-value trick avoids entirely.
-
-**Optimal approach.** Walk the array carrying one value: the best sum of a subarray **ending exactly here**. At each element x, the choice is binary — extend the previous run (best + x) or abandon it and start fresh at x. Extend only if the previous run is *worth carrying*, i.e. if best is positive; a negative prefix is dead weight, since any future subarray does strictly better without it. Track the global maximum of the running value as you go. The greedy sentence justifying it is an exchange argument in miniature: *any optimal subarray that includes a negative prefix can drop that prefix and improve — so some optimum starts fresh exactly where the greedy does.*
+**The Structural Invariant: Kadane's Algorithm (Resetting Negative Prefixes).**
+Walk the array carrying a running sum \`currSum\`:
+- At element $x = \\text{nums}[i]$:
+  - If \`currSum < 0\`: Drop the negative prefix immediately (\`currSum = 0\`)! A negative running sum will strictly reduce any future contiguous subarray.
+  - \`currSum += x\`.
+  - Update \`maxSum = max(maxSum, currSum)\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 0 }], "highlight": [0], "note": "i=0: running sum = -2. Global max = -2 (nothing better yet)." },
-    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 1 }], "highlight": [1], "note": "i=1: the previous run was negative — drop it, start fresh at 1. Running sum = 1. Global max = 1." },
-    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 3 }], "highlight": [3], "note": "i=2 extended to -2 (negative again), so i=3 drops it and starts fresh at 4. Running sum = 4. Global max = 4." },
-    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 6 }], "highlight": [3, 4, 5, 6], "note": "i=4,5,6 all extend the run (each addition helps) — running sum climbs to 6. New global max = 6, subarray [4,-1,2,1]." },
-    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "i", "index": 8 }], "highlight": [3, 4, 5, 6], "note": "i=7 (-5) drags the run down to 1; i=8 rebuilds it to 5 — neither beats 6. Final answer: 6." }
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "x=-2", "index": 0 }], "note": "x=-2: currSum=-2, maxSum=-2." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "x=1", "index": 1 }], "highlight": [1], "note": "x=1: currSum is negative (-2) -> Reset currSum=0. Add 1 -> currSum=1. maxSum=1." },
+    { "cells": [-2, 1, -3, 4, -1, 2, 1, -5, 4], "pointers": [{ "label": "x=1 (idx 6)", "index": 6 }], "highlight": [3, 4, 5, 6], "note": "Subarray [4, -1, 2, 1]: currSum = 6. New maxSum = 6!" }
   ],
-  "caption": "Maximum Subarray — Kadane's rule: carry the run while it helps, drop it the instant it hurts."
+  "caption": "Maximum Subarray — Kadane's Algorithm resetting negative running sums."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — versus O(n²) checking every subarray. (Divide-and-conquer solves it in O(n log n) — worth one sentence as the "clever but beaten" alternative.)
-
-**Thread.** One carried value, one drop rule. Jump Game, next, carries a different single value — the furthest reachable index — and feasibility falls out of a one-pass maximum.`,
+**Boundary Traps & Execution Blueprint.**
+- *All Negative Numbers*: Initialize \`maxSum = nums[0]\` (or \`-Infinity\`) to handle arrays containing only negative numbers (e.g. \`[-3, -2, -5]\` $\\rightarrow$ returns \`-2\`).`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why does Kadane's algorithm reset the running sum to 0 when it drops below 0?",
+          options: [
+            "Because 0 is the minimum array value.",
+            "Because a negative running sum reduces the total sum of any subsequent contiguous subarray it joins.",
+            "Because Kadane's algorithm requires non-negative integers.",
+            "To sort the array."
+          ],
+          correct_index: 1,
+          model_answer: "Adding a negative prefix sum to any future element is strictly worse than starting a new subarray from that element.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time and space complexity of Kadane's algorithm?",
+          model_answer: "O(N) time complexity and O(1) space complexity.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "jump-game",
@@ -52,30 +70,50 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/jump-game",
       summary: "Track the furthest reachable index; if the sweep ever outruns it, you are stranded.",
-      body: `**Signal.** "Each cell holds a maximum jump length — can you reach the last index" — a reachability question where only the furthest attainable point matters, not which specific jumps got you there, is the tell for tracking one running frontier instead of enumerating paths.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use recursive backtracking trying every possible jump distance ($O(2^N)$ time).
+*Why this shatters*: We do not care WHICH specific jumps were taken! We only care about the **FURTHEST REACHABLE INDEX**.
 
-**Brute force.** DP over "can I stand here": dp[i] = true if some earlier reachable j can jump to i — O(n²), checking every earlier index for every position.
-
-**Optimal approach.** Sweep left to right carrying one number: **reach**, the furthest index attainable so far. At each index i: if i > reach, you're standing somewhere unreachable — the sweep has outrun every possible route, return false. Otherwise this cell is live, and standing on it extends possibility: reach = max(reach, i + nums[i]). Reach the end of the sweep → true. The greedy justification is a dominance argument: *the furthest-reachable frontier dominates every individual path — any index some route can reach is ≤ reach — so tracking the maximum loses nothing.*
+**The Structural Invariant: Greedy Maximum Reach Frontier.**
+Maintain \`maxReach = 0\`:
+- Iterate $i$ from $0 \\dots N-1$:
+  - If $i > \\text{maxReach}$: **STRANDED!** (We reached an index that cannot be accessed by any previous jump $\\rightarrow$ return \`false\`).
+  - \`maxReach = max(maxReach, i + nums[i])\`.
+  - If \`maxReach >= N - 1\`: Return \`true\` early!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 0 }], "highlight": [0, 1, 2, 3], "note": "i=0: reach = max(0, 0+3) = 3. Cells 0..3 are reachable so far." },
-    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 1 }], "highlight": [0, 1, 2, 3], "note": "i=1 <= reach(3): live. reach = max(3, 1+2) = 3 — no improvement." },
-    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1, 2, 3], "note": "i=2 <= reach(3): live. reach = max(3, 2+1) = 3 — no improvement." },
-    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 3 }], "highlight": [0, 1, 2, 3], "note": "i=3 <= reach(3): live, but nums[3]=0 adds nothing. reach stays 3." },
-    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i", "index": 4 }], "highlight": [0, 1, 2, 3], "note": "i=4 > reach(3) — index 4 is unreachable. The sweep has outrun the frontier: false." }
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i=0", "index": 0 }], "note": "i=0 (val 3): maxReach = max(0, 0+3) = 3." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i=3", "index": 3 }], "highlight": [3], "note": "i=3 (val 0): i <= maxReach(3). maxReach stays 3." },
+    { "cells": [3, 2, 1, 0, 4], "pointers": [{ "label": "i=4", "index": 4 }], "highlight": [4], "note": "i=4 > maxReach(3) -> Index 4 is UNREACHABLE! Return FALSE." }
   ],
-  "caption": "Jump Game — the reach frontier stalls at 3 and the walk falls off the edge at index 4."
+  "caption": "Jump Game — Tracking maxReach frontier in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Backwards greedy, the mirror.** Sweep right to left carrying "leftmost index that can finish": a cell is good if i + nums[i] reaches the current goal; goal slides to each good cell. Same O(n), a nice sanity check that greedy directions are often interchangeable when the argument is dominance.
-
-**Complexity.** O(n) time, O(1) space — versus the O(n²) per-cell DP.
-
-**Thread.** Feasibility asked "can you?" — the sequel asks "how few jumps?" and the frontier idea sharpens into *layers*: BFS rings over indexes, walked without a queue.`,
+**Boundary Traps & Execution Blueprint.**
+- *Backward Goal Sliding Alternative*: Track \`goal = N - 1\`. Iterate $i$ from $N-2$ down to $0$: if $i + \\text{nums}[i] \\ge \\text{goal}$, update $\\text{goal} = i$. Return $\\text{goal} == 0$.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "In Jump Game, what condition confirms that the end of the array cannot be reached?",
+          options: [
+            "If nums[0] == 0.",
+            "If current loop index i exceeds maxReach (i > maxReach).",
+            "If nums contains negative numbers.",
+            "If array length is odd."
+          ],
+          correct_index: 1,
+          model_answer: "If the current index i is greater than maxReach, we have reached a cell that no previous jump could attain, stranding the walk.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Jump Game?",
+          model_answer: "O(N) time complexity, making a single pass through the array.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "jump-game-ii",
@@ -83,27 +121,52 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/jump-game-ii",
       summary: "Reach-layers: everything attainable in k jumps forms a window — count windows until the end falls inside.",
-      body: `**Signal.** "Find the *minimum* number of jumps to the last index, success guaranteed" — minimum steps in an unweighted reachability graph is BFS's territory, but here the graph is so orderly (each index connects to a contiguous block of later ones) that BFS needs no queue at all.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners greedily jump to the cell with the largest single jump value \`nums[i]\`.
+*Why this shatters*: Jumping to the largest number might land on a cell that cannot reach far ahead (e.g. \`[2, 3, 1, 1, 4]\`).
 
-**Brute force.** Greedily jump to the furthest *square* reachable at each step, choosing the specific landing spot — this fails: from [2,3,1,1,4], jumping max-distance from index 0 lands on index 2, wasting a jump that a window-aware choice would have avoided.
-
-**Optimal approach.** Think in rings, not jumps: layer 0 is index 0; layer 1 is every index reachable in one jump — a contiguous window; layer k+1 is everything reachable from *anywhere in* layer k's window, its right edge being the max of i + nums[i] over the window. Sweep once, tracking the current layer's right edge and the *next* layer's furthest reach; when the sweep crosses the current edge, a jump has been "spent" — increment the count and adopt the new edge. Nobody ever chooses where to land; the window *contains* the landing spot, and that suffices — dominance over layers, not over squares.
+**The Structural Invariant: Implicit BFS Window Levels.**
+Treat jump ranges as **BFS levels/windows**:
+- Maintain \`jumps = 0\`, \`currEnd = 0\`, \`farthest = 0\`.
+- Iterate $i$ from $0 \\dots N-2$:
+  - \`farthest = max(farthest, i + nums[i])\`.
+  - When $i == \\text{currEnd}$: We reached the boundary of the current jump level!
+    - \`jumps++\`
+    - \`currEnd = farthest\` (Advance boundary to the farthest cell reachable in the next jump!).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [2, 3, 1, 1, 4], "pointers": [{ "label": "i", "index": 0 }], "note": "Layer 0 is just index 0 (edge=0). i=0: nextReach = max(0, 0+2) = 2." },
-    { "cells": [2, 3, 1, 1, 4], "highlight": [0], "note": "i reaches edge (0) — jump count=1, edge becomes nextReach=2. New window: indices 1-2." },
-    { "cells": [2, 3, 1, 1, 4], "pointers": [{ "label": "i", "index": 1 }], "note": "i=1: nextReach = max(2, 1+3) = 4." },
-    { "cells": [2, 3, 1, 1, 4], "pointers": [{ "label": "i", "index": 2 }], "highlight": [1, 2], "note": "i=2: nextReach stays 4 (2+1=3<4). i reaches edge (2) — jump count=2, edge becomes 4. Index 4 (last) is inside this window. Answer: 2 jumps." }
+    { "cells": [2, 3, 1, 1, 4], "note": "i=0: farthest=2, currEnd=0 -> Reached currEnd! jumps=1, currEnd=2." },
+    { "cells": [2, 3, 1, 1, 4], "pointers": [{ "label": "i=1", "index": 1 }], "note": "i=1 (val 3): farthest = max(2, 1+3) = 4." },
+    { "cells": [2, 3, 1, 1, 4], "highlight": [1, 2], "note": "i=2: farthest=4, i==currEnd(2) -> Reached window end! jumps=2, currEnd=4. Min jumps = 2!" }
   ],
-  "caption": "Jump Game II — each layer is a contiguous window; crossing the current window's edge means one jump was spent, whichever specific square got you there."
+  "caption": "Jump Game II — Implicit BFS window traversal for min jumps."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — BFS semantics at zero BFS cost, versus a naive furthest-square greedy that produces wrong answers.
-
-**Thread.** Frontiers forward. Gas Station, next, drives a loop instead of a line — and its greedy restart rule comes with the chapter's most elegant little proof.`,
+**Boundary Traps & Execution Blueprint.**
+- *Loop Limit*: Loop ONLY up to $N - 2$ so you don't trigger an extra unnecessary jump when $i$ lands on $N - 1$.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How does Jump Game II achieve O(N) time complexity without using a BFS Queue?",
+          options: [
+            "By sorting jump values.",
+            "By tracking current jump window boundary (currEnd) and updating jumps count only when the sweep reaches currEnd.",
+            "By using binary search.",
+            "By converting jumps to negative numbers."
+          ],
+          correct_index: 1,
+          model_answer: "Tracking `currEnd` simulates level-by-level BFS traversal across contiguous index windows in linear time and O(1) space.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the space complexity of Jump Game II?",
+          model_answer: "O(1) space complexity.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "gas-station",
@@ -111,28 +174,52 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/gas-station",
       summary: "If you stall, no start inside the failed stretch works either — restart just past the failure.",
-      body: `**Signal.** "Circular route: choose the unique valid starting station to complete a full lap" — a circular consumption problem where failing partway through condemns a whole stretch at once is the tell for the restart rule, one of greedy's cleanest dominance arguments.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners simulate starting at every gas station $i$ ($O(N^2)$ time).
+*Why this shatters*: Simulating full laps from every starting index is too slow.
 
-**Brute force.** Simulate a full lap from every candidate starting station, checking whether the tank ever goes negative — O(n²), re-walking overlapping stretches from every failed start.
-
-**Optimal approach.** Solvability is global: a lap is possible iff total gas ≥ total cost. The restart rule: simulate from a candidate start, carrying the tank; the moment the tank dips negative en route to station j, skip everything and restart at j + 1. Why is the whole stretch condemned at once? Any station strictly inside it was entered with a *non-negative* tank under the current candidate — starting there instead means arriving at the same failure point with an equal-or-**smaller** tank, so it fails at least as early. One failure eliminates the entire prefix.
+**The Structural Invariant: Single-Pass Failed Stretch Pruning.**
+1. **Global Feasibility Check**: A valid circuit exists iff $\\sum \\text{gas} \\ge \\sum \\text{cost}$. If $\\sum \\text{gas} < \\sum \\text{cost}$, return \`-1\` immediately!
+2. **The Restart Rule**:
+   - Maintain \`currTank = 0\`, \`start = 0\`.
+   - Iterate $i$ from $0 \\dots N-1$:
+     - \`currTank += gas[i] - cost[i]\`.
+     - If \`currTank < 0\`:
+       - **PRUNE WHOLE STRETCH**: Stalling at station $i$ proves that **NO station between \`start\` and $i$ can be a valid starting point**!
+       - Reset \`start = i + 1\`, \`currTank = 0\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 0 }], "highlight": [0], "note": "Candidate = 0. Tank after station 0: 0 + (-2) = -2 — negative! Discard the prefix, candidate becomes 1." },
-    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 1 }], "highlight": [1], "note": "Candidate = 1. Tank: -2 again — negative. Candidate becomes 2." },
-    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 2 }], "highlight": [2], "note": "Candidate = 2. Tank: -2 again — negative. Candidate becomes 3." },
-    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 3 }], "highlight": [3, 4], "note": "Candidate = 3. Tank: +3, then +3 more at station 4 — tank climbs to 6, never dipping negative." },
-    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "candidate", "index": 3 }], "highlight": [0, 1, 2, 3, 4], "note": "Wrapping around: the tank absorbs -2, -2, -2 and lands at exactly 0. Total sum = 0 >= 0, so candidate 3 is confirmed." }
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "start=0", "index": 0 }], "note": "start=0: tank=-2 < 0 -> Prune [0]. Reset start=1, tank=0." },
+    { "cells": [-2, -2, -2, 3, 3], "pointers": [{ "label": "start=3", "index": 3 }], "highlight": [3, 4], "note": "start=3: tank=3, then tank=6. Never dips negative! Valid start index = 3." }
   ],
-  "caption": "Gas Station — every failed stretch condemns its whole prefix; the surviving candidate banks enough surplus to finish."
+  "caption": "Gas Station — Pruning failed stretches in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — versus O(n²) simulate-every-start.
-
-**Thread.** Circular consumption managed by restart logic. Next the greed sorts first: Hand of Straights — consuming cards in runs, always anchored at the smallest survivor.`,
+**Boundary Traps & Execution Blueprint.**
+- *Proof of Restart*: Arriving at station $i$ with a positive tank still resulted in failure at $i$. Starting at any intermediate station $k \\in (\\text{start}, i)$ with 0 tank would fail even earlier!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why can all stations between 'start' and 'i' be skipped when currTank dips below 0 at station i?",
+          options: [
+            "Because fuel costs are fixed.",
+            "Because starting at any intermediate station with 0 initial fuel will result in even less fuel than arriving there with a positive tank, failing at or before station i.",
+            "Because arrays are 0-indexed.",
+            "Because sum(gas) < sum(cost)."
+          ],
+          correct_index: 1,
+          model_answer: "Arriving at an intermediate station with a positive fuel balance was not enough to pass station i, so starting there from empty guarantees failure.",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "What condition guarantees that a valid circular circuit exists somewhere in the array?",
+          model_answer: "If total gas >= total cost (`sum(gas) >= sum(cost)`).",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "hand-of-straights",
@@ -140,27 +227,55 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/hand-of-straights",
       summary: "The smallest card has no choice: it must anchor a run — consume upward from it, count map in hand.",
-      body: `**Signal.** "Can a hand of cards be rearranged into groups of groupSize *consecutive* values" — the smallest remaining card can never sit in the middle of a run (nothing smaller precedes it), which is the tell that its role is *forced*, not chosen — the purest kind of greedy step.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to form groups by picking arbitrary available numbers.
+*Why this shatters*: The smallest available card in the hand **HAS NO CHOICE** — it MUST be the minimum/start card of a consecutive group!
 
-**Brute force.** Try every way of grouping cards into consecutive runs via backtracking — exponential, exploring choices that were never actually free.
-
-**Optimal approach.** Divisibility gate first: hand size must be a multiple of groupSize, or fail instantly. Consider the smallest value still in hand — it cannot sit in the middle of any straight, so it **must begin one**: itself, +1, +2, … up to groupSize. No alternative exists. A frequency map plus ordered access to the smallest remaining (sort the distinct values and sweep, or a min-heap) lets you batch-consume: for each value v in sorted order with count c > 0, it must anchor exactly c runs — subtract c from v, v+1, …, v+size−1; any deficit → false.
+**The Structural Invariant: Forced Minimum Card Run Consumption.**
+1. **Divisibility Check**: If \`hand.length % groupSize != 0\`, return \`false\` immediately!
+2. Count card frequencies in a Hash Map \`countMap\`.
+3. Sort unique keys or use a **Min-Heap** of unique card values.
+4. While Min-Heap is not empty:
+   - Pop smallest value \`first = heap.peek()\`.
+   - If \`countMap[first] == 0\`: Pop and continue.
+   - For $i = 0 \\dots \\text{groupSize} - 1$:
+     - \`card = first + i\`.
+     - If \`countMap[card] < countMap[first]\`: Return \`false\` (Not enough consecutive cards available!).
+     - \`countMap[card] -= countMap[first]\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 2, 1, 1, 1, 1], "note": "Counts for distinct values [1,2,3,4,6,7,8]: {1:1, 2:2, 3:2, 4:1, 6:1, 7:1, 8:1}. Smallest remaining is 1, count 1 — it must anchor a run: consume 1, 2, 3." },
-    { "cells": [0, 1, 1, 1, 1, 1, 1], "highlight": [0, 1, 2], "note": "After consuming: counts become {1:0, 2:1, 3:1, 4:1, 6:1, 7:1, 8:1}." },
-    { "cells": [0, 0, 0, 0, 1, 1, 1], "highlight": [1, 2, 3], "note": "Next smallest remaining is 2, count 1: consume 2, 3, 4. Counts drop to zero for all of them." },
-    { "cells": [0, 0, 0, 0, 0, 0, 0], "highlight": [4, 5, 6], "note": "Next smallest is 6, count 1: consume 6, 7, 8. All counts zero — every card accounted for. Answer: true." }
+    { "cells": [1, 2, 2, 3, 3, 4, 6, 7, 8], "note": "hand=[1,2,2,3,3,4,6,7,8], groupSize=3. Min card=1." },
+    { "cells": [0, 1, 1, 0, 0, 0, 0, 0, 0], "highlight": [0, 1, 3], "note": "Consume group [1, 2, 3]. Remaining cards: [2, 3, 4, 6, 7, 8]." },
+    { "cells": [0, 0, 0, 0, 0, 0, 0, 0, 0], "highlight": [2, 4, 5, 6, 7, 8], "note": "Consume groups [2, 3, 4] and [6, 7, 8]. All groups formed successfully -> Return TRUE!" }
   ],
-  "caption": "Hand of Straights — the smallest remaining value is always forced to anchor a run; batch-consuming its whole count at once keeps the sweep linear over distinct values."
+  "caption": "Hand of Straights — Greedy forced minimum anchor card consumption."
 }
 \`\`\`
 
-**Complexity.** O(n log n) for ordering, O(n) consumption, O(n) space — versus exponential backtracking over groupings.
-
-**Thread.** Greed as forced moves. The next problem inverts the lens entirely: Merge Triplets does not *choose* what to take — it discards what is poisoned, and checks that what remains suffices.`,
+**Boundary Traps & Execution Blueprint.**
+- *Frequency Subtraction*: Subtracting frequencies in bulk (\`countMap[card] -= countMap[first]\`) keeps execution linear over distinct card values.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must the smallest remaining card value always serve as the start of a new consecutive group?",
+          options: [
+            "Because sorting places it first.",
+            "Because no smaller card exists in the hand to place before it, leaving group start as its only valid position.",
+            "Because groupSize is fixed.",
+            "To save memory."
+          ],
+          correct_index: 1,
+          model_answer: "With no smaller cards remaining, the minimum card cannot be the middle or end of a straight; it must be the start.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Hand of Straights for N cards?",
+          model_answer: "O(N log N) time complexity for sorting unique card values.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "merge-triplets-to-form-target-triplet",
@@ -168,24 +283,52 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/merge-triplets-to-form-target",
       summary: "Discard any triplet that overshoots the target anywhere; the survivors can only help — check coverage.",
-      body: `**Signal.** "An operation replaces one triplet with the element-wise max of two — can some sequence produce exactly the target" — max-merging only ever ratchets values upward, never down, which is the tell that operation order is irrelevant and this reduces to a set-selection (filter + coverage) question.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners simulate all pairwise triplet max-merges ($O(2^N)$ combinations).
+*Why this shatters*: Max-merging only ratchets numbers **UPWARD**. Any triplet with a coordinate greater than \`target\` is **POISONOUS** and can NEVER be used!
 
-**Brute force.** Try every subset of triplets and every merge order, checking whether any produces the target exactly — the merge order is provably irrelevant (max is associative and commutative), so this explores enormous redundancy for nothing.
-
-**Optimal approach.** A triplet with *any* coordinate above the target is radioactive: include it ever, and that coordinate overshoots forever, since no operation lowers anything. Discard all such triplets. Everything surviving is ≤ target in every coordinate, so merging safe triplets can never exceed the target — you may take **all** of them without risk. Success reduces to coverage: among the survivors, does some triplet hit the target's first coordinate exactly? The second? The third? (Not necessarily the same triplet.) All three covered → true.
+**The Structural Invariant: Overshoot Filtering + Coordinate Coverage.**
+1. **Filter Poisonous Triplets**:
+   Discard any triplet \`[a, b, c]\` if \`a > target[0] || b > target[1] || c > target[2]\`.
+2. **Coverage Check on Safe Triplets**:
+   Maintain boolean flags \`foundA = false, foundB = false, foundC = false\`.
+   For each safe triplet \`[a, b, c]\`:
+   - If \`a == target[0]\`: \`foundA = true\`.
+   - If \`b == target[1]\`: \`foundB = true\`.
+   - If \`c == target[2]\`: \`foundC = true\`.
+3. Return \`foundA && foundB && foundC\`.
 
 \`\`\`viz:table-diff
 {
-  "columns": ["Triplet", "Coord 1", "Coord 2", "Coord 3", "Verdict"],
-  "before": [["[2,5,3]", 2, 5, 3, "safe — covers coord1 (2) exactly"], ["[1,8,4]", 1, 8, 4, "8 > target's 7 — DISCARDED wholesale"]],
-  "after": [["[1,7,5]", 1, 7, 5, "safe — covers coord2 (7) and coord3 (5)"], ["Coverage check", "✓", "✓", "✓", "all three coordinates covered → true"]],
-  "caption": "Target [2,7,5] — [1,8,4] is discarded entirely for one bad coordinate; the two survivors together cover all three target coordinates."
+  "columns": ["Triplet", "a <= t0", "b <= t1", "c <= t2", "Coverage Contribution"],
+  "before": [["[2,5,3]", "✓", "✓", "✓", "Covers t0 (2)"], ["[1,8,4]", "✓", "8 > 7 FAIL", "✓", "POISONOUS! Discard!"]],
+  "after": [["[1,7,5]", "✓", "✓", "✓", "Covers t1 (7) & t2 (5) -> Target [2,7,5] Achieved!"]],
+  "caption": "Merge Triplets — Filter poisonous triplets and verify coordinate coverage."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — one pass, three booleans — versus exhaustive subset-and-order enumeration.
-
-**Thread.** From filtering to partitioning: Partition Labels, where a window greedily stretches to the last occurrence of everything it has swallowed.`,
+**Boundary Traps & Execution Blueprint.**
+- *Associative Property*: Element-wise max is associative and commutative, making triplet order irrelevant.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why can a triplet [a, b, c] with b > target[1] never be used in any valid merge sequence?",
+          options: [
+            "Because triplets must be sorted.",
+            "Because max-merging only increases values. Overshooting a target coordinate cannot be undone by future max operations.",
+            "Because target values are prime.",
+            "To prevent negative numbers."
+          ],
+          correct_index: 1,
+          model_answer: "The max operation is monotonic non-decreasing. Once a coordinate exceeds the target, no future merge can reduce it.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Merge Triplets?",
+          model_answer: "O(N) time complexity, requiring a single linear pass over the triplets.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "partition-labels",
@@ -193,28 +336,54 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/partition-labels",
       summary: "A partition can close only when the window has passed every occurrence of every letter inside it.",
-      body: `**Signal.** "Split a string so no letter appears in two parts, maximise the number of parts" — maximising part count means cutting as early as legality allows, which is the tell for a greedy cut the instant every obligation inside the current window is settled.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to cut partitions at the first repetition of a character.
+*Why this shatters*: Cutting early breaks the rule that **each letter must appear in at most one partition**!
 
-**Brute force.** Try every possible set of cut positions and check whether each resulting part is self-contained (no letter leaking across a boundary) — exponentially many candidate partitions to verify.
-
-**Optimal approach.** A part containing letter x must contain *every* occurrence of x — so a part can end at position i only if no letter seen inside it occurs again after i. Precompute each letter's **last occurrence** (one pass, 26 slots). Sweep with an expanding obligation: track end = the furthest last-occurrence among letters seen since the current part began. When the sweep index *reaches* end — every debt inside is settled — cut: record the size, start fresh. Cutting earlier than legal is impossible, later is wasteful — first-legal is optimal by squeeze.
+**The Structural Invariant: Maximum Last-Occurrence Window Expansion.**
+A partition can ONLY close when the current window index reaches the **furthest last-occurrence** of ALL characters inside the window:
+1. **Precompute Last Indices**: Record \`lastIdx[ch] = index\` for every character in string $S$ ($O(N)$ pass).
+2. **Greedy Window Expansion**:
+   - Maintain \`size = 0\`, \`maxEnd = 0\`.
+   - Iterate $i$ from $0 \\dots N-1$:
+     - \`maxEnd = max(maxEnd, lastIdx[S[i]])\`.
+     - \`size++\`.
+     - If $i == \\text{maxEnd}$: **CLOSE PARTITION!** (All character obligations inside window are resolved!).
+       - Append \`size\` to result. Reset \`size = 0\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [8], "note": "Part 1 starts at index 0 ('a'). Running end = the furthest last-occurrence seen so far among letters inside the window; it settles at 8 once every occurrence of a, b, and c is accounted for. Cut after 9 characters (indices 0-8)." },
-    { "cells": [8, 15], "highlight": [1], "note": "Part 2 starts at index 9. Running end settles at 15 once d, e, f, g are all fully accounted for. Cut after 7 more characters (indices 9-15)." },
-    { "cells": [8, 15, 23], "highlight": [2], "note": "Part 3 starts at index 16 and runs to the end (index 23), since h, i, j, k, l's occurrences don't resolve until the string ends. Final part sizes: [9, 7, 8]." }
+    { "cells": ["a","b","a","b","c","b","a","c","a", "d","e"], "note": "S = 'ababcbacade...'. Last index of 'a'=8, 'b'=5, 'c'=7." },
+    { "cells": ["a","b","a","b","c","b","a","c","a"], "highlight": [0, 1, 2, 3, 4, 5, 6, 7, 8], "note": "i=8: maxEnd reaches 8 (last 'a'). i == maxEnd -> Cut Partition 1 (length 9)!" },
+    { "cells": ["d","e"], "highlight": [9, 10], "note": "Start new partition for 'd'..." }
   ],
-  "caption": "Partition Labels — the window's obligation (furthest last-occurrence) must fully resolve before a cut is legal; this is interval-merging in disguise."
+  "caption": "Partition Labels — Window obligation expansion cutting at max last-occurrence."
 }
 \`\`\`
 
-**The déjà vu.** Each letter spans [first, last]; overlapping spans must share a part, and parts are exactly the merged clusters of overlapping letter-spans — you are merging intervals without saying so. The next chapter will say so, loudly.
-
-**Complexity.** O(n) time, O(26) space — versus exponentially many candidate partitions to verify by brute force.
-
-**Thread.** One problem left: Valid Parenthesis String — where the wildcard forces greed to do something subtle: carry not a value but a *range* of possible truths, and stay sound by collapsing it carefully.`,
+**Boundary Traps & Execution Blueprint.**
+- *Interval Analogy*: This is equivalent to merging overlapping character intervals \`[first_occurrence, last_occurrence]\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What condition dictates when a partition can be safely closed in Partition Labels?",
+          options: [
+            "When part length reaches 5.",
+            "When current loop index i equals the maximum last-occurrence index of all characters encountered in the current partition.",
+            "When a vowel is reached.",
+            "When the string is sorted."
+          ],
+          correct_index: 1,
+          model_answer: "Reaching maxEnd guarantees that no character inside the current window appears anywhere later in the string.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time and space complexity of Partition Labels?",
+          model_answer: "O(N) time complexity and O(26) = O(1) auxiliary space.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "valid-parenthesis-string",
@@ -222,28 +391,56 @@ On the roadmap Greedy hangs off Heap and is a leaf — a finishing school for ju
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/valid-parenthesis-string",
       summary: "Stars are three-way wildcards: track the min and max possible open count — a whole range in two integers.",
-      body: `**Signal.** "Each * may act as (, as ), or as nothing — is *some* interpretation valid" — a wildcard forking every prefix's open-count into multiple possible values is the tell that the achievable set is always a contiguous **range**, trackable as just two integers instead of an exponential fan-out.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a stack, but struggle because wildcards \`'*'\` can act as \`'('\`, \`')'\`, or empty string \`""\`.
+*Why this shatters*: Wildcards create exponential $3^N$ choice trees if evaluated recursively without state range tracking.
 
-**Brute force.** Backtrack over every interpretation of every star (open, close, or nothing) — 3ⁿ branches for n stars, or a DP over (index, open-count) at O(n²), both far more than the greedy range needs.
-
-**Optimal approach.** The set of achievable open-counts after any prefix is always a contiguous range — each character shifts the whole range by ±1, or (for *) widens it by one in each direction, and contiguity survives every step. Carry two integers: **lo** and **hi**, the least and most opens any interpretation could have. ( → both up. ) → both down. * → lo down (might be a close), hi up (might be an open). If **hi** ever goes negative, even all-stars-as-opens has too many closes — false immediately. **lo** clamps at zero — a negative lo describes interpretations that already died, so discard them and keep the range honest. At the end: valid iff **lo == 0** — some surviving interpretation balanced exactly.
+**The Structural Invariant: Min/Max Open Bracket Range Tracking.**
+Track the range of possible **unclosed open bracket counts** \`[low, high]\`:
+- At each character \`ch\`:
+  - If \`ch == '('\`: \`low++\`, \`high++\`
+  - If \`ch == ')'\`: \`low--\`, \`high--\`
+  - If \`ch == '*'\`: \`low--\` (as ')'), \`high++\` (as '(')
+- **Range Maintenance Guards**:
+  - If \`high < 0\`: Return \`false\`! (Even using all stars as \`'('\`, too many \`')'\` were closed).
+  - If \`low < 0\`: Clamp \`low = 0\` (discards invalid negative open counts).
+- **Result**: Return \`low == 0\` (some valid wildcard interpretation balanced opens to 0!).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [0, 0], "note": "Start: lo=0, hi=0 (empty prefix, zero opens either way)." },
-    { "cells": [1, 1], "highlight": [0, 1], "note": "'(': both up. lo=1, hi=1." },
-    { "cells": [0, 2], "note": "'*': lo down (could be a close) to 0, hi up (could be an open) to 2. Range [0,2]." },
-    { "cells": [0, 1], "note": "')': both down. lo would be -1, clamped to 0. hi=1. Range [0,1]." },
-    { "cells": [0, 0], "highlight": [0], "note": "')': both down again. lo clamped to 0, hi=0. Range [0,0]. lo==0 at the end — valid: the star spent itself as an open." }
+    { "cells": [0, 0], "note": "s = '(*))'. Init low=0, high=0." },
+    { "cells": [1, 1], "note": "ch='(': low=1, high=1." },
+    { "cells": [0, 2], "highlight": [0, 1], "note": "ch='*': low=0 (as ')'), high=2 (as '('). Range [0, 2]." },
+    { "cells": [0, 1], "note": "ch=')': low=max(0, -1)=0, high=1. Range [0, 1]." },
+    { "cells": [0, 0], "highlight": [0], "note": "ch=')': low=0, high=0. String complete with low == 0 -> Return TRUE!" }
   ],
-  "caption": "Valid Parenthesis String on \\"(*))\\" — [lo, hi] tracks the whole envelope of possible open-counts; validity only needs lo to reach exactly 0."
+  "caption": "Valid Parenthesis String — [low, high] open count range tracking in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — for a problem whose possibility space is exponential — versus 3ⁿ backtracking or O(n²) DP. Carrying the *envelope of all futures* instead of any single future: greedy's graduation exam.
-
-**Thread.** Greedy closes. Partition Labels already whispered the next chapter's name — spans with starts and ends, merged and scheduled. Intervals is next, and its first move is the sort this chapter kept almost needing.`,
-    },
-  ],
+**Boundary Traps & Execution Blueprint.**
+- *Low Clamp*: Setting \`low = max(0, low)\` keeps the range valid because a negative open count represents invalid branches where closing brackets preceded opens.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What does high < 0 signify during range tracking in Valid Parenthesis String?",
+          options: [
+            "The string has no stars.",
+            "There are too many closing parentheses, making the string invalid even if every star were treated as an opening parenthesis.",
+            "The string is valid.",
+            "The string is empty."
+          ],
+          correct_index: 1,
+          model_answer: "high represents the maximum possible open count (treating stars as '('). If high < 0, an unmatchable excess of ')' exists.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "Why must low be clamped to 0 using `low = Math.max(0, low)`?",
+          model_answer: "Because we cannot have a negative count of open brackets. Treating a star as ')' when open count is 0 creates an invalid branch, so we clamp low to 0.",
+          difficulty: "intermediate"
+        }
+      ]
+    }
+  ]
 };

@@ -5,520 +5,642 @@ export const dp1d: DsaTopic = {
   slug: "dp-1d",
   title: "1-D Dynamic Programming",
   chapter: 13,
-  tagline:
-    "Overlapping subproblems, remembered once — the decision tree collapsed into a single array.",
+  tagline: "Overlapping subproblems, remembered once — the decision tree collapsed into a single array.",
   color: "#ffd166",
   prereqs: ["backtracking"],
   unlocks: ["dp-2d", "bit-manipulation"],
   intro: `Dynamic programming is the entire discipline built on one observation: **if a subproblem's answer depends only on where you are, not how you got there, solve it once and remember it.** The exponential tree collapses into a table with one entry per distinct state — and in this chapter, states fit in a single array: \`dp[i]\` for "the answer at position i" or "the answer for amount i."
 
-Every problem follows the same five-finger checklist: **State** — what does \`dp[i]\` mean? **Recurrence** — how does \`dp[i]\` follow from earlier entries? **Base cases** — the smallest honest answers. **Order** — fill so dependencies are ready. **Answer location** — which entry is the result.
-
-The twelve problems are sequenced as one long escalation: from Fibonacci-shaped recurrences (Climbing Stairs) through optimisation (Min Cost, House Robber) to string parsing (Decode Ways, Word Break) and finally the knapsack doorway (Partition Equal Subset Sum).`,
+Every problem follows the same five-finger checklist: **State**, **Recurrence**, **Base cases**, **Order of filling**, and **Answer location**.`,
   problems: [
-    /* ------------------------------------------------------------------ */
-    /*  1. CLIMBING STAIRS                                                */
-    /* ------------------------------------------------------------------ */
     {
       slug: "climbing-stairs",
       title: "Climbing Stairs",
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/climbing-stairs",
-      summary:
-        "Fibonacci in disguise — the canonical tour from brute recursion to O(1) space.",
-      body: `**Signal.** "Each time you can climb 1 or 2 steps — how many distinct ways to reach the top" — the last move splits into exactly two cases (a final 1-step or a final 2-step), and the count of ways to reach n is built from the counts for smaller n — the tell for a recurrence over one running index.
+      summary: "Fibonacci in disguise — the canonical tour from brute recursion to O(1) space.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try naive recursion \`climb(n) = climb(n-1) + climb(n-2)\`.
+*Why this shatters*: Naive recursion re-calculates the exact same subproblems repeatedly, creating an $O(2^N)$ exponential call tree (e.g. \`climb(3)\` is calculated dozens of times for \`n=10\`).
 
-**Brute force.** Recurse directly: ways(n) = ways(n-1) + ways(n-2). Code this naively and watch it burn — ways(5) calls ways(3) twice, ways(2) three times, and the call tree doubles per level: **O(2ⁿ)**, all from recomputing the same subproblems endlessly (the same amnesia Fibonacci recursion always has).
-
-**Optimal approach.** This is literally **Fibonacci** — F(1)=1, F(2)=2, F(n)=F(n-1)+F(n-2). Once a subproblem's answer depends only on *which step you're at*, not how you arrived, solve each step once and remember it: dp[i] = dp[i-1] + dp[i-2]. Tabulate bottom-up, filling left to right so both predecessors are always ready before you need them. Since each step only ever needs its two immediate predecessors, the whole array collapses to two rolling variables — O(n) time becomes O(1) space, the last stop on the memoisation-to-tabulation-to-rolling-variables tour every DP problem eventually takes.
+**The Structural Invariant: Optimal Substructure + Tabulation.**
+To reach step $i$, you can ONLY arrive from:
+1. Step $i - 1$ (taking a 1-step jump).
+2. Step $i - 2$ (taking a 2-step jump).
+- **Recurrence**:
+  $$\\text{dp}[i] = \\text{dp}[i-1] + \\text{dp}[i-2]$$
+- **Base Cases**: \`dp[1] = 1\`, \`dp[2] = 2\`.
+- **$O(1)$ Space Optimization**: Since \`dp[i]\` only depends on the previous 2 values, maintain two rolling variables \`prev1\` and \`prev2\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, "·", "·", "·"], "note": "Base cases: dp[1]=1 (one way: a single step), dp[2]=2 (1+1, or one 2-step)." },
-    { "cells": [1, 2, 3, "·", "·"], "highlight": [0, 1], "note": "dp[3] = dp[2] + dp[1] = 2 + 1 = 3." },
-    { "cells": [1, 2, 3, 5, "·"], "highlight": [1, 2], "note": "dp[4] = dp[3] + dp[2] = 3 + 2 = 5." },
-    { "cells": [1, 2, 3, 5, 8], "highlight": [2, 3], "note": "dp[5] = dp[4] + dp[3] = 5 + 3 = 8. Answer: 8 distinct ways." }
+    { "cells": [1, 2, "_", "_", "_"], "note": "Base: dp[1]=1, dp[2]=2." },
+    { "cells": [1, 2, 3, "_", "_"], "highlight": [0, 1], "note": "dp[3] = dp[2] + dp[1] = 2 + 1 = 3." },
+    { "cells": [1, 2, 3, 5, "_"], "highlight": [1, 2], "note": "dp[4] = dp[3] + dp[2] = 3 + 2 = 5." },
+    { "cells": [1, 2, 3, 5, 8], "highlight": [2, 3], "note": "dp[5] = dp[4] + dp[3] = 5 + 3 = 8. Total ways for 5 stairs = 8!" }
   ],
-  "caption": "Climbing Stairs — Fibonacci's exact recurrence; each entry needs only its two immediate predecessors."
+  "caption": "Climbing Stairs — Rolling variable Fibonacci DP in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space with rolling variables — versus the brute recursion's O(2ⁿ) time from recomputing every subproblem from scratch.
-
-**Thread.** Min Cost Climbing Stairs keeps the identical shape and swaps the operator: counting paths with + becomes optimising them with min.`,
+**Boundary Traps & Execution Blueprint.**
+- *Base Case Bounds*: Check $N=1$ explicitly before allocating array indices if using 1-indexed tables.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What sequence does Climbing Stairs directly map to?",
-          options: ["The Fibonacci sequence", "The Catalan numbers", "The Harmonic series", "The Collatz conjecture"],
+          prompt: "What mathematical sequence defines the recurrence for Climbing Stairs?",
+          options: [
+            "Fibonacci Sequence",
+            "Catalan Sequence",
+            "Geometric Progression",
+            "Factorial Sequence"
+          ],
           correct_index: 0,
-          model_answer: "The number of ways to reach step n is exactly the sum of ways to reach step n-1 and n-2.",
+          model_answer: "The number of ways to reach step N is dp[N-1] + dp[N-2], matching the Fibonacci recurrence.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "How can space complexity be reduced from O(N) to O(1) in Climbing Stairs?",
+          model_answer: "By replacing the DP array with two integer variables storing only the previous two step values (prev1 and prev2) as you iterate.",
           difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  2. MIN COST CLIMBING STAIRS                                       */
-    /* ------------------------------------------------------------------ */
     {
       slug: "min-cost-climbing-stairs",
       title: "Min Cost Climbing Stairs",
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/min-cost-climbing-stairs",
-      summary:
-        "Same staircase, now priced: dp[i] = cost[i] + min(two predecessors).",
-      body: `**Signal.** "Each step has a toll — minimise the total cost, starting from step 0 or 1" — Climbing Stairs' exact shape with the operator swapped: counting paths (+) becomes optimising them (min).
+      summary: "Same staircase, now priced: dp[i] = cost[i] + min(two predecessors).",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners greedily pick the cheaper step between step $i+1$ and $i+2$ at every step.
+*Why this shatters*: Greedy fails because taking a slightly cheaper step now might force landing on a massively expensive step later!
 
-**Brute force.** Try every possible sequence of 1-and-2-steps from start to past-the-end, summing tolls, and keep the cheapest — exponentially many paths, recomputing the same suffixes from every route that reaches a given step.
-
-**Optimal approach.** dp[i] = cheapest total cost to **stand on** step i (toll paid): dp[i] = cost[i] + min(dp[i-1], dp[i-2]). Base cases dp[0] = cost[0], dp[1] = cost[1]; the answer is min(dp[n-1], dp[n-2]) since the "top" is one step past the array, reachable from either of the last two steps.
+**The Structural Invariant: Minimum Accumulated Cost Recurrence.**
+Let \`dp[i]\` be the minimum cost to reach step $i$:
+$$\\text{dp}[i] = \\text{cost}[i] + \\min(\\text{dp}[i-1], \\text{dp}[i-2])$$
+- **Base Cases**: \`dp[0] = cost[0]\`, \`dp[1] = cost[1]\`.
+- **Top of Staircase**: The top is past the last index $N$. You can reach the top from either step $N-1$ or $N-2$:
+  $$\\text{Total Min Cost} = \\min(\\text{dp}[N-1], \\text{dp}[N-2])$$
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 100, "·", "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "dp[0]", "index": 0 }, { "label": "dp[1]", "index": 1 }], "note": "Base cases: dp[0]=cost[0]=1, dp[1]=cost[1]=100 — the toll just to stand on each starting step." },
-    { "cells": [1, 100, 2, "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1], "note": "dp[2] = cost[2] + min(dp[1], dp[0]) = 1 + min(100, 1) = 2 — the cheap step beats jumping from the costly one." },
-    { "cells": [1, 100, 2, 3, 3, "·", "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 4 }], "highlight": [2, 3], "note": "dp[3]=3 and dp[4]=3 — every predecessor here is cheap, so cost just climbs by 1 each step." },
-    { "cells": [1, 100, 2, 3, 3, 103, "·", "·", "·", "·"], "pointers": [{ "label": "i", "index": 5 }], "highlight": [3, 4], "note": "dp[5] = cost[5] + min(dp[4], dp[3]) = 100 + 3 = 103 — standing on step 5 is expensive no matter which predecessor you arrive from." },
-    { "cells": [1, 100, 2, 3, 3, 103, 4, 5, 104, 6], "pointers": [{ "label": "i", "index": 9 }], "highlight": [7, 8], "note": "dp[9] = cost[9] + min(dp[8], dp[7]) = 1 + min(104, 5) = 6 — arriving from dp[7] is a 2-step jump straight over step 8's toll." },
-    { "cells": [1, 100, 2, 3, 3, 103, 4, 5, 104, 6], "highlight": [8, 9], "note": "Answer = min(dp[9], dp[8]) = min(6, 104) = 6. The optimal path never stands on either 100 — it zigzags over both." }
+    { "cells": [10, 15, 20], "pointers": [{ "label": "cost[0]", "index": 0 }, { "label": "cost[1]", "index": 1 }], "note": "cost = [10, 15, 20]. Base: dp[0]=10, dp[1]=15." },
+    { "cells": [10, 15, 30], "highlight": [0, 1], "note": "dp[2] = 20 + min(10, 15) = 20 + 10 = 30." },
+    { "cells": [10, 15, 30], "highlight": [1, 2], "note": "Top reached! min(dp[1], dp[2]) = min(15, 30) = 15. Min cost = 15!" }
   ],
-  "caption": "Min Cost Climbing Stairs — dp[i] = cost[i] + min(dp[i-1], dp[i-2]), filled left to right."
+  "caption": "Min Cost Climbing Stairs — DP accumulation in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space with rolling variables — versus the brute force's exponential path enumeration.
-
-**Thread.** House Robber keeps the same two-predecessor shape but changes the decision from "which of two arrival costs" to "take this element or don't" — the include/exclude recurrence, the single most reused shape in DP.`,
+**Boundary Traps & Execution Blueprint.**
+- *Starting Step*: Remember you can start from either index 0 OR index 1 for free!`,
       questions: [
         {
           kind: "mcq",
-          prompt: "In Min Cost Climbing Stairs, what does dp[i] typically represent?",
-          options: ["The cost of the step itself.", "The minimum total cost to reach the top starting from step i.", "The maximum possible cost avoided.", "The cost to reach step i from the bottom."],
+          prompt: "In Min Cost Climbing Stairs, how is the final minimum cost to reach the top calculated from the DP table?",
+          options: [
+            "dp[N]",
+            "min(dp[N-1], dp[N-2])",
+            "dp[0] + dp[1]",
+            "max(dp[N-1], dp[N-2])"
+          ],
           correct_index: 1,
-          model_answer: "Usually, dp[i] is defined as the minimum cost to climb to the top starting from step i, computing backwards from the top.",
-          difficulty: "intermediate"
+          model_answer: "The top of the floor is past the end of the array, so it can be reached in 1 step from N-1 or in 2 steps from N-2.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time and space complexity of Min Cost Climbing Stairs using two rolling variables?",
+          model_answer: "O(N) time complexity and O(1) space complexity.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  3. HOUSE ROBBER                                                   */
-    /* ------------------------------------------------------------------ */
     {
       slug: "house-robber",
       title: "House Robber",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/house-robber",
-      summary:
-        "Take it and skip a neighbour, or skip it — the include/exclude recurrence.",
-      body: `**Signal.** "Adjacent houses share an alarm — you cannot rob neighbours, maximise the total haul" — a non-adjacency constraint over a linear sequence, maximised, is the tell for the include/exclude recurrence: at each position, either take it (and skip the neighbour) or don't.
+      summary: "Take it and skip a neighbour, or skip it — the include/exclude recurrence.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners greedily rob odd houses or even houses (\`sum(odd)\` vs \`sum(even)\`).
+*Why this shatters*: Counterexample: \`[2, 1, 1, 2]\`. Odd sum = $2 + 1 = 3$, Even sum = $1 + 2 = 3$. But robbing house 0 and house 3 yields $2 + 2 = 4$!
 
-**Brute force.** Try every subset of houses respecting non-adjacency and keep the max sum — 2ⁿ subsets, though a greedy shortcut ("always rob the richest available") tempts and fails: [2,1,1,2] wants both 2s (indices 0 and 3), skipping *two* houses in the middle, which no fixed alternating pattern finds.
-
-**Optimal approach.** For each house i, two choices: **skip it** → best from dp[i-1]; **take it** → nums[i] + dp[i-2] (the adjacent house must be skipped). dp[i] = max(dp[i-1], nums[i] + dp[i-2]). This include/exclude recurrence is the single most reused shape in DP.
+**The Structural Invariant: Include / Exclude Recurrence.**
+At each house $i$, we have two mutually exclusive choices:
+1. **Rob House $i$**: Earn \`nums[i]\` plus maximum loot from house $i-2$ (\`nums[i] + dp[i-2]\`).
+2. **Skip House $i$**: Earn maximum loot up to house $i-1$ (\`dp[i-1]\`).
+- **Recurrence**:
+  $$\\text{dp}[i] = \\max(\\text{dp}[i-1], \\text{nums}[i] + \\text{dp}[i-2])$$
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [2, 7, "·", "·", "·"], "pointers": [{ "label": "dp[0]", "index": 0 }, { "label": "dp[1]", "index": 1 }], "note": "Base cases: dp[0]=nums[0]=2 (one house, just take it). dp[1]=max(nums[0],nums[1])=max(2,7)=7 — rob the richer of the first two." },
-    { "cells": [2, 7, 11, "·", "·"], "pointers": [{ "label": "i", "index": 2 }], "highlight": [0, 1], "note": "dp[2] = max(dp[1], nums[2]+dp[0]) = max(7, 9+2) = 11 — taking house 2 plus house 0's loot beats skipping it." },
-    { "cells": [2, 7, 11, 11, "·"], "pointers": [{ "label": "i", "index": 3 }], "highlight": [1, 2], "note": "dp[3] = max(dp[2], nums[3]+dp[1]) = max(11, 3+7) = 11 — skipping house 3 wins this time." },
-    { "cells": [2, 7, 11, 11, 12], "pointers": [{ "label": "i", "index": 4 }], "highlight": [2, 3], "note": "dp[4] = max(dp[3], nums[4]+dp[2]) = max(11, 1+11) = 12 — taking house 4 plus house 2's total edges it out." },
-    { "cells": [2, 7, 11, 11, 12], "highlight": [0, 2, 4], "note": "Final answer dp[4] = 12, achieved by robbing houses 0, 2, 4 → 2 + 9 + 1 = 12." }
+    { "cells": [2, 7, 9, 3, 1], "note": "nums = [2, 7, 9, 3, 1]. Base: rob0=2, rob1=max(2,7)=7." },
+    { "cells": [2, 7, 11, 3, 1], "highlight": [0, 1], "note": "House 2 (val 9): max(dp[1], 9 + dp[0]) = max(7, 9+2) = 11." },
+    { "cells": [2, 7, 11, 11, 1], "highlight": [1, 2], "note": "House 3 (val 3): max(dp[2], 3 + dp[1]) = max(11, 3+7) = 11." },
+    { "cells": [2, 7, 11, 11, 12], "highlight": [2, 3], "note": "House 4 (val 1): max(dp[3], 1 + dp[2]) = max(11, 1+11) = 12. Final max loot = 12!" }
   ],
-  "caption": "House Robber — dp[i] = max(dp[i-1], nums[i] + dp[i-2])."
+  "caption": "House Robber — Non-adjacent DP choice tree in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space with rolling variables — versus the O(2ⁿ) brute-force subset search.
-
-**Thread.** House Robber II bends the street into a circle — the local recurrence still holds everywhere except at the seam, where a global constraint (house 0 and house n−1 are neighbours) needs a different trick entirely: split into two linear cases.`,
+**Boundary Traps & Execution Blueprint.**
+- *Rolling Variables*: Implement with \`rob1\` and \`rob2\` variables to eliminate $O(N)$ array memory.`,
       questions: [
         {
-          kind: "open",
-          prompt: "What is the core recurrence relation for House Robber?",
-          model_answer: "dp[i] = max(rob_current + dp[i+2], skip_current + dp[i+1]). We choose the maximum between robbing the current house and adding the max from two houses down, or skipping it and keeping the max from the next house.",
+          kind: "mcq",
+          prompt: "What are the two choices evaluated at house i in the House Robber recurrence?",
+          options: [
+            "Rob house i and i+1 vs Skip both",
+            "Rob house i (nums[i] + dp[i-2]) vs Skip house i (dp[i-1])",
+            "Rob all odd houses vs Rob all even houses",
+            "Sort houses descending vs ascending"
+          ],
+          correct_index: 1,
+          model_answer: "If we rob house i, we cannot rob i-1, so we add nums[i] to dp[i-2]. If we skip house i, we retain dp[i-1]. We take the maximum.",
           difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the optimal space complexity for House Robber?",
+          model_answer: "O(1) auxiliary space using two variables to track the maximum loot of the previous two houses.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  4. HOUSE ROBBER II                                                */
-    /* ------------------------------------------------------------------ */
     {
       slug: "house-robber-ii",
       title: "House Robber II",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/house-robber-ii",
-      summary:
-        "A circular street: split into two linear cases and take the better.",
-      body: `**Signal.** "Same rules, but the houses form a **circle** — house 0 and house n−1 are adjacent" — the old recurrence dp[i] = max(dp[i-1], nums[i] + dp[i-2]) only sees *local* adjacency, and a circle adds one **global** constraint no per-index recurrence can express directly — the tell to split into cases instead of extending the recurrence.
+      summary: "A circular street: split into two linear cases and take the better.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to handle circular house arrangements by adding modulo operations to index checks.
+*Why this shatters*: Modulo checks blur the distinction between house 0 and house $N-1$, breaking standard 1D DP array dependencies.
 
-**Brute force.** Try every subset respecting both local non-adjacency and the wraparound constraint (0 and n−1 not both chosen) directly — 2ⁿ subsets, with the wraparound check bolted on awkwardly at every candidate.
-
-**Optimal approach.** Every valid plan either skips house 0 **or** skips house n−1 (or both — covered by either case). Within each case, the circle breaks into a **linear** street: Case A is houses [1..n-1] (skip house 0), Case B is houses [0..n-2] (skip house n-1). Run House Robber I, unchanged, on each slice, and take the max. Splitting a global constraint into cases that each reduce to an already-solved subproblem is a broadly reusable move, not specific to circles.
+**The Structural Invariant: Global Circular Constraint Case Splitting.**
+Since houses are arranged in a **circle**, House 0 and House $N-1$ are adjacent!
+- You can NEVER rob both House 0 AND House $N-1$.
+- This splits the problem into **two independent linear House Robber I subproblems**:
+  1. **Case A (Rob House 0)**: Evaluate subarray \`nums[0 ... N-2]\` (exclude last house).
+  2. **Case B (Rob House N-1)**: Evaluate subarray \`nums[1 ... N-1]\` (exclude first house).
+- **Result**:
+  $$\\text{Max Loot} = \\max(\\text{HouseRobberI}(\\text{nums}[0 \\dots N-2]), \\text{HouseRobberI}(\\text{nums}[1 \\dots N-1]))$$
 
 \`\`\`viz:table-diff
 {
-  "columns": ["Case", "Houses considered", "Best haul (House Robber I)"],
-  "before": [["A: skip house 0", "[2, 3, 1]", "3"]],
-  "after": [["B: skip house n-1", "[1, 2, 3]", "4"]],
-  "caption": "nums=[1,2,3,1]. Case A excludes house 0, Case B excludes house 3 (n-1). Answer = max(3, 4) = 4, achieved by robbing houses 0 and 2 (1+3=4) under Case B's slice."
+  "columns": ["Case Choice", "Subarray Evaluated", "Constraint Handled"],
+  "before": [["Case A", "nums[0 ... N-2]", "Excludes House N-1"], ["Case B", "nums[1 ... N-1]", "Excludes House 0"]],
+  "after": [["Result", "max(Case A, Case B)", "Guarantees House 0 and N-1 are never robbed together"]],
+  "caption": "House Robber II — Case splitting circular constraint into 2 linear subproblems."
 }
 \`\`\`
 
-**Complexity.** O(n) time — two linear passes — O(1) space, same order as the brute force's exponential blowup avoided.
-
-**Thread.** Longest Palindromic Substring leaves counting-and-optimising behind for a different DP flavour entirely: expanding outward from centres, where the "state" is a symmetric window instead of a running index.`,
+**Boundary Traps & Execution Blueprint.**
+- *Single House Edge Case*: If \`nums.length == 1\`, return \`nums[0]\` immediately!`,
       questions: [
         {
           kind: "mcq",
-          prompt: "How do we handle the circular street in House Robber II?",
-          options: ["By using a 2D DP array.", "By running the standard House Robber algorithm twice: once skipping the first house, and once skipping the last house.", "By duplicating the array.", "By always skipping the first house."],
+          prompt: "How does House Robber II handle the constraint that the first and last houses are adjacent?",
+          options: [
+            "By using 2D matrix DP.",
+            "By running standard House Robber twice: once on houses [0...N-2] and once on houses [1...N-1], returning the max.",
+            "By setting negative values for house N-1.",
+            "By dividing the array by 2."
+          ],
           correct_index: 1,
-          model_answer: "Because the first and last houses are adjacent, you cannot rob both. Therefore, the maximum profit is the max of robbing houses[0 to n-2] or houses[1 to n-1].",
+          model_answer: "Splitting into two linear runs guarantees we never simultaneously rob both house 0 and house N-1.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the result for nums = [2, 3, 2] in House Robber II?",
+          model_answer: "3. Case A [2, 3] yields 3. Case B [3, 2] yields 3. Max is 3.",
           difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  5. LONGEST PALINDROMIC SUBSTRING                                  */
-    /* ------------------------------------------------------------------ */
     {
       slug: "longest-palindromic-substring",
       title: "Longest Palindromic Substring",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-palindromic-substring",
-      summary:
-        "Every palindrome has a centre — expand from all 2n−1 of them and keep the widest.",
-      body: `**Signal.** "Find the longest contiguous palindromic substring" — palindromes are symmetric around a centre, which is the tell for expanding outward from every possible centre instead of verifying substrings independently.
+      summary: "Every palindrome has a centre — expand from all 2n−1 of them and keep the widest.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners check all $O(N^2)$ substrings and verify if each is a palindrome ($O(N^3)$ total).
+*Why this shatters*: Checking substrings from scratch repeats palindrome checks for overlapping inner characters.
 
-**Brute force.** Check all O(n²) substrings, each requiring O(n) to verify as a palindrome — O(n³) total, massively redundant since re-verifying overlapping middles happens endlessly.
-
-**Optimal approach.** Every palindrome is symmetric about a **centre** — odd length (like "aba") centres on a character, even length (like "abba") centres on a gap between characters. A string of length n has 2n − 1 possible centres. From each, expand outward while characters match, tracking the longest span found. Two centres, one loop: expand(i, i) for odd-length, expand(i, i+1) for even-length, at every index i.
+**The Structural Invariant: Expand Around Center ($O(N^2)$ Time, $O(1)$ Space).**
+Every palindrome expands symmetrically around its **center**:
+- There are $2N - 1$ total potential centers in a string of length $N$:
+  - $N$ odd-length centers (e.g. \`"aba"\` centered at \`'b'\`).
+  - $N - 1$ even-length centers (e.g. \`"abba"\` centered between \`'b'\` and \`'b'\`).
+- **Expansion Algorithm**: For each center, expand pointers \`L\` and \`R\` outward while \`L >= 0 && R < N && s[L] == s[R]\`.
+- Track the maximum length substring found across all expansions.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "centre", "index": 0 }], "note": "Centre at index 0 ('b'): expand outward — nothing beyond the string's edge. Length 1." },
-    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "centre", "index": 1 }], "highlight": [0, 1, 2], "note": "Centre at index 1 ('a'): expand — s[0]='b', s[2]='b' match → \\"bab\\", length 3. New longest." },
-    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "centre", "index": 2 }], "note": "Centre at index 2 ('b'): expand — s[1]='a', s[3]='a' match → \\"aba\\", length 3. Ties the current best, doesn't beat it." },
-    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "centre", "index": 3 }], "note": "Centre at index 3 ('a'): expand — s[2]='b', s[4]='d' don't match. Length 1." },
-    { "cells": ["b", "a", "b", "a", "d"], "highlight": [0, 1, 2], "note": "Longest found overall: \\"bab\\" (indices 0-2), length 3 — the first palindrome to reach that length." }
+    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "center 'a'", "index": 1 }], "note": "Center at idx 1 ('a'). Expand L=1, R=1 -> 'a'." },
+    { "cells": ["b", "a", "b", "a", "d"], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 2 }], "highlight": [0, 1, 2], "note": "Expand L=0, R=2: s[0]=='b' == s[2]=='b'. Valid palindrome 'bab' (length 3)!" },
+    { "cells": ["b", "a", "b", "a", "d"], "highlight": [0, 1, 2], "note": "Expand L=-1 (out of bounds). Max Palindrome found = 'bab'." }
   ],
-  "caption": "Longest Palindromic Substring — every one of the 2n-1 centres gets one expansion; the widest match wins."
+  "caption": "Longest Palindromic Substring — Expand around center in O(N^2) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n²) time, O(1) space with centre expansion — versus O(n³) brute force, or an O(n²)-time, O(n²)-space DP table that tracks palindrome status for every (start, end) pair.
-
-**Thread.** Palindromic Substrings reuses this exact expansion engine — the only change is what gets harvested: every successful expansion step counts as one more answer, instead of tracking just the longest.`,
+**Boundary Traps & Execution Blueprint.**
+- *Space Advantage*: Expand Around Center achieves $O(1)$ extra space, vastly superior to the $O(N^2)$ space required by 2D DP table approaches.`,
       questions: [
         {
+          kind: "mcq",
+          prompt: "Why are there 2N - 1 total centers to check in a string of length N?",
+          options: [
+            "N centers for odd-length palindromes + N-1 centers between characters for even-length palindromes.",
+            "Because 2N - 1 is prime.",
+            "N centers for vowels + N-1 for consonants.",
+            "Because strings have two ends."
+          ],
+          correct_index: 0,
+          model_answer: "Odd-length palindromes center on a single character (N possibilities), while even-length palindromes center between two characters (N-1 possibilities).",
+          difficulty: "intermediate"
+        },
+        {
           kind: "open",
-          prompt: "Why is expanding around the center better than a 2D DP table for Longest Palindromic Substring?",
-          model_answer: "Expanding from the center achieves the same O(N^2) time complexity as the DP approach but only requires O(1) space, whereas the DP table requires O(N^2) space.",
+          prompt: "What is the space complexity of Expand Around Center vs 2D DP for Longest Palindromic Substring?",
+          model_answer: "Expand Around Center takes O(1) space, whereas 2D DP takes O(N^2) space to store table state.",
           difficulty: "intermediate"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  6. PALINDROMIC SUBSTRINGS                                         */
-    /* ------------------------------------------------------------------ */
     {
       slug: "palindromic-substrings",
       title: "Palindromic Substrings",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/palindromic-substrings",
-      summary:
-        "Same centres, new harvest: count every successful expansion step.",
-      body: `**Signal.** "Count the total number of palindromic substrings (every occurrence counts separately)" — the same 2n−1 centres as Longest Palindromic Substring, but the question is a tally, not a maximum — the tell to reuse the identical expansion engine with a different harvest.
+      summary: "Same centres, new harvest: count every successful expansion step.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use the same code as Longest Palindromic Substring, but store substrings in a Set to count them.
+*Why this shatters*: The problem explicitly requires counting **every occurrence** of a palindromic substring separately (duplicates at different positions count!).
 
-**Brute force.** Check all O(n²) substrings for palindrome-ness in O(n) each — O(n³), the same redundant re-verification as the longest-substring brute force.
-
-**Optimal approach.** Reuse the centre-expansion engine unchanged. Instead of tracking the longest, **count every successful expansion step** — each time s[l] == s[r] during an expansion, that's one more palindromic substring, incremented right inside the expansion loop.
+**The Structural Invariant: Center Expansion Step Harvesting.**
+- Use the same $2N - 1$ Center Expansion engine.
+- Instead of tracking maximum length, **increment \`count++\` for EVERY valid expansion step**:
+  - \`countSubstrings(L, R)\`:
+    - While \`L >= 0 && R < N && s[L] == s[R]\`:
+      - \`count++\`
+      - \`L--\`, \`R++\`
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["a", "a", "a"], "pointers": [{ "label": "centre", "index": 0 }], "note": "Centre at index 0: 'a' alone counts. Total: 1." },
-    { "cells": ["a", "a", "a"], "highlight": [0, 1], "note": "Gap centre between 0 and 1: s[0]=s[1]='a' → \\"aa\\" counts. Total: 2." },
-    { "cells": ["a", "a", "a"], "pointers": [{ "label": "centre", "index": 1 }], "highlight": [0, 1, 2], "note": "Centre at index 1: 'a' alone counts, then expanding once more matches s[0]=s[2]='a' → \\"aaa\\" counts too. Total: 4." },
-    { "cells": ["a", "a", "a"], "highlight": [1, 2], "note": "Gap centre between 1 and 2: s[1]=s[2]='a' → \\"aa\\" counts. Total: 5." },
-    { "cells": ["a", "a", "a"], "pointers": [{ "label": "centre", "index": 2 }], "note": "Centre at index 2: 'a' alone counts. Total: 6." }
+    { "cells": ["a", "a", "a"], "pointers": [{ "label": "center 0", "index": 0 }], "note": "Center 0 ('a'): L=0, R=0 -> s[0]=='a' -> count=1." },
+    { "cells": ["a", "a", "a"], "pointers": [{ "label": "gap 0-1", "index": 0 }], "highlight": [0, 1], "note": "Gap (0,1): L=0, R=1 -> s[0]==s[1]=='a' -> count=2 ('aa')." },
+    { "cells": ["a", "a", "a"], "pointers": [{ "label": "center 1", "index": 1 }], "highlight": [0, 1, 2], "note": "Center 1 ('a'): L=1,R=1 ('a') -> count=3; expand L=0,R=2 ('aaa') -> count=4!" }
   ],
-  "caption": "Palindromic Substrings — the same centre-expansion sweep as the longest-substring problem; here every successful match increments a running count instead of a max."
+  "caption": "Palindromic Substrings — Counting every expansion step in O(N^2) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n²) time, O(1) space — versus the O(n³) brute-force substring check.
-
-**Thread.** Decode Ways returns to Fibonacci-shaped counting, but now every step must pass a validity check before it's allowed to count at all — zeros are the whole game.`,
+**Boundary Traps & Execution Blueprint.**
+- *All Positions Count*: For \`"aaa"\`, answer is 6: \`"a", "a", "a", "aa", "aa", "aaa"\`.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "How many possible centers are there for palindromes in a string of length N?",
-          options: ["N", "2N", "2N - 1", "N^2"],
-          correct_index: 2,
-          model_answer: "There are N single-character centers and N-1 between-character centers (for even-length palindromes), totaling 2N - 1 centers.",
-          difficulty: "advanced"
+          prompt: "How does Palindromic Substrings harvest counts during center expansion?",
+          options: [
+            "It adds 1 only when expansion finishes.",
+            "It increments total count by 1 for EVERY step that s[L] == s[R] holds during expansion.",
+            "It multiplies counts by N.",
+            "It divides length by 2."
+          ],
+          correct_index: 1,
+          model_answer: "Every valid step during outward expansion corresponds to a distinct valid palindromic substring, adding 1 to the total count.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the total number of palindromic substrings in string s = \"aaa\"?",
+          model_answer: "6 palindromic substrings.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  7. DECODE WAYS                                                    */
-    /* ------------------------------------------------------------------ */
     {
       slug: "decode-ways",
       title: "Decode Ways",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/decode-ways",
-      summary:
-        "Fibonacci with validity guards: the last token was one digit or two, but zeros must ride as tails.",
-      body: `**Signal.** "Letters A-Z are encoded as 1-26 — count the number of valid decodings" — the last token being either one digit or two is the tell for a two-predecessor recurrence, Climbing Stairs' exact shape, gated by a validity check on each option.
+      summary: "Fibonacci with validity guards: the last token was one digit or two, but zeros must ride as tails.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners treat \`'0'\` as a valid digit mapping (e.g. mapping \`0\` to \`'A'\`).
+*Why this shatters*: Encoding is 1-indexed (\`'1' -> 'A'\` ... \`'26' -> 'Z'\`). A standalone \`'0'\` is INVALID and cannot be decoded!
 
-**Brute force.** Recursively try consuming one digit or two digits at each position, branching on validity — exponential in the worst case, recomputing the same suffix's decode count from every prefix that reaches it.
-
-**Optimal approach.** dp[i] counts valid decodings of the first i characters. If s[i] != '0': dp[i] += dp[i-1] (single digit valid, 1-9). If s[i-1:i+1] is 10-26: dp[i] += dp[i-2] (two-digit valid). **Zeros are the whole game** — '0' alone is invalid, and must ride as the tail of "10" or "20"; inputs like "30" or "100" give 0 decodings entirely.
+**The Structural Invariant: Gated 1-Digit and 2-Digit Recurrence.**
+Let \`dp[i]\` be the number of ways to decode prefix \`s[0 ... i-1]\`:
+1. **1-Digit Transition**: If \`s[i-1] != '0'\` (valid digit '1'-'9'):
+   $$\\text{dp}[i] += \\text{dp}[i-1]$$
+2. **2-Digit Transition**: If two-character substring \`s[i-2...i-1]\` is between \`"10"\` and \`"26"\`:
+   $$\\text{dp}[i] += \\text{dp}[i-2]$$
+- **Base Case**: \`dp[0] = 1\` (empty string has 1 valid decoding), \`dp[1] = s[0] == '0' ? 0 : 1\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, "·", "·", "·"], "note": "Base: dp[0] = 1 (empty prefix, one trivial way to decode nothing)." },
-    { "cells": [1, 1, "·", "·"], "highlight": [0], "note": "dp[1] ('2'): single digit '2' is valid (1-9) → += dp[0] = 1." },
-    { "cells": [1, 1, 2, "·"], "highlight": [0, 1], "note": "dp[2] ('22'): single digit '2' valid → += dp[1] = 1. Two-digit '22' is 10-26, valid → += dp[0] = 1. Total 2." },
-    { "cells": [1, 1, 2, 3], "highlight": [1, 2], "note": "dp[3] ('226'): single digit '6' valid → += dp[2] = 2. Two-digit '26' is 10-26, valid → += dp[1] = 1. Total 3." }
+    { "cells": [1, 1, "_", "_"], "note": "s = '226'. Base: dp[0]=1, dp[1]=1 ('2' is valid)." },
+    { "cells": [1, 1, 2, "_"], "highlight": [0, 1], "note": "i=2 ('2'): '2' valid (+dp[1]=1), '22' valid (+dp[0]=1) -> dp[2] = 2." },
+    { "cells": [1, 1, 2, 3], "highlight": [1, 2], "note": "i=3 ('6'): '6' valid (+dp[2]=2), '26' valid (+dp[1]=1) -> dp[3] = 3. Total ways = 3!" }
   ],
-  "caption": "Decode Ways — dp[i] sums a single-digit continuation and a two-digit continuation, each gated by validity."
+  "caption": "Decode Ways — Gated 1-digit and 2-digit DP transitions."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space with rolling variables — versus exponential naive recursion without memoisation.
-
-**Thread.** Coin Change keeps counting-with-validity but makes the jump every DP problem eventually makes: the state stops indexing *position in the input* and starts indexing *how much of a resource remains*.`,
+**Boundary Traps & Execution Blueprint.**
+- *Leading Zeros*: If \`s[0] == '0'\`, return \`0\` immediately! Substrings like \`"30"\` or \`"06"\` have 0 valid decodings.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "In Decode Ways, what is the special edge case you must always handle?",
-          options: ["Negative numbers.", "Numbers larger than 26.", "Leading zeros (like '06').", "Empty strings."],
-          correct_index: 2,
-          model_answer: "A string starting with '0' cannot be decoded into a letter (since 'A' is '1', not '0'). Any sequence starting with '0' contributes 0 ways to decode.",
+          prompt: "What happens when a standalone '0' character is encountered in Decode Ways without a valid preceding '1' or '2'?",
+          options: [
+            "It decodes to 'A'.",
+            "It is invalid, contributing 0 ways to decode at that branch.",
+            "It skips to the next character.",
+            "It doubles the DP value."
+          ],
+          correct_index: 1,
+          model_answer: "Digits start at '1'='A'. '0' cannot stand alone or follow digits > 2, making the decoding branch invalid (0 ways).",
           difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the result of Decode Ways for input s = \"10\"?",
+          model_answer: "1. '10' decodes to 'J'. '0' cannot decode alone.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  8. COIN CHANGE                                                    */
-    /* ------------------------------------------------------------------ */
     {
       slug: "coin-change",
       title: "Coin Change",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/coin-change",
-      summary:
-        "State = amount, not position. Fewest coins for every value 0..target.",
-      body: `**Signal.** "Fewest coins to make an amount exactly, unlimited supply" — an optimum over how a target quantity can be assembled from repeatable pieces is the tell for state indexed by *remaining amount*, not position in any input sequence.
+      summary: "State = amount, not position. Fewest coins for every value 0..target.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a Greedy approach, always taking the largest coin denomination available.
+*Why this shatters*: Counterexample: \`coins = [1, 3, 4, 5]\`, \`amount = 7\`. Greedy picks $5 + 1 + 1 = 3$ coins. But optimal is $4 + 3 = 2$ coins! Greedy fails for non-canonical coin systems.
 
-**Brute force.** Take-the-biggest greedy: 6 → 4+1+1 = 3 coins. But 3+3 = 2 coins beats it — greedy only works for denomination systems designed to make it work (like US coins), and fails in general. A true brute force tries every combination of coins summing to the target: exponential.
-
-**Optimal approach (the abstraction jump).** Until now, dp was indexed by position in the input. Here the state is **how much money remains**: dp[a] = fewest coins to make amount a. dp[a] = 1 + min(dp[a - c] for each coin c if a - c >= 0). Base: dp[0] = 0. Fill from 1 upward — every amount's answer depends only on smaller amounts, already computed.
+**The Structural Invariant: Amount-Indexed Min Unbounded Knapsack.**
+Let \`dp[a]\` be the minimum number of coins needed to make amount \`a\`:
+$$\\text{dp}[a] = 1 + \\min_{c \\in \\text{coins}, c \\le a} (\\text{dp}[a - c])$$
+- **Base Case**: \`dp[0] = 0\` (0 coins needed for amount 0).
+- **Initialization**: Fill \`dp\` array with \`amount + 1\` (acting as $+\\infty$).
+- **Outer Loop**: Amount $a$ from $1 \\dots \\text{amount}$.
+- **Inner Loop**: For each coin $c \\in \\text{coins}$.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [0, "·", "·", "·", "·", "·", "·"], "note": "Base case: dp[0] = 0 — zero coins needed to make amount 0." },
-    { "cells": [0, 1, "·", "·", "·", "·", "·"], "pointers": [{ "label": "a", "index": 1 }], "highlight": [0], "note": "dp[1] = 1 + dp[0] = 1 — one coin of value 1." },
-    { "cells": [0, 1, 2, "·", "·", "·", "·"], "pointers": [{ "label": "a", "index": 2 }], "highlight": [1], "note": "dp[2] = 1 + dp[1] = 2 — two 1-coins; coins 3 and 4 don't fit yet." },
-    { "cells": [0, 1, 2, 1, "·", "·", "·"], "pointers": [{ "label": "a", "index": 3 }], "highlight": [0, 2], "note": "dp[3] = 1 + min(dp[2]=2, dp[0]=0) = 1 — a single coin of value 3 beats three 1s." },
-    { "cells": [0, 1, 2, 1, 1, "·", "·"], "pointers": [{ "label": "a", "index": 4 }], "highlight": [0, 1, 3], "note": "dp[4] = 1 + min(dp[3]=1, dp[1]=1, dp[0]=0) = 1 — coin 4 directly." },
-    { "cells": [0, 1, 2, 1, 1, 2, "·"], "pointers": [{ "label": "a", "index": 5 }], "highlight": [1, 2, 4], "note": "dp[5] = 1 + min(dp[4]=1, dp[2]=2, dp[1]=1) = 2." },
-    { "cells": [0, 1, 2, 1, 1, 2, 2], "pointers": [{ "label": "a", "index": 6 }], "highlight": [2, 3, 5], "note": "dp[6] = 1 + min(dp[5]=2, dp[3]=1, dp[2]=2) = 2 — two coins of value 3 (3+3). Answer: 2." }
+    { "cells": [0, "INF", "INF", "INF", "INF", "INF", "INF", "INF"], "note": "coins=[1,3,4,5], amount=7. Base: dp[0]=0." },
+    { "cells": [0, 1, 2, 1, 1, 1, 2, 2], "highlight": [7], "note": "dp[7] = 1 + min(dp[6], dp[4], dp[3], dp[2]) = 1 + min(2, 1, 1, 2) = 2 (coins 4 + 3)!" }
   ],
-  "caption": "Coin Change — dp[a] = 1 + min(dp[a-c]) over each coin c, filled from amount 0 up."
+  "caption": "Coin Change — Amount-indexed DP finding minimum coins."
 }
 \`\`\`
 
-**Complexity.** O(amount × coins) time — pseudo-polynomial — O(amount) space — versus the exponential all-combinations brute force.
-
-**Thread.** Maximum Product Subarray leaves counting/amount-indexed DP for a Kadane's-style running scan — but with a twist that breaks the single running value House Robber and friends relied on.`,
+**Boundary Traps & Execution Blueprint.**
+- *Unreachable Amount*: If \`dp[amount] > amount\`, return \`-1\`.`,
       questions: [
         {
-          kind: "open",
-          prompt: "Why do we initialize the DP array with 'amount + 1' in Coin Change?",
-          model_answer: "Because 'amount + 1' acts as infinity. The maximum possible number of coins needed is 'amount' (all 1-value coins), so 'amount + 1' ensures we can reliably use Math.min() and check for impossible amounts at the end.",
+          kind: "mcq",
+          prompt: "Why does the Greedy algorithm fail for general Coin Change problems?",
+          options: [
+            "Because greedy algorithms take O(N^2) time.",
+            "Because picking the largest denomination can prevent finding a combination of smaller coins that uses fewer total coins overall.",
+            "Because coin values are negative.",
+            "Because Greedy requires sorted arrays."
+          ],
+          correct_index: 1,
+          model_answer: "Always taking the largest coin can leave an awkward remaining amount requiring many small coins, whereas smaller coin choices sum to the target in fewer steps.",
           difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Coin Change for amount A and N coin types?",
+          model_answer: "O(A * N) time complexity.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  9. MAXIMUM PRODUCT SUBARRAY                                       */
-    /* ------------------------------------------------------------------ */
     {
       slug: "maximum-product-subarray",
       title: "Maximum Product Subarray",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/maximum-product-subarray",
-      summary:
-        "Carry the max AND the min: a negative number swaps them, and yesterday's worst becomes today's best.",
-      body: `**Signal.** "The contiguous subarray with the largest *product*" — products, unlike sums, can flip sign entirely on one multiplication, which is the tell that a single running "best so far" value (Kadane's shape) isn't enough state.
+      summary: "Carry the max AND the min: a negative number swaps them, and yesterday's worst becomes today's best.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use Kadane's Algorithm tracking only the running maximum product \`maxSoFar\`.
+*Why this shatters*: Multiplying by a **negative number** flips a large negative number into a **massive positive number**! Tracking only the maximum discards negative candidates that could become the maximum on the next step.
 
-**Brute force.** Compute the product of every contiguous subarray directly — O(n²), recomputing overlapping products from scratch for every start index.
-
-**Optimal approach.** For sums, Kadane's algorithm carries one running value. For products, **negatives flip everything**: multiplying by −1 turns the max into the min and vice versa. Track **two** values at each position: maxHere = max(x, maxHere·x, minHere·x); minHere = min(x, maxHere·x, minHere·x) — a deeply negative running product is a rocket waiting for one more minus sign to fire. When a recurrence won't close with one running value, the state is too small — you don't need a cleverer formula, you need to remember more per step.
+**The Structural Invariant: Dual State Tracking (Max & Min Product).**
+At each element $x = \\text{nums}[i]$, maintain BOTH \`currMax\` and \`currMin\`:
+- If $x < 0$, **SWAP** \`currMax\` and \`currMin\`!
+- **Transitions**:
+  $$\\text{currMax} = \\max(x, x \\cdot \\text{currMax})$$
+  $$\\text{currMin} = \\min(x, x \\cdot \\text{currMin})$$
+- Update \`globalMax = max(globalMax, currMax)\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [2, 3, -2, 4], "pointers": [{ "label": "i", "index": 0 }], "note": "x=2: maxHere=2, minHere=2. globalMax=2." },
-    { "cells": [2, 3, -2, 4], "pointers": [{ "label": "i", "index": 1 }], "highlight": [0, 1], "note": "x=3: maxHere=max(3,2·3)=6, minHere=min(3,2·3)=3. globalMax=6." },
-    { "cells": [2, 3, -2, 4], "pointers": [{ "label": "i", "index": 2 }], "note": "x=-2 (negative — max and min effectively swap roles): maxHere=max(-2,6·-2,3·-2)=-2, minHere=min(-2,6·-2,3·-2)=-12. globalMax stays 6." },
-    { "cells": [2, 3, -2, 4], "pointers": [{ "label": "i", "index": 3 }], "note": "x=4: maxHere=max(4,-2·4,-12·4)=4, minHere=min(4,-2·4,-12·4)=-48. globalMax stays 6." },
-    { "cells": [2, 3, -2, 4], "highlight": [0, 1], "note": "Best subarray: [2, 3], product 6 — the deeply negative minHere=-48 never got a chance to flip into a new max." }
+    { "cells": [2, 3, -2, 4], "note": "nums=[2, 3, -2, 4]. Init currMax=2, currMin=2, global=2." },
+    { "cells": [2, 6, -2, 4], "highlight": [1], "note": "x=3: currMax=max(3, 3*2)=6, currMin=3. global=6." },
+    { "cells": [2, 6, -12, 4], "highlight": [2], "note": "x=-2 (negative -> swap max/min!): currMax=max(-2, -2*3)=-2, currMin=min(-2, -2*6)=-12. global=6." },
+    { "cells": [2, 6, -12, 4], "highlight": [1], "note": "x=4: currMax=max(4, 4*-2)=4, currMin=min(4, 4*-12)=-48. Final global max product = 6!" }
   ],
-  "caption": "Maximum Product Subarray — carrying both a running max AND min is what survives a sign flip; a single running value can't."
+  "caption": "Maximum Product Subarray — Tracking dual max and min states to handle negative flips."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — versus the O(n²) all-subarrays brute force.
-
-**Thread.** Word Break returns to prefix-indexed DP, but the recurrence now checks membership in a dictionary instead of an arithmetic condition.`,
+**Boundary Traps & Execution Blueprint.**
+- *Zero Reset*: When $x = 0$, both \`currMax\` and \`currMin\` reset to $0$, restarting subarray calculations.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "Why must we track both the maximum and minimum product ending at each position?",
-          options: ["To find the range of possible products.", "Because a negative minimum multiplied by a negative number becomes the new maximum.", "To avoid dividing by zero.", "Because it's required for a sliding window."],
+          prompt: "Why must we track currMin alongside currMax in Maximum Product Subarray?",
+          options: [
+            "To calculate average product.",
+            "Because multiplying a large negative currMin by a negative number produces a massive positive product that becomes the new currMax.",
+            "To prevent integer overflow.",
+            "Because Kadane's algorithm requires 2 variables."
+          ],
           correct_index: 1,
-          model_answer: "A very large negative number (the minimum) can instantly flip into a massive positive number if multiplied by another negative number.",
+          model_answer: "Negative numbers invert signs. Today's smallest negative product becomes tomorrow's largest positive product upon encountering a negative multiplier.",
           difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time and space complexity of Maximum Product Subarray?",
+          model_answer: "O(N) time complexity and O(1) space complexity.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  10. WORD BREAK                                                    */
-    /* ------------------------------------------------------------------ */
     {
       slug: "word-break",
       title: "Word Break",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/word-break",
-      summary:
-        "dp[i] asks: can the first i characters be fully segmented into dictionary words?",
-      body: `**Signal.** "Can a string be segmented entirely into dictionary words (reuse allowed)?" — a prefix-by-prefix segmentability question is the tell for dp[i] = "can the first i characters be fully segmented," checked against every earlier valid cut point.
+      summary: "dp[i] asks: can the first i characters be fully segmented into dictionary words?",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use greedy prefix matching, picking the longest matching dictionary word first.
+*Why this shatters*: Counterexample: \`s = "cars"\`, \`dict = ["car", "ca", "rs"]\`. Greedy picks \`"car"\`, leaving \`"s"\` (fails!). Optimal picks \`"ca"` + `"rs"\` (succeeds!).
 
-**Brute force.** Try every word at every position, recurse on the remainder — correct, but exponential on adversarial inputs: the same suffix is re-attempted from countless cut histories, the classic overlapping-subproblems signature DP exists to fix.
-
-**Optimal approach.** dp[i] = true iff the prefix of length i can be fully segmented: dp[i] = any(dp[j] AND s[j:i] in wordSet for j in range(i)). Base: dp[0] = true (the empty prefix is trivially done). A hash set for wordDict membership makes each inner check O(1) amortised.
+**The Structural Invariant: Prefix Segmentability Boolean DP.**
+Let \`dp[i]\` be \`true\` iff prefix \`s[0 ... i-1]\` can be segmented into dictionary words:
+- **Base Case**: \`dp[0] = true\` (empty string is valid).
+- **Transition**: For $i = 1 \\dots N$:
+  - For $j = 0 \\dots i-1$:
+    - If \`dp[j] == true\` AND \`s.substring(j, i)\` is in \`wordDictSet\`:
+      - Set \`dp[i] = true\` and \`break\`!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["T", "F", "F", "F", "F", "F", "F", "F", "F"], "note": "Base: dp[0] = T (empty prefix trivially segmentable)." },
-    { "cells": ["T", "F", "F", "F", "T", "F", "F", "F", "F"], "pointers": [{ "label": "i", "index": 4 }], "highlight": [0], "note": "dp[4]: s[0:4] = \\"leet\\" is in the dictionary AND dp[0] = T → dp[4] = T." },
-    { "cells": ["T", "F", "F", "F", "T", "F", "F", "F", "T"], "pointers": [{ "label": "i", "index": 8 }], "highlight": [4], "note": "dp[8]: s[4:8] = \\"code\\" is in the dictionary AND dp[4] = T → dp[8] = T. Answer: true — \\"leet\\" + \\"code\\"." }
+    { "cells": ["T", "F", "F", "F", "F", "F", "F", "F", "F"], "note": "s = 'leetcode', dict=['leet', 'code']. Base: dp[0]=T." },
+    { "cells": ["T", "F", "F", "F", "T", "F", "F", "F", "F"], "highlight": [0, 4], "note": "i=4: dp[0]==T && s[0..4] 'leet' in dict -> dp[4] = T." },
+    { "cells": ["T", "F", "F", "F", "T", "F", "F", "F", "T"], "highlight": [4, 8], "note": "i=8: dp[4]==T && s[4..8] 'code' in dict -> dp[8] = T. Return TRUE!" }
   ],
-  "caption": "Word Break — dp[i] checks every earlier valid cut point j where both dp[j] holds and s[j:i] is a dictionary word."
+  "caption": "Word Break — Boolean prefix segmentability DP."
 }
 \`\`\`
 
-**Complexity.** O(n² · k) time where k is average word length for substring hashing, O(n) space — versus exponential naive recursion without memoisation.
-
-**Thread.** Longest Increasing Subsequence keeps the "look back at every earlier index" shape but changes the question from segmentability to an optimum — and adds a second, much faster solution hiding underneath the obvious one.`,
+**Boundary Traps & Execution Blueprint.**
+- *HashSet Lookup*: Convert \`wordDict\` array to a \`Set\` for $O(1)$ string lookups.`,
       questions: [
         {
+          kind: "mcq",
+          prompt: "What does dp[i] = true represent in Word Break?",
+          options: [
+            "The character at index i is a vowel.",
+            "The prefix substring s[0...i-1] of length i can be completely segmented into valid dictionary words.",
+            "The dictionary contains i words.",
+            "The string has no spaces."
+          ],
+          correct_index: 1,
+          model_answer: "dp[i] stores whether the first i characters of string s can be formed by concatenating words from the dictionary.",
+          difficulty: "intermediate"
+        },
+        {
           kind: "open",
-          prompt: "What does dp[i] store in the bottom-up DP solution for Word Break?",
-          model_answer: "dp[i] stores a boolean indicating whether the substring starting at index i (to the end of the string) can be successfully segmented into words from the dictionary.",
+          prompt: "What is the time complexity of Word Break for a string of length N?",
+          model_answer: "O(N^2 * K) time, where N is string length and K is max word length (for substring slicing/hashing).",
           difficulty: "intermediate"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  11. LONGEST INCREASING SUBSEQUENCE                                */
-    /* ------------------------------------------------------------------ */
     {
       slug: "longest-increasing-subsequence",
       title: "Longest Increasing Subsequence",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-increasing-subsequence",
-      summary:
-        "dp[i] = LIS ending at i in O(n²). Then patience-sorting tails array in O(n log n).",
-      body: `**Signal.** "The length of the longest strictly increasing *subsequence*" — subsequence, not subarray (elements keep order but can skip), is the tell that the best chain ending at each element depends on the best chains ending at every earlier *smaller* element.
+      summary: "dp[i] = LIS ending at i in O(n²). Then patience-sorting tails array in O(n log n).",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners confuse *Subsequence* (elements keep order, can skip elements) with *Subarray* (contiguous elements).
+*Why this shatters*: Subsequences do NOT need to be contiguous!
 
-**Brute force.** Try every subset of elements, check whether it's increasing, keep the longest — 2ⁿ subsets, exponential and throwing away order information the array already gives you for free.
-
-**Optimal approach (O(n²) DP).** dp[i] = length of the LIS **ending exactly at** index i: dp[i] = 1 + max(dp[j] for j < i if nums[j] < nums[i]), or 1 if no such j exists. Answer: max(dp).
+**The Structural Invariant: Look-Back Predecessor DP ($O(N^2)$) vs Patience Sorting ($O(N \\log N)$).**
+- **$O(N^2)$ DP Approach**:
+  - Let \`dp[i]\` be the LIS ending **exactly at index $i$**.
+  - \`dp[i] = 1 + max(dp[j])\` for all $j < i$ where \`nums[j] < nums[i]\`.
+  - Base: \`dp[i] = 1\` for all $i$.
+- **$O(N \\log N)$ Patience Sorting Optimization**:
+  - Maintain array \`tails\` where \`tails[k]\` is the smallest tail value of all increasing subsequences of length $k + 1$.
+  - For each number $x \\in \\text{nums}$:
+    - Binary search $x$ in \`tails\`.
+    - If $x > \\text{all elements in tails}$, append $x$.
+    - Else replace first element in \`tails\` $\\ge x$ with $x$.
+  - Result = \`tails.length\`!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [10, 9, 2, 5, 3, 7, 101, 18], "note": "Input array — values, not yet dp." },
-    { "cells": [1, 1, 1, "·", "·", "·", "·", "·"], "note": "dp[0..2] = 1: each of 10, 9, 2 has no smaller earlier element, so each starts its own chain of length 1." },
-    { "cells": [1, 1, 1, 2, 2, "·", "·", "·"], "highlight": [2], "note": "dp[3]=2 (5 extends the chain ending at 2), dp[4]=2 (3 also extends the chain ending at 2)." },
-    { "cells": [1, 1, 1, 2, 2, 3, 4, 4], "highlight": [3, 4], "note": "dp[5]=3 (7 extends 5 or 3, whichever gives dp=2). dp[6]=4 (101 extends 7, dp=3). dp[7]=4 (18 also extends 7, tying 101's chain length). Answer: max(dp) = 4." }
+    { "cells": [10, 9, 2, 5, 3, 7, 101, 18], "note": "nums = [10, 9, 2, 5, 3, 7, 101, 18]." },
+    { "cells": [2, 3, 7, 101], "highlight": [0, 1, 2, 3], "note": "Patience Sorting tails array evolves to length 4: [2, 3, 7, 101]. LIS Length = 4!" }
   ],
-  "caption": "Longest Increasing Subsequence — dp[i] looks back at every smaller earlier value and extends its best chain."
+  "caption": "Longest Increasing Subsequence — Patience sorting binary search optimization in O(N log N) time."
 }
 \`\`\`
 
-**The O(n log n) approach — patience sorting.** Keep a tails array where tails[k] = smallest possible tail of an increasing subsequence of length k+1. For each number x: if x extends the longest chain (bigger than every tail), append; otherwise binary-search the first tail ≥ x and replace it — same idea as Koko's monotone feasibility search, aimed at maintaining the cheapest possible "ending value" per chain length. tails is *not* an actual LIS — its entries may belong to different chains — only its length is meaningful.
-
-**Complexity.** DP (look-back): O(n²) time, O(n) space. Patience sorting: O(n log n) time, O(n) space — versus the brute force's O(2ⁿ) subset enumeration.
-
-**Thread.** Partition Equal Subset Sum closes the chapter at the knapsack doorway: state indexed by *target sum*, like Coin Change, but now each number is available only once — and the sweep direction becomes the entire difference between using an item once and using it unboundedly.`,
+**Boundary Traps & Execution Blueprint.**
+- *Strictly Increasing*: Problem requires STRICTLY increasing ($>$, equal elements cannot extend the sequence!).`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What makes Patience Sorting (Binary Search) superior to standard 1D DP for LIS?",
-          options: ["It uses less space.", "It is easier to implement.", "It reduces the time complexity from O(N^2) to O(N log N).", "It can handle negative numbers."],
-          correct_index: 2,
-          model_answer: "By maintaining a sorted array of the smallest tails of all increasing subsequences of length i, we can binary search where to place the next element, dropping time to O(N log N).",
+          prompt: "How does Patience Sorting reduce the time complexity of LIS from O(N^2) to O(N log N)?",
+          options: [
+            "By sorting the input array.",
+            "By maintaining a sorted tails array of minimal end-elements for each subsequence length, using binary search to update entries in O(log N) per number.",
+            "By eliminating nested loops.",
+            "By using Hash Maps."
+          ],
+          correct_index: 1,
+          model_answer: "The tails array remains sorted, allowing binary search to find insertion/replacement positions in O(log N) time per element.",
           difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "In O(N^2) DP for LIS, what does dp[i] represent?",
+          model_answer: "dp[i] represents the length of the longest strictly increasing subsequence that ends specifically at index i.",
+          difficulty: "intermediate"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  12. PARTITION EQUAL SUBSET SUM                                    */
-    /* ------------------------------------------------------------------ */
     {
       slug: "partition-equal-subset-sum",
       title: "Partition Equal Subset Sum",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/partition-equal-subset-sum",
-      summary:
-        "Subset-sum DP: which totals are buildable? Sweep high-to-low so each number is used once.",
-      body: `**Signal.** "Can an array be split into two subsets with equal sums" — equal-sum partition reduces to finding a subset summing to exactly half the total, which is the tell for **subset-sum** DP: state indexed by target amount, exactly like Coin Change, but with each number usable only once.
+      summary: "Subset-sum DP: which totals are buildable? Sweep high-to-low so each number is used once.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to generate all $2^N$ subsets to check if any subset sums to \`total / 2\`.
+*Why this shatters*: $2^N$ subset generation for $N = 200$ takes $2^{200}$ operations (impossible!).
 
-**Brute force.** Try every subset (2ⁿ of them), check whether its sum equals total/2 — exponential, and if total is odd, impossible immediately (can't split an odd sum into two equal integer halves).
-
-**Optimal approach.** dp[a] = true iff some subset of numbers seen so far sums to exactly a. For each number x, sweep amounts **high-to-low**: for a in range(target, x-1, -1): dp[a] = dp[a] OR dp[a-x]. Sweeping low-to-high would let dp[a-x] be a value just set *using x itself* — counting x twice (unbounded knapsack, Coin Change's shape). High-to-low ensures only values from *before* x arrived get read, so each number is used at most once. This single loop direction is the entire 0/1-versus-unbounded-knapsack distinction.
+**The Structural Invariant: 0/1 Knapsack High-to-Low Boolean Sweep.**
+Partitioning into two equal sum subsets requires finding a subset with sum equal to **\`target = total_sum / 2\`**:
+1. If \`total_sum\` is ODD, return \`false\` immediately!
+2. Let \`dp[a]\` be boolean: Can we form exact sum \`a\` using a subset of numbers?
+3. Base: \`dp[0] = true\`.
+4. For each number $x \\in \\text{nums}$:
+   - **SWEEP HIGH-TO-LOW** ($a = \\text{target}$ down to $x$):
+     $$\\text{dp}[a] = \\text{dp}[a] \\;||\\; \\text{dp}[a - x]$$
+   - *Why High-to-Low?* Sweeping backwards ensures number $x$ is used at most ONCE (0/1 Knapsack rule). Low-to-high sweep would reuse $x$ multiple times (Unbounded Knapsack!).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["✓", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·"], "note": "Start: only sum 0 is reachable — the empty subset." },
-    { "cells": ["✓", "✓", "·", "·", "·", "·", "·", "·", "·", "·", "·", "·"], "pointers": [{ "label": "x=1", "index": 1 }], "highlight": [0], "note": "After num=1: dp[1] = dp[1] OR dp[0] → sum 1 becomes reachable." },
-    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "·"], "pointers": [{ "label": "x=5", "index": 5 }], "highlight": [0, 1], "note": "After num=5, swept high-to-low: dp[6] picks up dp[1] and dp[5] picks up dp[0] — 5 alone, or 5+1." },
-    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "✓"], "pointers": [{ "label": "x=11", "index": 11 }], "highlight": [0], "note": "After num=11: dp[11] = dp[11] OR dp[0] → sum 11 is reachable on its own. Target hit." },
-    { "cells": ["✓", "✓", "·", "·", "·", "✓", "✓", "·", "·", "·", "·", "✓"], "highlight": [11], "note": "dp[target] = dp[11] = true → the array splits into {11} and {1,5,5}, both summing to 11." }
+    { "cells": ["T", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F", "F"], "note": "nums=[1,5,11,5], sum=22, target=11. Base: dp[0]=T." },
+    { "cells": ["T", "T", "F", "F", "F", "T", "T", "F", "F", "F", "F", "T"], "highlight": [11], "note": "After processing 1, 5, 11: dp[11] becomes TRUE! Subset {11} equals target 11." }
   ],
-  "caption": "Partition Equal Subset Sum — dp[a]: can some subset sum to exactly a? Swept high-to-low per number so each is used once."
+  "caption": "Partition Equal Subset Sum — 0/1 Knapsack 1D DP high-to-low boolean sweep."
 }
 \`\`\`
 
-**Complexity.** O(n × target) time — pseudo-polynomial — O(target) space — versus the O(2ⁿ) all-subsets brute force.
-
-**Thread.** That closes 1-D DP: twelve problems, one checklist — state, recurrence, base cases, order, answer location — applied to counting (Climbing Stairs), optimising (House Robber), string validity (Decode Ways, Word Break), and now knapsack-shaped resource allocation. Next, **2-D Dynamic Programming** adds a second dimension to the state — two strings, two indices, a grid — and the same five-finger checklist scales up unchanged.`,
+**Boundary Traps & Execution Blueprint.**
+- *Target Check*: If max element in array $> \\text{target}$, return \`false\` immediately.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What must be true about the sum of the array for Partition Equal Subset Sum to be possible?",
-          options: ["It must be zero.", "It must be even.", "It must be a prime number.", "It must be greater than the maximum element."],
+          prompt: "Why must the amount loop sweep HIGH-TO-LOW (target down to x) in 0/1 Knapsack subset sum DP?",
+          options: [
+            "To prevent negative array indices.",
+            "To ensure each number x is used at most ONCE, preventing dp[a-x] updated in the current iteration from being reused to set dp[a].",
+            "Because high-to-low sorts the array.",
+            "To reduce time complexity."
+          ],
           correct_index: 1,
-          model_answer: "If the total sum is odd, it is impossible to divide the array into two subsets with equal integer sums.",
-          difficulty: "basic"
+          model_answer: "High-to-low iteration reads states from the *previous* element iteration. Low-to-high would allow the current number to be reused multiple times.",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Partition Equal Subset Sum for N numbers and target sum T?",
+          model_answer: "O(N * T) pseudo-polynomial time complexity.",
+          difficulty: "intermediate"
         }
       ]
-    },
-  ],
+    }
+  ]
 };

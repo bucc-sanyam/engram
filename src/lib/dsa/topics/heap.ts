@@ -11,11 +11,7 @@ export const heap: DsaTopic = {
   unlocks: ["intervals", "greedy", "advanced-graphs"],
   intro: `Sorting answers every question about order, but it charges O(n log n) up front and goes stale the moment data changes. Very often you need far less: not the full ranking — just *the* minimum, or *the* maximum, right now, with elements arriving and leaving constantly. The heap is the structure that sells exactly that and nothing more: push in O(log n), pop-the-extreme in O(log n), peek in O(1). Buying less lets it charge less, forever, under churn — the quality sorting cannot offer.
 
-Under the hood it is the prettiest engineering compromise in this atlas. A heap is a *complete* binary tree — every level full, last level packed left — obeying one lax rule: each parent outranks its children. No left-right ordering like a BST, no global sortedness; sibling order is chaos, and that looseness is the point, because a weaker promise is cheaper to maintain. Completeness buys something even better: the tree needs no pointers at all. Number the nodes level by level and drop them in a flat array — the children of slot i live at 2i+1 and 2i+2, the parent at (i−1)/2. Push appends and *bubbles up*; pop swaps the last element into the root and *sifts down*. A tree you learned in chapter seven, wearing an array from chapter one.
-
-The problems build a very deliberate skill: **choosing what the heap holds, which way it points, and how big it stays**. The counterintuitive workhorse — used in three of the seven problems — is keeping a *min*-heap of size k to track the k *largest* things: the root is the gatekeeper, the weakest member of the elite, and newcomers only enter by beating it. Kth Largest in a Stream introduces the trick; K Closest Points aims it at distances; Kth Largest in an Array contrasts it with quickselect. Last Stone Weight is the warm-up simulation, Task Scheduler adds greedy scheduling under cooldowns, and Design Twitter composes heaps with hash maps into a real feed system. The finale, Find Median from a Data Stream, is the chapter's signature move: *two* heaps leaning against each other, holding the median between them.
-
-On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last because Dijkstra's algorithm is, at its core, a heap deciding which frontier node to expand next.`,
+Under the hood it is a complete binary tree flattened into an array where each parent outranks its children. The children of index $i$ live at $2i+1$ and $2i+2$, while the parent sits at $\\lfloor(i-1)/2\\rfloor$.`,
   problems: [
     {
       slug: "kth-largest-element-in-a-stream",
@@ -23,27 +19,52 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/kth-largest-integer-in-a-stream",
       summary: "A min-heap of size k: the root is the bar every newcomer must clear — and also the answer.",
-      body: `**Signal.** "Each add(x) must return the kth largest value seen *so far*" — a running order statistic over a growing stream, queried after every insertion, is the tell that you need a maintained invariant, not a recompute-from-scratch.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners keep a running array of numbers, append each new streaming number, and re-sort the array descending ($O(N \\log N)$ per \`add()\`).
+*Why this shatters*: For a stream of $N = 100,000$ numbers, sorting repeatedly takes tens of billions of operations! Re-sorting full arrays on streaming data is too slow.
 
-**Brute force.** Keep every number seen so far and re-sort on every add — O(n log n) per call, on data that changed by exactly one element. The stream setting is precisely where recompute-from-scratch dies.
-
-**Optimal approach.** You never need most of the numbers. The kth largest is determined entirely by the top k values; everything below them is noise, forever (a number that falls out of the top k can never re-enter it). So maintain just the club of the k best. "Who is the kth largest?" becomes "who is the *weakest member* of the club?" — a structure whose specialty is exposing its minimum: a **min-heap**, capped at size k. The root — the club's weakest — *is* the kth largest overall. add(x): push x, and if the heap exceeds k, pop the root. Return the root. That inversion (min-heap to track largest) trips everyone once; internalise "the gatekeeper is the weakest elite" and it never trips you again.
+**The Structural Invariant: Capped Size-K Min-Heap.**
+- *The Mind Inversion*: To find the $K$-th **largest** elements, we maintain a **MIN-HEAP** of size $K$!
+- *Why Min-Heap?* In a Min-Heap of size $K$, the **root element is the MINIMUM of the $K$ largest elements** (the weakest member of the elite $K$ club).
+- **Add Operation**:
+  - Push new element into Min-Heap.
+  - If \`heap.size() > K\`: Pop the root element (\`heap.pop()\`).
+  - The $K$-th largest element is ALWAYS \`heap.peek()\`.
 
 \`\`\`viz:tree
 {
   "nodes": [
-    { "id": "root", "label": "4 (root — kth largest)", "children": ["c1", "c2"], "highlight": true },
-    { "id": "c1", "label": "5" },
-    { "id": "c2", "label": "8" }
+    { "id": "4", "label": "4 (root: peek() = 4th largest!)", "children": ["5", "8"], "highlight": true },
+    { "id": "5", "label": "5" },
+    { "id": "8", "label": "8" }
   ],
-  "rootId": "root",
-  "caption": "Kth Largest Element in a Stream — the size-3 min-heap club {4, 5, 8}; the root is the weakest member of the elite, and the answer."
+  "rootId": "4",
+  "caption": "Kth Largest in a Stream — Min-Heap of size K=3 containing elite {4, 5, 8}. Root 4 is the answer."
 }
 \`\`\`
 
-**Complexity.** O(log k) per add, O(k) space — versus the resort-everything O(n log n) per call, independent of the stream's length.
-
-**Thread.** Hold the size-k min-heap trick; two problems from now it returns for geometry. First, a lighter interlude — Last Stone Weight, where the heap plays demolition derby.`,
+**Boundary Traps & Execution Blueprint.**
+- *Why Min-Heap over Max-Heap*: A Max-Heap would store all elements, requiring $O(\\log N)$ insertions. A Min-Heap capped at size $K$ takes only $O(\\log K)$ time per addition and $O(K)$ space.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why do we use a MIN-HEAP of size K (instead of a MAX-HEAP) to track the K-th LARGEST element?",
+          options: [
+            "Because Min-Heaps use less RAM than Max-Heaps.",
+            "Because the root of a size-K Min-Heap contains the smallest of the top-K elements, which is mathematically the K-th largest overall.",
+            "Because Max-Heaps cannot accept stream insertions.",
+            "Because Min-Heaps sort elements automatically."
+          ],
+          correct_index: 1,
+          model_answer: "The root of a Min-Heap represents the minimum element inside it. In a heap capped at size K containing the largest elements, that root is precisely the K-th largest element.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity per add() operation using a Min-Heap of size K?",
+          model_answer: "O(log K) time per addition because the heap size is capped at K elements.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "last-stone-weight",
@@ -51,30 +72,51 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/last-stone-weight",
       summary: "Repeatedly smash the two heaviest stones — a simulation that is only fast if extremes are cheap.",
-      body: `**Signal.** "Repeatedly take the two heaviest, smash them, continue" — "repeatedly extract the extreme from a changing population" is close to a direct definition of what a heap is for; the priority queue should reach your hand before the problem finishes stating itself.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the stone array, pop the top two, smash them, and re-sort the remaining array ($O(N^2 \\log N)$).
+*Why this shatters*: Repeatedly re-sorting after every single stone collision causes massive overhead.
 
-**Brute force.** Keep the stones in a plain array (or sorted list) and re-sort or re-scan for the two maxima after every smash — O(n log n) per round if sorting, O(n) per round if scanning, and either way the whole collection is touched again for one insertion's worth of change.
-
-**Optimal approach.** A max-heap serves each round in three O(log n) moves: pop the heaviest, pop the next heaviest, and — if they weren't equal — push the difference back in. Several standard libraries ship only min-heaps; the idiom is to store *negated* weights, so the most negative is the heaviest, negating again on the way out.
+**The Structural Invariant: Max-Heap Simulation.**
+- Insert all stones into a **Max-Heap**.
+- **Smash Loop**: While \`heap.size() > 1\`:
+  - Pop \`first = heap.pop()\` (heaviest stone).
+  - Pop \`second = heap.pop()\` (second heaviest stone).
+  - If \`first != second\`: Push remaining fragment \`first - second\` back into Max-Heap.
+- **Result**: Return \`heap.size() == 1 ? heap.pop() : 0\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [2, 7, 4, 1, 8, 1], "note": "Max-heap of all stones: [2,7,4,1,8,1]." },
-    { "cells": [4, 2, 1, 1, 1], "note": "Pop 8 and 7 (the two heaviest), smash → difference 1, push it back. Heap: [4,2,1,1,1]." },
-    { "cells": [2, 1, 1, 1], "note": "Pop 4 and 2, smash → push 2. Heap: [2,1,1,1]." },
-    { "cells": [1, 1, 1], "note": "Pop 2 and 1, smash → push 1. Heap: [1,1,1]." },
-    { "cells": [1], "highlight": [0], "note": "Pop 1 and 1 — equal weights annihilate both, nothing to push back. Heap: [1]. Answer: 1." }
+    { "cells": [8, 7, 4, 2, 1, 1], "note": "Max-Heap: [8, 7, 4, 2, 1, 1]. Pop 8 & 7. Smash: 8 - 7 = 1. Push 1 back." },
+    { "cells": [4, 2, 1, 1, 1], "note": "Max-Heap: [4, 2, 1, 1, 1]. Pop 4 & 2. Smash: 4 - 2 = 2. Push 2 back." },
+    { "cells": [1], "highlight": [0], "note": "Continue smashing... Heap contains [1]. Final remaining weight = 1." }
   ],
-  "caption": "Last Stone Weight — a max-heap serves the two current heaviest stones in O(log n) each round, however the population changes."
+  "caption": "Last Stone Weight — Max-Heap simulation in O(N log N) time."
 }
 \`\`\`
 
-**Complexity.** O(n log n) — at most n − 1 smashes, each O(log n) — plus O(n) to build the heap (heapify by sifting is genuinely O(n)). Space O(n). Versus the plain-array approach's O(n log n) or O(n) *per round*.
-
-**A wider note.** Event-driven simulations — schedulers, physics engines, discrete-event models — are all this loop at scale: a priority queue of pending events, always processing the most urgent next. This toy is their skeleton.
-
-**Thread.** Back to the elite club: K Closest Points to Origin is Kth-Largest-in-a-Stream's trick pointed at 2-D geometry — with one inversion to keep you honest about which way the heap must face.`,
+**Boundary Traps & Execution Blueprint.**
+- *Negated Numbers Trick*: In standard JavaScript/Python where libraries default to Min-Heap, insert negated weights (\`-weight\`) to simulate a Max-Heap seamlessly!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the time complexity of Last Stone Weight using a Max-Heap?",
+          options: [
+            "O(N^2)",
+            "O(N log N)",
+            "O(N)",
+            "O(log N)"
+          ],
+          correct_index: 1,
+          model_answer: "Heapifying N stones takes O(N). We perform at most N-1 smash iterations, each taking O(log N) heap pops/pushes, yielding O(N log N) total time.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "How can a Min-Heap library be used to implement a Max-Heap without writing a custom heap class?",
+          model_answer: "Multiply values by -1 before pushing. The smallest negated number corresponds to the largest positive number, effectively turning a Min-Heap into a Max-Heap.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "k-closest-points-to-origin",
@@ -82,27 +124,52 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/k-closest-points-to-origin",
       summary: "Keep k candidates in a max-heap keyed on distance — evict the farthest whenever a closer one arrives.",
-      body: `**Signal.** "Return the k closest points to the origin, any order" — an unordered set of the best k, not a full ranking, is the tell that a capped elite-club heap beats sorting everything.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate Euclidean distances $\\sqrt{x^2 + y^2}$ for all $N$ points, sort all points ascending ($O(N \\log N)$), and slice the top $K$.
+*Why this shatters*: Full sorting does unnecessary work on $N - K$ points that we do not care about! Also, taking square roots is computationally expensive and introduces floating-point errors.
 
-**Brute force.** Compute every point's distance, sort all n points by distance, take the first k — O(n log n) time, doing full ranking work when only membership in the top k is required.
-
-**Optimal approach.** Comparing distances needs no square roots — squaring is monotone on non-negatives, so x² + y² alone decides order, avoiding floating-point entirely. Same elite-club structure as Kth Largest in a Stream, *mirrored*: there you kept the k largest, so the gatekeeper was the club's minimum; here you keep the k **closest**, so the gatekeeper is the club's **farthest** member — a **max**-heap on distance, capped at k. Stream the points through: push each; when size exceeds k, pop the root, expelling the current farthest. Survivors at the end are exactly the k closest.
+**The Structural Invariant: Capped Size-K Max-Heap of Distances.**
+- *Distance Metric Optimization*: Use squared Euclidean distance $x^2 + y^2$ directly (avoids \`Math.sqrt()\`).
+- *Max-Heap Invariant*: Maintain a **MAX-HEAP** of size $K$ storing \`[dist, x, y]\`.
+- *Why Max-Heap?* The root of a size-$K$ Max-Heap is the **farthest point currently in our top-$K$ closest list**.
+- **Stream Points**:
+  - Push current point distance to Max-Heap.
+  - If \`heap.size() > K\`: Pop root (evicts the farthest point!).
+  - Remaining $K$ points in heap are guaranteed to be the $K$ closest!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [10], "note": "Push (1,3), squared distance 10. Heap: {10}." },
-    { "cells": [10, 8], "note": "Push (-2,2), squared distance 8. Heap size 2 = k. Root (max): 10." },
-    { "cells": [10, 8], "note": "Push (5,8), squared distance 89 — heap grows to size 3, exceeding k. Pop the root (max) — 89 is evicted immediately. Heap unchanged: {10, 8}." },
-    { "cells": [8, 1], "note": "Push (0,1), squared distance 1 — heap grows to size 3 again. Pop the root (max) — 10 is evicted. Final club: {8, 1} → points (-2,2) and (0,1)." }
+    { "cells": ["d=10 (1,3)", "d=8 (-2,2)"], "note": "K=2. Push (1,3) d=10, (-2,2) d=8. Max-Heap root is farthest: d=10." },
+    { "cells": ["d=10 (1,3)", "d=8 (-2,2)"], "note": "Stream (5,8) d=89. Heap size > 2 -> Evict root (89) immediately!" },
+    { "cells": ["d=8 (-2,2)", "d=1 (0,1)"], "highlight": [0, 1], "note": "Stream (0,1) d=1. Push d=1, evict root d=10! Final K=2 closest: (-2,2) and (0,1)." }
   ],
-  "caption": "K Closest Points to Origin — a max-heap capped at k evicts the current farthest point whenever a closer one arrives."
+  "caption": "K Closest Points to Origin — Max-Heap of size K in O(N log K) time & O(K) space."
 }
 \`\`\`
 
-**Complexity.** O(n log k) time, O(k) space — versus O(n log n) to sort everything. When k is small (the usual case: "top 10 of ten million"), that gap is enormous. The size-k heap's unique virtue over quickselect: it *streams* — n never needs to fit in memory at once.
-
-**Thread.** Quickselect has now been name-dropped. Kth Largest Element in an Array, next, gives it the stage — heap versus partition, and when each deserves to win.`,
+**Boundary Traps & Execution Blueprint.**
+- *Comparison*: Compare points strictly by $x^2 + y^2$.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why can we compare squared distances (x^2 + y^2) instead of full Euclidean distances sqrt(x^2 + y^2)?",
+          options: [
+            "Because square root functions are non-linear.",
+            "Because square root is a strictly monotonic increasing function for non-negative values, preserving relative order while saving CPU performance.",
+            "Because square numbers use 16-bit integers.",
+            "Because distances cannot be negative."
+          ],
+          correct_index: 1,
+          model_answer: "For non-negative numbers, a > b if and only if a^2 > b^2. Omitting square roots preserves exact distance ordering while avoiding floating-point math.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity comparison between sorting all points vs using a Capped Size-K Max-Heap?",
+          model_answer: "Sorting takes O(N log N) time and O(N) space. Capped Max-Heap takes O(N log K) time and O(K) space, which is vastly faster when K << N.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "kth-largest-element-in-an-array",
@@ -110,28 +177,52 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/kth-largest-element-in-an-array",
       summary: "Heap gives O(n log k); quickselect partitions its way to O(n) average — know both, argue the trade.",
-      body: `**Signal.** "Find the kth largest element" — no stream this time, all data in hand. That one change reshuffles the leaderboard of solutions, and *discussing the reshuffle* is what the interviewer actually wants.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the entire array descending ($O(N \\log N)$) and return index $K - 1$.
+*Why this shatters*: Full sorting does extra work. Can we find the $K$-th largest element in **$O(N)$ average time**?
 
-**Brute force.** Sort the whole array and index k − 1 from the top — O(n log n) time. Correct, and it fully ranks n − k elements nobody asked about.
-
-**Option one (still valid): the heap.** Size-k min-heap, exactly as in the stream problem: O(n log k) time, O(k) space. Given the array is static, you are not using the heap's superpower (surviving updates) — you are just borrowing its economy.
-
-**Optimal approach: quickselect.** Recall quicksort's partition step: pick a pivot, sweep once, and land it at its final sorted position — everything larger on one side, smaller on the other. Quicksort recurses on *both* sides; you only need one position, so recurse only on **the side containing it**. If the pivot lands exactly at the target index, done; otherwise hunt in whichever side must contain it. Halving-in-expectation work on one side gives n + n/2 + n/4 + … = **O(n) average**. Worst case is O(n²) with adversarial pivots — randomised pivots make the bad case vanish in practice (median-of-medians guarantees O(n) worst-case at real constant-factor cost — cite it, never implement it live). Quickselect also *mutates* the array and does not stream; the heap does neither harm.
+**The Structural Invariant: QuickSelect (Hoare's Partition).**
+QuickSelect adapts QuickSort's partition logic, but **only recurses into the single half that contains the target index** $Target = N - K$.
+1. Pick a pivot element \`nums[pivot_idx]\`.
+2. **Partition Array**: Rearrange elements so everything $\\le \\text{pivot}$ is on the left, and everything $> \\text{pivot}$ is on the right.
+3. Let pivot land at index \`p\`:
+   - If \`p == Target\`: Return \`nums[p]\` (Found!).
+   - If \`p < Target\`: Target lies in the **right partition** $\\rightarrow$ Recurse on right subarray only!
+   - If \`p > Target\`: Target lies in the **left partition** $\\rightarrow$ Recurse on left subarray only!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 2, 1, 5, 6, 4], "note": "Array with pivot value 4 (chosen as the last element)." },
-    { "cells": [6, 5, 4, 3, 2, 1], "highlight": [2], "note": "Partition around 4 (descending: bigger left, smaller right): [6,5 | 4 | 3,2,1]. Pivot lands at index 2; the target (k=2, index 1) is to its left → recurse into [6,5]." },
-    { "cells": [6, 5], "highlight": [1], "note": "Pivot 5 (last element): partition gives [6 | 5]. 5 lands at index 1 — exactly the target. Answer: 5." }
+    { "cells": [3, 2, 1, 5, 6, 4], "note": "Target index = N - K = 6 - 2 = index 4. Pivot = 4." },
+    { "cells": [3, 2, 1, 4, 6, 5], "pointers": [{ "label": "pivot p=3", "index": 3 }], "note": "Partition around 4: [3, 2, 1 | 4 | 6, 5]. Pivot index p=3 < 4 -> Search RIGHT subarray!" },
+    { "cells": [6, 5], "pointers": [{ "label": "pivot p=4", "index": 4 }], "highlight": [4], "note": "Partition right half: p=4 matches Target index 4! Return value 5." }
   ],
-  "caption": "Kth Largest Element in an Array — quickselect only recurses into the half that must contain the target index."
+  "caption": "Kth Largest Element in an Array — QuickSelect in O(N) average time."
 }
 \`\`\`
 
-**Complexity.** Heap: O(n log k), O(k) space. Quickselect: O(n) average, O(1) extra space, in place — versus the O(n log n) full-sort brute force. There is no single winner — reciting the trade-off table fluently is the senior move.
-
-**Thread.** From pure selection to selection under *constraints*: Task Scheduler, next, repeatedly picks the best available task — with a cooldown rule that forces the heap to work alongside a waiting room.`,
+**Boundary Traps & Execution Blueprint.**
+- *Worst-Case Avoidance*: Standard QuickSelect has $O(N^2)$ worst-case time for already-sorted inputs. **Randomly shuffle the array** or pick random pivots to guarantee $O(N)$ average time!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why is QuickSelect faster on average than QuickSort for finding the K-th largest element?",
+          options: [
+            "Because QuickSelect sorts both halves simultaneously.",
+            "Because QuickSelect only recurses into ONE half of the array at each step (N + N/2 + N/4... = 2N = O(N)), whereas QuickSort recurses into BOTH halves (O(N log N)).",
+            "Because QuickSelect does not use pivots.",
+            "Because QuickSelect converts arrays into Min-Heaps."
+          ],
+          correct_index: 1,
+          model_answer: "By discarding one half at each step, QuickSelect evaluates a geometric series sum N + N/2 + N/4 + ... = 2N, achieving O(N) average time complexity.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the space complexity trade-off between QuickSelect and Size-K Min-Heap?",
+          model_answer: "QuickSelect operates in-place with O(1) auxiliary space (modifying input array). Size-K Min-Heap uses O(K) space but leaves the input array un-mutated and handles streaming data.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "task-scheduler",
@@ -139,29 +230,56 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/task-scheduling",
       summary: "Always run the most-remaining task that is off cooldown — a heap plus a cooldown queue, tick by tick.",
-      body: `**Signal.** "Identical tasks must sit at least n units apart — minimum total time" — a scarce resource (slots for the most frequent task) that must be spread out, with everything else filling gaps, is the tell for a greedy "run the tightest deadline first" rule, maintained by a heap.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to place tasks sequentially in alphabetical order.
+*Why this shatters*: Tasks with highest frequency create the largest bottleneck. You must **prioritize scheduling tasks with the highest remaining frequency** to minimize idle time slots!
 
-**Brute force.** Try every valid ordering of tasks respecting the cooldown constraint and take the shortest — combinatorially infeasible; worth naming only to motivate the greedy shortcut.
-
-**Optimal approach.** At every tick, among tasks currently off cooldown, run the one with the **most remaining copies** — it's the one whose deadlines are tightest, and deferring it can only push the schedule longer. "Most remaining, on a changing population" is a max-heap keyed on remaining count (counts come from a chapter-one frequency map; labels never matter). Two structures in conversation: the **ready heap** holds runnable task counts; a **cooldown queue** holds tasks serving their n-tick sentence, each stamped with the tick they become ready. Per tick: release anything whose stamp has matured back into the heap; pop the heap and run one unit of the best task (if copies remain, into the cooldown queue with stamp now + n); if the heap was empty, the tick is idle.
+**The Structural Invariant: Max-Heap + Cooldown Queue Simulation.**
+1. Count task frequencies using a Hash Map \`{ 'A': 3, 'B': 3 }\`.
+2. Insert frequencies into a **Max-Heap** (ready tasks).
+3. Maintain a **Cooldown Queue** storing \`[remaining_count, available_time_step]\`.
+4. **Time-Step Loop (time = 0, 1, 2...)**:
+   - **Release Cooldowns**: If \`cooldownQueue.front()[1] == time\`, pop from queue and push back to Max-Heap (task is ready again!).
+   - **Execute Task**: If Max-Heap is not empty:
+     - Pop max frequency \`cnt = heap.pop()\`.
+     - Execute task: if \`cnt - 1 > 0\`, push \`[cnt - 1, time + n + 1]\` to Cooldown Queue.
+   - If Max-Heap is empty, current time-step is an **IDLE CPU cycle**.
+   - Increment \`time++\`. Stop when both Max-Heap and Cooldown Queue are empty!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["A:3", "B:3"], "note": "Ready heap: A and B both have 3 remaining. Tick 1: run the most-remaining task, A — A now cools until tick 4." },
-    { "cells": ["B:3"], "note": "Tick 2: only B is ready (A is cooling) → run B. B cools until tick 5." },
-    { "cells": [], "note": "Tick 3: the ready heap is empty — both A and B are cooling. Idle tick; time still passes." },
-    { "cells": ["A:2"], "highlight": [0], "note": "Tick 4: A returns to the ready heap → run A. The cycle repeats identically; total time: 8 ticks." }
+    { "cells": ["A:3", "B:3"], "note": "Tasks A:3, B:3, n=2. Time 0: Run A. A:2 cools until time 3. Heap: [B:3]." },
+    { "cells": ["B:3"], "note": "Time 1: Run B. B:2 cools until time 4. Heap empty!" },
+    { "cells": ["IDLE"], "note": "Time 2: Heap empty, A cools until time 3 -> IDLE cycle." },
+    { "cells": ["A:2"], "highlight": [0], "note": "Time 3: A cools down! Re-enter Heap -> Run A. Repeat until all completed in 8 total units." }
   ],
-  "caption": "Task Scheduler — A×3, B×3, cooldown n=2: the ready heap always serves the most-remaining off-cooldown task."
+  "caption": "Task Scheduler — Max-Heap + Cooldown Queue simulation."
 }
 \`\`\`
 
-**A closed-form footnote.** (maxFreq − 1)·(n + 1) + (number of tasks tying maxFreq), floored at the task count, falls out of picturing the most-frequent task's copies as fence posts with gap-sized buckets between. Derive it after the simulation — the simulation generalises (heterogeneous durations, priorities), the formula does not.
-
-**Complexity.** O(total ticks × log 26) — effectively linear; space O(26) — versus the infeasible brute-force enumeration.
-
-**Thread.** One heap scheduling one machine. Design Twitter, next, aims k heaps' worth of machinery at a systems problem: merging friends' timelines into a feed.`,
+**Boundary Traps & Execution Blueprint.**
+- *Math Formula Alternative*: $\\text{Min Time} = \\max(\\text{tasks.length}, (\\text{maxFreq} - 1) \\times (n + 1) + \\text{countMaxFreqTasks})$.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why should the task with the highest remaining frequency always be scheduled first?",
+          options: [
+            "Because highest frequency tasks require less cooldown.",
+            "Because most-frequent tasks create the longest potential bottleneck, and scheduling them early maximizes available slots to interleave smaller tasks.",
+            "Because tasks are sorted alphabetically.",
+            "Because Max-Heaps only accept 26 tasks."
+          ],
+          correct_index: 1,
+          model_answer: "The task with highest frequency imposes the strictest structural limits on schedule length. Executing it greedily leaves open slots for less frequent tasks.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "Under what condition will the Task Scheduler produce NO idle slots at all?",
+          model_answer: "When there are enough distinct tasks to fill all cooldown gaps between high-frequency tasks, resulting in total time equal to `tasks.length`.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "design-twitter",
@@ -169,60 +287,121 @@ On the roadmap, Heap unlocks Intervals, Greedy, and Advanced Graphs — the last
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/design-twitter-feed",
       summary: "Follow sets in hash maps, tweets in per-user lists, and a heap merging the 10 freshest — a feed in miniature.",
-      body: `**Signal.** "getNewsFeed returns the 10 most recent tweet ids across the user and everyone they follow" — merging several already-recency-sorted sources into one bounded top-N output is the tell that this is Merge K Sorted Lists wearing a social-network costume.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners collect all tweets from all followed users, combine them into one list, and sort them descending by timestamp ($O(M \\log M)$ where $M$ is total tweets).
+*Why this shatters*: Full sorting re-sorts thousands of old tweets when we **only need the 10 most recent tweets**!
 
-**Brute force.** Collect every tweet from the user and everyone they follow into one list, sort it by timestamp, take the top 10 — O(m log m) where m is the total tweet count across all followees, redoing a full sort when only 10 outputs are ever needed.
-
-**Optimal approach.** Chapter-one reflexes cover the social graph: a hash map from user → *set* of followees (sets make unfollow O(1); remember users implicitly see their own tweets). Tweets: a map from user → list of (timestamp, id), appended in posting order — so each user's list is already sorted by recency, newest at the tail, for free. getNewsFeed is then: given up to N sorted-by-recency lists (one per followee), produce the 10 freshest overall — Merge K Sorted Lists with k = the follow count and only 10 outputs wanted. Max-heap seeded with each followee's newest tweet; pop the freshest overall, then push the *next-newest from that same author*; repeat 10 times.
+**The Structural Invariant: K-Way Merge of Recency Lists using Max-Heap.**
+- Data Storage:
+  - \`userFollows: Map<userId, Set<followeeId>>\`
+  - \`userTweets: Map<userId, List<{ tweetId, timestamp, index }>>\`
+- **\`getNewsFeed(userId)\`**:
+  - Get all followees of \`userId\` (including \`userId\` itself).
+  - Each followee's tweet list is ALREADY pre-sorted by timestamp (since tweets are appended chronologically!).
+  - This is reduced to **Merge K Sorted Lists**!
+  - Push the **latest tweet** of each followee into a Max-Heap \`[timestamp, tweetId, userId, tweetIndex]\`.
+  - Pop top (freshest tweet) 10 times:
+    - Add \`tweetId\` to feed.
+    - Push the **next newest tweet** from that same user into the Max-Heap.
 
 \`\`\`viz:flow
 {
   "nodes": [
-    { "id": "u1", "label": "user1: [5]", "row": 0, "col": 0 },
-    { "id": "u2", "label": "user2: [6, 8]", "row": 1, "col": 0 },
-    { "id": "feed", "label": "feed: [8, 6, 5]", "row": 0.5, "col": 1 }
+    { "id": "u1", "label": "User 1 Tweets: [t=10, t=5]", "row": 0, "col": 0 },
+    { "id": "u2", "label": "User 2 Tweets: [t=12, t=8]", "row": 1, "col": 0 },
+    { "id": "heap", "label": "Max-Heap: [t=12, t=10]", "row": 0.5, "col": 1 },
+    { "id": "feed", "label": "News Feed: [12, 10, 8, 5]", "row": 0.5, "col": 2 }
   ],
   "edges": [
-    { "from": "u1", "to": "feed" },
-    { "from": "u2", "to": "feed" }
+    { "from": "u1", "to": "heap" },
+    { "from": "u2", "to": "heap" },
+    { "from": "heap", "to": "feed" }
   ],
-  "caption": "Design Twitter — user1 follows user2. The heap seeds each followee's newest tweet (5 and 8), pops the freshest, pulls the next tweet from that same author (6), and repeats — same shape as merging k sorted lists."
+  "caption": "Design Twitter — K-Way Heap Merge of pre-sorted user tweet timelines."
 }
 \`\`\`
 
-**Complexity.** post/follow/unfollow O(1); feed O(k + 10 log k), where k is the follow count — versus the brute force's O(m log m) over the full tweet archive. Real Twitter's fan-out-on-write versus fan-out-on-read debate is *literally this trade-off* at planet scale.
-
-**Thread.** Every heap so far pointed one direction. The finale points two at once: Find Median from a Data Stream, where a max-heap and a min-heap lean against each other and the median lives in the crack.`,
+**Boundary Traps & Execution Blueprint.**
+- *Self-Following*: A user must always see their own tweets in their newsfeed even if they never explicitly called \`follow(userId, userId)\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why is getNewsFeed in Design Twitter mathematically equivalent to Merge K Sorted Lists?",
+          options: [
+            "Because tweets are stored in a 2D matrix.",
+            "Because each user's tweet history is already sorted by timestamp (newest to oldest), so we merge K sorted user timeline lists.",
+            "Because Twitter feeds only hold 10 tweets.",
+            "Because followee lists are sorted alphabetically."
+          ],
+          correct_index: 1,
+          model_answer: "Appending tweets chronologically keeps per-user tweet lists sorted. Merging feed updates from K followees is merging K pre-sorted lists.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of getNewsFeed() using a Max-Heap to extract 10 tweets for K followees?",
+          model_answer: "O(K + 10 log K) time. Seeding the heap takes O(K) time, and extracting 10 tweets with heap updates takes O(10 log K) time.",
+          difficulty: "intermediate"
+        }
+      ]
     },
     {
       slug: "find-median-from-data-stream",
       title: "Find Median From Data Stream",
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/find-median-in-a-data-stream",
-      summary: "Two heaps holding each half of the data, balanced within one element — the median lives at their facing roots.",
-      body: `**Signal.** "Report the median after every addNum, forever" — min and max are heap-native, but the *middle* moves unpredictably with every arrival, which is the tell that you need two heaps splitting the population, not one heap capped at a size.
+      summary: "Two Heaps holding each half of the data, balanced within one element — the median lives at their facing roots.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners insert streaming elements into an array and re-sort or shift elements using insertion sort ($O(N)$ per \`addNum()\`).
+*Why this shatters*: $O(N)$ insertion for $N = 100,000$ numbers in a stream takes 10 billion operations!
 
-**Brute force.** Keep all numbers in a sorted array (insertion sort into place, or full re-sort on each add) and read the middle directly — O(n) per insertion to maintain sorted order, on a stream where the answer is needed after every single element.
-
-**Optimal approach.** The median is where the lower half of the data meets the upper half. *Store the halves*: a **max-heap holding the lower half** (its root: the largest small number) and a **min-heap holding the upper half** (its root: the smallest large number). The two roots face each other across the cut, and the median is read off them in O(1). Two invariants: ordering (every element in the low heap ≤ every element in the high heap) and balance (sizes differ by at most one). addNum maintains both with a fixed two-step: push into the low heap if the number is ≤ its root, else into the high heap; then, if either heap outgrows the other by two, move one root across the gap.
+**The Structural Invariant: Dueling Two-Heap System (Max-Heap vs Min-Heap).**
+Split the stream into two equal halves:
+- **Small Halves (Max-Heap \`small\`)**: Holds the smaller half of numbers. Root is the **MAXIMUM of the small half**.
+- **Large Halves (Min-Heap \`large\`)**: Holds the larger half of numbers. Root is the **MINIMUM of the large half**.
+- **Two Invariants**:
+  1. **Value Order**: Every element in \`small\` $\\le$ every element in \`large\` (\`small.peek() <= large.peek()\`).
+  2. **Balance Constraint**: Sizes differ by **at most 1** (\`|small.size() - large.size()| <= 1\`).
+- **Median Calculation**:
+  - If \`small.size() > large.size()\`: \`Median = small.peek()\`.
+  - If \`large.size() > small.size()\`: \`Median = large.peek()\`.
+  - If \`small.size() == large.size()\`: \`Median = (small.peek() + large.peek()) / 2.0\`.
 
 \`\`\`viz:tree
 {
   "nodes": [
-    { "id": "stream", "label": "Stream so far: 5, 2, 8, 1", "children": ["low-root", "high-root"] },
-    { "id": "low-root", "label": "low max-heap root = 2", "children": ["low-child"], "highlight": true },
-    { "id": "low-child", "label": "1" },
-    { "id": "high-root", "label": "high min-heap root = 5", "children": ["high-child"], "highlight": true },
-    { "id": "high-child", "label": "8" }
+    { "id": "stream", "label": "Stream: [1, 2, 5, 8]", "children": ["small", "large"] },
+    { "id": "small", "label": "small (Max-Heap): root = 2", "children": ["1"], "highlight": true },
+    { "id": "1", "label": "1" },
+    { "id": "large", "label": "large (Min-Heap): root = 5", "children": ["8"], "highlight": true },
+    { "id": "8", "label": "8" }
   ],
   "rootId": "stream",
-  "caption": "Find Median From Data Stream — after adding 5, 2, 8, 1: the max-heap holds the lower half (root 2), the min-heap holds the upper half (root 5). Median = average of both roots = (2 + 5) / 2 = 3.5."
+  "caption": "Find Median From Data Stream — Small Max-Heap (root=2) & Large Min-Heap (root=5). Median = (2+5)/2 = 3.5."
 }
 \`\`\`
 
-**Complexity.** O(log n) per add, O(1) per median, O(n) space — versus O(n) per insertion to keep a fully sorted array. Follow-ups worth having thoughts on: values in a known small range → counting buckets; "median of the last k only" → sliding-window medians, genuinely harder (lazy deletion or order-statistics trees).
-
-**Thread.** Chapter closed: one heap, sized heaps, dueling heaps. Next the atlas returns to recursion and turns it outward — Backtracking, where the tree you traverse is the tree of *your own choices*, and unchoosing is the essential move.`,
-    },
-  ],
+**Boundary Traps & Execution Blueprint.**
+- *Rebalancing*: After inserting a number into \`small\`, if \`small.peek() > large.peek()\`, pop from \`small\` and push to \`large\`. If size imbalance exceeds 1, pop from larger heap and push to smaller heap.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How does the Dueling Two-Heap system achieve O(1) time for findMedian()?",
+          options: [
+            "By sorting both heaps.",
+            "Because the median is computed directly from the roots of the two heaps (small.peek() and large.peek()) in O(1) time.",
+            "By keeping all numbers in a single array.",
+            "By using binary search."
+          ],
+          correct_index: 1,
+          model_answer: "The roots of the Max-Heap (max of small half) and Min-Heap (min of large half) represent the two exact middle values of the dataset, accessible in O(1) time.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of addNum() in Find Median From Data Stream?",
+          model_answer: "O(log N) time due to pushing and balancing elements across the two heaps.",
+          difficulty: "basic"
+        }
+      ]
+    }
+  ]
 };

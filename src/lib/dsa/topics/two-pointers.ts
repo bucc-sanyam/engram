@@ -5,266 +5,279 @@ export const twoPointers: DsaTopic = {
   slug: "two-pointers",
   title: "Two Pointers",
   chapter: 2,
-  tagline:
-    "When the data already has structure, two moving fingers replace an entire hash map.",
+  tagline: "When the data already has structure, two moving fingers replace an entire hash map.",
   color: "#43d6b5",
   prereqs: ["arrays-hashing"],
   unlocks: ["binary-search", "sliding-window", "linked-list"],
   intro: `Chapter one taught you to buy speed with memory. This chapter teaches the counter-move: sometimes you do not need to buy anything, because the data already carries structure you can spend instead. Usually that structure is *sortedness* — and the tool for spending it is two indexes, walking toward each other.
 
-The core argument: put one pointer at each end of a sorted array. If their sum is too small, advance the left pointer (moving right can only shrink it). If too big, the mirror applies. Every comparison retires one candidate, and a quadratic universe of pairs collapses into a single linear pass.
+The core argument: put one pointer at each end of a sorted array. If their sum is too small, advance the left pointer (moving right can only grow it). If too big, the mirror applies. Every comparison retires one candidate, and a quadratic universe of pairs collapses into a single linear pass.
 
 The five problems build from simple mirroring (Valid Palindrome) to the full exploit: Two Sum II, 3Sum, Container With Most Water, and the boss fight — Trapping Rain Water.`,
   problems: [
-    /* ------------------------------------------------------------------ */
-    /*  1. VALID PALINDROME                                               */
-    /* ------------------------------------------------------------------ */
     {
       slug: "valid-palindrome",
       title: "Valid Palindrome",
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/is-palindrome",
-      summary:
-        "Two mirrored pointers meeting in the middle — the gentlest introduction to the pattern.",
-      body: `**Signal.** "Determine if a string is a palindrome, considering only alphanumeric characters" — a claim about *mirrored positions* (first = last, second = second-to-last, …) is the clearest possible tell for two pointers converging from both ends.
+      summary: "Two mirrored pointers meeting in the middle — the gentlest introduction to the pattern.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners usually solve this by filtering out non-alphanumeric characters, converting to lowercase, and reversing the string to check \`s_clean == reverse(s_clean)\`.
+*Why this shatters*: Creating a new filtered string and a reversed string requires $O(N)$ extra memory allocation. On embedded systems or high-performance APIs processing millions of strings, allocating temporary copies causes garbage collection churn.
 
-**Brute force.** Build a cleaned string — lowercase, alphanumeric only — then check if it equals its own reverse. Correct, O(n) time, but O(n) extra space for the copy that two pointers can avoid entirely.
-
-**Optimal approach.** Walk one pointer in from the left, one in from the right. When a pointer sits on a non-alphanumeric character, skip it — advance that pointer without comparing. Only compare when both rest on real characters; if they ever disagree (case-insensitively), it isn't a palindrome. If the pointers meet without ever disagreeing, it is.
+**The Structural Invariant.** A palindrome possesses **mirror symmetry**: character at index $i$ must match character at index $(N - 1 - i)$.
+- *In-Place Convergence*: Place \`left\` at index 0 and \`right\` at index $N-1$.
+- *Skip Rule*: If \`left\` points to non-alphanumeric, increment \`left\`. If \`right\` points to non-alphanumeric, decrement \`right\`.
+- *Match Check*: Convert to lowercase and compare. If mismatch, return \`false\` instantly.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 9 }], "note": "L='r', R='r' -> match, move both inward." },
-    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L", "index": 1 }, { "label": "R", "index": 8 }], "note": "L='a', R='a' -> match, move inward." },
-    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L", "index": 2 }, { "label": "R", "index": 7 }], "note": "L='c', R='c' -> match, move inward." },
-    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L", "index": 3 }, { "label": "R", "index": 6 }], "note": "L='e', R=' ' -> R is non-alphanumeric, skip it inward without comparing." },
-    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L", "index": 3 }, { "label": "R", "index": 5 }], "highlight": [3, 5], "note": "L='e', R='a' -> mismatch. Return false." }
+    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L=0", "index": 0 }, { "label": "R=9", "index": 9 }], "note": "L='r', R='r' -> match! Advance L to 1, decrement R to 8." },
+    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L=3", "index": 3 }, { "label": "R=6", "index": 6 }], "note": "L='e', R=' ' -> R is non-alphanumeric. Skip R inward without comparing." },
+    { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L=3", "index": 3 }, { "label": "R=5", "index": 5 }], "highlight": [3, 5], "note": "L='e', R='a' -> Mismatch ('e' != 'a')! Return false." }
   ],
-  "caption": "Valid Palindrome — s = \\"race a car\\": mirrored comparisons converge inward, skipping punctuation, until a mismatch or a meeting."
+  "caption": "Valid Palindrome — In-place two-pointer convergence with O(1) auxiliary space."
 }
 \`\`\`
 
-**Complexity.** O(n) time — each pointer moves only inward, never backtracks — and O(1) space, no cleaned copy needed.
-
-**Thread.** Here the two pointers only ever *mirrored* — same distance from each end, moving in lockstep. Next, Two Sum II asks them to move *independently*, driven by a comparison against a target instead of a fixed symmetry — the chapter's real thesis begins there.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty or Space-Only String*: \`s = " "\` should skip all characters, causing \`left >= right\` to terminate and return \`true\`.
+- *Loop Condition*: Always use \`while (left < right)\` to avoid comparing a middle character with itself.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "In Valid Palindrome, why do we use two pointers starting at opposite ends?",
-          options: ["To find the middle element faster.", "To check for symmetry by comparing characters from the outside moving inwards.", "Because a single pointer cannot iterate over a string.", "To reverse the string in place."],
+          prompt: "Why is the two-pointer approach superior to string reversal for Valid Palindrome?",
+          options: [
+            "Because string reversal requires O(N^2) time.",
+            "Because two pointers achieve O(1) auxiliary space by comparing characters in-place without allocating temporary strings.",
+            "Because string reversal only works on numbers.",
+            "Because two pointers convert ASCII to UTF-8 automatically."
+          ],
           correct_index: 1,
-          model_answer: "A palindrome is perfectly symmetrical, so characters equidistant from the ends must match. Two pointers converging inwards is the optimal O(N) way to verify this without extra memory.",
+          model_answer: "Two pointers check characters in-place, eliminating the O(N) space memory allocation required by string reversal.",
           difficulty: "basic"
         },
         {
           kind: "open",
-          prompt: "How does the optimal approach handle non-alphanumeric characters?",
-          model_answer: "It uses an inner loop to advance the pointers past any non-alphanumeric characters before comparing them, effectively skipping spaces and punctuation without allocating a new cleaned string.",
+          prompt: "What happens if we forget the inner loop check `left < right` when skipping non-alphanumeric characters?",
+          model_answer: "If a string contains only spaces (e.g., \"   \"), `left` will increment past `right` and out-of-bounds, causing index out-of-bounds runtime exceptions.",
           difficulty: "intermediate"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  2. TWO SUM II                                                     */
-    /* ------------------------------------------------------------------ */
     {
       slug: "two-sum-ii",
       title: "Two Sum II (Sorted Array)",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/two-integer-sum-ii",
-      summary:
-        "The chapter's thesis: sortedness lets each comparison retire a candidate forever.",
-      body: `**Signal.** "1-indexed **sorted** array, find two numbers that add up to the target, use O(1) extra space" — the hash map from Chapter 1's Two Sum still works, but the O(1) space bar rules it out, and the word "sorted" is doing all the talking: sortedness is structure you can spend instead of memory.
+      summary: "The chapter's thesis: sortedness lets each comparison retire a candidate forever.",
+      body: `**Beginner Intuition & The Naive Fallacy.** In Chapter 1, we solved Two Sum using a Hash Map in $O(N)$ time and $O(N)$ space. Beginners often re-use the Hash Map here.
+*Why this shatters*: Two Sum II explicitly specifies that the array is **sorted** and requires **$O(1)$ extra space**! Using a Hash Map ignores the sorted structure and fails the space constraint.
 
-**Brute force.** Every pair, O(n²) — or the O(n)/O(n) hash-map lookup from Two Sum, which is fast but violates the O(1) space requirement this problem is specifically testing.
-
-**Optimal approach (the retirement argument).** Place pointers at both ends. Check their sum: if it's less than target, the left value can't work with *anything* — even the largest remaining number — so retire it and move the left pointer right. If the sum is greater, the mirror applies: retire the right value, move left. If the sum matches, done. Each comparison permanently eliminates one candidate, so the pointers meet in at most n steps — no rescanning, no memory.
+**The Structural Invariant & Candidate Retirement.**
+Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
+- *If \`sum > target\`*: Because the array is sorted, \`nums[R]\` is the largest remaining element. Even when paired with the smallest available element (\`nums[L]\`), the sum exceeds target. Therefore, \`nums[R]\` can NEVER be part of the solution with any element! We safely **retire R** by decrementing \`R--\`.
+- *If \`sum < target\`*: Similarly, \`nums[L]\` is too small to pair with anything. We safely **retire L** by incrementing \`L++\`.
+- *If \`sum == target\`*: Return 1-based indices \`[L + 1, R + 1]\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 4 }], "note": "sum = 1 + 11 = 12 > 10 -> retire R (11 is too big for anyone)." },
-    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 3 }], "note": "sum = 1 + 7 = 8 < 10 -> retire L (1 is too small for anyone)." },
-    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L", "index": 1 }, { "label": "R", "index": 3 }], "highlight": [1, 3], "note": "sum = 3 + 7 = 10 = target -> found. 1-indexed answer: [2, 4]." }
+    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=4 (val=11)", "index": 4 }], "note": "Target = 10. sum = 1 + 11 = 12 > 10. 11 is too big for anyone $\\rightarrow$ Retire R (R=3)." },
+    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=3 (val=7)", "index": 3 }], "note": "sum = 1 + 7 = 8 < 10. 1 is too small for anyone $\\rightarrow$ Retire L (L=1)." },
+    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=1 (val=3)", "index": 1 }, { "label": "R=3 (val=7)", "index": 3 }], "highlight": [1, 3], "note": "sum = 3 + 7 = 10 == target! Found match. Return 1-indexed [2, 4]." }
   ],
-  "caption": "Two Sum II — each comparison retires one candidate forever; L and R converge on the answer in three steps."
+  "caption": "Two Sum II — Every step permanently eliminates one element, finding the target in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space — the whole point of spending sortedness instead of buying a hash map.
-
-**Thread.** You just retired candidates two at a time with a fixed pair of pointers. 3Sum adds a third moving part — but rather than three pointers dancing together, it fixes one and hands the other two straight back to this exact algorithm.`,
+**Boundary Traps & Execution Blueprint.**
+- *1-Indexed Result*: Problem requires returning 1-based indices (\`[L+1, R+1]\`), not 0-based!
+- *Strictly One Solution*: The problem guarantees exactly one solution, so \`L\` and \`R\` will always find the target before cross-over.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "In Two Sum II, if the sum of the elements at the left and right pointers is greater than the target, which pointer must move?",
-          options: ["The left pointer must move right (L = L + 1).", "The right pointer must move left (R = R - 1).", "Both pointers must move inwards.", "We must start over from the beginning."],
+          prompt: "Why does sum > target justify decrementing the right pointer (R--) in Two Sum II?",
+          options: [
+            "Because decrementing R increases the sum.",
+            "Because the array is sorted, nums[R] is the largest current element; if pairing it with the smallest element (nums[L]) still exceeds target, nums[R] can never form a valid pair.",
+            "Because it resets the left pointer back to 0.",
+            "Because R is always an even index."
+          ],
           correct_index: 1,
-          model_answer: "Because the array is sorted, the only way to decrease the sum is to move the right pointer to a smaller value.",
-          difficulty: "basic"
+          model_answer: "Since the array is sorted, nums[R] + nums[L] is the minimum possible sum involving nums[R]. If this minimum sum is too large, nums[R] cannot participate in any valid solution.",
+          difficulty: "intermediate"
         },
         {
           kind: "open",
-          prompt: "Why can't we use a hash map for Two Sum II to achieve O(N) time?",
-          model_answer: "We *could* use a hash map, but it requires O(N) extra space. The two-pointer approach leverages the sorted property to achieve O(N) time with only O(1) constant space, which is strictly better.",
-          difficulty: "intermediate"
+          prompt: "What is the key advantage of Two Sum II over the standard Two Sum problem?",
+          model_answer: "Standard Two Sum requires O(N) hash map memory. Two Sum II uses the sorted invariant to achieve O(N) linear time using only O(1) auxiliary memory.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  3. 3SUM                                                           */
-    /* ------------------------------------------------------------------ */
     {
       slug: "3sum",
       title: "3Sum",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/three-integer-sum",
-      summary:
-        "Fix one number and the rest is Two Sum II — plus the art of skipping duplicates.",
-      body: `**Signal.** "Find all unique triplets that sum to zero" — three moving parts is one too many to reason about directly, but "fix one, solve for two" is a standard reduction, and the two you're left solving for is exactly Two Sum II on a sorted array.
+      summary: "Fix one number and the rest is Two Sum II — plus the art of skipping duplicates.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use three nested loops $O(N^3)$ to test all triplets, inserting results into a Hash Set of sorted tuples to eliminate duplicates.
+*Why this shatters*: $O(N^3)$ time TLEs on $N = 3,000$ ($27$ billion operations!). Hash set tuple deduplication adds heavy overhead.
 
-**Brute force.** Three nested loops trying every triplet, then dedupe the results with a set — O(n³) time, plus the annoyance of hash-based dedup on top.
-
-**Optimal approach.** Sort the array first. For each index i, fix nums[i] and go looking for two numbers after it that sum to −nums[i] — that's Two Sum II, verbatim, on the remaining sorted suffix. The only new work is duplicate-skipping, and it happens at two levels: if nums[i] equals the previous nums[i−1], skip this i entirely — sorting already put its duplicate triplets one iteration ago, so re-running would just reproduce them. And after a match inside the inner two-pointer walk, slide L (and R) past any run of equal values before continuing, so the same triplet doesn't get recorded twice.
+**The Structural Invariant: Fix One + Two Sum II.**
+1. **Sort the array** first ($O(N \\log N)$).
+2. Iterate through the array with index $i$, fixing \`nums[i]\` as the first number.
+3. The remaining two numbers must sum to \`target = -nums[i]\`. This is reduced to **Two Sum II** on the sub-array \`nums[i+1 ... N-1]\`.
+4. **Duplicate Prevention Rules**:
+   - *Outer Loop Skip*: If $i > 0$ and \`nums[i] == nums[i-1]\`, skip $i$! (We already explored all triplets starting with this value).
+   - *Inner Loop Skip*: When a valid triplet is found (\`nums[i] + nums[L] + nums[R] == 0\`), advance \`L\` past all duplicate values (\`while (nums[L] == nums[L+1]) L++\`) before continuing.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i", "index": 1 }, { "label": "L", "index": 2 }, { "label": "R", "index": 5 }], "note": "Fix i=1 (val=-1), target = 1. Run Two Sum II on the suffix: L=2, R=5." },
-    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i", "index": 1 }, { "label": "L", "index": 2 }, { "label": "R", "index": 5 }], "highlight": [1, 2, 5], "note": "-1 + 2 = 1 = target -> found [-1,-1,2]. Skip L past its duplicate, then advance both pointers." },
-    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i", "index": 1 }, { "label": "L", "index": 3 }, { "label": "R", "index": 4 }], "highlight": [1, 3, 4], "note": "0 + 1 = 1 = target -> found [-1,0,1]. L and R meet next; move on to the next i." },
-    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i", "index": 2 }], "note": "i=2 has val=-1, same as nums[i-1] -> skip this i entirely, its triplets were already found." }
+    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=1 (-1)", "index": 1 }, { "label": "L=2 (-1)", "index": 2 }, { "label": "R=5 (2)", "index": 5 }], "note": "Fix i=1 (val=-1). Two Sum target = 1. L=2 (-1), R=5 (2). Sum = -1 + 2 = 1. Match! Triplet [-1, -1, 2]." },
+    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=1 (-1)", "index": 1 }, { "label": "L=3 (0)", "index": 3 }, { "label": "R=4 (1)", "index": 4 }], "highlight": [1, 3, 4], "note": "Skip duplicate L=-1. L moves to 3 (0), R moves to 4 (1). Sum = 0 + 1 = 1. Match! Triplet [-1, 0, 1]." },
+    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=2 (-1)", "index": 2 }], "note": "i=2 (val=-1) == nums[i-1] (-1) $\\rightarrow$ SKIP duplicate outer loop value!" }
   ],
-  "caption": "3Sum — fix i, then hand the rest to Two Sum II; duplicate-skipping at both levels is what keeps the output unique."
+  "caption": "3Sum — Sorting + Fixing 1 element + Two Sum II with duplicate skipping in O(N^2) time."
 }
 \`\`\`
 
-**Complexity.** O(n²) time — n fixed positions × a linear two-pointer walk each — O(1) space beyond the output, since sorting is in-place.
-
-**Thread.** Container With Most Water drops the sorting requirement and the target entirely — it replaces "find a pair matching a value" with "find a pair maximizing an area," but the two-pointer convergence argument survives the swap intact.`,
+**Boundary Traps & Execution Blueprint.**
+- *Positive First Element*: Since the array is sorted, if \`nums[i] > 0\`, we can break the loop immediately! Three positive numbers can never sum to zero.
+- *Outer Duplicate Check*: Must be \`i > 0 && nums[i] == nums[i-1]\` (comparing with previous), NOT \`nums[i] == nums[i+1]\` (which would skip identical numbers needed within the same triplet, like \`[-1, -1, 2]\`).`,
       questions: [
         {
           kind: "mcq",
-          prompt: "Why must we sort the array before solving 3Sum optimally?",
-          options: ["To easily skip duplicate triplets and enable the two-pointer technique on the remaining two numbers.", "Because sorting reduces the overall time complexity from O(N^3) to O(N log N).", "To make it easier to binary search for the third number.", "The array doesn't actually need to be sorted."],
-          correct_index: 0,
-          model_answer: "Sorting is required both to easily skip duplicate values (to avoid duplicate triplets) and to run the Two Sum II algorithm on the rest of the array.",
+          prompt: "Why do we skip nums[i] if i > 0 and nums[i] == nums[i-1] in 3Sum?",
+          options: [
+            "To prevent endless infinite loops.",
+            "Because all unique triplets starting with that number were already explored during the previous iteration.",
+            "Because 3Sum only allows positive numbers.",
+            "To reduce array size by half."
+          ],
+          correct_index: 1,
+          model_answer: "Since the array is sorted, identical consecutive values will search the exact same remaining search space, generating duplicate triplets.",
           difficulty: "intermediate"
         },
         {
           kind: "open",
-          prompt: "Explain how 3Sum handles avoiding duplicate triplets.",
-          model_answer: "After sorting, we skip any number that is identical to the previous one in the outer loop. Inside the two-pointer loop, if we find a match, we also skip past any duplicate values for the left pointer.",
-          difficulty: "advanced"
+          prompt: "Why can we break the outer loop early if nums[i] > 0 in 3Sum (target = 0)?",
+          model_answer: "Because the array is sorted. If the smallest of the three numbers (nums[i]) is greater than 0, any remaining numbers to its right are also > 0. Three positive numbers can never sum to 0.",
+          difficulty: "intermediate"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  4. CONTAINER WITH MOST WATER                                      */
-    /* ------------------------------------------------------------------ */
     {
       slug: "container-with-most-water",
       title: "Container With Most Water",
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/max-water-container",
-      summary:
-        "Always move the shorter wall — the greedy rule that provably never discards the best.",
-      body: `**Problem Statement**
-Vertical lines of various heights stand on the x-axis. Pick two that, with the x-axis, hold the most water. Area = distance × min(height_left, height_right).
+      summary: "Always move the shorter wall — the greedy rule that provably never discards the best.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate the water area for all possible pairs of vertical lines using nested loops in $O(N^2)$ time.
+*Why this shatters*:
+$$\\text{Area} = (\\text{R} - \\text{L}) \\times \\min(\\text{height}[\\text{L}], \\text{height}[\\text{R}])$$
+Moving pointers inward **always decreases the width** $(R - L)$. Beginners struggle to see how moving pointers inward could ever *increase* the total area.
 
-*Example:*
-\`\`\`
-Input:  height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
-Output: 49         # lines at index 1 (h=8) and index 8 (h=7): 7 × 7 = 49
-\`\`\`
-
-**Signal.** "Pick two lines that hold the most water" with area = distance × the *shorter* of the two — maximizing over pairs, where moving inward always shrinks one factor (width). That tension between width and height is what makes this a two-pointer convergence problem rather than a search.
-
-**Brute force.** Try every pair of lines, compute the area, keep the max — O(n²) time, O(1) space. Correct, but the problem's real content is the O(n) argument below.
-
-**Optimal approach (the shorter-wall rule).** area = (R − L) × min(height[L], height[R]). Start pointers at both ends. If you move the *taller* wall inward: width strictly decreases, and the min height can't increase — it's still pinned by the shorter wall on the other side — so area provably decreases or stays the same. That's a wasted move. So: **always move the shorter wall.** It's the only move that has any chance of improving the area, because the min might grow even as the width shrinks.
+**The Structural Invariant: The Shorter-Wall Greedy Rule.**
+Place \`L = 0\` and \`R = N - 1\` (maximizing initial width).
+- *Crucial Proof*: The container height is bottlenecked by the **shorter wall**: $\\min(h[L], h[R])$.
+- If we move the **taller wall** inward:
+  - Width $(R - L)$ strictly decreases.
+  - The new height is still capped by the shorter wall (or something even shorter).
+  - Therefore, moving the taller wall **can NEVER increase the area**!
+- *Conclusion*: **Always move the pointer at the SHORTER wall inward.** It is the ONLY move that holds any possibility of finding a taller wall to offset the reduced width!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 8 }], "note": "h[L]=1, h[R]=7 -> area = 8x1 = 8. L is shorter -> move L." },
-    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L", "index": 1 }, { "label": "R", "index": 8 }], "highlight": [1, 8], "note": "h[L]=8, h[R]=7 -> area = 7x7 = 49, the best area found. R is shorter -> move R." },
-    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L", "index": 1 }, { "label": "R", "index": 7 }], "note": "h[L]=8, h[R]=3 -> area = 6x3 = 18. Every later move stays below 49." }
+    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L=0 (h=1)", "index": 0 }, { "label": "R=8 (h=7)", "index": 8 }], "note": "h[L]=1, h[R]=7 -> Area = (8-0) * min(1,7) = 8. L is shorter -> Move L to 1." },
+    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L=1 (h=8)", "index": 1 }, { "label": "R=8 (h=7)", "index": 8 }], "highlight": [1, 8], "note": "h[L]=8, h[R]=7 -> Area = (8-1) * min(8,7) = 49 (Max Area!). R is shorter -> Move R to 7." },
+    { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L=1 (h=8)", "index": 1 }, { "label": "R=7 (h=3)", "index": 7 }], "note": "h[L]=8, h[R]=3 -> Area = (7-1) * min(8,3) = 18. Move R." }
   ],
-  "caption": "Container With Most Water — always move the shorter wall; the best area (49) appears at step 2 and nothing beats it after."
+  "caption": "Container With Most Water — Greedily moving the shorter wall achieves O(N) time complexity."
 }
 \`\`\`
 
-**Complexity.** O(n) time — each pointer moves inward at most n times total — O(1) space, versus the O(n²) brute force.
-
-**Thread.** The shorter-wall rule is a *greedy* argument dressed up as two pointers: at each step, exactly one move is provably not worse than optimal. Trapping Rain Water, the chapter's boss fight next, asks a related-looking question — but instead of one global max, it wants the water trapped at *every* position, and the same L/R convergence idea has to carry running state instead of just comparing once.`,
+**Boundary Traps & Execution Blueprint.**
+- *Equal Heights*: If \`height[L] == height[R]\`, moving either pointer (or both) is fine because neither can bound a larger area with the current opposite wall.`,
       questions: [
         {
-          kind: "mcq",
-          prompt: "In Container With Most Water, what dictates the height of the water between two pointers?",
-          options: ["The distance between the pointers.", "The sum of the heights of both pointers.", "The taller of the two heights.", "The shorter of the two heights."],
-          correct_index: 3,
-          model_answer: "Water cannot rise higher than the shorter wall without spilling over, so the area is always bottlenecked by min(height[L], height[R]).",
-          difficulty: "basic"
+          kind: "open",
+          prompt: "Mathematical Proof: Why does moving the taller wall inward guaranteed NEVER to yield a larger area than the current state?",
+          model_answer: "Area = width * min(h_left, h_right). Moving the taller wall reduces width from W to W - 1. The new min height is bounded by min(h_shorter, h_new_taller) <= h_shorter. Since width decreased and height cannot increase, area is strictly smaller or equal.",
+          difficulty: "advanced"
         },
         {
-          kind: "open",
-          prompt: "Why do we always move the pointer pointing to the shorter wall?",
-          model_answer: "Because moving the taller wall inwards will only decrease the width without increasing the height (since the height is bounded by the shorter wall). Moving the shorter wall is the only way to potentially find a taller boundary that offsets the lost width.",
-          difficulty: "intermediate"
+          kind: "mcq",
+          prompt: "What is the time and space complexity of the optimal Container With Most Water algorithm?",
+          options: [
+            "O(N log N) time and O(1) space.",
+            "O(N) time and O(1) space.",
+            "O(N^2) time and O(N) space.",
+            "O(N) time and O(N) space."
+          ],
+          correct_index: 1,
+          model_answer: "Each step moves one pointer inward, visiting each element at most once in O(N) time with O(1) auxiliary variables.",
+          difficulty: "basic"
         }
       ]
     },
-    /* ------------------------------------------------------------------ */
-    /*  5. TRAPPING RAIN WATER                                            */
-    /* ------------------------------------------------------------------ */
     {
       slug: "trapping-rain-water",
       title: "Trapping Rain Water",
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/trapping-rain-water",
-      summary:
-        "Water above each bar = min(maxLeft, maxRight) − height. Two pointers compute it in one pass.",
-      body: `**Signal.** "Compute how much water is trapped after raining" over an elevation map — water above any bar depends on walls on *both* sides at once, which is what pulls this out of Container With Most Water's single global answer into a per-position running computation.
+      summary: "Water above each bar = min(maxLeft, maxRight) − height. Two pointers compute it in one pass.",
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to calculate water by scanning left and right for every single bar $i$ to find the tallest left wall \`maxL\` and tallest right wall \`maxR\`.
+*Why this shatters*: For bar $i$, water trapped is:
+$$\\text{water}[i] = \\max(0, \\min(\\text{maxL}[i], \\text{maxR}[i]) - \\text{height}[i])$$
+Rescanning left and right from every bar takes $O(N^2)$ time!
 
-**Brute force.** Stand on each bar. Water there is max(0, min(maxLeft, maxRight) − height), where maxLeft and maxRight are the tallest walls anywhere to that side. Computed naively — rescanning left and right from every position — that's O(n²).
-
-**Approach 2: prefix arrays.** Precompute maxLeft[] with a forward sweep and maxRight[] with a backward sweep, then apply the formula at every position in a third pass. O(n) time, but O(n) extra space for the two arrays.
-
-**Optimal approach: two pointers, O(1) space.** Walk pointers inward from both ends, carrying running maxLeft and maxRight instead of precomputed arrays. The key insight: if maxLeft < maxRight, the *left* pointer's water is already fully determined — it's bounded by maxLeft, because whatever taller walls the right side is still hiding can only raise the right barrier, which isn't the binding one for this position. So you can settle the left position now and advance it, without ever knowing the true maxRight. Whichever side currently has the smaller running max is the side that's safe to process.
+**The Structural Invariant: The Binding Wall Principle.**
+Precomputing \`leftMax[]\` and \`rightMax[]\` prefix arrays takes $O(N)$ time and $O(N)$ space.
+*How Two Pointers achieve $O(1)$ space*:
+- Maintain running scalars \`maxL\` and \`maxR\`.
+- *The Key Insight*: Water trapped at bar $i$ is determined by the **smaller** of \`maxL\` and \`maxR\`.
+- If \`maxL < maxR\`: The left side is the **bottleneck**. Whatever taller walls exist far to the right do NOT matter because \`maxL\` caps the water height! We can process \`height[L]\` immediately and move \`L++\`.
+- If \`maxR <= maxL\`: The right side is the bottleneck. Process \`height[R]\` immediately and move \`R--\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L", "index": 0 }, { "label": "R", "index": 11 }], "note": "maxLeft=0 (h[0]), maxRight=1 (h[11]). maxLeft <= maxRight -> advance L." },
-    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L", "index": 5 }, { "label": "R", "index": 10 }], "note": "L has swept to index 5; maxLeft=2, maxRight=2 (ties go left). Water collected so far: 4." },
-    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L", "index": 7 }, { "label": "R", "index": 10 }], "note": "L reaches index 7 (h=3): maxLeft jumps to 3, now maxLeft > maxRight(2) -> control switches to R. Water collected so far: 5." },
-    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L", "index": 7 }, { "label": "R", "index": 7 }], "highlight": [7], "note": "R sweeps in to meet L at index 7. Total water trapped: 6." }
+    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L=0", "index": 0 }, { "label": "R=11", "index": 11 }], "note": "maxL=0, maxR=1. maxL <= maxR -> Process L=0: water += max(0, 0-0)=0. L=1, maxL=1." },
+    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L=2 (h=0)", "index": 2 }, { "label": "R=11 (h=1)", "index": 11 }], "highlight": [2], "note": "maxL=1, maxR=1. maxL <= maxR -> Process L=2: water += maxL - h[2] = 1 - 0 = 1 unit! L=3." },
+    { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L=7 (h=3)", "index": 7 }, { "label": "R=10 (h=2)", "index": 10 }], "note": "maxL=3, maxR=2. maxR < maxL -> Control shifts to R! Process R=10: water += 2 - 2 = 0." }
   ],
-  "caption": "Trapping Rain Water — advance whichever side has the smaller running max; water at that step is bounded by it."
+  "caption": "Trapping Rain Water — Process the smaller running max side in O(N) time & O(1) space."
 }
 \`\`\`
 
-**Complexity.** Brute force per bar: O(n²) time, O(1) space. Prefix arrays: O(n) time, O(n) space. Two pointers: O(n) time, O(1) space — the strict upgrade, and the version worth having ready cold.
-
-**Thread.** That closes the chapter. Every problem here spent structure the array already had — mirror symmetry, sortedness, a max bound from both sides — instead of buying memory the way Chapter 1 did. Next, **Binary Search** takes sortedness even further: instead of two pointers converging linearly, it discards half the search space every single step.`,
+**Boundary Traps & Execution Blueprint.**
+- *Updating Max Before Adding Water*: Always update \`maxL = max(maxL, height[L])\` **before** computing \`water += maxL - height[L]\` to avoid negative water addition!
+- *Flat & Monotonic Terrain*: Inputs like \`[1, 2, 3, 4]\` or \`[4, 4, 4]\` naturally yield \`0\` trapped water.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What determines the amount of water trapped at a single position 'i'?",
-          options: ["min(max_left, max_right) - height[i]", "max(max_left, max_right) - height[i]", "max_left + max_right - height[i]", "min(height[L], height[R])"],
-          correct_index: 0,
-          model_answer: "The water at index i is bounded by the maximum walls on its left and right. The shorter of those two max walls defines the waterline, and we subtract the ground height (height[i]) to get the depth.",
-          difficulty: "intermediate"
+          prompt: "In Trapping Rain Water, why can we safely process the left pointer when maxL < maxR without knowing the exact max wall to the right of L?",
+          options: [
+            "Because right walls are always shorter than left walls.",
+            "Because water depth is bounded by min(maxL, maxR). Since maxL < maxR, maxL is guaranteed to be the limiting bottleneck regardless of any even taller walls further right.",
+            "Because we sort the elevation map first.",
+            "Because water doesn't accumulate on the left side."
+          ],
+          correct_index: 1,
+          model_answer: "The trapped water formula relies on min(maxL, maxR). Knowing maxL < maxR guarantees maxL is the binding constraint, making further right details irrelevant for bar L.",
+          difficulty: "advanced"
         },
         {
           kind: "open",
-          prompt: "How does the two-pointer O(1) space solution avoid needing precomputed left/right max arrays?",
-          model_answer: "It maintains running maxes from both ends (maxL and maxR). Because water is bounded by the smaller max, if maxL < maxR, we know exactly how much water can be trapped at L without needing to know the true maximum on its right (and vice versa).",
-          difficulty: "advanced"
+          prompt: "Compare the Prefix Array approach vs Two Pointer approach for Trapping Rain Water.",
+          model_answer: "Both take O(N) time. The Prefix Array approach uses two auxiliary arrays (O(N) space) to store left/right maximums. The Two Pointer approach maintains running max scalars to achieve O(1) space.",
+          difficulty: "intermediate"
         }
       ]
-    },
-  ],
+    }
+  ]
 };

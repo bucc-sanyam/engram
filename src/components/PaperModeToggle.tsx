@@ -11,7 +11,7 @@ export default function PaperModeToggle({ className = "" }: { className?: string
       onClick={togglePaperMode}
       disabled={isSnapping}
       aria-label="Toggle Paper Mode reading view"
-      title={isPaperMode ? "Switch to Dark Mode (Thanos Snap)" : "Switch to E-Ink Paper Mode (Thanos Snap)"}
+      title={isPaperMode ? "Switch to Dark Mode (Ink Dissolve)" : "Switch to E-Ink Paper Mode (Ink Dissolve)"}
       className={`group relative inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
         isPaperMode
           ? "bg-[#1c1a17] text-[#f5f2eb] shadow-[0_2px_12px_rgba(28,26,23,0.25)] hover:bg-[#332e29]"
@@ -30,7 +30,7 @@ export default function PaperModeToggle({ className = "" }: { className?: string
         </>
       )}
 
-      {/* Thanos snap visual indicator badge */}
+      {/* Ink dissolve visual indicator badge */}
       <span
         className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.5 text-[9px] font-mono font-bold uppercase ${
           isPaperMode
@@ -38,7 +38,7 @@ export default function PaperModeToggle({ className = "" }: { className?: string
             : "bg-[#ff7a5c]/20 text-[#ff9a80]"
         }`}
       >
-        Snap
+        Fade
       </span>
     </button>
   );

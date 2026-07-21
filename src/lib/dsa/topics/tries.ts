@@ -9,13 +9,7 @@ export const tries: DsaTopic = {
   color: "#c9e07a",
   prereqs: ["trees"],
   unlocks: [],
-  intro: `Store a dictionary in a hash set and you can answer exactly one question fast: "is this exact word present?" Ask anything *prefix-shaped* — does anything start with "pre"? what are the autocompletions of "aut"? — and the set makes you scan everything it holds. The trie (from re*trie*val, usually pronounced "try") is the structure that makes prefixes first-class. It is a tree where each node fans out by *letter*: the root is the empty string, and every step down appends one character. A word is a root-to-node path; a shared prefix is a shared path. "apple" and "apply" ride the same four nodes and split only at the last letter — the dictionary's redundancy becomes the structure's compression.
-
-Two design details do all the work. Each node holds a small map (or 26-slot array) from character to child. And each node carries one boolean — *is a word ending here?* — which is easy to underestimate and impossible to skip: "app" may be a real word while also being a waypoint on the road to "apple", and the flag is the only thing distinguishing word from mere prefix. Every trie bug in every interview traces back to conflating those two ideas.
-
-Why does this small chapter sit here, after Trees and Backtracking? Because its three problems are exactly those two chapters composed. Implement Trie is Trees discipline — build the node, walk the paths, respect the flag. Design Add and Search Words drops a wildcard into queries, and the moment one character can be *anything*, the walk forks — search becomes backtracking down multiple children. And Word Search II welds the trie onto the letter-grid DFS from Word Search: hunting hundreds of dictionary words in one board walk, with the trie acting as a *shared prefix-pruner* that kills doomed paths after one letter. It is one of the great "two patterns snap together" moments in the entire 150.
-
-Tries power autocomplete boxes, spell checkers, IP routing tables (longest-prefix match), and tokenizers. On the roadmap this node is a leaf — nothing unlocks from it — but the lesson generalises: when your keys are *sequences* and your queries are about *their beginnings*, give the structure the same shape as the data.`,
+  intro: `Store a dictionary in a hash set and you can answer exactly one question fast: "is this exact word present?" Ask anything *prefix-shaped* — does anything start with "pre"? what are the autocompletions of "aut"? — and the set makes you scan everything it holds. The trie (from re*trie*val, usually pronounced "try") is the structure that makes prefixes first-class. It is a tree where each node fans out by *letter*: the root is the empty string, and every step down appends one character. A word is a root-to-node path; a shared prefix is a shared path. "apple" and "apply" ride the same four nodes and split only at the last letter — the dictionary's redundancy becomes the structure's compression.`,
   problems: [
     {
       slug: "implement-trie-prefix-tree",
@@ -23,32 +17,58 @@ Tries power autocomplete boxes, spell checkers, IP routing tables (longest-prefi
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/implement-prefix-tree",
       summary: "Nodes mapping letters to children, plus one end-of-word flag — insert, search, and startsWith.",
-      body: `**Signal.** "insert(word), search(word) — exact match — and startsWith(prefix) — any word begins this way" — a *prefix* query alongside an exact-match query is the tell that a plain hash set won't do: prefixes need shared structure, which is what a trie is for.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a standard Hash Set of words.
+*Why this shatters*: \`search(word)\` takes $O(1)$ time, but \`startsWith(prefix)\` requires scanning every word in the set ($O(N \\cdot L)$ time for $N$ words of length $L$). A Hash Set has no structural memory of character prefixes!
 
-**Brute force.** A hash set of complete words handles search in O(1), but startsWith has no shortcut — it must scan every stored word checking if it begins with the prefix, O(total words × prefix length), since the set has no notion of "beginning."
-
-**Optimal approach.** Two fields per node: children — a map from character to child node (a 26-slot array when the alphabet is lowercase English) — and isWord, the end-of-word flag. No node stores its own character; **the letter lives on the edge**, implicitly, as the key under which the parent reaches you. All three operations are the *same walk* with different endings. Insert: descend character by character, *creating* any missing child, and stamp isWord on the final node. Search: descend, *failing* on any missing child; arriving is not enough — return the final node's isWord. startsWith: identical descent; arrival alone is success. Factor the shared descent into a helper returning the final node (or null), and each public method becomes one line.
-
-**The walk-through.** insert("apple"): root grows a → p → p → l → e, flag on e. search("app") → path exists, flag absent → false. startsWith("app") → path exists → true. insert("app") → walk existing nodes, stamp the second p. search("app") → true now. Nothing was duplicated; "app" cost zero new nodes.
+**The Structural Invariant: Shared Prefix Character Node Trees.**
+Each node in a Trie contains:
+- \`children\`: Map or array of size 26 mapping characters \`'a' ... 'z'\` to child TrieNodes.
+- \`isWord\`: Boolean flag set to \`true\` if a complete word terminates at this node.
+- **Operations**:
+  - \`insert(word)\`: Walk character by character, creating missing nodes. Set \`isWord = true\` on the last node.
+  - \`search(word)\`: Walk characters. Return \`true\` iff all nodes exist AND the final node has \`isWord == true\`.
+  - \`startsWith(prefix)\`: Walk characters. Return \`true\` iff all prefix nodes exist (regardless of \`isWord\`!).
 
 \`\`\`viz:tree
 {
   "nodes": [
     { "id": "root", "label": "• (root)", "children": ["a"] },
-    { "id": "a", "label": "a", "children": ["ap"] },
-    { "id": "ap", "label": "p", "children": ["app"] },
-    { "id": "app", "label": "p", "children": ["appl"], "highlight": true },
-    { "id": "appl", "label": "l", "children": ["apple"] },
-    { "id": "apple", "label": "e", "highlight": true }
+    { "id": "a", "label": "a", "children": ["p"] },
+    { "id": "p", "label": "p", "children": ["p2"] },
+    { "id": "p2", "label": "p (isWord=true: 'app')", "children": ["l"], "highlight": true },
+    { "id": "l", "label": "l", "children": ["e"] },
+    { "id": "e", "label": "e (isWord=true: 'apple')", "highlight": true }
   ],
   "rootId": "root",
-  "caption": "After insert(\\"apple\\") and insert(\\"app\\") — no new nodes for \\"app\\", just a flag stamped on the existing second p. Highlighted nodes mark isWord = true."
+  "caption": "Implement Trie — Shared node prefix tree supporting O(L) insertions and searches."
 }
 \`\`\`
 
-**Complexity.** Every operation O(length of the key) — *independent of dictionary size*, the trie's headline — versus the hash set's O(total words × prefix length) for startsWith. A million stored words or ten: "apple" costs five steps. Space O(total characters) worst case, less as prefixes overlap.
-
-**Thread.** Structure built. Next problem bends the walk: a query character that matches *anything* — and the single descent becomes a branching search.`,
+**Boundary Traps & Execution Blueprint.**
+- *Difference Between search() and startsWith()*:
+  - \`search("app")\` checks if \`isWord == true\` at the node for the second \`'p'\`.
+  - \`startsWith("app")\` returns \`true\` as long as the path \`a -> p -> p\` exists, ignoring \`isWord\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the primary difference between search(word) and startsWith(prefix) in a Trie?",
+          options: [
+            "search() checks that the last node has isWord == true; startsWith() only checks that the path exists.",
+            "startsWith() sorts the prefix.",
+            "search() takes O(N) time while startsWith() takes O(1) time.",
+            "There is no difference."
+          ],
+          correct_index: 0,
+          model_answer: "search() requires an exact word match (verifying isWord == true), whereas startsWith() only verifies that the character prefix path exists in the tree.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of insert(word) for a word of length L?",
+          model_answer: "O(L) time complexity, where L is the length of the string, since we traverse/create exactly L node pointers.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "design-add-and-search-words-data-structure",
@@ -56,34 +76,56 @@ Tries power autocomplete boxes, spell checkers, IP routing tables (longest-prefi
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/design-word-search-data-structure",
       summary: "Wildcard dots fork the descent: trie walking becomes backtracking over every child.",
-      body: `**Signal.** "search may contain dots, and a dot matches *any single character*" — a query where one position could be anything is the tell that a single deterministic descent is no longer enough; the walk needs to fork, which is backtracking landed inside a data structure.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to use regular expressions or linear string scanning across stored arrays.
+*Why this shatters*: Linear regex scanning takes $O(N \\cdot L)$ time per query.
 
-**Brute force.** Store all words in a plain list; for each search query, check every stored word for a character-by-character match (treating '.' as always-equal) — O(total words × word length) per query, no shared structure exploited at all.
-
-**Optimal approach.** A literal character permits exactly one continuation: follow that child or fail. A dot permits *every* continuation: the walk must try each child of the current node — and if one branch dies deeper down, return and try the next. Recursion carries (current node, index into the query); literal characters advance one child deterministically, dots fan out, and success anywhere bubbles true through the ORs. Query exhausted → return the current node's isWord — the flag discipline survives wildcards; "b." must not match a mere prefix "ba" of "bad". Child missing under a literal → false, prune instantly. Literal segments stay O(1) per step — only dots pay the fan-out.
+**The Structural Invariant: Trie DFS Backtracking on Wildcards.**
+- Insert words into a standard Trie.
+- \`search(word)\`: Run DFS backtracking on the Trie:
+  - For literal character \`c\`: Check \`node.children[c]\`. If \`null\`, return \`false\`. Recurse to \`node.children[c]\`.
+  - For wildcard **\`'.'\`**: Iterate over **ALL 26 possible children** of current \`node\`. If any non-null child branch returns \`true\` recursively, return \`true\`!
+  - At end of word index: Return \`node.isWord\`.
 
 \`\`\`viz:tree
 {
   "nodes": [
-    { "id": "root", "label": ". (root) — wildcard tries all 3 children", "children": ["b", "d", "m"] },
+    { "id": "root", "label": "root (wildcard '.' checks all 3 children)", "children": ["b", "d", "m"] },
     { "id": "b", "label": "b", "children": ["ba"] },
     { "id": "ba", "label": "a", "children": ["bad"] },
-    { "id": "bad", "label": "d (word end)", "highlight": true },
+    { "id": "bad", "label": "d (isWord=true)", "highlight": true },
     { "id": "d", "label": "d", "children": ["da"] },
     { "id": "da", "label": "a", "children": ["dad"] },
-    { "id": "dad", "label": "d (word end)" },
-    { "id": "m", "label": "m", "children": ["ma"] },
-    { "id": "ma", "label": "a", "children": ["mad"] },
-    { "id": "mad", "label": "d (word end)" }
+    { "id": "dad", "label": "d (isWord=true)" },
+    { "id": "m", "label": "m" }
   ],
   "rootId": "root",
-  "caption": "search(\\".ad\\") — the dot at the root forks into all three children; the first branch tried (b) already walks deterministically to a flagged node, so true returns without ever checking d or m."
+  "caption": "Design Add and Search Words — Wildcard '.' branches DFS across all valid children."
 }
 \`\`\`
 
-**Complexity.** Literal-only queries: O(length). Worst case (all dots): O(total trie nodes) — versus the brute force's O(total words × length) on every single query regardless of how many dots it contains.
-
-**Thread.** Trie plus backtracking, inside the structure. The finale inverts the direction: the trie walks *alongside* a grid DFS, pruning a multi-word hunt — Word Search II.`,
+**Boundary Traps & Execution Blueprint.**
+- *Wildcard Pruning*: Empty child slots in \`node.children\` should be skipped instantly during wildcard evaluation.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "How does search(word) handle the wildcard character '.' in the WordDictionary Trie?",
+          options: [
+            "It skips the wildcard character completely.",
+            "It branches DFS recursively to check all 26 possible non-null children of the current node.",
+            "It returns true immediately.",
+            "It converts the Trie into a Hash Set."
+          ],
+          correct_index: 1,
+          model_answer: "The '.' character matches any letter, forcing a DFS branch to check if any existing child node can complete the remainder of the query.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the worst-case time complexity of searching a word of length L containing only wildcards '...'?",
+          model_answer: "O(26^L) worst-case time, as every dot forces exploring all 26 branching child paths down L levels.",
+          difficulty: "advanced"
+        }
+      ]
     },
     {
       slug: "word-search-ii",
@@ -91,43 +133,55 @@ Tries power autocomplete boxes, spell checkers, IP routing tables (longest-prefi
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/search-for-word-ii",
       summary: "Hunt a whole dictionary in one grid walk: the trie prunes every path no word could continue.",
-      body: `**Signal.** "A dictionary of words: return every one traceable through the grid" — searching for *hundreds* of words at once, not one, is the tell that the words need to be searched collectively rather than with hundreds of independent DFS passes.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners run standard Word Search DFS for every single word in the dictionary independently.
+*Why this shatters*: Searching $W$ words independently runs $W$ full grid traversals ($O(W \\cdot M \\cdot N \\cdot 4^L)$ time), resulting in TLE.
 
-**Brute force.** Run Word Search's single-word DFS once per dictionary word — correct, but re-walks the same board from scratch for every word, with no way for one word's search to short-circuit another's, even when they share long prefixes.
-
-**Optimal approach.** Build a trie of all the words, then run **one** DFS over the grid — walking the board and the trie *in lockstep*. Standing on a cell with letter c, holding a trie node t: if t has no child under c, stop — *no word in the entire dictionary* continues through this cell from this path. That is the trie acting as a shared pruner: one lookup vetoes hundreds of words at once. If the child exists, descend both worlds together — mark the cell (Word Search's choose), recurse into neighbours holding the child node, restore the cell (unchoose). Whenever the current trie node carries a word-end flag, harvest that word — and keep walking, since it may extend into a longer one ("cat" continuing toward "cattle").
-
-**The refinements that make it sing.** Harvested words re-harvest on other paths — clear the flag (or store the word on the node and null it) after first collection: dedup by *mutating the trie*. Better still, prune harder: after a subtree yields all its words, it is dead weight — delete child pointers that lead nowhere live, and the trie *shrinks as the search succeeds*, accelerating every later path. This turn-the-dictionary-into-a-guide inversion is why the problem is a classic: the data structure is not being queried, it is *steering the search*.
-
-**The walk-through.** Words [oath, pea, eat, rain], grid rows oaan / etae / ihkr / iflv. DFS from o: trie has o → a → walk to a, t, h — harvest "oath". From e (row 1): e → a → t — "eat". Cells starting p or r die at the root lookup — one comparison each.
+**The Structural Invariant: Grid DFS Guided by Trie Prefix Pruning.**
+Instead of searching for each word in the grid, **build a Trie of all words and search the grid using the Trie to guide DFS**!
+- Build Trie containing all words in dictionary. Store full \`word\` string directly at terminal nodes (\`node.word = "oath"\`).
+- Run DFS from every cell \`(r, c)\` in grid:
+  - If current cell character \`board[r][c]\` is NOT in \`trieNode.children\`, **PRUNE IMMEDIATELY**! (No word in the dictionary starts with this prefix!).
+  - If \`trieNode.word\` exists: Add to results, and set \`trieNode.word = null\` to prevent duplicate findings.
+  - Mark grid cell as visited \`'#'\`, recurse on 4 direction neighbors, then restore \`board[r][c]\` (Backtracking).
 
 \`\`\`viz:tree
 {
   "nodes": [
-    { "id": "root", "label": "• (root)", "children": ["o", "p", "e", "r"] },
-    { "id": "o", "label": "o", "children": ["oa"] },
-    { "id": "oa", "label": "a", "children": ["oat"] },
-    { "id": "oat", "label": "t", "children": ["oath"] },
-    { "id": "oath", "label": "h", "highlight": true },
-    { "id": "p", "label": "p", "children": ["pe"] },
-    { "id": "pe", "label": "e", "children": ["pea"] },
-    { "id": "pea", "label": "a", "highlight": true },
-    { "id": "e", "label": "e", "children": ["ea"] },
-    { "id": "ea", "label": "a", "children": ["eat"] },
-    { "id": "eat", "label": "t", "highlight": true },
-    { "id": "r", "label": "r", "children": ["ra"] },
-    { "id": "ra", "label": "a", "children": ["rai"] },
-    { "id": "rai", "label": "i", "children": ["rain"] },
-    { "id": "rain", "label": "n", "highlight": true }
+    { "id": "root", "label": "Trie Root", "children": ["o", "e"] },
+    { "id": "o", "label": "o (grid matches 'o')", "children": ["a"] },
+    { "id": "a", "label": "a (grid matches 'a')", "children": ["t"] },
+    { "id": "t", "label": "t (grid matches 't')", "children": ["h"] },
+    { "id": "h", "label": "h (FOUND 'oath'!)", "highlight": true },
+    { "id": "e", "label": "e (grid matches 'e')" }
   ],
   "rootId": "root",
-  "caption": "The dictionary trie for [oath, pea, eat, rain]. The grid DFS walks this tree in lockstep: a cell with no matching child prunes the whole branch instantly; highlighted nodes are the harvest points."
+  "caption": "Word Search II — Grid DFS guided by Trie prefix pruning."
 }
 \`\`\`
 
-**Complexity.** O(cells · 3^maxWordLength) worst case, but the trie's veto makes real behaviour dramatically better; trie build O(total characters) — versus the per-word brute force's full board re-walk for every dictionary entry.
-
-**Thread.** Two structures, one search — the atlas's cleanest fusion, and the trie chapter closes. Next: the country all these walks were training for. Graphs — where nodes connect however they please, cycles are real, and the visited set stops being optional.`,
-    },
-  ],
+**Boundary Traps & Execution Blueprint.**
+- *Trie Node Pruning Optimization*: After a word is found, remove terminal nodes or decrement child references from the Trie so future grid searches short-circuit instantly!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why is guiding Grid DFS with a Trie drastically faster than running independent DFS searches for each word?",
+          options: [
+            "Because Tries sort the grid characters.",
+            "Because a single Trie lookup at a grid cell prunes paths for hundreds of dictionary words simultaneously if that prefix does not exist.",
+            "Because Tries remove the need for grid backtracking.",
+            "Because grid coordinates become 1D indices."
+          ],
+          correct_index: 1,
+          model_answer: "If a cell's character does not exist in the current Trie node's children, no word in the dictionary can continue from that path, pruning all remaining branches in O(1).",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "How can we prevent duplicate word entries in the result list when a word can be formed via multiple distinct grid paths?",
+          model_answer: "Store the completed word string at the Trie node (`node.word`), and upon finding it, set `node.word = null` before adding it to the result set.",
+          difficulty: "intermediate"
+        }
+      ]
+    }
+  ]
 };

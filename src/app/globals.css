@@ -384,21 +384,37 @@ h1, h2, h3, .display {
    ========================================================================== */
 
 .paper-mode-active {
-  --background: #eee8dd;
-  --foreground: #221e1a;
-  --muted: #5b544b;
-  --faint: #8a8174;
-  --ember: #cf4225;      /* vermilion ink */
-  --gold: #aa6f1e;       /* warm ochre gold leaf */
-  --teal: #187369;       /* deep fountain pen blue-green */
+  /* ---- page + ink ---- */
+  --background: #eee8dd;   /* page (unchanged; keep == animation PAPER_BG) */
+  --foreground: #2f2a24;   /* body ink            ~10:1  */
+  --ink:        #231f1a;   /* strongest ink: headings + bold emphasis  ~13:1 */
+  --muted:      #544d42;   /* secondary text      ~6:1   */
+  --faint:      #655d4f;   /* micro labels        ~4.6:1 (was #8a8174 ~2.3:1) */
+
+  /* ---- elevation ramp (cards LIGHTER than page + real border/shadow) ---- */
+  --surface:    #f6f1e6;   /* cards / glass — a fresh sheet, lighter than the page */
+  --surface-2:  #efe9dc;   /* hover / nested */
+  --border:     #dcd2be;   /* warm hairline that actually shows */
+  --code-bg:    #f3ecdd;   /* code panel (warm parchment) */
+  --code-border:#ddd3bf;
+
+  /* ---- accents retuned for a LIGHT background (darker, saturated ink) ---- */
+  --ember:  #c0361d;   /* vermilion   ~5.2:1  (dark-mode #ff7a5c/#ff9a80 map here) */
+  --gold:   #9a6410;   /* ochre       ~4.8:1  (#f5b95f maps here) */
+  --teal:   #0f6b60;   /* pen teal    ~5.4:1  (#43d6b5/#7fe5cb map here) */
+  --violet: #5b3fb5;   /* (#a78bfa)   ~6:1  */
+  --blue:   #245f8f;   /* (#5ba4cf)   ~5.8:1 */
+  --cyan:   #0e7490;   /* (#22d3ee)   ~5.2:1 */
+  --lime:   #5a7d10;   /* (#a3e635)   ~4.3:1 */
+
   color-scheme: light;
-  background-color: #eee8dd !important;
-  color: #221e1a !important;
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
   min-height: 100vh;
   position: relative;
 }
 
-/* Authentic physical e-ink paper grain texture overlay */
+/* Authentic physical e-ink paper grain texture overlay (softened) */
 .paper-mode-active::before {
   content: "";
   position: fixed;
@@ -406,7 +422,7 @@ h1, h2, h3, .display {
   z-index: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.045'/%3E%3C/svg%3E");
-  opacity: 0.85;
+  opacity: 0.5 !important;
 }
 
 /* Hide dark mode ambient mesh & glowing floating blobs */
@@ -418,7 +434,7 @@ h1, h2, h3, .display {
 
 /* Warm ink headlines */
 .paper-mode-active .text-warm-gradient {
-  background: linear-gradient(120deg, #221e1a 20%, #3a342d 70%, #5b5349 100%) !important;
+  background: linear-gradient(120deg, var(--ink) 20%, #3a342d 70%, var(--muted) 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
@@ -428,7 +444,7 @@ h1, h2, h3, .display {
 .paper-mode-active h2,
 .paper-mode-active h3,
 .paper-mode-active .display {
-  color: #221e1a !important;
+  color: var(--ink) !important;
 }
 
 .paper-mode-active p,
@@ -442,89 +458,163 @@ h1, h2, h3, .display {
   color: #2e2823 !important;
 }
 .paper-mode-active .article-body {
-  color: #312b25 !important;
+  color: var(--foreground) !important;
 }
 .paper-mode-active .article-lead::first-letter {
-  color: #aa6f1e !important;
+  color: var(--gold) !important;
 }
 
 /* Surfaces & Cards in Paper Mode */
 .paper-mode-active .glass {
-  background: #e4ddd0 !important;
-  border: 1px solid rgba(45, 41, 38, 0.1) !important;
-  box-shadow: 0 4px 20px -4px rgba(45, 41, 38, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: 0 1px 2px rgba(60, 50, 40, 0.05),
+              0 10px 30px -14px rgba(60, 50, 40, 0.18) !important;
 }
 .paper-mode-active .glass::before {
-  background: linear-gradient(90deg, transparent, rgba(45, 41, 38, 0.12), transparent) !important;
+  background: linear-gradient(90deg, transparent, rgba(45, 41, 38, 0.10), transparent) !important;
 }
 .paper-mode-active .glass-hover:hover {
-  background: #ded6c8 !important;
-  box-shadow: 0 8px 28px -6px rgba(45, 41, 38, 0.11) !important;
+  background: var(--surface-2) !important;
+  box-shadow: 0 2px 4px rgba(60, 50, 40, 0.06),
+              0 14px 36px -14px rgba(60, 50, 40, 0.22) !important;
 }
 
-.paper-mode-active .row-soft:hover {
-  background: rgba(45, 41, 38, 0.06) !important;
+.paper-mode-active details {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
 }
+.paper-mode-active details[open] {
+  background: var(--surface-2) !important;
+}
+.paper-mode-active .row-soft:hover {
+  background: rgba(45, 41, 38, 0.05) !important;
+}
+.paper-mode-active hr {
+  border-color: var(--border) !important;
+}
+
+/* Remap leaked dark-mode white utility classes */
+.paper-mode-active [class*="text-white"]:not([class*="text-white/"]) {
+  color: var(--ink) !important;
+}
+.paper-mode-active [class*="text-white/9"],
+.paper-mode-active [class*="text-white/8"] {
+  color: var(--foreground) !important;
+}
+.paper-mode-active [class*="text-white/7"],
+.paper-mode-active [class*="text-white/6"],
+.paper-mode-active [class*="text-white/5"],
+.paper-mode-active [class*="text-white/4"] {
+  color: var(--muted) !important;
+}
+
+.paper-mode-active [class*="bg-white/"] {
+  background-color: rgba(58, 50, 38, 0.05) !important;
+}
+.paper-mode-active [class*="border-white/"] {
+  border-color: rgba(58, 50, 38, 0.14) !important;
+}
+
+/* Remap dark-mode neon accent text — class form */
+.paper-mode-active [class*="text-[#43d6b5]"],
+.paper-mode-active [class*="text-[#7fe5cb]"] { color: var(--teal) !important; }
+.paper-mode-active [class*="text-[#f5b95f]"],
+.paper-mode-active [class*="text-[#f5d9a8]"] { color: var(--gold) !important; }
+.paper-mode-active [class*="text-[#ff7a5c]"],
+.paper-mode-active [class*="text-[#ff9a80]"],
+.paper-mode-active [class*="text-[#ffe3d7]"],
+.paper-mode-active [class*="text-[#ffb09b]"] { color: var(--ember) !important; }
+.paper-mode-active [class*="text-[#a78bfa]"],
+.paper-mode-active [class*="text-[#bfa8f5]"] { color: var(--violet) !important; }
+.paper-mode-active [class*="text-[#5ba4cf]"] { color: var(--blue) !important; }
+.paper-mode-active [class*="text-[#22d3ee]"],
+.paper-mode-active [class*="text-[#7fd0e8]"] { color: var(--cyan) !important; }
+.paper-mode-active [class*="text-[#a3e635]"] { color: var(--lime) !important; }
+.paper-mode-active [class*="text-[#f87171]"] { color: var(--ember) !important; }
+
+/* Remap dark-mode neon accent text — inline-style form (difficulty pills, eyebrows, viz) */
+.paper-mode-active [style*="color:#43d6b5"],
+.paper-mode-active [style*="color:#7fe5cb"] { color: var(--teal) !important; }
+.paper-mode-active [style*="color:#f5b95f"],
+.paper-mode-active [style*="color:#f5d9a8"] { color: var(--gold) !important; }
+.paper-mode-active [style*="color:#ff7a5c"],
+.paper-mode-active [style*="color:#ff9a80"],
+.paper-mode-active [style*="color:#ffe3d7"],
+.paper-mode-active [style*="color:#ffb09b"] { color: var(--ember) !important; }
+.paper-mode-active [style*="color:#a78bfa"],
+.paper-mode-active [style*="color:#bfa8f5"] { color: var(--violet) !important; }
+.paper-mode-active [style*="color:#5ba4cf"] { color: var(--blue) !important; }
+.paper-mode-active [style*="color:#22d3ee"],
+.paper-mode-active [style*="color:#7fd0e8"] { color: var(--cyan) !important; }
+.paper-mode-active [style*="color:#a3e635"] { color: var(--lime) !important; }
+.paper-mode-active [style*="color:#f87171"] { color: var(--ember) !important; }
+
+/* Remap dark-mode accent fills — class & style form (difficulty pills, chips) */
+.paper-mode-active [class*="bg-[#43d6b5]"],
+.paper-mode-active [style*="background:#43d6b5"] { background-color: rgba(15, 107, 96, 0.12) !important; }
+.paper-mode-active [class*="bg-[#f5b95f]"],
+.paper-mode-active [style*="background:#f5b95f"] { background-color: rgba(154, 100, 16, 0.12) !important; }
+.paper-mode-active [class*="bg-[#ff7a5c]"],
+.paper-mode-active [style*="background:#ff7a5c"] { background-color: rgba(192, 54, 29, 0.12) !important; }
+.paper-mode-active [class*="bg-[#bfa8f5]"],
+.paper-mode-active [style*="background:#bfa8f5"] { background-color: rgba(91, 63, 181, 0.12) !important; }
 
 /* Code blocks & Markdown in Paper Mode */
 .paper-mode-active pre {
-  background: #dfd8cb !important;
-  border: 1px solid #d1c9b9 !important;
-  color: #1c1815 !important;
-  box-shadow: inset 0 1px 3px rgba(45, 41, 38, 0.06) !important;
+  background: var(--code-bg) !important;
+  border: 1px solid var(--code-border) !important;
+  color: #2b2620 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55),
+              0 1px 2px rgba(60, 50, 40, 0.05) !important;
 }
 .paper-mode-active pre code {
-  color: #1c1815 !important;
+  color: #2b2620 !important;
 }
 .paper-mode-active code {
-  background: #dfd8cb !important;
-  color: #aa6f1e !important;
-  border: 1px solid #d5cdbf !important;
+  background: var(--code-bg) !important;
+  color: var(--gold) !important;
+  border: 1px solid var(--code-border) !important;
 }
 .paper-mode-active blockquote {
-  border-left-color: #aa6f1e !important;
-  color: #4f473d !important;
+  border-left-color: var(--gold) !important;
+  color: #4a423a !important;
 }
-.paper-mode-active hr {
-  border-color: rgba(45, 41, 38, 0.15) !important;
+.paper-mode-active table {
+  border-color: var(--border) !important;
 }
-
-/* Details & Q&A components in Paper Mode */
-.paper-mode-active details {
-  background: #e4ddd0 !important;
-  border-color: rgba(45, 41, 38, 0.1) !important;
-}
-.paper-mode-active details[open] {
-  background: #ded6c8 !important;
+.paper-mode-active th,
+.paper-mode-active td {
+  border-color: var(--border) !important;
 }
 
 /* Top Bar & Navigation in Paper Mode */
 .paper-mode-active header {
-  background: linear-gradient(to bottom, rgba(238, 232, 221, 0.95), rgba(238, 232, 221, 0.75), transparent) !important;
+  background: linear-gradient(to bottom, rgba(238, 232, 221, 0.96), rgba(238, 232, 221, 0.75), transparent) !important;
 }
 .paper-mode-active header .display {
-  color: #221e1a !important;
+  color: var(--ink) !important;
 }
 .paper-mode-active nav {
   background: rgba(45, 41, 38, 0.06) !important;
 }
 .paper-mode-active nav a {
-  color: #5b544b !important;
+  color: var(--muted) !important;
 }
 .paper-mode-active nav a:hover {
-  background: rgba(45, 41, 38, 0.08) !important;
-  color: #221e1a !important;
+  background: rgba(45, 41, 38, 0.09) !important;
+  color: var(--ink) !important;
 }
 .paper-mode-active nav a.bg-\[\#f4f1e9\] {
-  background: #221e1a !important;
-  color: #eee8dd !important;
+  background: var(--ink) !important;
+  color: var(--background) !important;
   box-shadow: 0 4px 16px rgba(28, 26, 23, 0.2) !important;
 }
 
 /* Buttons & Inputs in Paper Mode */
 .paper-mode-active .btn-primary {
-  background: #221e1a !important;
-  color: #eee8dd !important;
+  background: var(--ink) !important;
+  color: var(--background) !important;
   box-shadow: 0 6px 20px rgba(28, 26, 23, 0.18) !important;
 }
 .paper-mode-active .btn-primary:hover:not(:disabled) {
@@ -533,26 +623,32 @@ h1, h2, h3, .display {
 }
 .paper-mode-active .btn-ghost {
   background: rgba(45, 41, 38, 0.06) !important;
-  color: #221e1a !important;
+  color: var(--ink) !important;
 }
 .paper-mode-active .btn-ghost:hover:not(:disabled) {
   background: rgba(45, 41, 38, 0.12) !important;
 }
 .paper-mode-active .input {
-  background: #dfd8cb !important;
-  border-color: rgba(45, 41, 38, 0.15) !important;
-  color: #221e1a !important;
+  background: var(--code-bg) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
 }
 .paper-mode-active .input::placeholder {
-  color: #8a8174 !important;
+  color: var(--faint) !important;
 }
 .paper-mode-active .input:focus {
-  background: #e4ddd0 !important;
-  border-color: #aa6f1e !important;
-  box-shadow: 0 0 0 4px rgba(170, 111, 30, 0.15) !important;
+  background: var(--surface) !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 4px rgba(154, 100, 16, 0.15) !important;
 }
 
 .paper-mode-active ::selection {
-  background: rgba(170, 111, 30, 0.25);
-  color: #221e1a;
+  background: rgba(154, 100, 16, 0.25);
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    transition: background-color 300ms ease, color 300ms ease;
+  }
 }

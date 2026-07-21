@@ -13,9 +13,7 @@ export const arraysHashing: DsaTopic = {
 
 An array is the simplest promise a computer makes you: give me an index, I hand you the value instantly. A hash map extends that promise to *anything*: give me a name, a word, a coordinate — I hand you what you stored under it, still in constant time. The entire chapter is one long meditation on that superpower. When a brute-force solution says "for every element, scan everything again," hashing whispers: *you already saw that information — why are you looking for it twice?* Store what you learn as you walk the array, and the second scan disappears.
 
-The nine problems here are sequenced like a story. You start by remembering **whether** you have seen something (Contains Duplicate), then **how many times** (Valid Anagram), then you flip the question and look up an element's **partner** (Two Sum). From there the keys get smarter: whole words collapse into canonical signatures (Group Anagrams), counts become bucket indexes (Top K Frequent Elements), and data learns to describe itself (Encode and Decode Strings). The chapter closes with three problems where the *shape* of the storage is the trick — running products (Product of Array Except Self), coordinate sets (Valid Sudoku), and finally a set you can leap through like stepping stones (Longest Consecutive Sequence).
-
-Master the reflex this chapter teaches — *"could a hash map remember this for me?"* — and you will reach for it in graphs, in dynamic programming, in sliding windows, everywhere. On the roadmap, this node unlocks both Two Pointers and Stack: structure through sortedness, and structure through order of arrival. Both are answers to the same question hashing answers with memory.`,
+The nine problems here are sequenced like a story. You start by remembering **whether** you have seen something (Contains Duplicate), then **how many times** (Valid Anagram), then you flip the question and look up an element's **partner** (Two Sum). From there the keys get smarter: whole words collapse into canonical signatures (Group Anagrams), counts become bucket indexes (Top K Frequent Elements), and data learns to describe itself (Encode and Decode Strings). The chapter closes with three problems where the *shape* of the storage is the trick — running products (Product of Array Except Self), coordinate sets (Valid Sudoku), and finally a set you can leap through like stepping stones (Longest Consecutive Sequence).`,
   problems: [
     {
       slug: "contains-duplicate",
@@ -23,35 +21,47 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/duplicate-integer",
       summary: "The hash set's one-line superpower: answering 'have I seen this before?' instantly.",
-      body: `**Signal.** "Decide whether any value appears more than once" — any prompt shaped like "have I seen this before?" is a hash set asking to be used. That's the whole task here, which is exactly why it is the chapter's cleanest opener.
+      body: `**Beginner Intuition & The Naive Fallacy.** When asked if an array contains duplicates, a beginner's first instinct is to take element 1 and compare it against element 2, 3, 4... then take element 2 and compare against 3, 4, 5... 
+*Why this shatters*: For $N = 100,000$ numbers, nested loops do $\\frac{N(N-1)}{2} \\approx 5$ billion comparisons! The core flaw is **amnesia**: when standing at index 50,000, you have already seen the first 49,999 numbers, yet nested loops re-examine them again and again.
 
-**Brute force.** Compare every pair. Two nested loops, O(n²) time, O(1) space. For 10 elements, fine; for a million, that is half a trillion comparisons for a yes/no question. The pain is *re-checking*: element number 500,000 gets compared against everything before it, even though you already walked past all of those values once.
-
-**Optimal approach.** You do not need to compare pairs. You need to *remember*. A hash set is a bag with a magic property: asking "is this in the bag?" costs the same whether the bag holds ten items or ten million. So walk the array once. Before you drop each number in, ask the bag if it is already there. The first yes ends the game. Take [1, 2, 3, 1]. See 1 — bag is empty, add it. See 2 — not in the bag, add. See 3 — add. See 1 again — the bag says *yes, I know that one*, and you return true having touched each element exactly once.
+**The Structural Invariant.** We do not need to compare pairs; we need to **remember state**. A Hash Set is a data structure backed by a hash function that provides $O(1)$ constant-time lookup. 
+- *The Invariant*: At step $i$, the set contains exactly the unique numbers found in \`nums[0...i-1]\`.
+- *The Decision Rule*: Before adding \`nums[i]\`, check if it already exists in the set. If yes, stop immediately.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 0 }], "note": "Bag is empty. See 1 — not there, add it." },
-    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 1 }], "note": "See 2 — not in the bag, add it." },
-    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 2 }], "note": "See 3 — not in the bag, add it." },
-    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i", "index": 3 }], "highlight": [0, 3], "note": "See 1 again — the bag already has it. Return true." }
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i=0 (seen: {})", "index": 0 }], "note": "Set is empty. Read 1: Not in set → Insert 1. Set is now {1}." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i=1 (seen: {1})", "index": 1 }], "note": "Read 2: Not in set → Insert 2. Set is now {1, 2}." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i=2 (seen: {1,2})", "index": 2 }], "note": "Read 3: Not in set → Insert 3. Set is now {1, 2, 3}." },
+    { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i=3 (seen: {1,2,3})", "index": 3 }], "highlight": [0, 3], "note": "Read 1: Set already contains 1! Duplicate found → Return true." }
   ],
-  "caption": "Contains Duplicate — one pass, one hash set, one early exit."
+  "caption": "Contains Duplicate — single pass O(N) time with O(N) Hash Set memory."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(n) space. Compare that with the other honest option — sort first, then scan for equal neighbours — which is O(n log n) time but O(1) extra space. That pair of options is worth memorising as a *shape*: hashing buys speed with memory; sorting buys order with time. Interviewers love asking which you would pick and why (answer: it depends on whether memory or latency is the scarce resource — say that out loud).
-
-**The thread.** You just learned to remember *whether* you have seen something. The very next problem, Valid Anagram, asks a slightly richer question: not "have I seen this letter?" but "*how many times* have I seen it?" — and the set quietly grows up into a counter.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty / Single-element array*: If \`nums.length < 2\`, duplicates are impossible $\\rightarrow$ return \`false\`.
+- *Space-Time Trade-off*: Sorting first costs $O(N \\log N)$ time but uses $O(1)$ space. Hash Set costs $O(N)$ time and $O(N)$ space. Always specify this trade-off during technical interviews.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What is the primary trade-off when using a Hash Set to solve Contains Duplicate?",
-          options: ["It sacrifices time for space.", "It trades O(N) auxiliary space to achieve O(N) time complexity.", "It requires the array to be sorted first.", "It only works for positive integers."],
+          prompt: "Why does using a Hash Set guarantee O(N) time complexity for Contains Duplicate?",
+          options: [
+            "Because Hash Sets sort the elements automatically upon insertion.",
+            "Because Hash Set lookup and insertion take O(1) average time, making the single loop overall O(N).",
+            "Because Hash Sets use two-pointer navigation internally.",
+            "Because Hash Sets eliminate the need for memory allocation."
+          ],
           correct_index: 1,
-          model_answer: "A Hash Set allows O(1) lookups, bringing the total time down to O(N). However, storing up to N elements in the set requires O(N) space.",
+          model_answer: "A Hash Set uses hashing to index elements, allowing instantaneous O(1) checks. Traversing N elements performs N lookups, giving O(N) total time.",
           difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "If memory is extremely constrained (O(1) space limit), how would you solve Contains Duplicate and what is the time penalty?",
+          model_answer: "Sort the array in-place first (O(N log N) time), then scan adjacent elements in one pass (O(N) time). The total time becomes O(N log N) while maintaining O(1) auxiliary space.",
+          difficulty: "intermediate"
         }
       ]
     },
@@ -61,34 +71,46 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/is-anagram",
       summary: "Two words are anagrams when their letter histograms match — comparison by counting.",
-      body: `**Signal.** "Are two strings anagrams" with no mention of order — "listen"/"silent" should say yes, "rat"/"car" should say no. Whenever a prompt says rearrangement is allowed, stop thinking about permutations and start thinking about **inventory**.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners often try to check if two strings are anagrams by checking if string \`s\` contains every letter of string \`t\` using string searching functions. 
+*Why this shatters*: Counterexample: \`s = "aab"\` and \`t = "abb"\`. Both contain 'a' and 'b', but they are **not** anagrams! Order doesn't matter, but **character frequency (inventory)** must match perfectly.
 
-**Brute force.** Sort both words and compare the sorted strings — sorted("listen") and sorted("silent") are both "eilnst". Correct, and it is a real canonical-form idea worth keeping (it returns with force two problems from now in Group Anagrams), but it costs O(n log n) per pair when a linear pass is available.
-
-**Optimal approach.** Two words are anagrams exactly when their letter counts match — 1 l, 1 i, 1 s, 1 t, 1 e, 1 n on both sides. So reduce each word to its histogram and compare histograms directly, without sorting either one. Count letters of the first word up: each letter increments its slot. Then walk the second word and count *down*: each letter decrements. If you ever go below zero, the second word uses a letter the first cannot supply — fail early. If the lengths matched and you never dipped negative, every count ends at exactly zero. One array of 26 integers does all the bookkeeping; no second pass to compare maps needed.
+**The Structural Invariant.** Two strings are anagrams if and only if their character frequency distributions (histograms) are identical.
+- *Fixed Alphabet Optimization*: If strings consist only of lowercase English letters (\`'a'\` to \`'z'\`), an array of size 26 acts as a fast, zero-overhead hash map.
+- *Single-Pass Balance Strategy*: Increment count for each character in \`s\`, decrement count for each character in \`t\`. If all 26 slots return to 0 at the end, they are anagrams.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [0, 0, 0, 0, 0, 0], "note": "Counter slots for e, i, l, n, s, t — all start at 0." },
-    { "cells": [1, 1, 1, 1, 1, 1], "note": "After counting UP through \\"listen\\": every letter's slot is 1." },
-    { "cells": [0, 0, 0, 0, 0, 0], "note": "After counting DOWN through \\"silent\\": every slot lands back on 0." },
-    { "cells": [0, 0, 0, 0, 0, 0], "highlight": [0, 1, 2, 3, 4, 5], "note": "All zero, same length, never went negative — anagram confirmed." }
+    { "cells": [0, 0, 0, 0, 0], "note": "Frequency array of size 26 (initialized to 0 for a, b, c, d, e...)" },
+    { "cells": [2, 1, 0, 0, 0], "note": "After processing s = 'aab': count['a'] = 2, count['b'] = 1." },
+    { "cells": [1, -1, 0, 0, 0], "highlight": [1], "note": "Processing t = 'abb': count['a'] drops to 1, count['b'] drops to -1 (negative count!)." },
+    { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' $\\rightarrow$ return false." }
   ],
-  "caption": "Valid Anagram — one histogram, incremented then decremented, must return to all-zero."
+  "caption": "Valid Anagram — frequency histogram increment/decrement with early exit."
 }
 \`\`\`
 
-**Complexity.** O(n) time, and O(1) space in the lowercase-English version — the histogram is 26 slots no matter how long the words are. (If the alphabet is unbounded — full Unicode — a hash map replaces the fixed array and space becomes O(k) for k distinct characters. Mentioning that unprompted is an easy interview point.) The sort-and-compare brute force stays O(n log n).
-
-**Thread.** Contains Duplicate remembered presence; this problem remembered counts. Next, Two Sum flips the direction of the question entirely: instead of asking "have I seen *this*?", you will ask "have I seen *the thing that completes this*?" — and that flip is the single most reused trick in interview history.`,
+**Boundary Traps & Execution Blueprint.**
+- *Length Mismatch*: If \`s.length !== t.length\`, return \`false\` immediately in $O(1)$.
+- *Unicode Support*: If inputs contain Unicode characters (beyond ASCII), a fixed-size 26-element array will overflow or throw index out-of-bounds. Upgrade to a standard \`Map<char, int>\`.`,
       questions: [
         {
           kind: "mcq",
           prompt: "Why can an array of size 26 replace a Hash Map for Valid Anagram?",
-          options: ["Because strings only ever contain 26 characters.", "Because the problem specifies lowercase English letters, mapping directly to indices 0-25.", "Because arrays are automatically dynamically sized.", "Because it takes O(1) time to sort an array of size 26."],
+          options: [
+            "Because strings can never exceed 26 characters in length.",
+            "Because lowercase English characters 'a'-'z' map directly to indices 0-25 using char code arithmetic ('c' - 'a').",
+            "Because arrays automatically resize when new characters are added.",
+            "Because sorting an array of size 26 takes O(1) time."
+          ],
           correct_index: 1,
-          model_answer: "When the character set is bounded (e.g., a-z), a fixed-size array acts as a perfect hash map with zero collision overhead and O(1) constant space.",
+          model_answer: "For a bounded character set like 'a'-'z', array index offset `ch - 'a'` provides O(1) access without hash collision overhead or object allocations.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What changes if the problem states that the input strings can contain arbitrary Unicode characters?",
+          model_answer: "The fixed array of size 26 is replaced with a Hash Map where keys are Unicode characters. Space complexity shifts from O(1) to O(K), where K is the number of distinct characters.",
           difficulty: "intermediate"
         }
       ]
@@ -99,30 +121,45 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/two-integer-sum",
       summary: "The most famous interview problem ever — and the birth of the complement lookup.",
-      body: `**Signal.** "Return the indices of the two numbers that add up to a target" — any "find a pair that sums/matches to X" prompt is asking whether you know the complement-lookup trick. It is the most-asked interview question in existence, and it earned that spot honestly: its one trick generalises everywhere.
+      body: `**Beginner Intuition & The Naive Fallacy.** The brute-force approach tests all pairs using two nested loops: for each index $i$, scan all $j > i$ to check if \`nums[i] + nums[j] == target\`.
+*Why this shatters*: This takes $O(N^2)$ time. If $N = 10,000$, it requires 50 million iterations!
+*The Breakthrough*: When standing at number $x = \\text{nums}[i]$, you do not need to search for every other number. You are looking for one specific required partner: $\\text{complement} = \\text{target} - x$.
 
-**Brute force.** Try every pair: two nested loops, O(n²) time, O(1) space. Notice *why* it feels wasteful: when you stand on 11 looking for a partner summing to 9, you scan backwards hunting for −2 — but you already *walked past* −2 earlier. The information existed; you just failed to keep it.
-
-**Optimal approach.** Reframe the question. Standing on value x, you do not need to search for anything — you need to know whether **target − x** has already been seen, and where. That number is called the *complement*, and "have I seen the complement?" is exactly the question a hash map answers in O(1). Walk the array once, and at each element first ask the map for the complement, then store your own value → index for the people downstream. Array [3, 4, 5, 6], target 7: at 3, complement is 4, map is empty, store 3→0; at 4, complement is 3 — the map has it at index 0. Done: [0, 1]. One pass, no rescanning. The check-before-store order also elegantly prevents using the same element twice.
+**The Structural Invariant.**
+- *State Map*: Store mapping of \`{ number_value: index }\` for all numbers seen so far.
+- *Order Invariant*: Check for \`complement\` in the hash map **before** inserting current number \`x\`. This guarantees you never pair an element with itself!
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i", "index": 0 }], "note": "At 3: complement = 7 − 3 = 4. Map is empty — not found. Store 3 → index 0." },
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i", "index": 1 }], "highlight": [0, 1], "note": "At 4: complement = 7 − 4 = 3. Map has 3 at index 0 — found! Return [0, 1]." }
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=0 (x=3)", "index": 0 }], "note": "Target = 7. x=3 $\\rightarrow$ complement = 7-3 = 4. Map is {}. 4 not found. Map adds {3: 0}." },
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 $\\rightarrow$ complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
   ],
-  "caption": "Two Sum — check the complement before storing, one pass, one map."
+  "caption": "Two Sum — single-pass complement lookup in O(N) time and O(N) space."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(n) space. There is a two-pointer O(1)-space variant — but it needs a *sorted* array, and sorting destroys the indices the problem demands. That exact variant is problem two of the next chapter (Two Sum II), which is the roadmap's way of teaching you that the same problem wears different optimal solutions depending on what structure the input already has.
-
-**Thread.** You now own the complement lookup. Group Anagrams, next, scales the idea from "one key finds one partner" to "one key gathers a whole family" — the map's values become buckets.`,
+**Boundary Traps & Execution Blueprint.**
+- *Duplicate Values*: What if \`nums = [3, 3]\` and \`target = 6\`? By checking for complement $6 - 3 = 3$ before inserting the second $3$, the map finds the first $3$ at index 0 and returns \`[0, 1]\` correctly.
+- *Same Element Reuse*: Storing before checking would cause \`nums = [3]\`, \`target = 6\` to return \`[0, 0]\` (invalid!). The check-before-store order prevents this bug completely.`,
       questions: [
         {
           kind: "open",
-          prompt: "In Two Sum, why do we store values as keys and indices as values in the Hash Map?",
-          model_answer: "We need to look up whether the *complement value* exists in O(1) time. By making the value the key in the map, we can check for its presence instantly, and the map's value gives us the index we need to return.",
+          prompt: "In Two Sum, why do we store array values as keys and array indices as values in the Hash Map?",
+          model_answer: "We need to perform O(1) lookups on the *value* of the complement (target - current). Hash maps lookup by key in O(1). Storing the index as the map value allows us to retrieve the required return indices instantly.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "mcq",
+          prompt: "What happens if we insert the current element into the Hash Map BEFORE checking for the complement?",
+          options: [
+            "The algorithm runs faster because insertion happens immediately.",
+            "It can incorrectly pair an element with itself if target == 2 * nums[i] (e.g., target=6, nums[0]=3 returning [0,0]).",
+            "It causes a runtime null pointer exception.",
+            "It degrades time complexity to O(N^2)."
+          ],
+          correct_index: 1,
+          model_answer: "Inserting before checking allows an element to match with its own map entry, producing invalid single-element pairs.",
           difficulty: "intermediate"
         }
       ]
@@ -133,11 +170,13 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/anagram-groups",
       summary: "Canonical forms as hash keys: everything 'the same' lands in the same bucket.",
-      body: `**Signal.** "Gather the anagrams into groups" — a grouping/bucketing prompt built on top of an equivalence relation (anagram-of) means a canonical form doubling as a **hash key**, so the map does the grouping for you.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners attempt to compare every string against every other string using the Valid Anagram helper function, building groups incrementally.
+*Why this shatters*: Comparing $N$ strings pairwise takes $O(N^2 \\cdot K)$ time (where $K$ is max string length). For 10,000 strings, $N^2 = 100,000,000$ comparisons!
 
-**Brute force.** Compare every word against every other word for the anagram relation and union them into groups — O(n²·k) for n words of average length k, since each comparison itself costs O(k). Painfully redundant: "eat" and "ate" get re-proven anagrams of each other independently of "tea" being one too.
-
-**Optimal approach.** Valid Anagram gave you the fingerprint idea: anagrams share a canonical form. Here that fingerprint becomes a hash key. Every word walks up to the map, announces its fingerprint, and gets dropped into the bucket labelled with it. Words that are anagrams of each other produce the identical label, so they cannot help but end up together — no comparisons between words ever happen. Two candidates for the fingerprint: the sorted word ("eat"/"tea"/"ate" all sort to "aet", O(k log k) per word), or the 26-letter count signature joined into a string key (O(k) per word — the answer to "can you avoid sorting each word?"). Either way the structure is identical: map from fingerprint → list of originals, then return the map's values.
+**The Structural Invariant & Canonical Key.** All anagrams, when transformed into a normalized **canonical signature**, produce identical keys.
+- *Sorting Key*: Sorting characters of \`"eat"\`, \`"tea"\`, \`"ate"\` all produce \`"aet"\`. Map key takes $O(K \\log K)$.
+- *Count Signature Key (Optimal $O(K)$)*: Build a 26-integer tuple/string representing character counts: \`#1#0#0...#1\` (1 'a', 1 'e', 1 't').
+- *Bucketing Invariant*: Map stores \`canonical_key -> List[original_strings]\`.
 
 \`\`\`viz:flow
 {
@@ -147,33 +186,41 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
     { "id": "ate", "label": "ate", "row": 2, "col": 0 },
     { "id": "tan", "label": "tan", "row": 3, "col": 0 },
     { "id": "nat", "label": "nat", "row": 4, "col": 0 },
-    { "id": "bat", "label": "bat", "row": 5, "col": 0 },
-    { "id": "aet", "label": "key \\"aet\\"", "row": 1, "col": 1 },
-    { "id": "ant", "label": "key \\"ant\\"", "row": 3.5, "col": 1 },
-    { "id": "abt", "label": "key \\"abt\\"", "row": 5, "col": 1 }
+    { "id": "key1", "label": "Bucket 'a1e1t1'", "row": 1, "col": 1 },
+    { "id": "key2", "label": "Bucket 'a1n1t1'", "row": 3.5, "col": 1 }
   ],
   "edges": [
-    { "from": "eat", "to": "aet" },
-    { "from": "tea", "to": "aet" },
-    { "from": "ate", "to": "aet" },
-    { "from": "tan", "to": "ant" },
-    { "from": "nat", "to": "ant" },
-    { "from": "bat", "to": "abt" }
+    { "from": "eat", "to": "key1" },
+    { "from": "tea", "to": "key1" },
+    { "from": "ate", "to": "key1" },
+    { "from": "tan", "to": "key2" },
+    { "from": "nat", "to": "key2" }
   ],
-  "caption": "Group Anagrams — every word's fingerprint routes it into the right bucket, no word-to-word comparisons."
+  "caption": "Group Anagrams — strings map directly into canonical frequency buckets."
 }
 \`\`\`
 
-**Complexity.** With count-signature keys: O(n·k) time for n words of average length k, O(n·k) space to hold everything. With sorted keys: O(n·k log k). Both are worlds better than the O(n²·k) brute force.
-
-**Thread.** Notice the promotion: in Two Sum the map's value was a single index; here it is a growing bucket. Next, Top K Frequent Elements pushes bucketing one step further — the bucket *index itself* becomes meaningful, and out of that falls a linear-time answer to a problem that looks like it needs sorting.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty Strings*: Inputs like \`[""]\` should map to key \`"#0#0..."\` and return \`[[""]]\`.
+- *Hash Key Serialization*: In languages like JavaScript/Python, array objects are compared by reference, not value! You must join frequency arrays into strings (e.g., \`count.join("#")\`) so map lookups compare by value.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "What is the optimal key to use in the Hash Map for Group Anagrams?",
-          options: ["The original string.", "The sorted version of the string.", "A character frequency count array (e.g., [1, 0, 2...]).", "The length of the string."],
-          correct_index: 2,
-          model_answer: "While sorting the string works (O(K log K) per string), building a 26-length frequency array takes only O(K) time per string and serves as a perfect, unique key for anagrams.",
+          prompt: "What is the primary advantage of using a 26-element character count string over sorting each word in Group Anagrams?",
+          options: [
+            "It avoids creating a Hash Map.",
+            "It reduces the per-word key generation time from O(K log K) to O(K).",
+            "It uses less memory than an integer array.",
+            "It allows the algorithm to work with integers."
+          ],
+          correct_index: 1,
+          model_answer: "Counting character frequencies takes linear time O(K) per string, beating comparison-based sorting O(K log K) for long strings.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "Why can't we use a raw JavaScript Array `[1, 0, 1...]` directly as a Map key in JS?",
+          model_answer: "In JavaScript, Objects and Maps compare object keys by reference identity, not value equality. Two identical arrays `[1, 0]` and `[1, 0]` are different object references. Converting to a primitive string key `\"1,0\"` ensures value-based hashing.",
           difficulty: "advanced"
         }
       ]
@@ -184,34 +231,47 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/top-k-elements-in-list",
       summary: "Count with a map, then bucket by frequency — a sort-shaped problem solved without sorting.",
-      body: `**Signal.** "Return the k most frequent values" — frequency means counting (a hash map), but "top k without full sort" is the actual ask, and it's a tell for bucket sort whenever counts are bounded by array length.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners count frequencies with a map, then sort the map entries by frequency descending.
+*Why this shatters*: Sorting $U$ unique elements takes $O(U \\log U)$ time. If all elements are unique, this takes $O(N \\log N)$. The problem explicitly asks for a solution faster than $O(N \\log N)$!
 
-**Brute force.** Count with a map — {1:3, 2:2, 3:1} for [1,1,1,2,2,3] — then sort the (value, count) pairs by count descending and take the first k. O(n log n) time for the sort, which the problem is explicitly steering you away from with a "better than O(n log n)" follow-up.
-
-**Optimal approach.** Ask what the counts can possibly be. An element in an array of length n can appear at most n times, and at least once — frequencies live in the tiny universe 1..n. Whenever values live in a small, dense, known range, you can use them **as array indexes**. Make an array of n+1 buckets where bucket[f] holds every value that occurred exactly f times — bucket sort wearing its most natural outfit. Then walk the buckets from the high end down, collecting values until you have k of them. No comparison-based sorting ever runs; the *positions* do the ordering.
+**The Structural Invariant & Bucket Sort Discovery.**
+- *Key Observation*: An element in an array of size $N$ can appear at most $N$ times. The frequencies are strictly bounded within the integer range $[1, N]$.
+- *Bucket Array*: Create an array of buckets where \`bucket[freq]\` holds a list of numbers that appeared exactly \`freq\` times.
+- *Reverse Sweep*: Iterate through \`bucket\` from index $N$ down to 1, collecting elements until $K$ elements are accumulated.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["", "", "", ""], "note": "Bucket array indexed by frequency 0..3 (n=6 elements, so max frequency ≤ 6)." },
-    { "cells": ["", "", "2", "1"], "note": "Counts {1:3, 2:2, 3:1} land in buckets: bucket[3] holds value 1, bucket[2] holds value 2." },
-    { "cells": ["", "", "2", "1"], "highlight": [3, 2], "note": "Sweep from the highest index down: bucket 3 yields 1, bucket 2 yields 2 — k=2 reached, stop." }
+    { "cells": ["freq 0", "freq 1", "freq 2", "freq 3"], "note": "Bucket array indexed by frequency 0..N (Array length N=6)." },
+    { "cells": ["[]", "[3]", "[2]", "[1]"], "note": "Counts {1:3, 2:2, 3:1} placed in buckets: bucket[3]=[1], bucket[2]=[2], bucket[1]=[3]." },
+    { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements $\\rightarrow$ [1, 2]." }
   ],
-  "caption": "Top K Frequent Elements — frequency becomes the index, so collecting the top k needs no sorting."
+  "caption": "Top K Frequent Elements — Bucket sort in O(N) time without comparison sorting."
 }
 \`\`\`
 
-**Complexity.** O(n) time — one counting pass, one bucketing pass, one collection sweep — and O(n) space. The mainstream alternative is a heap of size k, giving O(n log k): genuinely the better answer when data streams in and n is unbounded, and saying so shows range (a full chapter on heaps awaits later in the atlas). But on a static array, buckets win outright over the O(n log n) brute force.
-
-**Thread.** Three problems ago a map remembered presence; now maps and arrays are composing into little machines. Next comes a change of pace — Encode and Decode Strings has no counting at all. It asks a systems question: how do you make data *describe itself*? The answer, a length prefix, is secretly another kind of fingerprint.`,
+**Boundary Traps & Execution Blueprint.**
+- *Negative Numbers & Large Values*: The Hash Map handles arbitrary values (even negative or huge numbers). Bucket indices only depend on **counts**, which are always positive integers $\\le N$.
+- *Min-Heap Alternative*: A Min-Heap of size $K$ gives $O(N \\log K)$ time and $O(N)$ space — a great alternative when $K \\ll N$.`,
       questions: [
         {
           kind: "mcq",
-          prompt: "In Bucket Sort for Top K Frequent Elements, what does the index of the bucket array represent?",
-          options: ["The value from the original array.", "The frequency of the elements stored at that index.", "The rank (kth most frequent).", "The order the elements appeared in the original array."],
+          prompt: "What property of frequency counts enables Bucket Sort to achieve O(N) time complexity in Top K Frequent Elements?",
+          options: [
+            "The values in the array are already sorted.",
+            "The maximum frequency of any element cannot exceed N (the array length), bounding bucket indices to [1, N].",
+            "Hash maps store keys in sorted order automatically.",
+            "K is guaranteed to be less than 10."
+          ],
           correct_index: 1,
-          model_answer: "The index represents the count/frequency. Since a number can appear at most N times, we can create an array of size N+1 where bucket[i] holds all numbers that appeared exactly i times.",
+          model_answer: "Because frequencies are bounded by N, we can index buckets directly by frequency, performing an O(N) bucket sweep instead of an O(N log N) sort.",
           difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "When would a Min-Heap approach (O(N log K)) be preferred over Bucket Sort (O(N))?",
+          model_answer: "When streaming data where N is unknown or infinite, or when memory is limited and K is very small relative to N (saving allocation of N bucket lists).",
+          difficulty: "advanced"
         }
       ]
     },
@@ -221,34 +281,45 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/string-encode-and-decode",
       summary: "Length-prefix framing: the serialization trick real protocols use, in interview miniature.",
-      body: `**Signal.** "Flatten a list of strings, then reconstruct the exact original list" — where the strings can contain *anything*, including whatever separator you were about to reach for. That constraint is the whole signal: this is a serialization-framing question, not a string-algorithms one.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners suggest joining strings with a delimiter like \`","\` or \`"#"\`.
+*Why this shatters*: Counterexample: What if a string in the input list itself contains the delimiter, e.g., \`["hello#world", "test"]\`? Joining with \`"#"\` produces \`"hello#world#test"\`. The decoder cannot tell if \`"hello"\` and \`"world"\` were separate strings! Escaping delimiters adds complex edge-case bugs.
 
-**Brute force (why it fails).** The instinct is to join with a special character: "hello,world". But the moment a string may itself contain a comma, the decoder cannot tell structure from content. Escaping can patch it, but escapes need escaping, and the scheme grows hair. The problem is fundamental: a delimiter puts the structural information *inside* the same alphabet as the data, and the two collide — there's no complexity win here, it's just wrong.
-
-**Optimal approach.** Put the structure *before* the data instead of *between* the data: prefix each string with its length and a terminator for the length itself — "5#hello5#world". Now the decoder never searches for anything. It reads a number, reads the # that ends the number, then **counts** forward exactly that many characters — and whatever those characters are, even digits, even #, they are payload by construction. The data cannot collide with the framing because the framing is consumed before the data begins. Note why the # is genuinely required: without it, "12#ab" could not tell "a 12-char string" from "a 1-char string starting with 2…" — lengths can be multi-digit, so the length field needs its own end marker.
+**The Structural Invariant: Length-Prefix Framing.** Real-world protocols (TCP, HTTP Content-Length, Protobuf) avoid delimiter ambiguity by putting **metadata (length) before payload**.
+- *Format*: \`"<length>#<string_payload>"\` for each word.
+- *Decoding Invariant*: Read digits until encountering \`'#'\`. Parse integer \`L\`. Read exactly the next \`L\` characters as verbatim payload string regardless of content, then jump index by \`L\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["4", "#", "c", "o", "d", "e", "8", "#", "n", "e", "e", "t", "c", "o", "d", "e"], "pointers": [{ "label": "i", "index": 0 }], "note": "Read digits until '#': length = 4." },
-    { "cells": ["4", "#", "c", "o", "d", "e", "8", "#", "n", "e", "e", "t", "c", "o", "d", "e"], "highlight": [2, 3, 4, 5], "note": "Consume exactly 4 characters as payload: \\"code\\" — no searching, just counting." },
-    { "cells": ["4", "#", "c", "o", "d", "e", "8", "#", "n", "e", "e", "t", "c", "o", "d", "e"], "pointers": [{ "label": "i", "index": 6 }], "note": "Next: read digits until '#': length = 8." },
-    { "cells": ["4", "#", "c", "o", "d", "e", "8", "#", "n", "e", "e", "t", "c", "o", "d", "e"], "highlight": [8, 9, 10, 11, 12, 13, 14, 15], "note": "Consume exactly 8 characters: \\"neetcode\\". Decoded: [\\"code\\", \\"neetcode\\"]." }
+    { "cells": ["4", "#", "c", "o", "d", "e", "5", "#", "w", "o", "r", "l", "d"], "pointers": [{ "label": "i=0", "index": 0 }], "note": "Read digits until '#': length L = 4." },
+    { "cells": ["4", "#", "c", "o", "d", "e", "5", "#", "w", "o", "r", "l", "d"], "highlight": [2, 3, 4, 5], "note": "Read next L=4 chars: 'code'. Jump index past payload to i=6." },
+    { "cells": ["4", "#", "c", "o", "d", "e", "5", "#", "w", "o", "r", "l", "d"], "pointers": [{ "label": "i=6", "index": 6 }], "note": "Read digits until '#': length L = 5." },
+    { "cells": ["4", "#", "c", "o", "d", "e", "5", "#", "w", "o", "r", "l", "d"], "highlight": [8, 9, 10, 11, 12], "note": "Read next L=5 chars: 'world'. Decoded array: ['code', 'world']." }
   ],
-  "caption": "Encode and Decode Strings — a length prefix tells the decoder exactly how far to count, so payload content never has to be escaped."
+  "caption": "Encode and Decode Strings — Length-prefix prevents delimiter collisions."
 }
 \`\`\`
 
-**Complexity.** O(total characters) both ways, which is optimal — you must at least look at everything once. O(total characters) space for the encoded output.
-
-**The bigger picture.** You have reinvented length-prefix framing, which is how much of the real world ships data: HTTP's Content-Length header, TCP-level protocols, binary formats like Protocol Buffers. Interviewers ask this one because it separates people who memorise tricks from people who can *design* — there is no algorithm here, only a decision about where information should live.
-
-**Thread.** A length prefix is information carried *ahead* of the data it describes. Hold that thought: the very next problem, Product of Array Except Self, is built on prefixes of a numeric kind — what running products carry forward from the left and the right.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty Strings & Symbols*: \`["", "#", "12#ab"]\` encodes to \`"0##1##5#12#ab"\`. The decoder parses length \`0\`, skips 0 chars, parses length \`1\`, extracts \`"#"\`, parses length \`5\`, extracts \`"12#ab"\` perfectly!`,
       questions: [
         {
           kind: "open",
-          prompt: "Why is a simple delimiter (like '#') not enough to encode an array of strings?",
-          model_answer: "Because the delimiter character might exist inside the strings themselves. Without a length prefix telling us exactly how many characters belong to the string, we cannot distinguish a delimiter from normal string content.",
+          prompt: "Why is the delimiter character '#' required after the length number in length-prefix encoding?",
+          model_answer: "Because the length itself can be multi-digit (e.g., 12 vs 1). Without a delimiter terminating the length integer, '12ab' could be parsed as length 1 or length 12.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "mcq",
+          prompt: "What is the time complexity to encode and decode a list of N strings with total length L?",
+          options: [
+            "O(N log N) time for sorting strings.",
+            "O(L) time for encoding and O(L) time for decoding.",
+            "O(N^2) time due to string slice operations.",
+            "O(2^N) exponential time."
+          ],
+          correct_index: 1,
+          model_answer: "Each character across all strings is processed a constant number of times during encoding and decoding, resulting in optimal O(L) linear time.",
           difficulty: "basic"
         }
       ]
@@ -259,36 +330,51 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/products-of-array-discluding-self",
       summary: "Prefix meets suffix: every answer is the product of everything to your left times everything to your right.",
-      body: `**Signal.** "The product of every element except the one at i — without division" — the division ban is the tell. It rules out the one-line cheat (multiply everything, then divide by self) and points straight at **prefix aggregation**.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate the total product of all elements in the array, then for each index $i$, divide \`total_product / nums[i]\`.
+*Why this shatters*: 
+1. The problem explicitly bans division!
+2. *Division fails on Zeros*: If \`nums = [1, 0, 3]\`, total product is 0. Dividing by \`nums[1] = 0\` throws Division-By-Zero errors!
 
-**Brute force.** For each position, multiply every other element — O(n²) time. Or: multiply everything once, then divide by self for each position — O(n) but explicitly banned, since it breaks the moment a zero appears in the array and division isn't always the operation the interviewer wants generalised.
-
-**Optimal approach.** Stand at position i and look both ways. The answer at i is exactly (product of everything to my left) × (product of everything to my right). Neither side involves you. Both sides can be *precomputed as running totals*: a left-to-right sweep accumulates prefix products, a right-to-left sweep accumulates suffix products. Two passes, each O(n), and every element of the answer is one multiplication of a prefix by a suffix. The space-polished version writes the prefixes straight into the output array, then sweeps from the right carrying the suffix product in a single variable and multiplying it in — same idea, O(1) extra space, and the follow-up interviewers usually want.
+**The Structural Invariant: Prefix & Suffix Splitting.**
+For any index $i$, the product of all elements except \`nums[i]\` equals:
+$$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\times (\\text{product of all elements to the right of } i)$$
+- *Left Sweep*: Build \`res[i]\` containing the cumulative product of elements from index $0$ to $i-1$.
+- *Right Sweep*: Maintain a running \`postfix\` variable moving right-to-left, updating \`res[i] *= postfix\` in $O(1)$ extra space.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4], "note": "Input array." },
-    { "cells": [1, 1, 2, 6], "note": "Left-to-right sweep: prefix[i] = product of everything before i." },
-    { "cells": [24, 12, 4, 1], "note": "Right-to-left sweep: suffix[i] = product of everything after i." },
-    { "cells": [24, 12, 8, 6], "highlight": [0, 1, 2, 3], "note": "Multiply position-wise, prefix × suffix: the final answer, no division used." }
+    { "cells": [1, 2, 3, 4], "note": "Input array nums." },
+    { "cells": [1, 1, 2, 6], "note": "Left Pass: res[i] holds prefix product of left elements. (res = [1, 1, 2, 6])" },
+    { "cells": [24, 12, 8, 6], "highlight": [0, 1, 2, 3], "note": "Right Pass: multiply res[i] by running postfix (from right). Final res = [24, 12, 8, 6]." }
   ],
-  "caption": "Product of Array Except Self — each answer is where a left-sweep and a right-sweep meet."
+  "caption": "Product of Array Except Self — Prefix product pass followed by Suffix product pass."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(1) space beyond the output.
-
-**The bigger picture.** You have just met prefix aggregation, one of the quietly great ideas in all of computing. Swap × for +, and prefix sums answer any "sum of a range" query in O(1) — the trick behind countless subarray problems. The general shape: precompute what the left knows and what the right knows, and every position's answer becomes a meeting of the two. You will see it again in 2-D DP and in interval problems.
-
-**Thread.** So far every structure has been one-dimensional. Valid Sudoku, next, lifts hashing into two dimensions — where the thing you remember is not a value but a *coordinate fact*: "this digit already lives in this row, this column, this box."`,
+**Boundary Traps & Execution Blueprint.**
+- *Zeros in Array*:
+  - Single zero (e.g., \`[1, 2, 0, 4]\`): Output at index of zero is $1 \\times 2 \\times 4 = 8$. All other indices become $0$.
+  - Multiple zeros (e.g., \`[1, 0, 0, 4]\`): All output indices are $0$.
+  - The prefix-suffix algorithm handles zero elements naturally without special-case branches!`,
       questions: [
         {
           kind: "mcq",
-          prompt: "How does the optimal approach for Product of Array Except Self avoid division?",
-          options: ["By using a sliding window.", "By precomputing prefix products from the left and suffix products from the right, then multiplying them for each index.", "By using a Hash Map to store all products.", "By sorting the array first."],
+          prompt: "In Product of Array Except Self, how is O(1) auxiliary space achieved while maintaining O(N) time?",
+          options: [
+            "By modifying the input array directly.",
+            "By storing left prefix products directly inside the returned result array, and using a single running scalar variable for right suffix products.",
+            "By using bitwise shift operations.",
+            "By sorting the array in-place first."
+          ],
           correct_index: 1,
-          model_answer: "The product of everything except nums[i] is exactly the product of everything to its left multiplied by the product of everything to its right.",
+          model_answer: "The output array does not count toward auxiliary space complexity per problem convention. Using a single scalar `postfix` variable during the second pass preserves O(1) extra space.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the result array for nums = [0, 4, 0] using the prefix/suffix multiplication approach?",
+          model_answer: "res = [0, 0, 0]. For index 0, right product includes a 0. For index 1, left product has 0 and right has 0. For index 2, left product includes a 0. The output is correctly [0, 0, 0] without division by zero.",
           difficulty: "intermediate"
         }
       ]
@@ -299,34 +385,50 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/valid-sudoku",
       summary: "Hashing in two dimensions — 27 little sets, and the integer-division trick that names each box.",
-      body: `**Signal.** "No digit repeats in any row, column, or 3×3 box" — three independent duplicate-detection constraints layered on the same cells. Multiple independent "no repeats" rules over the same data is a tell for multiple parallel hash sets, not one shared structure.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think of validating Sudoku by running nested loops for each cell to scan its row, column, and 3x3 box.
+*Why this shatters*: Scanning 27 cells for each of the 81 cells leads to redundant lookups ($81 \\times 27 \\approx 2,200$ checks).
 
-**Brute force.** For every filled cell, rescan its entire row, column, and box looking for a match — O(n³) work-ish over an n×n board (81 cells, each triggering ~27 comparisons), and it re-derives information you already saw on an earlier cell.
-
-**Optimal approach.** This is Contains Duplicate, three ways at once. Every constraint — "no repeats in row 4", "no repeats in column 7", "no repeats in box (1,2)" — is its own tiny duplicate-detection problem, and each gets its own hash set: 9 row-sets, 9 column-sets, 9 box-sets, 27 in all. One pass over the 81 cells; each filled cell asks three sets "have you seen this digit?" and, if all say no, registers itself in all three. Any yes anywhere ends it. The one real trick: rows and columns index themselves, but which box does cell (r, c) belong to? Integer division collapses coordinates into blocks — r/3 (rounded down) and c/3 each map 0,1,2 → 0; 3,4,5 → 1; 6,7,8 → 2. The pair (r/3, c/3), or the single number 3·(r/3) + c/3, names the box. This coordinate-compression trick reappears any time a grid has block structure.
+**The Structural Invariant: 2D Multi-Set Encoding.** We can validate the entire board in a **single pass over the 81 cells**.
+- Maintain 3 collections of Hash Sets:
+  1. \`rows[r]\`: Hash set of numbers seen in row $r$ (0..8)
+  2. \`cols[c]\`: Hash set of numbers seen in column $c$ (0..8)
+  3. \`boxes[box_idx]\`: Hash set of numbers seen in 3x3 box \`box_idx\`
+- *The Coordinate Trick*: Box index for cell $(r, c)$ is computed via integer division:
+  $$\\text{box\\_idx} = (r // 3) \\times 3 + (c // 3)$$
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": ["row4: {}", "col7: {}", "box(1,2): {}"], "note": "Cell (4,7) holds a 6. Check all three sets — all empty, all clear." },
-    { "cells": ["row4: {6}", "col7: {6}", "box(1,2): {6}"], "note": "No conflicts found — register 6 in row-set 4, col-set 7, and box-set (1,2)." },
-    { "cells": ["row5: {}", "col8: {}", "box(1,2): {6}"], "highlight": [2], "note": "Cell (5,8) also holds a 6, also in box (1,2). Row 5 and col 8 are clean, but box(1,2) already has 6 — invalid." }
+    { "cells": ["r=4, c=7", "val = '6'", "box_idx = (4//3)*3 + (7//3) = 1*3 + 2 = 5"], "note": "Cell (4,7) contains '6'. Compute box index = 5." },
+    { "cells": ["rows[4]: {}", "cols[7]: {}", "boxes[5]: {}"], "note": "Check if '6' is in rows[4], cols[7], or boxes[5]. All clear!" },
+    { "cells": ["rows[4]: {'6'}", "cols[7]: {'6'}", "boxes[5]: {'6'}"], "highlight": [0, 1, 2], "note": "Add '6' to rows[4], cols[7], and boxes[5]. Proceed to next cell." }
   ],
-  "caption": "Valid Sudoku — 27 independent sets do all the cross-checking; box index comes from integer division."
+  "caption": "Valid Sudoku — Single-pass validation using row, column, and sub-box hash sets."
 }
 \`\`\`
 
-**Complexity.** The board is fixed at 81 cells, so formally O(1) everything — say that with a smile, then give the honest form: O(n²) time and space for an n×n board, versus the brute force's ~O(n³). Sudoku's later chapter-mate is N-Queens in Backtracking, where boards stop being audited and start being *searched*.
-
-**Thread.** One problem remains, and it is the chapter's best magic trick: Longest Consecutive Sequence, where a hash set stops being a passive memory and becomes a space you can *leap through* — stepping from number to neighbouring number in O(1), no sorting in sight.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty Cells (\`'.'\`)*: Ignore empty cells completely.
+- *Validity vs Solvability*: Valid Sudoku only verifies that **current placed numbers do not violate rules**. It does NOT check if the puzzle has a valid complete solution (that requires Backtracking!).`,
       questions: [
         {
           kind: "mcq",
-          prompt: "How do you map a 9x9 Sudoku cell at (row, col) to its corresponding 3x3 sub-box index?",
-          options: ["(row % 3) * 3 + (col % 3)", "(row // 3) * 3 + (col // 3)", "(row + col) // 3", "row * col % 9"],
+          prompt: "Which formula correctly maps cell coordinates (row, col) to a unique 3x3 sub-box index from 0 to 8?",
+          options: [
+            "(row % 3) * 3 + (col % 3)",
+            "Math.floor(row / 3) * 3 + Math.floor(col / 3)",
+            "(row + col) / 3",
+            "row * col % 9"
+          ],
           correct_index: 1,
-          model_answer: "Dividing by 3 (floor division) maps indices 0-2 to 0, 3-5 to 1, etc. Multiplying the row offset by 3 gives a unique 1D index (0-8) for each of the 9 sub-boxes.",
-          difficulty: "advanced"
+          model_answer: "Floor dividing row and col by 3 collapses grid coordinates into 3x3 blocks (0, 1, or 2). Multiplying the block row by 3 produces a unique 0-8 sub-box ID.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "Why does Valid Sudoku execute in O(1) time and O(1) space complexity?",
+          model_answer: "Because the Sudoku board dimensions are fixed at 9x9 (81 cells). The number of operations and maximum stored set elements are bounded by constant upper limits.",
+          difficulty: "basic"
         }
       ]
     },
@@ -336,37 +438,50 @@ Master the reflex this chapter teaches — *"could a hash map remember this for 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-consecutive-sequence",
       summary: "The set as teleporter: find runs of consecutive numbers in O(n), only ever counting from a run's true start.",
-      body: `**Signal.** "Longest run of consecutive integers," required in O(n) — the O(n) bound is the tell. It explicitly rules out the obvious sort-then-scan (O(n log n)), so the answer has to come from a hash set used as a space you can step through.
+      body: `**Beginner Intuition & The Naive Fallacy.** The obvious approach is to sort the array, then scan for consecutive runs \`nums[i] == nums[i-1] + 1\`.
+*Why this shatters*: Sorting takes $O(N \\log N)$ time. The problem explicitly requires $O(N)$ linear time!
 
-**Brute force.** Sort the array, then scan for consecutive runs — O(n log n) time, and it's explicitly disallowed by the required complexity, but it's the natural first idea and worth naming before ruling it out.
-
-**Optimal approach.** Drop every number into a hash set, and the set becomes a *space with geography*: standing at any number x, you can ask "does x+1 exist?" in O(1) and step to it. Runs can be walked without any sorting. But walking naively from every element re-walks long runs over and over — from 1, from 2, from 3… The fix is the beautiful part: **only start walking from a run's true beginning.** A number x starts a run exactly when x − 1 is *not* in the set. For every other number, do nothing — some starter upstream will collect it.
+**The Structural Invariant & Sequence Start Filtering.**
+- Insert all elements into a Hash Set for $O(1)$ presence queries.
+- *The Aha! Discovery*: A number $x$ is the **start of a sequence** if and only if $(x - 1)$ is **NOT** present in the Hash Set!
+- If $(x - 1)$ exists in the set, skip $x$! An earlier start element will measure the sequence containing $x$.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 2, 3, 4], "highlight": [0], "note": "Set: {100,4,200,1,3,2}. Visit 1: 0 is absent → 1 is a starter. Begin walking: check 2." },
-    { "cells": [1, 2, 3, 4], "highlight": [0, 1], "note": "2 is present — extend the run." },
-    { "cells": [1, 2, 3, 4], "highlight": [0, 1, 2], "note": "3 is present — extend further." },
-    { "cells": [1, 2, 3, 4], "highlight": [0, 1, 2, 3], "note": "4 is present, 5 is absent — run ends. Length 4. (100 and 200 are each their own starter, length 1; visits to 2 and 3 as outer-loop starters get skipped since 1/2 are present.)" }
+    { "cells": [100, 4, 200, 1, 3, 2], "note": "Set: {100, 4, 200, 1, 3, 2}. Scan elements..." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=100", "index": 0 }], "note": "99 in set? NO $\\rightarrow$ x=100 is a sequence start. Length = 1." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=4", "index": 1 }], "note": "3 in set? YES $\\rightarrow$ Skip! (3 will be handled when walking from 1)." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO $\\rightarrow$ Start at 1. Count 1, 2, 3, 4 $\\rightarrow$ Max Length = 4." }
   ],
-  "caption": "Longest Consecutive Sequence — only true run-starts pay for a walk, so every element is touched at most twice overall."
+  "caption": "Longest Consecutive Sequence — Only sequence start elements initiate linear counting."
 }
 \`\`\`
 
-**Why it is really O(n).** The loop-inside-a-loop look is deceiving. Every element is touched at most twice — once in the outer scan, once as a step inside the single walk that owns it, because only one starter per run exists. Amortised analysis in one sentence, and interviewers *will* ask you to make this argument. The is-x-minus-1-absent guard is the whole difference between O(n) and quadratic.
-
-**Complexity.** O(n) time, O(n) space — versus the O(n log n) brute force.
-
-**Thread.** That closes chapter one. Look at the arc: presence, counts, complements, buckets, self-describing data, prefixes, coordinates, and finally a set with paths through it. Every later chapter borrows from this toolkit. Next: **Two Pointers** — where instead of *spending memory* to create structure, you exploit structure the data already has. Its opening problem needs no map at all: just two fingers and a sorted-enough world.`,
+**Boundary Traps & Execution Blueprint.**
+- *Why it is strictly $O(N)$*: Although there is a nested \`while\` loop inside the \`for\` loop, the \`while\` loop ONLY runs for sequence starts. Each number in the array is visited at most twice (once in the outer loop, once in the inner \`while\` loop). Amortized time is strictly $O(N)$.
+- *Duplicates*: Hash Set automatically eliminates duplicate numbers, so \`[1, 2, 0, 1]\` works smoothly without infinite loops.`,
       questions: [
         {
+          kind: "mcq",
+          prompt: "How does the algorithm prevent O(N^2) behavior in Longest Consecutive Sequence?",
+          options: [
+            "By sorting the array before checking elements.",
+            "By only initiating the sequence counting loop if (num - 1) is NOT in the hash set.",
+            "By using a binary search tree instead of a hash set.",
+            "By limiting the search to positive numbers."
+          ],
+          correct_index: 1,
+          model_answer: "Checking `!set.has(num - 1)` ensures that sequence counting is executed strictly from the beginning of each sequence, visiting each number at most twice overall.",
+          difficulty: "intermediate"
+        },
+        {
           kind: "open",
-          prompt: "In Longest Consecutive Sequence, how do we ensure the algorithm runs in O(N) time instead of O(N^2)?",
-          model_answer: "We only start counting a sequence if the current number is the *start* of a sequence (i.e., num - 1 does not exist in the hash set). This guarantees each number is visited at most twice.",
+          prompt: "What would happen if we removed the `!set.has(num - 1)` check and counted sequences from every number?",
+          model_answer: "For an array like [1, 2, 3, 4, 5], number 1 would count 5 steps, number 2 would count 4 steps, number 3 would count 3 steps... leading to O(N^2) quadratic time complexity.",
           difficulty: "advanced"
         }
       ]
-    },
-  ],
+    }
+  ]
 };

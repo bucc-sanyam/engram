@@ -11,11 +11,7 @@ export const intervals: DsaTopic = {
   unlocks: [],
   intro: `An interval is the smallest interesting piece of geometry: a start and an end. Meetings, bookings, CPU bursts, IP ranges, gene spans — the moment your data means "from here to there," you are in this chapter. And nearly everything difficult about intervals dissolves under one preparatory move: **sort by start**. Unsorted, "do any of these overlap?" is an all-pairs question; sorted, overlap can only happen between *neighbours in the sweep* — each new interval need only be compared against the latest thing still open. One sort converts geometry into a single left-to-right pass. If this chapter had a motto, that is it.
 
-The second load-bearing idea is knowing the **overlap test** cold, in its clean form: two intervals overlap iff each starts before the other ends — a.start ≤ b.end and b.start ≤ a.end. Interviewers watch whether you derive it or fumble it; derive it once from its negation ("they *don't* overlap iff one ends before the other starts") and it is yours forever. Its edge case — do touching endpoints count? — is a *problem statement* question, not a math question; ask it out loud every time.
-
-The six problems build a complete toolkit. Insert Interval is the surgical case — one new span absorbed into sorted peace, three phases: before, during (merge), after. Merge Intervals is the same absorption run wholesale. Non-overlapping Intervals turns to scheduling — remove the fewest to make peace — and resurrects the Greedy chapter's exchange argument in its most famous costume (keep the earliest-ending). Meeting Rooms is the overlap test as a yes/no sweep; Meeting Rooms II asks *how many rooms* — the count of simultaneous overlaps — and introduces the two great counting techniques: the min-heap of end-times (chapter eight, back on stage) and the event sweep (starts +1, ends −1), which is really a prefix-sum over time (chapter one, of all things). The finale, Minimum Interval to Include Each Query, composes everything: sort intervals *and* queries, sweep them together, and let a heap hold the candidates — offline processing, the pattern real databases use when queries can be reordered.
-
-On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent tools.`,
+The second load-bearing idea is knowing the **overlap test** cold: two intervals $A$ and $B$ overlap iff $A.\\text{start} \\le B.\\text{end}$ and $B.\\text{start} \\le A.\\text{end}$.`,
   problems: [
     {
       slug: "insert-interval",
@@ -23,24 +19,50 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/insert-new-interval",
       summary: "Three phases against a sorted list: copy the before, absorb the overlapping, copy the after.",
-      body: `**Signal.** "A sorted, non-overlapping list, and one new interval: insert it, merging wherever it overlaps" — a single insertion into an already-sorted, already-disjoint list is the tell that the collisions form one *contiguous block*, solvable in three linear phases with no re-sorting.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners push the new interval into the array and re-sort the entire list ($O(N \\log N)$).
+*Why this shatters*: The input list is **ALREADY SORTED and NON-OVERLAPPING**! Re-sorting from scratch throws away pre-existing order and takes unnecessary time.
 
-**Brute force.** Append the new interval to the list, sort everything again, then merge overlapping intervals as a fresh pass — O(n log n), throwing away the fact that the input was already sorted and disjoint before the insertion.
-
-**Optimal approach.** Because the existing list is sorted and disjoint, the new interval's collisions form a **contiguous block**. **Phase one:** intervals ending before the newcomer starts are untouchable — copy them through. **Phase two:** intervals that overlap it get *absorbed*: fold each into the newcomer by taking min of starts and max of ends — the newcomer swells as it eats. When the next interval starts beyond the swollen end, emit the merged span once. **Phase three:** everything after — copy through.
+**The Structural Invariant: Three-Phase Linear Sweep ($O(N)$ Time).**
+A single insertion into an already-sorted disjoint list produces a **contiguous overlapping block**:
+1. **Phase 1 (Before)**: Copy all intervals ending BEFORE the new interval starts (\`curr.end < newInterval.start\`).
+2. **Phase 2 (Overlap Merging)**: Merge all intervals that overlap with new interval (\`curr.start <= newInterval.end\`):
+   $$\\text{newInterval.start} = \\min(\\text{newInterval.start}, \\text{curr.start})$$
+   $$\\text{newInterval.end} = \\max(\\text{newInterval.end}, \\text{curr.end})$$
+3. **Push Merged New Interval**.
+4. **Phase 3 (After)**: Copy remaining intervals (\`curr.start > newInterval.end\`).
 
 \`\`\`viz:table-diff
 {
-  "columns": ["Interval", "Phase", "Action"],
-  "before": [["[1,2]", "Before", "copy through unchanged"], ["[3,5]", "Overlap", "absorb — newcomer [4,8] becomes [3,8]"]],
-  "after": [["[6,7]", "Overlap", "absorb — stays [3,8]"], ["[8,10]", "Overlap (touching)", "absorb — newcomer becomes [3,10]"], ["[12,16]", "After", "emit merged [3,10] first, then copy [12,16] through"]],
-  "caption": "Insert Interval — [[1,2],[3,5],[6,7],[8,10],[12,16]] + [4,8]: the collision block is contiguous (indices 1-3), swallowed into one growing span. Result: [[1,2],[3,10],[12,16]]."
+  "columns": ["Existing Interval", "Sweep Phase", "Action Taken"],
+  "before": [["[1, 2]", "Phase 1: Before", "Push to result as-is"], ["[3, 5]", "Phase 2: Overlap", "Merge: newInterval becomes [3, 8]"]],
+  "after": [["[6, 7]", "Phase 2: Overlap", "Merge: newInterval stays [3, 8]"], ["[8, 10]", "Phase 2: Overlap", "Merge: newInterval becomes [3, 10]"], ["[12, 16]", "Phase 3: After", "Push merged [3, 10], then copy [12, 16]"]],
+  "caption": "Insert Interval — 3-Phase linear sweep merging contiguous overlapping spans."
 }
 \`\`\`
 
-**Complexity.** O(n) time, O(n) output space — versus the O(n log n) re-sort-everything approach.
-
-**Thread.** One interval absorbed into sorted peace. Merge Intervals, next, is this problem with *nothing* pre-sorted and *everything* potentially colliding — the wholesale version, and the chapter's true workhorse.`,
+**Boundary Traps & Execution Blueprint.**
+- *Empty List*: If existing list is empty \`[]\`, return \`[newInterval]\`.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why does Insert Interval take O(N) time instead of O(N log N)?",
+          options: [
+            "Because we sort the array.",
+            "Because the input intervals are already sorted and disjoint, allowing us to merge in a single linear 3-phase pass without re-sorting.",
+            "Because it uses binary search.",
+            "Because intervals are 1D arrays."
+          ],
+          correct_index: 1,
+          model_answer: "Pre-sorted inputs allow contiguous overlap merging during a single O(N) linear sweep.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What condition defines that interval A and interval B overlap?",
+          model_answer: "A.start <= B.end && B.start <= A.end.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "merge-intervals",
@@ -48,26 +70,51 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/merge-intervals",
       summary: "Sort by start; each interval either extends the last open span or starts a new one.",
-      body: `**Signal.** "An arbitrary pile of intervals: merge all overlapping ones" — no pre-existing order is the tell for the chapter's motto: sort by start first, and an all-pairs question collapses into a single left-to-right sweep.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners compare all pairs of intervals without sorting ($O(N^2)$).
+*Why this shatters*: Un-sorted intervals can overlap with intervals located anywhere in the input array.
 
-**Brute force.** Compare every pair of intervals for overlap and union the overlapping ones (e.g. via union-find or repeated merging) — O(n²), since without sorting, any interval might touch any other.
-
-**Optimal approach.** Sort by start. Sweep, maintaining one **open span** — the interval currently being built. Each next interval, thanks to the sort, can only relate to the open span two ways: its start falls inside (start ≤ openEnd — extend the span's end with max) or beyond it (a gap — the open span is finished forever; emit it, open a new one). The sort guarantees no *later* interval can reach back and touch an emitted span, because later starts only grow — emitted means safe, the entire correctness argument. Extending must take max(openEnd, end), not assign: a swallowed interval like [2,3] inside [1,10] must not shrink the open span.
+**The Structural Invariant: Sort-By-Start + Running Open Span Sweep.**
+1. **Sort intervals by start time**: \`intervals.sort((a, b) => a[0] - b[0])\`.
+2. Maintain \`result = [intervals[0]]\`.
+3. For each subsequent interval \`curr\`:
+   - Let \`last = result[result.length - 1]\`.
+   - **Overlap Case** (\`curr.start <= last.end\`):
+     Extend current open span: \`last.end = max(last.end, curr.end)\`.
+   - **Disjoint Case** (\`curr.start > last.end\`):
+     Start a new open span: \`result.push(curr)\`.
 
 \`\`\`viz:table-diff
 {
-  "columns": ["Next interval", "Compare to open span", "Result"],
-  "before": [["[1,3]", "(first) open span begins", "open = [1,3]"], ["[2,6]", "2 <= openEnd(3)", "extend — open = [1,6]"]],
-  "after": [["[8,10]", "8 > openEnd(6) — a gap", "emit [1,6]; open = [8,10]"], ["[15,18]", "15 > openEnd(10) — a gap", "emit [8,10]; open = [15,18]; emit at the end"]],
-  "caption": "Merge Intervals, sorted [[1,3],[2,6],[8,10],[15,18]] — each interval either extends the open span (overlap/touch) or closes it (a gap). Result: [[1,6],[8,10],[15,18]]."
+  "columns": ["Interval (Sorted)", "Comparison against last.end", "Action"],
+  "before": [["[1, 3]", "First interval", "result = [[1, 3]]"], ["[2, 6]", "2 <= 3 (Overlap!)", "Extend: result = [[1, 6]]"]],
+  "after": [["[8, 10]", "8 > 6 (Disjoint!)", "Push new: result = [[1, 6], [8, 10]]"], ["[15, 18]", "15 > 10 (Disjoint!)", "Push new: result = [[1, 6], [8, 10], [15, 18]]"]],
+  "caption": "Merge Intervals — Sort-by-start single pass linear sweep."
 }
 \`\`\`
 
-**Complexity.** O(n log n) for the sort, O(n) sweep and output — versus the O(n²) all-pairs comparison.
-
-**Kinship.** Partition Labels (last chapter) was secretly this — letter spans merged into clusters; and Insert Interval is this problem's phase two running once.
-
-**Thread.** Merging makes peace by *union*. The next problem makes peace by *eviction* — remove the fewest intervals so none overlap — and the right greedy choice (keep the earliest ender) comes with the chapter's classic proof.`,
+**Boundary Traps & Execution Blueprint.**
+- *Swallowed Intervals*: Always update \`last.end = max(last.end, curr.end)\`. Don't just assign \`last.end = curr.end\` because a swallowed interval like \`[2, 3]\` inside \`[1, 10]\` must not shrink \`last.end\`!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must we use max(last.end, curr.end) instead of assigning last.end = curr.end when merging overlapping intervals?",
+          options: [
+            "Because intervals are sorted by end time.",
+            "Because an interval may be completely swallowed inside the previous interval (e.g. [1, 10] and [2, 3]), and assigning directly would incorrectly shrink last.end.",
+            "To prevent negative interval values.",
+            "Because JavaScript arrays require max values."
+          ],
+          correct_index: 1,
+          model_answer: "A swallowed interval has a smaller end than the open span. Using max() ensures the span never shrinks.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Merge Intervals?",
+          model_answer: "O(N log N) time complexity due to sorting intervals by start time.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "non-overlapping-intervals",
@@ -75,24 +122,51 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/non-overlapping-intervals",
       summary: "Fewest removals = total minus the most you can keep — and earliest-end-first keeps the most.",
-      body: `**Signal.** "Remove the minimum number of intervals so the rest never overlap" — minimizing removals is the same as maximizing what's kept, which is the tell that this is the classic **activity selection** problem in an interval costume: sort by end time, keep greedily.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort by start time and greedily pick intervals.
+*Why this shatters*: Counterexample: \`[[1, 10], [2, 3], [3, 4]]\`. Sorting by start time picks \`[1, 10]\` first, forcing the removal of 2 smaller non-overlapping intervals!
 
-**Brute force.** Try every subset of intervals, check which are pairwise non-overlapping, and keep the largest valid subset — 2ⁿ subsets, exponential.
-
-**Optimal approach.** "Fewest removed" = n − "most kept." Sort by **end time**. Sweep, keeping any interval that starts at or after the end of the last kept one; skip the rest. Why earliest-end and not shortest or earliest-start? The exchange argument: compare any optimal kept-set's first interval with the greedy's first (the global earliest ender) — swapping the greedy's choice in can never hurt, since it ends no later, so everything after the optimal's first still fits after the greedy's. Earliest end *frees the future fastest*.
+**The Structural Invariant: Activity Selection (Sort by End Time).**
+To **MINIMIZE REMOVALS**, we must **MAXIMIZE KEPT INTERVALS**:
+- **Greedy Rule**: Sort intervals by **END TIME** (\`a[1] - b[1]\`).
+- *Why End Time?* The interval that finishes **earliest** leaves the **maximum possible room for future intervals**!
+- **Sweep**:
+  - Track \`lastEnd = -Infinity\`, \`removed = 0\`.
+  - For each \`curr\` in sorted intervals:
+    - If \`curr.start >= lastEnd\`: Keep interval! Update \`lastEnd = curr.end\`.
+    - Else (\`curr.start < lastEnd\`): Overlap detected! **REMOVE \`curr\`** $\\rightarrow$ \`removed++\`.
 
 \`\`\`viz:table-diff
 {
-  "columns": ["Interval", "Compare to last kept end", "Decision"],
-  "before": [["[1,2]", "first — keep", "lastEnd = 2"], ["[2,3]", "2 >= 2", "keep, lastEnd = 3"]],
-  "after": [["[1,3]", "1 < 3", "REMOVE"], ["[3,4]", "3 >= 3", "keep, lastEnd = 4"]],
-  "caption": "Sorted by end: [1,2],[2,3],[1,3],[3,4]. Kept 3 of 4 — [1,3] is the one removal. Every kept interval starts at or after the previous kept interval's end."
+  "columns": ["Interval (Sorted by End)", "Compare to lastEnd", "Decision"],
+  "before": [["[1, 2]", "1 >= -inf", "KEEP: lastEnd = 2"], ["[2, 3]", "2 >= 2", "KEEP: lastEnd = 3"]],
+  "after": [["[1, 3]", "1 < 3 (Overlap!)", "REMOVE! removed = 1"], ["[3, 4]", "3 >= 3", "KEEP: lastEnd = 4"]],
+  "caption": "Non-Overlapping Intervals — Sort by End Time greedy activity selection."
 }
 \`\`\`
 
-**Complexity.** O(n log n) sort, O(n) sweep, O(1) extra — versus the O(2ⁿ) subset search.
-
-**Thread.** Yes/no overlap next, in its purest form — Meeting Rooms, the one-person calendar — and then its famous sequel asks *how many calendars* you need.`,
+**Boundary Traps & Execution Blueprint.**
+- *Touching Endpoints*: Touching endpoints (e.g. \`[1, 2]\` and \`[2, 3]\`) are NOT considered overlapping (\`curr.start >= lastEnd\` is valid).`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must intervals be sorted by END TIME instead of START TIME for Non-Overlapping Intervals?",
+          options: [
+            "Because sorting by end time takes O(N) time.",
+            "Because picking the interval that ends earliest frees up the maximum remaining timeline for future non-overlapping intervals (Greedy Activity Selection).",
+            "Because start times are negative.",
+            "Because end times are 1-indexed."
+          ],
+          correct_index: 1,
+          model_answer: "Selecting the earliest-ending interval leaves the maximum open space for subsequent intervals, maximizing the total count of non-overlapping intervals kept.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the relationship between Min Removals and Max Non-Overlapping Intervals Kept?",
+          model_answer: "Min Removals = Total Intervals - Max Non-Overlapping Intervals Kept.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "meeting-rooms",
@@ -100,27 +174,49 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/meeting-schedule",
       summary: "One person, many meetings: sort by start and check each neighbour pair — any overlap means no.",
-      body: `**Signal.** "Can one person attend all these meetings" — equivalent to "are the intervals pairwise non-overlapping" — is the tell that sorting reduces an all-pairs check to a neighbours-only check: after sorting by start, if any two intervals overlap, some *adjacent* pair overlaps.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners compare all pairs of meetings ($O(N^2)$).
+*Why this shatters*: Un-sorted pair checking takes quadratic time.
 
-**Brute force.** Compare every pair of intervals for overlap — O(n²), checking pairs that sorting would make provably unnecessary.
-
-**Optimal approach.** Sort by start. One pass, one comparison per step: interval[i+1].start < interval[i].end → false (a clash). Survive the whole sweep → true. This works because after sorting, meeting i is the latest-starting thing seen so far, and — since nothing has overlapped yet — also the latest-ending relevant one, so comparing only against the immediate predecessor suffices.
+**The Structural Invariant: Adjacent Neighbor Overlap Check.**
+1. **Sort intervals by start time**: \`intervals.sort((a, b) => a[0] - b[0])\`.
+2. Iterate $i$ from $0 \\dots N-2$:
+   - If \`intervals[i+1].start < intervals[i].end\`:
+     - Overlap detected! **Return \`false\`** (One person cannot attend both!).
+3. Return \`true\` if sweep completes without overlaps.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [30, 10, 20], "pointers": [{ "label": "i", "index": 0 }], "highlight": [0, 1], "note": "Sorted by start: [0,30],[5,10],[15,20]. Compare interval[1].start(5) to interval[0].end(30): 5 < 30 — overlap detected immediately. Answer: false." },
-    { "cells": [4, 10], "highlight": [0, 1], "note": "Second example, sorted [[2,4],[7,10]]: compare interval[1].start(7) to interval[0].end(4): 7 >= 4 — no clash. Sweep survives — true." }
+    { "cells": [[0,30], [5,10], [15,20]], "note": "Sorted: [[0,30], [5,10], [15,20]]." },
+    { "cells": [[0,30], [5,10]], "highlight": [0, 1], "note": "Check i=0: intervals[1].start(5) < intervals[0].end(30) -> OVERLAP! Return FALSE." }
   ],
-  "caption": "Meeting Rooms — after sorting by start, only adjacent pairs ever need checking."
+  "caption": "Meeting Rooms — Sort by start single pass overlap check."
 }
 \`\`\`
 
-**Why an Easy sits this deep in the atlas.** It is the *skeleton* of the previous two problems (Merge's sweep without the merging; Non-overlapping's sweep without the eviction) and the setup for its sequel, the real interview staple.
-
-**Complexity.** O(n log n) sort, O(n) sweep, O(1) space — versus the O(n²) all-pairs check.
-
-**Thread.** One room, yes or no. The sequel: everyone keeps their meetings — how many rooms must exist? Counting simultaneous overlap needs a genuinely new tool, and there are two lovely ones.`,
+**Boundary Traps & Execution Blueprint.**
+- *Equal End/Start*: If meeting A ends at 10 and meeting B starts at 10 (\`10 < 10\` is false), there is NO overlap.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What is the condition that signals a meeting collision in Meeting Rooms after sorting by start time?",
+          options: [
+            "intervals[i+1].start < intervals[i].end",
+            "intervals[i+1].end < intervals[i].start",
+            "intervals[i].start == 0",
+            "intervals[i].end == 24"
+          ],
+          correct_index: 0,
+          model_answer: "After sorting by start time, a meeting collision occurs if the next meeting starts before the previous meeting ends.",
+          difficulty: "basic"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Meeting Rooms?",
+          model_answer: "O(N log N) time complexity due to sorting.",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "meeting-rooms-ii",
@@ -128,30 +224,57 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/meeting-schedule-ii",
       summary: "Peak simultaneous meetings: a min-heap of end times, or the +1/−1 event sweep — know both.",
-      body: `**Signal.** "The minimum number of rooms so every meeting happens as scheduled" — this is really asking for the **maximum number of meetings alive at any one instant**, the tell for either a min-heap of end times or an event-based concurrency sweep.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think the number of rooms equals the number of overlapping meeting pairs.
+*Why this shatters*: The number of rooms needed equals the **MAXIMUM CONCURRENT / SIMULTANEOUS MEETINGS** active at any single point in time!
 
-**Brute force.** For every point in time (or every meeting start), count how many meetings are active — O(n²) if checking each meeting against every other, or worse if sampling a continuous timeline.
-
-**Optimal approach, tool one (end-time min-heap).** Sort by start; the heap holds the end times of meetings currently occupying rooms. For each meeting: if the earliest-ending room (heap root) frees up before this meeting starts, that room is reusable — pop it; either way push this meeting's end. The heap's peak size is the answer — always reuse the room freeing earliest; if even that one is busy, a new room is genuinely forced.
-
-**Optimal approach, tool two (event sweep).** Explode each meeting into two events: (start, +1) and (end, −1). Sort events by time — ends before starts on ties, so back-to-back meetings share a room. Sweep, keeping a running sum; its **peak** is the answer. This is a prefix sum over time — chapter one's oldest idea — and it generalises effortlessly (max CPU load, plane-seat overlap, staffing curves).
+**The Structural Invariant: Min-Heap of Active End-Times (or Event Sweep).**
+- **Approach 1: Min-Heap of End-Times**:
+  - Sort intervals by start time.
+  - Maintain a **Min-Heap \`minHeap\` storing meeting end times**.
+  - For each \`meeting\` in sorted intervals:
+    - If \`minHeap.peek() <= meeting.start\`:
+      - Room freed up! Pop earliest end time (\`minHeap.pop()\`).
+    - Push \`meeting.end\` to \`minHeap\`.
+  - Result = \`minHeap.size()\` (Peak concurrent rooms needed!).
+- **Approach 2: Chronological Event Line Sweep (+1 / -1)**:
+  - Separate start times and end times into 2 sorted arrays.
+  - Walk two pointers \`s\` and \`e\`: if \`starts[s] < ends[e]\`, \`count++\`, \`s++\`; else \`count--\`, \`e++\`. Track \`max(count)\`.
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1], "note": "Event (0, +1): running count = 1." },
-    { "cells": [1, 2], "highlight": [1], "note": "Event (5, +1): running count = 2. New peak: 2." },
-    { "cells": [1, 2, 1], "note": "Event (10, -1): running count = 1 — a room frees up." },
-    { "cells": [1, 2, 1, 2], "highlight": [1, 3], "note": "Event (15, +1): running count = 2 again — ties the peak." },
-    { "cells": [1, 2, 1, 2, 1, 0], "note": "Events (20, -1) and (30, -1): count falls to 1, then 0. Peak concurrency — and the answer — is 2 rooms." }
+    { "cells": [[0,30], [5,10], [15,20]], "note": "Sorted: [[0,30], [5,10], [15,20]]." },
+    { "cells": [30], "note": "Meeting [0,30]: Heap=[30]. Rooms=1." },
+    { "cells": [10, 30], "highlight": [0, 1], "note": "Meeting [5,10]: 5 < 30 (No room free) -> Push 10. Heap=[10, 30]. Rooms=2." },
+    { "cells": [20, 30], "highlight": [0, 1], "note": "Meeting [15,20]: 15 >= 10 (Room freed!) -> Pop 10, Push 20. Heap=[20, 30]. Peak Rooms = 2!" }
   ],
-  "caption": "Meeting Rooms II — the event sweep's running sum is a prefix sum over time; its peak is the room count."
+  "caption": "Meeting Rooms II — Min-Heap of end times tracking peak concurrency."
 }
 \`\`\`
 
-**Complexity.** Both tools O(n log n) time, O(n) space — versus O(n²) naive concurrency checking. Offer both; pick the sweep for elegance, the heap when the follow-up wants *which* room each meeting gets.
-
-**Thread.** Counting concurrency conquered. The finale composes the whole chapter — intervals sorted, queries sorted, a heap in the middle — to answer many questions in one pass: offline processing.`,
+**Boundary Traps & Execution Blueprint.**
+- *Tie Breaking in Event Sweep*: If a meeting ends at 10 and another starts at 10, process the end event BEFORE the start event so the room is reused.`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "What does the peak size of the Min-Heap represent in Meeting Rooms II?",
+          options: [
+            "The total number of meetings.",
+            "The maximum number of concurrent/simultaneous meetings active at any single point in time, which equals the minimum rooms needed.",
+            "The total duration of all meetings.",
+            "The number of canceled meetings."
+          ],
+          correct_index: 1,
+          model_answer: "The Min-Heap tracks active meeting end times. Its peak size represents maximum simultaneous room occupancy.",
+          difficulty: "intermediate"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Meeting Rooms II using a Min-Heap?",
+          model_answer: "O(N log N) time complexity (sorting takes O(N log N), N heap operations take O(N log N)).",
+          difficulty: "basic"
+        }
+      ]
     },
     {
       slug: "minimum-interval-to-include-each-query",
@@ -159,27 +282,55 @@ On the roadmap Intervals is a leaf hanging off Heap. Small chapter, permanent to
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/minimum-interval-including-query",
       summary: "Sort intervals and queries together, sweep once: a heap keyed by size holds the candidates — offline processing.",
-      body: `**Signal.** "For each query, the size of the smallest interval containing it" — answers can be delivered in any order and remapped at the end, which is the tell for **offline processing**: sort the queries too, and sweep both lists together instead of answering in the order asked.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners scan every interval for each query independently ($O(Q \\cdot N)$ time).
+*Why this shatters*: Scanning $Q = 100,000$ queries against $N = 100,000$ intervals takes 10 billion operations (TLE!).
 
-**Brute force.** For each query, scan every interval to find the smallest one containing it — O(n·q), redoing the same scan structure for every query independently.
-
-**Optimal approach.** Sort intervals by start. Walk queries ascending, maintaining a min-heap of **candidate intervals keyed by size**. Per query q: *admit* — push every not-yet-admitted interval whose start ≤ q (the interval pointer only ever moves forward across the whole sweep). *Evict* — pop from the heap while its top has end < q: queries only grow from here, so an interval too far left for this query is too far left for every future one, dead forever. *Read* — the surviving top is the smallest-sized interval covering q; empty heap → −1. A hash map remaps sorted-order answers back to the original query order (queries may repeat).
+**The Structural Invariant: Offline Query Sorting + Min-Heap Size Candidate Sweep.**
+1. **Offline Query Processing**:
+   Sort queries alongside their original indices: \`sortedQueries = [[q, origIdx]...]\` sorted by value $q$.
+2. **Sort Intervals by Start Time**: \`intervals.sort((a, b) => a[0] - b[0])\`.
+3. Maintain a **Min-Heap of Candidate Intervals** storing \`[interval_size, interval_end]\`.
+4. **Single-Pass Sweep for each Query $q$**:
+   - **Admit**: Push all intervals with \`start <= q\` into Min-Heap.
+   - **Evict**: Pop from Min-Heap any interval with \`end < q\` (Expired interval that can NEVER cover future $q$!).
+   - **Read**: The Min-Heap root is the **smallest valid interval covering $q$**!
+   - Save \`result[origIdx] = heap.peek().size\` (or \`-1\` if heap is empty).
 
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 3], "pointers": [{ "label": "q", "index": 0 }], "note": "q=2: admit [1,4] (size 4) and [2,4] (size 3). Heap top (smallest size): 3." },
-    { "cells": [3, 3, 4], "pointers": [{ "label": "q", "index": 1 }], "note": "q=3: admit [3,6] (size 4). Heap top is still 3." },
-    { "cells": [3, 3, 4, 1], "pointers": [{ "label": "q", "index": 2 }], "note": "q=4: admit [4,4] (size 1). Heap top: 1." },
-    { "cells": [4], "highlight": [0], "pointers": [{ "label": "q", "index": 3 }], "note": "q=5: evict [4,4], [1,4], [2,4] (their ends are all < 5). Only [3,6] (size 4) survives. Answer: 4." }
+    { "cells": [3, 3], "note": "Query q=2: Admit [1,4] (size 4) & [2,4] (size 3). Min size=3." },
+    { "cells": [3, 3, 4], "note": "Query q=3: Admit [3,6] (size 4). Min size stays 3." },
+    { "cells": [3, 3, 4, 1], "note": "Query q=4: Admit [4,4] (size 1). Heap root min size = 1." },
+    { "cells": [4], "highlight": [0], "note": "Query q=5: Evict expired intervals (end < 5). Remaining root = [3,6] (size 4). Answer = 4." }
   ],
-  "caption": "Minimum Interval to Include Each Query — admit/evict/read against a size-ordered heap; queries sorted ascending [2,3,4,5] give answers [3,3,1,4], remapped to original query order."
+  "caption": "Minimum Interval to Include Each Query — Offline processing with size Min-Heap."
 }
 \`\`\`
 
-**Complexity.** O(n log n + q log q + (n + q) log n) — sorts plus each interval pushed and popped at most once — O(n + q) space, versus the O(n·q) per-query scan.
-
-**Thread.** Intervals close with the atlas's favourite move: three old tools, one new posture. Two chapters remain — Math & Geometry's grab-bag of grids and digits, then the bit-level finale.`,
-    },
-  ],
+**Boundary Traps & Execution Blueprint.**
+- *Lazy Eviction*: Evicting expired intervals (\`heap.peek().end < q\`) at query time ensures each interval is pushed and popped from the heap at most ONCE!`,
+      questions: [
+        {
+          kind: "mcq",
+          prompt: "Why must queries be sorted alongside intervals in Minimum Interval to Include Each Query?",
+          options: [
+            "Because binary search requires sorted queries.",
+            "Sorting queries allows an offline 2-pointer sweep where interval admission and eviction move monotonically forward, guaranteeing each interval is pushed/popped at most once.",
+            "Because query values are negative.",
+            "To remove duplicate queries."
+          ],
+          correct_index: 1,
+          model_answer: "Monotonic query progression allows single-pass admission and eviction, reducing total time from O(Q * N) to O((N + Q) log N).",
+          difficulty: "advanced"
+        },
+        {
+          kind: "open",
+          prompt: "What is the time complexity of Minimum Interval to Include Each Query?",
+          model_answer: "O((N log N) + (Q log Q)) time complexity for sorting intervals and queries.",
+          difficulty: "intermediate"
+        }
+      ]
+    }
+  ]
 };

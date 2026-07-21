@@ -40,6 +40,21 @@ export function ReadingThemeProvider({ children }: { children: React.ReactNode }
   const togglePaperMode = (e?: React.MouseEvent) => {
     if (isSnapping) return;
 
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduce) {
+      const nextMode = !isPaperMode;
+      setIsPaperMode(nextMode);
+      try {
+        localStorage.setItem("knovis_paper_mode", String(nextMode));
+      } catch {
+        // ignore
+      }
+      return;
+    }
+
     if (e && e.clientX && e.clientY) {
       setSnapPos({ x: e.clientX, y: e.clientY });
     } else {
