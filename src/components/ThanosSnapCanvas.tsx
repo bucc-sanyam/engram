@@ -6,17 +6,15 @@ import { useEffect, useRef } from "react";
  * Paper-snap theme transition.
  *
  * Brings back the old "Thanos snap" disintegration (real ash particles on a
- * <canvas>) but reshapes it around the request: instead of a soft reveal wave,
- * the whole screen breaks into a grid of small PAPER SHARDS that each rotate /
- * flip away in place — a little paper turning in the light — while shedding a
- * spray of ash. The whole thing radiates outward from the click origin (the
- * Paper Mode button, bottom-right), sweeping across the screen shard by shard.
+ * <canvas>) but reshapes it around the request: the theme flips instantly and a
+ * band of small PAPER SHARDS + ash sweeps outward from the click origin (the
+ * Paper Mode button, bottom-right), each shard rotating / flipping as it tears
+ * away. Crucially there is NO full-screen cover — the shards only ever exist as
+ * a travelling band, so the real (already re-themed) page stays visible the
+ * whole time and the effect plays directly over it rather than behind a curtain.
  *
- * Same props/contract as before so `ReadingThemeContext` is unchanged: the
- * shards initially cover the screen in the OLD page colour, we flip the DOM
- * theme underneath once (hidden beneath the still-covering shards), and each
- * shard reveals the NEW theme as it rotates away. `onComplete` fires once every
- * shard + ash particle is gone.
+ * Same props/contract as before so `ReadingThemeContext` is unchanged.
+ * `onComplete` fires once every shard + ash particle is gone.
  */
 interface ThanosSnapCanvasProps {
   isActive: boolean;
@@ -36,7 +34,7 @@ interface Shard {
   w: number;
   h: number;
   delay: number; // frames before it lets go (radial sweep from origin)
-  triggered: boolean;
+  age: number; // frames since it let go (fade-in then out)
   angle: number; // z-rotation
   spin: number; // z-rotation speed
   flip: number; // 3D-flip phase → scaleX
@@ -130,7 +128,7 @@ export default function ThanosSnapCanvas({
           w: cw + 1, // +1 hides sub-pixel seams while covering
           h: chh + 1,
           delay: d * 46 + Math.random() * 8,
-          triggered: false,
+          age: 0,
           angle: 0,
           spin: (Math.random() - 0.5) * 0.26,
           flip: 0,
@@ -172,9 +170,9 @@ export default function ThanosSnapCanvas({
       ctx.clearRect(0, 0, W, H);
       frame++;
 
-      // Flip the DOM theme underneath once the shards have painted a covering
-      // sheet — the new theme stays hidden until each shard rotates away.
-      if (frame === 2 && !flipped) {
+      // Flip the DOM theme right away — the page re-themes underneath and the
+      // shard band just sweeps over the top of it (no covering curtain).
+      if (frame === 1 && !flipped) {
         flipped = true;
         flipRef.current();
       }
@@ -194,21 +192,17 @@ export default function ThanosSnapCanvas({
 
       let alive = 0;
 
-      // ---- shards ----
+      // ---- shards (a travelling band, never a full cover) ----
       for (const s of shards) {
-        if (!s.triggered) {
-          if (frame >= s.delay) s.triggered = true;
-          else {
-            drawShard(ctx, s, sheet, sheetEdge, sheen, 1); // still covering — flat sheet
-            alive++;
-            continue;
-          }
+        if (frame < s.delay) {
+          alive++; // still to come — page shows through here
+          continue;
         }
-
         if (!s.shed) {
           s.shed = true;
           spawnAsh(s);
         }
+        s.age++;
 
         // physics
         s.angle += s.spin;
@@ -216,13 +210,15 @@ export default function ThanosSnapCanvas({
         s.cx += s.vx;
         s.cy += s.vy;
         s.vy += 0.06; // slight gravity settle after the initial lift
-        s.w *= 0.984;
-        s.h *= 0.984;
-        s.alpha *= 0.93;
+        s.w *= 0.985;
+        s.h *= 0.985;
+        if (s.age > 3) s.alpha *= 0.9;
 
+        // quick fade-in as it tears free, capped < 1 so the page peeks through
+        const a = s.alpha * Math.min(1, s.age / 2) * 0.88;
         const flipScale = Math.abs(Math.cos(s.flip)); // 3D turn → edge-on then back
-        if (s.alpha > 0.03 && s.w > 1.2) {
-          drawShard(ctx, s, sheet, sheetEdge, sheen, flipScale);
+        if (a > 0.03 && s.w > 1.2) {
+          drawShard(ctx, s, sheet, sheetEdge, sheen, flipScale, a);
           alive++;
         }
       }
@@ -276,9 +272,10 @@ function drawShard(
   edge: string,
   sheen: string,
   flipScale: number,
+  alpha: number,
 ) {
   ctx.save();
-  ctx.globalAlpha = Math.max(0, Math.min(1, s.alpha));
+  ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
   ctx.translate(s.cx, s.cy);
   ctx.rotate(s.angle);
   ctx.scale(Math.max(0.04, flipScale), 1);
