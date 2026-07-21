@@ -30,6 +30,7 @@ const SERIES_TITLES: Record<string, string> = {
   "competition-act": "Legal Series",
   "dsa": "DSA Series",
   "sql": "SQL Series",
+  "psychopaths-and-savages": "Psychology Series",
   "general": "General Knowledge",
 };
 
@@ -37,6 +38,7 @@ const SERIES_COLORS: Record<string, string> = {
   "competition-act": "#5ba4cf",
   "dsa": "#f5b95f",
   "sql": "#22d3ee",
+  "psychopaths-and-savages": "#d94f5c",
   "general": "#9aa0aa",
 };
 

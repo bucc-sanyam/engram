@@ -7,6 +7,8 @@ import { SARFAESI_CHAPTERS } from "./sarfaesi-act";
 import type { SarfaesiQuestion } from "./sarfaesi-act/types";
 import { MACROECONOMICS_CHAPTERS } from "./macroeconomics";
 import type { MacroQuestion } from "./macroeconomics/types";
+import { PS_CHAPTERS, PS_SERIES_TITLE } from "./psychopaths-and-savages";
+import type { PsQuestion } from "./psychopaths-and-savages/types";
 
 export interface SeedSection {
   chapterSlug: string;
@@ -16,7 +18,7 @@ export interface SeedSection {
   category: string;
   summary: string;
   keyPoints: string[];
-  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[] | DsaQuestion[];
+  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[] | DsaQuestion[] | PsQuestion[];
   facts: string[];
 }
 
@@ -122,12 +124,32 @@ function macroeconomicsSeed(): SeriesSeed {
   return { seriesSlug: "macroeconomics", title: "Macroeconomics: An Introduction", sections };
 }
 
+function psychopathsAndSavagesSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const chapter of PS_CHAPTERS) {
+    for (const section of chapter.sections) {
+      sections.push({
+        chapterSlug: chapter.slug,
+        sectionSlug: section.slug,
+        name: section.title,
+        category: "Psychology",
+        summary: section.summary,
+        keyPoints: [],
+        questions: section.questions ?? [],
+        facts: section.facts ?? [],
+      });
+    }
+  }
+  return { seriesSlug: "psychopaths-and-savages", title: PS_SERIES_TITLE, sections };
+}
+
 const SERIES: Record<string, () => SeriesSeed> = {
   "competition-act": compActSeed,
   "dsa": dsaSeed,
   "sql": sqlSeed,
   "sarfaesi-act": sarfaesiSeed,
   "macroeconomics": macroeconomicsSeed,
+  "psychopaths-and-savages": psychopathsAndSavagesSeed,
 };
 
 export function getSeed(seriesSlug: string): SeriesSeed {

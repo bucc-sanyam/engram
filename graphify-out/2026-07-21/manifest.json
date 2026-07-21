@@ -978,15 +978,5 @@
     "mtime": 1784597827.2482846,
     "ast_hash": "d4f2d0407d25566cb57e0442f7686d53",
     "semantic_hash": ""
-  },
-  "STORY_PSYCHOPATHS_SAVAGES_PLAN.md": {
-    "mtime": 1784599994.9103136,
-    "ast_hash": "244b79769a6a7bae3033436c89f935f4",
-    "semantic_hash": ""
-  },
-  "prompts/story-agents/true-crime-forensic-story-agent.md": {
-    "mtime": 1784599907.2820675,
-    "ast_hash": "741c2dad605d97800e93479429132bdb",
-    "semantic_hash": ""
   }
 }

@@ -138,79 +138,82 @@ Recommended execution: same pattern as the 2026-07-20 viz rollout — parallel b
 - [x] [x] `redundant-connection` — Redundant Connection (Medium)
 - [x] [x] `word-ladder` — Word Ladder (Hard)
 
-## Chapter 12 — Advanced Graphs (`advanced-graphs.ts`) — intro: [D: ✗]
-- [x] [ ] `network-delay-time` — Network Delay Time (Medium)
-- [ ] [ ] `reconstruct-itinerary` — Reconstruct Itinerary (Hard)
-- [ ] [ ] `min-cost-to-connect-all-points` — Min Cost to Connect All Points (Medium)
-- [ ] [ ] `swim-in-rising-water` — Swim In Rising Water (Hard)
-- [x] [ ] `alien-dictionary` — Alien Dictionary (Hard)
-- [ ] [ ] `cheapest-flights-within-k-stops` — Cheapest Flights Within K Stops (Medium)
+## Chapter 12 — Advanced Graphs (`advanced-graphs.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21
+- [x] [x] `network-delay-time` — Network Delay Time (Medium)
+- [x] [x] `reconstruct-itinerary` — Reconstruct Itinerary (Hard)
+- [x] [x] `min-cost-to-connect-all-points` — Min Cost to Connect All Points (Medium)
+- [x] [x] `swim-in-rising-water` — Swim In Rising Water (Hard)
+- [x] [x] `alien-dictionary` — Alien Dictionary (Hard)
+- [x] [x] `cheapest-flights-within-k-stops` — Cheapest Flights Within K Stops (Medium)
 
-## Chapter 13 — 1-D Dynamic Programming (`dp-1d.ts`) — intro: [D: ✗]
-- [ ] [ ] `climbing-stairs` — Climbing Stairs (Easy)
-- [x] [ ] `min-cost-climbing-stairs` — Min Cost Climbing Stairs (Easy)
-- [x] [ ] `house-robber` — House Robber (Medium)
-- [ ] [ ] `house-robber-ii` — House Robber II (Medium)
-- [ ] [ ] `longest-palindromic-substring` — Longest Palindromic Substring (Medium)
-- [ ] [ ] `palindromic-substrings` — Palindromic Substrings (Medium)
-- [ ] [ ] `decode-ways` — Decode Ways (Medium)
-- [x] [ ] `coin-change` — Coin Change (Medium)
-- [ ] [ ] `maximum-product-subarray` — Maximum Product Subarray (Medium)
-- [ ] [ ] `word-break` — Word Break (Medium)
-- [ ] [ ] `longest-increasing-subsequence` — Longest Increasing Subsequence (Medium)
-- [x] [ ] `partition-equal-subset-sum` — Partition Equal Subset Sum (Medium)
+## Chapter 13 — 1-D Dynamic Programming (`dp-1d.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21 (also normalized off old ASCII/Python template; hardcoded `questions` arrays preserved)
+- [x] [x] `climbing-stairs` — Climbing Stairs (Easy)
+- [x] [x] `min-cost-climbing-stairs` — Min Cost Climbing Stairs (Easy)
+- [x] [x] `house-robber` — House Robber (Medium)
+- [x] [x] `house-robber-ii` — House Robber II (Medium)
+- [x] [x] `longest-palindromic-substring` — Longest Palindromic Substring (Medium)
+- [x] [x] `palindromic-substrings` — Palindromic Substrings (Medium)
+- [x] [x] `decode-ways` — Decode Ways (Medium)
+- [x] [x] `coin-change` — Coin Change (Medium)
+- [x] [x] `maximum-product-subarray` — Maximum Product Subarray (Medium)
+- [x] [x] `word-break` — Word Break (Medium)
+- [x] [x] `longest-increasing-subsequence` — Longest Increasing Subsequence (Medium)
+- [x] [x] `partition-equal-subset-sum` — Partition Equal Subset Sum (Medium)
 
-## Chapter 14 — 2-D Dynamic Programming (`dp-2d.ts`) — intro: [D: ✗]  
-*(also flagged in TASKS.md backlog as an older ASCII-art/Python-fence template — the rewrite pass should fold that normalization in here rather than doing it twice)*
-- [x] [ ] `unique-paths` — Unique Paths (Medium)
-- [ ] [ ] `longest-common-subsequence` — Longest Common Subsequence (Medium)
-- [x] [ ] `best-time-to-buy-and-sell-stock-with-cooldown` — Best Time to Buy and Sell Stock With Cooldown (Medium)
-- [x] [ ] `coin-change-ii` — Coin Change II (Medium)
-- [x] [ ] `target-sum` — Target Sum (Medium)
-- [ ] [ ] `interleaving-string` — Interleaving String (Medium)
-- [ ] [ ] `longest-increasing-path-in-a-matrix` — Longest Increasing Path in a Matrix (Hard)
-- [ ] [ ] `distinct-subsequences` — Distinct Subsequences (Hard)
-- [ ] [ ] `edit-distance` — Edit Distance (Hard)
-- [ ] [ ] `burst-balloons` — Burst Balloons (Hard)
-- [ ] [ ] `regular-expression-matching` — Regular Expression Matching (Hard)
+## Chapter 14 — 2-D Dynamic Programming (`dp-2d.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21 (also normalized off old ASCII/Python template; hardcoded `questions` arrays preserved)
+- [x] [x] `unique-paths` — Unique Paths (Medium)
+- [x] [x] `longest-common-subsequence` — Longest Common Subsequence (Medium)
+- [x] [x] `best-time-to-buy-and-sell-stock-with-cooldown` — Best Time to Buy and Sell Stock With Cooldown (Medium)
+- [x] [x] `coin-change-ii` — Coin Change II (Medium)
+- [x] [x] `target-sum` — Target Sum (Medium)
+- [x] [x] `interleaving-string` — Interleaving String (Medium)
+- [x] [x] `longest-increasing-path-in-a-matrix` — Longest Increasing Path in a Matrix (Hard)
+- [x] [x] `distinct-subsequences` — Distinct Subsequences (Hard)
+- [x] [x] `edit-distance` — Edit Distance (Hard)
+- [x] [x] `burst-balloons` — Burst Balloons (Hard)
+- [x] [x] `regular-expression-matching` — Regular Expression Matching (Hard)
 
-## Chapter 15 — Greedy (`greedy.ts`) — intro: [D: ✗]
-- [x] [ ] `maximum-subarray` — Maximum Subarray (Medium)
-- [x] [ ] `jump-game` — Jump Game (Medium)
-- [ ] [ ] `jump-game-ii` — Jump Game II (Medium)
-- [x] [ ] `gas-station` — Gas Station (Medium)
-- [ ] [ ] `hand-of-straights` — Hand of Straights (Medium)
-- [ ] [ ] `merge-triplets-to-form-target-triplet` — Merge Triplets to Form Target Triplet (Medium)
-- [ ] [ ] `partition-labels` — Partition Labels (Medium)
-- [ ] [ ] `valid-parenthesis-string` — Valid Parenthesis String (Medium)
+## Chapter 15 — Greedy (`greedy.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21
+- [x] [x] `maximum-subarray` — Maximum Subarray (Medium)
+- [x] [x] `jump-game` — Jump Game (Medium)
+- [x] [x] `jump-game-ii` — Jump Game II (Medium)
+- [x] [x] `gas-station` — Gas Station (Medium)
+- [x] [x] `hand-of-straights` — Hand of Straights (Medium)
+- [x] [x] `merge-triplets-to-form-target-triplet` — Merge Triplets to Form Target Triplet (Medium)
+- [x] [x] `partition-labels` — Partition Labels (Medium)
+- [x] [x] `valid-parenthesis-string` — Valid Parenthesis String (Medium)
 
-## Chapter 16 — Intervals (`intervals.ts`) — intro: [D: ✗]
-- [ ] [ ] `insert-interval` — Insert Interval (Medium)
-- [ ] [ ] `merge-intervals` — Merge Intervals (Medium)
-- [ ] [ ] `non-overlapping-intervals` — Non Overlapping Intervals (Medium)
-- [ ] [ ] `meeting-rooms` — Meeting Rooms (Easy)
-- [ ] [ ] `meeting-rooms-ii` — Meeting Rooms II (Medium)
-- [ ] [ ] `minimum-interval-to-include-each-query` — Minimum Interval to Include Each Query (Hard)
-*(zero diagrams in this entire chapter — 0/6)*
+## Chapter 16 — Intervals (`intervals.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21
+- [x] [x] `insert-interval` — Insert Interval (Medium)
+- [x] [x] `merge-intervals` — Merge Intervals (Medium)
+- [x] [x] `non-overlapping-intervals` — Non Overlapping Intervals (Medium)
+- [x] [x] `meeting-rooms` — Meeting Rooms (Easy)
+- [x] [x] `meeting-rooms-ii` — Meeting Rooms II (Medium)
+- [x] [x] `minimum-interval-to-include-each-query` — Minimum Interval to Include Each Query (Hard)
 
-## Chapter 17 — Math & Geometry (`math-geometry.ts`) — intro: [D: ✗]
-- [ ] [ ] `rotate-image` — Rotate Image (Medium)
-- [ ] [ ] `spiral-matrix` — Spiral Matrix (Medium)
-- [ ] [ ] `set-matrix-zeroes` — Set Matrix Zeroes (Medium)
-- [ ] [ ] `happy-number` — Happy Number (Easy)
-- [x] [ ] `plus-one` — Plus One (Easy)
-- [ ] [ ] `pow-x-n` — Pow(x, n) (Medium)
-- [ ] [ ] `multiply-strings` — Multiply Strings (Medium)
-- [ ] [ ] `detect-squares` — Detect Squares (Medium)
+## Chapter 17 — Math & Geometry (`math-geometry.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21
+- [x] [x] `rotate-image` — Rotate Image (Medium)
+- [x] [x] `spiral-matrix` — Spiral Matrix (Medium)
+- [x] [x] `set-matrix-zeroes` — Set Matrix Zeroes (Medium)
+- [x] [x] `happy-number` — Happy Number (Easy)
+- [x] [x] `plus-one` — Plus One (Easy)
+- [x] [x] `pow-x-n` — Pow(x, n) (Medium)
+- [x] [x] `multiply-strings` — Multiply Strings (Medium)
+- [x] [x] `detect-squares` — Detect Squares (Medium)
 
-## Chapter 18 — Bit Manipulation (`bit-manipulation.ts`) — intro: [D: ✗]
-- [x] [ ] `single-number` — Single Number (Easy)
-- [x] [ ] `number-of-1-bits` — Number of 1 Bits (Easy)
-- [ ] [ ] `counting-bits` — Counting Bits (Easy)
-- [ ] [ ] `reverse-bits` — Reverse Bits (Easy)
-- [ ] [ ] `missing-number` — Missing Number (Easy)
-- [ ] [ ] `sum-of-two-integers` — Sum of Two Integers (Medium)
-- [ ] [ ] `reverse-integer` — Reverse Integer (Medium)
+## Chapter 18 — Bit Manipulation (`bit-manipulation.ts`) — intro: [D: ✗] — CHAPTER DONE 2026-07-21
+- [x] [x] `single-number` — Single Number (Easy)
+- [x] [x] `number-of-1-bits` — Number of 1 Bits (Easy)
+- [x] [x] `counting-bits` — Counting Bits (Easy)
+- [x] [x] `reverse-bits` — Reverse Bits (Easy)
+- [x] [x] `missing-number` — Missing Number (Easy)
+- [x] [x] `sum-of-two-integers` — Sum of Two Integers (Medium)
+- [x] [x] `reverse-integer` — Reverse Integer (Medium)
+
+---
+
+## ALL 18 CHAPTERS / 150 QUESTIONS COMPLETE — 2026-07-21
+Every DSA question now has: a `viz:*` diagram, and a Signal/Brute-force/Optimal-approach/Complexity/Thread (hellointerview-style) rewrite. Chapters that used the older ASCII-art/Python-fence template (two-pointers, binary-search, dp-1d, dp-2d) were normalized to house style in the same pass. All hardcoded `questions` quiz arrays (added by a separate concurrent process partway through this work) were preserved untouched in every chapter that had them. Validated via `npx tsx scripts/validate-viz.mts` (all 150 diagrams parse) and `npx tsc --noEmit` (clean) after every chapter.
 
 ---
 

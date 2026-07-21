@@ -532,7 +532,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 50,
+      "community": 84,
       "norm_label": "page.tsx"
     },
     {
@@ -542,7 +542,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 50,
+      "community": 84,
       "norm_label": "metadata"
     },
     {
@@ -552,7 +552,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 50,
+      "community": 84,
       "norm_label": "aboutpage()"
     },
     {
@@ -852,7 +852,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_snapshotitem",
-      "community": 91,
+      "community": 85,
       "norm_label": "snapshotitem"
     },
     {
@@ -1872,7 +1872,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 84,
+      "community": 55,
       "norm_label": "page.tsx"
     },
     {
@@ -1882,7 +1882,7 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "src_app_page_mode_label",
-      "community": 84,
+      "community": 55,
       "norm_label": "mode_label"
     },
     {
@@ -1892,7 +1892,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_app_page_dashboard",
-      "community": 84,
+      "community": 55,
       "norm_label": "dashboard()"
     },
     {
@@ -1902,7 +1902,7 @@
       "source_location": "L369",
       "_origin": "ast",
       "id": "src_app_page_stat",
-      "community": 84,
+      "community": 55,
       "norm_label": "stat()"
     },
     {
@@ -1912,7 +1912,7 @@
       "source_location": "L387",
       "_origin": "ast",
       "id": "src_app_page_divider",
-      "community": 84,
+      "community": 55,
       "norm_label": "divider()"
     },
     {
@@ -1922,7 +1922,7 @@
       "source_location": "L391",
       "_origin": "ast",
       "id": "src_app_page_planrow",
-      "community": 84,
+      "community": 55,
       "norm_label": "planrow()"
     },
     {
@@ -1932,7 +1932,7 @@
       "source_location": "L434",
       "_origin": "ast",
       "id": "src_app_page_bulbicon",
-      "community": 84,
+      "community": 55,
       "norm_label": "bulbicon()"
     },
     {
@@ -1942,7 +1942,7 @@
       "source_location": "L442",
       "_origin": "ast",
       "id": "src_app_page_sparkleicon",
-      "community": 84,
+      "community": 55,
       "norm_label": "sparkleicon()"
     },
     {
@@ -2352,7 +2352,7 @@
       "source_location": "L183",
       "_origin": "ast",
       "id": "src_components_nav_flameicon",
-      "community": 49,
+      "community": 50,
       "norm_label": "flameicon()"
     },
     {
@@ -2472,7 +2472,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progressmap",
-      "community": 49,
+      "community": 50,
       "norm_label": "progressmap.tsx"
     },
     {
@@ -2482,7 +2482,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progressmap_nextmilestone",
-      "community": 49,
+      "community": 50,
       "norm_label": "nextmilestone()"
     },
     {
@@ -2492,7 +2492,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_progressmap_progressmap",
-      "community": 49,
+      "community": 50,
       "norm_label": "progressmap()"
     },
     {
@@ -2502,7 +2502,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_components_progressmap_heatmap",
-      "community": 49,
+      "community": 85,
       "norm_label": "heatmap()"
     },
     {
@@ -2512,7 +2512,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_questionwidget",
-      "community": 91,
+      "community": 85,
       "norm_label": "questionwidget.tsx"
     },
     {
@@ -2522,7 +2522,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_components_questionwidget_kind_label",
-      "community": 91,
+      "community": 85,
       "norm_label": "kind_label"
     },
     {
@@ -2532,7 +2532,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_components_questionwidget_question",
-      "community": 91,
+      "community": 85,
       "norm_label": "question"
     },
     {
@@ -2542,7 +2542,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_questionwidget_questionwidget",
-      "community": 91,
+      "community": 85,
       "norm_label": "questionwidget()"
     },
     {
@@ -2552,7 +2552,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 92,
+      "community": 49,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -2562,7 +2562,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_components_reportcardview_kind_label",
-      "community": 92,
+      "community": 48,
       "norm_label": "kind_label"
     },
     {
@@ -2572,7 +2572,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 92,
+      "community": 49,
       "norm_label": "reportcardview()"
     },
     {
@@ -2582,7 +2582,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 92,
+      "community": 49,
       "norm_label": "reportitemcard()"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 9,
+      "community": 49,
       "norm_label": "bigscorering()"
     },
     {
@@ -2602,7 +2602,7 @@
       "source_location": "L168",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 92,
+      "community": 49,
       "norm_label": "scorering()"
     },
     {
@@ -3632,7 +3632,7 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "src_lib_data_gettopics",
-      "community": 58,
+      "community": 55,
       "norm_label": "gettopics()"
     },
     {
@@ -3672,7 +3672,7 @@
       "source_location": "L237",
       "_origin": "ast",
       "id": "src_lib_data_getentries",
-      "community": 84,
+      "community": 55,
       "norm_label": "getentries()"
     },
     {
@@ -3692,7 +3692,7 @@
       "source_location": "L285",
       "_origin": "ast",
       "id": "src_lib_data_getreviews",
-      "community": 84,
+      "community": 55,
       "norm_label": "getreviews()"
     },
     {
@@ -3772,7 +3772,7 @@
       "source_location": "L570",
       "_origin": "ast",
       "id": "src_lib_data_getfactoftheday",
-      "community": 84,
+      "community": 55,
       "norm_label": "getfactoftheday()"
     },
     {
@@ -3842,7 +3842,7 @@
       "source_location": "L769",
       "_origin": "ast",
       "id": "src_lib_data_getlatestreporttoday",
-      "community": 52,
+      "community": 49,
       "norm_label": "getlatestreporttoday()"
     },
     {
@@ -3852,7 +3852,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 49,
+      "community": 56,
       "norm_label": "dates.ts"
     },
     {
@@ -3912,7 +3912,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_dates_localtodayforoffset",
-      "community": 85,
+      "community": 56,
       "norm_label": "localtodayforoffset()"
     },
     {
@@ -3972,7 +3972,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_demo_daysago",
-      "community": 85,
+      "community": 86,
       "norm_label": "daysago()"
     },
     {
@@ -3982,7 +3982,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_demo_daysahead",
-      "community": 85,
+      "community": 86,
       "norm_label": "daysahead()"
     },
     {
@@ -3992,7 +3992,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_demo_t",
-      "community": 85,
+      "community": 86,
       "norm_label": "t()"
     },
     {
@@ -4082,7 +4082,7 @@
       "source_location": "L217",
       "_origin": "ast",
       "id": "src_lib_demo_demobankquestion",
-      "community": 91,
+      "community": 85,
       "norm_label": "demobankquestion"
     },
     {
@@ -4722,7 +4722,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_lib_gemini_extractknowledge",
-      "community": 86,
+      "community": 87,
       "norm_label": "extractknowledge()"
     },
     {
@@ -4802,7 +4802,7 @@
       "source_location": "L209",
       "_origin": "ast",
       "id": "src_lib_gemini_gradesession",
-      "community": 85,
+      "community": 87,
       "norm_label": "gradesession()"
     },
     {
@@ -5272,7 +5272,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 85,
+      "community": 56,
       "norm_label": "progress.ts"
     },
     {
@@ -5372,7 +5372,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_rag_findduplicateentry",
-      "community": 86,
+      "community": 44,
       "norm_label": "findduplicateentry()"
     },
     {
@@ -6332,7 +6332,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_lib_stories_getstartedstories",
-      "community": 48,
+      "community": 55,
       "norm_label": "getstartedstories()"
     },
     {
@@ -6362,7 +6362,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_lib_stories_storysectionhref",
-      "community": 55,
+      "community": 48,
       "norm_label": "storysectionhref()"
     },
     {
@@ -6562,7 +6562,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_text",
-      "community": 84,
+      "community": 55,
       "norm_label": "text.ts"
     },
     {
@@ -6572,7 +6572,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_lib_text_stripmarkdown",
-      "community": 84,
+      "community": 55,
       "norm_label": "stripmarkdown()"
     },
     {
@@ -6742,7 +6742,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_lib_types_profile",
-      "community": 0,
+      "community": 50,
       "norm_label": "profile"
     },
     {
@@ -6822,7 +6822,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "src_lib_types_questionkind",
-      "community": 91,
+      "community": 85,
       "norm_label": "questionkind"
     },
     {
@@ -6862,7 +6862,7 @@
       "source_location": "L139",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 92,
+      "community": 49,
       "norm_label": "reportitem"
     },
     {
@@ -6872,7 +6872,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "src_lib_types_reportcard",
-      "community": 92,
+      "community": 49,
       "norm_label": "reportcard"
     },
     {
@@ -6892,7 +6892,7 @@
       "source_location": "L175",
       "_origin": "ast",
       "id": "src_lib_types_planitem",
-      "community": 0,
+      "community": 52,
       "norm_label": "planitem"
     },
     {
@@ -6902,7 +6902,7 @@
       "source_location": "L184",
       "_origin": "ast",
       "id": "src_lib_types_dailyplan",
-      "community": 56,
+      "community": 0,
       "norm_label": "dailyplan"
     },
     {
@@ -9226,126 +9226,6 @@
       "norm_label": "earlier (from git history)"
     },
     {
-      "label": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan",
-      "community": 89,
-      "norm_label": "story_psychopaths_savages_plan.md"
-    },
-    {
-      "label": "New story series: \"Talking with Psychopaths and Savages\" \u2014 Plan + Checklist",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "community": 89,
-      "norm_label": "new story series: \"talking with psychopaths and savages\" \u2014 plan + checklist"
-    },
-    {
-      "label": "Which story-agent applies (the actual point of this section)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L5",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_which_story_agent_applies_the_actual_point_of_this_section",
-      "community": 89,
-      "norm_label": "which story-agent applies (the actual point of this section)"
-    },
-    {
-      "label": "Source",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_source",
-      "community": 89,
-      "norm_label": "source"
-    },
-    {
-      "label": "Page map (verified against the PDF's own table of contents + heading scan)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_page_map_verified_against_the_pdf_s_own_table_of_contents_heading_scan",
-      "community": 89,
-      "norm_label": "page map (verified against the pdf's own table of contents + heading scan)"
-    },
-    {
-      "label": "Content-safety approach (read this before writing any section body)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L50",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_content_safety_approach_read_this_before_writing_any_section_body",
-      "community": 89,
-      "norm_label": "content-safety approach (read this before writing any section body)"
-    },
-    {
-      "label": "Series architecture (the generic Knovis Story Engine shape \u2014 chapter/section/questions/facts TS objects + a 3-route pattern is infrastructure shared by every series, not something borrowed stylistically from SARFAESI specifically; content voice/framework comes from `true-crime-forensic-story-agent.md` above, not from any other series' prose)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_series_architecture_the_generic_knovis_story_engine_shape_chapter_section_questions_facts_ts_objects_a_3_route_pattern_is_infrastructure_shared_by_every_series_not_something_borrowed_stylistically_from_sarfaesi_specifically_content_voice_framework_comes_from_true_crime_forensic_story_agent_md_above_not_from_any_other_series_prose",
-      "community": 89,
-      "norm_label": "series architecture (the generic knovis story engine shape \u2014 chapter/section/questions/facts ts objects + a 3-route pattern is infrastructure shared by every series, not something borrowed stylistically from sarfaesi specifically; content voice/framework comes from `true-crime-forensic-story-agent.md` above, not from any other series' prose)"
-    },
-    {
-      "label": "Full touch-point checklist (verified via `grep -rl sarfaesi-act src/` \u2014 this is the exhaustive list, nothing hidden elsewhere)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L66",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_full_touch_point_checklist_verified_via_grep_rl_sarfaesi_act_src_this_is_the_exhaustive_list_nothing_hidden_elsewhere",
-      "community": 89,
-      "norm_label": "full touch-point checklist (verified via `grep -rl sarfaesi-act src/` \u2014 this is the exhaustive list, nothing hidden elsewhere)"
-    },
-    {
-      "label": "Chapter breakdown (12 chapters total)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L78",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_chapter_breakdown_12_chapters_total",
-      "community": 89,
-      "norm_label": "chapter breakdown (12 chapters total)"
-    },
-    {
-      "label": "Quiz + facts rules (per `true-crime-forensic-story-agent.md`, created 2026-07-21 \u2014 verified against the file's actual committed content, not asserted from memory)",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L99",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_quiz_facts_rules_per_true_crime_forensic_story_agent_md_created_2026_07_21_verified_against_the_file_s_actual_committed_content_not_asserted_from_memory",
-      "community": 89,
-      "norm_label": "quiz + facts rules (per `true-crime-forensic-story-agent.md`, created 2026-07-21 \u2014 verified against the file's actual committed content, not asserted from memory)"
-    },
-    {
-      "label": "Explicitly out of scope for this pass",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L108",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_explicitly_out_of_scope_for_this_pass",
-      "community": 89,
-      "norm_label": "explicitly out of scope for this pass"
-    },
-    {
-      "label": "Implementation checklist",
-      "file_type": "document",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L113",
-      "_origin": "ast",
-      "id": "story_psychopaths_savages_plan_implementation_checklist",
-      "community": 89,
-      "norm_label": "implementation checklist"
-    },
-    {
       "label": "TASKS.md",
       "file_type": "document",
       "source_file": "TASKS.md",
@@ -11476,86 +11356,6 @@
       "norm_label": "output format"
     },
     {
-      "label": "true-crime-forensic-story-agent.md",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent",
-      "community": 90,
-      "norm_label": "true-crime-forensic-story-agent.md"
-    },
-    {
-      "label": "True Crime & Forensic Casework Story Creator Agent",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "community": 90,
-      "norm_label": "true crime & forensic casework story creator agent"
-    },
-    {
-      "label": "Domain Guidelines: True Crime & Forensic Casework",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_domain_guidelines_true_crime_forensic_casework",
-      "community": 90,
-      "norm_label": "domain guidelines: true crime & forensic casework"
-    },
-    {
-      "label": "Coverage & Completeness",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_coverage_completeness",
-      "community": 90,
-      "norm_label": "coverage & completeness"
-    },
-    {
-      "label": "Pedagogical Framework",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_pedagogical_framework",
-      "community": 90,
-      "norm_label": "pedagogical framework"
-    },
-    {
-      "label": "Content Depth & Engagement",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L31",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_content_depth_engagement",
-      "community": 90,
-      "norm_label": "content depth & engagement"
-    },
-    {
-      "label": "Quiz Isolation Rules",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L38",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_quiz_isolation_rules",
-      "community": 90,
-      "norm_label": "quiz isolation rules"
-    },
-    {
-      "label": "Output Format",
-      "file_type": "document",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L52",
-      "_origin": "ast",
-      "id": "prompts_story_agents_true_crime_forensic_story_agent_output_format",
-      "community": 90,
-      "norm_label": "output format"
-    },
-    {
       "label": "Engram Project",
       "file_type": "document",
       "source_file": "README.md",
@@ -11651,7 +11451,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -31703,116 +31503,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan",
-      "target": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L78",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_chapter_breakdown_12_chapters_total",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_content_safety_approach_read_this_before_writing_any_section_body",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L108",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_explicitly_out_of_scope_for_this_pass",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L113",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_implementation_checklist",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_page_map_verified_against_the_pdf_s_own_table_of_contents_heading_scan",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L99",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_quiz_facts_rules_per_true_crime_forensic_story_agent_md_created_2026_07_21_verified_against_the_file_s_actual_committed_content_not_asserted_from_memory",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_series_architecture_the_generic_knovis_story_engine_shape_chapter_section_questions_facts_ts_objects_a_3_route_pattern_is_infrastructure_shared_by_every_series_not_something_borrowed_stylistically_from_sarfaesi_specifically_content_voice_framework_comes_from_true_crime_forensic_story_agent_md_above_not_from_any_other_series_prose",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_source",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_new_story_series_talking_with_psychopaths_and_savages_plan_checklist",
-      "target": "story_psychopaths_savages_plan_which_story_agent_applies_the_actual_point_of_this_section",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "STORY_PSYCHOPATHS_SAVAGES_PLAN.md",
-      "source_location": "L66",
-      "weight": 1.0,
-      "source": "story_psychopaths_savages_plan_series_architecture_the_generic_knovis_story_engine_shape_chapter_section_questions_facts_ts_objects_a_3_route_pattern_is_infrastructure_shared_by_every_series_not_something_borrowed_stylistically_from_sarfaesi_specifically_content_voice_framework_comes_from_true_crime_forensic_story_agent_md_above_not_from_any_other_series_prose",
-      "target": "story_psychopaths_savages_plan_full_touch_point_checklist_verified_via_grep_rl_sarfaesi_act_src_this_is_the_exhaustive_list_nothing_hidden_elsewhere",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "TASKS.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -33668,76 +33358,6 @@
       "weight": 1.0,
       "source": "prompts_story_agents_tech_story_agent_tech_engineering_story_creator_agent",
       "target": "prompts_story_agents_tech_story_agent_quiz_isolation_rules",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_content_depth_engagement",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_coverage_completeness",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_domain_guidelines_true_crime_forensic_casework",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L52",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_output_format",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_pedagogical_framework",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "prompts/story-agents/true-crime-forensic-story-agent.md",
-      "source_location": "L38",
-      "weight": 1.0,
-      "source": "prompts_story_agents_true_crime_forensic_story_agent_true_crime_forensic_casework_story_creator_agent",
-      "target": "prompts_story_agents_true_crime_forensic_story_agent_quiz_isolation_rules",
       "confidence_score": 1.0
     },
     {

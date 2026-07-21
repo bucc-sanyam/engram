@@ -57,6 +57,15 @@ const STORY_SERIES = [
     meta: "6 chapters",
     desc: "A critical approach to understanding macroeconomics and the Indian economy.",
   },
+  {
+    href: "/blogs/psychopaths-and-savages",
+    label: "Talking with Psychopaths and Savages",
+    tag: "Psychology",
+    color: "#d94f5c",
+    title: "Talking with Psychopaths and Savages",
+    meta: "12 chapters",
+    desc: "A deep dive into the minds of predators. Are they clinical psychopaths, or unrestrained savages?",
+  },
 ];
 
 export default function BlogsPage() {

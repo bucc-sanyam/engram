@@ -1,0 +1,472 @@
+{
+  "communities": {
+    "0": [
+      "src_app_api_plan_route",
+      "src_app_api_plan_route_get",
+      "src_app_review_page",
+      "src_app_review_page_phase",
+      "src_app_review_page_ratebtn",
+      "src_app_review_page_reviewpage",
+      "src_app_review_page_scorelabel",
+      "src_app_review_page_scorering",
+      "src_app_review_page_spinner",
+      "src_lib_data",
+      "src_lib_data_api",
+      "src_lib_data_demostate",
+      "src_lib_data_getflashcards",
+      "src_lib_data_getplan",
+      "src_lib_data_getquestion",
+      "src_lib_data_ingestlink",
+      "src_lib_data_markplancompleted",
+      "src_lib_data_rateflashcard",
+      "src_lib_data_submitanswer",
+      "src_lib_demo",
+      "src_lib_demo_daysago",
+      "src_lib_demo_daysahead",
+      "src_lib_demo_demoentries",
+      "src_lib_demo_demoflashcards",
+      "src_lib_demo_demograde",
+      "src_lib_demo_demolinks",
+      "src_lib_demo_demoplan",
+      "src_lib_demo_demoprofile",
+      "src_lib_demo_demoquestions",
+      "src_lib_demo_demoreviews",
+      "src_lib_demo_demotopics",
+      "src_lib_demo_t",
+      "src_lib_types",
+      "src_lib_types_category",
+      "src_lib_types_dailyplan",
+      "src_lib_types_entry",
+      "src_lib_types_flashcard",
+      "src_lib_types_graderesult",
+      "src_lib_types_planitem",
+      "src_lib_types_profile",
+      "src_lib_types_review",
+      "src_lib_types_reviewmode",
+      "src_lib_types_topic",
+      "src_lib_types_topiclink"
+    ],
+    "1": [
+      "ref_dom",
+      "ref_dom_iterable",
+      "ref_esnext",
+      "ref_mts",
+      "ref_next_dev_types_ts",
+      "ref_next_env_d_ts",
+      "ref_next_types_ts",
+      "ref_node_modules",
+      "ref_src",
+      "ref_ts",
+      "ref_tsx",
+      "tsconfig",
+      "tsconfig_compileroptions",
+      "tsconfig_compileroptions_allowjs",
+      "tsconfig_compileroptions_esmoduleinterop",
+      "tsconfig_compileroptions_incremental",
+      "tsconfig_compileroptions_isolatedmodules",
+      "tsconfig_compileroptions_jsx",
+      "tsconfig_compileroptions_lib",
+      "tsconfig_compileroptions_module",
+      "tsconfig_compileroptions_moduleresolution",
+      "tsconfig_compileroptions_noemit",
+      "tsconfig_compileroptions_paths",
+      "tsconfig_compileroptions_plugins",
+      "tsconfig_compileroptions_resolvejsonmodule",
+      "tsconfig_compileroptions_skiplibcheck",
+      "tsconfig_compileroptions_strict",
+      "tsconfig_compileroptions_target",
+      "tsconfig_exclude",
+      "tsconfig_include",
+      "tsconfig_paths"
+    ],
+    "2": [
+      "src_app_api_ingest_route",
+      "src_app_api_ingest_route_fetchreadable",
+      "src_app_api_ingest_route_post",
+      "src_app_api_plan_route_post",
+      "src_app_api_quiz_route",
+      "src_app_api_quiz_route_applyreview",
+      "src_app_api_quiz_route_post",
+      "src_app_auth_callback_route",
+      "src_app_auth_callback_route_get",
+      "src_lib_gemini",
+      "src_lib_gemini_client",
+      "src_lib_gemini_extractknowledge",
+      "src_lib_gemini_generatejson",
+      "src_lib_gemini_generatequestion",
+      "src_lib_gemini_gradeanswer",
+      "src_lib_gemini_writeplannarrative",
+      "src_lib_progress",
+      "src_lib_progress_awardxp",
+      "src_lib_srs",
+      "src_lib_srs_schedulenext",
+      "src_lib_srs_srsresult",
+      "src_lib_srs_srsstate",
+      "src_lib_srs_updatemastery",
+      "src_lib_srs_xpforreview",
+      "src_lib_supabase_server",
+      "src_lib_supabase_server_createclient",
+      "src_lib_types_extractionresult"
+    ],
+    "3": [
+      "src_app_add_page",
+      "src_app_add_page_addpage",
+      "src_app_add_page_mode",
+      "src_app_add_page_phase",
+      "src_app_add_page_spinner",
+      "src_app_add_page_tip",
+      "src_app_login_page",
+      "src_app_login_page_loginpage",
+      "src_components_nav",
+      "src_components_nav_bolticon",
+      "src_components_nav_brainicon",
+      "src_components_nav_flameicon",
+      "src_components_nav_links",
+      "src_components_nav_nav",
+      "src_components_nav_plusicon",
+      "src_components_nav_sunicon",
+      "src_components_nav_usericon",
+      "src_components_progressmap",
+      "src_components_progressmap_heatmap",
+      "src_components_progressmap_levelpath",
+      "src_components_progressmap_progressmap",
+      "src_lib_data_ingestresult",
+      "src_lib_data_ingesttext",
+      "src_lib_types_level_titles",
+      "src_lib_types_levelforxp",
+      "src_lib_types_leveltitle"
+    ],
+    "4": [
+      "src_app_brain_page",
+      "src_app_brain_page_brainpage",
+      "src_app_brain_page_pathconnector",
+      "src_app_brain_page_searchicon",
+      "src_app_page",
+      "src_app_page_dashboard",
+      "src_app_page_divider",
+      "src_app_page_mode_label",
+      "src_app_page_sparkleicon",
+      "src_app_page_stat",
+      "src_lib_data_getentries",
+      "src_lib_data_getlinks",
+      "src_lib_data_getprofile",
+      "src_lib_data_getreviews",
+      "src_lib_data_gettopic",
+      "src_lib_data_gettopics",
+      "src_lib_data_signout",
+      "src_lib_demo_l",
+      "src_lib_supabase_client",
+      "src_lib_supabase_client_createclient",
+      "src_lib_types_category_colors",
+      "src_lib_types_categorycolor"
+    ],
+    "5": [
+      "google_genai",
+      "next",
+      "package_dependencies",
+      "package_dependencies_google_genai",
+      "package_dependencies_next",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_supabase_ssr",
+      "package_dependencies_supabase_supabase_js",
+      "package_dependencies_tailwindcss",
+      "package_dependencies_tailwindcss_postcss",
+      "package_dependencies_three",
+      "react",
+      "react_dom",
+      "supabase_ssr",
+      "supabase_supabase_js",
+      "tailwindcss",
+      "tailwindcss_postcss",
+      "three"
+    ],
+    "6": [
+      "package",
+      "package_devdependencies",
+      "package_devdependencies_types_node",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_types_three",
+      "package_devdependencies_typescript",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_start",
+      "package_version",
+      "types_node",
+      "types_react",
+      "types_react_dom",
+      "types_three",
+      "typescript"
+    ],
+    "7": [
+      "readme_engram",
+      "supabase_schema",
+      "supabase_schema_on_auth_user_created",
+      "supabase_schema_public_daily_plans",
+      "supabase_schema_public_entries",
+      "supabase_schema_public_entry_topics",
+      "supabase_schema_public_flashcards",
+      "supabase_schema_public_handle_new_user",
+      "supabase_schema_public_profiles",
+      "supabase_schema_public_reviews",
+      "supabase_schema_public_topic_links",
+      "supabase_schema_public_topics"
+    ],
+    "8": [
+      "src_components_brainscene",
+      "src_components_brainscene_brainpoint",
+      "src_components_brainscene_brainscene",
+      "src_components_brainscene_hashstr",
+      "src_components_brainscene_linkobj",
+      "src_components_brainscene_makecircletexture",
+      "src_components_brainscene_makeglowtexture",
+      "src_components_brainscene_makelabeltexture",
+      "src_components_brainscene_mulberry32",
+      "src_components_brainscene_nodeobj"
+    ],
+    "9": [
+      "src_app_layout",
+      "src_app_layout_grotesk",
+      "src_app_layout_inter",
+      "src_app_layout_jetmono",
+      "src_app_layout_metadata",
+      "src_app_layout_rootlayout",
+      "src_app_layout_viewport"
+    ],
+    "10": [
+      "render_engram",
+      "render_gemini_key",
+      "render_node_runtime",
+      "render_supabase_url"
+    ],
+    "11": [
+      "src_proxy",
+      "src_proxy_config",
+      "src_proxy_proxy",
+      "src_proxy_public_paths"
+    ],
+    "12": [
+      "claude_claude_claude_claudemd_graphify",
+      "claude_skills_graphify_references_extraction_spec_rules",
+      "claude_skills_graphify_references_query_traversal"
+    ],
+    "13": [
+      "claude_skills_graphify_references_add_watch_ingest",
+      "claude_skills_graphify_references_transcribe_whisper",
+      "claude_skills_graphify_references_update_incremental"
+    ],
+    "14": [
+      "claude_graphify",
+      "claude_skills_graphify_skill"
+    ],
+    "15": [
+      "next_config",
+      "next_config_nextconfig"
+    ],
+    "16": [
+      "postcss_config",
+      "postcss_config_config"
+    ],
+    "17": [
+      "claude_skills_graphify_references_add_watch_watch"
+    ],
+    "18": [
+      "claude_skills_graphify_references_exports_falkordb"
+    ],
+    "19": [
+      "claude_skills_graphify_references_exports_mcp"
+    ],
+    "20": [
+      "claude_skills_graphify_references_exports_neo4j"
+    ],
+    "21": [
+      "claude_skills_graphify_references_github_and_merge_clone"
+    ],
+    "22": [
+      "claude_skills_graphify_references_github_and_merge_merge"
+    ],
+    "23": [
+      "claude_skills_graphify_references_hooks_git"
+    ],
+    "24": [
+      "render_supabase_key"
+    ]
+  },
+  "cohesion": {
+    "0": 0.10359408033826638,
+    "1": 0.06451612903225806,
+    "2": 0.16524216524216523,
+    "3": 0.08923076923076922,
+    "4": 0.1471861471861472,
+    "5": 0.10526315789473684,
+    "6": 0.10526315789473684,
+    "7": 0.18181818181818182,
+    "8": 0.3333333333333333,
+    "9": 0.2857142857142857,
+    "10": 0.5,
+    "11": 0.6666666666666666,
+    "12": 0.6666666666666666,
+    "13": 0.6666666666666666,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_compileroptions",
+      "label": "compilerOptions",
+      "degree": 16
+    },
+    {
+      "id": "src_lib_supabase_client_createclient",
+      "label": "createClient()",
+      "degree": 10
+    },
+    {
+      "id": "src_lib_supabase_server_createclient",
+      "label": "createClient()",
+      "degree": 10
+    },
+    {
+      "id": "src_lib_data_api",
+      "label": "api()",
+      "degree": 8
+    },
+    {
+      "id": "src_components_brainscene_brainscene",
+      "label": "BrainScene()",
+      "degree": 8
+    },
+    {
+      "id": "src_app_page_dashboard",
+      "label": "Dashboard()",
+      "degree": 7
+    },
+    {
+      "id": "src_lib_types_categorycolor",
+      "label": "categoryColor()",
+      "degree": 7
+    },
+    {
+      "id": "src_lib_types_topic",
+      "label": "Topic",
+      "degree": 7
+    },
+    {
+      "id": "tsconfig_include",
+      "label": "include",
+      "degree": 7
+    },
+    {
+      "id": "src_app_api_quiz_route_applyreview",
+      "label": "applyReview()",
+      "degree": 6
+    }
+  ],
+  "surprises": [
+    {
+      "source": "BrainPage()",
+      "target": "l()",
+      "source_files": [
+        "src/app/brain/page.tsx",
+        "src/lib/demo.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; peripheral node `l()` unexpectedly reaches hub `BrainPage()`"
+    },
+    {
+      "source": "BrainPage()",
+      "target": "t()",
+      "source_files": [
+        "src/app/brain/page.tsx",
+        "src/lib/demo.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source; bridges separate communities"
+    },
+    {
+      "source": "Graphify Skill",
+      "target": "Graphify Skill Definition",
+      "source_files": [
+        "CLAUDE.md",
+        ".claude/skills/graphify/SKILL.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    },
+    {
+      "source": "GET()",
+      "target": "t()",
+      "source_files": [
+        "src/app/api/plan/route.ts",
+        "src/lib/demo.ts"
+      ],
+      "confidence": "INFERRED",
+      "relation": "indirect_call",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "GET()",
+      "target": "writePlanNarrative()",
+      "source_files": [
+        "src/app/api/plan/route.ts",
+        "src/lib/gemini.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `dependencies` connect `Project Dependencies` to `package.json`?",
+      "why": "High betweenness centrality (0.016) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `Topic` connect `Review and Scoring System` to `AI Content Generation`, `Dashboard and Visualization`?",
+      "why": "High betweenness centrality (0.015) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `BrainScene()` connect `BrainScene.tsx` to `Dashboard and Visualization`?",
+      "why": "High betweenness centrality (0.014) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `nextConfig`, `config`, `Phase` to the rest of the system?",
+      "why": "86 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Review and Scoring System` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.10359408033826638 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `TypeScript Configuration` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Navigation and Core UI` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08923076923076922 - nodes in this community are weakly interconnected."
+    }
+  ]
+}
