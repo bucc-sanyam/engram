@@ -95,6 +95,8 @@ export interface VizPalette {
   edgeStroke: string;
   /** secondary label text (edge labels, notes) */
   muted: string;
+  /** diagram panel / backdrop fill */
+  panel: string;
 }
 
 /** Theme-aware colour set for the `viz:*` reading diagrams. */
@@ -130,5 +132,6 @@ export function useAccentColor(hex: string): string {
   const { isPaperMode } = useReadingTheme();
   return isPaperMode ? darkenForPaper(hex) : hex;
 }
+
 
 

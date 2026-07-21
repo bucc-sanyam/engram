@@ -31,8 +31,12 @@ const PAPER_BG = "#eee8dd";
 interface Shard {
   cx: number; // centre x (moves as it drifts)
   cy: number; // centre y
+  homeX: number; // resting position while still an intact tile
+  homeY: number;
   w: number;
   h: number;
+  baseW: number; // intact tile size (before it starts shrinking)
+  baseH: number;
   delay: number; // frames before it lets go (radial sweep from origin)
   age: number; // frames since it let go (fade-in then out)
   angle: number; // z-rotation
@@ -42,6 +46,7 @@ interface Shard {
   vx: number; // drift
   vy: number;
   alpha: number;
+  tint: number; // subtle per-tile brightness so the intact sheet has grain
   shed: boolean; // has it emitted its ash yet
 }
 
@@ -60,7 +65,9 @@ interface Ash {
 }
 
 // Shard grid size — bigger cells = fewer, chunkier sheets of paper.
-const CELL = 46;
+const CELL = 44;
+// How fast the crack sweeps outward from the origin (frames across the screen).
+const SWEEP = 30;
 
 export default function ThanosSnapCanvas({
   isActive,
@@ -125,17 +132,22 @@ export default function ThanosSnapCanvas({
         shards.push({
           cx,
           cy,
-          w: cw + 1, // +1 hides sub-pixel seams while covering
+          homeX: cx,
+          homeY: cy,
+          w: cw + 1, // +1 hides sub-pixel seams while the sheet is intact
           h: chh + 1,
-          delay: d * 46 + Math.random() * 8,
+          baseW: cw + 1,
+          baseH: chh + 1,
+          delay: d * SWEEP + Math.random() * 5,
           age: 0,
           angle: 0,
-          spin: (Math.random() - 0.5) * 0.26,
+          spin: (Math.random() - 0.5) * 0.3,
           flip: 0,
-          flipSpeed: 0.1 + Math.random() * 0.09,
+          flipSpeed: 0.12 + Math.random() * 0.1,
           vx: Math.cos(ang) * push + (Math.random() - 0.5),
-          vy: Math.sin(ang) * push - (0.6 + Math.random() * 1.1), // bias upward
+          vy: Math.sin(ang) * push - (0.8 + Math.random() * 1.3), // bias upward
           alpha: 1,
+          tint: (Math.random() - 0.5) * 0.14, // ±grain on the intact sheet
           shed: false,
         });
       }
@@ -143,20 +155,40 @@ export default function ThanosSnapCanvas({
 
     const ash: Ash[] = [];
     const spawnAsh = (s: Shard) => {
-      const n = 2 + Math.floor(Math.random() * 2);
+      const n = 4 + Math.floor(Math.random() * 4);
       for (let k = 0; k < n; k++) {
-        const ang = Math.atan2(s.cy - oy, s.cx - ox) + (Math.random() - 0.5) * 1.1;
-        const speed = 1.4 + Math.random() * 2.6;
+        const ang = Math.atan2(s.cy - oy, s.cx - ox) + (Math.random() - 0.5) * 1.2;
+        const speed = 1.4 + Math.random() * 3;
         ash.push({
           x: s.cx + (Math.random() - 0.5) * s.w,
           y: s.cy + (Math.random() - 0.5) * s.h,
           vx: Math.cos(ang) * speed,
-          vy: Math.sin(ang) * speed - Math.random() * 1.4,
-          size: 1.4 + Math.random() * 3,
+          vy: Math.sin(ang) * speed - Math.random() * 1.5,
+          size: 1.3 + Math.random() * 3.2,
           color: ashPalette[Math.floor(Math.random() * ashPalette.length)],
           alpha: 1,
           angle: Math.random() * Math.PI * 2,
-          spin: (Math.random() - 0.5) * 0.24,
+          spin: (Math.random() - 0.5) * 0.26,
+          seed: Math.random() * 100,
+        });
+      }
+    };
+
+    // A fountain of particles that keeps bursting straight out of the button.
+    const spawnFountain = (count: number) => {
+      for (let k = 0; k < count; k++) {
+        const ang = Math.random() * Math.PI * 2;
+        const speed = 2.5 + Math.random() * 5.5; // fast — really spreads out
+        ash.push({
+          x: ox + (Math.random() - 0.5) * 10,
+          y: oy + (Math.random() - 0.5) * 10,
+          vx: Math.cos(ang) * speed,
+          vy: Math.sin(ang) * speed - Math.random() * 2,
+          size: 1.4 + Math.random() * 3.4,
+          color: ashPalette[Math.floor(Math.random() * ashPalette.length)],
+          alpha: 1,
+          angle: Math.random() * Math.PI * 2,
+          spin: (Math.random() - 0.5) * 0.3,
           seed: Math.random() * 100,
         });
       }
@@ -190,12 +222,22 @@ export default function ThanosSnapCanvas({
         ctx.fill();
       }
 
+      // Fountain of particles spreading out of the button — a strong initial
+      // burst, then a tail while the sheet is still shattering.
+      if (frame === 1) spawnFountain(46);
+      else if (frame < 30) spawnFountain(6);
+
       let alive = 0;
 
-      // ---- shards (a travelling band, never a full cover) ----
+      // ---- shards ----
+      // Before a tile's turn it stays an INTACT sheet of the OLD colour, hiding
+      // the already-flipped page underneath (so there is no flash). At its turn
+      // it tears free and flies, revealing the new page behind it.
       for (const s of shards) {
         if (frame < s.delay) {
-          alive++; // still to come — page shows through here
+          // intact tile — part of the old page's surface, still covering
+          drawTile(ctx, s, sheet, sheetEdge);
+          alive++;
           continue;
         }
         if (!s.shed) {
@@ -209,13 +251,13 @@ export default function ThanosSnapCanvas({
         s.flip += s.flipSpeed;
         s.cx += s.vx;
         s.cy += s.vy;
-        s.vy += 0.06; // slight gravity settle after the initial lift
-        s.w *= 0.985;
-        s.h *= 0.985;
-        if (s.age > 3) s.alpha *= 0.9;
+        s.vy += 0.07; // slight gravity settle after the initial lift
+        s.w *= 0.982;
+        s.h *= 0.982;
+        if (s.age > 2) s.alpha *= 0.9;
 
-        // quick fade-in as it tears free, capped < 1 so the page peeks through
-        const a = s.alpha * Math.min(1, s.age / 2) * 0.88;
+        // fades out as it tears free and tumbles away
+        const a = s.alpha * Math.min(1, s.age / 1.5);
         const flipScale = Math.abs(Math.cos(s.flip)); // 3D turn → edge-on then back
         if (a > 0.03 && s.w > 1.2) {
           drawShard(ctx, s, sheet, sheetEdge, sheen, flipScale, a);
@@ -264,6 +306,27 @@ export default function ThanosSnapCanvas({
   );
 }
 
+/** Apply a small brightness delta to a #rrggbb colour (for per-tile grain). */
+function shade(hex: string, delta: number): string {
+  const n = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, Math.min(255, ((n >> 16) & 255) + delta * 255));
+  const g = Math.max(0, Math.min(255, ((n >> 8) & 255) + delta * 255));
+  const b = Math.max(0, Math.min(255, (n & 255) + delta * 255));
+  return `rgb(${r | 0},${g | 0},${b | 0})`;
+}
+
+/** Draw one still-intact tile of the old page surface (covers the flip). */
+function drawTile(ctx: CanvasRenderingContext2D, s: Shard, sheet: string, edge: string) {
+  ctx.save();
+  ctx.fillStyle = s.tint ? shade(sheet, s.tint * 0.4) : sheet;
+  ctx.fillRect(s.homeX - s.baseW / 2, s.homeY - s.baseH / 2, s.baseW, s.baseH);
+  ctx.strokeStyle = edge;
+  ctx.lineWidth = 0.5;
+  ctx.globalAlpha = 0.35;
+  ctx.strokeRect(s.homeX - s.baseW / 2, s.homeY - s.baseH / 2, s.baseW, s.baseH);
+  ctx.restore();
+}
+
 /** Draw one paper shard: a sheet with a soft directional sheen + hairline edge. */
 function drawShard(
   ctx: CanvasRenderingContext2D,
@@ -281,7 +344,7 @@ function drawShard(
   ctx.scale(Math.max(0.04, flipScale), 1);
   const w = s.w;
   const h = s.h;
-  ctx.fillStyle = sheet;
+  ctx.fillStyle = s.tint ? shade(sheet, s.tint * 0.4) : sheet;
   ctx.fillRect(-w / 2, -h / 2, w, h);
   // sheen — a diagonal gloss so the rotating paper catches light
   const g = ctx.createLinearGradient(-w / 2, -h / 2, w / 2, h / 2);
