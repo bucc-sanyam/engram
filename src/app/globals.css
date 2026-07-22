@@ -391,15 +391,15 @@ h1, h2, h3, .display {
   --muted:      #544d42;   /* secondary text      ~6:1   */
   --faint:      #655d4f;   /* micro labels        ~4.6:1 (was #8a8174 ~2.3:1) */
 
-  /* ---- elevation ramp (cards lift GENTLY off the page — warm, not glary) ---- */
-  /* Cards used to be #f6f1e6 (much lighter + cooler than the page), which read
-     as a bright band on big, mostly-empty surfaces like the prev/next nav.
-     Now they lift only a whisper and lean warm, leaning on the border/shadow. */
-  --surface:    #f1ebde;   /* cards / glass — a soft warm sheet, barely above the page */
-  --surface-2:  #ebe4d5;   /* hover / nested */
-  --border:     #d7ccb6;   /* warm hairline that actually shows (does the separation) */
-  --code-bg:    #f0e9d9;   /* code panel (warm parchment) */
-  --code-border:#d9cfba;
+  /* ---- elevation ramp (cards BLEND into the page — no bright floating block) ---- */
+  /* Cards sit at essentially the page tone (a hair warmer), separated only by a
+     soft hairline + the faintest shadow. No lighter fill, no elevation halo —
+     so a big mostly-empty card (prev/next nav) reads as calm cream, not glare. */
+  --surface:    #ece6d9;   /* cards / glass — level with the page, gently warm */
+  --surface-2:  #e6dfd0;   /* hover / nested */
+  --border:     #d5cab3;   /* warm hairline — this alone does the separation */
+  --code-bg:    #ece5d5;   /* code panel (warm parchment) */
+  --code-border:#d5cbb6;
 
   /* ---- accents retuned for a LIGHT background (darker, saturated ink) ---- */
   --ember:  #c0361d;   /* vermilion   ~5.2:1  (dark-mode #ff7a5c/#ff9a80 map here) */
@@ -471,16 +471,16 @@ h1, h2, h3, .display {
 .paper-mode-active .glass {
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
-  box-shadow: 0 1px 2px rgba(60, 50, 40, 0.05),
-              0 10px 30px -14px rgba(60, 50, 40, 0.18) !important;
+  /* No elevation halo — a card that floats reads as a bright block on cream.
+     Keep only a whisper of depth so it's still a "sheet", not a glare. */
+  box-shadow: 0 1px 1px rgba(60, 50, 40, 0.04) !important;
 }
 .paper-mode-active .glass::before {
   background: linear-gradient(90deg, transparent, rgba(45, 41, 38, 0.10), transparent) !important;
 }
 .paper-mode-active .glass-hover:hover {
   background: var(--surface-2) !important;
-  box-shadow: 0 2px 4px rgba(60, 50, 40, 0.06),
-              0 14px 36px -14px rgba(60, 50, 40, 0.22) !important;
+  box-shadow: 0 2px 3px rgba(60, 50, 40, 0.06) !important;
 }
 
 .paper-mode-active details {
