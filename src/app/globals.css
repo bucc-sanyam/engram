@@ -391,12 +391,15 @@ h1, h2, h3, .display {
   --muted:      #544d42;   /* secondary text      ~6:1   */
   --faint:      #655d4f;   /* micro labels        ~4.6:1 (was #8a8174 ~2.3:1) */
 
-  /* ---- elevation ramp (cards LIGHTER than page + real border/shadow) ---- */
-  --surface:    #f6f1e6;   /* cards / glass — a fresh sheet, lighter than the page */
-  --surface-2:  #efe9dc;   /* hover / nested */
-  --border:     #dcd2be;   /* warm hairline that actually shows */
-  --code-bg:    #f3ecdd;   /* code panel (warm parchment) */
-  --code-border:#ddd3bf;
+  /* ---- elevation ramp (cards lift GENTLY off the page — warm, not glary) ---- */
+  /* Cards used to be #f6f1e6 (much lighter + cooler than the page), which read
+     as a bright band on big, mostly-empty surfaces like the prev/next nav.
+     Now they lift only a whisper and lean warm, leaning on the border/shadow. */
+  --surface:    #f1ebde;   /* cards / glass — a soft warm sheet, barely above the page */
+  --surface-2:  #ebe4d5;   /* hover / nested */
+  --border:     #d7ccb6;   /* warm hairline that actually shows (does the separation) */
+  --code-bg:    #f0e9d9;   /* code panel (warm parchment) */
+  --code-border:#d9cfba;
 
   /* ---- accents retuned for a LIGHT background (darker, saturated ink) ---- */
   --ember:  #c0361d;   /* vermilion   ~5.2:1  (dark-mode #ff7a5c/#ff9a80 map here) */
