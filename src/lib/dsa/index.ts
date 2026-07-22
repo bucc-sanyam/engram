@@ -64,6 +64,24 @@ export function dsaProblemCount(): number {
   return DSA_TOPICS.reduce((sum, t) => sum + t.problems.length, 0);
 }
 
+/**
+ * Problem slugs whose LeetCode slug differs from our internal slug.
+ * Everything else maps 1:1 to `https://leetcode.com/problems/<slug>/`.
+ */
+const LEETCODE_SLUG_OVERRIDES: Record<string, string> = {
+  "two-sum-ii": "two-sum-ii-input-array-is-sorted",
+  "lowest-common-ancestor-of-a-bst": "lowest-common-ancestor-of-a-binary-search-tree",
+  "pow-x-n": "powx-n",
+  "number-of-connected-components": "number-of-connected-components-in-an-undirected-graph",
+};
+
+/** The LeetCode "solve it" URL for a problem — explicit field first, else derived. */
+export function dsaLeetcodeUrl(problem: DsaProblem): string {
+  if (problem.leetcodeUrl) return problem.leetcodeUrl;
+  const slug = LEETCODE_SLUG_OVERRIDES[problem.slug] ?? problem.slug;
+  return `https://leetcode.com/problems/${slug}/`;
+}
+
 /** One stop on the linear read: a chapter opener or a question inside it. */
 export type DsaStop =
   | { kind: "topic"; topic: DsaTopic }

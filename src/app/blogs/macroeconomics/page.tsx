@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import StoryStartControl from "@/components/StoryStartControl";
+import { AccentText, AccentPill } from "@/components/AccentText";
 import {
   MACRO_SERIES_TITLE,
   MACROECONOMICS_CHAPTERS,
@@ -36,7 +37,9 @@ export default function MacroeconomicsPage() {
             style={{ background: "#a3e635" }}
             aria-hidden
           />
-          <p className="micro mb-3 !text-[#a3e635]">{MACRO_SERIES_TITLE}</p>
+          <AccentText as="p" color="#a3e635" className="micro mb-3">
+            {MACRO_SERIES_TITLE}
+          </AccentText>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
             Macroeconomics: An Introduction
           </h1>
@@ -48,15 +51,21 @@ export default function MacroeconomicsPage() {
         {/* How to read */}
         <section className="rise mb-10 grid gap-3 sm:grid-cols-3">
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#a3e635]">{MACROECONOMICS_CHAPTERS.length}</p>
+            <AccentText as="p" color="#a3e635" className="display text-2xl font-bold">
+              {MACROECONOMICS_CHAPTERS.length}
+            </AccentText>
             <p className="mt-1 text-sm text-muted">chapters, from foundations to policy</p>
           </div>
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#43d6b5]">{total}</p>
+            <AccentText as="p" color="#43d6b5" className="display text-2xl font-bold">
+              {total}
+            </AccentText>
             <p className="mt-1 text-sm text-muted">section blogs, each a complete read</p>
           </div>
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#ff7a5c]">1</p>
+            <AccentText as="p" color="#ff7a5c" className="display text-2xl font-bold">
+              1
+            </AccentText>
             <p className="mt-1 text-sm text-muted">path — every blog links to the next</p>
           </div>
         </section>
@@ -90,12 +99,12 @@ export default function MacroeconomicsPage() {
                       aria-hidden
                     />
                     <div className="flex items-start gap-4">
-                      <span
+                      <AccentText
+                        color={chapter.color}
                         className="display mt-0.5 shrink-0 text-2xl font-bold tabular-nums opacity-40"
-                        style={{ color: chapter.color }}
                       >
                         {String(chapter.chapter).padStart(2, "0")}
-                      </span>
+                      </AccentText>
                       <div className="min-w-0 flex-1">
                         <h3
                           className="text-base font-bold leading-snug transition-colors group-hover:text-white"
@@ -110,27 +119,24 @@ export default function MacroeconomicsPage() {
                           </span>
                           {(["Foundation", "Core", "Advanced"] as const).map((imp) =>
                             counts[imp] > 0 ? (
-                              <span
+                              <AccentPill
                                 key={imp}
+                                color={MACRO_IMPORTANCE_COLORS[imp]}
                                 className="rounded-full px-2 py-0.5 font-semibold"
-                                style={{
-                                  background: `${MACRO_IMPORTANCE_COLORS[imp]}1a`,
-                                  color: MACRO_IMPORTANCE_COLORS[imp],
-                                }}
                               >
                                 {counts[imp]} {imp.toLowerCase()}
-                              </span>
+                              </AccentPill>
                             ) : null
                           )}
                         </div>
                       </div>
-                      <span
-                        aria-hidden
+                      <AccentText
+                        ariaHidden
+                        color={chapter.color}
                         className="mt-1 shrink-0 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                        style={{ color: chapter.color }}
                       >
                         →
-                      </span>
+                      </AccentText>
                     </div>
                   </Link>
                 </li>

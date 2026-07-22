@@ -14,6 +14,7 @@ import {
   dsaProblemNumber,
   dsaStopHref,
   dsaStopTitle,
+  dsaLeetcodeUrl,
   getDsaProblem,
 } from "@/lib/dsa";
 
@@ -89,6 +90,14 @@ export default async function DsaProblemPage({
                 className="text-muted underline decoration-white/20 underline-offset-2 transition-colors hover:text-white hover:decoration-white/50"
               >
                 Practice on NeetCode ↗
+              </a>
+              <a
+                href={dsaLeetcodeUrl(problem)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted underline decoration-white/20 underline-offset-2 transition-colors hover:text-white hover:decoration-white/50"
+              >
+                Solve on LeetCode ↗
               </a>
             </div>
           </header>

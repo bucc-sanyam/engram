@@ -207,7 +207,7 @@ Iterate 32 times:
             "Because arithmetic right shift runs faster.",
             "Because arithmetic right shift (>>) preserves the sign bit by padding with 1s for negative numbers, whereas unsigned shift (>>>) always pads with 0s.",
             "To multiply by 2.",
-            "Because JavaScript requires >>>."
+            "Because unsigned shift is always faster than arithmetic shift."
           ],
           correct_index: 1,
           model_answer: "Arithmetic right shift preserves the leading 1 (sign bit) for negative numbers. Unsigned right shift fills empty high bits with 0.",

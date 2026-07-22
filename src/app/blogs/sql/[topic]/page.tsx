@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
+import { AccentText, AccentPill } from "@/components/AccentText";
 import {
   SQL_SERIES_TITLE,
   SQL_TOPICS,
@@ -63,9 +64,9 @@ export default async function SqlTopicPage({
               style={{ background: topic.color }}
               aria-hidden
             />
-            <p className="micro mb-4" style={{ color: topic.color }}>
+            <AccentText as="p" className="micro mb-4" color={topic.color}>
               Chapter {topic.chapter} · {topic.problems.length} problem{topic.problems.length === 1 ? "" : "s"}
-            </p>
+            </AccentText>
             <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
               {topic.title}
             </h1>
@@ -77,14 +78,14 @@ export default async function SqlTopicPage({
                   <span className="inline-flex flex-wrap items-center gap-2">
                     <span className="micro !text-faint">After</span>
                     {prereqs.map((p) => (
-                      <Link
+                      <AccentPill
                         key={p.slug}
                         href={`/blogs/sql/${p.slug}`}
+                        color={p.color}
                         className="rounded-full px-2.5 py-0.5 text-[12px] font-semibold transition-transform hover:-translate-y-0.5"
-                        style={{ background: `${p.color}1a`, color: p.color }}
                       >
                         {p.title}
-                      </Link>
+                      </AccentPill>
                     ))}
                   </span>
                 )}
@@ -92,14 +93,14 @@ export default async function SqlTopicPage({
                   <span className="inline-flex flex-wrap items-center gap-2">
                     <span className="micro !text-faint">Unlocks</span>
                     {unlocks.map((p) => (
-                      <Link
+                      <AccentPill
                         key={p.slug}
                         href={`/blogs/sql/${p.slug}`}
+                        color={p.color}
                         className="rounded-full px-2.5 py-0.5 text-[12px] font-semibold transition-transform hover:-translate-y-0.5"
-                        style={{ background: `${p.color}1a`, color: p.color }}
                       >
                         {p.title}
-                      </Link>
+                      </AccentPill>
                     ))}
                   </span>
                 )}
@@ -114,9 +115,9 @@ export default async function SqlTopicPage({
 
           {/* The problems, in reading order */}
           <section className="border-t border-white/[0.07] pt-9">
-            <h2 className="micro mb-2" style={{ color: topic.color }}>
+            <AccentText as="h2" className="micro mb-2" color={topic.color}>
               The problems, in order
-            </h2>
+            </AccentText>
             <p className="mb-6 text-sm text-faint">
               Read them top to bottom — each one hands off to the next.
             </p>
@@ -127,26 +128,23 @@ export default async function SqlTopicPage({
                     href={`/blogs/sql/${topic.slug}/${p.slug}`}
                     className="row-soft group flex items-start gap-4 px-4 py-3.5"
                   >
-                    <span
+                    <AccentText
                       className="display mt-0.5 shrink-0 text-lg font-bold tabular-nums opacity-40"
-                      style={{ color: topic.color }}
+                      color={topic.color}
                     >
                       {String(i + 1).padStart(2, "0")}
-                    </span>
+                    </AccentText>
                     <span className="min-w-0 flex-1">
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="font-medium text-white/90 transition-colors group-hover:text-white">
                           {p.title}
                         </span>
-                        <span
+                        <AccentPill
+                          color={SQL_DIFFICULTY_COLORS[p.difficulty]}
                           className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
-                          style={{
-                            background: `${SQL_DIFFICULTY_COLORS[p.difficulty]}1a`,
-                            color: SQL_DIFFICULTY_COLORS[p.difficulty],
-                          }}
                         >
                           {p.difficulty}
-                        </span>
+                        </AccentPill>
                         <span className="text-[10px] text-faint">LC #{p.leetcodeNumber}</span>
                       </span>
                       <span className="mt-0.5 block text-sm leading-snug text-faint">
@@ -184,9 +182,9 @@ export default async function SqlTopicPage({
                 className="glass glass-hover rounded-[1.5rem] p-4 text-right"
               >
                 <span className="micro !text-faint">Begin the chapter →</span>
-                <span className="mt-1 block font-medium" style={{ color: topic.color }}>
+                <AccentText as="span" className="mt-1 block font-medium" color={topic.color}>
                   {sqlStopTitle(next)}
-                </span>
+                </AccentText>
               </Link>
             )}
           </nav>

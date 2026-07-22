@@ -338,7 +338,7 @@ Since we are allowed **at most $K$ stops** (which means at most $K + 1$ flight e
           options: [
             "To prevent negative prices.",
             "To ensure that each round relaxes edges using ONLY the paths established in previous rounds, preventing an edge from chaining across multiple hops in a single round.",
-            "Because JavaScript arrays are passed by reference.",
+            "To guarantee the graph contains no negative-weight cycles.",
             "To sort the flight routes."
           ],
           correct_index: 1,

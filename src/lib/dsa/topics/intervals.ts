@@ -102,7 +102,7 @@ A single insertion into an already-sorted disjoint list produces a **contiguous 
             "Because intervals are sorted by end time.",
             "Because an interval may be completely swallowed inside the previous interval (e.g. [1, 10] and [2, 3]), and assigning directly would incorrectly shrink last.end.",
             "To prevent negative interval values.",
-            "Because JavaScript arrays require max values."
+            "Because the intervals were sorted by end time, not start time."
           ],
           correct_index: 1,
           model_answer: "A swallowed interval has a smaller end than the open span. Using max() ensures the span never shrinks.",

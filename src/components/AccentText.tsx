@@ -19,17 +19,19 @@ export function AccentText({
   style,
   children,
   as: Tag = "span",
+  ariaHidden,
 }: {
   color: string;
   className?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;
   as?: "span" | "p" | "div" | "h2" | "h3";
+  ariaHidden?: boolean;
 }) {
   const { isPaperMode } = useReadingTheme();
   const c = isPaperMode ? darkenForPaper(color) : color;
   return (
-    <Tag className={className} style={{ ...style, color: c }}>
+    <Tag className={className} style={{ ...style, color: c }} aria-hidden={ariaHidden}>
       {children}
     </Tag>
   );
@@ -91,6 +93,7 @@ export function AccentPill({
     </span>
   );
 }
+
 
 
 

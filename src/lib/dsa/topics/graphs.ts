@@ -159,7 +159,7 @@ Maintain \`oldToNew = Map<OldNode, ClonedNode>()\`:
           kind: "mcq",
           prompt: "Why must oldToNew.set(node, copy) be executed BEFORE iterating over node.neighbors?",
           options: [
-            "Because JavaScript Maps require pre-allocation.",
+            "Because the map must be sized before any inserts.",
             "So that if a neighbor contains a cycle pointing back to 'node', the recursion discovers the existing clone in oldToNew instead of creating a duplicate infinite clone chain.",
             "To sort neighbor values.",
             "To convert graph nodes into array indices."

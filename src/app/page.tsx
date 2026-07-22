@@ -7,8 +7,17 @@ import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
 import StoryJourney from "@/components/StoryJourney";
-import { getEntries, getFactOfTheDay, getPlan, getProfile, getReviews, getTopics } from "@/lib/data";
-import { getAllStorySections, getStartedStories, type StorySection, type UserStory } from "@/lib/stories";
+import {
+  getEntriesCached,
+  getFactCached,
+  getPlanCached,
+  getProfileCached,
+  getReviewsCached,
+  getStartedStoriesCached,
+  getStorySectionsCached,
+  getTopicsCached,
+} from "@/lib/prefetch";
+import { type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
 import type { DailyFact, DailyPlan, Entry, Note, PlanItem, Profile, Review, Topic } from "@/lib/types";
@@ -33,14 +42,14 @@ export default function Dashboard() {
   const [storySections, setStorySections] = useState<StorySection[]>([]);
 
   useEffect(() => {
-    getProfile().then(setProfile).catch(() => {});
-    getTopics().then(setTopics).catch(() => {});
-    getReviews().then(setReviews).catch(() => {});
-    getEntries().then(setEntries).catch(() => {});
-    getFactOfTheDay().then(setFact).catch(() => {});
-    getPlan().then(setPlan).catch(() => setPlanError(true));
-    getStartedStories().then(setStories).catch(() => {});
-    getAllStorySections().then(setStorySections).catch(() => {});
+    getProfileCached().then(setProfile).catch(() => {});
+    getTopicsCached().then(setTopics).catch(() => {});
+    getReviewsCached().then(setReviews).catch(() => {});
+    getEntriesCached().then(setEntries).catch(() => {});
+    getFactCached().then(setFact).catch(() => {});
+    getPlanCached().then(setPlan).catch(() => setPlanError(true));
+    getStartedStoriesCached().then(setStories).catch(() => {});
+    getStorySectionsCached().then(setStorySections).catch(() => {});
   }, []);
 
   // Personal notes live in localStorage — read on mount, stay in sync with edits.

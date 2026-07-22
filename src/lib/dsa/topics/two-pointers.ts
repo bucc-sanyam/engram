@@ -21,7 +21,10 @@ The five problems build from simple mirroring (Valid Palindrome) to the full exp
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/is-palindrome",
       summary: "Two mirrored pointers meeting in the middle — the gentlest introduction to the pattern.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners usually solve this by filtering out non-alphanumeric characters, converting to lowercase, and reversing the string to check \`s_clean == reverse(s_clean)\`.
+      body: `**The problem.** Given a string, return \`true\` if it reads the same forwards and backwards after dropping every non-alphanumeric character and ignoring case. \`"A man, a plan, a canal: Panama"\` → \`true\`, \`"race a car"\` → \`false\`.
+**The signal.** The interviewer wants you to compare from *both ends* without building a cleaned-up copy of the string. Recognising that a palindrome check is inherently a **converging scan** — not a reverse-and-compare — is the whole test here.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners usually solve this by filtering out non-alphanumeric characters, converting to lowercase, and reversing the string to check \`s_clean == reverse(s_clean)\`.
 *Why this shatters*: Creating a new filtered string and a reversed string requires $O(N)$ extra memory allocation. On embedded systems or high-performance APIs processing millions of strings, allocating temporary copies causes garbage collection churn.
 
 **The Structural Invariant.** A palindrome possesses **mirror symmetry**: character at index $i$ must match character at index $(N - 1 - i)$.
@@ -37,6 +40,35 @@ The five problems build from simple mirroring (Valid Palindrome) to the full exp
     { "cells": ["r", "a", "c", "e", " ", "a", " ", "c", "a", "r"], "pointers": [{ "label": "L=3", "index": 3 }, { "label": "R=5", "index": 5 }], "highlight": [3, 5], "note": "L='e', R='a' -> Mismatch ('e' != 'a')! Return false." }
   ],
   "caption": "Valid Palindrome — In-place two-pointer convergence with O(1) auxiliary space."
+}
+\`\`\`
+
+**The optimal solution (converging pointers).**
+
+\`\`\`python
+def is_palindrome(s):
+    l, r = 0, len(s) - 1
+    while l < r:
+        while l < r and not s[l].isalnum():   # skip junk from the left
+            l += 1
+        while l < r and not s[r].isalnum():   # skip junk from the right
+            r -= 1
+        if s[l].lower() != s[r].lower():
+            return False
+        l += 1
+        r -= 1
+    return True
+\`\`\`
+
+**Complexity — in-place comparison avoids the extra copy.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Filter + reverse + compare", "time": "O(N)", "space": "O(N)", "note": "Allocates a cleaned copy and its reverse — GC churn at scale." },
+    { "approach": "Two converging pointers", "time": "O(N)", "space": "O(1)", "note": "Compares in place, skipping non-alphanumerics. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = string length. Same linear time, but the two-pointer scan never allocates a second string."
 }
 \`\`\`
 
@@ -71,7 +103,10 @@ The five problems build from simple mirroring (Valid Palindrome) to the full exp
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/two-integer-sum-ii",
       summary: "The chapter's thesis: sortedness lets each comparison retire a candidate forever.",
-      body: `**Beginner Intuition & The Naive Fallacy.** In Chapter 1, we solved Two Sum using a Hash Map in $O(N)$ time and $O(N)$ space. Beginners often re-use the Hash Map here.
+      body: `**The problem.** Given a **sorted** array and a target, return the 1-based indices of the two numbers that add up to it. Exactly one solution exists, and you must use only O(1) extra space. \`numbers = [2,7,11,15], target = 9\` → \`[1, 2]\`.
+**The signal.** The word *sorted* combined with the O(1)-space rule is a neon arrow pointing at two pointers. If you reach for a hash map here, you have thrown away the very structure the problem handed you.
+
+**Beginner Intuition & The Naive Fallacy.** In Chapter 1, we solved Two Sum using a Hash Map in $O(N)$ time and $O(N)$ space. Beginners often re-use the Hash Map here.
 *Why this shatters*: Two Sum II explicitly specifies that the array is **sorted** and requires **$O(1)$ extra space**! Using a Hash Map ignores the sorted structure and fails the space constraint.
 
 **The Structural Invariant & Candidate Retirement.**
@@ -88,6 +123,34 @@ Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
     { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=1 (val=3)", "index": 1 }, { "label": "R=3 (val=7)", "index": 3 }], "highlight": [1, 3], "note": "sum = 3 + 7 = 10 == target! Found match. Return 1-indexed [2, 4]." }
   ],
   "caption": "Two Sum II — Every step permanently eliminates one element, finding the target in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (retire from the ends).**
+
+\`\`\`python
+def two_sum(numbers, target):
+    l, r = 0, len(numbers) - 1
+    while l < r:
+        s = numbers[l] + numbers[r]
+        if s == target:
+            return [l + 1, r + 1]     # 1-indexed answer
+        if s < target:
+            l += 1                    # too small → grow the sum
+        else:
+            r -= 1                    # too big → shrink the sum
+\`\`\`
+
+**Complexity — sortedness buys away the hash map.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (all pairs)", "time": "O(N²)", "space": "O(1)", "note": "Ignores the sorted order entirely." },
+    { "approach": "Hash map complement", "time": "O(N)", "space": "O(N)", "note": "Fast, but violates the O(1)-space requirement." },
+    { "approach": "Two pointers from the ends", "time": "O(N)", "space": "O(1)", "note": "Each comparison retires one element for good. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The sorted invariant lets one comparison eliminate a candidate permanently."
 }
 \`\`\`
 
@@ -122,7 +185,10 @@ Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/three-integer-sum",
       summary: "Fix one number and the rest is Two Sum II — plus the art of skipping duplicates.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use three nested loops $O(N^3)$ to test all triplets, inserting results into a Hash Set of sorted tuples to eliminate duplicates.
+      body: `**The problem.** Return every **unique** triplet \`[a, b, c]\` in the array with \`a + b + c = 0\`. Order within a triplet does not matter, and no triplet may repeat. \`[-1,0,1,2,-1,-4]\` → \`[[-1,-1,2], [-1,0,1]]\`.
+**The signal.** "Find k numbers that sum to a target" with k = 3 is the canonical *fix-one, two-pointer-the-rest* pattern. The interviewer is testing whether you can reduce a new problem to one you already solved (Two Sum II) and then handle duplicates without a hash set.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners use three nested loops $O(N^3)$ to test all triplets, inserting results into a Hash Set of sorted tuples to eliminate duplicates.
 *Why this shatters*: $O(N^3)$ time TLEs on $N = 3,000$ ($27$ billion operations!). Hash set tuple deduplication adds heavy overhead.
 
 **The Structural Invariant: Fix One + Two Sum II.**
@@ -141,6 +207,46 @@ Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
     { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=2 (-1)", "index": 2 }], "note": "i=2 (val=-1) == nums[i-1] (-1) $\\rightarrow$ SKIP duplicate outer loop value!" }
   ],
   "caption": "3Sum — Sorting + Fixing 1 element + Two Sum II with duplicate skipping in O(N^2) time."
+}
+\`\`\`
+
+**The optimal solution (sort, fix one, two-pointer the rest).**
+
+\`\`\`python
+def three_sum(nums):
+    nums.sort()
+    res = []
+    for i in range(len(nums)):
+        if nums[i] > 0:                          # smallest is positive → done
+            break
+        if i > 0 and nums[i] == nums[i - 1]:     # skip duplicate anchor
+            continue
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            total = nums[i] + nums[l] + nums[r]
+            if total < 0:
+                l += 1
+            elif total > 0:
+                r -= 1
+            else:
+                res.append([nums[i], nums[l], nums[r]])
+                l += 1
+                r -= 1
+                while l < r and nums[l] == nums[l - 1]:   # skip duplicate lefts
+                    l += 1
+    return res
+\`\`\`
+
+**Complexity — sorting is cheaper than the triple loop.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (3 nested loops)", "time": "O(N³)", "space": "O(N)", "note": "TLEs at N=3,000; hash-set dedup adds overhead." },
+    { "approach": "Sort + hash set per anchor", "time": "O(N²)", "space": "O(N)", "note": "Right time class, but stores a set to dedup." },
+    { "approach": "Sort + fix one + two pointers", "time": "O(N²)", "space": "O(1)", "note": "Duplicates skipped by scanning past equals. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The O(N log N) sort is dominated by the O(N²) two-pointer sweep. Space excludes the output list."
 }
 \`\`\`
 
@@ -175,7 +281,10 @@ Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/max-water-container",
       summary: "Always move the shorter wall — the greedy rule that provably never discards the best.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate the water area for all possible pairs of vertical lines using nested loops in $O(N^2)$ time.
+      body: `**The problem.** Each array value is the height of a vertical line on the x-axis. Pick two lines that, together with the axis, hold the most water. The area between lines \`L\` and \`R\` is \`(R - L) × min(height[L], height[R])\`. \`[1,8,6,2,5,4,8,3,7]\` → \`49\`.
+**The signal.** The O(N²) "try every pair" is obvious, so the interviewer is watching for the **greedy** insight: which pointer is *safe* to move — and, ideally, a short proof that moving the taller wall can never improve the answer.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners calculate the water area for all possible pairs of vertical lines using nested loops in $O(N^2)$ time.
 *Why this shatters*:
 $$\\text{Area} = (\\text{R} - \\text{L}) \\times \\min(\\text{height}[\\text{L}], \\text{height}[\\text{R}])$$
 Moving pointers inward **always decreases the width** $(R - L)$. Beginners struggle to see how moving pointers inward could ever *increase* the total area.
@@ -197,6 +306,33 @@ Place \`L = 0\` and \`R = N - 1\` (maximizing initial width).
     { "cells": [1, 8, 6, 2, 5, 4, 8, 3, 7], "pointers": [{ "label": "L=1 (h=8)", "index": 1 }, { "label": "R=7 (h=3)", "index": 7 }], "note": "h[L]=8, h[R]=3 -> Area = (7-1) * min(8,3) = 18. Move R." }
   ],
   "caption": "Container With Most Water — Greedily moving the shorter wall achieves O(N) time complexity."
+}
+\`\`\`
+
+**The optimal solution (move the shorter wall).**
+
+\`\`\`python
+def max_area(height):
+    l, r = 0, len(height) - 1
+    best = 0
+    while l < r:
+        best = max(best, (r - l) * min(height[l], height[r]))
+        if height[l] < height[r]:
+            l += 1                    # the shorter wall is the only hopeful move
+        else:
+            r -= 1
+    return best
+\`\`\`
+
+**Complexity — one pass replaces every-pair enumeration.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (all pairs)", "time": "O(N²)", "space": "O(1)", "note": "Recomputes area for every pair of lines." },
+    { "approach": "Two pointers, move shorter wall", "time": "O(N)", "space": "O(1)", "note": "Each step retires the wall that can never do better. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of lines. Moving the shorter wall is the only move that could ever increase the area."
 }
 \`\`\`
 
@@ -230,7 +366,10 @@ Place \`L = 0\` and \`R = N - 1\` (maximizing initial width).
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/trapping-rain-water",
       summary: "Water above each bar = min(maxLeft, maxRight) − height. Two pointers compute it in one pass.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to calculate water by scanning left and right for every single bar $i$ to find the tallest left wall \`maxL\` and tallest right wall \`maxR\`.
+      body: `**The problem.** Given an elevation map where each value is a bar's height, compute how much rainwater is trapped between the bars after it rains. \`[0,1,0,2,1,0,1,3,2,1,2,1]\` → \`6\`.
+**The signal.** This is a famous "hard," but it collapses the instant you see that the water sitting above bar \`i\` is \`min(maxLeft, maxRight) − height[i]\`. The interviewer wants that per-bar reformulation first, then the space optimisation from prefix arrays down to two running maxes.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to calculate water by scanning left and right for every single bar $i$ to find the tallest left wall \`maxL\` and tallest right wall \`maxR\`.
 *Why this shatters*: For bar $i$, water trapped is:
 $$\\text{water}[i] = \\max(0, \\min(\\text{maxL}[i], \\text{maxR}[i]) - \\text{height}[i])$$
 Rescanning left and right from every bar takes $O(N^2)$ time!
@@ -251,6 +390,40 @@ Precomputing \`leftMax[]\` and \`rightMax[]\` prefix arrays takes $O(N)$ time an
     { "cells": [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], "pointers": [{ "label": "L=7 (h=3)", "index": 7 }, { "label": "R=10 (h=2)", "index": 10 }], "note": "maxL=3, maxR=2. maxR < maxL -> Control shifts to R! Process R=10: water += 2 - 2 = 0." }
   ],
   "caption": "Trapping Rain Water — Process the smaller running max side in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (two running maxes).**
+
+\`\`\`python
+def trap(height):
+    if not height:
+        return 0
+    l, r = 0, len(height) - 1
+    max_l, max_r = height[l], height[r]
+    water = 0
+    while l < r:
+        if max_l < max_r:                 # left side is the bottleneck
+            l += 1
+            max_l = max(max_l, height[l])
+            water += max_l - height[l]
+        else:                             # right side is the bottleneck
+            r -= 1
+            max_r = max(max_r, height[r])
+            water += max_r - height[r]
+    return water
+\`\`\`
+
+**Complexity — running maxes drop the prefix arrays.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Rescan left/right per bar", "time": "O(N²)", "space": "O(1)", "note": "Finds maxL/maxR from scratch for every bar." },
+    { "approach": "Prefix leftMax + rightMax arrays", "time": "O(N)", "space": "O(N)", "note": "Precompute both walls; clearest to reason about." },
+    { "approach": "Two pointers, running maxes", "time": "O(N)", "space": "O(1)", "note": "Smaller running max is the binding wall. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of bars. Knowing which running max is smaller is enough to fix the water level at that pointer."
 }
 \`\`\`
 

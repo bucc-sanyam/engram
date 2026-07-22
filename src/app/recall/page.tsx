@@ -7,14 +7,13 @@ import Nav from "@/components/Nav";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
 import {
   finishQuiz,
-  getPlan,
   markPlanCompleted,
   saveQuizAnswer,
   startQuiz,
   getTodayReviewDetail,
   getLatestReportToday,
 } from "@/lib/data";
-import { getAllStorySections } from "@/lib/stories";
+import { getPlanCached, getStorySectionsCached } from "@/lib/prefetch";
 import type {
   DailyPlan,
   PlanItem,
@@ -103,7 +102,7 @@ function ReviewRunner() {
     setCompletedGroups(new Set());
     setGroupedReports(new Map());
 
-    Promise.all([getPlan(), getAllStorySections()])
+    Promise.all([getPlanCached(), getStorySectionsCached()])
       .then(async ([full, sections]) => {
         if (cancelled) return;
 
@@ -158,21 +157,23 @@ function ReviewRunner() {
         }
 
         // Start an independent session per group (its pending topics only), so
-        // each section can be finished + graded on its own.
+        // each section can be finished + graded on its own. Fire them in
+        // PARALLEL — a sequential await-loop here was the main cause of the lag
+        // when opening recall for several series at once.
         const sessions = new Map<string, QuizSession | null>();
-        for (const [slug, items] of Array.from(groups.entries())) {
-          const pendingIds = items.filter((it) => !it.done).map((it) => it.topic_id);
-          if (pendingIds.length === 0) {
-            sessions.set(slug, null);
-            continue;
-          }
-          try {
-            sessions.set(slug, await startQuiz(pendingIds));
-          } catch (e) {
-            sessions.set(slug, null);
-            if (!cancelled) setError(e instanceof Error ? e.message : "Couldn't start a quiz session");
-          }
-        }
+        const started = await Promise.all(
+          Array.from(groups.entries()).map(async ([slug, items]) => {
+            const pendingIds = items.filter((it) => !it.done).map((it) => it.topic_id);
+            if (pendingIds.length === 0) return [slug, null] as const;
+            try {
+              return [slug, await startQuiz(pendingIds)] as const;
+            } catch (e) {
+              if (!cancelled) setError(e instanceof Error ? e.message : "Couldn't start a quiz session");
+              return [slug, null] as const;
+            }
+          })
+        );
+        for (const [slug, session] of started) sessions.set(slug, session);
 
         if (cancelled) return;
         setGroupedItems(groups);
@@ -222,7 +223,7 @@ function ReviewRunner() {
     if (phase !== "quizzing" || singleTask || !allGroupsDone) return;
     (async () => {
       try {
-        const p = await getPlan();
+        const p = await getPlanCached();
         if (p.items.length > 0 && p.items.every((it) => it.done) && !p.completed) {
           await markPlanCompleted();
         }

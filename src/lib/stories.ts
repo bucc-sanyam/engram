@@ -17,6 +17,7 @@
  */
 import { createClient } from "./supabase/client";
 import { isDemo } from "./demo";
+import { CACHE_KEYS, invalidate } from "./cache";
 import { getSeed, type SeedSection, type SeriesSeed } from "./story-seeds";
 
 export interface UserStory {
@@ -189,6 +190,9 @@ export async function startStory(seriesSlug: string, color: string): Promise<voi
   if (linkRows.length) {
     await supabase.from("topic_links").upsert(linkRows, { onConflict: "user_id,source,target", ignoreDuplicates: true });
   }
+  invalidate(CACHE_KEYS.storySections);
+  invalidate(CACHE_KEYS.startedStories);
+  invalidate(CACHE_KEYS.topics);
 }
 
 /**
@@ -202,6 +206,7 @@ export async function updateStoryColor(seriesSlug: string, color: string): Promi
     .eq("user_id", user.id)
     .eq("series_slug", seriesSlug);
   if (error) throw error;
+  invalidate(CACHE_KEYS.startedStories);
 }
 
 /**
@@ -237,6 +242,11 @@ export async function endStory(seriesSlug: string): Promise<void> {
     .delete()
     .eq("user_id", user.id)
     .eq("series_slug", seriesSlug);
+
+  invalidate(CACHE_KEYS.storySections);
+  invalidate(CACHE_KEYS.startedStories);
+  invalidate(CACHE_KEYS.topics);
+  invalidate(CACHE_KEYS.plan);
 
   if (topicIds.length === 0) return;
 
@@ -355,6 +365,11 @@ export async function completeSection(
     .eq("series_slug", seriesSlug)
     .eq("section_slug", sectionSlug)
     .eq("user_id", user.id);
+
+  invalidate(CACHE_KEYS.storySections);
+  invalidate(CACHE_KEYS.startedStories);
+  invalidate(CACHE_KEYS.topics);
+  invalidate(CACHE_KEYS.plan);
 
   return { questionCount: seededCount };
 }

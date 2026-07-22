@@ -19,7 +19,10 @@ Why does this deserve its own chapter? Because of what it kills. An enormous fam
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/buy-and-sell-crypto",
       summary: "One pass, one running minimum: the lightest state a window can carry.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to calculate profit for every pair of (buy_day, sell_day) where \`sell_day > buy_day\` using two nested loops.
+      body: `**The problem.** Given daily prices, buy on one day and sell on a *later* day to maximise profit; return \`0\` if no profitable trade exists. \`[7,1,5,3,6,4]\` → \`5\` (buy at 1, sell at 6).
+**The signal.** "Best over all (buy, sell) pairs with buy before sell" screams $O(N^2)$ — but the interviewer wants you to see that for any sell day the only thing that matters is the *cheapest price so far*, which collapses it to one pass.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to calculate profit for every pair of (buy_day, sell_day) where \`sell_day > buy_day\` using two nested loops.
 *Why this shatters*: For $N = 100,000$ days, two nested loops require 5 billion comparisons ($O(N^2)$ time). The key realization is: if you decide to sell on day $i$, the best buy price is simply the **lowest price seen anywhere before day $i$**.
 
 **The Structural Invariant & Running Minimum.**
@@ -38,6 +41,30 @@ Why does this deserve its own chapter? Because of what it kills. An enormous fam
     { "cells": [7, 1, 5, 3, 6, 4], "pointers": [{ "label": "min=1", "index": 4 }], "highlight": [1, 4], "note": "Day 4: Price=6. Profit = 6 - 1 = 5. Update max_profit=5 (Max Profit Found!)." }
   ],
   "caption": "Best Time to Buy and Sell Stock — Track running minimum price to achieve O(N) single-pass execution."
+}
+\`\`\`
+
+**The optimal solution (running minimum).**
+
+\`\`\`python
+def max_profit(prices):
+    min_price = float('inf')
+    best = 0
+    for p in prices:
+        min_price = min(min_price, p)     # cheapest buy so far
+        best = max(best, p - min_price)   # best sell if we sell today
+    return best
+\`\`\`
+
+**Complexity — one scalar erases the inner loop.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (all buy/sell pairs)", "time": "O(N²)", "space": "O(1)", "note": "Re-checks every earlier day for each sell day." },
+    { "approach": "Running minimum, single pass", "time": "O(N)", "space": "O(1)", "note": "Cheapest-so-far is all a sell day needs. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of days. Sweeping left-to-right keeps the buy strictly before the sell for free."
 }
 \`\`\`
 
@@ -72,7 +99,10 @@ Why does this deserve its own chapter? Because of what it kills. An enormous fam
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-substring-without-duplicates",
       summary: "The canonical elastic window: expand right, evict from the left until the duplicate is gone.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners generate all $O(N^2)$ substrings and check each for unique characters using a set ($O(N)$), yielding an $O(N^3)$ algorithm.
+      body: `**The problem.** Return the length of the longest substring of \`s\` with no repeated characters. \`"abcabcbb"\` → \`3\` (\`"abc"\`), \`"bbbbb"\` → \`1\`.
+**The signal.** "Longest contiguous run with a property" is the sliding-window tell. The interviewer wants an elastic window that expands right and evicts from the left only when a duplicate appears — never re-scanning a range.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners generate all $O(N^2)$ substrings and check each for unique characters using a set ($O(N)$), yielding an $O(N^3)$ algorithm.
 *Why this shatters*: For $N = 10,000$, $N^3$ is 1 trillion operations! The fundamental insight is that if substring \`s[L...R]\` has a duplicate character, extending it to \`s[L...R+1]\` will still contain duplicates!
 
 **The Structural Invariant: Elastic Window Expansion & Eviction.**
@@ -90,6 +120,34 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
     { "cells": ["a", "b", "c", "a", "b", "c", "b", "b"], "pointers": [{ "label": "L=5", "index": 5 }, { "label": "R=6", "index": 6 }], "highlight": [5, 6], "note": "R=6 ('b') duplicate! Evict s[3] ('a'), s[4] ('b'). Window becomes [c, b]. Length = 2." }
   ],
   "caption": "Longest Substring Without Repeating Characters — Amortized O(N) time (each char enters/leaves once)."
+}
+\`\`\`
+
+**The optimal solution (last-seen jump).**
+
+\`\`\`python
+def length_of_longest_substring(s):
+    last = {}                        # char -> last index seen
+    l = 0
+    best = 0
+    for r, ch in enumerate(s):
+        if ch in last and last[ch] >= l:
+            l = last[ch] + 1         # jump L past the duplicate
+        last[ch] = r
+        best = max(best, r - l + 1)
+    return best
+\`\`\`
+
+**Complexity — each character is visited a constant number of times.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "All substrings + uniqueness check", "time": "O(N³)", "space": "O(N)", "note": "Rebuilds and rechecks every substring." },
+    { "approach": "Elastic window + set (step L)", "time": "O(N)", "space": "O(min(N, Σ))", "note": "L walks forward one char at a time." },
+    { "approach": "Window + last-seen index jump", "time": "O(N)", "space": "O(min(N, Σ))", "note": "L leaps straight past the duplicate. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = length of s, Σ = alphabet size. Both pointers only move forward, so the scan is linear."
 }
 \`\`\`
 
@@ -124,7 +182,10 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-repeating-substring-with-replacement",
       summary: "Window valid while size − max frequency ≤ k — plus the ratchet trick that never lowers the max.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think they need to test replacing every character with every other letter of the alphabet across all substrings ($O(26 \\cdot N^2)$).
+      body: `**The problem.** You may replace up to \`k\` characters of \`s\` with any uppercase letter. Return the length of the longest substring that can become a single repeated character. \`s = "AABABBA", k = 1\` → \`4\`.
+**The signal.** A window is valid while \`(window length − count of its most frequent char) ≤ k\`. Spotting that "everything except the majority character must be replaced" is exactly what the interviewer is probing for.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners think they need to test replacing every character with every other letter of the alphabet across all substrings ($O(26 \\cdot N^2)$).
 *Why this shatters*: To make a window \`s[L...R]\` consist of identical characters using at most $K$ replacements, we should **keep the most frequent character** in the window and replace all other characters!
 
 **The Structural Invariant & The Validity Equation.**
@@ -143,6 +204,36 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
     { "cells": ["A", "A", "B", "A", "B", "B", "A"], "pointers": [{ "label": "L=1", "index": 1 }, { "label": "R=4", "index": 4 }], "highlight": [1, 2, 3, 4], "note": "Shrink L=1: Window 'ABAB', len=4. Cost = 4 - 2 = 2 > K -> Keep window size at 4." }
   ],
   "caption": "Longest Repeating Character Replacement — Window state checked via length - maxFreq <= K."
+}
+\`\`\`
+
+**The optimal solution (window on length − maxFreq).**
+
+\`\`\`python
+def character_replacement(s, k):
+    count = {}
+    l = 0
+    max_freq = 0
+    best = 0
+    for r, ch in enumerate(s):
+        count[ch] = count.get(ch, 0) + 1
+        max_freq = max(max_freq, count[ch])
+        while (r - l + 1) - max_freq > k:     # too many chars to replace
+            count[s[l]] -= 1
+            l += 1
+        best = max(best, r - l + 1)
+    return best
+\`\`\`
+
+**Complexity — a 26-slot count keeps every step O(1).**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Try every substring × replacement", "time": "O(26 · N²)", "space": "O(1)", "note": "Re-evaluates replacement cost from scratch." },
+    { "approach": "Sliding window + frequency map", "time": "O(N)", "space": "O(1)", "note": "maxFreq never needs to decrease. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = length of s. The count map holds at most 26 letters, so its space is constant."
 }
 \`\`\`
 
@@ -176,7 +267,10 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/permutation-string",
       summary: "A fixed-size window sliding one step at a time, comparing letter histograms as it goes.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners extract every substring of \`s2\` with length equal to \`s1.length\`, sort both strings, and compare them in $O(N \\cdot K \\log K)$ time.
+      body: `**The problem.** Given \`s1\` and \`s2\`, return \`true\` if \`s2\` contains a permutation of \`s1\` as a contiguous substring. \`s1 = "ab", s2 = "eidbaooo"\` → \`true\` (\`"ba"\`).
+**The signal.** A permutation is just a substring with an *identical character histogram*, so this is a **fixed-size** window (length = \`|s1|\`) sliding one step at a time and comparing two 26-slot counts.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners extract every substring of \`s2\` with length equal to \`s1.length\`, sort both strings, and compare them in $O(N \\cdot K \\log K)$ time.
 *Why this shatters*: Re-sorting windows repeatedly does redundant work! A permutation of \`s1\` is simply any substring with an **identical character frequency distribution**.
 
 **The Structural Invariant: Fixed-Size Sliding Window.**
@@ -195,6 +289,38 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
     { "cells": ["e", "i", "d", "b", "a", "o", "o", "o"], "pointers": [{ "label": "L=3", "index": 3 }, { "label": "R=4", "index": 4 }], "highlight": [3, 4], "note": "Slide window to 'ba': count2={a:1,b:1} == count1! Permutation found -> Return true." }
   ],
   "caption": "Permutation in String — Fixed-size sliding window with O(26) frequency checks."
+}
+\`\`\`
+
+**The optimal solution (fixed window of counts).**
+
+\`\`\`python
+def check_inclusion(s1, s2):
+    if len(s1) > len(s2):
+        return False
+    need = [0] * 26
+    have = [0] * 26
+    for ch in s1:
+        need[ord(ch) - 97] += 1
+    k = len(s1)
+    for i, ch in enumerate(s2):
+        have[ord(ch) - 97] += 1
+        if i >= k:
+            have[ord(s2[i - k]) - 97] -= 1   # evict the char leaving the window
+        if have == need:
+            return True
+    return False
+\`\`\`
+
+**Complexity — no re-sorting, just count deltas.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sort each length-K window", "time": "O(N · K log K)", "space": "O(K)", "note": "Redundantly re-sorts overlapping windows." },
+    { "approach": "Fixed window + 26-slot counts", "time": "O(N)", "space": "O(1)", "note": "One char in, one out per slide. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = length of s2, K = length of s1. Comparing two fixed 26-slot arrays is O(1) per step."
 }
 \`\`\`
 
@@ -229,7 +355,10 @@ Maintain a window \`s[L...R]\` and a Hash Set storing characters inside the wind
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/minimum-window-with-characters",
       summary: "Expand until you cover, contract while you still cover — the inverted window at full power.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners generate all $O(N^2)$ substrings, checking if each contains all characters of string $T$.
+      body: `**The problem.** Given \`s\` and \`t\`, return the shortest substring of \`s\` that contains every character of \`t\` including multiplicity, or \`""\` if none exists. \`s = "ADOBECODEBANC", t = "ABC"\` → \`"BANC"\`.
+**The signal.** "Smallest window covering a requirement" is the *inverted* sliding window: expand to satisfy, then contract to minimise — tracked with a \`have == required\` counter so each validity check is O(1).
+
+**Beginner Intuition & The Naive Fallacy.** Beginners generate all $O(N^2)$ substrings, checking if each contains all characters of string $T$.
 *Why this shatters*: $O(N^3)$ time complexity TLEs on large inputs.
 
 **The Structural Invariant: The Inverted Expand-Satisfy / Contract-Optimize Pattern.**
@@ -250,6 +379,46 @@ Unlike previous problems where we expand until *invalid*, here we:
     { "cells": ["A", "D", "O", "B", "E", "C", "O", "D", "E", "B", "A", "N", "C"], "pointers": [{ "label": "L=9", "index": 9 }, { "label": "R=12", "index": 12 }], "highlight": [9, 10, 11, 12], "note": "After expansion/contraction cycles, window tightens to 'BANC' (index 9..12). Min Length = 4." }
   ],
   "caption": "Minimum Window Substring — Expand to satisfy, contract to minimize."
+}
+\`\`\`
+
+**The optimal solution (expand-satisfy, contract-optimize).**
+
+\`\`\`python
+def min_window(s, t):
+    if not t or not s:
+        return ""
+    need = {}
+    for ch in t:
+        need[ch] = need.get(ch, 0) + 1
+    required = len(need)
+    window = {}
+    have = 0
+    best_len, best = float('inf'), (0, 0)
+    l = 0
+    for r, ch in enumerate(s):
+        window[ch] = window.get(ch, 0) + 1
+        if ch in need and window[ch] == need[ch]:
+            have += 1
+        while have == required:                    # fully covered → shrink
+            if r - l + 1 < best_len:
+                best_len, best = r - l + 1, (l, r)
+            window[s[l]] -= 1
+            if s[l] in need and window[s[l]] < need[s[l]]:
+                have -= 1
+            l += 1
+    return s[best[0]: best[1] + 1] if best_len != float('inf') else ""
+\`\`\`
+
+**Complexity — both pointers cross s once.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Check every substring", "time": "O(N² · M)", "space": "O(M)", "note": "Re-verifies coverage for each substring." },
+    { "approach": "Expand-satisfy / contract-optimize", "time": "O(N + M)", "space": "O(M)", "note": "have/need counter makes validity O(1). Interview-optimal.", "best": true }
+  ],
+  "caption": "N = length of s, M = length of t. Each character of s is added once and removed at most once."
 }
 \`\`\`
 
@@ -284,7 +453,10 @@ Unlike previous problems where we expand until *invalid*, here we:
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/sliding-window-maximum",
       summary: "A deque of the undefeated: keep candidates in decreasing order and the window max is always at the front.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Scanning all $K$ elements for each of the $N - K + 1$ windows takes $O(N \\cdot K)$ time.
+      body: `**The problem.** Given \`nums\` and a window size \`k\`, return the maximum of every contiguous window as it slides across the array. \`nums = [1,3,-1,-3,5,3,6,7], k = 3\` → \`[3,3,5,5,6,7]\`.
+**The signal.** Needing the max of *every* window in O(N) rules out re-scanning and even a heap (removing stale elements is costly). The intended tool is a **monotonic decreasing deque** of indices whose front is always the current window max.
+
+**Beginner Intuition & The Naive Fallacy.** Scanning all $K$ elements for each of the $N - K + 1$ windows takes $O(N \\cdot K)$ time.
 *Why Max-Heap fails*: Using a Max-Heap takes $O(N \\log K)$ time, but removing elements that fall out of the left window requires $O(K)$ search unless complex lazy deletion is implemented.
 
 **The Structural Invariant: The Monotonic Decreasing Deque.**
@@ -304,6 +476,38 @@ We maintain a Double-Ended Queue (Deque) storing **indices** of elements in stri
     { "cells": [1, 3, -1, -3, 5, 3, 6, 7], "pointers": [{ "label": "L=4", "index": 4 }, { "label": "R=6", "index": 6 }], "highlight": [6], "note": "R=6 (val 6): 6 > 3 and 6 > 5! Evict all. Deque: [6] (val 6). Max = 6." }
   ],
   "caption": "Sliding Window Maximum — Monotonic Deque provides O(N) overall time complexity."
+}
+\`\`\`
+
+**The optimal solution (monotonic deque of indices).**
+
+\`\`\`python
+from collections import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()          # indices, their values strictly decreasing
+    res = []
+    for i, x in enumerate(nums):
+        if dq and dq[0] == i - k:        # front slid out of the window
+            dq.popleft()
+        while dq and nums[dq[-1]] <= x:  # evict smaller, older values
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            res.append(nums[dq[0]])      # front is the window max
+    return res
+\`\`\`
+
+**Complexity — every index is pushed and popped at most once.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Re-scan each window", "time": "O(N · K)", "space": "O(1)", "note": "Recomputes the max for every window from scratch." },
+    { "approach": "Max-heap with lazy deletion", "time": "O(N log N)", "space": "O(N)", "note": "Stale-max removal drags in a log factor." },
+    { "approach": "Monotonic decreasing deque", "time": "O(N)", "space": "O(K)", "note": "Front is always the max; O(1) amortized per step. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements, K = window size. Each index enters and leaves the deque once → linear total."
 }
 \`\`\`
 

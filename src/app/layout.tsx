@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from "next/font/google";
 import Footer from "@/components/Footer";
+import Prefetcher from "@/components/Prefetcher";
 import TutorialTour from "@/components/TutorialTour";
 import "./globals.css";
 
@@ -55,6 +56,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <TutorialTour />
+        <Prefetcher />
       </body>
     </html>
   );

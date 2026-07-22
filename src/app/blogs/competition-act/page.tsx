@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import StoryStartControl from "@/components/StoryStartControl";
+import { AccentText, AccentPill } from "@/components/AccentText";
 import {
   COMP_ACT_SERIES_TITLE,
   COMP_ACT_CHAPTERS,
@@ -40,7 +41,9 @@ export default function CompetitionActPage() {
             style={{ background: "#5ba4cf" }}
             aria-hidden
           />
-          <p className="micro mb-3 !text-[#5ba4cf]">{COMP_ACT_SERIES_TITLE}</p>
+          <AccentText as="p" color="#5ba4cf" className="micro mb-3">
+            {COMP_ACT_SERIES_TITLE}
+          </AccentText>
           <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
             Competition Act, 2002
           </h1>
@@ -56,15 +59,21 @@ export default function CompetitionActPage() {
         {/* How to read */}
         <section className="rise mb-10 grid gap-3 sm:grid-cols-3">
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#5ba4cf]">{COMP_ACT_CHAPTERS.length}</p>
+            <AccentText as="p" color="#5ba4cf" className="display text-2xl font-bold">
+              {COMP_ACT_CHAPTERS.length}
+            </AccentText>
             <p className="mt-1 text-sm text-muted">chapters, from definitions to advocacy</p>
           </div>
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#43d6b5]">{total}</p>
+            <AccentText as="p" color="#43d6b5" className="display text-2xl font-bold">
+              {total}
+            </AccentText>
             <p className="mt-1 text-sm text-muted">section blogs, each a complete read</p>
           </div>
           <div className="glass rounded-[1.5rem] p-5">
-            <p className="display text-2xl font-bold text-[#ff7a5c]">1</p>
+            <AccentText as="p" color="#ff7a5c" className="display text-2xl font-bold">
+              1
+            </AccentText>
             <p className="mt-1 text-sm text-muted">path — every blog links to the next</p>
           </div>
         </section>
@@ -98,12 +107,12 @@ export default function CompetitionActPage() {
                       aria-hidden
                     />
                     <div className="flex items-start gap-4">
-                      <span
+                      <AccentText
+                        color={chapter.color}
                         className="display mt-0.5 shrink-0 text-2xl font-bold tabular-nums opacity-40"
-                        style={{ color: chapter.color }}
                       >
                         {String(chapter.chapter).padStart(2, "0")}
-                      </span>
+                      </AccentText>
                       <div className="min-w-0 flex-1">
                         <h3
                           className="text-base font-bold leading-snug transition-colors group-hover:text-white"
@@ -118,27 +127,24 @@ export default function CompetitionActPage() {
                           </span>
                           {(["Foundation", "Core", "Advanced"] as const).map((imp) =>
                             counts[imp] > 0 ? (
-                              <span
+                              <AccentPill
                                 key={imp}
+                                color={IMPORTANCE_COLORS[imp]}
                                 className="rounded-full px-2 py-0.5 font-semibold"
-                                style={{
-                                  background: `${IMPORTANCE_COLORS[imp]}1a`,
-                                  color: IMPORTANCE_COLORS[imp],
-                                }}
                               >
                                 {counts[imp]} {imp.toLowerCase()}
-                              </span>
+                              </AccentPill>
                             ) : null
                           )}
                         </div>
                       </div>
-                      <span
-                        aria-hidden
+                      <AccentText
+                        ariaHidden
+                        color={chapter.color}
                         className="mt-1 shrink-0 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
-                        style={{ color: chapter.color }}
                       >
                         →
-                      </span>
+                      </AccentText>
                     </div>
                   </Link>
                 </li>

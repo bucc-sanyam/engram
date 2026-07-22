@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
 import StoryLearnPanel from "@/components/StoryLearnPanel";
+import { AccentText, DifficultyPill } from "@/components/AccentText";
 import {
   SQL_SERIES_TITLE,
   SQL_TOPICS,
@@ -73,19 +74,14 @@ export default async function SqlProblemPage({
               style={{ background: topic.color }}
               aria-hidden
             />
-            <p className="micro mb-4" style={{ color: topic.color }}>
+            <AccentText as="p" className="micro mb-4" color={topic.color}>
               {topic.title} · read {number} of {total}
-            </p>
+            </AccentText>
             <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
               {problem.title}
             </h1>
             <div className="mt-5 flex flex-wrap items-center gap-3 text-sm">
-              <span
-                className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
-                style={{ background: `${diffColor}1a`, color: diffColor }}
-              >
-                {problem.difficulty}
-              </span>
+              <DifficultyPill difficulty={problem.difficulty} color={diffColor} />
               <span className="text-muted">LC #{problem.leetcodeNumber}</span>
               <a
                 href={problem.leetcodeUrl}
@@ -138,9 +134,9 @@ export default async function SqlProblemPage({
                 className={`glass glass-hover rounded-[1.5rem] p-4 text-right ${prev ? "" : "sm:col-start-2"}`}
               >
                 <span className="micro !text-faint">Keep reading →</span>
-                <span className="mt-1 block font-medium" style={{ color: topic.color }}>
+                <AccentText as="span" className="mt-1 block font-medium" color={topic.color}>
                   {sqlStopTitle(next)}
-                </span>
+                </AccentText>
               </Link>
             ) : (
               <Link

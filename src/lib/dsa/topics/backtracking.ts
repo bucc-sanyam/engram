@@ -58,7 +58,7 @@ For an array of length $N$, there are $2^N$ total subsets (the Power Set).
             "Because path is a mutable array reference that will be emptied by path.pop() as backtracking unwinds.",
             "To sort the subset elements.",
             "To convert integers to strings.",
-            "Because JavaScript arrays cannot hold duplicate references."
+            "Because a subset can only be recorded once per recursion depth."
           ],
           correct_index: 0,
           model_answer: "Backtracking uses a single mutable array for space efficiency. Saving `path` by reference stores the same array object, which gets emptied at the end.",
@@ -397,7 +397,7 @@ From each grid cell \`(r, c)\` matching \`word[0]\`:
           options: [
             "To reset the grid dimensions.",
             "So that other independent search paths originating from different starting cells can reuse the cell.",
-            "Because JavaScript board arrays are read-only.",
+            "Because the grid must be returned unchanged to the caller.",
             "To prevent stack overflow."
           ],
           correct_index: 1,

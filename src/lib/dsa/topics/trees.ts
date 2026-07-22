@@ -19,7 +19,10 @@ The mental shift this chapter demands is learning to think **recursively without
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/invert-a-binary-tree",
       summary: "Swap left and right at every node — the recursive skeleton in its purest form.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners attempt to swap node values across the tree by storing them in arrays or manually re-assigning values level-by-level.
+      body: `**The problem.** Invert a binary tree — mirror it so every node's left and right subtrees are swapped — and return the root.
+**The signal.** This is the recursive skeleton in its purest form. The interviewer wants "solve one node, trust the recursion for the rest," the template underpinning the whole chapter.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners attempt to swap node values across the tree by storing them in arrays or manually re-assigning values level-by-level.
 *Why this shatters*: Swapping values requires complex indexing and breaks tree structural pointers. Inverting a binary tree means **swapping the left and right child pointers at EVERY node**!
 
 **The Structural Invariant: Recursive Pointer Swapping.**
@@ -44,6 +47,28 @@ At any node \`root\`:
   ],
   "rootId": "4",
   "caption": "Invert Binary Tree — Recursively swapping left and right child pointers."
+}
+\`\`\`
+
+**The optimal solution (recursive pointer swap).**
+
+\`\`\`python
+def invert_tree(root):
+    if not root:
+        return None
+    root.left, root.right = invert_tree(root.right), invert_tree(root.left)
+    return root
+\`\`\`
+
+**Complexity — swap pointers, not values.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Copy values into arrays, rebuild", "time": "O(N)", "space": "O(N)", "note": "Fights the structure instead of using it." },
+    { "approach": "Recursive pointer swap", "time": "O(N)", "space": "O(H)", "note": "One swap per node; stack depth = tree height. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = tree height. Every node is visited once; recursion uses O(H) stack (O(log N) balanced, O(N) skewed)."
 }
 \`\`\`
 
@@ -77,7 +102,10 @@ At any node \`root\`:
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/depth-of-binary-tree",
       summary: "Depth = 1 + max(left, right): the template every tree measurement is cut from.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to count nodes along every path using a global counter variable, running into bugs when tracking multiple branching paths.
+      body: `**The problem.** Return the maximum depth — the number of nodes on the longest root-to-leaf path. \`[3,9,20,null,null,15,7]\` → \`3\`.
+**The signal.** \`depth = 1 + max(left, right)\` is the post-order template every tree measurement is cut from — the interviewer wants the combine-at-the-node pattern.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to count nodes along every path using a global counter variable, running into bugs when tracking multiple branching paths.
 *Why this shatters*: Managing global counters across recursive branches leads to dirty shared state.
 
 **The Structural Invariant: Post-Order Height Accumulation.**
@@ -97,6 +125,27 @@ $$\\text{depth}(\\text{root}) = 1 + \\max(\\text{depth}(\\text{root.left}), \\te
   ],
   "rootId": "3",
   "caption": "Maximum Depth of Binary Tree — Post-order height accumulation."
+}
+\`\`\`
+
+**The optimal solution (post-order recurrence).**
+
+\`\`\`python
+def max_depth(root):
+    if not root:
+        return 0
+    return 1 + max(max_depth(root.left), max_depth(root.right))
+\`\`\`
+
+**Complexity — one recurrence, one pass.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "BFS level counting", "time": "O(N)", "space": "O(W)", "note": "Queue holds a whole level; W = max width." },
+    { "approach": "Post-order DFS recurrence", "time": "O(N)", "space": "O(H)", "note": "1 + max(left, right); stack = height. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height, W = max width. DFS uses O(H) stack; BFS uses O(W) queue."
 }
 \`\`\`
 
@@ -130,7 +179,10 @@ $$\\text{depth}(\\text{root}) = 1 + \\max(\\text{depth}(\\text{root.left}), \\te
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/binary-tree-diameter",
       summary: "The longest path bends at some node — compute heights, and harvest left + right at every bend.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners assume the longest path (diameter) must pass through the root of the tree.
+      body: `**The problem.** Return the diameter — the length in *edges* of the longest path between any two nodes (the path need not pass through the root).
+**The signal.** The longest path bends at some node; compute heights bottom-up and harvest \`leftH + rightH\` at every node, updating a global maximum.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners assume the longest path (diameter) must pass through the root of the tree.
 *Why this shatters*: Counterexample: A tree with a deep, bushy left subtree (e.g. depth 5 on left-left and left-right) and no right subtree has its longest path **entirely contained within the left subtree**, without passing through the global root!
 
 **The Structural Invariant: Bending Point Harvesting.**
@@ -152,6 +204,35 @@ Every path in a binary tree has a highest point where it "bends".
   ],
   "rootId": "1",
   "caption": "Diameter of Binary Tree — Harvesting longest path at every potential bend node."
+}
+\`\`\`
+
+**The optimal solution (height + global harvest).**
+
+\`\`\`python
+def diameter_of_binary_tree(root):
+    best = 0
+    def height(node):
+        nonlocal best
+        if not node:
+            return 0
+        lh = height(node.left)
+        rh = height(node.right)
+        best = max(best, lh + rh)      # path bending here, counted in edges
+        return 1 + max(lh, rh)
+    height(root)
+    return best
+\`\`\`
+
+**Complexity — heights and diameter in a single pass.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Recompute height at every node", "time": "O(N²)", "space": "O(H)", "note": "Each node re-walks its subtrees for height." },
+    { "approach": "One post-order pass + global max", "time": "O(N)", "space": "O(H)", "note": "Height returned up; diameter harvested locally. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height. Height is computed once per node and the bend candidate updates a global maximum."
 }
 \`\`\`
 
@@ -185,7 +266,10 @@ Every path in a binary tree has a highest point where it "bends".
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/balanced-binary-tree",
       summary: "Check every node's child-height gap in the same single pass that computes the heights.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate \`getHeight(node.left)\` and \`getHeight(node.right)\` at every node, then recurse on left and right children.
+      body: `**The problem.** Return \`true\` if the tree is height-balanced — for every node, its two subtrees' heights differ by at most 1.
+**The signal.** Computing height separately at every node is O(N²); the interviewer wants height and balance produced together in one bottom-up pass, using a −1 sentinel to short-circuit.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners calculate \`getHeight(node.left)\` and \`getHeight(node.right)\` at every node, then recurse on left and right children.
 *Why this shatters*: Calling a separate \`getHeight\` function at every node re-traverses subtrees repeatedly, causing $O(N^2)$ quadratic time!
 
 **The Structural Invariant: Bottom-Up Fast-Failure (-1 Sentinel).**
@@ -204,6 +288,37 @@ We can check balance and compute height in a **single $O(N)$ pass**:
   ],
   "rootId": "1",
   "caption": "Balanced Binary Tree — Bottom-up -1 sentinel propagation halts unnecessary calculations."
+}
+\`\`\`
+
+**The optimal solution (-1 poison sentinel).**
+
+\`\`\`python
+def is_balanced(root):
+    def dfs(node):
+        if not node:
+            return 0
+        lh = dfs(node.left)
+        if lh == -1:
+            return -1                  # already unbalanced below
+        rh = dfs(node.right)
+        if rh == -1:
+            return -1
+        if abs(lh - rh) > 1:
+            return -1                  # poison value bubbles up
+        return 1 + max(lh, rh)
+    return dfs(root) != -1
+\`\`\`
+
+**Complexity — fuse the two computations.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Separate getHeight at each node", "time": "O(N²)", "space": "O(H)", "note": "Re-traverses subtrees to measure height." },
+    { "approach": "Bottom-up height + -1 sentinel", "time": "O(N)", "space": "O(H)", "note": "Height and balance in one pass; short-circuits. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height. The sentinel lets one pass both measure height and detect imbalance."
 }
 \`\`\`
 
@@ -237,7 +352,10 @@ We can check balance and compute height in a **single $O(N)$ pass**:
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/same-binary-tree",
       summary: "Two trees in lockstep: equal roots, then equal left pairs, then equal right pairs.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners serialize both trees to arrays and check array equality.
+      body: `**The problem.** Given the roots of two binary trees, return \`true\` if they are structurally identical and every corresponding node has the same value.
+**The signal.** Walk both trees in lockstep — compare roots, then the left pair, then the right pair; a single mismatch short-circuits the whole recursion to false.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners serialize both trees to arrays and check array equality.
 *Why this shatters*: Standard traversals (like in-order) can produce identical arrays for different tree structures! Array conversion also uses $O(N)$ extra space.
 
 **The Structural Invariant: Lockstep Structural & Value Equivalence.**
@@ -255,6 +373,29 @@ Traverse trees \`p\` and \`q\` simultaneously:
   "before": [["Root", 1, 1, "Match"], ["Left Child", 2, 2, "Match"], ["Right Child", 3, "null", "MISMATCH!"]],
   "after": [["Result", "-", "-", "Return FALSE immediately"]],
   "caption": "Same Tree — Lockstep traversal catching structural mismatch in O(N) time."
+}
+\`\`\`
+
+**The optimal solution (lockstep recursion).**
+
+\`\`\`python
+def is_same_tree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q or p.val != q.val:
+        return False
+    return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)
+\`\`\`
+
+**Complexity — compare in place, short-circuit early.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Serialize both, compare strings", "time": "O(N)", "space": "O(N)", "note": "Allocates two serializations; can be shape-ambiguous without markers." },
+    { "approach": "Lockstep recursion", "time": "O(min(N, M))", "space": "O(H)", "note": "First mismatch returns false immediately. Interview-optimal.", "best": true }
+  ],
+  "caption": "N, M = node counts of the two trees, H = height. The && short-circuits at the first mismatch."
 }
 \`\`\`
 
@@ -288,7 +429,10 @@ Traverse trees \`p\` and \`q\` simultaneously:
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/subtree-of-a-binary-tree",
       summary: "Try Same Tree at every node of the host — composition of two recursions, with a serialization twist.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think \`subRoot\` must match starting at the main root of \`root\`.
+      body: `**The problem.** Return \`true\` if \`subRoot\` is a subtree of \`root\` — some node in \`root\`, together with all its descendants, exactly matches \`subRoot\`.
+**The signal.** Compose two recursions: try "Same Tree" anchored at every node of the host tree. A serialization + substring trick collapses it to linear time.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners think \`subRoot\` must match starting at the main root of \`root\`.
 *Why this shatters*: \`subRoot\` can match a subtree anchored at **any candidate node** deep inside \`root\`!
 
 **The Structural Invariant: Composed Recursion.**
@@ -310,6 +454,38 @@ Traverse trees \`p\` and \`q\` simultaneously:
   ],
   "rootId": "3",
   "caption": "Subtree of Another Tree — Testing isSameTree at every anchor node."
+}
+\`\`\`
+
+**The optimal solution (Same Tree at every anchor).**
+
+\`\`\`python
+def is_subtree(root, sub_root):
+    if not sub_root:
+        return True
+    if not root:
+        return False
+    if is_same_tree(root, sub_root):
+        return True
+    return is_subtree(root.left, sub_root) or is_subtree(root.right, sub_root)
+
+def is_same_tree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q or p.val != q.val:
+        return False
+    return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)
+\`\`\`
+
+**Complexity — anchor test vs serialization.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "isSameTree at every anchor node", "time": "O(N · M)", "space": "O(H)", "note": "Simple; each of N anchors runs an O(M) compare." },
+    { "approach": "Serialize both + KMP substring", "time": "O(N + M)", "space": "O(N + M)", "note": "Null-marked preorder; substring search. Time-optimal.", "best": true }
+  ],
+  "caption": "N = host nodes, M = subRoot nodes. Serialization trades extra space for linear-time matching."
 }
 \`\`\`
 
@@ -343,7 +519,10 @@ Traverse trees \`p\` and \`q\` simultaneously:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/lowest-common-ancestor-in-binary-search-tree",
       summary: "The LCA is where two values part ways — and the BST invariant tells you which way to walk.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use general binary tree LCA algorithms, storing parent paths in hash sets ($O(N)$ space).
+      body: `**The problem.** In a BST, return the lowest common ancestor of two given nodes \`p\` and \`q\`.
+**The signal.** The LCA is where the two values first part ways; the BST ordering tells you which direction to walk, so you reach it in O(H) time and O(1) space.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners use general binary tree LCA algorithms, storing parent paths in hash sets ($O(N)$ space).
 *Why this shatters*: A **Binary Search Tree (BST)** has a strict ordering invariant ($L < \\text{root} < R$). We can find LCA in $O(H)$ time and $O(1)$ space by following the BST invariant!
 
 **The Structural Invariant: The Split Point.**
@@ -360,6 +539,32 @@ Traverse trees \`p\` and \`q\` simultaneously:
   ],
   "rootId": "6",
   "caption": "Lowest Common Ancestor of a BST — The split point where paths to p and q diverge."
+}
+\`\`\`
+
+**The optimal solution (walk to the split point).**
+
+\`\`\`python
+def lowest_common_ancestor(root, p, q):
+    curr = root
+    while curr:
+        if p.val > curr.val and q.val > curr.val:
+            curr = curr.right          # both larger → go right
+        elif p.val < curr.val and q.val < curr.val:
+            curr = curr.left           # both smaller → go left
+        else:
+            return curr                # they split here → this is the LCA
+\`\`\`
+
+**Complexity — the ordering makes it a single descent.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "General LCA (parent paths in a set)", "time": "O(N)", "space": "O(N)", "note": "Ignores the BST ordering." },
+    { "approach": "BST walk to the split point", "time": "O(H)", "space": "O(1)", "note": "One comparison steers left/right. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height (O(log N) balanced). No stack or map needed — just a single pointer descent."
 }
 \`\`\`
 
@@ -393,7 +598,10 @@ Traverse trees \`p\` and \`q\` simultaneously:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/level-order-traversal-of-binary-tree",
       summary: "BFS with a queue, level by level: snapshot the queue's size to know where each floor ends.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use standard Queue-based BFS, but fail to group nodes into separate sub-arrays by tree level.
+      body: `**The problem.** Return the node values level by level, top to bottom, as a list of lists. \`[3,9,20,null,null,15,7]\` → \`[[3],[9,20],[15,7]]\`.
+**The signal.** Level-by-level output means BFS with a queue; snapshot the queue's size at the start of each level so you know exactly where one floor ends and the next begins.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners use standard Queue-based BFS, but fail to group nodes into separate sub-arrays by tree level.
 *Why this shatters*: Pushing nodes into a queue flattens them. Without level boundaries, level 1 and level 2 nodes blur together.
 
 **The Structural Invariant: Queue Level-Size Snapshot.**
@@ -413,6 +621,40 @@ To preserve level boundaries in BFS:
     { "cells": [15, 7], "note": "Queue=[15, 7], size=2. Dequeue 15 & 7. Level 2 result: [[3], [9, 20], [15, 7]]." }
   ],
   "caption": "Level Order Traversal — BFS using queue size snapshotting."
+}
+\`\`\`
+
+**The optimal solution (queue-size snapshot).**
+
+\`\`\`python
+from collections import deque
+
+def level_order(root):
+    if not root:
+        return []
+    res, q = [], deque([root])
+    while q:
+        level = []
+        for _ in range(len(q)):        # snapshot: nodes on this floor only
+            node = q.popleft()
+            level.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        res.append(level)
+    return res
+\`\`\`
+
+**Complexity — one visit per node, queue holds a level.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "DFS tagging nodes with depth", "time": "O(N)", "space": "O(N)", "note": "Works, but recursion depth + buckets use O(N)." },
+    { "approach": "BFS queue-size snapshot", "time": "O(N)", "space": "O(W)", "note": "Size snapshot isolates each level. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, W = maximum width. The queue never holds more than one level plus its children."
 }
 \`\`\`
 
@@ -446,7 +688,10 @@ To preserve level boundaries in BFS:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/binary-tree-right-side-view",
       summary: "Stand to the tree's right: you see exactly one node per level — the last one in BFS order.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think they can just traverse down \`root.right\` child pointers.
+      body: `**The problem.** Return the values of the nodes visible from the right side of the tree, top to bottom. \`[1,2,3,null,5,null,4]\` → \`[1,3,4]\`.
+**The signal.** From the right you see exactly one node per level — the *last* node in each BFS level, which is not necessarily on the right spine.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners think they can just traverse down \`root.right\` child pointers.
 *Why this shatters*: Counterexample: If a left child subtree extends 5 levels deep while the right child subtree is only 2 levels deep, the **bottom 3 levels of the left subtree are visible** from the right side!
 
 **The Structural Invariant: Rightmost Node per Level.**
@@ -463,6 +708,40 @@ To preserve level boundaries in BFS:
     { "cells": [5, 4], "highlight": [1], "note": "Level 2: Queue [5, 4], last node is 4 (from left subtree!) -> View: [1, 3, 4]." }
   ],
   "caption": "Binary Tree Right Side View — Extracting the last node of each level in BFS."
+}
+\`\`\`
+
+**The optimal solution (last node of each BFS level).**
+
+\`\`\`python
+from collections import deque
+
+def right_side_view(root):
+    if not root:
+        return []
+    res, q = [], deque([root])
+    while q:
+        n = len(q)
+        for i in range(n):
+            node = q.popleft()
+            if i == n - 1:             # last node on this level is visible
+                res.append(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+    return res
+\`\`\`
+
+**Complexity — one node per level survives.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Follow root.right only", "time": "O(H)", "space": "O(1)", "note": "Wrong — misses deep left-subtree nodes." },
+    { "approach": "BFS, take last of each level", "time": "O(N)", "space": "O(W)", "note": "Right-first DFS by depth also works. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, W = maximum width. Every node is visited once; only the level's last node is recorded."
 }
 \`\`\`
 
@@ -496,7 +775,10 @@ To preserve level boundaries in BFS:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/count-good-nodes-in-binary-tree",
       summary: "Pass the path's running maximum down the recursion — top-down flow, the mirror of everything so far.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to check if a node is good by looking at its immediate parent.
+      body: `**The problem.** A node is "good" if no node on the path from the root to it has a greater value; return the count of good nodes.
+**The signal.** Thread the path's running maximum *down* the recursion — a top-down flow, the mirror image of the bottom-up combine used elsewhere in this chapter.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to check if a node is good by looking at its immediate parent.
 *Why this shatters*: A node is "good" if **NO node on the path from root to it** is greater than it! Checking only the parent misses larger grandparents upstream.
 
 **The Structural Invariant: Top-Down Running Max Propagation.**
@@ -517,6 +799,31 @@ Pass \`maxSoFar\` down the call stack:
   ],
   "rootId": "3",
   "caption": "Count Good Nodes in Binary Tree — Propagating path maximum top-down."
+}
+\`\`\`
+
+**The optimal solution (thread the running max down).**
+
+\`\`\`python
+def good_nodes(root):
+    def dfs(node, max_so_far):
+        if not node:
+            return 0
+        good = 1 if node.val >= max_so_far else 0
+        new_max = max(max_so_far, node.val)
+        return good + dfs(node.left, new_max) + dfs(node.right, new_max)
+    return dfs(root, root.val)
+\`\`\`
+
+**Complexity — the max travels down, not up.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Recompute path max per node", "time": "O(N · H)", "space": "O(H)", "note": "Re-walks the root path for every node." },
+    { "approach": "Thread running max top-down", "time": "O(N)", "space": "O(H)", "note": "Each node compares against a carried max. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height. Passing max down means each node needs only one O(1) comparison."
 }
 \`\`\`
 
@@ -550,7 +857,10 @@ Pass \`maxSoFar\` down the call stack:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/valid-binary-search-tree",
       summary: "Not 'children versus parent' — every node must sit inside a range its whole ancestry carved out.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners check if \`node.left.val < node.val\` and \`node.right.val > node.val\` for every node.
+      body: `**The problem.** Return \`true\` if a binary tree is a valid BST — every node's entire left subtree is smaller and its entire right subtree is larger.
+**The signal.** It is not "child vs parent." Each node must fall inside a \`(low, high)\` range that its whole ancestry carved out, so you thread shrinking bounds down the recursion.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners check if \`node.left.val < node.val\` and \`node.right.val > node.val\` for every node.
 *Why this shatters*: **The Famous BST Trap!** Counterexample: Root 5, Left child 3, Right child of 3 is **6**. Locally $3 < 6$ and $3 < 5$ passes, but **6 is in root 5's left subtree**, violating BST rules ($6 > 5$)!
 
 **The Structural Invariant: Ancestor Bound Shrinking.**
@@ -569,6 +879,32 @@ Every node must fall strictly within an allowed range \`(min_bound, max_bound)\`
   ],
   "rootId": "5",
   "caption": "Validate BST — Ancestor bounds check catches invalid deep descendants."
+}
+\`\`\`
+
+**The optimal solution (shrinking (low, high) bounds).**
+
+\`\`\`python
+def is_valid_bst(root):
+    def valid(node, low, high):
+        if not node:
+            return True
+        if not (low < node.val < high):
+            return False
+        return (valid(node.left, low, node.val) and
+                valid(node.right, node.val, high))
+    return valid(root, float('-inf'), float('inf'))
+\`\`\`
+
+**Complexity — bounds carry the ancestry.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Compare only immediate children", "time": "O(N)", "space": "O(H)", "note": "Wrong — misses deep-descendant violations." },
+    { "approach": "Range-bounds DFS (or in-order monotonic)", "time": "O(N)", "space": "O(H)", "note": "Each node checked against ancestor bounds. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height. The (low, high) window encodes every ancestor constraint in O(1) per node."
 }
 \`\`\`
 
@@ -602,7 +938,10 @@ Every node must fall strictly within an allowed range \`(min_bound, max_bound)\`
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/kth-smallest-integer-in-bst",
       summary: "In-order traversal emits a BST in sorted order — walk it with a countdown and stop at k.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners collect all tree elements into an array, sort the array, and pick index $K - 1$ ($O(N \\log N)$).
+      body: `**The problem.** Return the k-th smallest value in a BST (1-indexed).
+**The signal.** In-order traversal emits a BST's values in sorted order — walk it with a countdown and stop the moment you reach the k-th node, before touching the rest.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners collect all tree elements into an array, sort the array, and pick index $K - 1$ ($O(N \\log N)$).
 *Why this shatters*: A BST **already has sorted order embedded in its structure** via In-Order Traversal!
 
 **The Structural Invariant: In-Order Traversal Countdown.**
@@ -624,6 +963,35 @@ In-Order Traversal (Left $\\rightarrow$ Node $\\rightarrow$ Right) visits BST no
   ],
   "rootId": "5",
   "caption": "Kth Smallest Element in a BST — In-Order traversal countdown stopping at K=0."
+}
+\`\`\`
+
+**The optimal solution (iterative in-order with countdown).**
+
+\`\`\`python
+def kth_smallest(root, k):
+    stack = []
+    curr = root
+    while stack or curr:
+        while curr:                    # dive to the smallest unseen node
+            stack.append(curr)
+            curr = curr.left
+        curr = stack.pop()
+        k -= 1
+        if k == 0:
+            return curr.val            # stop the instant we hit the k-th
+        curr = curr.right
+\`\`\`
+
+**Complexity — stop early, never sort.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Collect all values, sort, index k-1", "time": "O(N log N)", "space": "O(N)", "note": "Ignores the sorted structure already present." },
+    { "approach": "Iterative in-order, stop at k", "time": "O(H + k)", "space": "O(H)", "note": "Visits only until the k-th smallest. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height, k = target rank. The traversal halts after k pops instead of scanning everything."
 }
 \`\`\`
 
@@ -657,7 +1025,10 @@ In-Order Traversal (Left $\\rightarrow$ Node $\\rightarrow$ Right) visits BST no
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/binary-tree-from-preorder-and-inorder-traversal",
       summary: "Preorder names the root; inorder splits left from right — recurse on the two halves.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners get stuck trying to construct the tree using only preorder traversal.
+      body: `**The problem.** Given \`preorder\` and \`inorder\` traversals of a tree with unique values, reconstruct the tree and return its root.
+**The signal.** Preorder names the root; inorder splits the remaining nodes into left-of-root and right-of-root — recurse on the two halves, using a hash map for O(1) splits.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners get stuck trying to construct the tree using only preorder traversal.
 *Why this shatters*: Preorder traversal alone is ambiguous — a left-skewed tree and right-skewed tree can produce identical preorder sequences!
 
 **The Structural Invariant: Preorder Root Identification + Inorder Subtree Splitting.**
@@ -676,6 +1047,37 @@ In-Order Traversal (Left $\\rightarrow$ Node $\\rightarrow$ Right) visits BST no
   "before": [["Preorder", "[3, 9, 20, 15, 7]", "First element (3) = Root"], ["Inorder", "[9, 3, 15, 20, 7]", "Split at 3: Left=[9], Right=[15,20,7]"]],
   "after": [["Result", "Root 3 created", "Recurse on Left [9] & Right [15,20,7]"]],
   "caption": "Construct Tree — Preorder determines root, Inorder partitions subtrees."
+}
+\`\`\`
+
+**The optimal solution (preorder root + inorder split).**
+
+\`\`\`python
+def build_tree(preorder, inorder):
+    idx = {v: i for i, v in enumerate(inorder)}   # value -> inorder index
+    pre_i = 0
+    def build(lo, hi):
+        nonlocal pre_i
+        if lo > hi:
+            return None
+        root = TreeNode(preorder[pre_i])          # preorder gives the root
+        pre_i += 1
+        mid = idx[root.val]                       # inorder splits the sides
+        root.left = build(lo, mid - 1)            # left BEFORE right
+        root.right = build(mid + 1, hi)
+        return root
+    return build(0, len(inorder) - 1)
+\`\`\`
+
+**Complexity — the hash map kills the inner scan.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Linear scan for root in inorder", "time": "O(N²)", "space": "O(N)", "note": "Each call re-scans inorder for the split point." },
+    { "approach": "Hash map inorder index lookup", "time": "O(N)", "space": "O(N)", "note": "O(1) split per node; each node built once. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. Pre-indexing inorder turns every O(N) split search into an O(1) lookup."
 }
 \`\`\`
 
@@ -709,7 +1111,10 @@ In-Order Traversal (Left $\\rightarrow$ Node $\\rightarrow$ Right) visits BST no
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/binary-tree-maximum-path-sum",
       summary: "At each node, two different questions: the best path through me, and the best path I can offer upward.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate path sums for every pair of nodes ($O(N^2)$).
+      body: `**The problem.** Return the maximum path sum of any non-empty path; a path need not pass through the root and node values may be negative. \`[-10,9,20,null,null,15,7]\` → \`42\`.
+**The signal.** Each node answers two different questions: the best path *through* it (both branches) to update the global answer, and the best single branch it can offer *upward* to its parent.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners calculate path sums for every pair of nodes ($O(N^2)$).
 *Why this shatters*: Nodes can contain **negative values**! A negative subtree reduces total path sum, so paths must be allowed to **clamp negative subtrees to 0**!
 
 **The Structural Invariant: Local Bend Harvest vs Upward Single-Branch Gain.**
@@ -734,6 +1139,35 @@ At each node \`curr\`:
   ],
   "rootId": "-10",
   "caption": "Binary Tree Maximum Path Sum — Local path 42 bends at 20 without visiting root."
+}
+\`\`\`
+
+**The optimal solution (bend harvest + single-branch return).**
+
+\`\`\`python
+def max_path_sum(root):
+    best = float('-inf')
+    def gain(node):
+        nonlocal best
+        if not node:
+            return 0
+        left = max(gain(node.left), 0)      # clamp negative subtrees to 0
+        right = max(gain(node.right), 0)
+        best = max(best, node.val + left + right)   # path bending through node
+        return node.val + max(left, right)          # best single branch upward
+    gain(root)
+    return best
+\`\`\`
+
+**Complexity — one post-order pass answers both questions.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sum every pair of node paths", "time": "O(N²)", "space": "O(H)", "note": "Recomputes overlapping paths repeatedly." },
+    { "approach": "Post-order gain with clamping", "time": "O(N)", "space": "O(H)", "note": "Bend updates the global max; branch returns upward. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, H = height. Each node produces its upward gain once while updating a global best."
 }
 \`\`\`
 
@@ -767,7 +1201,10 @@ At each node \`curr\`:
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/serialize-and-deserialize-binary-tree",
       summary: "Preorder with explicit nulls uniquely describes any tree — and reads back as a self-consuming stream.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners serialize nodes using standard preorder traversal without recording null pointers.
+      body: `**The problem.** Design \`serialize(root) → string\` and \`deserialize(string) → root\` that round-trip *any* binary tree.
+**The signal.** Preorder with explicit null markers uniquely describes any tree; deserialize reads that token stream, each recursive call self-consuming exactly the tokens of its own subtree.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners serialize nodes using standard preorder traversal without recording null pointers.
 *Why this shatters*: Preorder without null markers is ambiguous! \`[1, 2]\` could represent \`1 -> left:2\` OR \`1 -> right:2\`.
 
 **The Structural Invariant: Preorder Stream with Explicit Sentinel Markers.**
@@ -793,6 +1230,47 @@ At each node \`curr\`:
     { "cells": ["1", "2", "N", "N", "3", "4", "N", "N", "5", "N", "N"], "pointers": [{ "label": "token=N", "index": 2 }], "highlight": [2], "note": "Read 'N' -> Node(2).left = null. Next 'N' -> Node(2).right = null. Node 2 done!" }
   ],
   "caption": "Serialize & Deserialize Binary Tree — Self-consuming token queue reconstruction."
+}
+\`\`\`
+
+**The optimal solution (preorder stream with null sentinels).**
+
+\`\`\`python
+class Codec:
+    def serialize(self, root):
+        out = []
+        def dfs(node):
+            if not node:
+                out.append("N")            # explicit null marker
+                return
+            out.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+        dfs(root)
+        return ",".join(out)
+
+    def deserialize(self, data):
+        tokens = iter(data.split(","))
+        def dfs():
+            val = next(tokens)             # self-consuming stream
+            if val == "N":
+                return None
+            node = TreeNode(int(val))
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
+\`\`\`
+
+**Complexity — one token per node and per null.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "BFS level-order with null markers", "time": "O(N)", "space": "O(N)", "note": "Equally valid; queue-driven encoding/decoding." },
+    { "approach": "Preorder stream with sentinels", "time": "O(N)", "space": "O(N)", "note": "Recursive, self-consuming token stream. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. The string has N values plus up to N+1 null markers — still O(N) time and space."
 }
 \`\`\`
 

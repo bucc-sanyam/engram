@@ -28,6 +28,8 @@ export type DsaProblem = {
   difficulty: DsaDifficulty;
   /** Canonical practice link on neetcode.io */
   neetcodeUrl: string;
+  /** Optional explicit LeetCode URL. When omitted, derived from the slug (+ overrides). */
+  leetcodeUrl?: string;
   /** One-liner shown on cards and used as the page description */
   summary: string;
   /** The blog itself — markdown rendered by src/components/Markdown.tsx */

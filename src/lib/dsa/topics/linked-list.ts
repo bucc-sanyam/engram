@@ -19,7 +19,10 @@ For interviews, linked lists are really a test of **pointer discipline** — can
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/reverse-a-linked-list",
       summary: "The three-pointer shuffle: save next, flip the arrow, shift the trio — the chapter's atomic move.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to reverse a linked list by iterating and immediately setting \`curr.next = prev\`.
+      body: `**The problem.** Reverse a singly linked list and return the new head. \`1→2→3→null\` → \`3→2→1→null\`.
+**The signal.** This is the pointer-discipline primitive. The interviewer wants the in-place three-pointer flip (O(1) space) because it's a building block for half the harder problems in this chapter.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to reverse a linked list by iterating and immediately setting \`curr.next = prev\`.
 *Why this shatters*: Overwriting \`curr.next\` instantly **destroys your only link to the rest of the list**! Node \`curr.next\` becomes garbage collected or un-reachable, severing the chain.
 
 **The Structural Invariant: The Four-Beat Pointer Shuffle.**
@@ -42,6 +45,31 @@ We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially 
 }
 \`\`\`
 
+**The optimal solution (three-pointer shuffle).**
+
+\`\`\`python
+def reverse_list(head):
+    prev, curr = None, head
+    while curr:
+        nxt = curr.next      # save the rest of the list
+        curr.next = prev     # flip the arrow
+        prev = curr          # advance prev
+        curr = nxt           # advance curr
+    return prev              # prev is the new head
+\`\`\`
+
+**Complexity — one pass, three pointers, no extra list.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Copy values to array, rebuild", "time": "O(N)", "space": "O(N)", "note": "Allocates a whole second structure." },
+    { "approach": "Three-pointer in-place reversal", "time": "O(N)", "space": "O(1)", "note": "Rewires next pointers as it walks. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. The in-place flip touches each node once and stores nothing but three pointers."
+}
+\`\`\`
+
 **Boundary Traps & Execution Blueprint.**
 - *Empty or 1-Node List*: If \`head == null\` or \`head.next == null\`, return \`head\` directly in $O(1)$.
 - *Recursive Variant*: Reverses recursively: \`newHead = reverse(head.next); head.next.next = head; head.next = null;\` ($O(N)$ stack space).`,
@@ -50,7 +78,7 @@ We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially 
           kind: "mcq",
           prompt: "Why must we store curr.next in a temporary variable 'temp' BEFORE executing curr.next = prev?",
           options: [
-            "Because JavaScript requires temporary variables for string conversion.",
+            "Because the list length must be counted before reversing.",
             "Because setting curr.next = prev overwrites the next pointer, severing our only reference to the remainder of the linked list.",
             "To calculate the total length of the list.",
             "To prevent memory leaks in the browser."
@@ -73,7 +101,10 @@ We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially 
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/merge-two-sorted-linked-lists",
       summary: "Two sorted chains, one dummy head, and a tail that always grabs the smaller front.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to handle special cases for setting the initial new \`head\` pointer before starting the merging loop.
+      body: `**The problem.** Merge two sorted linked lists into one sorted list and return its head. \`1→2→4\` and \`1→3→4\` → \`1→1→2→3→4→4\`.
+**The signal.** Two sorted inputs and one sorted output is the classic merge move; the dummy-head pattern is what the interviewer wants to see kill the "which node is the head?" special-case.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to handle special cases for setting the initial new \`head\` pointer before starting the merging loop.
 *Why this shatters*: Writing special conditional logic for setting the new head leads to messy, error-prone code with duplicate branches.
 
 **The Structural Invariant: Dummy Head Node & Tail Splice.**
@@ -93,6 +124,34 @@ We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially 
     { "cells": [1, 1, 2, 3, 4, 4], "highlight": [0, 1, 2, 3, 4, 5], "note": "Continue weaving... l2 reaches null. Splice remaining l1 directly to tail. Return dummy.next." }
   ],
   "caption": "Merge Two Sorted Lists — In-place pointer weaving using a sentinel dummy node."
+}
+\`\`\`
+
+**The optimal solution (dummy head + tail splice).**
+
+\`\`\`python
+def merge_two_lists(l1, l2):
+    dummy = ListNode()
+    tail = dummy
+    while l1 and l2:
+        if l1.val <= l2.val:
+            tail.next, l1 = l1, l1.next
+        else:
+            tail.next, l2 = l2, l2.next
+        tail = tail.next
+    tail.next = l1 or l2         # attach the leftover tail in O(1)
+    return dummy.next
+\`\`\`
+
+**Complexity — splice, never copy.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Concatenate then sort", "time": "O((N+M) log(N+M))", "space": "O(N+M)", "note": "Throws away the sorted structure you were handed." },
+    { "approach": "Dummy head + tail splice", "time": "O(N + M)", "space": "O(1)", "note": "Relinks existing nodes; no new allocation. Interview-optimal.", "best": true }
+  ],
+  "caption": "N, M = lengths of the two lists. Each node is visited once and re-pointed, never copied."
 }
 \`\`\`
 
@@ -126,7 +185,10 @@ We must maintain 3 pointers: \`prev\` (initially \`null\`), \`curr\` (initially 
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/linked-list-cycle-detection",
       summary: "Floyd's tortoise and hare: on a looped track, a runner at 2x must lap a runner at 1x.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Set to store visited node references as they walk the list ($O(N)$ time, $O(N)$ space).
+      body: `**The problem.** Given the head of a linked list, return \`true\` if it contains a cycle, else \`false\`.
+**The signal.** "Detect a loop in O(1) space" is Floyd's tortoise-and-hare — a 2× runner must eventually lap a 1× runner inside any cycle, so a collision proves the loop.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Set to store visited node references as they walk the list ($O(N)$ time, $O(N)$ space).
 *Why this shatters*: Storing node references requires $O(N)$ auxiliary memory. The problem challenges us to solve cycle detection in **$O(1)$ constant space**!
 
 **The Structural Invariant: Floyd's Tortoise & Hare Algorithm.**
@@ -144,6 +206,31 @@ Place two runners at \`head\`:
     { "cells": [3, 2, 0, -4], "pointers": [{ "label": "slow", "index": 3 }, { "label": "fast", "index": 3 }], "highlight": [3], "note": "Tick 3: slow at -4, fast at -4. COLLISION! Cycle detected -> return true." }
   ],
   "caption": "Linked List Cycle — Floyd's fast/slow pointer collision in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (fast/slow runners).**
+
+\`\`\`python
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next            # 1 step
+        fast = fast.next.next       # 2 steps
+        if slow is fast:            # they met → cycle
+            return True
+    return False                    # fast fell off → no cycle
+\`\`\`
+
+**Complexity — two runners, no memory.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Hash set of visited nodes", "time": "O(N)", "space": "O(N)", "note": "Stores every node reference seen." },
+    { "approach": "Floyd fast/slow pointers", "time": "O(N)", "space": "O(1)", "note": "Constant memory; collision proves the loop. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. Once both runners are in the cycle the gap shrinks by 1 each tick, forcing a meeting."
 }
 \`\`\`
 
@@ -177,7 +264,10 @@ Place two runners at \`head\`:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/reorder-linked-list",
       summary: "Find the middle, reverse the back half, interleave — three known moves composed into surgery.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners copy all nodes into an array, then use two pointers on the array to re-link nodes ($O(N)$ space).
+      body: `**The problem.** Reorder \`L0→L1→…→Ln\` in place to \`L0→Ln→L1→Ln-1→…\`. \`1→2→3→4→5\` → \`1→5→2→4→3\`.
+**The signal.** "Interleave front and back in O(1) space" composes three known moves — find the middle, reverse the second half, zip the halves — which is exactly the composition skill the interviewer is probing.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners copy all nodes into an array, then use two pointers on the array to re-link nodes ($O(N)$ space).
 *Why this shatters*: The problem requires reordering **in-place without allocating extra array space** ($O(1)$ space).
 
 **The Structural Invariant: Three-Phase List Surgery.**
@@ -194,6 +284,45 @@ Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes
     { "cells": [1, 5, 2, 4, 3], "highlight": [0, 1, 2, 3, 4], "note": "Phase 3: Interleave [1->2->3] and [5->4] alternatingly -> 1 -> 5 -> 2 -> 4 -> 3." }
   ],
   "caption": "Reorder List — In-place composition: Midpoint + Reverse + Interleave in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (middle + reverse + zip).**
+
+\`\`\`python
+def reorder_list(head):
+    # 1. find middle (slow ends at the tail of the first half)
+    slow, fast = head, head.next
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    # 2. reverse the second half
+    second = slow.next
+    slow.next = None
+    prev = None
+    while second:
+        nxt = second.next
+        second.next = prev
+        prev = second
+        second = nxt
+    # 3. merge the two halves alternately
+    first, second = head, prev
+    while second:
+        n1, n2 = first.next, second.next
+        first.next = second
+        second.next = n1
+        first, second = n1, n2
+\`\`\`
+
+**Complexity — surgery beats copying.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Array of node references + relink", "time": "O(N)", "space": "O(N)", "note": "Simple, but allocates an N-sized array." },
+    { "approach": "Midpoint + reverse + interleave", "time": "O(N)", "space": "O(1)", "note": "Three in-place passes, no allocation. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. Each phase is a single linear pass over pointers already in memory."
 }
 \`\`\`
 
@@ -227,7 +356,10 @@ Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/remove-node-from-end-of-linked-list",
       summary: "Two pointers locked n apart: when the leader falls off the end, the trailer stands before the victim.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners count the total length $L$ of the list in one pass, then calculate the target node's 1-based index $(L - N + 1)$ and perform a second pass to delete it.
+      body: `**The problem.** Remove the n-th node from the *end* of the list and return the head. \`1→2→3→4→5, n=2\` → \`1→2→3→5\`.
+**The signal.** "From the end, in one pass" means two pointers locked \`n+1\` apart — when the leader falls off the end, the trailer sits exactly on the victim's predecessor.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners count the total length $L$ of the list in one pass, then calculate the target node's 1-based index $(L - N + 1)$ and perform a second pass to delete it.
 *Why this shatters*: While $O(N)$ time, it requires **two full passes** over the list. Can we delete the $N$-th node from the end in a **single pass**?
 
 **The Structural Invariant: Two Pointers Locked with Fixed Gap $(N+1)$.**
@@ -245,6 +377,33 @@ Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes
     { "cells": [0, 1, 2, 3, 5], "highlight": [3], "note": "Victim is node 4 (idx 4). Splice: left.next = left.next.next (3.next = 5). Result: 1->2->3->5." }
   ],
   "caption": "Remove Nth Node From End — Single pass with (N+1) fixed pointer gap."
+}
+\`\`\`
+
+**The optimal solution (gapped two pointers).**
+
+\`\`\`python
+def remove_nth_from_end(head, n):
+    dummy = ListNode(0, head)
+    left = right = dummy
+    for _ in range(n + 1):           # open a gap of n+1 nodes
+        right = right.next
+    while right:                     # advance both until leader falls off
+        left = left.next
+        right = right.next
+    left.next = left.next.next       # splice out the victim
+    return dummy.next
+\`\`\`
+
+**Complexity — one pass instead of two.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Count length, then delete", "time": "O(N)", "space": "O(1)", "note": "Correct, but walks the list twice." },
+    { "approach": "Gapped two pointers, one pass", "time": "O(N)", "space": "O(1)", "note": "Single traversal; dummy handles head deletion. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. The n+1 gap places the trailer on the victim's predecessor when the leader hits null."
 }
 \`\`\`
 
@@ -278,7 +437,10 @@ Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/copy-linked-list-with-random-pointer",
       summary: "Deep-copy a list whose nodes point anywhere: a map from old to new — or clones woven between originals.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to clone the list in a single pass.
+      body: `**The problem.** Deep-copy a linked list where each node has a \`next\` and a \`random\` pointer to any node (or null); return the copied head without mutating the original.
+**The signal.** A \`random\` pointer may target a node not yet created, so the interviewer wants an old→new mapping — either via a hash map (O(N) space) or the O(1) interleaved-clone weave.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to clone the list in a single pass.
 *Why this shatters*: A node's \`random\` pointer might point to a node far ahead in the list that has **not been created yet**!
 
 **The Structural Invariant: Interleaved Splicing ($O(1)$ Auxiliary Space).**
@@ -297,6 +459,37 @@ We can perform a deep copy in 3 linear passes without a Hash Map:
     { "cells": ["A'", "B'"], "highlight": [0, 1], "note": "Pass 3: Unweave cloned nodes into standalone list A' -> B'." }
   ],
   "caption": "Copy List with Random Pointer — Interleaved cloning in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (hash map old→new).**
+
+\`\`\`python
+def copy_random_list(head):
+    if not head:
+        return None
+    clones = {}                              # original node -> clone
+    curr = head
+    while curr:                              # pass 1: create bare clones
+        clones[curr] = Node(curr.val)
+        curr = curr.next
+    curr = head
+    while curr:                              # pass 2: wire next + random
+        clones[curr].next = clones.get(curr.next)
+        clones[curr].random = clones.get(curr.random)
+        curr = curr.next
+    return clones[head]
+\`\`\`
+
+**Complexity — the map trades space for simplicity.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Hash map old→new node", "time": "O(N)", "space": "O(N)", "note": "Two clean passes; easiest to reason about." },
+    { "approach": "Interleaved clone weave", "time": "O(N)", "space": "O(1)", "note": "Clones spliced between originals, then unwoven. Space-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes. Both are O(N) time; the weave removes the O(N) map at the cost of trickier pointer surgery."
 }
 \`\`\`
 
@@ -331,7 +524,10 @@ We can perform a deep copy in 3 linear passes without a Hash Map:
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/add-two-numbers",
       summary: "Grade-school addition down two chains: sum digits, emit node, carry the overflow forward.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to convert the linked lists into integers (e.g., \`2->4->3\` $\\rightarrow$ \`342\`), add them (\`342 + 465 = 807\`), and convert the result back to a list.
+      body: `**The problem.** Two non-negative numbers are given as linked lists of digits in *reverse* order; return their sum as a linked list. \`2→4→3\` + \`5→6→4\` → \`7→0→8\` (342 + 465 = 807).
+**The signal.** Reverse-order digits plus arbitrary length means grade-school column addition with a carry, node by node — the interviewer does not want you converting to an integer.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners try to convert the linked lists into integers (e.g., \`2->4->3\` $\\rightarrow$ \`342\`), add them (\`342 + 465 = 807\`), and convert the result back to a list.
 *Why this shatters*: Linked lists can contain **thousands of digits**, far exceeding 64-bit integer limits (\`BigInt\` overflow!).
 
 **The Structural Invariant: Digit-by-Digit Carry Column Addition.**
@@ -352,6 +548,36 @@ Because digits are stored in **reverse order** (least significant digit first), 
     { "cells": [7, 0, 8], "pointers": [{ "label": "l1 (3)", "index": 2 }, { "label": "l2 (4)", "index": 2 }], "highlight": [2], "note": "l1=3, l2=4, carry=1. sum = 3+4+1 = 8. Emit 8, carry=0. Result: 7 -> 0 -> 8." }
   ],
   "caption": "Add Two Numbers — Column addition handling arbitrary-length numbers in O(N) time."
+}
+\`\`\`
+
+**The optimal solution (carry-propagating column add).**
+
+\`\`\`python
+def add_two_numbers(l1, l2):
+    dummy = ListNode()
+    tail = dummy
+    carry = 0
+    while l1 or l2 or carry:
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
+        carry, digit = divmod(v1 + v2 + carry, 10)
+        tail.next = ListNode(digit)
+        tail = tail.next
+        l1 = l1.next if l1 else None
+        l2 = l2.next if l2 else None
+    return dummy.next
+\`\`\`
+
+**Complexity — one column at a time, no overflow.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Parse to int, add, rebuild", "time": "O(N)", "space": "O(N)", "note": "Overflows once the numbers exceed 64 bits." },
+    { "approach": "Column addition with carry", "time": "O(max(N, M))", "space": "O(1)", "note": "Handles thousands of digits safely. Interview-optimal.", "best": true }
+  ],
+  "caption": "N, M = lengths of the two lists. Output length is counted as the result, so extra space is O(1)."
 }
 \`\`\`
 
@@ -385,7 +611,10 @@ Because digits are stored in **reverse order** (least significant digit first), 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/find-duplicate-integer",
       summary: "An array where values are pointers in disguise — the duplicate is a cycle entrance, and Floyd finds it.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \\log N)$ time) or use a Hash Set ($O(N)$ space).
+      body: `**The problem.** An array of \`n+1\` integers, each in \`[1, n]\`, contains exactly one repeated value; find it without modifying the array and in O(1) space. \`[1,3,4,2,2]\` → \`2\`.
+**The signal.** Read \`nums[i]\` as a next-pointer and the duplicate becomes a cycle *entrance* — the interviewer wants Floyd's two-phase cycle finding, not sorting or a hash set.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \\log N)$ time) or use a Hash Set ($O(N)$ space).
 *Why this shatters*: The problem strictly forbids modifying the array and requires **$O(1)$ extra space** and **$O(N)$ time**!
 
 **The Structural Invariant: Mapping Array to a Cyclic Linked List.**
@@ -403,6 +632,36 @@ Because digits are stored in **reverse order** (least significant digit first), 
     { "cells": [1, 3, 4, 2, 2], "pointers": [{ "label": "slow", "index": 2 }, { "label": "slow2", "index": 2 }], "highlight": [2, 4], "note": "Phase 2 Meeting at val=2! Duplicate number = 2 found in O(N) time & O(1) space." }
   ],
   "caption": "Find the Duplicate Number — Array treated as Linked List cycle entrance problem."
+}
+\`\`\`
+
+**The optimal solution (Floyd on index-pointers).**
+
+\`\`\`python
+def find_duplicate(nums):
+    slow = fast = 0
+    while True:                      # phase 1: find a collision inside the cycle
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    slow2 = 0                        # phase 2: walk to the entrance
+    while slow != slow2:
+        slow = nums[slow]
+        slow2 = nums[slow2]
+    return slow                      # entrance index = duplicate value
+\`\`\`
+
+**Complexity — constant space, no mutation.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sort then scan neighbours", "time": "O(N log N)", "space": "O(1)", "note": "Mutates the array — banned here." },
+    { "approach": "Hash set of seen values", "time": "O(N)", "space": "O(N)", "note": "Simple but uses linear extra memory." },
+    { "approach": "Floyd cycle on index-pointers", "time": "O(N)", "space": "O(1)", "note": "No mutation, no extra memory. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = n, the value range. Treating values as pointers turns the duplicate into a cycle entrance Floyd can locate."
 }
 \`\`\`
 
@@ -436,7 +695,10 @@ Because digits are stored in **reverse order** (least significant digit first), 
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/lru-cache",
       summary: "Hash map for finding, doubly linked list for ordering — O(1) get and put, and eviction for free.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Map + Timestamp array. On \`put\`, they scan the array for the oldest timestamp to evict ($O(N)$ time).
+      body: `**The problem.** Design a cache with capacity \`C\` supporting \`get(key)\` and \`put(key, val)\` in O(1), evicting the least-recently-used entry when full.
+**The signal.** O(1) lookup + O(1) recency reordering + O(1) eviction is the classic marriage of a hash map (for finding) and a doubly linked list (for ordering).
+
+**Beginner Intuition & The Naive Fallacy.** Beginners use a Hash Map + Timestamp array. On \`put\`, they scan the array for the oldest timestamp to evict ($O(N)$ time).
 *Why this shatters*: The problem requires **$O(1)$ time complexity for BOTH \`get\` and \`put\`**!
 
 **The Structural Invariant: Hash Map + Doubly Linked List Composition.**
@@ -458,6 +720,60 @@ Because digits are stored in **reverse order** (least significant digit first), 
     { "cells": ["left", "(1,1)", "(3,3)", "right"], "highlight": [2], "note": "put(3,3) at capacity 2: Evict LRU (2,2)! Remove from DLL & Map. Insert (3,3) at MRU tail." }
   ],
   "caption": "LRU Cache — Hash Map + Doubly Linked List achieving O(1) get & put operations."
+}
+\`\`\`
+
+**The optimal solution (hash map + doubly linked list).**
+
+\`\`\`python
+class Node:
+    def __init__(self, key, val):
+        self.key, self.val = key, val
+        self.prev = self.next = None
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.cap = capacity
+        self.map = {}                          # key -> Node
+        self.left = Node(0, 0)                 # LRU sentinel
+        self.right = Node(0, 0)                # MRU sentinel
+        self.left.next, self.right.prev = self.right, self.left
+
+    def _remove(self, node):
+        node.prev.next, node.next.prev = node.next, node.prev
+
+    def _insert(self, node):                   # insert just before MRU sentinel
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.prev, node.next = prev, nxt
+
+    def get(self, key):
+        if key not in self.map:
+            return -1
+        self._remove(self.map[key])
+        self._insert(self.map[key])            # mark most-recently used
+        return self.map[key].val
+
+    def put(self, key, val):
+        if key in self.map:
+            self._remove(self.map[key])
+        self.map[key] = Node(key, val)
+        self._insert(self.map[key])
+        if len(self.map) > self.cap:           # evict LRU
+            lru = self.left.next
+            self._remove(lru)
+            del self.map[lru.key]
+\`\`\`
+
+**Complexity — two structures, each doing what it's best at.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Hash map + timestamp scan", "time": "put O(N)", "space": "O(C)", "note": "Finding the LRU entry scans all C entries." },
+    { "approach": "Hash map + doubly linked list", "time": "get & put O(1)", "space": "O(C)", "note": "Map finds; list reorders and evicts in O(1). Interview-optimal.", "best": true }
+  ],
+  "caption": "C = capacity. The doubly linked list gives O(1) unlink of any node; the map gives O(1) lookup by key."
 }
 \`\`\`
 
@@ -491,7 +807,10 @@ Because digits are stored in **reverse order** (least significant digit first), 
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/merge-k-sorted-linked-lists",
       summary: "Pairwise tournament merging turns k lists into one in O(n log k) — divide and conquer over streams.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners merge lists one-by-one sequentially: merge list 1 and 2, then merge result with 3, then with 4...
+      body: `**The problem.** Merge \`k\` sorted linked lists into a single sorted list and return its head.
+**The signal.** Merging one list at a time is O(N·k); the interviewer wants pairwise divide-and-conquer (or a k-sized min-heap) to reach O(N log k).
+
+**Beginner Intuition & The Naive Fallacy.** Beginners merge lists one-by-one sequentially: merge list 1 and 2, then merge result with 3, then with 4...
 *Why this shatters*: Merging $K$ lists sequentially results in $O(N \\cdot K)$ total time complexity (where $N$ is total number of nodes across all lists). For 10,000 lists, this is quadratic TLE!
 
 **The Structural Invariant: Pairwise Divide & Conquer Tournament.**
@@ -517,6 +836,47 @@ Instead of sequential merging, merge lists **in pairs** hierarchically (like a t
     { "from": "l3", "to": "final" }
   ],
   "caption": "Merge K Sorted Lists — Pairwise Divide & Conquer in O(N log K) time."
+}
+\`\`\`
+
+**The optimal solution (pairwise tournament).**
+
+\`\`\`python
+def merge_k_lists(lists):
+    if not lists:
+        return None
+    while len(lists) > 1:                  # each round halves the list count
+        merged = []
+        for i in range(0, len(lists), 2):
+            l1 = lists[i]
+            l2 = lists[i + 1] if i + 1 < len(lists) else None
+            merged.append(merge_two(l1, l2))
+        lists = merged
+    return lists[0]
+
+def merge_two(l1, l2):
+    dummy = ListNode()
+    tail = dummy
+    while l1 and l2:
+        if l1.val <= l2.val:
+            tail.next, l1 = l1, l1.next
+        else:
+            tail.next, l2 = l2, l2.next
+        tail = tail.next
+    tail.next = l1 or l2
+    return dummy.next
+\`\`\`
+
+**Complexity — halving the number of lists each round.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sequential merge (1+2, +3, +4…)", "time": "O(N · K)", "space": "O(1)", "note": "Early nodes get re-scanned in every merge." },
+    { "approach": "Min-heap of K list heads", "time": "O(N log K)", "space": "O(K)", "note": "Great for streaming; heap holds one node per list." },
+    { "approach": "Pairwise divide & conquer", "time": "O(N log K)", "space": "O(1)", "note": "log K merge rounds, each O(N). Interview-optimal.", "best": true }
+  ],
+  "caption": "N = total nodes across all lists, K = number of lists. Pairwise merging performs log₂K rounds of O(N) work."
 }
 \`\`\`
 
@@ -550,7 +910,10 @@ Instead of sequential merging, merge lists **in pairs** hierarchically (like a t
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/reverse-nodes-in-k-group",
       summary: "Reverse the list k nodes at a time, re-splicing each reversed block seamlessly — the pointer final exam.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners reverse the entire list and try to fix sub-group links afterwards.
+      body: `**The problem.** Reverse the nodes of the list \`k\` at a time; any nodes left over at the end (fewer than \`k\`) stay in their original order. \`1→2→3→4→5, k=2\` → \`2→1→4→3→5\`.
+**The signal.** This is the reverse primitive plus careful re-splicing per block — the pointer-surgery final exam, and the interviewer expects it in O(1) space.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners reverse the entire list and try to fix sub-group links afterwards.
 *Why this shatters*: Reversing in groups of $K$ requires modifying pointer connections **block by block**, leaving any leftover sub-group smaller than $K$ untouched.
 
 **The Structural Invariant: Four-Step Block Reversal.**
@@ -572,6 +935,44 @@ Use a \`dummy\` node. For each block of $K$ nodes:
     { "cells": [2, 1, 4, 3, 5], "highlight": [4], "note": "Group 3: node [5]. Scout finds < 2 nodes -> Leave 5 unchanged! Final: 2->1->4->3->5." }
   ],
   "caption": "Reverse Nodes in K-Group — Grouped reversal with tail preservation in O(N) time & O(1) space."
+}
+\`\`\`
+
+**The optimal solution (scout, reverse, re-splice).**
+
+\`\`\`python
+def reverse_k_group(head, k):
+    dummy = ListNode(0, head)
+    group_prev = dummy
+    while True:
+        kth = group_prev                 # scout k nodes ahead
+        for _ in range(k):
+            kth = kth.next
+            if not kth:
+                return dummy.next        # fewer than k left → stop
+        group_next = kth.next
+        # reverse the group [group_prev.next .. kth]
+        prev, curr = group_next, group_prev.next
+        while curr != group_next:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        # re-splice the reversed block back in
+        tmp = group_prev.next            # old head becomes the block's tail
+        group_prev.next = kth            # new head of the block
+        group_prev = tmp
+\`\`\`
+
+**Complexity — in-place block reversal.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Copy to array, reverse chunks, rebuild", "time": "O(N)", "space": "O(N)", "note": "Allocates a full array of nodes." },
+    { "approach": "In-place per-block reversal", "time": "O(N)", "space": "O(1)", "note": "Each node reversed once; leftover tail untouched. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of nodes, k = group size. Every node is visited a constant number of times across all blocks."
 }
 \`\`\`
 

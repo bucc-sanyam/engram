@@ -21,7 +21,10 @@ The nine problems here are sequenced like a story. You start by remembering **wh
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/duplicate-integer",
       summary: "The hash set's one-line superpower: answering 'have I seen this before?' instantly.",
-      body: `**Beginner Intuition & The Naive Fallacy.** When asked if an array contains duplicates, a beginner's first instinct is to take element 1 and compare it against element 2, 3, 4... then take element 2 and compare against 3, 4, 5... 
+      body: `**The problem.** Given an integer array, return \`true\` if any value appears at least twice, else \`false\`. \`[1,2,3,1]\` → \`true\`, \`[1,2,3,4]\` → \`false\`.
+**The signal.** "Have I seen this before?" is the hash set's reason to exist — the interviewer wants you to trade a little memory for instant membership instead of re-scanning what you already passed.
+
+**Beginner Intuition & The Naive Fallacy.** When asked if an array contains duplicates, a beginner's first instinct is to take element 1 and compare it against element 2, 3, 4... then take element 2 and compare against 3, 4, 5... 
 *Why this shatters*: For $N = 100,000$ numbers, nested loops do $\\frac{N(N-1)}{2} \\approx 5$ billion comparisons! The core flaw is **amnesia**: when standing at index 50,000, you have already seen the first 49,999 numbers, yet nested loops re-examine them again and again.
 
 **The Structural Invariant.** We do not need to compare pairs; we need to **remember state**. A Hash Set is a data structure backed by a hash function that provides $O(1)$ constant-time lookup. 
@@ -37,6 +40,31 @@ The nine problems here are sequenced like a story. You start by remembering **wh
     { "cells": [1, 2, 3, 1], "pointers": [{ "label": "i=3 (seen: {1,2,3})", "index": 3 }], "highlight": [0, 3], "note": "Read 1: Set already contains 1! Duplicate found → Return true." }
   ],
   "caption": "Contains Duplicate — single pass O(N) time with O(N) Hash Set memory."
+}
+\`\`\`
+
+**The optimal solution (single pass + Hash Set).**
+
+\`\`\`python
+def contains_duplicate(nums):
+    seen = set()
+    for x in nums:
+        if x in seen:      # O(1) membership test
+            return True
+        seen.add(x)
+    return False
+\`\`\`
+
+**Complexity — how each approach trades time for memory.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (compare every pair)", "time": "O(N²)", "space": "O(1)", "note": "Nested loops re-scan seen elements — quadratic blow-up." },
+    { "approach": "Sort then scan neighbours", "time": "O(N log N)", "space": "O(1)", "note": "Duplicates become adjacent; trades time for tiny memory." },
+    { "approach": "Hash Set (remember as you go)", "time": "O(N)", "space": "O(N)", "note": "O(1) membership test per element. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The Hash Set spends O(N) memory to erase the second scan."
 }
 \`\`\`
 
@@ -71,7 +99,10 @@ The nine problems here are sequenced like a story. You start by remembering **wh
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/is-anagram",
       summary: "Two words are anagrams when their letter histograms match — comparison by counting.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners often try to check if two strings are anagrams by checking if string \`s\` contains every letter of string \`t\` using string searching functions. 
+      body: `**The problem.** Given \`s\` and \`t\`, return \`true\` if \`t\` is an anagram of \`s\` — the same letters with the same counts. \`s = "anagram", t = "nagaram"\` → \`true\`, \`s = "rat", t = "car"\` → \`false\`.
+**The signal.** "Same multiset of characters" means you compare *histograms*, not order. The interviewer is testing whether you reach for counting instead of the slower sort-and-compare.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners often try to check if two strings are anagrams by checking if string \`s\` contains every letter of string \`t\` using string searching functions. 
 *Why this shatters*: Counterexample: \`s = "aab"\` and \`t = "abb"\`. Both contain 'a' and 'b', but they are **not** anagrams! Order doesn't matter, but **character frequency (inventory)** must match perfectly.
 
 **The Structural Invariant.** Two strings are anagrams if and only if their character frequency distributions (histograms) are identical.
@@ -87,6 +118,32 @@ The nine problems here are sequenced like a story. You start by remembering **wh
     { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' $\\rightarrow$ return false." }
   ],
   "caption": "Valid Anagram — frequency histogram increment/decrement with early exit."
+}
+\`\`\`
+
+**The optimal solution (26-slot balance).**
+
+\`\`\`python
+def is_anagram(s, t):
+    if len(s) != len(t):
+        return False
+    count = [0] * 26
+    for a, b in zip(s, t):
+        count[ord(a) - ord('a')] += 1   # add for s
+        count[ord(b) - ord('a')] -= 1   # remove for t
+    return all(c == 0 for c in count)
+\`\`\`
+
+**Complexity — counting beats sorting.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sort both strings, compare", "time": "O(N log N)", "space": "O(1)", "note": "Simple to write; sorting is the bottleneck." },
+    { "approach": "Hash Map of character counts", "time": "O(N)", "space": "O(K)", "note": "K = distinct characters — works for any alphabet." },
+    { "approach": "Fixed 26-slot count array", "time": "O(N)", "space": "O(1)", "note": "Bounded lowercase alphabet → constant memory. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = string length, K = distinct characters. The 26-slot array is O(1) because the alphabet size is fixed."
 }
 \`\`\`
 
@@ -121,7 +178,10 @@ The nine problems here are sequenced like a story. You start by remembering **wh
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/two-integer-sum",
       summary: "The most famous interview problem ever — and the birth of the complement lookup.",
-      body: `**Beginner Intuition & The Naive Fallacy.** The brute-force approach tests all pairs using two nested loops: for each index $i$, scan all $j > i$ to check if \`nums[i] + nums[j] == target\`.
+      body: `**The problem.** Return the indices of the two numbers in \`nums\` that add up to \`target\`; exactly one answer exists and you can't reuse an index. \`nums = [2,7,11,15], target = 9\` → \`[0, 1]\`.
+**The signal.** For each number you need one *specific* partner, \`target − x\`. The interviewer wants a single-pass hash-map lookup for that partner rather than a nested scan of every pair.
+
+**Beginner Intuition & The Naive Fallacy.** The brute-force approach tests all pairs using two nested loops: for each index $i$, scan all $j > i$ to check if \`nums[i] + nums[j] == target\`.
 *Why this shatters*: This takes $O(N^2)$ time. If $N = 10,000$, it requires 50 million iterations!
 *The Breakthrough*: When standing at number $x = \\text{nums}[i]$, you do not need to search for every other number. You are looking for one specific required partner: $\\text{complement} = \\text{target} - x$.
 
@@ -136,6 +196,31 @@ The nine problems here are sequenced like a story. You start by remembering **wh
     { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 $\\rightarrow$ complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
   ],
   "caption": "Two Sum — single-pass complement lookup in O(N) time and O(N) space."
+}
+\`\`\`
+
+**The optimal solution (complement lookup).**
+
+\`\`\`python
+def two_sum(nums, target):
+    seen = {}                       # value -> index
+    for i, x in enumerate(nums):
+        need = target - x
+        if need in seen:            # check BEFORE inserting x
+            return [seen[need], i]
+        seen[x] = i
+\`\`\`
+
+**Complexity — the complement lookup collapses the inner loop.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Brute force (all pairs)", "time": "O(N²)", "space": "O(1)", "note": "Re-searches for the partner from scratch every time." },
+    { "approach": "Sort + two pointers", "time": "O(N log N)", "space": "O(N)", "note": "Loses original indices — needs bookkeeping to recover them." },
+    { "approach": "Hash Map complement lookup", "time": "O(N)", "space": "O(N)", "note": "Check-before-insert finds the partner in O(1). Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The map stores each value→index so the partner is one lookup away."
 }
 \`\`\`
 
@@ -269,8 +354,8 @@ def group_anagrams(words):
         },
         {
           kind: "open",
-          prompt: "Why can't we use a raw JavaScript Array `[1, 0, 1...]` directly as a Map key in JS?",
-          model_answer: "In JavaScript, Objects and Maps compare object keys by reference identity, not value equality. Two identical arrays `[1, 0]` and `[1, 0]` are different object references. Converting to a primitive string key `\"1,0\"` ensures value-based hashing.",
+          prompt: "The count signature is naturally an array of 26 numbers. Why is it common to convert this array into a string (or tuple) before using it as the hash-map key?",
+          model_answer: "A hash key must be compared by value, not by identity. In many languages a mutable array/list is hashed by reference, so two separate arrays holding the same counts would map to different buckets and anagrams would not group. Serialising the counts into an immutable, value-comparable key (a delimited string like \"1#0#1…\" or a tuple) makes equal counts produce equal keys, which is exactly the bucketing behaviour we need.",
           difficulty: "advanced"
         }
       ]
@@ -281,7 +366,10 @@ def group_anagrams(words):
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/top-k-elements-in-list",
       summary: "Count with a map, then bucket by frequency — a sort-shaped problem solved without sorting.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners count frequencies with a map, then sort the map entries by frequency descending.
+      body: `**The problem.** Return the \`k\` most frequent elements in \`nums\`, in any order. \`nums = [1,1,1,2,2,3], k = 2\` → \`[1, 2]\`.
+**The signal.** The problem asks for *better than* $O(N \\log N)$, so sorting is a trap. The interviewer wants bucket-by-frequency — exploiting that any element's count is at most \`N\`.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners count frequencies with a map, then sort the map entries by frequency descending.
 *Why this shatters*: Sorting $U$ unique elements takes $O(U \\log U)$ time. If all elements are unique, this takes $O(N \\log N)$. The problem explicitly asks for a solution faster than $O(N \\log N)$!
 
 **The Structural Invariant & Bucket Sort Discovery.**
@@ -297,6 +385,37 @@ def group_anagrams(words):
     { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements $\\rightarrow$ [1, 2]." }
   ],
   "caption": "Top K Frequent Elements — Bucket sort in O(N) time without comparison sorting."
+}
+\`\`\`
+
+**The optimal solution (bucket by frequency).**
+
+\`\`\`python
+def top_k_frequent(nums, k):
+    count = {}
+    for x in nums:
+        count[x] = count.get(x, 0) + 1
+    buckets = [[] for _ in range(len(nums) + 1)]   # index = frequency
+    for val, freq in count.items():
+        buckets[freq].append(val)
+    res = []
+    for freq in range(len(nums), 0, -1):           # high frequency first
+        for val in buckets[freq]:
+            res.append(val)
+            if len(res) == k:
+                return res
+\`\`\`
+
+**Complexity — bounded frequencies unlock linear time.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Count + sort entries by frequency", "time": "O(N log N)", "space": "O(N)", "note": "Simplest, but violates the sub-N-log-N requirement." },
+    { "approach": "Count + size-K Min-Heap", "time": "O(N log K)", "space": "O(N)", "note": "Great when K ≪ N or data streams in." },
+    { "approach": "Count + bucket by frequency", "time": "O(N)", "space": "O(N)", "note": "Frequencies ≤ N index buckets directly — no sort. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements, K = elements to return. Bucketing exploits that any frequency is ≤ N."
 }
 \`\`\`
 
@@ -331,7 +450,10 @@ def group_anagrams(words):
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/string-encode-and-decode",
       summary: "Length-prefix framing: the serialization trick real protocols use, in interview miniature.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners suggest joining strings with a delimiter like \`","\` or \`"#"\`.
+      body: `**The problem.** Design \`encode(list) → string\` and \`decode(string) → list\` that round-trip *any* list of strings — including ones that contain whatever separator you pick. \`["code","love you"]\` must decode back exactly.
+**The signal.** A naive delimiter breaks the instant a payload contains it. The interviewer wants **length-prefix framing**: write each string's length before its bytes so decoding is never ambiguous.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners suggest joining strings with a delimiter like \`","\` or \`"#"\`.
 *Why this shatters*: Counterexample: What if a string in the input list itself contains the delimiter, e.g., \`["hello#world", "test"]\`? Joining with \`"#"\` produces \`"hello#world#test"\`. The decoder cannot tell if \`"hello"\` and \`"world"\` were separate strings! Escaping delimiters adds complex edge-case bugs.
 
 **The Structural Invariant: Length-Prefix Framing.** Real-world protocols (TCP, HTTP Content-Length, Protobuf) avoid delimiter ambiguity by putting **metadata (length) before payload**.
@@ -347,6 +469,36 @@ def group_anagrams(words):
     { "cells": ["4", "#", "c", "o", "d", "e", "5", "#", "w", "o", "r", "l", "d"], "highlight": [8, 9, 10, 11, 12], "note": "Read next L=5 chars: 'world'. Decoded array: ['code', 'world']." }
   ],
   "caption": "Encode and Decode Strings — Length-prefix prevents delimiter collisions."
+}
+\`\`\`
+
+**The optimal solution (length-prefix framing).**
+
+\`\`\`python
+def encode(strs):
+    return "".join(f"{len(s)}#{s}" for s in strs)
+
+def decode(s):
+    res, i = [], 0
+    while i < len(s):
+        j = i
+        while s[j] != '#':               # read the length digits
+            j += 1
+        length = int(s[i:j])
+        res.append(s[j + 1: j + 1 + length])
+        i = j + 1 + length               # jump past the payload
+    return res
+\`\`\`
+
+**Complexity — every character is touched a constant number of times.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Delimiter join + escaping", "time": "O(L)", "space": "O(L)", "note": "Linear too, but escaping edge cases are bug-prone." },
+    { "approach": "Length-prefix framing", "time": "O(L)", "space": "O(L)", "note": "Read length, copy payload verbatim — unambiguous. Interview-optimal.", "best": true }
+  ],
+  "caption": "L = total characters across all strings. Encoding and decoding each make a single linear pass."
 }
 \`\`\`
 
@@ -380,7 +532,10 @@ def group_anagrams(words):
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/products-of-array-discluding-self",
       summary: "Prefix meets suffix: every answer is the product of everything to your left times everything to your right.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate the total product of all elements in the array, then for each index $i$, divide \`total_product / nums[i]\`.
+      body: `**The problem.** Return an array where \`output[i]\` is the product of every element *except* \`nums[i]\` — with no division and in $O(N)$. \`[1,2,3,4]\` → \`[24,12,8,6]\`.
+**The signal.** "No division" plus "except self" points straight at prefix × suffix products, which the interviewer then wants folded into $O(1)$ extra space by reusing the output array.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners calculate the total product of all elements in the array, then for each index $i$, divide \`total_product / nums[i]\`.
 *Why this shatters*: 
 1. The problem explicitly bans division!
 2. *Division fails on Zeros*: If \`nums = [1, 0, 3]\`, total product is 0. Dividing by \`nums[1] = 0\` throws Division-By-Zero errors!
@@ -399,6 +554,34 @@ $$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\time
     { "cells": [24, 12, 8, 6], "highlight": [0, 1, 2, 3], "note": "Right Pass: multiply res[i] by running postfix (from right). Final res = [24, 12, 8, 6]." }
   ],
   "caption": "Product of Array Except Self — Prefix product pass followed by Suffix product pass."
+}
+\`\`\`
+
+**The optimal solution (prefix in output + running suffix).**
+
+\`\`\`python
+def product_except_self(nums):
+    n = len(nums)
+    res = [1] * n
+    for i in range(1, n):             # res[i] = product of everything left of i
+        res[i] = res[i - 1] * nums[i - 1]
+    suffix = 1
+    for i in range(n - 1, -1, -1):    # multiply in the running right-side product
+        res[i] *= suffix
+        suffix *= nums[i]
+    return res
+\`\`\`
+
+**Complexity — prefix × suffix, with the output array doing double duty.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Total product ÷ nums[i]", "time": "O(N)", "space": "O(1)", "note": "Banned by the problem and breaks on zeros." },
+    { "approach": "Separate prefix + suffix arrays", "time": "O(N)", "space": "O(N)", "note": "Clear two-array version before optimising memory." },
+    { "approach": "Prefix in output + running suffix", "time": "O(N)", "space": "O(1)", "note": "Suffix carried in one scalar; output array is free. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The returned array is not counted as auxiliary space, so extra space is O(1)."
 }
 \`\`\`
 
@@ -435,7 +618,10 @@ $$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\time
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/valid-sudoku",
       summary: "Hashing in two dimensions — 27 little sets, and the integer-division trick that names each box.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think of validating Sudoku by running nested loops for each cell to scan its row, column, and 3x3 box.
+      body: `**The problem.** Given a partially filled 9×9 board, return \`true\` if no row, column, or 3×3 box already contains a duplicate digit (empty cells are \`'.'\`). Only current placement is checked, not solvability.
+**The signal.** "No duplicate per row / column / box" is a membership question in three dimensions at once — the interviewer wants 27 hash sets and the integer-division box index, resolved in a single pass.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners think of validating Sudoku by running nested loops for each cell to scan its row, column, and 3x3 box.
 *Why this shatters*: Scanning 27 cells for each of the 81 cells leads to redundant lookups ($81 \\times 27 \\approx 2,200$ checks).
 
 **The Structural Invariant: 2D Multi-Set Encoding.** We can validate the entire board in a **single pass over the 81 cells**.
@@ -454,6 +640,37 @@ $$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\time
     { "cells": ["rows[4]: {'6'}", "cols[7]: {'6'}", "boxes[5]: {'6'}"], "highlight": [0, 1, 2], "note": "Add '6' to rows[4], cols[7], and boxes[5]. Proceed to next cell." }
   ],
   "caption": "Valid Sudoku — Single-pass validation using row, column, and sub-box hash sets."
+}
+\`\`\`
+
+**The optimal solution (row / col / box hash sets).**
+
+\`\`\`python
+def is_valid_sudoku(board):
+    rows = [set() for _ in range(9)]
+    cols = [set() for _ in range(9)]
+    boxes = [set() for _ in range(9)]
+    for r in range(9):
+        for c in range(9):
+            v = board[r][c]
+            if v == '.':
+                continue
+            b = (r // 3) * 3 + (c // 3)          # 3x3 box index 0..8
+            if v in rows[r] or v in cols[c] or v in boxes[b]:
+                return False
+            rows[r].add(v); cols[c].add(v); boxes[b].add(v)
+    return True
+\`\`\`
+
+**Complexity — a fixed 9×9 board makes everything constant.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Re-scan row/col/box per cell", "time": "O(1)*", "space": "O(1)", "note": "*81×27 ≈ 2,200 redundant checks — constant but wasteful." },
+    { "approach": "Row/col/box hash sets, single pass", "time": "O(1)", "space": "O(1)", "note": "One pass over 81 cells; each cell does three O(1) checks. Interview-optimal.", "best": true }
+  ],
+  "caption": "The board is fixed at 9×9, so both time and space are bounded by constants. For a generic N×N board it would be O(N²)."
 }
 \`\`\`
 
@@ -488,7 +705,10 @@ $$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\time
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/longest-consecutive-sequence",
       summary: "The set as teleporter: find runs of consecutive numbers in O(n), only ever counting from a run's true start.",
-      body: `**Beginner Intuition & The Naive Fallacy.** The obvious approach is to sort the array, then scan for consecutive runs \`nums[i] == nums[i-1] + 1\`.
+      body: `**The problem.** Return the length of the longest run of *consecutive* integers in \`nums\`, in $O(N)$. \`[100,4,200,1,3,2]\` → \`4\` (the run \`1,2,3,4\`).
+**The signal.** The required $O(N)$ rules out sorting. The interviewer wants a hash set plus the key trick: only start counting a run from its true head — the number whose predecessor \`x − 1\` is absent.
+
+**Beginner Intuition & The Naive Fallacy.** The obvious approach is to sort the array, then scan for consecutive runs \`nums[i] == nums[i-1] + 1\`.
 *Why this shatters*: Sorting takes $O(N \\log N)$ time. The problem explicitly requires $O(N)$ linear time!
 
 **The Structural Invariant & Sequence Start Filtering.**
@@ -505,6 +725,33 @@ $$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\time
     { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO $\\rightarrow$ Start at 1. Count 1, 2, 3, 4 $\\rightarrow$ Max Length = 4." }
   ],
   "caption": "Longest Consecutive Sequence — Only sequence start elements initiate linear counting."
+}
+\`\`\`
+
+**The optimal solution (start-only counting).**
+
+\`\`\`python
+def longest_consecutive(nums):
+    s = set(nums)
+    best = 0
+    for x in s:
+        if x - 1 not in s:            # only start from a run's head
+            length = 1
+            while x + length in s:    # walk the run upward
+                length += 1
+            best = max(best, length)
+    return best
+\`\`\`
+
+**Complexity — the set turns a run-scan into amortized linear time.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Sort then scan runs", "time": "O(N log N)", "space": "O(1)", "note": "Easy, but violates the required O(N)." },
+    { "approach": "Hash Set + start-only counting", "time": "O(N)", "space": "O(N)", "note": "Walk a run only from its true start; each value visited ≤ 2×. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. The 'x-1 not in set' guard keeps the inner while-loop amortized O(N) overall."
 }
 \`\`\`
 

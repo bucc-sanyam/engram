@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Markdown from "@/components/Markdown";
 import StoryLearnPanel from "@/components/StoryLearnPanel";
+import { AccentText, DifficultyPill } from "@/components/AccentText";
 import {
   MACRO_SERIES_TITLE,
   MACROECONOMICS_CHAPTERS,
@@ -71,19 +72,14 @@ export default async function MacroSectionPage({
               style={{ background: chapter.color }}
               aria-hidden
             />
-            <p className="micro mb-4" style={{ color: chapter.color }}>
+            <AccentText as="p" className="micro mb-4" color={chapter.color}>
               {chapter.title} · read {number} of {total}
-            </p>
+            </AccentText>
             <h1 className="text-warm-gradient text-4xl font-bold leading-[1.08] sm:text-5xl">
               {section.title}
             </h1>
             <div className="mt-5 flex flex-wrap items-center gap-3 text-sm">
-              <span
-                className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
-                style={{ background: `${impColor}1a`, color: impColor }}
-              >
-                {section.importance}
-              </span>
+              <DifficultyPill difficulty={section.importance} color={impColor} />
               <span className="text-muted">{section.sectionNumber}</span>
             </div>
           </header>
@@ -113,9 +109,9 @@ export default async function MacroSectionPage({
                 className={`glass glass-hover rounded-[1.5rem] p-4 text-right ${prev ? "" : "sm:col-start-2"}`}
               >
                 <span className="micro !text-faint">Keep reading →</span>
-                <span className="mt-1 block font-medium" style={{ color: chapter.color }}>
+                <AccentText as="span" className="mt-1 block font-medium" color={chapter.color}>
                   {macroStopTitle(next)}
-                </span>
+                </AccentText>
               </Link>
             ) : (
               <Link

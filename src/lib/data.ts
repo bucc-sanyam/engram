@@ -5,6 +5,7 @@
  * demo data (no Supabase configured) and the real Supabase + API backend.
  */
 import { createClient } from "./supabase/client";
+import { CACHE_KEYS, clearCache, invalidate } from "./cache";
 import {
   isDemo,
   demoTopics,
@@ -168,6 +169,7 @@ export async function updateProfile(fields: { display_name: string }): Promise<P
   if (isDemo) {
     demoState.profile = { ...demoState.profile, ...fields };
     saveDemoState();
+    invalidate(CACHE_KEYS.profile);
     return demoState.profile;
   }
   const supabase = createClient();
@@ -179,6 +181,7 @@ export async function updateProfile(fields: { display_name: string }): Promise<P
     .select()
     .single();
   if (error) throw error;
+  invalidate(CACHE_KEYS.profile);
   return data as Profile;
 }
 
@@ -327,7 +330,12 @@ export async function ingestText(text: string): Promise<IngestResult> {
       topicNames: ["(Demo mode — add Supabase + Gemini keys to save real entries)"],
     };
   }
-  return api("/api/ingest", { text, tz: tzOffsetMinutes() });
+  return api("/api/ingest", { text, tz: tzOffsetMinutes() }).then((r) => {
+    invalidate(CACHE_KEYS.topics);
+    invalidate(CACHE_KEYS.entries);
+    invalidate(CACHE_KEYS.plan);
+    return r as IngestResult;
+  });
 }
 
 export async function ingestLink(url: string): Promise<IngestResult> {
@@ -343,7 +351,12 @@ export async function ingestLink(url: string): Promise<IngestResult> {
       sourceUrl: url,
     };
   }
-  return api("/api/ingest", { url, tz: tzOffsetMinutes() });
+  return api("/api/ingest", { url, tz: tzOffsetMinutes() }).then((r) => {
+    invalidate(CACHE_KEYS.topics);
+    invalidate(CACHE_KEYS.entries);
+    invalidate(CACHE_KEYS.plan);
+    return r as IngestResult;
+  });
 }
 
 /**
@@ -561,9 +574,16 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
     // Keep the graded report so "See report" and calendar day clicks can replay it.
     demoState.reports.push(report);
     saveDemoState();
+    invalidate(CACHE_KEYS.plan);
+    invalidate(CACHE_KEYS.reviews);
+    invalidate(CACHE_KEYS.profile);
     return report;
   }
-  return api("/api/quiz", { action: "finish", sessionId, tz: tzOffsetMinutes() });
+  const report = await api<ReportCard>("/api/quiz", { action: "finish", sessionId, tz: tzOffsetMinutes() });
+  invalidate(CACHE_KEYS.plan);
+  invalidate(CACHE_KEYS.reviews);
+  invalidate(CACHE_KEYS.profile);
+  return report;
 }
 
 /**
@@ -598,12 +618,17 @@ export async function markPlanCompleted(): Promise<void> {
     if (!demoState.plan.completed) demoState.profile.streak += 1;
     demoState.plan.completed = true;
     saveDemoState();
+    invalidate(CACHE_KEYS.plan);
+    invalidate(CACHE_KEYS.profile);
     return;
   }
   await api("/api/plan", { action: "complete", tz: tzOffsetMinutes() });
+  invalidate(CACHE_KEYS.plan);
+  invalidate(CACHE_KEYS.profile);
 }
 
 export async function signOut(): Promise<void> {
+  clearCache();
   if (isDemo) return;
   const supabase = createClient();
   await supabase.auth.signOut();

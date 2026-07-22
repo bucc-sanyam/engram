@@ -19,7 +19,10 @@ The real skill here is recognising binary search wearing disguises. A 2-D matrix
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/binary-search",
       summary: "The canonical halving loop — and the invariant decisions that end all off-by-one suffering.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners scan the array sequentially from left to right using a linear loop ($O(N)$ time).
+      body: `**The problem.** Given a sorted array and a target, return the target's index, or \`-1\` if it isn't present, in O(log N). \`nums = [-1,0,3,5,9,12], target = 9\` → \`4\`.
+**The signal.** "Sorted array + find/decide" is the binary-search reflex. The interviewer wants each comparison to retire *half* of the remaining candidates rather than one at a time.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners scan the array sequentially from left to right using a linear loop ($O(N)$ time).
 *Why this shatters*: Linear scanning completely ignores the fact that the input array is **already sorted**! For $N = 1,000,000$ elements, linear search takes up to $1,000,000$ comparisons, while Binary Search takes at most $\\approx 20$ comparisons ($\\log_2 1,000,000 \\approx 19.9$).
 
 **The Structural Invariant: Monotone Range Reduction.**
@@ -37,6 +40,34 @@ The real skill here is recognising binary search wearing disguises. A 2-D matrix
     { "cells": [-1, 0, 3, 5, 9, 12], "pointers": [{ "label": "L=3", "index": 3 }, { "label": "mid=4 (9)", "index": 4 }, { "label": "R=5", "index": 5 }], "highlight": [4], "note": "mid=(3+5)//2=4 -> nums[4]=9 == target! Found at index 4." }
   ],
   "caption": "Binary Search — Halving the search space on every step in O(log N) time."
+}
+\`\`\`
+
+**The optimal solution (halving loop).**
+
+\`\`\`python
+def search(nums, target):
+    l, r = 0, len(nums) - 1
+    while l <= r:
+        mid = l + (r - l) // 2          # avoids L + R overflow
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            l = mid + 1                 # target is to the right
+        else:
+            r = mid - 1                 # target is to the left
+    return -1
+\`\`\`
+
+**Complexity — every step throws away half the array.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Linear scan", "time": "O(N)", "space": "O(1)", "note": "Ignores the sorted order entirely." },
+    { "approach": "Binary search", "time": "O(log N)", "space": "O(1)", "note": "One comparison halves the search space. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. log₂(1,000,000) ≈ 20, so a million elements need ~20 comparisons."
 }
 \`\`\`
 
@@ -71,7 +102,10 @@ The real skill here is recognising binary search wearing disguises. A 2-D matrix
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/search-2d-matrix",
       summary: "Rows sorted, rows stacked in order — the grid is just one sorted array wearing a disguise.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners search row-by-row or run binary search on every row individually ($O(M \\log N)$).
+      body: `**The problem.** Given an \`m × n\` matrix where each row is sorted and each row's first value exceeds the previous row's last, return whether \`target\` is present. \`target = 3\` in \`[[1,3,5,7],[10,11,16,20],[23,30,34,60]]\` → \`true\`.
+**The signal.** Those two rules mean the grid is *one* sorted array folded into rows. The interviewer wants a single binary search over \`m·n\` virtual indices, not a separate search per row.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners search row-by-row or run binary search on every row individually ($O(M \\log N)$).
 *Why this shatters*: Notice the problem's two rules:
 1. Each row is sorted ascending.
 2. The first integer of each row is strictly greater than the last integer of the previous row.
@@ -91,6 +125,37 @@ Perform a single Binary Search over virtual 1D indices \`0 ... (M * N - 1)\`.
     { "cells": [1, 3, 5, 7, 10, 11, 16, 20, 23, 30, 34, 60], "pointers": [{ "label": "L=0", "index": 0 }, { "label": "mid=1 (val=3)", "index": 1 }, { "label": "R=4", "index": 4 }], "highlight": [1], "note": "mid=1 -> row=0, col=1 -> matrix[0][1]=3 == target. Found in O(log(M*N)) time!" }
   ],
   "caption": "Search a 2D Matrix — Virtual 1D index mapping enables pure O(log(M*N)) binary search."
+}
+\`\`\`
+
+**The optimal solution (one search over m·n indices).**
+
+\`\`\`python
+def search_matrix(matrix, target):
+    rows, cols = len(matrix), len(matrix[0])
+    l, r = 0, rows * cols - 1
+    while l <= r:
+        mid = l + (r - l) // 2
+        val = matrix[mid // cols][mid % cols]    # 1-D index → (row, col)
+        if val == target:
+            return True
+        if val < target:
+            l = mid + 1
+        else:
+            r = mid - 1
+    return False
+\`\`\`
+
+**Complexity — treat the grid as a single sorted line.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Scan every cell", "time": "O(M · N)", "space": "O(1)", "note": "Ignores that the whole grid is sorted." },
+    { "approach": "Binary search each row", "time": "O(M log N)", "space": "O(1)", "note": "Better, but still checks one row at a time." },
+    { "approach": "Single binary search over M·N", "time": "O(log(M·N))", "space": "O(1)", "note": "Index math maps the flat position to (row, col). Interview-optimal.", "best": true }
+  ],
+  "caption": "M = rows, N = columns. log(M·N) = log M + log N — the whole matrix in one search."
 }
 \`\`\`
 
@@ -125,7 +190,10 @@ Perform a single Binary Search over virtual 1D indices \`0 ... (M * N - 1)\`.
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/eating-bananas",
       summary: "No array to search — so binary-search the answer itself, steered by a monotone yes/no test.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners look for a sorted array in the problem input to binary search. Finding none, they try every speed $k = 1, 2, 3...$ sequentially until Koko can finish within $H$ hours.
+      body: `**The problem.** Koko eats \`k\` bananas/hour from a single pile at a time; given \`piles\` and \`h\` hours, return the minimum integer speed \`k\` that finishes every pile within \`h\` hours. \`piles = [3,6,7,11], h = 8\` → \`4\`.
+**The signal.** There is no array to search — the *answer itself* is monotone (a faster \`k\` never needs more hours). The interviewer wants binary search on the answer space, steered by a feasibility test.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners look for a sorted array in the problem input to binary search. Finding none, they try every speed $k = 1, 2, 3...$ sequentially until Koko can finish within $H$ hours.
 *Why this shatters*: If the largest pile has $1,000,000,000$ bananas, linear search tests up to 1 billion speeds!
 
 **The Structural Invariant: Binary Search on the Answer Space.**
@@ -145,6 +213,37 @@ Perform a single Binary Search over virtual 1D indices \`0 ... (M * N - 1)\`.
     { "cells": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "pointers": [{ "label": "L=4", "index": 3 }, { "label": "mid=4", "index": 3 }, { "label": "R=4", "index": 3 }], "highlight": [3], "note": "Test speed mid=4: hours=1+2+2+3=8 <= 8 (Valid!). Record res=4. Loop ends -> Min Speed = 4." }
   ],
   "caption": "Koko Eating Bananas — Binary search over candidate answer space [1, max(piles)]."
+}
+\`\`\`
+
+**The optimal solution (binary search on the answer).**
+
+\`\`\`python
+import math
+
+def min_eating_speed(piles, h):
+    l, r = 1, max(piles)
+    best = r
+    while l <= r:
+        k = l + (r - l) // 2
+        hours = sum(math.ceil(p / k) for p in piles)
+        if hours <= h:                 # feasible → try eating slower
+            best = k
+            r = k - 1
+        else:
+            l = k + 1                  # too slow → must eat faster
+    return best
+\`\`\`
+
+**Complexity — the feasibility test is O(N), the search is log(range).**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Try every speed 1..max(piles)", "time": "O(N · max(piles))", "space": "O(1)", "note": "Up to a billion trials on large piles." },
+    { "approach": "Binary search on speed", "time": "O(N log max(piles))", "space": "O(1)", "note": "Halve the speed range; each check sums N piles. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of piles. The answer range [1, max(piles)] is searched in log steps, each an O(N) feasibility check."
 }
 \`\`\`
 
@@ -178,7 +277,10 @@ Perform a single Binary Search over virtual 1D indices \`0 ... (M * N - 1)\`.
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/find-minimum-in-rotated-sorted-array",
       summary: "A rotated array is two sorted runs; compare mid to the right end to find the seam.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners scan linearly looking for the element where \`nums[i] < nums[i-1]\` ($O(N)$ time).
+      body: `**The problem.** A sorted array of distinct values was rotated at an unknown pivot; return its minimum in O(log N). \`[4,5,6,7,0,1,2]\` → \`0\`.
+**The signal.** A rotated array is two sorted runs joined at one seam. Comparing \`mid\` to the *right end* tells you which run \`mid\` sits in, so the interviewer wants a boundary-finding binary search.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners scan linearly looking for the element where \`nums[i] < nums[i-1]\` ($O(N)$ time).
 *Why this shatters*: Linear scanning fails the problem's strict $O(\\log N)$ time requirement!
 
 **The Structural Invariant: Finding the Inflection Point (Seam).**
@@ -195,6 +297,32 @@ A rotated sorted array consists of two sorted subarrays: \`[Large Values | Small
     { "cells": [4, 5, 6, 7, 0, 1, 2], "pointers": [{ "label": "L=4", "index": 4 }, { "label": "mid=4 (0)", "index": 4 }, { "label": "R=5 (1)", "index": 5 }], "highlight": [4], "note": "nums[mid]=0 <= nums[R]=1 -> R = mid = 4. L == R == 4. Minimum found: nums[4] = 0." }
   ],
   "caption": "Find Minimum in Rotated Sorted Array — Binary search comparing mid against rightmost boundary."
+}
+\`\`\`
+
+**The optimal solution (compare mid to the right end).**
+
+\`\`\`python
+def find_min(nums):
+    l, r = 0, len(nums) - 1
+    while l < r:
+        mid = l + (r - l) // 2
+        if nums[mid] > nums[r]:        # min is strictly right of mid
+            l = mid + 1
+        else:
+            r = mid                    # mid could be the min — keep it
+    return nums[l]
+\`\`\`
+
+**Complexity — the seam is found by halving.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Linear scan for the drop", "time": "O(N)", "space": "O(1)", "note": "Looks at every element to find the seam." },
+    { "approach": "Binary search on the seam", "time": "O(log N)", "space": "O(1)", "note": "mid vs right end retires half each step. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. Comparing against nums[r] avoids the ambiguity of comparing against nums[l]."
 }
 \`\`\`
 
@@ -229,7 +357,10 @@ A rotated sorted array consists of two sorted subarrays: \`[Large Values | Small
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/find-target-in-rotated-sorted-array",
       summary: "At every step one half is perfectly sorted — check if the target lives there.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners think rotation destroys binary search because the array isn't globally sorted.
+      body: `**The problem.** Search a target in a rotated sorted array of distinct values; return its index, or \`-1\`, in O(log N). \`nums = [4,5,6,7,0,1,2], target = 0\` → \`4\`.
+**The signal.** Even rotated, splitting at \`mid\` leaves at least one half perfectly sorted. The interviewer wants you to identify that sorted half and range-check the target against it before deciding where to recurse.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners think rotation destroys binary search because the array isn't globally sorted.
 *Why this shatters*: Even when rotated, splitting the array at \`mid\` guarantees that **at least ONE half is strictly, perfectly sorted**!
 
 **The Structural Invariant: The Sorted Half Test.**
@@ -252,6 +383,40 @@ A rotated sorted array consists of two sorted subarrays: \`[Large Values | Small
     { "cells": [4, 5, 6, 7, 0, 1, 2], "pointers": [{ "label": "L=4", "index": 4 }, { "label": "mid=4 (0)", "index": 4 }, { "label": "R=4", "index": 4 }], "highlight": [4], "note": "nums[mid]=0 == target! Found at index 4 in O(log N) time." }
   ],
   "caption": "Search in Rotated Sorted Array — Identify sorted half and perform range bounds check."
+}
+\`\`\`
+
+**The optimal solution (find the sorted half).**
+
+\`\`\`python
+def search(nums, target):
+    l, r = 0, len(nums) - 1
+    while l <= r:
+        mid = l + (r - l) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[l] <= nums[mid]:                 # left half is sorted
+            if nums[l] <= target < nums[mid]:
+                r = mid - 1
+            else:
+                l = mid + 1
+        else:                                    # right half is sorted
+            if nums[mid] < target <= nums[r]:
+                l = mid + 1
+            else:
+                r = mid - 1
+    return -1
+\`\`\`
+
+**Complexity — one sorted half is always decidable.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Linear scan", "time": "O(N)", "space": "O(1)", "note": "Ignores the near-sorted structure." },
+    { "approach": "Sorted-half binary search", "time": "O(log N)", "space": "O(1)", "note": "Range-check the sorted half, then halve. Interview-optimal.", "best": true }
+  ],
+  "caption": "N = number of elements. Exactly one side of mid is always a contiguous sorted run to test against."
 }
 \`\`\`
 
@@ -285,7 +450,10 @@ A rotated sorted array consists of two sorted subarrays: \`[Large Values | Small
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/time-based-key-value-store",
       summary: "Histories append in time order — so 'latest value at or before t' is a right-boundary search.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners search through historical timestamps linearly from newest to oldest ($O(N)$ time per lookup).
+      body: `**The problem.** Implement \`set(key, value, timestamp)\` and \`get(key, timestamp)\` returning the value stored for \`key\` with the largest timestamp \`≤ timestamp\` (or \`""\` if none). Sets arrive with strictly increasing timestamps.
+**The signal.** Because each key's history is already time-ordered, "latest value at or before t" is a right-boundary binary search — the interviewer wants O(log K) lookups, not a linear scan of history.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners search through historical timestamps linearly from newest to oldest ($O(N)$ time per lookup).
 *Why this shatters*: The problem guarantees that calls to \`set(key, value, timestamp)\` arrive with **strictly increasing timestamps**!
 
 **The Structural Invariant: Binary Search on Monotonic Timestamps.**
@@ -304,6 +472,42 @@ Because timestamps arrive pre-sorted:
     { "cells": ["t=1, v='bar'", "t=4, v='bar2'"], "highlight": [0], "note": "Return best saved result res = 'bar'." }
   ],
   "caption": "Time Based Key Value Store — Binary search for largest timestamp <= query timestamp."
+}
+\`\`\`
+
+**The optimal solution (right-boundary binary search).**
+
+\`\`\`python
+class TimeMap:
+    def __init__(self):
+        self.store = {}                       # key -> list of (timestamp, value)
+
+    def set(self, key, value, timestamp):
+        self.store.setdefault(key, []).append((timestamp, value))
+
+    def get(self, key, timestamp):
+        history = self.store.get(key, [])
+        res = ""
+        l, r = 0, len(history) - 1
+        while l <= r:
+            mid = l + (r - l) // 2
+            if history[mid][0] <= timestamp:
+                res = history[mid][1]         # candidate; look for a newer one
+                l = mid + 1
+            else:
+                r = mid - 1
+        return res
+\`\`\`
+
+**Complexity — sorted timestamps make get logarithmic.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Linear scan of history", "time": "O(K) per get", "space": "O(1)", "note": "Walks the whole history each lookup." },
+    { "approach": "Binary search on timestamps", "time": "O(log K) per get", "space": "O(1)", "note": "set is O(1) append; history stays sorted. Interview-optimal.", "best": true }
+  ],
+  "caption": "K = number of entries stored for the queried key. set appends in O(1); get binary-searches in O(log K)."
 }
 \`\`\`
 
@@ -337,7 +541,10 @@ Because timestamps arrive pre-sorted:
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/median-of-two-sorted-arrays",
       summary: "Binary-search the partition: cut both arrays so left halves balance right halves.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners merge both sorted arrays into one array of size $M + N$ using Two Pointers ($O(M + N)$ time).
+      body: `**The problem.** Given two sorted arrays, return the median of their combined set in O(log(m+n)). \`[1,3]\` and \`[2]\` → \`2.0\`; \`[1,2]\` and \`[3,4]\` → \`2.5\`.
+**The signal.** Merging is O(m+n) — too slow for the required log bound. The interviewer wants you to binary-search the *partition* of the smaller array so that every left-half element ≤ every right-half element.
+
+**Beginner Intuition & The Naive Fallacy.** Beginners merge both sorted arrays into one array of size $M + N$ using Two Pointers ($O(M + N)$ time).
 *Why this shatters*: The problem strictly demands **$O(\\log(M + N))$ time**! Merging whole arrays is too slow.
 
 **The Structural Invariant: Binary Searching the Combined Partition Line.**
@@ -360,6 +567,45 @@ A median splits a dataset into two equal halves where **all left elements $\\le$
   "before": [[3, 8, 9, 10, "No: B_left (9) > A_right (8) -> Move Right in A"]],
   "after": [[8, "inf", 7, 9, "YES: 8 <= 9 and 7 <= inf"]],
   "caption": "Median of Two Sorted Arrays — Binary search partition cut on smaller array in O(log(min(M,N))) time."
+}
+\`\`\`
+
+**The optimal solution (binary-search the partition).**
+
+\`\`\`python
+def find_median_sorted_arrays(a, b):
+    if len(a) > len(b):
+        a, b = b, a                    # always search the smaller array
+    m, n = len(a), len(b)
+    half = (m + n + 1) // 2
+    l, r = 0, m
+    while l <= r:
+        i = (l + r) // 2               # cut position in a
+        j = half - i                   # matching cut in b
+        a_left  = a[i - 1] if i > 0 else float('-inf')
+        a_right = a[i]     if i < m else float('inf')
+        b_left  = b[j - 1] if j > 0 else float('-inf')
+        b_right = b[j]     if j < n else float('inf')
+        if a_left <= b_right and b_left <= a_right:      # valid partition
+            if (m + n) % 2:
+                return max(a_left, b_left)
+            return (max(a_left, b_left) + min(a_right, b_right)) / 2
+        if a_left > b_right:
+            r = i - 1                  # a contributed too many → take fewer
+        else:
+            l = i + 1                  # a contributed too few → take more
+\`\`\`
+
+**Complexity — search the partition, not the merge.**
+
+\`\`\`viz:complexity
+{
+  "rows": [
+    { "approach": "Merge both arrays fully", "time": "O(M + N)", "space": "O(M + N)", "note": "Simple, but violates the log requirement." },
+    { "approach": "Merge halfway to the median", "time": "O(M + N)", "space": "O(1)", "note": "Drops the extra array but still linear." },
+    { "approach": "Binary-search the partition", "time": "O(log min(M, N))", "space": "O(1)", "note": "Cut the smaller array; the other cut is forced. Interview-optimal.", "best": true }
+  ],
+  "caption": "M, N = array lengths. Searching the smaller array keeps the partition index valid and the time at log(min(M,N))."
 }
 \`\`\`
 
