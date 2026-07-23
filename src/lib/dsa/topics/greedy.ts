@@ -24,7 +24,7 @@ Two proof-shapes carry almost every greedy argument: the **exchange argument** (
 
 **The Structural Invariant: Kadane's Algorithm (Resetting Negative Prefixes).**
 Walk the array carrying a running sum \`currSum\`:
-- At element $x = \\text{nums}[i]$:
+- At element $x = \text{nums}[i]$:
   - If \`currSum < 0\`: Drop the negative prefix immediately (\`currSum = 0\`)! A negative running sum will strictly reduce any future contiguous subarray.
   - \`currSum += x\`.
   - Update \`maxSum = max(maxSum, currSum)\`.
@@ -41,7 +41,7 @@ Walk the array carrying a running sum \`currSum\`:
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *All Negative Numbers*: Initialize \`maxSum = nums[0]\` (or \`-Infinity\`) to handle arrays containing only negative numbers (e.g. \`[-3, -2, -5]\` $\\rightarrow$ returns \`-2\`).`,
+- *All Negative Numbers*: Initialize \`maxSum = nums[0]\` (or \`-Infinity\`) to handle arrays containing only negative numbers (e.g. \`[-3, -2, -5]\` $\rightarrow$ returns \`-2\`).`,
       questions: [
         {
           kind: "mcq",
@@ -75,8 +75,8 @@ Walk the array carrying a running sum \`currSum\`:
 
 **The Structural Invariant: Greedy Maximum Reach Frontier.**
 Maintain \`maxReach = 0\`:
-- Iterate $i$ from $0 \\dots N-1$:
-  - If $i > \\text{maxReach}$: **STRANDED!** (We reached an index that cannot be accessed by any previous jump $\\rightarrow$ return \`false\`).
+- Iterate $i$ from $0 \dots N-1$:
+  - If $i > \text{maxReach}$: **STRANDED!** (We reached an index that cannot be accessed by any previous jump $\rightarrow$ return \`false\`).
   - \`maxReach = max(maxReach, i + nums[i])\`.
   - If \`maxReach >= N - 1\`: Return \`true\` early!
 
@@ -92,7 +92,7 @@ Maintain \`maxReach = 0\`:
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Backward Goal Sliding Alternative*: Track \`goal = N - 1\`. Iterate $i$ from $N-2$ down to $0$: if $i + \\text{nums}[i] \\ge \\text{goal}$, update $\\text{goal} = i$. Return $\\text{goal} == 0$.`,
+- *Backward Goal Sliding Alternative*: Track \`goal = N - 1\`. Iterate $i$ from $N-2$ down to $0$: if $i + \text{nums}[i] \ge \text{goal}$, update $\text{goal} = i$. Return $\text{goal} == 0$.`,
       questions: [
         {
           kind: "mcq",
@@ -127,9 +127,9 @@ Maintain \`maxReach = 0\`:
 **The Structural Invariant: Implicit BFS Window Levels.**
 Treat jump ranges as **BFS levels/windows**:
 - Maintain \`jumps = 0\`, \`currEnd = 0\`, \`farthest = 0\`.
-- Iterate $i$ from $0 \\dots N-2$:
+- Iterate $i$ from $0 \dots N-2$:
   - \`farthest = max(farthest, i + nums[i])\`.
-  - When $i == \\text{currEnd}$: We reached the boundary of the current jump level!
+  - When $i == \text{currEnd}$: We reached the boundary of the current jump level!
     - \`jumps++\`
     - \`currEnd = farthest\` (Advance boundary to the farthest cell reachable in the next jump!).
 
@@ -178,10 +178,10 @@ Treat jump ranges as **BFS levels/windows**:
 *Why this shatters*: Simulating full laps from every starting index is too slow.
 
 **The Structural Invariant: Single-Pass Failed Stretch Pruning.**
-1. **Global Feasibility Check**: A valid circuit exists iff $\\sum \\text{gas} \\ge \\sum \\text{cost}$. If $\\sum \\text{gas} < \\sum \\text{cost}$, return \`-1\` immediately!
+1. **Global Feasibility Check**: A valid circuit exists iff $\sum \text{gas} \ge \sum \text{cost}$. If $\sum \text{gas} < \sum \text{cost}$, return \`-1\` immediately!
 2. **The Restart Rule**:
    - Maintain \`currTank = 0\`, \`start = 0\`.
-   - Iterate $i$ from $0 \\dots N-1$:
+   - Iterate $i$ from $0 \dots N-1$:
      - \`currTank += gas[i] - cost[i]\`.
      - If \`currTank < 0\`:
        - **PRUNE WHOLE STRETCH**: Stalling at station $i$ proves that **NO station between \`start\` and $i$ can be a valid starting point**!
@@ -198,7 +198,7 @@ Treat jump ranges as **BFS levels/windows**:
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Proof of Restart*: Arriving at station $i$ with a positive tank still resulted in failure at $i$. Starting at any intermediate station $k \\in (\\text{start}, i)$ with 0 tank would fail even earlier!`,
+- *Proof of Restart*: Arriving at station $i$ with a positive tank still resulted in failure at $i$. Starting at any intermediate station $k \in (\text{start}, i)$ with 0 tank would fail even earlier!`,
       questions: [
         {
           kind: "mcq",
@@ -237,7 +237,7 @@ Treat jump ranges as **BFS levels/windows**:
 4. While Min-Heap is not empty:
    - Pop smallest value \`first = heap.peek()\`.
    - If \`countMap[first] == 0\`: Pop and continue.
-   - For $i = 0 \\dots \\text{groupSize} - 1$:
+   - For $i = 0 \dots \text{groupSize} - 1$:
      - \`card = first + i\`.
      - If \`countMap[card] < countMap[first]\`: Return \`false\` (Not enough consecutive cards available!).
      - \`countMap[card] -= countMap[first]\`.
@@ -344,10 +344,10 @@ A partition can ONLY close when the current window index reaches the **furthest 
 1. **Precompute Last Indices**: Record \`lastIdx[ch] = index\` for every character in string $S$ ($O(N)$ pass).
 2. **Greedy Window Expansion**:
    - Maintain \`size = 0\`, \`maxEnd = 0\`.
-   - Iterate $i$ from $0 \\dots N-1$:
+   - Iterate $i$ from $0 \dots N-1$:
      - \`maxEnd = max(maxEnd, lastIdx[S[i]])\`.
      - \`size++\`.
-     - If $i == \\text{maxEnd}$: **CLOSE PARTITION!** (All character obligations inside window are resolved!).
+     - If $i == \text{maxEnd}$: **CLOSE PARTITION!** (All character obligations inside window are resolved!).
        - Append \`size\` to result. Reset \`size = 0\`.
 
 \`\`\`viz:array

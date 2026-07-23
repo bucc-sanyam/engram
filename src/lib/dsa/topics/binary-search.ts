@@ -23,15 +23,15 @@ The real skill here is recognising binary search wearing disguises. A 2-D matrix
 **The signal.** "Sorted array + find/decide" is the binary-search reflex. The interviewer wants each comparison to retire *half* of the remaining candidates rather than one at a time.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners scan the array sequentially from left to right using a linear loop ($O(N)$ time).
-*Why this shatters*: Linear scanning completely ignores the fact that the input array is **already sorted**! For $N = 1,000,000$ elements, linear search takes up to $1,000,000$ comparisons, while Binary Search takes at most $\\approx 20$ comparisons ($\\log_2 1,000,000 \\approx 19.9$).
+*Why this shatters*: Linear scanning completely ignores the fact that the input array is **already sorted**! For $N = 1,000,000$ elements, linear search takes up to $1,000,000$ comparisons, while Binary Search takes at most $\approx 20$ comparisons ($\log_2 1,000,000 \approx 19.9$).
 
 **The Structural Invariant: Monotone Range Reduction.**
 - Maintain inclusive search bounds \`[L, R]\`.
 - Compute mid point: \`mid = L + floor((R - L) / 2)\` (prevents integer overflow!).
 - **Three Decisions**:
-  - \`nums[mid] == target\` $\\rightarrow$ Match found! Return \`mid\`.
-  - \`nums[mid] < target\` $\\rightarrow$ Target lies strictly to the right. Retire left half: \`L = mid + 1\`.
-  - \`nums[mid] > target\` $\\rightarrow$ Target lies strictly to the left. Retire right half: \`R = mid - 1\`.
+  - \`nums[mid] == target\` $\rightarrow$ Match found! Return \`mid\`.
+  - \`nums[mid] < target\` $\rightarrow$ Target lies strictly to the right. Retire left half: \`L = mid + 1\`.
+  - \`nums[mid] > target\` $\rightarrow$ Target lies strictly to the left. Retire right half: \`R = mid - 1\`.
 
 \`\`\`viz:array
 {
@@ -105,18 +105,18 @@ def search(nums, target):
       body: `**The problem.** Given an \`m × n\` matrix where each row is sorted and each row's first value exceeds the previous row's last, return whether \`target\` is present. \`target = 3\` in \`[[1,3,5,7],[10,11,16,20],[23,30,34,60]]\` → \`true\`.
 **The signal.** Those two rules mean the grid is *one* sorted array folded into rows. The interviewer wants a single binary search over \`m·n\` virtual indices, not a separate search per row.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners search row-by-row or run binary search on every row individually ($O(M \\log N)$).
+**Beginner Intuition & The Naive Fallacy.** Beginners search row-by-row or run binary search on every row individually ($O(M \log N)$).
 *Why this shatters*: Notice the problem's two rules:
 1. Each row is sorted ascending.
 2. The first integer of each row is strictly greater than the last integer of the previous row.
-This means the $M \\times N$ 2D grid is **literally one giant 1D sorted array** of length $M \\times N$ wrapped into rows!
+This means the $M \times N$ 2D grid is **literally one giant 1D sorted array** of length $M \times N$ wrapped into rows!
 
 **The Structural Invariant: Virtual 1D Coordinate Mapping.**
 Perform a single Binary Search over virtual 1D indices \`0 ... (M * N - 1)\`.
 - **Coordinate Translation**:
   - \`row = Math.floor(mid / COLS)\`
   - \`col = mid % COLS\`
-- Evaluate \`matrix[row][col]\` against \`target\` using standard binary search logic in $O(\\log(M \\cdot N))$ time.
+- Evaluate \`matrix[row][col]\` against \`target\` using standard binary search logic in $O(\log(M \cdot N))$ time.
 
 \`\`\`viz:array
 {
@@ -160,7 +160,7 @@ def search_matrix(matrix, target):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Matrix Dimensions*: $M = \\text{matrix.length}$, $N = \\text{matrix}[0].\\text{length}$. Total elements $Total = M \\times N$.
+- *Matrix Dimensions*: $M = \text{matrix.length}$, $N = \text{matrix}[0].\text{length}$. Total elements $Total = M \times N$.
 - *Range*: Search range initializes to $L = 0, R = Total - 1$.`,
       questions: [
         {
@@ -197,9 +197,9 @@ def search_matrix(matrix, target):
 *Why this shatters*: If the largest pile has $1,000,000,000$ bananas, linear search tests up to 1 billion speeds!
 
 **The Structural Invariant: Binary Search on the Answer Space.**
-- **The Answer Range**: Koko's eating speed $k$ must lie within $[1, \\max(\\text{piles})]$.
+- **The Answer Range**: Koko's eating speed $k$ must lie within $[1, \\max(\text{piles})]$.
 - **Monotone Feasibility Function \`canFinish(k)\`**:
-  $$\\text{total\_hours}(k) = \\sum_{p \\in \\text{piles}} \\lceil p / k \\rceil$$
+  $$\text{total\_hours}(k) = \sum_{p \in \text{piles}} \\lceil p / k \rceil$$
   - If $k$ is too small, hours $> H$ (Fails).
   - As $k$ increases, total hours **monotonically decreases**.
   - There exists a sharp boundary: \`[False, False, ..., True, True]\`.
@@ -281,7 +281,7 @@ def min_eating_speed(piles, h):
 **The signal.** A rotated array is two sorted runs joined at one seam. Comparing \`mid\` to the *right end* tells you which run \`mid\` sits in, so the interviewer wants a boundary-finding binary search.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners scan linearly looking for the element where \`nums[i] < nums[i-1]\` ($O(N)$ time).
-*Why this shatters*: Linear scanning fails the problem's strict $O(\\log N)$ time requirement!
+*Why this shatters*: Linear scanning fails the problem's strict $O(\log N)$ time requirement!
 
 **The Structural Invariant: Finding the Inflection Point (Seam).**
 A rotated sorted array consists of two sorted subarrays: \`[Large Values | Small Values]\`.
@@ -368,12 +368,12 @@ def find_min(nums):
 2. **Determine which half is sorted**:
    - **Case A: Left Half is Sorted (\`nums[L] <= nums[mid]\`)**:
      - Check if target falls within the sorted range \`nums[L] <= target < nums[mid]\`:
-       - If yes: Search left half $\\rightarrow$ \`R = mid - 1\`.
-       - If no: Search right half $\\rightarrow$ \`L = mid + 1\`.
+       - If yes: Search left half $\rightarrow$ \`R = mid - 1\`.
+       - If no: Search right half $\rightarrow$ \`L = mid + 1\`.
    - **Case B: Right Half is Sorted (\`nums[mid] <= nums[R]\`)**:
      - Check if target falls within the sorted range \`nums[mid] < target <= nums[R]\`:
-       - If yes: Search right half $\\rightarrow$ \`L = mid + 1\`.
-       - If no: Search left half $\\rightarrow$ \`R = mid - 1\`.
+       - If yes: Search right half $\rightarrow$ \`L = mid + 1\`.
+       - If no: Search left half $\rightarrow$ \`R = mid - 1\`.
 
 \`\`\`viz:array
 {
@@ -460,7 +460,7 @@ def search(nums, target):
 Because timestamps arrive pre-sorted:
 - Map structure: \`Map<string, List<{ timestamp, value }>>\`.
 - For \`get(key, timestamp)\`:
-  - Run Binary Search over the key's history list to find the **largest timestamp $\\le$ target timestamp**.
+  - Run Binary Search over the key's history list to find the **largest timestamp $\le$ target timestamp**.
   - If \`list[mid].timestamp <= target\`: Save \`list[mid].value\` as current best answer, then search right (\`L = mid + 1\`) for a newer timestamp!
   - If \`list[mid].timestamp > target\`: Search left (\`R = mid - 1\`).
 
@@ -512,7 +512,7 @@ class TimeMap:
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Key Does Not Exist*: If key is not in map or all timestamps $> \\text{query}$, return \`""\`.`,
+- *Key Does Not Exist*: If key is not in map or all timestamps $> \text{query}$, return \`""\`.`,
       questions: [
         {
           kind: "mcq",
@@ -545,21 +545,21 @@ class TimeMap:
 **The signal.** Merging is O(m+n) — too slow for the required log bound. The interviewer wants you to binary-search the *partition* of the smaller array so that every left-half element ≤ every right-half element.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners merge both sorted arrays into one array of size $M + N$ using Two Pointers ($O(M + N)$ time).
-*Why this shatters*: The problem strictly demands **$O(\\log(M + N))$ time**! Merging whole arrays is too slow.
+*Why this shatters*: The problem strictly demands **$O(\log(M + N))$ time**! Merging whole arrays is too slow.
 
 **The Structural Invariant: Binary Searching the Combined Partition Line.**
-A median splits a dataset into two equal halves where **all left elements $\\le$ all right elements**.
+A median splits a dataset into two equal halves where **all left elements $\le$ all right elements**.
 - Binary search the **partition cut index \`i\`** in the SMALLER array $A$ (length $M$).
 - The partition cut index \`j\` in array $B$ is automatically fixed:
-  $$j = \\text{Math.floor}((M + N + 1) / 2) - i$$
+  $$j = \text{Math.floor}((M + N + 1) / 2) - i$$
 - **Cross-Boundary Validation**:
   - Let $A_{left} = A[i-1]$, $A_{right} = A[i]$.
   - Let $B_{left} = B[j-1]$, $B_{right} = B[j]$.
   - **Valid Partition Condition**:
-    $$A_{left} \\le B_{right} \\quad \\text{AND} \\quad B_{left} \\le A_{right}$$
+    $$A_{left} \le B_{right} \quad \text{AND} \quad B_{left} \le A_{right}$$
 - **Adjusting Search**:
-  - If $A_{left} > B_{right}$: $A$ contributed too many elements $\\rightarrow$ Search left in $A$ (\`R = i - 1\`).
-  - If $B_{left} > A_{right}$: $A$ contributed too few elements $\\rightarrow$ Search right in $A$ (\`L = i + 1\`).
+  - If $A_{left} > B_{right}$: $A$ contributed too many elements $\rightarrow$ Search left in $A$ (\`R = i - 1\`).
+  - If $B_{left} > A_{right}$: $A$ contributed too few elements $\rightarrow$ Search right in $A$ (\`L = i + 1\`).
 
 \`\`\`viz:table-diff
 {
@@ -610,10 +610,10 @@ def find_median_sorted_arrays(a, b):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Out of Bounds Handling*: If $i = 0$, $A_{left} = -\\infty$. If $i = M$, $A_{right} = +\\infty$.
+- *Out of Bounds Handling*: If $i = 0$, $A_{left} = -\infty$. If $i = M$, $A_{right} = +\infty$.
 - *Odd vs Even Total Length*:
-  - If total length $(M + N)$ is **odd**: $\\text{Median} = \\max(A_{left}, B_{left})$.
-  - If total length $(M + N)$ is **even**: $\\text{Median} = \\frac{\\max(A_{left}, B_{left}) + \\min(A_{right}, B_{right})}{2.0}$.`,
+  - If total length $(M + N)$ is **odd**: $\text{Median} = \\max(A_{left}, B_{left})$.
+  - If total length $(M + N)$ is **even**: $\text{Median} = \frac{\\max(A_{left}, B_{left}) + \\min(A_{right}, B_{right})}{2.0}$.`,
       questions: [
         {
           kind: "mcq",

@@ -31,8 +31,8 @@ The second superpower is subtler and carries the chapter's hard problems: the **
 The most recently opened bracket must be the FIRST one to close.
 - **Opener (\`'(' \`,'[' \`,'{' \`)**: Push onto the stack.
 - **Closer (\`')' \`,']' \`,'}' \`)**:
-  - Check top of stack. If stack is empty OR top does NOT match the required opener $\\rightarrow$ **INVALID** immediately.
-  - If matching opener is at the top $\\rightarrow$ **POP** top of stack.
+  - Check top of stack. If stack is empty OR top does NOT match the required opener $\rightarrow$ **INVALID** immediately.
+  - If matching opener is at the top $\rightarrow$ **POP** top of stack.
 - **Final Validation**: Stack must be empty at the end (no unclosed openers remaining).
 
 \`\`\`viz:array
@@ -76,9 +76,9 @@ def is_valid(s):
 
 **Boundary Traps & Execution Blueprint.**
 - *Three Classic Failure Modes*:
-  1. *Unmatched Closer*: \`s = "]" \` $\\rightarrow$ Stack is empty when closer arrives.
-  2. *Mismatched Type*: \`s = "(]" \` $\\rightarrow$ Stack top doesn't match closer.
-  3. *Unclosed Opener*: \`s = "((" \` $\\rightarrow$ Stack is NOT empty at the end.`,
+  1. *Unmatched Closer*: \`s = "]" \` $\rightarrow$ Stack is empty when closer arrives.
+  2. *Mismatched Type*: \`s = "(]" \` $\rightarrow$ Stack top doesn't match closer.
+  3. *Unclosed Opener*: \`s = "((" \` $\rightarrow$ Stack is NOT empty at the end.`,
       questions: [
         {
           kind: "mcq",
@@ -339,7 +339,7 @@ def daily_temperatures(temperatures):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Unresolved Days*: Days remaining on the stack at the end of the array never found a warmer day $\\rightarrow$ their answer remains default \`0\`.
+- *Unresolved Days*: Days remaining on the stack at the end of the array never found a warmer day $\rightarrow$ their answer remains default \`0\`.
 - *Amortized $O(N)$ Proof*: Every day index is pushed to the stack once and popped at most once. Total operations = $2N = O(N)$.`,
       questions: [
         {
@@ -377,12 +377,12 @@ def daily_temperatures(temperatures):
 
 **The Structural Invariant: Monotonic Time-to-Target Stack.**
 1. **Compute Alone Arrival Time** for each car:
-   $$\\text{time}[i] = \\frac{\\text{target} - \\text{position}[i]}{\\text{speed}[i]}$$
+   $$\text{time}[i] = \frac{\text{target} - \text{position}[i]}{\text{speed}[i]}$$
 2. **Sort cars by starting position DESCENDING** (cars closest to target first).
 3. **The Absorption Rule**:
-   - A car starting further back with arrival time $T_{\\text{behind}} \\le T_{\\text{ahead}}$ will **catch up to the lead car** and join its fleet! (Its effective arrival time becomes $T_{\\text{ahead}}$).
-   - If $T_{\\text{behind}} > T_{\\text{ahead}}$, it can NEVER catch up, forming a new independent car fleet leader!
-4. **Stack Maintenance**: Push arrival times. If new arrival time $\\le$ stack top, pop it (it merged into the fleet ahead!).
+   - A car starting further back with arrival time $T_{\text{behind}} \le T_{\text{ahead}}$ will **catch up to the lead car** and join its fleet! (Its effective arrival time becomes $T_{\text{ahead}}$).
+   - If $T_{\text{behind}} > T_{\text{ahead}}$, it can NEVER catch up, forming a new independent car fleet leader!
+4. **Stack Maintenance**: Push arrival times. If new arrival time $\le$ stack top, pop it (it merged into the fleet ahead!).
 
 \`\`\`viz:array
 {
@@ -456,7 +456,7 @@ def car_fleet(target, position, speed):
       body: `**The problem.** Given bar heights, return the area of the largest rectangle that fits entirely under the histogram. \`[2,1,5,6,2,3]\` → \`10\` (bars 5 and 6 spanning width 2).
 **The signal.** Each bar's widest rectangle runs until the first *shorter* bar on each side. Computing "nearest smaller to the left and to the right" for every bar in a single pass is the monotonic-stack signature.
 
-**Beginner Intuition & The Naive Fallacy.** For every bar $i$, beginners expand left and right to find the nearest shorter bars, calculating $\\text{area} = \\text{height}[i] \\times (\\text{right\_bound} - \\text{left\_bound} - 1)$ in $O(N^2)$ time.
+**Beginner Intuition & The Naive Fallacy.** For every bar $i$, beginners expand left and right to find the nearest shorter bars, calculating $\text{area} = \text{height}[i] \times (\text{right\_bound} - \text{left\_bound} - 1)$ in $O(N^2)$ time.
 *Why this shatters*: $O(N^2)$ takes 25 million operations for $N = 100,000$.
 
 **The Structural Invariant: Monotonic Increasing Stack of Height Boundaries.**
@@ -467,7 +467,7 @@ Any candidate rectangle is height-bottlenecked by a specific bar $i$. That recta
   - Pop \`(pop_idx, pop_h) = stack.pop()\`.
   - The new \`stack.top()\` index is the **LEFT BOUNDARY** for the popped bar!
   - Calculate area:
-    $$\\text{Area} = \\text{pop\\_h} \\times (i - \\text{new\\_stack\\_top} - 1)$$
+    $$\text{Area} = \text{pop\\_h} \times (i - \text{new\\_stack\\_top} - 1)$$
   - Update \`max_area = max(max_area, Area)\`.
 - **Push New Bar**: The incoming bar \`heights[i]\` can extend backward to the \`pop_idx\` of the last popped taller bar!
 

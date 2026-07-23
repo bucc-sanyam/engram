@@ -124,16 +124,16 @@ Subtracting 1 from $n$ flips the lowest set bit to 0 and all bits below it to 1:
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/counting-bits",
       summary: "dp[i] = dp[i >> 1] + (i & 1): every number's bit count is its half's count plus its last bit.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate popcount independently for each number $0 \\dots N$ ($O(N \\log N)$).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate popcount independently for each number $0 \dots N$ ($O(N \log N)$).
 *Why this shatters*: Independent computation repeats set bit counts for overlapping sub-numbers.
 
 **The Structural Invariant: Sub-problem Shift Recurrence ($O(N)$ DP).**
 Notice that shifting a number right by 1 bit (\`i >> 1\`) yields a smaller number whose set bit count is ALREADY COMPUTED:
 - \`i >> 1\` is $i$ with its lowest bit dropped.
 - **Recurrence**:
-  $$\\text{dp}[i] = \\text{dp}[i \\gg 1] + (i \\;\\&\\; 1)$$
+  $$\text{dp}[i] = \text{dp}[i \\gg 1] + (i \\;\\&\\; 1)$$
 - **Base Case**: \`dp[0] = 0\`.
-- Single loop $i$ from $1 \\dots N$ fills array in $O(N)$ time with $O(1)$ work per cell.
+- Single loop $i$ from $1 \dots N$ fills array in $O(N)$ time with $O(1)$ work per cell.
 
 \`\`\`viz:array
 {
@@ -227,17 +227,17 @@ Iterate 32 times:
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/missing-number",
       summary: "0..n with one absentee: XOR the range against the array — or subtract sums — and the gap names itself.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \\log N)$) or use a Hash Set ($O(N)$ space).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \log N)$) or use a Hash Set ($O(N)$ space).
 *Why this shatters*: We can solve this in **$O(N)$ time and $O(1)$ space** using Gauss's sum formula OR XOR cancellation!
 
 **The Structural Invariant: Gauss Sum vs XOR Cancellation.**
 - **Method 1: Gauss Expected Sum Difference**:
-  - Expected sum of range $0 \\dots N$:
-    $$\\text{expected} = \\frac{N \\cdot (N + 1)}{2}$$
+  - Expected sum of range $0 \dots N$:
+    $$\text{expected} = \frac{N \cdot (N + 1)}{2}$$
   - \`missing = expected - sum(nums)\`.
 - **Method 2: XOR Index-Value Pairing ($O(1)$ Overflow Safe)**:
   - Initialize \`res = N\`.
-  - For each $i \\in [0, N-1]$:
+  - For each $i \in [0, N-1]$:
     - \`res ^= i ^ nums[i]\`
   - All matching numbers and indices cancel out, leaving ONLY the missing number!
 
@@ -286,9 +286,9 @@ Iterate 32 times:
 
 **The Structural Invariant: Ripple-Carry Logic Gate Decomposition.**
 Binary addition decomposes into two fundamental logic operations:
-1. **Sum without Carry** $\\rightarrow$ **XOR** (\`a ^ b\`):
+1. **Sum without Carry** $\rightarrow$ **XOR** (\`a ^ b\`):
    $0+0=0$, $1+0=1$, $0+1=1$, $1+1=0$.
-2. **Carry Bits** $\\rightarrow$ **AND Shifted Left** (\`(a & b) << 1\`):
+2. **Carry Bits** $\rightarrow$ **AND Shifted Left** (\`(a & b) << 1\`):
    Carry occurs ONLY when both bits are $1$ ($1+1=10_2$).
 - **Algorithm**:
   - While \`b != 0\` (while carry bits remain):
@@ -345,7 +345,7 @@ Binary addition decomposes into two fundamental logic operations:
 
 **The Structural Invariant: Predictive Overflow Boundary Guard.**
 We must predict if the next digit push will overflow **BEFORE** executing \`res = res * 10 + pop\`:
-- Let $\\text{MAX} = 2^{31} - 1 = 2,147,483,647$ and $\\text{MIN} = -2^{31} = -2,147,483,648$.
+- Let $\text{MAX} = 2^{31} - 1 = 2,147,483,647$ and $\text{MIN} = -2^{31} = -2,147,483,648$.
 - **Positive Overflow Guard**:
   - If \`res > Math.floor(MAX / 10)\` OR (\`res == Math.floor(MAX / 10)\` AND \`pop > 7\`): Return \`0\`!
 - **Negative Overflow Guard**:
@@ -353,7 +353,7 @@ We must predict if the next digit push will overflow **BEFORE** executing \`res 
 - Loop:
   - \`pop = x % 10\`
   - \`x = Math.trunc(x / 10)\`
-  - Check guards $\\rightarrow$ if failed, return 0.
+  - Check guards $\rightarrow$ if failed, return 0.
   - \`res = res * 10 + pop\`
 
 \`\`\`viz:array

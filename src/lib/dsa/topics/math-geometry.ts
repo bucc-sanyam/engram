@@ -17,7 +17,7 @@ export const mathGeometry: DsaTopic = {
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/rotate-matrix",
       summary: "Rotate 90° in place: transpose across the diagonal, then mirror each row — two simple moves, no index acrobatics.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to manually rotate elements using 4-way index swap cycles ($(r, c) \\rightarrow (c, N-1-r)$).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to manually rotate elements using 4-way index swap cycles ($(r, c) \rightarrow (c, N-1-r)$).
 *Why this shatters*: Complex 4-way index swapping leads to index bugs.
 
 **The Structural Invariant: Decomposed Matrix Transformation (Transpose + Mirror).**
@@ -65,15 +65,15 @@ A $90^\\circ$ clockwise matrix rotation is mathematically equivalent to **two si
       neetcodeUrl: "https://neetcode.io/problems/spiral-matrix",
       summary: "Four boundaries — top, bottom, left, right — walked in order and tightened after each pass.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners simulate movement with direction vectors \`(dx, dy)\` and a boolean \`visited[][]\` grid.
-*Why this shatters*: Direction vectors require allocating $O(M \\cdot N)$ extra visited matrix memory and complex turn logic.
+*Why this shatters*: Direction vectors require allocating $O(M \cdot N)$ extra visited matrix memory and complex turn logic.
 
 **The Structural Invariant: 4-Boundary Shrinking Frame.**
 Maintain four bounding pointers: \`top = 0\`, \`bottom = M - 1\`, \`left = 0\`, \`right = N - 1\`.
 - **Loop while \`top <= bottom\` AND \`left <= right\`**:
-  1. Walk **Left $\\rightarrow$ Right** along \`top\` row. \`top++\`.
-  2. Walk **Top $\\rightarrow$ Bottom** along \`right\` col. \`right--\`.
-  3. **Guard**: If \`top <= bottom\`, walk **Right $\\rightarrow$ Left** along \`bottom\` row. \`bottom--\`.
-  4. **Guard**: If \`left <= right\`, walk **Bottom $\\rightarrow$ Top** along \`left\` col. \`left++\`.
+  1. Walk **Left $\rightarrow$ Right** along \`top\` row. \`top++\`.
+  2. Walk **Top $\rightarrow$ Bottom** along \`right\` col. \`right--\`.
+  3. **Guard**: If \`top <= bottom\`, walk **Right $\rightarrow$ Left** along \`bottom\` row. \`bottom--\`.
+  4. **Guard**: If \`left <= right\`, walk **Bottom $\rightarrow$ Top** along \`left\` col. \`left++\`.
 
 \`\`\`viz:array
 {
@@ -123,9 +123,9 @@ Maintain four bounding pointers: \`top = 0\`, \`bottom = M - 1\`, \`left = 0\`, 
 **The Structural Invariant: In-Place Marker Borrowing ($O(1)$ Space).**
 Instead of using $O(M + N)$ extra boolean arrays, **use Matrix Row 0 and Col 0 as marker arrays**:
 1. Record if Row 0 originally had a zero (\`firstRowZero\`) and Col 0 originally had a zero (\`firstColZero\`).
-2. Scan interior cells $r \\in [1, M-1], c \\in [1, N-1]$:
+2. Scan interior cells $r \in [1, M-1], c \in [1, N-1]$:
    - If \`matrix[r][c] == 0\`: Mark \`matrix[r][0] = 0\` and \`matrix[0][c] = 0\`.
-3. Apply interior markers: For $r \\ge 1, c \\ge 1$, if \`matrix[r][0] == 0\` or \`matrix[0][c] == 0\`, set \`matrix[r][c] = 0\`.
+3. Apply interior markers: For $r \ge 1, c \ge 1$, if \`matrix[r][0] == 0\` or \`matrix[0][c] == 0\`, set \`matrix[r][c] = 0\`.
 4. Handle Row 0 and Col 0 markers using saved booleans.
 
 \`\`\`viz:table-diff
@@ -168,7 +168,7 @@ Instead of using $O(M + N)$ extra boolean arrays, **use Matrix Row 0 and Col 0 a
       neetcodeUrl: "https://neetcode.io/problems/non-cyclical-number",
       summary: "Square the digits, sum, repeat: it ends at 1 or loops — and loop detection is Floyd, no list required.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners run digit-square sums in an infinite loop until hitting 1.
-*Why this shatters*: Unhappy numbers get trapped in an **infinite cycle** (e.g., $4 \\rightarrow 16 \\rightarrow 37 \\dots \\rightarrow 4$), causing an infinite loop.
+*Why this shatters*: Unhappy numbers get trapped in an **infinite cycle** (e.g., $4 \rightarrow 16 \rightarrow 37 \dots \rightarrow 4$), causing an infinite loop.
 
 **The Structural Invariant: Floyd's Fast & Slow Pointer Cycle Detection.**
 The digit square sum operation is a deterministic function $f(n)$. It either reaches $1$ or enters a cycle.
@@ -192,7 +192,7 @@ The digit square sum operation is a deterministic function $f(n)$. It either rea
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *HashSet Alternative*: Store visited numbers in a Set ($O(\\text{visited})$ space). Floyd achieves $O(1)$ space.`,
+- *HashSet Alternative*: Store visited numbers in a Set ($O(\text{visited})$ space). Floyd achieves $O(1)$ space.`,
       questions: [
         {
           kind: "mcq",
@@ -277,14 +277,14 @@ Iterate $i$ from $N - 1$ down to $0$:
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners multiply $x$ by itself $N$ times ($O(N)$ loop).
 *Why this shatters*: For $N = 2^{31} - 1$, multiplying 2 billion times results in a TLE timeout.
 
-**The Structural Invariant: Binary Exponentiation by Squaring ($O(\\log N)$).**
+**The Structural Invariant: Binary Exponentiation by Squaring ($O(\log N)$).**
 Exploit $x^{2n} = (x^2)^n$:
 - **Recurrence**:
   - If $n$ is even: $x^n = (x^2)^{n/2}$
-  - If $n$ is odd: $x^n = x \\cdot (x^2)^{(n-1)/2}$
+  - If $n$ is odd: $x^n = x \cdot (x^2)^{(n-1)/2}$
 - **Negative Exponent $n < 0$**:
   - Convert $x = 1 / x$, $n = -n$.
-- **Base Case**: $n == 0 \\implies 1$.
+- **Base Case**: $n == 0 \implies 1$.
 
 \`\`\`viz:array
 {
@@ -337,7 +337,7 @@ For two numbers of length $M$ and $N$, their product takes at most **$M + N$ dig
   - The product of \`num1[i]\` and \`num2[j]\` contributes to indices **\`i + j\` (carry)** and **\`i + j + 1\` (digit)** in the result array!
 - **Algorithm**:
   - Initialize \`res = Array(M + N).fill(0)\`.
-  - Nested loop $i$ from $M-1 \\dots 0$, $j$ from $N-1 \\dots 0$:
+  - Nested loop $i$ from $M-1 \dots 0$, $j$ from $N-1 \dots 0$:
     - \`mul = num1[i] * num2[j]\`.
     - \`sum = mul + res[i + j + 1]\`.
     - \`res[i + j + 1] = sum % 10\`.
@@ -391,12 +391,12 @@ For two numbers of length $M$ and $N$, their product takes at most **$M + N$ dig
 An axis-aligned square is fully determined by its **opposite diagonal corners**:
 - Given query point $(qx, qy)$ and candidate opposite corner $(x, y)$:
   - Check if $(x, y)$ forms a valid **diagonal**:
-    $$\\text{Math.abs}(x - qx) == \\text{Math.abs}(y - qy) > 0$$
+    $$\text{Math.abs}(x - qx) == \text{Math.abs}(y - qy) > 0$$
   - If valid, the remaining two required corners are **FIXED**:
     - Corner 3: $(qx, y)$
     - Corner 4: $(x, qy)$
 - **Count Calculation**:
-  $$\\text{Total} += \\text{countMap}[(x, y)] \\times \\text{countMap}[(qx, y)] \\times \\text{countMap}[(x, qy)]$$
+  $$\text{Total} += \text{countMap}[(x, y)] \times \text{countMap}[(qx, y)] \times \text{countMap}[(x, qy)]$$
 
 \`\`\`viz:table-diff
 {

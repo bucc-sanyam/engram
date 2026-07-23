@@ -27,7 +27,7 @@ To reach step $i$, you can ONLY arrive from:
 1. Step $i - 1$ (taking a 1-step jump).
 2. Step $i - 2$ (taking a 2-step jump).
 - **Recurrence**:
-  $$\\text{dp}[i] = \\text{dp}[i-1] + \\text{dp}[i-2]$$
+  $$\text{dp}[i] = \text{dp}[i-1] + \text{dp}[i-2]$$
 - **Base Cases**: \`dp[1] = 1\`, \`dp[2] = 2\`.
 - **$O(1)$ Space Optimization**: Since \`dp[i]\` only depends on the previous 2 values, maintain two rolling variables \`prev1\` and \`prev2\`.
 
@@ -78,10 +78,10 @@ To reach step $i$, you can ONLY arrive from:
 
 **The Structural Invariant: Minimum Accumulated Cost Recurrence.**
 Let \`dp[i]\` be the minimum cost to reach step $i$:
-$$\\text{dp}[i] = \\text{cost}[i] + \\min(\\text{dp}[i-1], \\text{dp}[i-2])$$
+$$\text{dp}[i] = \text{cost}[i] + \\min(\text{dp}[i-1], \text{dp}[i-2])$$
 - **Base Cases**: \`dp[0] = cost[0]\`, \`dp[1] = cost[1]\`.
 - **Top of Staircase**: The top is past the last index $N$. You can reach the top from either step $N-1$ or $N-2$:
-  $$\\text{Total Min Cost} = \\min(\\text{dp}[N-1], \\text{dp}[N-2])$$
+  $$\text{Total Min Cost} = \\min(\text{dp}[N-1], \text{dp}[N-2])$$
 
 \`\`\`viz:array
 {
@@ -132,7 +132,7 @@ At each house $i$, we have two mutually exclusive choices:
 1. **Rob House $i$**: Earn \`nums[i]\` plus maximum loot from house $i-2$ (\`nums[i] + dp[i-2]\`).
 2. **Skip House $i$**: Earn maximum loot up to house $i-1$ (\`dp[i-1]\`).
 - **Recurrence**:
-  $$\\text{dp}[i] = \\max(\\text{dp}[i-1], \\text{nums}[i] + \\text{dp}[i-2])$$
+  $$\text{dp}[i] = \\max(\text{dp}[i-1], \text{nums}[i] + \text{dp}[i-2])$$
 
 \`\`\`viz:array
 {
@@ -186,7 +186,7 @@ Since houses are arranged in a **circle**, House 0 and House $N-1$ are adjacent!
   1. **Case A (Rob House 0)**: Evaluate subarray \`nums[0 ... N-2]\` (exclude last house).
   2. **Case B (Rob House N-1)**: Evaluate subarray \`nums[1 ... N-1]\` (exclude first house).
 - **Result**:
-  $$\\text{Max Loot} = \\max(\\text{HouseRobberI}(\\text{nums}[0 \\dots N-2]), \\text{HouseRobberI}(\\text{nums}[1 \\dots N-1]))$$
+  $$\text{Max Loot} = \\max(\text{HouseRobberI}(\text{nums}[0 \dots N-2]), \text{HouseRobberI}(\text{nums}[1 \dots N-1]))$$
 
 \`\`\`viz:table-diff
 {
@@ -337,9 +337,9 @@ Every palindrome expands symmetrically around its **center**:
 **The Structural Invariant: Gated 1-Digit and 2-Digit Recurrence.**
 Let \`dp[i]\` be the number of ways to decode prefix \`s[0 ... i-1]\`:
 1. **1-Digit Transition**: If \`s[i-1] != '0'\` (valid digit '1'-'9'):
-   $$\\text{dp}[i] += \\text{dp}[i-1]$$
+   $$\text{dp}[i] += \text{dp}[i-1]$$
 2. **2-Digit Transition**: If two-character substring \`s[i-2...i-1]\` is between \`"10"\` and \`"26"\`:
-   $$\\text{dp}[i] += \\text{dp}[i-2]$$
+   $$\text{dp}[i] += \text{dp}[i-2]$$
 - **Base Case**: \`dp[0] = 1\` (empty string has 1 valid decoding), \`dp[1] = s[0] == '0' ? 0 : 1\`.
 
 \`\`\`viz:array
@@ -388,11 +388,11 @@ Let \`dp[i]\` be the number of ways to decode prefix \`s[0 ... i-1]\`:
 
 **The Structural Invariant: Amount-Indexed Min Unbounded Knapsack.**
 Let \`dp[a]\` be the minimum number of coins needed to make amount \`a\`:
-$$\\text{dp}[a] = 1 + \\min_{c \\in \\text{coins}, c \\le a} (\\text{dp}[a - c])$$
+$$\text{dp}[a] = 1 + \\min_{c \in \text{coins}, c \le a} (\text{dp}[a - c])$$
 - **Base Case**: \`dp[0] = 0\` (0 coins needed for amount 0).
-- **Initialization**: Fill \`dp\` array with \`amount + 1\` (acting as $+\\infty$).
-- **Outer Loop**: Amount $a$ from $1 \\dots \\text{amount}$.
-- **Inner Loop**: For each coin $c \\in \\text{coins}$.
+- **Initialization**: Fill \`dp\` array with \`amount + 1\` (acting as $+\infty$).
+- **Outer Loop**: Amount $a$ from $1 \dots \text{amount}$.
+- **Inner Loop**: For each coin $c \in \text{coins}$.
 
 \`\`\`viz:array
 {
@@ -438,11 +438,11 @@ $$\\text{dp}[a] = 1 + \\min_{c \\in \\text{coins}, c \\le a} (\\text{dp}[a - c])
 *Why this shatters*: Multiplying by a **negative number** flips a large negative number into a **massive positive number**! Tracking only the maximum discards negative candidates that could become the maximum on the next step.
 
 **The Structural Invariant: Dual State Tracking (Max & Min Product).**
-At each element $x = \\text{nums}[i]$, maintain BOTH \`currMax\` and \`currMin\`:
+At each element $x = \text{nums}[i]$, maintain BOTH \`currMax\` and \`currMin\`:
 - If $x < 0$, **SWAP** \`currMax\` and \`currMin\`!
 - **Transitions**:
-  $$\\text{currMax} = \\max(x, x \\cdot \\text{currMax})$$
-  $$\\text{currMin} = \\min(x, x \\cdot \\text{currMin})$$
+  $$\text{currMax} = \\max(x, x \cdot \text{currMax})$$
+  $$\text{currMin} = \\min(x, x \cdot \text{currMin})$$
 - Update \`globalMax = max(globalMax, currMax)\`.
 
 \`\`\`viz:array
@@ -493,8 +493,8 @@ At each element $x = \\text{nums}[i]$, maintain BOTH \`currMax\` and \`currMin\`
 **The Structural Invariant: Prefix Segmentability Boolean DP.**
 Let \`dp[i]\` be \`true\` iff prefix \`s[0 ... i-1]\` can be segmented into dictionary words:
 - **Base Case**: \`dp[0] = true\` (empty string is valid).
-- **Transition**: For $i = 1 \\dots N$:
-  - For $j = 0 \\dots i-1$:
+- **Transition**: For $i = 1 \dots N$:
+  - For $j = 0 \dots i-1$:
     - If \`dp[j] == true\` AND \`s.substring(j, i)\` is in \`wordDictSet\`:
       - Set \`dp[i] = true\` and \`break\`!
 
@@ -542,17 +542,17 @@ Let \`dp[i]\` be \`true\` iff prefix \`s[0 ... i-1]\` can be segmented into dict
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners confuse *Subsequence* (elements keep order, can skip elements) with *Subarray* (contiguous elements).
 *Why this shatters*: Subsequences do NOT need to be contiguous!
 
-**The Structural Invariant: Look-Back Predecessor DP ($O(N^2)$) vs Patience Sorting ($O(N \\log N)$).**
+**The Structural Invariant: Look-Back Predecessor DP ($O(N^2)$) vs Patience Sorting ($O(N \log N)$).**
 - **$O(N^2)$ DP Approach**:
   - Let \`dp[i]\` be the LIS ending **exactly at index $i$**.
   - \`dp[i] = 1 + max(dp[j])\` for all $j < i$ where \`nums[j] < nums[i]\`.
   - Base: \`dp[i] = 1\` for all $i$.
-- **$O(N \\log N)$ Patience Sorting Optimization**:
+- **$O(N \log N)$ Patience Sorting Optimization**:
   - Maintain array \`tails\` where \`tails[k]\` is the smallest tail value of all increasing subsequences of length $k + 1$.
-  - For each number $x \\in \\text{nums}$:
+  - For each number $x \in \text{nums}$:
     - Binary search $x$ in \`tails\`.
-    - If $x > \\text{all elements in tails}$, append $x$.
-    - Else replace first element in \`tails\` $\\ge x$ with $x$.
+    - If $x > \text{all elements in tails}$, append $x$.
+    - Else replace first element in \`tails\` $\ge x$ with $x$.
   - Result = \`tails.length\`!
 
 \`\`\`viz:array
@@ -603,9 +603,9 @@ Partitioning into two equal sum subsets requires finding a subset with sum equal
 1. If \`total_sum\` is ODD, return \`false\` immediately!
 2. Let \`dp[a]\` be boolean: Can we form exact sum \`a\` using a subset of numbers?
 3. Base: \`dp[0] = true\`.
-4. For each number $x \\in \\text{nums}$:
-   - **SWEEP HIGH-TO-LOW** ($a = \\text{target}$ down to $x$):
-     $$\\text{dp}[a] = \\text{dp}[a] \\;||\\; \\text{dp}[a - x]$$
+4. For each number $x \in \text{nums}$:
+   - **SWEEP HIGH-TO-LOW** ($a = \text{target}$ down to $x$):
+     $$\text{dp}[a] = \text{dp}[a] \\;||\\; \text{dp}[a - x]$$
    - *Why High-to-Low?* Sweeping backwards ensures number $x$ is used at most ONCE (0/1 Knapsack rule). Low-to-high sweep would reuse $x$ multiple times (Unbounded Knapsack!).
 
 \`\`\`viz:array
@@ -619,7 +619,7 @@ Partitioning into two equal sum subsets requires finding a subset with sum equal
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Target Check*: If max element in array $> \\text{target}$, return \`false\` immediately.`,
+- *Target Check*: If max element in array $> \text{target}$, return \`false\` immediately.`,
       questions: [
         {
           kind: "mcq",

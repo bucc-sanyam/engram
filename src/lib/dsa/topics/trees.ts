@@ -110,7 +110,7 @@ def invert_tree(root):
 
 **The Structural Invariant: Post-Order Height Accumulation.**
 The maximum depth at any node \`root\` is:
-$$\\text{depth}(\\text{root}) = 1 + \\max(\\text{depth}(\\text{root.left}), \\text{depth}(\\text{root.right}))$$
+$$\text{depth}(\text{root}) = 1 + \\max(\text{depth}(\text{root.left}), \text{depth}(\text{root.right}))$$
 - **Base Case**: If \`root == null\`, depth is \`0\`.
 - **Combine Step**: Take \`1\` (for current node) plus the maximum depth returned from either child subtree.
 
@@ -150,7 +150,7 @@ def max_depth(root):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Single-Node Tree*: If tree contains only root, \`depth(root.left) = 0\`, \`depth(root.right) = 0\` $\\rightarrow$ returns \`1 + max(0, 0) = 1\`.`,
+- *Single-Node Tree*: If tree contains only root, \`depth(root.left) = 0\`, \`depth(root.right) = 0\` $\rightarrow$ returns \`1 + max(0, 0) = 1\`.`,
       questions: [
         {
           kind: "mcq",
@@ -188,7 +188,7 @@ def max_depth(root):
 **The Structural Invariant: Bending Point Harvesting.**
 Every path in a binary tree has a highest point where it "bends".
 - For any node \`root\`, the longest path bending at \`root\` is:
-  $$\\text{path\\_length}(\\text{root}) = \\text{height}(\\text{root.left}) + \\text{height}(\\text{root.right})$$
+  $$\text{path\\_length}(\text{root}) = \text{height}(\text{root.left}) + \text{height}(\text{root.right})$$
 - Maintain a global variable \`max_diameter\`.
 - Compute height post-order: \`height(node) = 1 + max(leftH, rightH)\`.
 - At each node, update \`max_diameter = max(max_diameter, leftH + rightH)\`.
@@ -274,7 +274,7 @@ def diameter_of_binary_tree(root):
 
 **The Structural Invariant: Bottom-Up Fast-Failure (-1 Sentinel).**
 We can check balance and compute height in a **single $O(N)$ pass**:
-- If a subtree is unbalanced ($|\\text{leftH} - \\text{rightH}| > 1$), return **\`-1\` as a poison/sentinel value**.
+- If a subtree is unbalanced ($|\text{leftH} - \text{rightH}| > 1$), return **\`-1\` as a poison/sentinel value**.
 - If a child returns \`-1\`, immediately propagate \`-1\` upward without doing further height math.
 - Otherwise, return standard height \`1 + max(leftH, rightH)\`.
 
@@ -361,9 +361,9 @@ def is_balanced(root):
 **The Structural Invariant: Lockstep Structural & Value Equivalence.**
 Traverse trees \`p\` and \`q\` simultaneously:
 - **Base Cases**:
-  - If both \`p == null\` and \`q == null\` $\\rightarrow$ Return \`true\` (both empty).
-  - If one is \`null\` and the other is NOT \`null\` $\\rightarrow$ Return \`false\` (structural mismatch!).
-  - If \`p.val != q.val\` $\\rightarrow$ Return \`false\` (value mismatch!).
+  - If both \`p == null\` and \`q == null\` $\rightarrow$ Return \`true\` (both empty).
+  - If one is \`null\` and the other is NOT \`null\` $\rightarrow$ Return \`false\` (structural mismatch!).
+  - If \`p.val != q.val\` $\rightarrow$ Return \`false\` (value mismatch!).
 - **Recursive Step**:
   - Return \`isSameTree(p.left, q.left) && isSameTree(p.right, q.right)\`.
 
@@ -438,8 +438,8 @@ def is_same_tree(p, q):
 **The Structural Invariant: Composed Recursion.**
 - **Outer Helper**: Traverse \`root\`. At every node \`node\`, check if \`isSameTree(node, subRoot)\` is true.
 - **Base Cases**:
-  - If \`subRoot == null\` $\\rightarrow$ Return \`true\` (an empty tree is a subtree of everything).
-  - If \`root == null\` $\\rightarrow$ Return \`false\` (non-empty subRoot cannot be in an empty tree).
+  - If \`subRoot == null\` $\rightarrow$ Return \`true\` (an empty tree is a subtree of everything).
+  - If \`root == null\` $\rightarrow$ Return \`false\` (non-empty subRoot cannot be in an empty tree).
 - **Recurse**:
   - Return \`isSameTree(root, subRoot) || isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)\`.
 
@@ -523,7 +523,7 @@ def is_same_tree(p, q):
 **The signal.** The LCA is where the two values first part ways; the BST ordering tells you which direction to walk, so you reach it in O(H) time and O(1) space.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners use general binary tree LCA algorithms, storing parent paths in hash sets ($O(N)$ space).
-*Why this shatters*: A **Binary Search Tree (BST)** has a strict ordering invariant ($L < \\text{root} < R$). We can find LCA in $O(H)$ time and $O(1)$ space by following the BST invariant!
+*Why this shatters*: A **Binary Search Tree (BST)** has a strict ordering invariant ($L < \text{root} < R$). We can find LCA in $O(H)$ time and $O(1)$ space by following the BST invariant!
 
 **The Structural Invariant: The Split Point.**
 - If BOTH \`p.val\` and \`q.val\` are **smaller** than \`curr.val\`: The LCA MUST lie in the **left subtree**! Move \`curr = curr.left\`.
@@ -866,8 +866,8 @@ def good_nodes(root):
 **The Structural Invariant: Ancestor Bound Shrinking.**
 Every node must fall strictly within an allowed range \`(min_bound, max_bound)\`.
 - Root starts with \`(-Infinity, +Infinity)\`.
-- When going **Left**: Upper bound shrinks $\\rightarrow$ \`(low, node.val)\`.
-- When going **Right**: Lower bound increases $\\rightarrow$ \`(node.val, high)\`.
+- When going **Left**: Upper bound shrinks $\rightarrow$ \`(low, node.val)\`.
+- When going **Right**: Lower bound increases $\rightarrow$ \`(node.val, high)\`.
 - If \`node.val <= low\` or \`node.val >= high\`, return \`false\`!
 
 \`\`\`viz:tree
@@ -909,7 +909,7 @@ def is_valid_bst(root):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Strict Inequality*: BST requires STRICT inequality ($<$, not $\\le$). Duplicate values in subtrees render a BST invalid!`,
+- *Strict Inequality*: BST requires STRICT inequality ($<$, not $\le$). Duplicate values in subtrees render a BST invalid!`,
       questions: [
         {
           kind: "mcq",
@@ -941,11 +941,11 @@ def is_valid_bst(root):
       body: `**The problem.** Return the k-th smallest value in a BST (1-indexed).
 **The signal.** In-order traversal emits a BST's values in sorted order — walk it with a countdown and stop the moment you reach the k-th node, before touching the rest.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners collect all tree elements into an array, sort the array, and pick index $K - 1$ ($O(N \\log N)$).
+**Beginner Intuition & The Naive Fallacy.** Beginners collect all tree elements into an array, sort the array, and pick index $K - 1$ ($O(N \log N)$).
 *Why this shatters*: A BST **already has sorted order embedded in its structure** via In-Order Traversal!
 
 **The Structural Invariant: In-Order Traversal Countdown.**
-In-Order Traversal (Left $\\rightarrow$ Node $\\rightarrow$ Right) visits BST nodes in **strictly sorted ascending order**.
+In-Order Traversal (Left $\rightarrow$ Node $\rightarrow$ Right) visits BST nodes in **strictly sorted ascending order**.
 - Use Iterative In-Order Traversal with a Stack.
 - Push all left nodes to stack.
 - Pop node (this is the next smallest element!).
@@ -1039,7 +1039,7 @@ def kth_smallest(root, k):
 3. **Recursion**:
    - \`root.left = build(inorder_start, mid - 1)\`
    - \`root.right = build(mid + 1, inorder_end)\`
-4. **Optimization**: Store \`inorder\` value $\\rightarrow$ index mapping in a Hash Map for $O(1)$ split lookups!
+4. **Optimization**: Store \`inorder\` value $\rightarrow$ index mapping in a Hash Map for $O(1)$ split lookups!
 
 \`\`\`viz:table-diff
 {
@@ -1122,7 +1122,7 @@ At each node \`curr\`:
 1. Calculate max gain from left child: \`leftGain = max(0, maxGain(curr.left))\` (clamp negative to 0!).
 2. Calculate max gain from right child: \`rightGain = max(0, maxGain(curr.right))\`.
 3. **The Bend Harvest (Local Candidate Path)**:
-   $$\\text{price\\_new\\_path} = \\text{curr.val} + \\text{leftGain} + \\text{rightGain}$$
+   $$\text{price\\_new\\_path} = \text{curr.val} + \text{leftGain} + \text{rightGain}$$
    Update \`max_path_sum = max(max_path_sum, price_new_path)\`.
 4. **The Upward Return (Single Branch)**:
    A parent can only extend a path through ONE of \`curr\`'s branches!
@@ -1216,7 +1216,7 @@ def max_path_sum(root):
 - **Deserialize**:
   - Convert string into an array/queue of tokens.
   - Dequeue next token \`val\`:
-    - If \`val == "N"\` $\\rightarrow$ Return \`null\`.
+    - If \`val == "N"\` $\rightarrow$ Return \`null\`.
     - Otherwise, create \`node = new TreeNode(parseInt(val))\`.
     - \`node.left = deserialize(tokens)\`
     - \`node.right = deserialize(tokens)\`

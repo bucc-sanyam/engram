@@ -27,7 +27,7 @@ A robot moving ONLY **Right** or **Down** can reach cell $(r, c)$ ONLY from:
 1. Cell directly above: $(r - 1, c)$
 2. Cell directly left: $(r, c - 1)$
 - **Recurrence**:
-  $$\\text{dp}[r][c] = \\text{dp}[r-1][c] + \\text{dp}[r][c-1]$$
+  $$\text{dp}[r][c] = \text{dp}[r-1][c] + \text{dp}[r][c-1]$$
 - **Base Cases**: Top row \`dp[0][c] = 1\` and left column \`dp[r][0] = 1\` (strictly 1 way to travel in a straight line).
 - **$O(N)$ Space Optimization**: Collapse 2D matrix into a 1D row array: \`row[c] += row[c-1]\`.
 
@@ -43,7 +43,7 @@ A robot moving ONLY **Right** or **Down** can reach cell $(r, c)$ ONLY from:
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Combinatorial Math Alternative*: $\\text{Paths} = \\binom{(M-1) + (N-1)}{M-1} = \\frac{(M+N-2)!}{(M-1)! (N-1)!}$.`,
+- *Combinatorial Math Alternative*: $\text{Paths} = \\binom{(M-1) + (N-1)}{M-1} = \frac{(M+N-2)!}{(M-1)! (N-1)!}$.`,
       questions: [
         {
           kind: "mcq",
@@ -79,10 +79,10 @@ A robot moving ONLY **Right** or **Down** can reach cell $(r, c)$ ONLY from:
 Let \`dp[i][j]\` be the LCS length for \`text1[0...i-1]\` and \`text2[0...j-1]\`:
 - **Match Case** (\`text1[i-1] == text2[j-1]\`):
   Extends diagonal:
-  $$\\text{dp}[i][j] = 1 + \\text{dp}[i-1][j-1]$$
+  $$\text{dp}[i][j] = 1 + \text{dp}[i-1][j-1]$$
 - **Mismatch Case** (\`text1[i-1] != text2[j-1]\`):
   Take max of skipping character from text1 OR text2:
-  $$\\text{dp}[i][j] = \\max(\\text{dp}[i-1][j], \\text{dp}[i][j-1])$$
+  $$\text{dp}[i][j] = \\max(\text{dp}[i-1][j], \text{dp}[i][j-1])$$
 
 \`\`\`viz:table-diff
 {
@@ -129,7 +129,7 @@ Let \`dp[i][j]\` be the LCS length for \`text1[0...i-1]\` and \`text2[0...j-1]\`
 **The Structural Invariant: State Machine Automaton DP.**
 Maintain 3 states for each day $i$:
 1. **\`held\`** (Own stock): \`max(prev_held, prev_reset - price)\`
-2. **\`sold\`** (Just sold stock today $\\rightarrow$ Forces cooldown tomorrow!): \`prev_held + price\`
+2. **\`sold\`** (Just sold stock today $\rightarrow$ Forces cooldown tomorrow!): \`prev_held + price\`
 3. **\`reset\`** (No stock, ready to buy): \`max(prev_reset, prev_sold)\`
 
 \`\`\`viz:array
@@ -180,9 +180,9 @@ Maintain 3 states for each day $i$:
 **The Structural Invariant: Coins Outer Loop for Combination Counting.**
 To count combinations (where \`[1, 2]\` is identical to \`[2, 1]\`):
 - **Place Coins in the OUTER loop**:
-  - For each coin $c \\in \\text{coins}$:
-    - For amount $a = c \\dots \\text{amount}$:
-      $$\\text{dp}[a] += \\text{dp}[a - c]$$
+  - For each coin $c \in \text{coins}$:
+    - For amount $a = c \dots \text{amount}$:
+      $$\text{dp}[a] += \text{dp}[a - c]$$
 - **Why this works**: Processing each coin denomination fully before moving to the next coin ensures combinations are constructed in strict non-decreasing coin order!
 
 \`\`\`viz:array
@@ -198,7 +198,7 @@ To count combinations (where \`[1, 2]\` is identical to \`[2, 1]\`):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Loop Order Trap*: Outer = Coins, Inner = Amount $\\rightarrow$ Combinations. Outer = Amount, Inner = Coins $\\rightarrow$ Permutations.`,
+- *Loop Order Trap*: Outer = Coins, Inner = Amount $\rightarrow$ Combinations. Outer = Amount, Inner = Coins $\rightarrow$ Permutations.`,
       questions: [
         {
           kind: "mcq",
@@ -232,10 +232,10 @@ To count combinations (where \`[1, 2]\` is identical to \`[2, 1]\`):
 
 **The Structural Invariant: Algebraic Reduction to Subset Sum.**
 Let $P$ be the subset of numbers with $+$ sign, and $N$ be numbers with $-$ sign:
-1. $P - N = \\text{target}$
-2. $P + N = \\text{total\\_sum}$
-- Adding equations: $2P = \\text{target} + \\text{total\\_sum}$
-  $$P = \\frac{\\text{target} + \\text{total\\_sum}}{2}$$
+1. $P - N = \text{target}$
+2. $P + N = \text{total\\_sum}$
+- Adding equations: $2P = \text{target} + \text{total\\_sum}$
+  $$P = \frac{\text{target} + \text{total\\_sum}}{2}$$
 - **Reduction**: Count subsets that sum to **\`P\`** using **0/1 Knapsack High-to-Low DP**!
 
 \`\`\`viz:array
@@ -284,7 +284,7 @@ Let $P$ be the subset of numbers with $+$ sign, and $N$ be numbers with $-$ sign
 **The Structural Invariant: 2D Braid Verification Matrix.**
 Let \`dp[i][j]\` be \`true\` iff \`s1[0...i-1]\` and \`s2[0...j-1]\` can interleave to form \`s3[0...i+j-1]\`:
 - Transition for \`k = i + j - 1\`:
-  $$\\text{dp}[i][j] = (s1[i-1] == s3[k] \\;\\&\\; \\text{dp}[i-1][j]) \\;||\\; (s2[j-1] == s3[k] \\;\\&\\; \\text{dp}[i][j-1])$$
+  $$\text{dp}[i][j] = (s1[i-1] == s3[k] \\;\\&\\; \text{dp}[i-1][j]) \\;||\\; (s2[j-1] == s3[k] \\;\\&\\; \text{dp}[i][j-1])$$
 - Base: \`dp[0][0] = true\`. First row depends only on \`s2\`; first column depends only on \`s1\`.
 
 \`\`\`viz:table-diff
@@ -327,7 +327,7 @@ Let \`dp[i][j]\` be \`true\` iff \`s1[0...i-1]\` and \`s2[0...j-1]\` can interle
       neetcodeUrl: "https://neetcode.io/problems/longest-increasing-path-in-matrix",
       summary: "Memoised DFS on the implicit DAG of increasing moves — strict increase means no cycles.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners run unmemoized DFS from every cell.
-*Why this shatters*: Unmemoized grid exploration takes exponential $O(4^{M \\cdot N})$ time.
+*Why this shatters*: Unmemoized grid exploration takes exponential $O(4^{M \cdot N})$ time.
 
 **The Structural Invariant: Memoized DFS on Implicit Grid DAG.**
 Because paths must be **STRICTLY INCREASING** ($matrix[nr][nc] > matrix[r][c]$), cycles are **mathematically impossible**! The grid is implicitly a Directed Acyclic Graph (DAG).
@@ -390,10 +390,10 @@ Because paths must be **STRICTLY INCREASING** ($matrix[nr][nc] > matrix[r][c]$),
 Let \`dp[i][j]\` be the number of ways to match prefix \`t[0...j-1]\` inside \`s[0...i-1]\`:
 - **Match Case** (\`s[i-1] == t[j-1]\`):
   Sum of **USING** character + **SKIPPING** character in \`s\`:
-  $$\\text{dp}[i][j] = \\text{dp}[i-1][j-1] + \\text{dp}[i-1][j]$$
+  $$\text{dp}[i][j] = \text{dp}[i-1][j-1] + \text{dp}[i-1][j]$$
 - **Mismatch Case** (\`s[i-1] != t[j-1]\`):
   Must skip character in \`s\`:
-  $$\\text{dp}[i][j] = \\text{dp}[i-1][j]$$
+  $$\text{dp}[i][j] = \text{dp}[i-1][j]$$
 - **Base Case**: \`dp[i][0] = 1\` (an empty string \`t\` matches any string \`s\` in 1 way).
 
 \`\`\`viz:table-diff
@@ -443,7 +443,7 @@ Let \`dp[i][j]\` be the minimum operations to convert \`word1[0...i-1]\` to \`wo
 - **Match Case** (\`word1[i-1] == word2[j-1]\`):
   No operation cost: \`dp[i][j] = dp[i-1][j-1]\`.
 - **Mismatch Case**:
-  $$1 + \\min \\begin{cases} \\text{dp}[i][j-1] & \\text{(Insert)} \\\\ \\text{dp}[i-1][j] & \\text{(Delete)} \\\\ \\text{dp}[i-1][j-1] & \\text{(Replace)} \\end{cases}$$
+  $$1 + \\min \\begin{cases} \text{dp}[i][j-1] & \text{(Insert)} \\\\ \text{dp}[i-1][j] & \text{(Delete)} \\\\ \text{dp}[i-1][j-1] & \text{(Replace)} \\end{cases}$$
 - **Base Cases**: \`dp[i][0] = i\` (delete all chars), \`dp[0][j] = j\` (insert all chars).
 
 \`\`\`viz:table-diff
@@ -492,7 +492,7 @@ Let \`dp[i][j]\` be the minimum operations to convert \`word1[0...i-1]\` to \`wo
 Invert your perspective! Think about which balloon $k$ is burst **LAST in range $(l, r)$**:
 - If balloon $k$ is burst LAST in interval $(l, r)$, its adjacent neighbors are fixed at the walls \`nums[l]\` and \`nums[r]\`!
 - **Recurrence**:
-  $$\\text{dp}[l][r] = \\max_{l < k < r} (\\text{dp}[l][k] + \\text{nums}[l] \\cdot \\text{nums}[k] \\cdot \\text{nums}[r] + \\text{dp}[k][r])$$
+  $$\text{dp}[l][r] = \\max_{l < k < r} (\text{dp}[l][k] + \text{nums}[l] \cdot \text{nums}[k] \cdot \text{nums}[r] + \text{dp}[k][r])$$
 - Pad array: Add virtual \`1\` at index 0 and index $N+1$.
 - **Fill Order**: Iterate by **interval length (span)** from $2$ to $N+1$.
 
@@ -542,12 +542,12 @@ Invert your perspective! Think about which balloon $k$ is burst **LAST in range 
 **The Structural Invariant: Wildcard Star Dual-Branch Matrix DP.**
 Let \`dp[i][j]\` be \`true\` iff \`s[0...i-1]\` matches pattern \`p[0...j-1]\`:
 1. **Normal / Dot Match** (\`p[j-1] == '.'\` OR \`s[i-1] == p[j-1]\`):
-   $$\\text{dp}[i][j] = \\text{dp}[i-1][j-1]$$
+   $$\text{dp}[i][j] = \text{dp}[i-1][j-1]$$
 2. **Star Wildcard** (\`p[j-1] == '*'\`):
    Star can represent **0 occurrences** OR **1+ occurrences** of preceding character \`p[j-2]\`:
    - **Zero Occurrences**: \`dp[i][j-2]\` (skip char and star!).
-   - **One+ Occurrences**: If \`s[i-1]\` matches \`p[j-2]\` $\\rightarrow$ \`dp[i-1][j]\` (consume 1 char in $s$, keep star in $p$).
-   $$\\text{dp}[i][j] = \\text{dp}[i][j-2] \\;||\\; (\\text{match} \\;\\&\\; \\text{dp}[i-1][j])$$
+   - **One+ Occurrences**: If \`s[i-1]\` matches \`p[j-2]\` $\rightarrow$ \`dp[i-1][j]\` (consume 1 char in $s$, keep star in $p$).
+   $$\text{dp}[i][j] = \text{dp}[i][j-2] \\;||\\; (\text{match} \\;\\&\\; \text{dp}[i-1][j])$$
 
 \`\`\`viz:table-diff
 {

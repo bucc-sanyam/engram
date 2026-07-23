@@ -25,7 +25,7 @@ The nine problems here are sequenced like a story. You start by remembering **wh
 **The signal.** "Have I seen this before?" is the hash set's reason to exist — the interviewer wants you to trade a little memory for instant membership instead of re-scanning what you already passed.
 
 **Beginner Intuition & The Naive Fallacy.** When asked if an array contains duplicates, a beginner's first instinct is to take element 1 and compare it against element 2, 3, 4... then take element 2 and compare against 3, 4, 5... 
-*Why this shatters*: For $N = 100,000$ numbers, nested loops do $\\frac{N(N-1)}{2} \\approx 5$ billion comparisons! The core flaw is **amnesia**: when standing at index 50,000, you have already seen the first 49,999 numbers, yet nested loops re-examine them again and again.
+*Why this shatters*: For $N = 100,000$ numbers, nested loops do $\frac{N(N-1)}{2} \approx 5$ billion comparisons! The core flaw is **amnesia**: when standing at index 50,000, you have already seen the first 49,999 numbers, yet nested loops re-examine them again and again.
 
 **The Structural Invariant.** We do not need to compare pairs; we need to **remember state**. A Hash Set is a data structure backed by a hash function that provides $O(1)$ constant-time lookup. 
 - *The Invariant*: At step $i$, the set contains exactly the unique numbers found in \`nums[0...i-1]\`.
@@ -69,8 +69,8 @@ def contains_duplicate(nums):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Empty / Single-element array*: If \`nums.length < 2\`, duplicates are impossible $\\rightarrow$ return \`false\`.
-- *Space-Time Trade-off*: Sorting first costs $O(N \\log N)$ time but uses $O(1)$ space. Hash Set costs $O(N)$ time and $O(N)$ space. Always specify this trade-off during technical interviews.`,
+- *Empty / Single-element array*: If \`nums.length < 2\`, duplicates are impossible $\rightarrow$ return \`false\`.
+- *Space-Time Trade-off*: Sorting first costs $O(N \log N)$ time but uses $O(1)$ space. Hash Set costs $O(N)$ time and $O(N)$ space. Always specify this trade-off during technical interviews.`,
       questions: [
         {
           kind: "mcq",
@@ -115,7 +115,7 @@ def contains_duplicate(nums):
     { "cells": [0, 0, 0, 0, 0], "note": "Frequency array of size 26 (initialized to 0 for a, b, c, d, e...)" },
     { "cells": [2, 1, 0, 0, 0], "note": "After processing s = 'aab': count['a'] = 2, count['b'] = 1." },
     { "cells": [1, -1, 0, 0, 0], "highlight": [1], "note": "Processing t = 'abb': count['a'] drops to 1, count['b'] drops to -1 (negative count!)." },
-    { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' $\\rightarrow$ return false." }
+    { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' $\rightarrow$ return false." }
   ],
   "caption": "Valid Anagram — frequency histogram increment/decrement with early exit."
 }
@@ -183,7 +183,7 @@ def is_anagram(s, t):
 
 **Beginner Intuition & The Naive Fallacy.** The brute-force approach tests all pairs using two nested loops: for each index $i$, scan all $j > i$ to check if \`nums[i] + nums[j] == target\`.
 *Why this shatters*: This takes $O(N^2)$ time. If $N = 10,000$, it requires 50 million iterations!
-*The Breakthrough*: When standing at number $x = \\text{nums}[i]$, you do not need to search for every other number. You are looking for one specific required partner: $\\text{complement} = \\text{target} - x$.
+*The Breakthrough*: When standing at number $x = \text{nums}[i]$, you do not need to search for every other number. You are looking for one specific required partner: $\text{complement} = \text{target} - x$.
 
 **The Structural Invariant.**
 - *State Map*: Store mapping of \`{ number_value: index }\` for all numbers seen so far.
@@ -192,8 +192,8 @@ def is_anagram(s, t):
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=0 (x=3)", "index": 0 }], "note": "Target = 7. x=3 $\\rightarrow$ complement = 7-3 = 4. Map is {}. 4 not found. Map adds {3: 0}." },
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 $\\rightarrow$ complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=0 (x=3)", "index": 0 }], "note": "Target = 7. x=3 $\rightarrow$ complement = 7-3 = 4. Map is {}. 4 not found. Map adds {3: 0}." },
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 $\rightarrow$ complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
   ],
   "caption": "Two Sum — single-pass complement lookup in O(N) time and O(N) space."
 }
@@ -258,7 +258,7 @@ def two_sum(nums, target):
       body: `**The problem in one line.** You are given a list of words. Group together the ones that are anagrams of each other (same letters, any order). For \`["eat","tea","tan","ate","nat","bat"]\` the answer is \`[["eat","tea","ate"], ["tan","nat"], ["bat"]]\`.
 
 **Beginner Intuition & The Naive Fallacy.** The obvious idea: take each word and compare it against every other word using an "is-anagram?" check, then glue the matches into groups.
-*Why this shatters*: comparing $N$ words pairwise is $O(N^2 \\cdot K)$ (where $K$ is the longest word). At 10,000 words that is 100,000,000 comparisons — and you still have to manage which group each word already belongs to. The real problem is that you keep *re-deciding* sameness. You never write down a word's identity so you can look it up instantly.
+*Why this shatters*: comparing $N$ words pairwise is $O(N^2 \cdot K)$ (where $K$ is the longest word). At 10,000 words that is 100,000,000 comparisons — and you still have to manage which group each word already belongs to. The real problem is that you keep *re-deciding* sameness. You never write down a word's identity so you can look it up instantly.
 
 **The key idea — a canonical signature.** Every set of anagrams shares one thing: the same multiset of letters. If we can turn a word into a **canonical fingerprint** that is identical for all its anagrams, then grouping becomes trivial — words with the same fingerprint go in the same bucket. A hash map does the bucketing for us in $O(1)$ per word:
 
@@ -266,7 +266,7 @@ def two_sum(nums, target):
 
 There are two ways to build that fingerprint:
 
-- **(a) Sort the letters.** \`sorted("eat") = "aet"\`, \`sorted("tea") = "aet"\`, \`sorted("ate") = "aet"\` — same key. Costs $O(K \\log K)$ per word.
+- **(a) Sort the letters.** \`sorted("eat") = "aet"\`, \`sorted("tea") = "aet"\`, \`sorted("ate") = "aet"\` — same key. Costs $O(K \log K)$ per word.
 - **(b) Count the letters (optimal).** Build a 26-slot count of the letters, then turn it into a string like \`"1#0#0#0#1#…#1"\` (one 'a', one 'e', one 't'). Costs $O(K)$ per word — no sorting.
 
 **Building the count signature (step through it).** Below we build the fingerprint for \`"eat"\`. The three slots stand for the counts of \`a\`, \`e\`, \`t\`. \`"tea"\` and \`"ate"\` walk different orders but land on the exact same final counts — which is *why* they collide into one bucket.
@@ -307,7 +307,7 @@ There are two ways to build that fingerprint:
 }
 \`\`\`
 
-**The optimal solution (count-key, $O(N \\cdot K)$).**
+**The optimal solution (count-key, $O(N \cdot K)$).**
 
 \`\`\`python
 def group_anagrams(words):
@@ -367,10 +367,10 @@ def group_anagrams(words):
       neetcodeUrl: "https://neetcode.io/problems/top-k-elements-in-list",
       summary: "Count with a map, then bucket by frequency — a sort-shaped problem solved without sorting.",
       body: `**The problem.** Return the \`k\` most frequent elements in \`nums\`, in any order. \`nums = [1,1,1,2,2,3], k = 2\` → \`[1, 2]\`.
-**The signal.** The problem asks for *better than* $O(N \\log N)$, so sorting is a trap. The interviewer wants bucket-by-frequency — exploiting that any element's count is at most \`N\`.
+**The signal.** The problem asks for *better than* $O(N \log N)$, so sorting is a trap. The interviewer wants bucket-by-frequency — exploiting that any element's count is at most \`N\`.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners count frequencies with a map, then sort the map entries by frequency descending.
-*Why this shatters*: Sorting $U$ unique elements takes $O(U \\log U)$ time. If all elements are unique, this takes $O(N \\log N)$. The problem explicitly asks for a solution faster than $O(N \\log N)$!
+*Why this shatters*: Sorting $U$ unique elements takes $O(U \log U)$ time. If all elements are unique, this takes $O(N \log N)$. The problem explicitly asks for a solution faster than $O(N \log N)$!
 
 **The Structural Invariant & Bucket Sort Discovery.**
 - *Key Observation*: An element in an array of size $N$ can appear at most $N$ times. The frequencies are strictly bounded within the integer range $[1, N]$.
@@ -382,7 +382,7 @@ def group_anagrams(words):
   "frames": [
     { "cells": ["freq 0", "freq 1", "freq 2", "freq 3"], "note": "Bucket array indexed by frequency 0..N (Array length N=6)." },
     { "cells": ["[]", "[3]", "[2]", "[1]"], "note": "Counts {1:3, 2:2, 3:1} placed in buckets: bucket[3]=[1], bucket[2]=[2], bucket[1]=[3]." },
-    { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements $\\rightarrow$ [1, 2]." }
+    { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements $\rightarrow$ [1, 2]." }
   ],
   "caption": "Top K Frequent Elements — Bucket sort in O(N) time without comparison sorting."
 }
@@ -420,8 +420,8 @@ def top_k_frequent(nums, k):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Negative Numbers & Large Values*: The Hash Map handles arbitrary values (even negative or huge numbers). Bucket indices only depend on **counts**, which are always positive integers $\\le N$.
-- *Min-Heap Alternative*: A Min-Heap of size $K$ gives $O(N \\log K)$ time and $O(N)$ space — a great alternative when $K \\ll N$.`,
+- *Negative Numbers & Large Values*: The Hash Map handles arbitrary values (even negative or huge numbers). Bucket indices only depend on **counts**, which are always positive integers $\le N$.
+- *Min-Heap Alternative*: A Min-Heap of size $K$ gives $O(N \log K)$ time and $O(N)$ space — a great alternative when $K \\ll N$.`,
       questions: [
         {
           kind: "mcq",
@@ -542,7 +542,7 @@ def decode(s):
 
 **The Structural Invariant: Prefix & Suffix Splitting.**
 For any index $i$, the product of all elements except \`nums[i]\` equals:
-$$\\text{Output}[i] = (\\text{product of all elements to the left of } i) \\times (\\text{product of all elements to the right of } i)$$
+$$\text{Output}[i] = (\text{product of all elements to the left of } i) \times (\text{product of all elements to the right of } i)$$
 - *Left Sweep*: Build \`res[i]\` containing the cumulative product of elements from index $0$ to $i-1$.
 - *Right Sweep*: Maintain a running \`postfix\` variable moving right-to-left, updating \`res[i] *= postfix\` in $O(1)$ extra space.
 
@@ -587,7 +587,7 @@ def product_except_self(nums):
 
 **Boundary Traps & Execution Blueprint.**
 - *Zeros in Array*:
-  - Single zero (e.g., \`[1, 2, 0, 4]\`): Output at index of zero is $1 \\times 2 \\times 4 = 8$. All other indices become $0$.
+  - Single zero (e.g., \`[1, 2, 0, 4]\`): Output at index of zero is $1 \times 2 \times 4 = 8$. All other indices become $0$.
   - Multiple zeros (e.g., \`[1, 0, 0, 4]\`): All output indices are $0$.
   - The prefix-suffix algorithm handles zero elements naturally without special-case branches!`,
       questions: [
@@ -622,7 +622,7 @@ def product_except_self(nums):
 **The signal.** "No duplicate per row / column / box" is a membership question in three dimensions at once — the interviewer wants 27 hash sets and the integer-division box index, resolved in a single pass.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners think of validating Sudoku by running nested loops for each cell to scan its row, column, and 3x3 box.
-*Why this shatters*: Scanning 27 cells for each of the 81 cells leads to redundant lookups ($81 \\times 27 \\approx 2,200$ checks).
+*Why this shatters*: Scanning 27 cells for each of the 81 cells leads to redundant lookups ($81 \times 27 \approx 2,200$ checks).
 
 **The Structural Invariant: 2D Multi-Set Encoding.** We can validate the entire board in a **single pass over the 81 cells**.
 - Maintain 3 collections of Hash Sets:
@@ -630,7 +630,7 @@ def product_except_self(nums):
   2. \`cols[c]\`: Hash set of numbers seen in column $c$ (0..8)
   3. \`boxes[box_idx]\`: Hash set of numbers seen in 3x3 box \`box_idx\`
 - *The Coordinate Trick*: Box index for cell $(r, c)$ is computed via integer division:
-  $$\\text{box\\_idx} = (r // 3) \\times 3 + (c // 3)$$
+  $$\text{box\\_idx} = (r // 3) \times 3 + (c // 3)$$
 
 \`\`\`viz:array
 {
@@ -709,7 +709,7 @@ def is_valid_sudoku(board):
 **The signal.** The required $O(N)$ rules out sorting. The interviewer wants a hash set plus the key trick: only start counting a run from its true head — the number whose predecessor \`x − 1\` is absent.
 
 **Beginner Intuition & The Naive Fallacy.** The obvious approach is to sort the array, then scan for consecutive runs \`nums[i] == nums[i-1] + 1\`.
-*Why this shatters*: Sorting takes $O(N \\log N)$ time. The problem explicitly requires $O(N)$ linear time!
+*Why this shatters*: Sorting takes $O(N \log N)$ time. The problem explicitly requires $O(N)$ linear time!
 
 **The Structural Invariant & Sequence Start Filtering.**
 - Insert all elements into a Hash Set for $O(1)$ presence queries.
@@ -720,9 +720,9 @@ def is_valid_sudoku(board):
 {
   "frames": [
     { "cells": [100, 4, 200, 1, 3, 2], "note": "Set: {100, 4, 200, 1, 3, 2}. Scan elements..." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=100", "index": 0 }], "note": "99 in set? NO $\\rightarrow$ x=100 is a sequence start. Length = 1." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=4", "index": 1 }], "note": "3 in set? YES $\\rightarrow$ Skip! (3 will be handled when walking from 1)." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO $\\rightarrow$ Start at 1. Count 1, 2, 3, 4 $\\rightarrow$ Max Length = 4." }
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=100", "index": 0 }], "note": "99 in set? NO $\rightarrow$ x=100 is a sequence start. Length = 1." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=4", "index": 1 }], "note": "3 in set? YES $\rightarrow$ Skip! (3 will be handled when walking from 1)." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO $\rightarrow$ Start at 1. Count 1, 2, 3, 4 $\rightarrow$ Max Length = 4." }
   ],
   "caption": "Longest Consecutive Sequence — Only sequence start elements initiate linear counting."
 }

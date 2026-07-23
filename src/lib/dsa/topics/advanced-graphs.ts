@@ -23,16 +23,16 @@ The unifying idea is *greedy expansion guided by a priority queue*: Dijkstra for
 *Why this shatters*: Standard BFS assumes all edges have unit weight (1). In weighted graphs, a 3-hop path of total weight $1 + 1 + 1 = 3$ is faster than a 1-hop path of weight $10$!
 
 **The Structural Invariant: Dijkstra's Greedy Min-Heap Expansion.**
-Maintain a **Min-Heap** storing \`[dist_so_far, node]\` and a distance array \`distMap\` initialized to $\\infty$.
+Maintain a **Min-Heap** storing \`[dist_so_far, node]\` and a distance array \`distMap\` initialized to $\infty$.
 1. Seed heap with \`[0, k]\` (distance 0 to source \`k\`). Set \`distMap[k] = 0\`.
 2. While Min-Heap is not empty:
    - Pop \`[d, u]\`.
-   - If $d > \\text{distMap}[u]$: **PRUNE STALE NODE** (a cheaper path to \`u\` was already processed!).
+   - If $d > \text{distMap}[u]$: **PRUNE STALE NODE** (a cheaper path to \`u\` was already processed!).
    - For each neighbor \`[v, weight]\` of \`u\`:
-     - If $d + \\text{weight} < \\text{distMap}[v]$:
+     - If $d + \text{weight} < \text{distMap}[v]$:
        - Update \`distMap[v] = d + weight\`.
        - Push \`[distMap[v], v]\` to Min-Heap.
-3. Signal reaches all nodes when the **MAXIMUM distance** in \`distMap\` is found! If any node remains $\\infty$, return \`-1\`.
+3. Signal reaches all nodes when the **MAXIMUM distance** in \`distMap\` is found! If any node remains $\infty$, return \`-1\`.
 
 \`\`\`viz:tree
 {
@@ -48,7 +48,7 @@ Maintain a **Min-Heap** storing \`[dist_so_far, node]\` and a distance array \`d
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Non-Negative Weight Guarantee*: Dijkstra's algorithm ONLY works on non-negative edge weights ($w \\ge 0$).`,
+- *Non-Negative Weight Guarantee*: Dijkstra's algorithm ONLY works on non-negative edge weights ($w \ge 0$).`,
       questions: [
         {
           kind: "mcq",
@@ -218,7 +218,7 @@ Find a path from \`(0, 0)\` to \`(N-1, N-1)\` that **minimizes the MAXIMUM eleva
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Binary Search + BFS Alternative*: Binary search answer $T \\in [0, N^2 - 1]$. Run BFS flood fill considering only cells with elevation $\\le T$.`,
+- *Binary Search + BFS Alternative*: Binary search answer $T \in [0, N^2 - 1]$. Run BFS flood fill considering only cells with elevation $\le T$.`,
       questions: [
         {
           kind: "mcq",
@@ -309,14 +309,14 @@ Find a path from \`(0, 0)\` to \`(N-1, N-1)\` that **minimizes the MAXIMUM eleva
 
 **The Structural Invariant: Bellman-Ford $K+1$ Round Edge Relaxation.**
 Since we are allowed **at most $K$ stops** (which means at most $K + 1$ flight edges), we can run **Bellman-Ford for exactly $K + 1$ rounds**:
-- Maintain distance array \`prices\` initialized to $\\infty$, with \`prices[src] = 0\`.
+- Maintain distance array \`prices\` initialized to $\infty$, with \`prices[src] = 0\`.
 - For $i = 0$ to $K$:
   - Create a **copy of current prices** \`tempPrices = [...prices]\`.
   - For each flight \`[u, v, price]\` in flights:
-    - If \`prices[u] != \\infty\`:
+    - If \`prices[u] != \infty\`:
       - \`tempPrices[v] = min(tempPrices[v], prices[u] + price)\`.
   - \`prices = tempPrices\` (Snapshot prevents updates from chaining within the same round!).
-- Return \`prices[dst] == \\infty ? -1 : prices[dst]\`.
+- Return \`prices[dst] == \infty ? -1 : prices[dst]\`.
 
 \`\`\`viz:array
 {
@@ -330,7 +330,7 @@ Since we are allowed **at most $K$ stops** (which means at most $K + 1$ flight e
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Snapshot Array*: Copying \`tempPrices\` at the start of each round ensures Round $R$ only uses paths of length $\\le R$ edges, preventing multi-hop chaining in a single round.`,
+- *Snapshot Array*: Copying \`tempPrices\` at the start of each round ensures Round $R$ only uses paths of length $\le R$ edges, preventing multi-hop chaining in a single round.`,
       questions: [
         {
           kind: "mcq",

@@ -183,7 +183,7 @@ Maintain \`oldToNew = Map<OldNode, ClonedNode>()\`:
       neetcodeUrl: "https://neetcode.io/problems/islands-and-treasure",
       summary: "Multi-source BFS: start the wave from every gate at once, and each cell's first touch is its true distance.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners run single-source BFS starting from each empty room cell \`INF\` to find the nearest gate \`0\`.
-*Why this shatters*: Running $O(M \\cdot N)$ searches for $M \\times N$ rooms takes $O((M \\cdot N)^2)$ time (quadratic TLE!).
+*Why this shatters*: Running $O(M \cdot N)$ searches for $M \times N$ rooms takes $O((M \cdot N)^2)$ time (quadratic TLE!).
 
 **The Structural Invariant: Multi-Source Simultaneous BFS.**
 Invert the direction! Start BFS from **ALL GATES SIMULTANEOUSLY**:
@@ -296,7 +296,7 @@ Invert the direction! Start BFS from **ALL GATES SIMULTANEOUSLY**:
       neetcodeUrl: "https://neetcode.io/problems/pacific-atlantic-water-flow",
       summary: "Reverse the flow: climb from each coastline, take the intersection of the two reachable sets.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners run DFS starting from every individual grid cell \`(r, c)\` down to the ocean borders.
-*Why this shatters*: Water flows downhill. Running DFS from every cell causes redundant path traversals ($O((M \\cdot N)^2)$ time).
+*Why this shatters*: Water flows downhill. Running DFS from every cell causes redundant path traversals ($O((M \cdot N)^2)$ time).
 
 **The Structural Invariant: Reverse Flow (Uphill Climb from Coastlines).**
 Invert the problem! Instead of flowing downhill from cell to ocean, **climb UPHILL from ocean borders into the island**:
@@ -358,8 +358,8 @@ An 'O' region is captured UNLESS it is connected to an 'O' on the border!
 1. **Find Un-capturable 'O's**: Run DFS/BFS from all **border 'O' cells** (top, bottom, left, right edges).
 2. Mark all reachable border-connected 'O's as temporary **\`'T'\`** (Safe from capture!).
 3. **Final Grid Sweep**:
-   - If cell is \`'O'\` $\\rightarrow$ Change to \`'X'\` (Captured!).
-   - If cell is \`'T'\` $\\rightarrow$ Change back to \`'O'\` (Rescued!).
+   - If cell is \`'O'\` $\rightarrow$ Change to \`'X'\` (Captured!).
+   - If cell is \`'T'\` $\rightarrow$ Change back to \`'O'\` (Rescued!).
 
 \`\`\`viz:flow
 {
@@ -404,14 +404,14 @@ An 'O' region is captured UNLESS it is connected to an 'O' on the border!
       neetcodeUrl: "https://neetcode.io/problems/course-schedule",
       summary: "Prerequisites form a directed graph — you can finish them all if and only if it has no cycle.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners think checking if a graph contains a cycle is the same as detecting undirected cycles.
-*Why this shatters*: In a Directed Graph, visiting an already-visited node is NOT a cycle if that node was finished on a DIFFERENT path (e.g. $A \\rightarrow B \\rightarrow C$ and $A \\rightarrow C$ is a DAG, not a cycle!).
+*Why this shatters*: In a Directed Graph, visiting an already-visited node is NOT a cycle if that node was finished on a DIFFERENT path (e.g. $A \rightarrow B \rightarrow C$ and $A \rightarrow C$ is a DAG, not a cycle!).
 
 **The Structural Invariant: Three-Color Directed Cycle DFS.**
 Maintain a state array \`state[i]\`:
 - **0 = Unvisited** (White).
 - **1 = Visiting / In-Progress** (Gray - on CURRENT recursion call stack!).
 - **2 = Visited / Completed** (Black - fully processed and cycle-free).
-- **Cycle Rule**: If DFS visits a neighbor with \`state[neighbor] == 1\` (Gray), we hit an ancestor on our active recursion stack $\\rightarrow$ **CYCLE DETECTED! Return \`false\`**.
+- **Cycle Rule**: If DFS visits a neighbor with \`state[neighbor] == 1\` (Gray), we hit an ancestor on our active recursion stack $\rightarrow$ **CYCLE DETECTED! Return \`false\`**.
 
 \`\`\`viz:array
 {
@@ -520,7 +520,7 @@ A graph of $N$ nodes is a **Valid Tree** if and ONLY if:
   - Initialize Union-Find with $N$ components.
   - If \`edges.length != n - 1\`, return \`false\` immediately!
   - For each edge \`(u, v)\`:
-    - If \`find(u) == find(v)\`: Nodes are already connected $\\rightarrow$ **CYCLE DETECTED**! Return \`false\`.
+    - If \`find(u) == find(v)\`: Nodes are already connected $\rightarrow$ **CYCLE DETECTED**! Return \`false\`.
     - \`union(u, v)\`.
   - Return \`true\`.
 
@@ -671,7 +671,7 @@ We are given a graph that started as a tree of $N$ nodes, but has **1 extra edge
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/word-ladder",
       summary: "Words are nodes, one-letter changes are edges — BFS the implicit graph, generating neighbours by pattern.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners build an adjacency list by comparing every pair of words in the dictionary ($O(N^2 \\cdot L)$ time).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners build an adjacency list by comparing every pair of words in the dictionary ($O(N^2 \cdot L)$ time).
 *Why this shatters*: For $N = 5,000$ words, comparing all pairs takes tens of millions of operations up front!
 
 **The Structural Invariant: On-The-Fly Pattern Neighbor Generation BFS.**

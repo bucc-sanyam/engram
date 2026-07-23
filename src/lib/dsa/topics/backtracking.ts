@@ -28,7 +28,7 @@ For an array of length $N$, there are $2^N$ total subsets (the Power Set).
   1. **Include** \`nums[i]\` in current path.
   2. **Exclude** \`nums[i]\` from current path.
 - **The Backtracking Mantra**:
-  - \`path.push(nums[i])\` $\\rightarrow$ Recurse \`dfs(i + 1)\` $\\rightarrow$ \`path.pop()\` (Unchoose!).
+  - \`path.push(nums[i])\` $\rightarrow$ Recurse \`dfs(i + 1)\` $\rightarrow$ \`path.pop()\` (Unchoose!).
   - Recurse \`dfs(i + 1)\` (without element).
 - **Snapshot Requirement**: Save a **deep copy** (\`[...path]\`) of the path at every decision node!
 
@@ -86,7 +86,7 @@ For an array of length $N$, there are $2^N$ total subsets (the Power Set).
 - **Unlimited Reuse**: When choosing \`candidates[i]\`, recurse with \`dfs(i, remain - candidates[i])\` (passing index \`i\` instead of \`i + 1\` allows picking the same number again!).
 - **Target Pruning**:
   - \`remain == 0\`: Found valid sum! Save \`[...path]\`.
-  - \`remain < 0\`: Exceeded target $\\rightarrow$ PRUNE branch immediately (return!).
+  - \`remain < 0\`: Exceeded target $\rightarrow$ PRUNE branch immediately (return!).
 
 \`\`\`viz:tree
 {
@@ -139,10 +139,10 @@ For an array of length $N$, there are $2^N$ total subsets (the Power Set).
 1. **Sort candidates** first (\`[1, 1, 2, 5, 6, 7, 10]\`).
 2. Recurse with \`i + 1\` (each element used at most ONCE).
 3. **The Sibling Twin Skip Rule**:
-   $$\\text{if } i > \\text{start} \\quad \\text{AND} \\quad \\text{candidates}[i] == \\text{candidates}[i - 1] \\implies \\textbf{SKIP!}$$
-   - *Why $i > \\text{start}$ matters*:
-     - If $i == \\text{start}$, it is the FIRST time we consider this value at the current tree level (parent-child relationship) $\\rightarrow$ **ALLOW** (allows \`[1, 1, 6]\`).
-     - If $i > \\text{start}$ and equals previous, it is an alternative duplicate choice at the SAME tree level (sibling relationship) $\\rightarrow$ **SKIP** (prevents cloning subtrees!).
+   $$\text{if } i > \text{start} \quad \text{AND} \quad \text{candidates}[i] == \text{candidates}[i - 1] \implies \textbf{SKIP!}$$
+   - *Why $i > \text{start}$ matters*:
+     - If $i == \text{start}$, it is the FIRST time we consider this value at the current tree level (parent-child relationship) $\rightarrow$ **ALLOW** (allows \`[1, 1, 6]\`).
+     - If $i > \text{start}$ and equals previous, it is an alternative duplicate choice at the SAME tree level (sibling relationship) $\rightarrow$ **SKIP** (prevents cloning subtrees!).
 
 \`\`\`viz:tree
 {
@@ -255,8 +255,8 @@ At each recursion depth:
 1. **Sort the array** first (\`[1, 2, 2]\`).
 2. **Collect As You Go**: Save \`[...path]\` at **EVERY node** of the decision tree (since every prefix is a valid subset!).
 3. **Sibling Twin Skip**:
-   - For $i = \\text{start}$ to $N - 1$:
-   - If $i > \\text{start}$ AND \`nums[i] == nums[i - 1]\`: **SKIP**!
+   - For $i = \text{start}$ to $N - 1$:
+   - If $i > \text{start}$ AND \`nums[i] == nums[i - 1]\`: **SKIP**!
 
 \`\`\`viz:tree
 {
@@ -311,7 +311,7 @@ At each recursion depth:
 Build valid strings incrementally by enforcing two invariant guards:
 1. **Add Open Bracket \`'('\`**: Allowed if \`open_count < N\`.
 2. **Add Close Bracket \`')'\`**: Allowed ONLY if \`close_count < open_count\` (a close bracket can only balance an unclosed open bracket!).
-3. **Base Case**: When \`path.length == 2 * N\` $\\rightarrow$ String is guaranteed valid! Save and return.
+3. **Base Case**: When \`path.length == 2 * N\` $\rightarrow$ String is guaranteed valid! Save and return.
 
 \`\`\`viz:tree
 {
@@ -365,7 +365,7 @@ Build valid strings incrementally by enforcing two invariant guards:
 From each grid cell \`(r, c)\` matching \`word[0]\`:
 - **DFS Function \`dfs(r, c, index)\`**:
   - **Success**: If \`index == word.length\`, return \`true\`.
-  - **Prune / Failure**: Out-of-bounds, \`board[r][c] != word[index]\`, or already visited (\`board[r][c] == '#'\`) $\\rightarrow$ Return \`false\`.
+  - **Prune / Failure**: Out-of-bounds, \`board[r][c] != word[index]\`, or already visited (\`board[r][c] == '#'\`) $\rightarrow$ Return \`false\`.
   - **Choose**: Save \`tmp = board[r][c]\`; mark \`board[r][c] = '#'\` (in-place visited!).
   - **Explore**: Recurse on 4 cardinal directions: \`(r+1, c), (r-1, c), (r, c+1), (r, c-1)\`.
   - **Unchoose**: Restore \`board[r][c] = tmp\`!
@@ -425,8 +425,8 @@ From each grid cell \`(r, c)\` matching \`word[0]\`:
 - We iterate over **cut end-positions** $j$ starting from index \`start\`:
   - Substring candidate: \`sub = s.substring(start, j + 1)\`.
   - **Palindrome Guard**: Check if \`sub\` is a palindrome (using two pointers).
-  - If NOT a palindrome $\\rightarrow$ **PRUNE** branch (do not recurse!).
-  - If palindrome $\\rightarrow$ \`path.push(sub)\`, recurse \`dfs(j + 1)\`, \`path.pop()\`.
+  - If NOT a palindrome $\rightarrow$ **PRUNE** branch (do not recurse!).
+  - If palindrome $\rightarrow$ \`path.push(sub)\`, recurse \`dfs(j + 1)\`, \`path.pop()\`.
 - **Base Case**: When \`start == s.length\`, save \`[...path]\`.
 
 \`\`\`viz:tree
@@ -533,8 +533,8 @@ From each grid cell \`(r, c)\` matching \`word[0]\`:
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/n-queens",
       summary: "One queen per row; columns and both diagonal families tracked in sets — the classic constraint search.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners attempt to place queens on any of the $N \\times N$ squares ($C(N^2, N)$ possibilities).
-*Why this shatters*: Testing all $N^2$ positions for 8 queens results in $4.4 \\text{ billion}$ checks!
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners attempt to place queens on any of the $N \times N$ squares ($C(N^2, N)$ possibilities).
+*Why this shatters*: Testing all $N^2$ positions for 8 queens results in $4.4 \text{ billion}$ checks!
 
 **The Structural Invariant: One Queen per Row + O(1) Diagonal Tracking.**
 Since no two queens can share a row, **place exactly one queen per row $r$** (depth of recursion tree = $N$).
@@ -544,7 +544,7 @@ Since no two queens can share a row, **place exactly one queen per row $r$** (de
   3. \`diag2\` (Negative Diagonal $\\searrow$): Occupied \`row - col\` values.
 - **Backtracking Loop for Row $r$**:
   - For $c = 0$ to $N - 1$:
-    - If $c \\in \\text{cols}$ OR $(r + c) \\in \\text{diag1}$ OR $(r - c) \\in \\text{diag2}$ $\\rightarrow$ **CONFLICT! Skip.**
+    - If $c \in \text{cols}$ OR $(r + c) \in \text{diag1}$ OR $(r - c) \in \text{diag2}$ $\rightarrow$ **CONFLICT! Skip.**
     - **Choose**: Add $c$, $r+c$, $r-c$ to sets. Place Queen at \`(r, c)\`.
     - **Explore**: Recurse \`dfs(r + 1)\`.
     - **Unchoose**: Remove from sets, clear square.

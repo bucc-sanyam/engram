@@ -271,7 +271,7 @@ def has_cycle(head):
 *Why this shatters*: The problem requires reordering **in-place without allocating extra array space** ($O(1)$ space).
 
 **The Structural Invariant: Three-Phase List Surgery.**
-Reordering $L_0 \\rightarrow L_n \\rightarrow L_1 \\rightarrow L_{n-1}$ composes three atomic operations:
+Reordering $L_0 \rightarrow L_n \rightarrow L_1 \rightarrow L_{n-1}$ composes three atomic operations:
 1. **Find Middle**: Use Fast & Slow pointers to locate the list midpoint.
 2. **Reverse Second Half**: Split the list at midpoint and reverse the right sub-list using the Three-Pointer Shuffle.
 3. **Interleave (Zip)**: Merge the first half and reversed second half by alternating pointers!
@@ -445,9 +445,9 @@ def remove_nth_from_end(head, n):
 
 **The Structural Invariant: Interleaved Splicing ($O(1)$ Auxiliary Space).**
 We can perform a deep copy in 3 linear passes without a Hash Map:
-1. **Pass 1 (Interleave Clones)**: For each original node $X$, create clone $X'$ and insert it directly after $X$: $X \\rightarrow X' \\rightarrow Y \\rightarrow Y'$.
+1. **Pass 1 (Interleave Clones)**: For each original node $X$, create clone $X'$ and insert it directly after $X$: $X \rightarrow X' \rightarrow Y \rightarrow Y'$.
 2. **Pass 2 (Wire Random Pointers)**: For each original node $X$, its clone's random pointer is:
-   $$X'.\\text{random} = X.\\text{random}.\\text{next}$$
+   $$X'.\text{random} = X.\text{random}.\text{next}$$
 3. **Pass 3 (Unweave Lists)**: Separate the interleaved list back into original list and cloned list!
 
 \`\`\`viz:array
@@ -527,7 +527,7 @@ def copy_random_list(head):
       body: `**The problem.** Two non-negative numbers are given as linked lists of digits in *reverse* order; return their sum as a linked list. \`2→4→3\` + \`5→6→4\` → \`7→0→8\` (342 + 465 = 807).
 **The signal.** Reverse-order digits plus arbitrary length means grade-school column addition with a carry, node by node — the interviewer does not want you converting to an integer.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners try to convert the linked lists into integers (e.g., \`2->4->3\` $\\rightarrow$ \`342\`), add them (\`342 + 465 = 807\`), and convert the result back to a list.
+**Beginner Intuition & The Naive Fallacy.** Beginners try to convert the linked lists into integers (e.g., \`2->4->3\` $\rightarrow$ \`342\`), add them (\`342 + 465 = 807\`), and convert the result back to a list.
 *Why this shatters*: Linked lists can contain **thousands of digits**, far exceeding 64-bit integer limits (\`BigInt\` overflow!).
 
 **The Structural Invariant: Digit-by-Digit Carry Column Addition.**
@@ -614,7 +614,7 @@ def add_two_numbers(l1, l2):
       body: `**The problem.** An array of \`n+1\` integers, each in \`[1, n]\`, contains exactly one repeated value; find it without modifying the array and in O(1) space. \`[1,3,4,2,2]\` → \`2\`.
 **The signal.** Read \`nums[i]\` as a next-pointer and the duplicate becomes a cycle *entrance* — the interviewer wants Floyd's two-phase cycle finding, not sorting or a hash set.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \\log N)$ time) or use a Hash Set ($O(N)$ space).
+**Beginner Intuition & The Naive Fallacy.** Beginners sort the array ($O(N \log N)$ time) or use a Hash Set ($O(N)$ space).
 *Why this shatters*: The problem strictly forbids modifying the array and requires **$O(1)$ extra space** and **$O(N)$ time**!
 
 **The Structural Invariant: Mapping Array to a Cyclic Linked List.**
@@ -811,14 +811,14 @@ class LRUCache:
 **The signal.** Merging one list at a time is O(N·k); the interviewer wants pairwise divide-and-conquer (or a k-sized min-heap) to reach O(N log k).
 
 **Beginner Intuition & The Naive Fallacy.** Beginners merge lists one-by-one sequentially: merge list 1 and 2, then merge result with 3, then with 4...
-*Why this shatters*: Merging $K$ lists sequentially results in $O(N \\cdot K)$ total time complexity (where $N$ is total number of nodes across all lists). For 10,000 lists, this is quadratic TLE!
+*Why this shatters*: Merging $K$ lists sequentially results in $O(N \cdot K)$ total time complexity (where $N$ is total number of nodes across all lists). For 10,000 lists, this is quadratic TLE!
 
 **The Structural Invariant: Pairwise Divide & Conquer Tournament.**
 Instead of sequential merging, merge lists **in pairs** hierarchically (like a tournament bracket):
 - Round 1: Merge $K$ lists pairwise into $K / 2$ lists.
 - Round 2: Merge $K / 2$ lists pairwise into $K / 4$ lists.
 - ... Continue until 1 merged list remains.
-- **Complexity**: Each round processes all $N$ nodes in $O(N)$ time. The number of rounds is $\\log_2 K$. Total time = **$O(N \\log K)$**!
+- **Complexity**: Each round processes all $N$ nodes in $O(N)$ time. The number of rounds is $\log_2 K$. Total time = **$O(N \log K)$**!
 
 \`\`\`viz:flow
 {
@@ -881,7 +881,7 @@ def merge_two(l1, l2):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Min-Heap Alternative*: Insert the head node of each of the $K$ lists into a Min-Heap of size $K$. Pop minimum node, attach to output, push \`popped.next\` into heap. Time: $O(N \\log K)$, Space: $O(K)$.`,
+- *Min-Heap Alternative*: Insert the head node of each of the $K$ lists into a Min-Heap of size $K$. Pop minimum node, attach to output, push \`popped.next\` into heap. Time: $O(N \log K)$, Space: $O(K)$.`,
       questions: [
         {
           kind: "mcq",

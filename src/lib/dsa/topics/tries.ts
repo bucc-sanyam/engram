@@ -18,7 +18,7 @@ export const tries: DsaTopic = {
       neetcodeUrl: "https://neetcode.io/problems/implement-prefix-tree",
       summary: "Nodes mapping letters to children, plus one end-of-word flag — insert, search, and startsWith.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners use a standard Hash Set of words.
-*Why this shatters*: \`search(word)\` takes $O(1)$ time, but \`startsWith(prefix)\` requires scanning every word in the set ($O(N \\cdot L)$ time for $N$ words of length $L$). A Hash Set has no structural memory of character prefixes!
+*Why this shatters*: \`search(word)\` takes $O(1)$ time, but \`startsWith(prefix)\` requires scanning every word in the set ($O(N \cdot L)$ time for $N$ words of length $L$). A Hash Set has no structural memory of character prefixes!
 
 **The Structural Invariant: Shared Prefix Character Node Trees.**
 Each node in a Trie contains:
@@ -77,7 +77,7 @@ Each node in a Trie contains:
       neetcodeUrl: "https://neetcode.io/problems/design-word-search-data-structure",
       summary: "Wildcard dots fork the descent: trie walking becomes backtracking over every child.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners try to use regular expressions or linear string scanning across stored arrays.
-*Why this shatters*: Linear regex scanning takes $O(N \\cdot L)$ time per query.
+*Why this shatters*: Linear regex scanning takes $O(N \cdot L)$ time per query.
 
 **The Structural Invariant: Trie DFS Backtracking on Wildcards.**
 - Insert words into a standard Trie.
@@ -134,7 +134,7 @@ Each node in a Trie contains:
       neetcodeUrl: "https://neetcode.io/problems/search-for-word-ii",
       summary: "Hunt a whole dictionary in one grid walk: the trie prunes every path no word could continue.",
       body: `**Beginner Intuition & The Naive Fallacy.** Beginners run standard Word Search DFS for every single word in the dictionary independently.
-*Why this shatters*: Searching $W$ words independently runs $W$ full grid traversals ($O(W \\cdot M \\cdot N \\cdot 4^L)$ time), resulting in TLE.
+*Why this shatters*: Searching $W$ words independently runs $W$ full grid traversals ($O(W \cdot M \cdot N \cdot 4^L)$ time), resulting in TLE.
 
 **The Structural Invariant: Grid DFS Guided by Trie Prefix Pruning.**
 Instead of searching for each word in the grid, **build a Trie of all words and search the grid using the Trie to guide DFS**!

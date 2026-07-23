@@ -118,8 +118,8 @@ Place \`L = 0\` and \`R = N - 1\`. Calculate \`sum = nums[L] + nums[R]\`.
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=4 (val=11)", "index": 4 }], "note": "Target = 10. sum = 1 + 11 = 12 > 10. 11 is too big for anyone $\\rightarrow$ Retire R (R=3)." },
-    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=3 (val=7)", "index": 3 }], "note": "sum = 1 + 7 = 8 < 10. 1 is too small for anyone $\\rightarrow$ Retire L (L=1)." },
+    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=4 (val=11)", "index": 4 }], "note": "Target = 10. sum = 1 + 11 = 12 > 10. 11 is too big for anyone $\rightarrow$ Retire R (R=3)." },
+    { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=0 (val=1)", "index": 0 }, { "label": "R=3 (val=7)", "index": 3 }], "note": "sum = 1 + 7 = 8 < 10. 1 is too small for anyone $\rightarrow$ Retire L (L=1)." },
     { "cells": [1, 3, 4, 7, 11], "pointers": [{ "label": "L=1 (val=3)", "index": 1 }, { "label": "R=3 (val=7)", "index": 3 }], "highlight": [1, 3], "note": "sum = 3 + 7 = 10 == target! Found match. Return 1-indexed [2, 4]." }
   ],
   "caption": "Two Sum II — Every step permanently eliminates one element, finding the target in O(N) time & O(1) space."
@@ -192,7 +192,7 @@ def two_sum(numbers, target):
 *Why this shatters*: $O(N^3)$ time TLEs on $N = 3,000$ ($27$ billion operations!). Hash set tuple deduplication adds heavy overhead.
 
 **The Structural Invariant: Fix One + Two Sum II.**
-1. **Sort the array** first ($O(N \\log N)$).
+1. **Sort the array** first ($O(N \log N)$).
 2. Iterate through the array with index $i$, fixing \`nums[i]\` as the first number.
 3. The remaining two numbers must sum to \`target = -nums[i]\`. This is reduced to **Two Sum II** on the sub-array \`nums[i+1 ... N-1]\`.
 4. **Duplicate Prevention Rules**:
@@ -204,7 +204,7 @@ def two_sum(numbers, target):
   "frames": [
     { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=1 (-1)", "index": 1 }, { "label": "L=2 (-1)", "index": 2 }, { "label": "R=5 (2)", "index": 5 }], "note": "Fix i=1 (val=-1). Two Sum target = 1. L=2 (-1), R=5 (2). Sum = -1 + 2 = 1. Match! Triplet [-1, -1, 2]." },
     { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=1 (-1)", "index": 1 }, { "label": "L=3 (0)", "index": 3 }, { "label": "R=4 (1)", "index": 4 }], "highlight": [1, 3, 4], "note": "Skip duplicate L=-1. L moves to 3 (0), R moves to 4 (1). Sum = 0 + 1 = 1. Match! Triplet [-1, 0, 1]." },
-    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=2 (-1)", "index": 2 }], "note": "i=2 (val=-1) == nums[i-1] (-1) $\\rightarrow$ SKIP duplicate outer loop value!" }
+    { "cells": [-4, -1, -1, 0, 1, 2], "pointers": [{ "label": "i=2 (-1)", "index": 2 }], "note": "i=2 (val=-1) == nums[i-1] (-1) $\rightarrow$ SKIP duplicate outer loop value!" }
   ],
   "caption": "3Sum — Sorting + Fixing 1 element + Two Sum II with duplicate skipping in O(N^2) time."
 }
@@ -286,7 +286,7 @@ def three_sum(nums):
 
 **Beginner Intuition & The Naive Fallacy.** Beginners calculate the water area for all possible pairs of vertical lines using nested loops in $O(N^2)$ time.
 *Why this shatters*:
-$$\\text{Area} = (\\text{R} - \\text{L}) \\times \\min(\\text{height}[\\text{L}], \\text{height}[\\text{R}])$$
+$$\text{Area} = (\text{R} - \text{L}) \times \\min(\text{height}[\text{L}], \text{height}[\text{R}])$$
 Moving pointers inward **always decreases the width** $(R - L)$. Beginners struggle to see how moving pointers inward could ever *increase* the total area.
 
 **The Structural Invariant: The Shorter-Wall Greedy Rule.**
@@ -371,7 +371,7 @@ def max_area(height):
 
 **Beginner Intuition & The Naive Fallacy.** Beginners try to calculate water by scanning left and right for every single bar $i$ to find the tallest left wall \`maxL\` and tallest right wall \`maxR\`.
 *Why this shatters*: For bar $i$, water trapped is:
-$$\\text{water}[i] = \\max(0, \\min(\\text{maxL}[i], \\text{maxR}[i]) - \\text{height}[i])$$
+$$\text{water}[i] = \\max(0, \\min(\text{maxL}[i], \text{maxR}[i]) - \text{height}[i])$$
 Rescanning left and right from every bar takes $O(N^2)$ time!
 
 **The Structural Invariant: The Binding Wall Principle.**

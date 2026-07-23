@@ -11,7 +11,7 @@ export const intervals: DsaTopic = {
   unlocks: [],
   intro: `An interval is the smallest interesting piece of geometry: a start and an end. Meetings, bookings, CPU bursts, IP ranges, gene spans — the moment your data means "from here to there," you are in this chapter. And nearly everything difficult about intervals dissolves under one preparatory move: **sort by start**. Unsorted, "do any of these overlap?" is an all-pairs question; sorted, overlap can only happen between *neighbours in the sweep* — each new interval need only be compared against the latest thing still open. One sort converts geometry into a single left-to-right pass. If this chapter had a motto, that is it.
 
-The second load-bearing idea is knowing the **overlap test** cold: two intervals $A$ and $B$ overlap iff $A.\\text{start} \\le B.\\text{end}$ and $B.\\text{start} \\le A.\\text{end}$.`,
+The second load-bearing idea is knowing the **overlap test** cold: two intervals $A$ and $B$ overlap iff $A.\text{start} \le B.\text{end}$ and $B.\text{start} \le A.\text{end}$.`,
   problems: [
     {
       slug: "insert-interval",
@@ -19,15 +19,15 @@ The second load-bearing idea is knowing the **overlap test** cold: two intervals
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/insert-new-interval",
       summary: "Three phases against a sorted list: copy the before, absorb the overlapping, copy the after.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners push the new interval into the array and re-sort the entire list ($O(N \\log N)$).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners push the new interval into the array and re-sort the entire list ($O(N \log N)$).
 *Why this shatters*: The input list is **ALREADY SORTED and NON-OVERLAPPING**! Re-sorting from scratch throws away pre-existing order and takes unnecessary time.
 
 **The Structural Invariant: Three-Phase Linear Sweep ($O(N)$ Time).**
 A single insertion into an already-sorted disjoint list produces a **contiguous overlapping block**:
 1. **Phase 1 (Before)**: Copy all intervals ending BEFORE the new interval starts (\`curr.end < newInterval.start\`).
 2. **Phase 2 (Overlap Merging)**: Merge all intervals that overlap with new interval (\`curr.start <= newInterval.end\`):
-   $$\\text{newInterval.start} = \\min(\\text{newInterval.start}, \\text{curr.start})$$
-   $$\\text{newInterval.end} = \\max(\\text{newInterval.end}, \\text{curr.end})$$
+   $$\text{newInterval.start} = \\min(\text{newInterval.start}, \text{curr.start})$$
+   $$\text{newInterval.end} = \\max(\text{newInterval.end}, \text{curr.end})$$
 3. **Push Merged New Interval**.
 4. **Phase 3 (After)**: Copy remaining intervals (\`curr.start > newInterval.end\`).
 
@@ -133,7 +133,7 @@ To **MINIMIZE REMOVALS**, we must **MAXIMIZE KEPT INTERVALS**:
   - Track \`lastEnd = -Infinity\`, \`removed = 0\`.
   - For each \`curr\` in sorted intervals:
     - If \`curr.start >= lastEnd\`: Keep interval! Update \`lastEnd = curr.end\`.
-    - Else (\`curr.start < lastEnd\`): Overlap detected! **REMOVE \`curr\`** $\\rightarrow$ \`removed++\`.
+    - Else (\`curr.start < lastEnd\`): Overlap detected! **REMOVE \`curr\`** $\rightarrow$ \`removed++\`.
 
 \`\`\`viz:table-diff
 {
@@ -179,7 +179,7 @@ To **MINIMIZE REMOVALS**, we must **MAXIMIZE KEPT INTERVALS**:
 
 **The Structural Invariant: Adjacent Neighbor Overlap Check.**
 1. **Sort intervals by start time**: \`intervals.sort((a, b) => a[0] - b[0])\`.
-2. Iterate $i$ from $0 \\dots N-2$:
+2. Iterate $i$ from $0 \dots N-2$:
    - If \`intervals[i+1].start < intervals[i].end\`:
      - Overlap detected! **Return \`false\`** (One person cannot attend both!).
 3. Return \`true\` if sweep completes without overlaps.
@@ -282,7 +282,7 @@ To **MINIMIZE REMOVALS**, we must **MAXIMIZE KEPT INTERVALS**:
       difficulty: "Hard",
       neetcodeUrl: "https://neetcode.io/problems/minimum-interval-including-query",
       summary: "Sort intervals and queries together, sweep once: a heap keyed by size holds the candidates — offline processing.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners scan every interval for each query independently ($O(Q \\cdot N)$ time).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners scan every interval for each query independently ($O(Q \cdot N)$ time).
 *Why this shatters*: Scanning $Q = 100,000$ queries against $N = 100,000$ intervals takes 10 billion operations (TLE!).
 
 **The Structural Invariant: Offline Query Sorting + Min-Heap Size Candidate Sweep.**

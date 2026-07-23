@@ -31,24 +31,27 @@ const MATH_SYMBOLS: [RegExp, string][] = [
   [/\\in\b/g, "∈"], [/\\notin\b/g, "∉"], [/\\forall/g, "∀"], [/\\exists/g, "∃"],
   [/\\subseteq/g, "⊆"], [/\\subset/g, "⊂"], [/\\cup/g, "∪"], [/\\cap/g, "∩"],
   [/\\emptyset|\\varnothing/g, "∅"],
+  [/\\implies/g, "⇒"], [/\\iff/g, "⇔"],
   [/\\Rightarrow/g, "⇒"], [/\\Leftarrow/g, "⇐"], [/\\rightarrow|\\to\b/g, "→"], [/\\leftarrow/g, "←"],
+  [/\\nearrow/g, "↗"], [/\\searrow/g, "↘"], [/\\swarrow/g, "↙"], [/\\nwarrow/g, "↖"],
   [/\\sum/g, "∑"], [/\\prod/g, "∏"], [/\\sqrt/g, "√"], [/\\partial/g, "∂"], [/\\nabla/g, "∇"],
+  [/\\oplus/g, "⊕"], [/\\otimes/g, "⊗"], [/\\ll\b/g, "≪"], [/\\gg\b/g, "≫"],
   [/\\log\b/g, "log"], [/\\ln\b/g, "ln"], [/\\lg\b/g, "lg"], [/\\bmod\b/g, "mod"],
   [/\\Theta/g, "Θ"], [/\\theta/g, "θ"], [/\\Omega/g, "Ω"], [/\\omega/g, "ω"],
   [/\\alpha/g, "α"], [/\\beta/g, "β"], [/\\gamma/g, "γ"], [/\\delta/g, "δ"],
   [/\\lambda/g, "λ"], [/\\mu/g, "μ"], [/\\pi/g, "π"], [/\\sigma/g, "σ"], [/\\phi/g, "φ"],
-  [/\\lfloor/g, "⌊"], [/\\rfloor/g, "⌋"], [/\\lceil/g, "⌈"], [/\\rceil/g, "⌉"],
+  [/\\floor|\\lfloor/g, "⌊"], [/\\rfloor/g, "⌋"], [/\\ceil|\\lceil/g, "⌈"], [/\\rceil/g, "⌉"],
+  [/\\quad|\\qquad/g, "  "],
   [/\\%/g, "%"], [/\\&/g, "&"], [/\\#/g, "#"], [/\\_/g, "_"],
   [/\\,|\\;|\\:|\\!/g, " "], [/\\ /g, " "], [/\\left|\\right/g, ""],
 ];
 
 // Distinguishes an inline-math span from a stray currency pair like
-// "$1 billion … $3 billion" (real in the Competition Act content). Math is
-// short, and either has a math operator/command or has no internal spaces.
+// "$1 billion … $3 billion" (real in the Competition Act content).
 function looksLikeMath(content: string): boolean {
-  if (content.length > 60) return false; // long → prose, not a formula
-  if (/[₹]|\b(billion|million|trillion|crore|lakh|USD|INR|dollars?)\b/i.test(content)) return false;
-  return /[\\^_=<>≤≥≠+\-/·×∑∏√]|O\(|Θ\(|Ω\(/.test(content) || !/\s/.test(content);
+  if (/[₹]|\b(billion|million|trillion|crore|lakh|USD|INR|dollars?|cents?)\b/i.test(content)) return false;
+  if (!/\s/.test(content)) return true;
+  return /[\\^_=<>≤≥≠+\-*\/·×∑∏√:|&~,;!()[\]{}]|O\(|Θ\(|Ω\(/.test(content);
 }
 
 // Parse `^`/`_` runs (with optional {…} grouping) into <sup>/<sub> nodes.
@@ -87,10 +90,20 @@ function tokenizeScripts(s: string, keyBase: number): ReactNode[] {
 }
 
 function renderMath(tex: string, keyBase: number): ReactNode {
-  let s = tex;
+  let s = tex
+    // Recover control characters resulting from JS string literal evaluation of unescaped backslashes
+    .replace(/\r(ightarrow|ight|eal|eturn|ho)/g, "\\r$1")
+    .replace(/\t(ext|extrm|extbf|extit|o|au|heta|imes|ilde|op|riangle)/g, "\\t$1")
+    .replace(/\n(otin|eq|abla|u|atural|earrow|warrow)/g, "\\n$1")
+    .replace(/\b(eta|mod|inom|ar|ullet|oundary)/g, "\\b$1")
+    // Collapse double backslashes \\ -> \
+    .replace(/\\\\/g, "\\");
+
   for (const [re, rep] of MATH_SYMBOLS) s = s.replace(re, rep);
   // \frac{a}{b} → a⁄b
   s = s.replace(/\\[dt]?frac\{([^{}]*)\}\{([^{}]*)\}/g, "$1⁄$2");
+  // Clean up any remaining backslashes before known LaTeX command names
+  s = s.replace(/\\([a-zA-Z]+)/g, "$1");
   // Split out upright text runs (\text/\mathrm/\operatorname/…) from math runs;
   // words read upright, single-letter variables stay italic for a real math feel.
   const parts: ReactNode[] = [];

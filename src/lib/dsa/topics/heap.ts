@@ -11,7 +11,7 @@ export const heap: DsaTopic = {
   unlocks: ["intervals", "greedy", "advanced-graphs"],
   intro: `Sorting answers every question about order, but it charges O(n log n) up front and goes stale the moment data changes. Very often you need far less: not the full ranking — just *the* minimum, or *the* maximum, right now, with elements arriving and leaving constantly. The heap is the structure that sells exactly that and nothing more: push in O(log n), pop-the-extreme in O(log n), peek in O(1). Buying less lets it charge less, forever, under churn — the quality sorting cannot offer.
 
-Under the hood it is a complete binary tree flattened into an array where each parent outranks its children. The children of index $i$ live at $2i+1$ and $2i+2$, while the parent sits at $\\lfloor(i-1)/2\\rfloor$.`,
+Under the hood it is a complete binary tree flattened into an array where each parent outranks its children. The children of index $i$ live at $2i+1$ and $2i+2$, while the parent sits at $\lfloor(i-1)/2\rfloor$.`,
   problems: [
     {
       slug: "kth-largest-element-in-a-stream",
@@ -19,7 +19,7 @@ Under the hood it is a complete binary tree flattened into an array where each p
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/kth-largest-integer-in-a-stream",
       summary: "A min-heap of size k: the root is the bar every newcomer must clear — and also the answer.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners keep a running array of numbers, append each new streaming number, and re-sort the array descending ($O(N \\log N)$ per \`add()\`).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners keep a running array of numbers, append each new streaming number, and re-sort the array descending ($O(N \log N)$ per \`add()\`).
 *Why this shatters*: For a stream of $N = 100,000$ numbers, sorting repeatedly takes tens of billions of operations! Re-sorting full arrays on streaming data is too slow.
 
 **The Structural Invariant: Capped Size-K Min-Heap.**
@@ -43,7 +43,7 @@ Under the hood it is a complete binary tree flattened into an array where each p
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Why Min-Heap over Max-Heap*: A Max-Heap would store all elements, requiring $O(\\log N)$ insertions. A Min-Heap capped at size $K$ takes only $O(\\log K)$ time per addition and $O(K)$ space.`,
+- *Why Min-Heap over Max-Heap*: A Max-Heap would store all elements, requiring $O(\log N)$ insertions. A Min-Heap capped at size $K$ takes only $O(\log K)$ time per addition and $O(K)$ space.`,
       questions: [
         {
           kind: "mcq",
@@ -72,7 +72,7 @@ Under the hood it is a complete binary tree flattened into an array where each p
       difficulty: "Easy",
       neetcodeUrl: "https://neetcode.io/problems/last-stone-weight",
       summary: "Repeatedly smash the two heaviest stones — a simulation that is only fast if extremes are cheap.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the stone array, pop the top two, smash them, and re-sort the remaining array ($O(N^2 \\log N)$).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the stone array, pop the top two, smash them, and re-sort the remaining array ($O(N^2 \log N)$).
 *Why this shatters*: Repeatedly re-sorting after every single stone collision causes massive overhead.
 
 **The Structural Invariant: Max-Heap Simulation.**
@@ -124,7 +124,7 @@ Under the hood it is a complete binary tree flattened into an array where each p
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/k-closest-points-to-origin",
       summary: "Keep k candidates in a max-heap keyed on distance — evict the farthest whenever a closer one arrives.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate Euclidean distances $\\sqrt{x^2 + y^2}$ for all $N$ points, sort all points ascending ($O(N \\log N)$), and slice the top $K$.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners calculate Euclidean distances $\\sqrt{x^2 + y^2}$ for all $N$ points, sort all points ascending ($O(N \log N)$), and slice the top $K$.
 *Why this shatters*: Full sorting does unnecessary work on $N - K$ points that we do not care about! Also, taking square roots is computationally expensive and introduces floating-point errors.
 
 **The Structural Invariant: Capped Size-K Max-Heap of Distances.**
@@ -177,17 +177,17 @@ Under the hood it is a complete binary tree flattened into an array where each p
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/kth-largest-element-in-an-array",
       summary: "Heap gives O(n log k); quickselect partitions its way to O(n) average — know both, argue the trade.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the entire array descending ($O(N \\log N)$) and return index $K - 1$.
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners sort the entire array descending ($O(N \log N)$) and return index $K - 1$.
 *Why this shatters*: Full sorting does extra work. Can we find the $K$-th largest element in **$O(N)$ average time**?
 
 **The Structural Invariant: QuickSelect (Hoare's Partition).**
 QuickSelect adapts QuickSort's partition logic, but **only recurses into the single half that contains the target index** $Target = N - K$.
 1. Pick a pivot element \`nums[pivot_idx]\`.
-2. **Partition Array**: Rearrange elements so everything $\\le \\text{pivot}$ is on the left, and everything $> \\text{pivot}$ is on the right.
+2. **Partition Array**: Rearrange elements so everything $\le \text{pivot}$ is on the left, and everything $> \text{pivot}$ is on the right.
 3. Let pivot land at index \`p\`:
    - If \`p == Target\`: Return \`nums[p]\` (Found!).
-   - If \`p < Target\`: Target lies in the **right partition** $\\rightarrow$ Recurse on right subarray only!
-   - If \`p > Target\`: Target lies in the **left partition** $\\rightarrow$ Recurse on left subarray only!
+   - If \`p < Target\`: Target lies in the **right partition** $\rightarrow$ Recurse on right subarray only!
+   - If \`p > Target\`: Target lies in the **left partition** $\rightarrow$ Recurse on left subarray only!
 
 \`\`\`viz:array
 {
@@ -258,7 +258,7 @@ QuickSelect adapts QuickSort's partition logic, but **only recurses into the sin
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Math Formula Alternative*: $\\text{Min Time} = \\max(\\text{tasks.length}, (\\text{maxFreq} - 1) \\times (n + 1) + \\text{countMaxFreqTasks})$.`,
+- *Math Formula Alternative*: $\text{Min Time} = \\max(\text{tasks.length}, (\text{maxFreq} - 1) \times (n + 1) + \text{countMaxFreqTasks})$.`,
       questions: [
         {
           kind: "mcq",
@@ -287,7 +287,7 @@ QuickSelect adapts QuickSort's partition logic, but **only recurses into the sin
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/design-twitter-feed",
       summary: "Follow sets in hash maps, tweets in per-user lists, and a heap merging the 10 freshest — a feed in miniature.",
-      body: `**Beginner Intuition & The Naive Fallacy.** Beginners collect all tweets from all followed users, combine them into one list, and sort them descending by timestamp ($O(M \\log M)$ where $M$ is total tweets).
+      body: `**Beginner Intuition & The Naive Fallacy.** Beginners collect all tweets from all followed users, combine them into one list, and sort them descending by timestamp ($O(M \log M)$ where $M$ is total tweets).
 *Why this shatters*: Full sorting re-sorts thousands of old tweets when we **only need the 10 most recent tweets**!
 
 **The Structural Invariant: K-Way Merge of Recency Lists using Max-Heap.**
@@ -358,7 +358,7 @@ Split the stream into two equal halves:
 - **Small Halves (Max-Heap \`small\`)**: Holds the smaller half of numbers. Root is the **MAXIMUM of the small half**.
 - **Large Halves (Min-Heap \`large\`)**: Holds the larger half of numbers. Root is the **MINIMUM of the large half**.
 - **Two Invariants**:
-  1. **Value Order**: Every element in \`small\` $\\le$ every element in \`large\` (\`small.peek() <= large.peek()\`).
+  1. **Value Order**: Every element in \`small\` $\le$ every element in \`large\` (\`small.peek() <= large.peek()\`).
   2. **Balance Constraint**: Sizes differ by **at most 1** (\`|small.size() - large.size()| <= 1\`).
 - **Median Calculation**:
   - If \`small.size() > large.size()\`: \`Median = small.peek()\`.

@@ -26,7 +26,7 @@ Why does this deserve its own chapter? Because of what it kills. An enormous fam
 *Why this shatters*: For $N = 100,000$ days, two nested loops require 5 billion comparisons ($O(N^2)$ time). The key realization is: if you decide to sell on day $i$, the best buy price is simply the **lowest price seen anywhere before day $i$**.
 
 **The Structural Invariant & Running Minimum.**
-- Maintain a single scalar \`min_price\` initialized to $\\infty$, and \`max_profit\` initialized to $0$.
+- Maintain a single scalar \`min_price\` initialized to $\infty$, and \`max_profit\` initialized to $0$.
 - As you sweep rightward through prices:
   - Update \`min_price = min(min_price, current_price)\`.
   - Calculate potential profit: \`current_price - min_price\`.
@@ -69,7 +69,7 @@ def max_profit(prices):
 \`\`\`
 
 **Boundary Traps & Execution Blueprint.**
-- *Monotonically Decreasing Prices*: Inputs like \`[7, 6, 4, 3, 1]\` yield no profitable sales $\\rightarrow$ algorithm safely returns \`0\`.
+- *Monotonically Decreasing Prices*: Inputs like \`[7, 6, 4, 3, 1]\` yield no profitable sales $\rightarrow$ algorithm safely returns \`0\`.
 - *Buy-Before-Sell Guarantee*: Because \`min_price\` is updated before or during the pass, you can never accidentally sell before buying!`,
       questions: [
         {
@@ -185,14 +185,14 @@ def length_of_longest_substring(s):
       body: `**The problem.** You may replace up to \`k\` characters of \`s\` with any uppercase letter. Return the length of the longest substring that can become a single repeated character. \`s = "AABABBA", k = 1\` → \`4\`.
 **The signal.** A window is valid while \`(window length − count of its most frequent char) ≤ k\`. Spotting that "everything except the majority character must be replaced" is exactly what the interviewer is probing for.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners think they need to test replacing every character with every other letter of the alphabet across all substrings ($O(26 \\cdot N^2)$).
+**Beginner Intuition & The Naive Fallacy.** Beginners think they need to test replacing every character with every other letter of the alphabet across all substrings ($O(26 \cdot N^2)$).
 *Why this shatters*: To make a window \`s[L...R]\` consist of identical characters using at most $K$ replacements, we should **keep the most frequent character** in the window and replace all other characters!
 
 **The Structural Invariant & The Validity Equation.**
 - Window length = $(R - L + 1)$.
-- Number of character replacements needed = $\\text{Window Length} - \\text{max\_frequency\_in\_window}$.
+- Number of character replacements needed = $\text{Window Length} - \text{max\_frequency\_in\_window}$.
 - **Validity Condition**:
-  $$\\text{Window Length} - \\text{max\_frequency} \\le K$$
+  $$\text{Window Length} - \text{max\_frequency} \le K$$
 - If valid: Expand \`R++\`.
 - If invalid: Shrink \`L++\` (and decrement count of \`s[L]\`).
 
@@ -270,11 +270,11 @@ def character_replacement(s, k):
       body: `**The problem.** Given \`s1\` and \`s2\`, return \`true\` if \`s2\` contains a permutation of \`s1\` as a contiguous substring. \`s1 = "ab", s2 = "eidbaooo"\` → \`true\` (\`"ba"\`).
 **The signal.** A permutation is just a substring with an *identical character histogram*, so this is a **fixed-size** window (length = \`|s1|\`) sliding one step at a time and comparing two 26-slot counts.
 
-**Beginner Intuition & The Naive Fallacy.** Beginners extract every substring of \`s2\` with length equal to \`s1.length\`, sort both strings, and compare them in $O(N \\cdot K \\log K)$ time.
+**Beginner Intuition & The Naive Fallacy.** Beginners extract every substring of \`s2\` with length equal to \`s1.length\`, sort both strings, and compare them in $O(N \cdot K \log K)$ time.
 *Why this shatters*: Re-sorting windows repeatedly does redundant work! A permutation of \`s1\` is simply any substring with an **identical character frequency distribution**.
 
 **The Structural Invariant: Fixed-Size Sliding Window.**
-- Window size is fixed at $K = \\text{s1.length}$.
+- Window size is fixed at $K = \text{s1.length}$.
 - Maintain two frequency arrays of size 26: \`count1\` (for \`s1\`) and \`count2\` (for current window in \`s2\`).
 - **Slide Window One Step**:
   - Add incoming character \`s2[R]\`: \`count2[s2[R]]++\`.
@@ -456,17 +456,17 @@ def min_window(s, t):
       body: `**The problem.** Given \`nums\` and a window size \`k\`, return the maximum of every contiguous window as it slides across the array. \`nums = [1,3,-1,-3,5,3,6,7], k = 3\` → \`[3,3,5,5,6,7]\`.
 **The signal.** Needing the max of *every* window in O(N) rules out re-scanning and even a heap (removing stale elements is costly). The intended tool is a **monotonic decreasing deque** of indices whose front is always the current window max.
 
-**Beginner Intuition & The Naive Fallacy.** Scanning all $K$ elements for each of the $N - K + 1$ windows takes $O(N \\cdot K)$ time.
-*Why Max-Heap fails*: Using a Max-Heap takes $O(N \\log K)$ time, but removing elements that fall out of the left window requires $O(K)$ search unless complex lazy deletion is implemented.
+**Beginner Intuition & The Naive Fallacy.** Scanning all $K$ elements for each of the $N - K + 1$ windows takes $O(N \cdot K)$ time.
+*Why Max-Heap fails*: Using a Max-Heap takes $O(N \log K)$ time, but removing elements that fall out of the left window requires $O(K)$ search unless complex lazy deletion is implemented.
 
 **The Structural Invariant: The Monotonic Decreasing Deque.**
 We maintain a Double-Ended Queue (Deque) storing **indices** of elements in strictly **decreasing order of value**.
 - *The Dominance Principle*: If a new element \`nums[i]\` is **larger** than elements at the back of the deque, those smaller elements can **NEVER** be the maximum of any current or future window! (They are smaller AND older).
 - **Deque Maintenance per Step**:
   1. **Evict Expired Head**: If \`deque.front() == i - K\`, pop from front (out of window).
-  2. **Evict Dominated Back**: While \`deque.back()\` has value $\\le \\text{nums}[i]$, pop from back.
+  2. **Evict Dominated Back**: While \`deque.back()\` has value $\le \text{nums}[i]$, pop from back.
   3. **Push Current Index**: Push index $i$ to back.
-  4. **Record Max**: For $i \\ge K - 1$, \`res.push(nums[deque.front()])\`.
+  4. **Record Max**: For $i \ge K - 1$, \`res.push(nums[deque.front()])\`.
 
 \`\`\`viz:array
 {
