@@ -450,13 +450,13 @@ def top_k_frequent(nums, k):
       difficulty: "Medium",
       neetcodeUrl: "https://neetcode.io/problems/string-encode-and-decode",
       summary: "Length-prefix framing: the serialization trick real protocols use, in interview miniature.",
-      body: `**The problem.** Design \`encode(list) → string\` and \`decode(string) → list\` that round-trip *any* list of strings — including ones that contain whatever separator you pick. \`["code","love you"]\` must decode back exactly.
+      body: `**The problem.** Design \`encode(strs)\` to serialize a list of strings into a single string by prefixing each string with its character length and a delimiter (e.g., \`"<length>#<string_payload>"\`), and \`decode(s)\` to reconstruct the original list of strings. For example, \`["code","love you"]\` encodes to \`"4#code8#love you"\` (where \`4\` and \`8\` are the lengths of each string) and decodes back to \`["code","love you"]\` exactly.
 **The signal.** A naive delimiter breaks the instant a payload contains it. The interviewer wants **length-prefix framing**: write each string's length before its bytes so decoding is never ambiguous.
 
 **Beginner Intuition & The Naive Fallacy.** Beginners suggest joining strings with a delimiter like \`","\` or \`"#"\`.
 *Why this shatters*: Counterexample: What if a string in the input list itself contains the delimiter, e.g., \`["hello#world", "test"]\`? Joining with \`"#"\` produces \`"hello#world#test"\`. The decoder cannot tell if \`"hello"\` and \`"world"\` were separate strings! Escaping delimiters adds complex edge-case bugs.
 
-**The Structural Invariant: Length-Prefix Framing.** Real-world protocols (TCP, HTTP Content-Length, Protobuf) avoid delimiter ambiguity by putting **metadata (length) before payload**.
+**The Structural Invariant: Length-Prefix Framing.** Real-world protocols (TCP, HTTP Content-Length, Protobuf) avoid delimiter ambiguity by putting **metadata (character length) before payload**.
 - *Format*: \`"<length>#<string_payload>"\` for each word.
 - *Decoding Invariant*: Read digits until encountering \`'#'\`. Parse integer \`L\`. Read exactly the next \`L\` characters as verbatim payload string regardless of content, then jump index by \`L\`.
 
@@ -507,13 +507,13 @@ def decode(s):
       questions: [
         {
           kind: "open",
-          prompt: "Why is the delimiter character '#' required after the length number in length-prefix encoding?",
-          model_answer: "Because the length itself can be multi-digit (e.g., 12 vs 1). Without a delimiter terminating the length integer, '12ab' could be parsed as length 1 or length 12.",
+          prompt: "In length-prefix string encoding (where each string is prefixed with its character length, e.g. '4#code'), why is the delimiter character '#' required immediately after the length number?",
+          model_answer: "Because the string length number itself can be multi-digit (e.g., 12 vs 1). Without a delimiter like '#' terminating the length integer, an encoded string like '12ab' would be ambiguous — the decoder wouldn't know whether the string length is 1 or 12.",
           difficulty: "intermediate"
         },
         {
           kind: "mcq",
-          prompt: "What is the time complexity to encode and decode a list of N strings with total length L?",
+          prompt: "What is the time complexity to encode and decode a list of N strings with total combined length of L characters using length-prefix framing?",
           options: [
             "O(N log N) time for sorting strings.",
             "O(L) time for encoding and O(L) time for decoding.",
