@@ -176,32 +176,70 @@ async function start(
       });
     } else {
       const storySection = storyTopics.get(topic.id);
+      let seedQuestion: {
+        kind: QuestionKind;
+        prompt: string;
+        options?: string[] | null;
+        correct_index?: number | null;
+        correct_indices?: number[] | null;
+        model_answer: string;
+      } | null = null;
+
       let fallbackSummary = topic.summary ?? (topic.key_points as string[]).join(" ");
+
       if (storySection) {
         try {
           const seed = getSeed(storySection.series_slug as string);
-          const section = seed.sections.find(s => s.sectionSlug === storySection.section_slug);
-          if (section) fallbackSummary = section.summary;
-        } catch { /* ignore if seed not found */ }
+          const section = seed.sections.find((s) => s.sectionSlug === storySection.section_slug);
+          if (section) {
+            fallbackSummary = section.summary;
+            if (section.questions && section.questions.length > 0) {
+              seedQuestion = section.questions[i % section.questions.length];
+            }
+          }
+        } catch {
+          /* ignore if seed not found */
+        }
       }
-      
-      // Topic predates the question bank — synthesize a recall prompt locally.
-      snapshot.push({
-        index: snapshot.length,
-        question_id: null,
-        topic_id: topic.id,
-        topic_name: topic.name,
-        category: topic.category,
-        kind: "open",
-        prompt:
-          topic.category === "Computer Science"
-            ? `For the algorithm "${topic.name}", explain the core pattern or recurrence relation used to solve it, and state the time and space complexity of the optimal approach.`
-            : `From memory, explain "${topic.name}" — the core idea and why it matters.`,
-        options: null,
-        correct_index: null,
-        correct_indices: null,
-        model_answer: fallbackSummary,
-      });
+
+      if (seedQuestion) {
+        const isChoice = CHOICE_KINDS.has(seedQuestion.kind);
+        snapshot.push({
+          index: snapshot.length,
+          question_id: null,
+          topic_id: topic.id,
+          topic_name: topic.name,
+          category: topic.category,
+          kind: seedQuestion.kind,
+          prompt: seedQuestion.prompt,
+          options: isChoice
+            ? seedQuestion.kind === "truefalse"
+              ? seedQuestion.options ?? ["True", "False"]
+              : seedQuestion.options ?? null
+            : null,
+          correct_index:
+            seedQuestion.kind === "mcq" || seedQuestion.kind === "truefalse"
+              ? seedQuestion.correct_index ?? null
+              : null,
+          correct_indices: seedQuestion.kind === "multi" ? seedQuestion.correct_indices ?? null : null,
+          model_answer: seedQuestion.model_answer,
+        });
+      } else {
+        // Synthesize a prompt whose model answer directly aligns with the question
+        snapshot.push({
+          index: snapshot.length,
+          question_id: null,
+          topic_id: topic.id,
+          topic_name: topic.name,
+          category: topic.category,
+          kind: "open",
+          prompt: `From memory, explain "${topic.name}" — the core idea, optimal approach, and why it matters.`,
+          options: null,
+          correct_index: null,
+          correct_indices: null,
+          model_answer: fallbackSummary,
+        });
+      }
     }
   });
 

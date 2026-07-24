@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Nav from "@/components/Nav";
+import RichText from "@/components/RichText";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
 import {
   finishQuiz,
@@ -582,7 +583,7 @@ function QuizCarousel({
       {/* Question */}
       {phase === "question" && question && (
         <div className="glass rise p-6">
-          <p className="mb-5 text-lg font-medium leading-relaxed">{question.prompt}</p>
+          <RichText className="mb-5 block text-lg font-medium leading-relaxed">{question.prompt}</RichText>
 
           {question.kind === "truefalse" && question.options ? (
             <div className="grid grid-cols-2 gap-4">
@@ -597,7 +598,7 @@ function QuizCarousel({
                       : "border-white/[0.07] bg-white/[0.03] text-white/80 hover:border-white/[0.15] hover:bg-white/[0.05]"
                   }`}
                 >
-                  {opt}
+                  <RichText>{opt}</RichText>
                 </button>
               ))}
             </div>
@@ -617,7 +618,7 @@ function QuizCarousel({
                   <span className="mr-3 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/[0.07] text-xs font-bold">
                     {String.fromCharCode(65 + i)}
                   </span>
-                  {opt}
+                  <RichText>{opt}</RichText>
                 </button>
               ))}
             </div>
@@ -640,7 +641,7 @@ function QuizCarousel({
                     <span className={`mr-3 inline-flex h-6 w-6 items-center justify-center rounded-lg text-xs font-bold ${picked ? "bg-[#f5b95f] text-[#1a120e]" : "bg-white/[0.07]"}`}>
                       {picked ? "✓" : String.fromCharCode(65 + i)}
                     </span>
-                    {opt}
+                    <RichText>{opt}</RichText>
                   </button>
                 );
               })}

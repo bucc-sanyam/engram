@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { QuestionKind } from "@/lib/types";
+import RichText from "@/components/RichText";
 
 const KIND_LABEL: Record<string, string> = {
   open: "Deep recall",
@@ -86,9 +87,9 @@ export default function QuestionWidget({ questions, color = "#43d6b5" }: { quest
                 </div>
 
                 <div className="min-h-0 flex-1 overflow-y-auto">
-                  <p className="mb-6 text-[15px] font-medium leading-relaxed">
+                  <RichText className="mb-6 block text-[15px] font-medium leading-relaxed">
                     {q.prompt}
-                  </p>
+                  </RichText>
 
                   {!revealed ? (
                     <button
@@ -119,7 +120,7 @@ export default function QuestionWidget({ questions, color = "#43d6b5" }: { quest
                                 <span className="mr-3 text-xs font-bold opacity-50">
                                   {String.fromCharCode(65 + optIdx)}
                                 </span>
-                                {opt}
+                                <RichText>{opt}</RichText>
                                 {isCorrect && <span className="ml-2 text-xs">✓</span>}
                               </div>
                             );
@@ -128,9 +129,9 @@ export default function QuestionWidget({ questions, color = "#43d6b5" }: { quest
                       )}
                       <div className="rounded-xl border border-white/[0.04] bg-white/[0.02] p-4">
                         <div className="micro mb-2" style={{ color }}>Explanation</div>
-                        <p className="text-sm leading-relaxed text-muted">
+                        <RichText className="block text-sm leading-relaxed text-muted">
                           {q.model_answer}
-                        </p>
+                        </RichText>
                       </div>
                     </div>
                   )}

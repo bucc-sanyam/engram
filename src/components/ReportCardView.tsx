@@ -1,5 +1,6 @@
 "use client";
 
+import RichText from "@/components/RichText";
 import type { ReportCard, ReportItem } from "@/lib/types";
 
 export const KIND_LABEL: Record<string, string> = {
@@ -92,7 +93,7 @@ export function ReportItemCard({ item }: { item: ReportItem }) {
         </span>
       </div>
 
-      <p className="mb-4 font-medium leading-relaxed">{item.prompt}</p>
+      <RichText className="mb-4 block font-medium leading-relaxed">{item.prompt}</RichText>
 
       {isChoice && item.options ? (
         <div className="mb-4 space-y-1.5">
@@ -115,7 +116,7 @@ export function ReportItemCard({ item }: { item: ReportItem }) {
                 }`}
               >
                 <span className="mr-2 text-xs font-bold">{String.fromCharCode(65 + i)}</span>
-                {opt}
+                <RichText className="inline">{opt}</RichText>
                 {isCorrect && <span className="ml-2 text-xs">✓{isPicked ? " your pick" : ""}</span>}
                 {isPicked && !isCorrect && <span className="ml-2 text-xs">your pick</span>}
               </div>
@@ -127,19 +128,19 @@ export function ReportItemCard({ item }: { item: ReportItem }) {
         item.answer && (
           <div className="mb-4 rounded-2xl bg-white/[0.03] p-4">
             <div className="micro mb-1.5">Your answer</div>
-            <p className="text-sm leading-relaxed text-white/75">{item.answer}</p>
+            <RichText className="block text-sm leading-relaxed text-white/75">{item.answer}</RichText>
           </div>
         )
       )}
 
-      {item.feedback && <p className="mb-4 text-sm leading-relaxed text-white/85">{item.feedback}</p>}
+      {item.feedback && <RichText className="mb-4 block text-sm leading-relaxed text-white/85">{item.feedback}</RichText>}
 
       {item.correct_answer && (
         <div className="rounded-2xl bg-[#43d6b5]/[0.05] p-4">
           <div className="micro mb-1.5 !text-[#43d6b5]">
             {isChoice ? "Correct answer" : "Model answer"}
           </div>
-          <p className="text-sm leading-relaxed text-muted">{item.correct_answer}</p>
+          <RichText className="block text-sm leading-relaxed text-muted">{item.correct_answer}</RichText>
         </div>
       )}
     </div>
