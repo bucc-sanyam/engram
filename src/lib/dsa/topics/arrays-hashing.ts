@@ -115,7 +115,7 @@ def contains_duplicate(nums):
     { "cells": [0, 0, 0, 0, 0], "note": "Frequency array of size 26 (initialized to 0 for a, b, c, d, e...)" },
     { "cells": [2, 1, 0, 0, 0], "note": "After processing s = 'aab': count['a'] = 2, count['b'] = 1." },
     { "cells": [1, -1, 0, 0, 0], "highlight": [1], "note": "Processing t = 'abb': count['a'] drops to 1, count['b'] drops to -1 (negative count!)." },
-    { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' $\rightarrow$ return false." }
+    { "cells": [1, -1, 0, 0, 0], "note": "Early exit: count['b'] < 0 means 't' has more 'b's than 's' → return false." }
   ],
   "caption": "Valid Anagram — frequency histogram increment/decrement with early exit."
 }

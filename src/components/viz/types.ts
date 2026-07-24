@@ -78,8 +78,13 @@ function fail(msg: string): never {
 /** Parses + shape-validates a raw `viz:<kind>` fence body. Throws on any problem. */
 export function parseVizPayload(kind: string, raw: string): unknown {
   let data: unknown;
+  const cleanRaw = raw
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, " ")
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, " ");
+
   try {
-    data = JSON.parse(raw);
+    data = JSON.parse(cleanRaw);
   } catch (e) {
     fail(`viz:${kind} — invalid JSON (${e instanceof Error ? e.message : "parse error"})`);
   }
