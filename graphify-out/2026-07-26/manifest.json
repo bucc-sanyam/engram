@@ -225,13 +225,13 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785002612.4853103,
-    "ast_hash": "4e9f5c4e736ba4ee73b39fa71234c082",
+    "mtime": 1785004703.5780616,
+    "ast_hash": "bd0b3fd40fe3d61c08dba5fe26d23ed2",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785002828.2351694,
-    "ast_hash": "2f9b2211c05a506a8671bda2d4a25e53",
+    "mtime": 1785004742.4669726,
+    "ast_hash": "ea6b8b0d070774bd2c37ba16daabafe8",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -1155,13 +1155,18 @@
     "semantic_hash": ""
   },
   "scripts/restructure-blogs.mts": {
-    "mtime": 1785002494.2080488,
-    "ast_hash": "d49abc2ee2a0a4f32ff29200fbd88780",
+    "mtime": 1785004669.3143861,
+    "ast_hash": "851f6b54739c8c2fe219aa7dada1d2fa",
     "semantic_hash": ""
   },
   "supabase/schema-blog-body.sql": {
     "mtime": 1784991181.2659514,
     "ast_hash": "1da4d636c9074a92fcaa0c0827edf8b1",
+    "semantic_hash": ""
+  },
+  "scripts/blog-gen.mts": {
+    "mtime": 1785004350.352597,
+    "ast_hash": "b3d2bfad8a6f990c4f82a9740515f42a",
     "semantic_hash": ""
   }
 }

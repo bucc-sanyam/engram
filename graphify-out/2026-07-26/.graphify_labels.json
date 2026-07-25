@@ -51,6 +51,7 @@
   "49": "page.tsx",
   "50": "QuestionKind",
   "51": "Nav.tsx",
+  "52": "page.tsx",
   "53": "Architecture & Urban Planning Story Creator Agent",
   "54": "stories.ts",
   "55": "route.ts",
@@ -79,6 +80,7 @@
   "78": "Political Science Story Creator Agent",
   "79": "Psychiatry & Psychology Story Creator Agent",
   "80": "Science (Physics/Chemistry/Biology) Story Creator Agent",
+  "81": "blog-gen.mts",
   "82": "Sociology & Anthropology Story Creator Agent",
   "83": "Tech & Engineering Story Creator Agent",
   "84": "page.tsx",
@@ -89,6 +91,7 @@
   "89": "New story series: \"Talking with Psychopaths and Savages\" — Plan + Checklist",
   "90": "True Crime & Forensic Casework Story Creator Agent",
   "91": "QuestionKind",
+  "92": "srs.ts",
   "93": "graphify reference: transcribe video and audio",
   "94": "vercel.json",
   "95": "graphify",
@@ -96,6 +99,5 @@
   "98": "page.tsx",
   "99": "stories.ts",
   "100": "Nav.tsx",
-  "102": "BrainScene.tsx",
   "103": "page.tsx"
 }

@@ -331,8 +331,12 @@ function parseBodySections(md: string): { heading: string; content: string }[] {
   const out: { heading: string; content: string }[] = [];
   let cur: { heading: string; content: string } | null = null;
   const pre: string[] = [];
+  let inFence = false;
   for (const line of lines) {
-    const h = line.match(/^#{1,3}\s+(.*)$/);
+    // Never split on a `#` line that sits inside a ``` fence (e.g. a viz:* JSON
+    // diagram or a code block) — only real section headings split.
+    if (/^```/.test(line.trim())) inFence = !inFence;
+    const h = !inFence && line.match(/^#{1,3}\s+(.*)$/);
     if (h) {
       if (cur) out.push(cur);
       cur = { heading: h[1].trim(), content: "" };

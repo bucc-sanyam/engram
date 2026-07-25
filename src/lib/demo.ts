@@ -103,6 +103,25 @@ Spaced repetition is a study *scheduling* technique: you revisit material at inc
 ## How it works
 Memory decays predictably — the **Ebbinghaus forgetting curve** falls off exponentially after you learn something. Instead of cramming, you review at *expanding* intervals: a day, then a few days, then weeks. Each time you successfully recall an item the curve flattens and the next interval stretches further out. An algorithm like **SM-2** turns how well you recalled into the next review date — nail it and the gap grows, stumble and it shrinks.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "learn", "label": "Learn it", "row": 0, "col": 0 },
+    { "id": "d1", "label": "Review · 1 day", "row": 0, "col": 1 },
+    { "id": "d3", "label": "Review · 3 days", "row": 0, "col": 2 },
+    { "id": "w1", "label": "Review · 1 week", "row": 0, "col": 3 },
+    { "id": "m1", "label": "Review · 1 month", "row": 0, "col": 4 }
+  ],
+  "edges": [
+    { "from": "learn", "to": "d1", "label": "recall ✓" },
+    { "from": "d1", "to": "d3", "label": "recall ✓" },
+    { "from": "d3", "to": "w1", "label": "recall ✓" },
+    { "from": "w1", "to": "m1", "label": "recall ✓" }
+  ],
+  "caption": "Each successful recall pushes the next review further out."
+}
+\`\`\`
+
 ## Key points to remember
 1. The **forgetting curve** shows memory decays exponentially without review.
 2. Each successful recall **flattens** the curve and earns a longer interval.
