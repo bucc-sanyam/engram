@@ -37,44 +37,61 @@
  */
 
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { resolve, dirname } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
-// --- dependency-free .env.local loader (scripts aren't run through Next) ---
+// --- dependency-free env loader (scripts aren't run through Next). Walks up
+// from cwd so a worktree picks up the main checkout's .env.local (gitignored,
+// so it isn't shared between worktrees). Nearest file wins. ---
 function loadEnvLocal() {
-  for (const file of [".env.local", ".env"]) {
-    try {
-      const raw = readFileSync(resolve(process.cwd(), file), "utf8");
-      for (const line of raw.split("\n")) {
-        const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);
-        if (!m) continue;
-        const key = m[1];
-        let val = m[2].trim();
-        if (
-          (val.startsWith('"') && val.endsWith('"')) ||
-          (val.startsWith("'") && val.endsWith("'"))
-        ) {
-          val = val.slice(1, -1);
+  let dir = process.cwd();
+  const roots: string[] = [];
+  for (let i = 0; i < 8; i++) {
+    roots.push(dir);
+    const parent = dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+  for (const root of roots) {
+    for (const file of [".env.local", ".env"]) {
+      try {
+        const raw = readFileSync(resolve(root, file), "utf8");
+        for (const line of raw.split("\n")) {
+          const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/i);
+          if (!m) continue;
+          const key = m[1];
+          let val = m[2].trim();
+          if (
+            (val.startsWith('"') && val.endsWith('"')) ||
+            (val.startsWith("'") && val.endsWith("'"))
+          ) {
+            val = val.slice(1, -1);
+          }
+          if (process.env[key] === undefined) process.env[key] = val; // nearest wins
         }
-        if (process.env[key] === undefined) process.env[key] = val;
+      } catch {
+        /* file may not exist — ignore */
       }
-    } catch {
-      /* file may not exist — ignore */
     }
   }
 }
 loadEnvLocal();
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+// Accept the common env-var name variants this project has used.
+const supabaseUrl =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const serviceRoleKey =
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_ROLE;
 const commit = process.argv.includes("--commit");
 const useAi = process.argv.includes("--ai");
 const limitArg = process.argv.indexOf("--limit");
 const limit = limitArg !== -1 ? Number(process.argv[limitArg + 1]) : Infinity;
 
 if (!supabaseUrl || !serviceRoleKey) {
-  console.error("❌ Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY");
-  console.error("   Set these in .env.local before running this script.");
+  console.error("❌ Missing Supabase connection details in .env.local:");
+  console.error(`   • URL          ${supabaseUrl ? "OK" : "MISSING — set NEXT_PUBLIC_SUPABASE_URL (or SUPABASE_URL) to https://<project>.supabase.co"}`);
+  console.error(`   • service role ${serviceRoleKey ? "OK" : "MISSING — set SUPABASE_SERVICE_ROLE_KEY (or SUPABASE_SERVICE_ROLE)"}`);
+  console.error("   The anon key will NOT work — RLS blocks cross-user writes; the service role is required.");
   process.exit(1);
 }
 if (useAi && !process.env.GEMINI_API_KEY) {
