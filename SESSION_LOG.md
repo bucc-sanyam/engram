@@ -5,14 +5,15 @@
 ## 2026-07-25 — Week 1 COMPLETE: PostHog live + ICP + OMTM (growth playbook execution underway)
 - **PostHog analytics LIVE:** added `phx_...` API key to `.env.local`, dev server restarted, events now firing to PostHog. `landed` event confirmed (homepage visits). All 5 funnel events wired and active:
   1. `landed` — first page load
-  2. `guest_started` — "Continue as guest" (login)
+  2. `guest_started` — "Continue as guest" (login) — ✅ tested & confirmed firing
   3. `recall_graded` — quiz report shown (the AHA)
   4. `streak_advanced` — streak advancement
   5. `signed_in` — successful auth
+  - **PostHog init error fixed:** removed errant `loaded` callback that was calling `ph.flush()` (doesn't exist in this version). Events now fire cleanly without console errors. Verified: "landed" + "guest_started" logged and no errors in recent console output after hard refresh + cache clear.
 - **ICP.md written:** beachhead is **Sarah Chen** — 26, L7 SDE at Meta, prepping for senior interviews. Pain: forgets patterns 1–2 weeks after learning. Current: LeetCode + Anki (manual) + Notion (scattered). Payoff: "remember every pattern I've already mastered." Audience: engineers 26–35 going for Big Tech roles. Wedge: coding interview prep (expand later).
 - **OMTM.md written:** **Day-7 Return %** is the north star (≥20% by Week 5). Why: retention predicts everything. If weak, fix the loop; if strong, launch. Tracked via PostHog: users who return day 7–10 unprompted.
 - **RAG diagnostic ready:** `scripts/diagnose-rag.mts` (needs `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` to check if `knowledge_chunks` table exists). Backfill script ready when RAG is confirmed live.
-- **Week 1 exit gate CLEARED:** ✅ PostHog confirmed + RAG status knowable + ICP + OMTM. Next: Week 2 repositioning (hero copy "Learn it once. Never forget it.") + time-to-aha compression.
+- **Week 1 exit gate CLEARED:** ✅ PostHog confirmed (events firing cleanly) + RAG status knowable + ICP + OMTM. Next: Week 2 repositioning (hero copy "Learn it once. Never forget it.") + time-to-aha compression.
 
 ## 2026-07-22 — Paper-mode accent-component rollout to ALL story-series pages (hub + chapter + section)
 - **Why:** the theme-aware accent components (`AccentText`/`AccentPill`/`DifficultyPill` from `src/components/AccentText.tsx`, backed by `viz-theme.ts`) were only wired into the DSA question/chapter pages + the 4 viz primitives. The SQL/SARFAESI/Macro/Competition-Act hub pages — and every series' chapter and section pages — still used raw inline `style={{color: topic.color}}` / `style={{background:${x}1a,color:x}}`, so per-topic pastels stayed illegible on the cream Paper-Mode page (last open sub-item of redesign part 4).
