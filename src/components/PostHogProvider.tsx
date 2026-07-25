@@ -28,9 +28,13 @@ export function PostHogWrapper({ children }: { children: React.ReactNode }) {
           console.log('✅ PostHog initialized successfully');
           const isGuest = document.cookie.includes('knovis_guest=1');
           ph.register({ mode: isGuest ? 'guest' : 'auth' });
+          // Force flush any batched events immediately (for testing)
+          ph.flush();
         },
       });
       (window as any).__POSTHOG_LOADED__ = true;
+      // Force flush events every 3 seconds during development
+      setInterval(() => posthog.flush(), 3000);
     } else if (!apiKey) {
       console.warn('⚠️ PostHog: No API key found. Add NEXT_PUBLIC_POSTHOG_KEY to .env.local and restart the server.');
     }
