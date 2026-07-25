@@ -405,6 +405,9 @@ export async function POST(request: Request) {
         .slice(0, 8)
         .map((k) => sanitizeField(k, 300))
         .filter(Boolean),
+      // Long-form structured article (markdown). sanitizeField keeps newlines
+      // (tab/LF/CR are preserved) so the markdown structure survives.
+      body: sanitizeField(t.body, 8000),
     }))
     .filter((t) => t.name);
   extraction.connections = (extraction.connections ?? [])
@@ -465,6 +468,8 @@ export async function POST(request: Request) {
         .update({
           summary: t.summary,
           key_points: mergedPoints,
+          // Newest material rewrites the structured article for this topic.
+          body: t.body,
           // Fresh material on an old topic → surface it for review again soon.
           next_review_at: new Date().toISOString(),
         })
@@ -479,6 +484,7 @@ export async function POST(request: Request) {
           category: t.category,
           summary: t.summary,
           key_points: t.key_points,
+          body: t.body,
         })
         .select("id")
         .single();

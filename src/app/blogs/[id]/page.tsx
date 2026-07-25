@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import Markdown from "@/components/Markdown";
 import Nav from "@/components/Nav";
 import { KIND_LABEL } from "@/components/ReportCardView";
 import { getLinks, getTopic, getTopics, getTopicQuestions, getTopicSource } from "@/lib/data";
@@ -124,31 +125,41 @@ export default function TopicBlogPage() {
               )}
             </header>
 
-            {/* Lead — the summary, in full */}
-            {topic.summary && (
-              <p className="article-lead mb-10">{topic.summary}</p>
-            )}
+            {topic.body ? (
+              /* Structured article — the full, sectioned read (The gist /
+                 What it is / How it works · Why it matters / Key points /
+                 Watch out for / The takeaway). */
+              <Markdown className="article-body mb-12" vizAccent={color}>
+                {topic.body}
+              </Markdown>
+            ) : (
+              /* Fallback for topics not yet restructured: summary + key ideas. */
+              <>
+                {topic.summary && (
+                  <p className="article-lead mb-10">{topic.summary}</p>
+                )}
 
-            {/* Key ideas, expanded into a read */}
-            {topic.key_points?.length > 0 && (
-              <section className="mb-12">
-                <h2 className="micro mb-6" style={{ color }}>
-                  The key ideas
-                </h2>
-                <ol className="space-y-6">
-                  {topic.key_points.map((k, i) => (
-                    <li key={i} className="flex gap-5">
-                      <span
-                        className="display mt-0.5 shrink-0 text-2xl font-bold tabular-nums opacity-40"
-                        style={{ color }}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <p className="article-body flex-1">{k}</p>
-                    </li>
-                  ))}
-                </ol>
-              </section>
+                {topic.key_points?.length > 0 && (
+                  <section className="mb-12">
+                    <h2 className="micro mb-6" style={{ color }}>
+                      The key ideas
+                    </h2>
+                    <ol className="space-y-6">
+                      {topic.key_points.map((k, i) => (
+                        <li key={i} className="flex gap-5">
+                          <span
+                            className="display mt-0.5 shrink-0 text-2xl font-bold tabular-nums opacity-40"
+                            style={{ color }}
+                          >
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <p className="article-body flex-1">{k}</p>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )}
+              </>
             )}
 
             {/* Every question this topic can ask — with the answers */}

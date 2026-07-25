@@ -49,6 +49,7 @@ create table if not exists public.topics (
   category text not null default 'General',
   summary text,
   key_points jsonb not null default '[]'::jsonb,
+  body text,                                    -- structured long-form article (markdown) for the blog page
   mastery integer not null default 0,          -- 0..100
   review_count integer not null default 0,
   ease real not null default 2.5,              -- SM-2 ease factor

@@ -43,6 +43,9 @@ export interface Topic {
   category: string;
   summary: string | null;
   key_points: string[];
+  /** Structured long-form article (markdown) for the blog page. Null until
+   * generated at ingest or filled by the one-off restructure backfill. */
+  body: string | null;
   mastery: number;
   review_count: number;
   ease: number;
@@ -198,6 +201,7 @@ export interface ExtractionResult {
     category: string;
     summary: string;
     key_points: string[];
+    body: string;
   }[];
   connections: { a: string; b: string; reason: string }[];
   questions: {

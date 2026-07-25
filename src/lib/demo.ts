@@ -55,13 +55,15 @@ const t = (
   key_points: string[],
   mastery: number,
   createdDaysAgo: number,
-  nextReviewInDays: number
+  nextReviewInDays: number,
+  body: string | null = null
 ): Topic => ({
   id,
   name,
   category,
   summary,
   key_points,
+  body,
   mastery,
   review_count: Math.max(0, Math.round(mastery / 25)),
   ease: 2.5,
@@ -91,7 +93,27 @@ export const demoTopics: Topic[] = [
   t("d5", "Spaced Repetition", "Science",
     "Reviewing material at increasing intervals right before you'd forget it. Exploits the spacing effect — one of the most robust findings in memory research.",
     ["Ebbinghaus forgetting curve: memory decays exponentially", "Each successful recall flattens the curve", "SM-2 algorithm schedules reviews from recall quality"],
-    85, 14, 4),
+    85, 14, 4,
+    `## The gist
+Spaced repetition schedules your reviews to land **right before you'd forget** — the least effort for the most durable memory.
+
+## What it is
+Spaced repetition is a study *scheduling* technique: you revisit material at increasing intervals timed to the moment you're about to forget it. It exploits the **spacing effect**, one of the most robust findings in all of memory research.
+
+## How it works
+Memory decays predictably — the **Ebbinghaus forgetting curve** falls off exponentially after you learn something. Instead of cramming, you review at *expanding* intervals: a day, then a few days, then weeks. Each time you successfully recall an item the curve flattens and the next interval stretches further out. An algorithm like **SM-2** turns how well you recalled into the next review date — nail it and the gap grows, stumble and it shrinks.
+
+## Key points to remember
+1. The **forgetting curve** shows memory decays exponentially without review.
+2. Each successful recall **flattens** the curve and earns a longer interval.
+3. **SM-2** converts your recall quality into the next scheduled date.
+4. Reviewing *just before* forgetting is the sweet spot — earlier wastes effort, later loses the memory.
+
+## Watch out for
+Re-reading *feels* productive but barely moves retention — the gains come from **active recall**, actually retrieving the answer before you check. And skipping a due review quietly resets much of your interval progress.
+
+## The takeaway
+Don't study more — study *at the right moment*. Spacing turns forgetting from an enemy into a scheduling signal.`),
   t("d6", "How Memory Consolidates", "Science",
     "New memories are fragile and hippocampus-dependent; over time they consolidate into cortex. Retrieval practice and sleep both strengthen this process.",
     ["Hippocampus encodes fast, cortex stores slow", "Active recall beats re-reading", "Consolidation continues during sleep"],

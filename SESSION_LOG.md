@@ -2,6 +2,21 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-25 — Structured blog body for user topic blogs (spine + AI-regenerate backfill)
+- **Why:** user-generated topic blogs (`/blogs/[id]`, backed by `topics`) rendered as just a `summary` lead + a flat `key_points` list — open-ended and structureless. User asked for a real structure (their draft: Topic→Definition→Working→Important points→Conclusion) applied to all users' blogs in Supabase, with the structure shown for sign-off first.
+- **Structure approved (the "Knovis blog spine", 6 beats):** `## The gist` / `## What it is` / `## How it works` (auto-renamed to `## Why it matters` for non-mechanistic topics — never both) / `## Key points to remember` (numbered; the recall targets) / `## Watch out for` (OPTIONAL — only when the material supports real pitfalls) / `## The takeaway`. Chosen over the naive draft because it front-loads the essence (recall/scan), generalizes "Working" so it fits history/philosophy/business, and upgrades "Conclusion" to a memory anchor. Two decisions taken via AskUserQuestion: **storage = single markdown `body` column** (not typed JSON sections); **backfill = AI-regenerate** (not deterministic reshape).
+- **Scope guard (explicit user check):** ONLY the AI-generated topic blogs (the `topics` table). The hand-authored static story series (DSA / SQL / Macro / SARFAESI / Competition-Act) are pure TS data with zero `topics` rows — the backfill writes only to `topics`, so it structurally cannot touch them, and none of those files were edited.
+- **What shipped (code, verified):**
+  - `supabase/schema.sql` topics gains `body text`; new focused migration `supabase/schema-blog-body.sql` (`alter table ... add column if not exists body text`).
+  - `types.ts`: `Topic.body: string | null`, `ExtractionResult.topics[].body: string`.
+  - `gemini.ts`: shared `BLOG_BODY_SPEC` constant; `extractKnowledge()` now emits `body` per topic in the SAME single call (still 1 Gemini call/ingest); new `generateBlogStructure()` for the backfill.
+  - `/api/ingest`: `body` sanitized (`sanitizeField`, 8000 cap — keeps newlines since codes 9/10/13 are preserved) + written on both insert and merge-update.
+  - `/blogs/[id]/page.tsx`: renders `body` via `Markdown` (`.article-body`, `vizAccent`) when present; else the old summary + "The key ideas" fallback (graceful degradation for un-backfilled topics).
+  - `scripts/restructure-blogs.mts`: one-off backfill (self-loads `.env.local`; only topics with `body IS NULL`; dry-run default, `--commit`, `--limit N`; per-topic try/catch; 1.2s pacing). Grounds each rewrite in the topic's own summary/key_points + original `entries.raw_text`.
+  - `demo.ts`: `t()` helper gains a `body` param; d5 "Spaced Repetition" seeded with a full structured body for verification.
+- **Verified:** `tsc --noEmit` clean; `npm run build` clean (compiled successfully, all SSG pages). Browser (demo): `/blogs/d5` renders all 6 sections in serif long-form with bold/italic emphasis; `/blogs/d1` (no body) correctly shows the fallback layout. Only console error is the pre-existing stale-bundle PostHog `ph.flush` artifact (unrelated). `graphify update .` ran (1397 nodes).
+- **🧑 Owed by user (can't run from here — no service-role/Gemini keys in this env; project's standard manual-apply pattern):** (1) run `supabase/schema-blog-body.sql` in Supabase; (2) `npx tsx scripts/restructure-blogs.mts` (dry-run) then `--commit` to fill existing blogs. New ingests are structured automatically. The fallback means nothing breaks before either step runs.
+
 ## 2026-07-25 — Week 2: outcome-first hero + demo compressed 14→6 steps + site-wide recopy
 - **Positioning pivot (per founder directive): no competitor comparison; hero is the outcome "Learn it once. Never forget it."** Rewrote every site-wide static line off the mechanism/wordplay framing ("second brain", "knowledge meets vision", "sounds like novice") onto the outcome promise:
   - `src/app/layout.tsx` metadata: title → "Knovis — learn it once, never forget it"; description reworked to lead with the timing/outcome.
