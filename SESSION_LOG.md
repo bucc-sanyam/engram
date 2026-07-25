@@ -2,6 +2,14 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-25 — Week 1: PostHog analytics + RAG diagnostics (12-week growth playbook begins)
+- **12-week GROWTH_PLAYBOOK.md created** — a week-by-week execution checklist (Phases A–D: Ideation → Validation → Monetizable loop → Launch). Each week has agent briefs, human tasks, exit gates. Positioned Knovis beachhead: coding-interview prep (interview-preppers are high-intent, already pay for courses/Anki). Two-product tension resolved by letting data decide (Weeks 3–5 validation).
+- **PostHog analytics wired (5 events, all funnels):** `src/components/PostHogProvider.tsx` mounted in `layout.tsx`, all 5 funnel events captured (landed→guest_started→recall_graded→streak_advanced→signed_in) in the right places. `src/lib/analytics.ts` exports the event functions. `mode` (demo/guest/auth) tracked as person property. Events are no-op if `NEXT_PUBLIC_POSTHOG_KEY` is unset, safe for dev.
+- **RAG diagnostic + backfill scripts:** `scripts/diagnose-rag.mts` checks if `knowledge_chunks` table + v1/v2 exist; `scripts/backfill-rag.mts` (dry-run + `--commit` modes) chunks+embeds existing entries into RAG, respects Gemini rate limits. Both ready to run.
+- **Browser verified:** app loads without errors (demo mode), PostHog provider mounts, login page renders with "Continue as guest" event hook in place. `tsc --noEmit` clean.
+- **WEEK1_CHECKLIST.md:** human tasks (PostHog account + env vars, verify events fire, check RAG status, write ICP one-pager, pick OMTM), exit gate (PostHog confirmed + RAG status known + ICP written).
+- **Next:** Weeks 1–2 are sharp positioning + time-to-aha compression (land→aha in <60s). Weeks 3–5 validate beachhead with 20 real users + problem interviews. Weeks 6–8 close the monetizable loop (Stripe + share loop). Weeks 9–12 launch.
+
 ## 2026-07-22 — Paper-mode accent-component rollout to ALL story-series pages (hub + chapter + section)
 - **Why:** the theme-aware accent components (`AccentText`/`AccentPill`/`DifficultyPill` from `src/components/AccentText.tsx`, backed by `viz-theme.ts`) were only wired into the DSA question/chapter pages + the 4 viz primitives. The SQL/SARFAESI/Macro/Competition-Act hub pages — and every series' chapter and section pages — still used raw inline `style={{color: topic.color}}` / `style={{background:${x}1a,color:x}}`, so per-topic pastels stayed illegible on the cream Paper-Mode page (last open sub-item of redesign part 4).
 - **Extended `AccentText`** with an `ariaHidden?: boolean` pass-through (forwarded to the rendered tag) so the decorative hover "→" arrows keep `aria-hidden`.
