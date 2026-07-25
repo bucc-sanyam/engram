@@ -313,7 +313,7 @@ export default function TutorialTour() {
                         ? "Create my account →"
                         : "Start exploring →"
                       : state.step === 0
-                        ? "Show me around →"
+                        ? "Try a quick recall →"
                         : "Next →"}
                   </button>
                 </div>

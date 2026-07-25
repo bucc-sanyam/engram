@@ -43,7 +43,7 @@ export default function Nav() {
             <span className="flex flex-col">
               <span className="display text-lg font-bold leading-tight tracking-tight">Knovis</span>
               <span className="hidden text-[9.5px] leading-tight tracking-wide text-faint sm:block">
-                kno·vis — knowledge meets vision
+                learn it once — never forget it
               </span>
             </span>
             {demo && (

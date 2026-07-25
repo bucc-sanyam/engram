@@ -30,9 +30,9 @@ const jetmono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Knovis — your second brain",
+  title: "Knovis — learn it once, never forget it",
   description:
-    "Knowledge + vision — and yes, it sounds like 'novice' on purpose. Log what you learn, watch it grow into a living knowledge graph, and revise it right before you'd forget.",
+    "Knovis quizzes you the moment before you'd forget — the timing that turns studying into remembering. Log what you learn, and Knovis keeps it from fading.",
 };
 
 export const viewport: Viewport = {

@@ -98,7 +98,7 @@ async function backfill() {
           }
 
           // Embed all chunks for this entry
-          const texts = chunks.map((c) => c.text);
+          const texts = chunks.map((c) => c.content);
           const embeddings = await embedTexts(texts);
 
           // Store (indexContent does the chunking + embedding + storage)

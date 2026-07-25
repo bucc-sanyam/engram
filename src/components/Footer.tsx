@@ -25,10 +25,10 @@ export default function Footer() {
           <div>
             <p className="display text-lg font-bold tracking-tight">Knovis</p>
             <p className="mt-1.5 max-w-xs text-sm leading-relaxed text-faint">
-              kno·vis <span className="italic">(n.)</span>{" "}
-              — knowledge + vision, and yes, it sounds like
-              &ldquo;novice&rdquo; on purpose. We help you see what you know,
-              and keep seeing it.
+              Learn it once, never forget it. Knovis times each review for the
+              moment right before a memory fades — so what you study actually
+              sticks. <span className="italic">(kno·vis</span> — knowledge +
+              vision, and yes, it sounds like &ldquo;novice&rdquo; on purpose.)
             </p>
           </div>
 

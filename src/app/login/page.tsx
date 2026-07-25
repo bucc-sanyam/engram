@@ -84,12 +84,10 @@ export default function LoginPage() {
           <span className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_48px_rgba(255,122,92,0.5)]">
             <BrainIcon className="h-9 w-9 text-[#1a120e]" />
           </span>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome to Knovis</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Learn it once. Never forget it.</h1>
           <p className="mt-2 max-w-sm text-sm text-faint">
-            <em>Knovis</em>{" "}
-            — knowledge plus vision. It sounds like &ldquo;novice,&rdquo;
-            which is fitting: every real learner stays one. Knovis helps you
-            see what you know, and keep seeing it.
+            Knovis quizzes you the moment before you&apos;d forget — the timing
+            that turns studying into remembering. Sign in to pick up your streak.
           </p>
         </div>
 

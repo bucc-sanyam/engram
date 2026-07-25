@@ -2,6 +2,18 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-25 — Week 2: outcome-first hero + demo compressed 14→6 steps + site-wide recopy
+- **Positioning pivot (per founder directive): no competitor comparison; hero is the outcome "Learn it once. Never forget it."** Rewrote every site-wide static line off the mechanism/wordplay framing ("second brain", "knowledge meets vision", "sounds like novice") onto the outcome promise:
+  - `src/app/layout.tsx` metadata: title → "Knovis — learn it once, never forget it"; description reworked to lead with the timing/outcome.
+  - `src/components/Nav.tsx` subtitle (every page): "kno·vis — knowledge meets vision" → "learn it once — never forget it".
+  - `src/app/login/page.tsx`: h1 "Welcome to Knovis" → "Learn it once. Never forget it."; tagline now sells the timing outcome (dropped the novice etymology here).
+  - `src/components/Footer.tsx`: brand blurb leads with the outcome, keeps the "novice" charm parenthetically (below-the-fold brand personality, not the hero).
+- **Time-to-aha compressed (Week-2 exit gate = graded recall in <60s).** The 14-step forced tour (`src/lib/tour.ts` `TOUR_STEPS`) buried the aha (the graded recall demo) at step 5. Restructured to **6 steps with the aha moved to step 2**: (1) hero "Learn it once. Never forget it." → (2) the `review-demo` graded recall (the whole trick) → (3) plan/spaced-rep → (4) streak/momentum → (5) 3D brain → (6) signup ask. Cut the nav-overview, one-tap-recall, calendar, fact, notes, brain-search, blogs, and add steps from the *tour* (features unchanged, just not force-marched). All step copy rewritten outcome-first. Step-0 CTA label in `TutorialTour.tsx` → "Try a quick recall →" (points straight at the aha).
+- **`TutorialTour.tsx` is index-agnostic** (counter = `TOUR_STEPS.length`, relative next/back, `review-demo` works at any index) so the array restructure needed only the one button-label tweak.
+- **Verified in preview (guest/demo, logged-out):** fresh tour shows "TOUR · 1 / 6" with the new hero; one click reaches the graded recall at step 2; answering renders the real `ReportCardView` BigScoreRing report card (100%, genuine grading — not faked). Cold-load → graded report in ~2 clicks, well under 60s. No new console errors (the lingering `ph.flush` entries are stale history from the pre-fix PostHog bundle; current `PostHogProvider` has no `loaded` callback). Tab title reflects new metadata.
+- **Also fixed** a pre-existing tsc error in the Week-1 `scripts/backfill-rag.mts` (`Chunk.text` → `Chunk.content`; the interface exposes `content`). `npx tsc --noEmit` now clean; `graphify update .` ran (1386 nodes).
+- **Not done (deliberately deferred):** surfacing the `/about` Ebbinghaus forgetting-curve chart as a dedicated landing-page section, and the 3 written competitor kill-sentences — both are founder-copy/structure items from the Week-2 checklist, out of scope for this "hero + demo + recopy" pass. `/about` narrative left as-is (already on-message about forgetting).
+
 ## 2026-07-25 — Week 1 COMPLETE: PostHog live + ICP + OMTM (growth playbook execution underway)
 - **PostHog analytics LIVE:** added `phx_...` API key to `.env.local`, dev server restarted, events now firing to PostHog. `landed` event confirmed (homepage visits). All 5 funnel events wired and active:
   1. `landed` — first page load
