@@ -155,6 +155,25 @@ async function sourceTextForTopic(topicId: string): Promise<string> {
     .slice(0, 40000);
 }
 
+/**
+ * Topic ids seeded from a story (DSA/SQL/Macro/…). These are the "custom
+ * created story blogs" and must NEVER get an auto-generated body — only
+ * genuinely user-ingested topics do. Identified via story_sections membership.
+ */
+async function storySeededIds(): Promise<Set<string>> {
+  const ids = new Set<string>();
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await supabase
+      .from("story_sections")
+      .select("topic_id")
+      .range(from, from + 999);
+    if (error) throw new Error(error.message);
+    for (const r of data ?? []) ids.add((r as { topic_id: string }).topic_id);
+    if (!data || data.length < 1000) break;
+  }
+  return ids;
+}
+
 async function run() {
   const mode = useAi ? "AI (Gemini)" : "deterministic (no AI)";
   console.log(`🔄 Blog restructure — ${commit ? "COMMIT" : "DRY-RUN"} · ${mode}\n`);
@@ -171,7 +190,12 @@ async function run() {
     process.exit(1);
   }
 
-  const all = (topics ?? []) as TopicRow[];
+  // Exclude story-seeded topics — only real user-ingested blogs get bodies.
+  const story = await storySeededIds();
+  const fetched = (topics ?? []) as TopicRow[];
+  const all = fetched.filter((t) => !story.has(t.id));
+  const skippedStory = fetched.length - all.length;
+  if (skippedStory > 0) console.log(`(excluding ${skippedStory} story-seeded topic(s))\n`);
   const todo = Number.isFinite(limit) ? all.slice(0, limit) : all;
 
   console.log(`📊 Topics missing a structured body: ${all.length}`);
