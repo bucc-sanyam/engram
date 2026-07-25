@@ -1,7 +1,8 @@
-# 🧠 Knovis — your second brain
+# 🧠 Knovis — learn it once, never forget it
 
 Log what you learn (AI conversations, reading notes), see it as a living knowledge graph,
-and let Gemini quiz you with spaced repetition before you forget it.
+and let Gemini quiz you with spaced repetition at the moment before you'd forget — so what
+you study actually sticks.
 
 ## Features
 
