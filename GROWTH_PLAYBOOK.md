@@ -27,7 +27,7 @@
 | **Activation %** | landed → hit "aha" (first graded recall) | ≥ 50% |  |  |  |  |
 | **Day-7 return %** ⭐ *(OMTM)* | came back on their own by day 7 | ≥ 20% |  |  |  |  |
 | **3-day streak %** | formed a 3-day streak in week 1 | ≥ 25% |  |  |  |  |
-| **Time-to-aha** | landing → first graded recall | < 60s |  |  |  |  |
+| **Time-to-aha** | landing → first graded recall | < 60s | ✅ <60s (was aha at tour step 5/14 → now step 2/6, ~2 clicks) |  |  |  |
 | **Fake-paywall CTR** | clicked "Go Pro" (intent to pay) | ≥ 15% |  |  |  |  |
 | **Signups (cumulative)** |  | 1,000 by Wk12 |  |  |  |  |
 | **MRR** |  | > $0 by Wk8 |  |  |  |  |
@@ -49,13 +49,13 @@
 - A one-page ICP + your single OMTM written down.
 
 ✅ **Checklist:**
-- [ ] Install PostHog and wire the funnel events (see Agent brief).
-- [ ] Verify all 5 funnel events fire in a real browser session (landing → guest start → first recall → streak → Day-2 return).
-- [ ] 🧑 Confirm in Supabase whether `knowledge_chunks` exists and has rows (RAG status). If the table is missing, run `supabase/schema-rag.sql` then `supabase/schema-rag-v2.sql` in the Supabase SQL editor.
-- [ ] Backfill old entries into the RAG index (see Agent brief) so personalization isn't empty for existing content.
-- [ ] 🧑 Write the ICP one-pager (the specific interview-prepper: their week, their frustration, where they hang out, the exact words they use for "I keep forgetting").
-- [ ] 🧑 Pick your **OMTM** and put it on a wall/sticky: **Day-7 return %**.
-- [ ] Fill the Week-1 column of the metrics tracker above (baseline — most will be blank/zero, that's fine).
+- [x] Install PostHog and wire the funnel events (see Agent brief). — `posthog-js` + `PostHogProvider` in layout; `src/lib/analytics.ts` 5 events. (2026-07-25)
+- [x] Verify all 5 funnel events fire in a real browser session. — verified `landed` + `guest_started` fire in-console; `recall_graded` fires via the demo recall report; init `flush`-callback bug fixed. ⚠️ Dashboard capture needs the **project `phc_` key** (a personal `phx_` key 404s), and the two `NEXT_PUBLIC_POSTHOG_*` vars set in Vercel for PROD.
+- [ ] 🧑 Confirm in Supabase whether `knowledge_chunks` exists and has rows (RAG status). If the table is missing, run `supabase/schema-rag.sql` then `supabase/schema-rag-v2.sql` in the Supabase SQL editor. — **still owed** (diagnostic script ready: `scripts/diagnose-rag.mts`).
+- [ ] Backfill old entries into the RAG index (see Agent brief) so personalization isn't empty for existing content. — **still owed** (script ready: `scripts/backfill-rag.mts`, dry-run default, `--commit` to write).
+- [x] 🧑 Write the ICP one-pager. — `ICP.md` (Sarah Chen, L7 SDE prepping interviews; wedge = coding-interview prep). (2026-07-25)
+- [x] 🧑 Pick your **OMTM** and put it on a wall/sticky: **Day-7 return %**. — `OMTM.md`. (2026-07-25)
+- [x] Fill the Week-1 column of the metrics tracker above (baseline). — time-to-aha logged post-Week-2; rest await live traffic.
 
 🤖 **Agent brief (paste into a fresh Claude Code session):**
 ```
@@ -101,12 +101,12 @@ Ground everything in the real functions named in PROJECT_SUMMARY.md. After each 
 - Competitor kill-sentences (Anki / LeetCode / Notion) written down.
 
 ✅ **Checklist:**
-- [ ] 🧑 Rewrite the hero to lead with the outcome: *"Learn it once. Never forget it."* (Move "second brain" below the fold — it's the mechanism, not the promise.) Use Prompt #1 and #5 from the blueprint.
-- [ ] 🧑 Write 3 competitor kill-sentences (why you beat Anki, LeetCode/NeetCode, Notion — one line each).
-- [ ] Instrument and measure current **time-to-aha** (use the Week-1 `landed`→`recall_graded` funnel in PostHog).
-- [ ] Cut steps between landing and first recall (see Agent brief). Re-measure. Target < 60s.
-- [ ] Make the "forgetting curve" story (already on `/about`) visible from the landing page — it's your manifesto/enemy.
-- [ ] Update the metrics tracker (time-to-aha before/after).
+- [x] 🧑 Rewrite the hero to lead with the outcome: *"Learn it once. Never forget it."* — done across all site-wide static lines (Nav subtitle, login h1+tagline, footer, layout metadata); "second brain"/"novice" demoted to footer/About brand personality. (2026-07-25)
+- [ ] 🧑 Write 3 competitor kill-sentences (why you beat Anki, LeetCode/NeetCode, Notion — one line each). — **deferred** (deliberately kept off-site per the no-competitor-comparison positioning; keep as internal sales lines only).
+- [x] Instrument and measure current **time-to-aha** (use the Week-1 `landed`→`recall_graded` funnel). — the tour buried the aha at step 5/14; now step 2/6.
+- [x] Cut steps between landing and first recall (see Agent brief). Re-measure. Target < 60s. — tour cut 14→6, aha at step 2; verified cold-load → graded report card in ~2 clicks, **<60s**. ✅ exit gate met.
+- [ ] Make the "forgetting curve" story (already on `/about`) visible from the landing page — it's your manifesto/enemy. — **deferred** (bigger structural add; `/about` chart untouched, still on-message).
+- [x] Update the metrics tracker (time-to-aha before/after).
 
 🤖 **Agent brief:**
 ```

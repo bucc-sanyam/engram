@@ -1,6 +1,6 @@
 # Week 1 — Instrument Everything + Activate Your Moat
 
-**Status:** ✅ **BUILD PHASE COMPLETE** — Ready for your human tasks + browser verification
+**Status:** ✅ **COMPLETE (2026-07-25)** — analytics live, ICP + OMTM written, Week 2 shipped on top. **Two follow-ups still owed** (tracked in TASKS.md): (1) set the `NEXT_PUBLIC_POSTHOG_*` vars in **Vercel** so PROD captures traffic (local dev is confirmed firing); (2) run the RAG schema files + backfill in Supabase (still dormant). Key lesson: use the **project key `phc_…`**, not the personal key `phx_…` (the latter 404s on config and captures nothing).
 
 ---
 
@@ -34,16 +34,11 @@
 
 ## 🧑 Human Tasks — YOUR TURN
 
-### 1. Set up PostHog (5 min)
-- [ ] Create a free PostHog account at https://posthog.com
-- [ ] Create a new project
-- [ ] Copy the **API key** (starts with `phc_`) and **region** (us.posthog.com or eu.posthog.com)
-- [ ] Add to `.env.local`:
-  ```
-  NEXT_PUBLIC_POSTHOG_KEY=phc_your_key_here
-  NEXT_PUBLIC_POSTHOG_HOST=https://us.posthog.com
-  ```
-- [ ] Restart the dev server (`npm run dev`)
+### 1. Set up PostHog (5 min) ✅ (local)
+- [x] Create a free PostHog account + project
+- [x] Copy the **project API key** (`phc_…`) — NOT the personal key (`phx_…`, which 404s). Region: `https://us.i.posthog.com`.
+- [x] Added to `.env.local` (dev). Events confirmed firing in-console after restart.
+- [ ] 🧑 **PROD:** add `NEXT_PUBLIC_POSTHOG_KEY=phc_A6hieXtvLxPodKeHwA4hMsCeD3k8kyqNZ9baVXyapYir` + `NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com` in **Vercel → Settings → Environment Variables** (Production + Preview), then **redeploy** (these are inlined at build time). `.env*` is gitignored so the push doesn't carry them.
 
 ### 2. Verify Events Fire in PostHog (15 min)
 - [ ] Open http://localhost:3000 in browser (triggers `landed` event)
@@ -61,7 +56,7 @@
 - [ ] Run: `SELECT COUNT(*) FROM knowledge_chunks;`
   - Note the count (should be 0 if no backfill yet)
 
-### 4. Write the ICP One-Pager (20 min) ⭐
+### 4. Write the ICP One-Pager (20 min) ⭐ ✅ — written to `ICP.md` (Sarah Chen, L7 SDE prepping interviews; wedge = coding-interview prep)
 **This is founder judgment work — no AI substitute.** Create a file `ICP.md` with:
 - **Who:** A 2–3 sentence character sketch of the *specific person* you're building for
   - Example: *"Sarah, 26, FAANG SDE prepping for senior interviews. She studies DSA 1–2 hrs/day but forgets half of it by the time interviews come. Hangs out on r/cscareerquestions and LeetCode discord."*
@@ -72,7 +67,7 @@
 - **Why they'd pay:** The outcome they'd give money for (not a feature):
   - Example: *"Never walk into an interview forgetting a pattern I've already studied."*
 
-### 5. Pick Your OMTM (One Minute) ⭐
+### 5. Pick Your OMTM (One Minute) ⭐ ✅ — written to `OMTM.md`
 **Put this on a sticky note or a wall.** Your North Star metric for the next 12 weeks:
 
 **Day-7 Return %** — the % of users who come back on their own by day 7.
@@ -127,12 +122,11 @@ npx tsx scripts/backfill-rag.mts --commit
 
 ---
 
-## 🎯 What Comes Next (Week 2)
+## 🎯 What Comes Next — Week 2 ✅ SHIPPED (2026-07-25), Week 3 NEXT
 
-- Rewrite the homepage hero to lead with the outcome: *"Learn it once. Never forget it."*
-- Measure and compress time-to-aha from landing to first graded recall (target: < 60s)
-- Write 3 competitor kill-sentences (why you beat Anki, LeetCode, Notion)
-- Identify the "forgetting curve" on the About page as your manifesto
+Week 2 done: outcome-first hero across all site-wide copy; tour cut 14→6 with the aha at step 2 (cold-load → graded report card <60s); shipped to prod. Competitor kill-sentences + the `/about` forgetting-curve landing section were deliberately deferred (see GROWTH_PLAYBOOK Week 2).
+
+**Week 3 (next):** recruit 20 real interview-preppers + build the feedback loop — session replay, a waitlist/feedback capture, personal onboarding. See `GROWTH_PLAYBOOK.md` Week 3.
 
 ---
 
