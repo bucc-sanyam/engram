@@ -2,33 +2,43 @@
 
 /**
  * One-off backfill: give every existing USER topic blog a structured markdown
- * `body` (The gist / What it is / How it works · Why it matters / Key points to
- * remember / Watch out for / The takeaway).
+ * `body`.
  *
- * Scope: the `topics` table ONLY — i.e. the AI-generated topic blogs at
- * /blogs/[id]. The hand-authored static story series (DSA / SQL / Macro /
- * SARFAESI / Competition-Act) live in TS data with NO rows here, so they are
- * structurally out of reach and never touched.
+ * TWO modes:
+ *   • DEFAULT (deterministic, NO Gemini): reshapes the topic's existing
+ *     `summary` + `key_points` into a structured body — The gist / What it is /
+ *     Key points to remember. Free, instant, no API keys beyond Supabase.
+ *     Thinner than the AI version (no "How it works" / "Watch out for" /
+ *     "The takeaway" — that content isn't in the existing fields), but it gives
+ *     every old blog real section structure now.
+ *   • --ai (Gemini): regenerates the FULL 6-beat spine grounded in the topic's
+ *     original source text. Richer, one Gemini call per topic. Use this later.
+ *
+ * New ingests already get the full AI-generated structure automatically. This
+ * script only backfills PRE-EXISTING topics.
+ *
+ * Scope: the `topics` table ONLY (the AI-generated blogs at /blogs/[id]). The
+ * hand-authored static story series (DSA / SQL / Macro / SARFAESI /
+ * Competition-Act) live in TS data with NO rows here and are never touched.
  *
  * Safe to re-run: only topics whose `body` is still null are processed, so an
- * interrupted run resumes cleanly and re-runs are no-ops. One Gemini call per
- * topic (grounded in its own summary/key_points + original source text).
+ * interrupted run resumes cleanly and re-runs are no-ops.
  *
  * Prerequisites:
  *   1. Run supabase/schema-blog-body.sql in Supabase (adds the `body` column).
- *   2. NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY + GEMINI_API_KEY
- *      in .env.local (this script auto-loads that file).
+ *   2. NEXT_PUBLIC_SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY in .env.local
+ *      (auto-loaded below). GEMINI_API_KEY is only needed for --ai mode.
  *
  * Run:
- *   npx tsx scripts/restructure-blogs.mts            (DRY-RUN — shows the plan)
- *   npx tsx scripts/restructure-blogs.mts --commit   (writes bodies)
- *   npx tsx scripts/restructure-blogs.mts --commit --limit 5   (small test run first)
+ *   npx tsx scripts/restructure-blogs.mts               (DRY-RUN, deterministic)
+ *   npx tsx scripts/restructure-blogs.mts --commit      (writes, deterministic)
+ *   npx tsx scripts/restructure-blogs.mts --commit --ai (writes, Gemini-rich)
+ *   npx tsx scripts/restructure-blogs.mts --commit --limit 5   (small test run)
  */
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createClient } from "@supabase/supabase-js";
-import { generateBlogStructure } from "@/lib/gemini";
 
 // --- dependency-free .env.local loader (scripts aren't run through Next) ---
 function loadEnvLocal() {
@@ -58,6 +68,7 @@ loadEnvLocal();
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const commit = process.argv.includes("--commit");
+const useAi = process.argv.includes("--ai");
 const limitArg = process.argv.indexOf("--limit");
 const limit = limitArg !== -1 ? Number(process.argv[limitArg + 1]) : Infinity;
 
@@ -66,8 +77,8 @@ if (!supabaseUrl || !serviceRoleKey) {
   console.error("   Set these in .env.local before running this script.");
   process.exit(1);
 }
-if (!process.env.GEMINI_API_KEY) {
-  console.error("❌ Missing GEMINI_API_KEY (needed to generate the structured bodies).");
+if (useAi && !process.env.GEMINI_API_KEY) {
+  console.error("❌ --ai mode needs GEMINI_API_KEY in .env.local.");
   process.exit(1);
 }
 
@@ -81,7 +92,34 @@ type TopicRow = {
   key_points: unknown;
 };
 
-/** Best-effort original source text for grounding — most-recent entries first. */
+/** Split a summary into its first sentence (the gist) and the rest. */
+function firstSentenceAndRest(summary: string): { gist: string; rest: string } {
+  const s = summary.replace(/\s+/g, " ").trim();
+  if (!s) return { gist: "", rest: "" };
+  const m = s.match(/^(.*?[.!?])\s+(.*)$/);
+  if (m && m[2].trim()) return { gist: m[1].trim(), rest: m[2].trim() };
+  return { gist: s, rest: "" };
+}
+
+/**
+ * Deterministic (no-AI) structured body from the fields we already have.
+ * Honest about its limits — it only emits the sections the existing data can
+ * actually support, never fabricating "How it works" / pitfalls / takeaways.
+ */
+function deterministicBody(summary: string | null, key_points: string[]): string {
+  const parts: string[] = [];
+  const { gist, rest } = firstSentenceAndRest(summary ?? "");
+  if (gist) parts.push(`## The gist\n${gist}`);
+  if (rest) parts.push(`## What it is\n${rest}`);
+  if (key_points.length) {
+    parts.push(
+      `## Key points to remember\n${key_points.map((k, i) => `${i + 1}. ${k}`).join("\n")}`
+    );
+  }
+  return parts.join("\n\n");
+}
+
+/** Best-effort original source text for AI grounding — newest entries first. */
 async function sourceTextForTopic(topicId: string): Promise<string> {
   const { data } = await supabase
     .from("entry_topics")
@@ -101,7 +139,8 @@ async function sourceTextForTopic(topicId: string): Promise<string> {
 }
 
 async function run() {
-  console.log(`🔄 Blog restructure — ${commit ? "COMMIT MODE" : "DRY-RUN"}\n`);
+  const mode = useAi ? "AI (Gemini)" : "deterministic (no AI)";
+  console.log(`🔄 Blog restructure — ${commit ? "COMMIT" : "DRY-RUN"} · ${mode}\n`);
 
   // Only topics still missing a structured body → idempotent + resumable.
   const { data: topics, error } = await supabase
@@ -130,10 +169,18 @@ async function run() {
     console.log("📋 DRY-RUN — would restructure (first 10):");
     todo.slice(0, 10).forEach((t) => console.log(`   • ${t.name} (${t.category})`));
     if (todo.length > 10) console.log(`   … and ${todo.length - 10} more`);
-    console.log(`\n🚀 Re-run with --commit to write. This makes ~${todo.length} Gemini call(s).`);
-    console.log("   Tip: start with --commit --limit 5 to spot-check the output first.");
+    console.log(
+      `\n🚀 Re-run with --commit to write.${useAi ? ` This makes ~${todo.length} Gemini call(s).` : " (deterministic — no API calls.)"}`
+    );
+    if (!useAi) console.log("   Add --ai for the richer full-spine Gemini version.");
     return;
   }
+
+  // Lazy-load the Gemini generator only when actually needed (keeps the
+  // deterministic path free of the GEMINI_API_KEY / @google/genai dependency).
+  const generate = useAi
+    ? (await import("@/lib/gemini")).generateBlogStructure
+    : null;
 
   let success = 0;
   let failed = 0;
@@ -143,17 +190,23 @@ async function run() {
       const key_points = Array.isArray(topic.key_points)
         ? (topic.key_points as string[])
         : [];
-      const sourceText = await sourceTextForTopic(topic.id);
-      const body = await generateBlogStructure({
-        name: topic.name,
-        category: topic.category,
-        summary: topic.summary,
-        key_points,
-        sourceText,
-      });
 
-      if (!body || body.trim().length < 40) {
-        console.log(`⏭️  ${topic.name} — model returned an empty body, skipped`);
+      let body: string;
+      if (useAi && generate) {
+        const sourceText = await sourceTextForTopic(topic.id);
+        body = await generate({
+          name: topic.name,
+          category: topic.category,
+          summary: topic.summary,
+          key_points,
+          sourceText,
+        });
+      } else {
+        body = deterministicBody(topic.summary, key_points);
+      }
+
+      if (!body || body.trim().length < 20) {
+        console.log(`⏭️  ${topic.name} — no usable content (empty summary + key_points), skipped`);
         failed++;
         continue;
       }
@@ -171,13 +224,13 @@ async function run() {
       failed++;
     }
 
-    // Gentle pacing so a large backfill doesn't trip the Gemini rate limit.
-    await new Promise((r) => setTimeout(r, 1200));
+    // Pace only the AI path (Gemini rate limit). Deterministic needs no delay.
+    if (useAi) await new Promise((r) => setTimeout(r, 1200));
   }
 
   console.log(`\n📈 Done — restructured: ${success}, failed/skipped: ${failed}`);
   if (failed > 0) {
-    console.log("   Failed topics kept a null body (fallback render still works). Re-run to retry them.");
+    console.log("   Skipped topics kept a null body (fallback render still works). Re-run to retry.");
   }
 }
 

@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "src/app/api/ingest/route.ts": {
-    "mtime": 1784982783.1000159,
-    "ast_hash": "08331d48c708e47b7590a40c403e8b47",
+    "mtime": 1784991163.3575728,
+    "ast_hash": "f95f6f43c6b82247326ea8c86a2f4e57",
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
@@ -90,13 +90,13 @@
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
-    "mtime": 1784982783.1273441,
-    "ast_hash": "7acae92aaac2735c0cd54657b67e2bdf",
+    "mtime": 1784991221.5182574,
+    "ast_hash": "5bcfb97c10d2ca6e8f680d8fb6761886",
     "semantic_hash": ""
   },
   "src/lib/gemini.ts": {
-    "mtime": 1784982783.1359754,
-    "ast_hash": "0573fd0ff4280e226ea4ff16eaac5618",
+    "mtime": 1784991131.780562,
+    "ast_hash": "a3d95e03f3ecd1638368113f0656859e",
     "semantic_hash": ""
   },
   "src/lib/progress.ts": {
@@ -120,13 +120,13 @@
     "semantic_hash": "1cf9332fa62472d782bb7703f2f618a7"
   },
   "src/lib/types.ts": {
-    "mtime": 1784982783.1533701,
-    "ast_hash": "4713d0279318a0d0def2febdc68b07c3",
+    "mtime": 1784991143.2987168,
+    "ast_hash": "976f7c1fdae5f8ce507f39a82510720b",
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
-    "mtime": 1784982783.1555238,
-    "ast_hash": "4e32b8b57a4b7088df2544e14dce19f7",
+    "mtime": 1784991170.0332572,
+    "ast_hash": "357453f8c3257089815b18ce5523c815",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -150,8 +150,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1784982783.009165,
-    "ast_hash": "d44eca879f88feceb30975a5410661c1",
+    "mtime": 1784990059.7610557,
+    "ast_hash": "4c232e18095d94f6f70d0313f57068cd",
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
@@ -295,8 +295,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
-    "mtime": 1784982783.101829,
-    "ast_hash": "99eead1a75b25305c3b9d5dcf8e362ff",
+    "mtime": 1784991256.4939687,
+    "ast_hash": "9dc5f433eff458684f451804f1ba7bc2",
     "semantic_hash": ""
   },
   "src/app/about/page.tsx": {
@@ -1152,6 +1152,16 @@
   "ch1_context.txt": {
     "mtime": 1784982783.014962,
     "ast_hash": "a04e6b8e4c2b3d7f84280158663f94d2",
+    "semantic_hash": ""
+  },
+  "scripts/restructure-blogs.mts": {
+    "mtime": 1784991321.8556068,
+    "ast_hash": "f988287b187d195cb17a06b9b6e241d4",
+    "semantic_hash": ""
+  },
+  "supabase/schema-blog-body.sql": {
+    "mtime": 1784991181.2659514,
+    "ast_hash": "1da4d636c9074a92fcaa0c0827edf8b1",
     "semantic_hash": ""
   }
 }

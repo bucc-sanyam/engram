@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1784984214.1123128,
-    "ast_hash": "b299058cb6697d43951c5747b252e378",
+    "mtime": 1785002336.572022,
+    "ast_hash": "bd6054d568a24c068d6aa5c4d853dbbd",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1784989869.9035907,
-    "ast_hash": "82db873c348704d40a0d9956359fa82b",
+    "mtime": 1785002816.2330093,
+    "ast_hash": "52d9b8ffc86ddb31eb87ae75e486a4c2",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1784988915.319378,
-    "ast_hash": "771bb3d93cc64c140f8a8ee5e4398721",
+    "mtime": 1785002612.4853103,
+    "ast_hash": "4e9f5c4e736ba4ee73b39fa71234c082",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1784989912.2552323,
-    "ast_hash": "826c27beaa6da0809341a96dc203a31b",
+    "mtime": 1785002828.2351694,
+    "ast_hash": "2f9b2211c05a506a8671bda2d4a25e53",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -1155,8 +1155,8 @@
     "semantic_hash": ""
   },
   "scripts/restructure-blogs.mts": {
-    "mtime": 1784991321.8556068,
-    "ast_hash": "f988287b187d195cb17a06b9b6e241d4",
+    "mtime": 1785002494.2080488,
+    "ast_hash": "d49abc2ee2a0a4f32ff29200fbd88780",
     "semantic_hash": ""
   },
   "supabase/schema-blog-body.sql": {

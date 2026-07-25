@@ -131,12 +131,12 @@ export default function Dashboard() {
 
         <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           {/* Left column */}
-          <div className="space-y-6">
+          <div className="min-w-0 space-y-6">
             {/* Today's plan */}
             <section data-tour="plan" className="glass rise rise-1 relative overflow-hidden p-6 sm:p-7">
               <div className="absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[#ff7a5c]/[0.07] blur-3xl" />
               <div className="mb-5 flex items-center justify-between gap-3">
-                <div>
+                <div className="min-w-0">
                   <p className="micro mb-1 flex items-center gap-2 !text-[#ff9a80]">
                     <span className="ping-dot text-[#ff7a5c]" /> Today&apos;s session
                   </p>
@@ -290,7 +290,7 @@ export default function Dashboard() {
           </div>
 
           {/* Right column */}
-          <div className="space-y-6">
+          <div className="min-w-0 space-y-6">
             {/* Fact of the day — pre-generated from the user's own knowledge graph */}
             {fact && (
               <section data-tour="fact" className="rise rise-1 relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#7fd0e8]/[0.08] via-transparent to-[#bfa8f5]/[0.05] p-6 sm:p-7">

@@ -38,6 +38,12 @@
 
 html {
   color-scheme: dark;
+  /* The fixed ambient blobs bleed off-screen by design; without this they
+     create horizontal scroll on narrow (phone) viewports, which widens the
+     initial containing block and stretches the whole layout. `clip` kills the
+     horizontal overflow without creating a scroll container, so sticky/fixed
+     positioning still works (unlike `overflow-x: hidden`). */
+  overflow-x: clip;
 }
 
 body {
@@ -48,6 +54,7 @@ body {
   line-height: 1.65;
   letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 /* ---------- Ambient fluidic mesh background ---------- */
