@@ -2,6 +2,12 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-26 — Blog vibe pass: on-brand section rendering + deployed to main + viz diagrams
+- **Deploy gap fixed:** all prior work was on the worktree branch; `origin/main` (what Vercel builds) was still at `fcc9926`, so prod showed the old render even though the DB had bodies. Fast-forwarded `main` to ship it.
+- **"Looked basic/generic" fix:** the body was rendering `##` as plain white bold. New `BlogBody` + `parseBodySections` in `src/app/blogs/[id]/page.tsx` render the structured body section-by-section — each heading becomes a category-accent `micro` eyebrow (matching the page's other sections), the lead "gist" gets the serif `.article-lead` drop-cap, prose stays `.article-body`. Parser is fence-aware (a viz/code fence's `#` lines never split sections).
+- **Diagrams ("graphs"):** viz:* fences render inside sections (via Markdown→VizBlock, no strictViz for user content). Demo "Spaced Repetition" blog got a `viz:flow` (expanding review intervals) — verified rendering. TF-IDF prod blog got a `viz:flow` (TF × IDF → score) as the exemplar. Viz payload schema: `src/components/viz/types.ts` (array/tree/table-diff/flow/complexity).
+- **Still open:** bespoke diagrams for the other ~15 real user blogs (per-topic authoring — offered to the user, not yet done). Verified locally on demo d5 (styling + flow diagram, no console errors); tsc + build clean; deployed to main.
+
 ## 2026-07-26 — Blog backfill EXECUTED against prod (16 user blogs) + caught story-seeded scope leak
 - **Ran the structured-body backfill against production Supabase.** Env keys added by the user to the MAIN repo `.env.local` (worktrees have separate gitignored env; `scripts/*` now walk up parent dirs to find it, and accept `SUPABASE_SERVICE_ROLE`/`SUPABASE_URL` name variants).
 - **Gemini path abandoned mid-run:** free-tier 429 rate-limits (script paced 1.2s ≈ 50/min ≫ ~15 RPM cap). Got ~29 done then errored out; user asked to generate with Claude directly instead ("not claude api… just recreate the blogs and push to supabase directly"). New harness `scripts/blog-gen.mts` (`count`/`fetch`/`push`/`revert-story`) moves data only — the AGENT writes the bodies, zero LLM API calls.
