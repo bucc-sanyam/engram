@@ -126,12 +126,10 @@ export default function TopicBlogPage() {
             </header>
 
             {topic.body ? (
-              /* Structured article — the full, sectioned read (The gist /
-                 What it is / How it works · Why it matters / Key points /
-                 Watch out for / The takeaway). */
-              <Markdown className="article-body mb-12" vizAccent={color}>
-                {topic.body}
-              </Markdown>
+              /* Structured article rendered section-by-section so each heading
+                 becomes an on-brand accent eyebrow (matching the rest of the
+                 page) instead of a plain markdown heading. */
+              <BlogBody markdown={topic.body} color={color} />
             ) : (
               /* Fallback for topics not yet restructured: summary + key ideas. */
               <>
@@ -286,6 +284,68 @@ export default function TopicBlogPage() {
       </main>
     </>
   );
+}
+
+/**
+ * Renders a structured topic body (markdown with `## ` section headings) as a
+ * sequence of on-brand sections: each heading becomes an accent-coloured `micro`
+ * eyebrow (like "Questions & answers" / "Connected in your brain" on this page)
+ * and the section prose renders as serif `.article-body`. The lead "gist"
+ * section is given the larger `.article-lead` treatment. Falls back to a plain
+ * render if the body has no headings.
+ */
+function BlogBody({ markdown, color }: { markdown: string; color: string }) {
+  const sections = parseBodySections(markdown);
+  if (sections.length === 0) {
+    return (
+      <Markdown className="article-body mb-12" vizAccent={color}>
+        {markdown}
+      </Markdown>
+    );
+  }
+  return (
+    <div className="mb-12 space-y-10">
+      {sections.map((s, i) => {
+        const isLead = i === 0 && /gist|overview|in one line|tl;?dr/i.test(s.heading);
+        return (
+          <section key={i} className="scroll-mt-24">
+            {s.heading && (
+              <h2 className="micro mb-4 flex items-center gap-2.5" style={{ color }}>
+                <span className="h-1 w-1 rounded-full" style={{ background: color }} aria-hidden />
+                {s.heading}
+              </h2>
+            )}
+            <Markdown className={isLead ? "article-lead" : "article-body"} vizAccent={color}>
+              {s.content}
+            </Markdown>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Split a structured markdown body into { heading, content } sections at `##`. */
+function parseBodySections(md: string): { heading: string; content: string }[] {
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
+  const out: { heading: string; content: string }[] = [];
+  let cur: { heading: string; content: string } | null = null;
+  const pre: string[] = [];
+  for (const line of lines) {
+    const h = line.match(/^#{1,3}\s+(.*)$/);
+    if (h) {
+      if (cur) out.push(cur);
+      cur = { heading: h[1].trim(), content: "" };
+    } else if (cur) {
+      cur.content += line + "\n";
+    } else {
+      pre.push(line);
+    }
+  }
+  if (cur) out.push(cur);
+  const preText = pre.join("\n").trim();
+  if (preText) out.unshift({ heading: "", content: preText });
+  return out.map((s) => ({ heading: s.heading, content: s.content.trim() })).filter((s) => s.heading || s.content);
 }
 
 /** Prefer a clean host + path for display, falling back to the raw string. */
