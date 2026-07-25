@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, JetBrains_Mono, Fraunces } from "next/font/google
 import Footer from "@/components/Footer";
 import Prefetcher from "@/components/Prefetcher";
 import TutorialTour from "@/components/TutorialTour";
+import { PostHogWrapper } from "@/components/PostHogProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -49,14 +50,16 @@ export default function RootLayout({
       className={`${inter.variable} ${grotesk.variable} ${jetmono.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <div className="ambient" aria-hidden />
-        <div className="blob blob-ember" aria-hidden />
-        <div className="blob blob-teal" aria-hidden />
-        <div className="blob blob-gold" aria-hidden />
-        {children}
-        <Footer />
-        <TutorialTour />
-        <Prefetcher />
+        <PostHogWrapper>
+          <div className="ambient" aria-hidden />
+          <div className="blob blob-ember" aria-hidden />
+          <div className="blob blob-teal" aria-hidden />
+          <div className="blob blob-gold" aria-hidden />
+          {children}
+          <Footer />
+          <TutorialTour />
+          <Prefetcher />
+        </PostHogWrapper>
       </body>
     </html>
   );

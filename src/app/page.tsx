@@ -7,6 +7,7 @@ import ProgressCalendar from "@/components/ProgressCalendar";
 import ProgressMap from "@/components/ProgressMap";
 import RichText from "@/components/RichText";
 import StoryJourney from "@/components/StoryJourney";
+import { trackLanded } from "@/lib/analytics";
 import {
   getEntriesCached,
   getFactCached,
@@ -40,6 +41,11 @@ export default function Dashboard() {
   const [planError, setPlanError] = useState(false);
   const [stories, setStories] = useState<UserStory[]>([]);
   const [storySections, setStorySections] = useState<StorySection[]>([]);
+
+  // Track "landed" event for analytics funnel
+  useEffect(() => {
+    trackLanded();
+  }, []);
 
   useEffect(() => {
     getProfileCached().then(setProfile).catch(() => {});

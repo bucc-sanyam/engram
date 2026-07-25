@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { clearGuestMode, enableGuestMode } from "@/lib/demo";
 import { hasSeenTour, startTour } from "@/lib/tour";
+import { trackGuestStarted, trackSignedIn } from "@/lib/analytics";
 import { BrainIcon } from "@/components/Nav";
 
 
@@ -50,17 +51,19 @@ export default function LoginPage() {
       if (mode === "signup") {
         // `name` lands in raw_user_meta_data; the handle_new_user trigger
         // copies it into profiles.display_name.
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: { data: { name: name.trim() } },
         });
         if (error) throw error;
+        if (data.user?.id) trackSignedIn(data.user.id);
         clearGuestMode();
         window.location.assign("/");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        if (data.user?.id) trackSignedIn(data.user.id);
         // Real session replaces any guest session. Full page load (not SPA
         // navigation) so the data layer re-evaluates demo mode.
         clearGuestMode();
@@ -170,6 +173,7 @@ export default function LoginPage() {
           <button
             type="button"
             onClick={() => {
+              trackGuestStarted();
               enableGuestMode();
               // Every demo entry replays the guided tour, per design.
               startTour("demo");

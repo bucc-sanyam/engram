@@ -6,6 +6,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import Nav from "@/components/Nav";
 import RichText from "@/components/RichText";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
+import { trackRecallGraded, trackStreakAdvanced } from "@/lib/analytics";
 import {
   finishQuiz,
   markPlanCompleted,
@@ -329,6 +330,10 @@ function GroupRunner({
       try {
         const r = await finishQuiz(session.id);
         setReport(r);
+        // Track the aha moment — user received a graded report
+        trackRecallGraded(r.score_pct);
+        // Track streak advancement (happens server-side; client doesn't know exact value yet)
+        trackStreakAdvanced(0);
         setPhase("report");
       } catch (e) {
         setError(e instanceof Error ? e.message : "Couldn't build your report card");
