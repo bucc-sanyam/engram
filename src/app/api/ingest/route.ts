@@ -144,9 +144,21 @@ async function fetchReadable(url: string): Promise<{ pageTitle: string | null; t
     const remaining = deadline - Date.now();
     if (remaining <= 0) throw new Error("That link took too long to load.");
     res = await fetch(current.toString(), {
+      // Present as a real browser. Many publishers (Medium, Substack,
+      // Cloudflare-fronted sites, news paywalls) return 403 to anything that
+      // self-identifies as a bot, so a "KnovisBot" UA got blocked on exactly
+      // the article links users most want to save. A mainstream desktop-Chrome
+      // UA + the headers a browser actually sends gets those pages to respond.
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; KnovisBot/1.0; +learning-app)",
-        Accept: "text/html,application/xhtml+xml",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        Accept:
+          "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Sec-Ch-Ua": '"Chromium";v="125", "Not.A/Brand";v="24", "Google Chrome";v="125"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"Windows"',
+        "Upgrade-Insecure-Requests": "1",
       },
       signal: AbortSignal.timeout(remaining),
       redirect: "manual",
@@ -163,7 +175,17 @@ async function fetchReadable(url: string): Promise<{ pageTitle: string | null; t
     break;
   }
   if (!res) throw new Error("Couldn't fetch that link.");
-  if (!res.ok) throw new Error(`The page responded with ${res.status}.`);
+  if (!res.ok) {
+    // 401/403/429 usually mean the site is paywalled or actively blocks
+    // automated fetches (bot protection) — no header tweak gets past those,
+    // so point the user at the reliable fallback: paste the text directly.
+    if (res.status === 401 || res.status === 403 || res.status === 429) {
+      throw new Error(
+        "This site blocks automated readers (it's likely paywalled or bot-protected). Open the article and paste its text instead."
+      );
+    }
+    throw new Error(`The page responded with ${res.status}.`);
+  }
   const type = res.headers.get("content-type") ?? "";
   if (!type.includes("html") && !type.includes("text")) {
     throw new Error("That link isn't an article page (unsupported content type).");

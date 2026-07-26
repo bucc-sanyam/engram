@@ -132,7 +132,12 @@ export default function Dashboard() {
         <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           {/* Left column */}
           <div className="min-w-0 space-y-6">
-            {/* Today's plan */}
+            {/* Today's recall — hidden entirely for a brand-new account with no
+                data yet (empty plan). A user with nothing to recall shouldn't be
+                shown a recall card at all; the "Recent learnings" section below
+                already carries the "add your first learning" onboarding path.
+                Still shown while loading, on error, or once there's any data. */}
+            {!(plan && plan.items.length === 0 && !planError) && (
             <section data-tour="plan" className="glass rise rise-1 relative overflow-hidden p-6 sm:p-7">
               <div className="absolute -right-14 -top-14 h-44 w-44 rounded-full bg-[#ff7a5c]/[0.07] blur-3xl" />
               <div className="mb-5 flex items-center justify-between gap-3">
@@ -161,15 +166,6 @@ export default function Dashboard() {
                 <p className="text-sm text-danger">
                   Couldn&apos;t load today&apos;s plan. Check your Supabase & Gemini configuration.
                 </p>
-              )}
-
-              {plan && plan.items.length === 0 && (
-                <div className="py-8 text-center">
-                  <p className="mb-4 text-muted">{stripMarkdown(plan.insight)}</p>
-                  <Link href="/add" className="btn-primary">
-                    Log your first learning
-                  </Link>
-                </div>
               )}
 
               {plan && plan.items.length > 0 && !plan.completed && (
@@ -201,6 +197,7 @@ export default function Dashboard() {
                 </div>
               )}
             </section>
+            )}
 
 
 

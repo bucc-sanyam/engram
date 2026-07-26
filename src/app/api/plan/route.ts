@@ -63,17 +63,30 @@ export async function GET(request: Request) {
     .maybeSingle();
   if (saved) {
     // Reuse the cached plan UNLESS a topic has become due since it was built
-    // (e.g. the user just learned a story section, making its topic due now).
-    // A completed day is left alone. Otherwise a newly-due topic would never
-    // surface until tomorrow's fresh plan.
+    // (e.g. the user just learned a story section or ingested a new note,
+    // making its topic due now). A completed day is left alone.
+    //
+    // Crucially, "became due since it was built" means next_review_at moved
+    // past NOW *after* the plan's build time — NOT every topic that happens to
+    // be due now. A story can seed more due topics than the item cap holds; if
+    // we rebuilt whenever any due topic was missing from the plan, finishing
+    // today's shown items would just swap in the next over-cap batch as fresh
+    // "Due for review today" rows, and the day could never actually complete
+    // (the reported bug). Over-cap topics were due BEFORE build → ignored here;
+    // they naturally roll into tomorrow's fresh plan.
     let reuse = true;
     if (!saved.completed) {
+      const savedPlan = saved.plan as DailyPlan;
+      // Plans built before built_at existed fall back to the local day start —
+      // still filters out topics whose due time predates today entirely.
+      const builtAt = savedPlan.built_at ?? dayStart;
       const { data: dueRows } = await supabase
         .from("topics")
-        .select("id")
+        .select("id, next_review_at")
         .eq("user_id", user.id)
-        .lte("next_review_at", new Date().toISOString());
-      const savedIds = new Set((saved.plan as DailyPlan).items.map((i) => i.topic_id));
+        .lte("next_review_at", new Date().toISOString())
+        .gt("next_review_at", builtAt);
+      const savedIds = new Set(savedPlan.items.map((i) => i.topic_id));
       reuse = (dueRows ?? []).every((r) => savedIds.has(r.id as string));
     }
     if (reuse) {
@@ -100,6 +113,7 @@ export async function GET(request: Request) {
       insight: "Paste your first AI conversation or reading notes and topics will start appearing here.",
       items: [],
       completed: false,
+      built_at: new Date().toISOString(),
     };
     return NextResponse.json(empty);
   }
@@ -175,7 +189,14 @@ export async function GET(request: Request) {
   // already wrote at ingest time — no AI call for the daily plan.
   const { headline, insight } = await composeNarrative(supabase, user.id, picked);
 
-  const plan: DailyPlan = { date: today, headline, insight, items, completed: false };
+  const plan: DailyPlan = {
+    date: today,
+    headline,
+    insight,
+    items,
+    completed: false,
+    built_at: new Date().toISOString(),
+  };
   await supabase
     .from("daily_plans")
     .upsert({ user_id: user.id, plan_date: today, plan, completed: false });

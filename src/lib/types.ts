@@ -208,6 +208,15 @@ export interface DailyPlan {
   insight: string;       // AI-written connection insight between today's topics
   items: PlanItem[];
   completed: boolean;
+  /**
+   * ISO instant the plan was generated. Used to decide whether to rebuild a
+   * cached plan mid-day: only topics that became due AFTER this time (a fresh
+   * ingest, a just-learned story section) warrant a rebuild — topics that were
+   * already due at build time but didn't fit the item cap must NOT resurface,
+   * or finishing today's session would just swap in the next batch forever.
+   * Optional for backwards-compat with plans cached before this field existed.
+   */
+  built_at?: string;
 }
 
 /** Result of Gemini extracting knowledge from a pasted conversation. */
