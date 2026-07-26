@@ -2,6 +2,16 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-26 — The Communication Lab: Phase 2 content (chapters 4-7, now 7 chapters / 22 sections)
+- **Why:** Phase-1 shipped the engine (series scaffold + the C/S/D answer judge) with 3 pilot chapters; user approved authoring the remaining chapters.
+- **Authored 4 new chapters (13 sections)** in `src/lib/english-communication/topics/`, same `EcChapter` shape, prose-only (no `viz`), each section with a MIX of choice questions + `open` scenario prompts (exemplar `model_answer`) + a fact:
+  - `04-everyday-scenarios.ts` — Introducing Yourself · Status Updates That Land · Giving and Receiving Feedback (SBI) · Saying No Without Burning a Bridge (4 sections).
+  - `05-meetings-and-presentations.ts` — Speaking Up in Meetings · Disagreeing Professionally · Presenting & Handling Q&A (3).
+  - `06-written-communication.ts` — Email That Gets Read · Chat & Async Etiquette · Requests & Follow-ups (3).
+  - `07-high-stakes-conversations.ts` — Delivering Bad News · Difficult Conversations · Interviews & the STAR Method (3).
+- **Wiring:** registered all 4 in `EC_CHAPTERS` (`index.ts`). The seed (`englishCommunicationSeed`) + all 3 routes iterate `EC_CHAPTERS`, so they pick the new chapters up automatically — **no seed/route change**. Updated the two hardcoded counts: `/blogs` `STORY_SERIES` meta (3→7 chapters) + the hub's "coming soon" footer line (chapters now exist). Hub stat card is `EC_CHAPTERS.length` (auto).
+- **Verified:** `tsc` clean; `npm run build` clean; `tsx` module eval → 7 chapters / **22 sections**, no duplicate section slugs (matters — sections key seeding by slug). Browser (demo): hub shows all 7 chapters + stat card "7"; `/blogs/english-communication/high-stakes-conversations/interviews-star` renders (STAR body + Learn panel), zero console errors. `graphify update` ran.
+
 ## 2026-07-26 — "The Communication Lab" story series + the Content/Structure/Delivery answer judge
 - **Why:** user wanted a story for working professionals on English communication that also *judges* submitted answers — not just for knowledge, but for how they **structure and deliver** a response. Approved plan: build it on the proven static-story-series pattern + add a communication grading rubric to the existing quiz-finish path. Defaults approved: Phase-1 pilot (3 chapters), include the `improved_answer` rewrite, name "The Communication Lab".
 - **New story series (`src/lib/english-communication/`)** mirroring `psychopaths-and-savages`: `types.ts` (EcChapter/EcSection/EcQuestion), `index.ts` (EC_CHAPTERS registry + EC_COLOR `#3fb4c4` + nav helpers), 3 hand-authored chapters (`topics/01-foundations.ts`, `02-structuring-your-message.ts`, `03-delivery.ts` = 9 sections). Each section body is prose-only (no `viz` fences this pilot) and carries a MIX of questions: mcq/truefalse/multi for framework recall + **1-2 `open` "respond to this scenario" prompts** whose `model_answer` is an exemplar strong response (BLUF / PREP / Pyramid / SBI / STAR taught throughout). Routes: `src/app/blogs/english-communication/{page,[chapter]/page,[chapter]/[slug]/page}.tsx` (13 SSG pages). Registered in `story-seeds.ts` (`englishCommunicationSeed`, category **"Communication"**) + `STORY_SERIES` on `/blogs`.

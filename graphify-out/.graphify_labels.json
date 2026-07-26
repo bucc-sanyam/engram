@@ -99,5 +99,8 @@
   "97": "BrainScene.tsx",
   "98": "page.tsx",
   "99": "stories.ts",
-  "100": "page.tsx"
+  "100": "page.tsx",
+  "101": "index.ts",
+  "102": "Nav.tsx",
+  "103": "RichText.tsx"
 }

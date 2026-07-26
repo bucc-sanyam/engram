@@ -128,7 +128,7 @@ export default function EnglishCommunicationPage() {
         </section>
 
         <p className="mt-10 text-center text-xs leading-relaxed text-faint">
-          A living series — more chapters (meetings &amp; presentations, written comms, high-stakes conversations) are on the way.
+          A living series — from foundations to high-stakes conversations. Read it end to end, or drop into the scenario that&apos;s in front of you today.
         </p>
       </main>
     </>

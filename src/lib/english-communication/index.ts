@@ -2,6 +2,10 @@ import { EcChapter, EcSection } from "./types";
 import { foundations } from "./topics/01-foundations";
 import { structuringYourMessage } from "./topics/02-structuring-your-message";
 import { delivery } from "./topics/03-delivery";
+import { everydayScenarios } from "./topics/04-everyday-scenarios";
+import { meetingsAndPresentations } from "./topics/05-meetings-and-presentations";
+import { writtenCommunication } from "./topics/06-written-communication";
+import { highStakesConversations } from "./topics/07-high-stakes-conversations";
 
 export const EC_SERIES_TITLE = "The Communication Lab";
 export const EC_SERIES_SLUG = "english-communication";
@@ -11,6 +15,10 @@ export const EC_CHAPTERS: EcChapter[] = [
   foundations,
   structuringYourMessage,
   delivery,
+  everydayScenarios,
+  meetingsAndPresentations,
+  writtenCommunication,
+  highStakesConversations,
 ];
 
 export function ecSectionCount(): number {
