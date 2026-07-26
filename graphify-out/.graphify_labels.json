@@ -57,6 +57,7 @@
   "55": "route.ts",
   "56": "route.ts",
   "57": "ReadingThemeContext.tsx",
+  "58": "route.ts",
   "59": "Art, Design & UI/UX Story Creator Agent",
   "60": "Biology & Ecology Story Creator Agent",
   "61": "clear_cache.js",
@@ -98,6 +99,5 @@
   "97": "BrainScene.tsx",
   "98": "page.tsx",
   "99": "stories.ts",
-  "100": "page.tsx",
-  "102": "srs.ts"
+  "100": "page.tsx"
 }

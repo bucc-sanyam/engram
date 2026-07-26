@@ -17,6 +17,7 @@ import {
   demoPlan,
   demoQuestionBank,
   demoGrade,
+  demoCommGrade,
   demoTopicSource,
 } from "./demo";
 import { localDayKey, localDayStartIso, localDayEndIso, tzOffsetMinutes } from "./dates";
@@ -522,6 +523,13 @@ export async function finishQuiz(sessionId: string): Promise<ReportCard> {
         if (!typed) {
           item.skipped = true;
           item.feedback = "You skipped this one — no harm done, it'll come back around.";
+        } else if (topic.category === "Communication") {
+          // The Communication Lab: grade how the answer LANDS (Content/Structure/
+          // Delivery), mirroring the real AI judge so the report card renders it.
+          const g = demoCommGrade(typed);
+          item.score = g.score;
+          item.feedback = g.feedback;
+          item.comm = g.comm;
         } else {
           const g = demoGrade(typed, topic.key_points);
           item.score = g.score;

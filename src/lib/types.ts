@@ -9,6 +9,7 @@ export type Category =
   | "Language"
   | "Mathematics"
   | "Legal"
+  | "Communication"
   | "General";
 
 export const CATEGORY_COLORS: Record<string, string> = {
@@ -22,6 +23,7 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Language: "#7fd0e8",
   Mathematics: "#ffd166",
   Legal: "#5ba4cf",
+  Communication: "#3fb4c4",
   General: "#a8a29e",
 };
 
@@ -156,6 +158,22 @@ export interface ReportItem {
   correct_index: number | null;
   selected_indices?: number[] | null; // multi
   correct_indices?: number[] | null;  // multi
+  /**
+   * Communication coaching breakdown — present ONLY for open answers graded by
+   * the communication rubric (The Communication Lab story). When set, the report
+   * card renders Content/Structure/Delivery sub-scores + tips + a stronger
+   * rewrite of the learner's own answer instead of a plain knowledge grade.
+   */
+  comm?: CommGrade | null;
+}
+
+/** Sub-scores from the communication "answer judge". Each score is 0..5. */
+export interface CommGrade {
+  content: number;   // did the answer actually address the situation
+  structure: number; // opening → logic → close, signposting, framework use
+  delivery: number;  // clarity, concision, tone, professionalism, grammar
+  tips: string[];        // 1-3 concrete, actionable fixes
+  improved_answer?: string; // a stronger rewrite of the learner's own answer
 }
 
 /** The single-AI-call report shown after all answers are submitted. */

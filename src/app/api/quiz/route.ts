@@ -488,6 +488,13 @@ async function finish(
   let strengths: string[] = [];
   let focus: string[] = [];
   let usedAi = false;
+  // Communication Lab sessions grade typed answers on how they COMMUNICATE
+  // (Content/Structure/Delivery), not factual recall. Sessions are per-series,
+  // so any Communication-category typed item means the whole session is comms.
+  const commMode = presented.some(
+    (s) => s.category === "Communication" && (s.kind === "open" || s.kind === "quickfire")
+  );
+  const gradeMode = commMode ? "communication" : "knowledge";
   if (toGrade.length) {
     // Daily AI-grading budget: count today's sessions that already got a real
     // gradeSession() call. Never blocks finishing — just silently downgrades
@@ -511,13 +518,23 @@ async function finish(
 
     if (budgetAvailable) {
       try {
-        const graded = await gradeSession(toGrade);
+        const graded = await gradeSession(toGrade, gradeMode);
+        const clamp5 = (n: number) => Math.max(0, Math.min(5, Math.round(n)));
         for (const g of graded.grades) {
           const item = items.find((i) => i.index === g.index);
           if (!item) continue;
-          item.score = Math.max(0, Math.min(5, Math.round(g.score)));
+          item.score = clamp5(g.score);
           item.feedback = g.feedback;
           if (g.correct_answer) item.correct_answer = g.correct_answer;
+          if (commMode) {
+            item.comm = {
+              content: clamp5(g.content ?? g.score),
+              structure: clamp5(g.structure ?? g.score),
+              delivery: clamp5(g.delivery ?? g.score),
+              tips: (g.tips ?? []).slice(0, 3),
+              improved_answer: g.improved_answer,
+            };
+          }
         }
         summary = graded.summary;
         strengths = graded.strengths ?? [];
@@ -528,15 +545,29 @@ async function finish(
       }
     }
     if (!usedAi) {
-      // Either Gemini failed above, or today's AI-grading budget is spent —
-      // keyword-overlap fallback keeps the session finishable either way.
+      // Either Gemini failed above, or today's AI-grading budget is spent — a
+      // heuristic keeps the session finishable either way. Communication answers
+      // get a structural check (there's no single "correct" answer to keyword-match).
       for (const g of toGrade) {
         const item = items.find((i) => i.index === g.index)!;
-        item.score = heuristicScore(g.answer, g.key_points);
-        item.feedback =
-          item.score >= 4
-            ? "Strong answer — you hit the key ideas. (AI grading was unavailable, so this was scored by keyword match.)"
-            : "You've got part of it, but some key points seem missing. (AI grading was unavailable, so this was scored by keyword match.)";
+        if (commMode) {
+          const h = heuristicCommunicationScore(g.answer);
+          item.score = h.score;
+          item.comm = {
+            content: h.content,
+            structure: h.structure,
+            delivery: h.delivery,
+            tips: ["Lead with your point", "Trim filler and hedges", "Close with the next step"],
+          };
+          item.feedback =
+            "Quick structural check only — full AI coaching wasn't available this time. Aim to lead with your point, keep it concise, and end with a clear next step.";
+        } else {
+          item.score = heuristicScore(g.answer, g.key_points);
+          item.feedback =
+            item.score >= 4
+              ? "Strong answer — you hit the key ideas. (AI grading was unavailable, so this was scored by keyword match.)"
+              : "You've got part of it, but some key points seem missing. (AI grading was unavailable, so this was scored by keyword match.)";
+        }
       }
     }
   }
@@ -650,4 +681,44 @@ function heuristicScore(answer: string, keyPoints: string[]): number {
   ).length;
   const lengthOk = answer.trim().split(/\s+/).length >= 8;
   return Math.min(5, Math.max(1, hits + (lengthOk ? 2 : 0)));
+}
+
+/**
+ * Fallback grader for communication answers when the AI judge is unavailable.
+ * There's no single correct answer to keyword-match, so this scores rough
+ * structural signals: adequate-but-not-rambling length (content), a clear
+ * shape with a crisp opener (structure), and low filler density (delivery).
+ * Deliberately conservative — the UI labels it as a "quick check", not coaching.
+ */
+function heuristicCommunicationScore(
+  answer: string
+): { content: number; structure: number; delivery: number; score: number } {
+  const text = answer.trim();
+  const words = text.split(/\s+/).filter(Boolean);
+  const wc = words.length;
+  const sentences = text.split(/[.!?\n]+/).map((s) => s.trim()).filter(Boolean);
+
+  // Content: substantive, on-length response (too short = thin, too long = unfocused).
+  const content = wc < 6 ? 1 : wc < 20 ? 3 : wc <= 120 ? 4 : 3;
+
+  // Structure: a crisp opener plus a real shape (more than one sentence, not a wall).
+  const firstLen = sentences[0]?.split(/\s+/).filter(Boolean).length ?? 0;
+  let structure = 2;
+  if (sentences.length >= 2) structure += 1;
+  if (firstLen > 0 && firstLen <= 20) structure += 1;
+  if (sentences.length >= 3 && sentences.length <= 8) structure += 1;
+  structure = Math.min(5, structure);
+
+  // Delivery: penalise filler/hedge density and wordiness.
+  const fillers =
+    text.toLowerCase().match(/\b(just|really|very|actually|basically|sort of|kind of|maybe|i think|i guess|sorry)\b/g)?.length ?? 0;
+  const fillerRatio = wc ? fillers / wc : 1;
+  let delivery = 4;
+  if (fillerRatio > 0.06) delivery -= 2;
+  else if (fillerRatio > 0.03) delivery -= 1;
+  if (wc > 140) delivery -= 1;
+  delivery = Math.max(1, Math.min(5, delivery));
+
+  const score = Math.max(1, Math.min(5, Math.round((content + structure + delivery) / 3)));
+  return { content, structure, delivery, score };
 }

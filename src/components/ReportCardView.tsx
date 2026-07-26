@@ -135,10 +135,39 @@ export function ReportItemCard({ item }: { item: ReportItem }) {
 
       {item.feedback && <RichText className="mb-4 block text-sm leading-relaxed text-white/85">{item.feedback}</RichText>}
 
+      {/* Communication judge: Content / Structure / Delivery breakdown + coaching */}
+      {item.comm && (
+        <div className="mb-4 rounded-2xl bg-white/[0.03] p-4">
+          <div className="micro mb-3 !text-[#5fd0da]">How it landed</div>
+          <div className="grid grid-cols-3 gap-3">
+            <CommMeter label="Content" score={item.comm.content} />
+            <CommMeter label="Structure" score={item.comm.structure} />
+            <CommMeter label="Delivery" score={item.comm.delivery} />
+          </div>
+          {item.comm.tips && item.comm.tips.length > 0 && (
+            <ul className="mt-4 space-y-1.5">
+              {item.comm.tips.map((tip, i) => (
+                <li key={i} className="flex gap-2 text-sm leading-relaxed text-white/75">
+                  <span className="shrink-0 text-[#5fd0da]">→</span>
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      {item.comm?.improved_answer && (
+        <div className="mb-4 rounded-2xl bg-[#3fb4c4]/[0.07] p-4">
+          <div className="micro mb-1.5 !text-[#5fd0da]">A stronger version</div>
+          <RichText className="block text-sm leading-relaxed text-white/80">{item.comm.improved_answer}</RichText>
+        </div>
+      )}
+
       {item.correct_answer && (
         <div className="rounded-2xl bg-[#43d6b5]/[0.05] p-4">
           <div className="micro mb-1.5 !text-[#43d6b5]">
-            {isChoice ? "Correct answer" : "Model answer"}
+            {isChoice ? "Correct answer" : item.comm ? "What a strong answer nails" : "Model answer"}
           </div>
           <RichText className="block text-sm leading-relaxed text-muted">{item.correct_answer}</RichText>
         </div>
@@ -163,6 +192,26 @@ export function BigScoreRing({ pct }: { pct: number }) {
         {pct}%
       </text>
     </svg>
+  );
+}
+
+/** A labelled 0-5 bar for one communication axis (Content / Structure / Delivery). */
+function CommMeter({ label, score }: { label: string; score: number }) {
+  const pct = (Math.max(0, Math.min(5, score)) / 5) * 100;
+  const color = score >= 4 ? "#43d6b5" : score >= 3 ? "#f5b95f" : "#f87171";
+  return (
+    <div>
+      <div className="mb-1.5 flex items-baseline justify-between gap-1">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-faint">{label}</span>
+        <span className="text-xs font-bold tabular-nums" style={{ color }}>
+          {score}
+          <span className="text-faint">/5</span>
+        </span>
+      </div>
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07]">
+        <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
+      </div>
+    </div>
   );
 }
 

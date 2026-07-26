@@ -40,8 +40,8 @@
     "semantic_hash": ""
   },
   "src/app/api/quiz/route.ts": {
-    "mtime": 1784982783.1007206,
-    "ast_hash": "87facd19d87bcf4c3ba6081645d1e8c5",
+    "mtime": 1785054337.9640267,
+    "ast_hash": "2045a9be27b1a011a0f420c585440989",
     "semantic_hash": ""
   },
   "src/app/auth/callback/route.ts": {
@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785002336.572022,
-    "ast_hash": "bd6054d568a24c068d6aa5c4d853dbbd",
+    "mtime": 1785043046.0909328,
+    "ast_hash": "e52e016eac0d2afb6c437eee4796380b",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -85,18 +85,18 @@
     "semantic_hash": ""
   },
   "src/lib/data.ts": {
-    "mtime": 1784982783.1264982,
-    "ast_hash": "a3a4ad21df6f20182b5e039b6f2e46d7",
+    "mtime": 1785056938.1924164,
+    "ast_hash": "36093f63cd7f710858631ded78c08799",
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
-    "mtime": 1785005882.1146019,
-    "ast_hash": "fc2269cab38d4e85d6be54fb93ec90df",
+    "mtime": 1785056921.359536,
+    "ast_hash": "683590d870da842131b4e0899dd89a35",
     "semantic_hash": ""
   },
   "src/lib/gemini.ts": {
-    "mtime": 1785038888.52097,
-    "ast_hash": "3e828aad9b9ae8b85551b261246abcf4",
+    "mtime": 1785054266.2272575,
+    "ast_hash": "eb7554b317ce35fc45e9ffd749e78aa6",
     "semantic_hash": ""
   },
   "src/lib/progress.ts": {
@@ -120,8 +120,8 @@
     "semantic_hash": "1cf9332fa62472d782bb7703f2f618a7"
   },
   "src/lib/types.ts": {
-    "mtime": 1784991143.2987168,
-    "ast_hash": "976f7c1fdae5f8ce507f39a82510720b",
+    "mtime": 1785051923.0646777,
+    "ast_hash": "9c65dea4c385bbc9f32285293737ef6d",
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
@@ -220,13 +220,13 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785042509.1433918,
-    "ast_hash": "e22f6b23080791d19f584621159f3e85",
+    "mtime": 1785043285.175244,
+    "ast_hash": "004648eecfb238b9b1553ab729bb763e",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785042495.2109501,
-    "ast_hash": "f611005b08dfb895abea011c9d6ecd61",
+    "mtime": 1785043266.642647,
+    "ast_hash": "d8a1ccf5f588deb8786e2570aeeff549",
     "semantic_hash": ""
   },
   "TASKS.md": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1784982783.1059127,
-    "ast_hash": "887e3b98d825b3816e7f562bcf2e5894",
+    "mtime": 1785053577.1241727,
+    "ast_hash": "3b06f6f0283c835cc1bf0fab700ff827",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "src/components/ReportCardView.tsx": {
-    "mtime": 1784982783.1156871,
-    "ast_hash": "c9b5f1327298f55afd14ad6768516879",
+    "mtime": 1785055781.0737803,
+    "ast_hash": "535b931668260e97297545f543a81477",
     "semantic_hash": ""
   },
   "src/lib/chunk.ts": {
@@ -745,8 +745,8 @@
     "semantic_hash": ""
   },
   "src/lib/story-seeds.ts": {
-    "mtime": 1784982783.151484,
-    "ast_hash": "c3a2faa6a328f3fe1f7afd870071d810",
+    "mtime": 1785053572.4000018,
+    "ast_hash": "7a3299e10a1b63ed8343979fc297dcc8",
     "semantic_hash": ""
   },
   "prompts/story-agents/architecture-urban-planning-agent.md": {
@@ -935,8 +935,8 @@
     "semantic_hash": ""
   },
   "src/app/recall/page.tsx": {
-    "mtime": 1784984298.9829602,
-    "ast_hash": "5fe710f26579e896d7eae62b23992dd3",
+    "mtime": 1785043065.6587393,
+    "ast_hash": "61340ea05fb4d0a8ce303def34bdfde7",
     "semantic_hash": ""
   },
   "src/components/viz/ArrayViz.tsx": {
@@ -1167,6 +1167,46 @@
   "scripts/blog-gen.mts": {
     "mtime": 1785038997.8135858,
     "ast_hash": "e261dd7a6159725d54233b321e5b0337",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/english-communication/[chapter]/[slug]/page.tsx": {
+    "mtime": 1785054222.1949148,
+    "ast_hash": "c595ae59c3025f28f6e52fb57abafb89",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/english-communication/[chapter]/page.tsx": {
+    "mtime": 1785053623.8873982,
+    "ast_hash": "9a9256d54a208380caa162cea4d1e82c",
+    "semantic_hash": ""
+  },
+  "src/app/blogs/english-communication/page.tsx": {
+    "mtime": 1785053603.573147,
+    "ast_hash": "15f469f1c46a5742716e10a8bcb3066e",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/index.ts": {
+    "mtime": 1785053556.6659443,
+    "ast_hash": "0f8705a5d29574be9f873e502cbcb7d1",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/topics/01-foundations.ts": {
+    "mtime": 1785051990.240791,
+    "ast_hash": "bd49d35426a9b82144e85df48b595e30",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/topics/02-structuring-your-message.ts": {
+    "mtime": 1785052065.0886915,
+    "ast_hash": "6ff1b0938603dc1f21c7120be7433bb0",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/topics/03-delivery.ts": {
+    "mtime": 1785053544.8890522,
+    "ast_hash": "bddc06d24a2632537668302909d837a8",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/types.ts": {
+    "mtime": 1785051930.615554,
+    "ast_hash": "edf6ec6f97d0236cf4b2b85862e97cee",
     "semantic_hash": ""
   }
 }

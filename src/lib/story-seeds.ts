@@ -9,6 +9,8 @@ import { MACROECONOMICS_CHAPTERS } from "./macroeconomics";
 import type { MacroQuestion } from "./macroeconomics/types";
 import { PS_CHAPTERS, PS_SERIES_TITLE } from "./psychopaths-and-savages";
 import type { PsQuestion } from "./psychopaths-and-savages/types";
+import { EC_CHAPTERS, EC_SERIES_TITLE } from "./english-communication";
+import type { EcQuestion } from "./english-communication/types";
 
 export interface SeedSection {
   chapterSlug: string;
@@ -18,7 +20,7 @@ export interface SeedSection {
   category: string;
   summary: string;
   keyPoints: string[];
-  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[] | DsaQuestion[] | PsQuestion[];
+  questions: CompActQuestion[] | SarfaesiQuestion[] | MacroQuestion[] | DsaQuestion[] | PsQuestion[] | EcQuestion[];
   facts: string[];
 }
 
@@ -143,6 +145,27 @@ function psychopathsAndSavagesSeed(): SeriesSeed {
   return { seriesSlug: "psychopaths-and-savages", title: PS_SERIES_TITLE, sections };
 }
 
+function englishCommunicationSeed(): SeriesSeed {
+  const sections: SeedSection[] = [];
+  for (const chapter of EC_CHAPTERS) {
+    for (const section of chapter.sections) {
+      sections.push({
+        chapterSlug: chapter.slug,
+        sectionSlug: section.slug,
+        name: section.title,
+        // "Communication" category routes open answers to the communication
+        // judge at quiz-finish (see src/app/api/quiz/route.ts).
+        category: "Communication",
+        summary: section.summary,
+        keyPoints: [],
+        questions: section.questions ?? [],
+        facts: section.facts ?? [],
+      });
+    }
+  }
+  return { seriesSlug: "english-communication", title: EC_SERIES_TITLE, sections };
+}
+
 const SERIES: Record<string, () => SeriesSeed> = {
   "competition-act": compActSeed,
   "dsa": dsaSeed,
@@ -150,6 +173,7 @@ const SERIES: Record<string, () => SeriesSeed> = {
   "sarfaesi-act": sarfaesiSeed,
   "macroeconomics": macroeconomicsSeed,
   "psychopaths-and-savages": psychopathsAndSavagesSeed,
+  "english-communication": englishCommunicationSeed,
 };
 
 export function getSeed(seriesSlug: string): SeriesSeed {

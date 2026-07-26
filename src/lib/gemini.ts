@@ -269,17 +269,40 @@ export interface SessionGradeInput {
 }
 
 export interface SessionGradeResult {
-  grades: { index: number; score: number; feedback: string; correct_answer: string }[];
+  grades: {
+    index: number;
+    score: number;
+    feedback: string;
+    correct_answer: string;
+    // Communication mode only — Content/Structure/Delivery sub-scores (0-5),
+    // coaching tips, and a stronger rewrite of the learner's own answer.
+    content?: number;
+    structure?: number;
+    delivery?: number;
+    tips?: string[];
+    improved_answer?: string;
+  }[];
   summary: string;
   strengths: string[];
   focus: string[];
 }
 
+export type GradeMode = "knowledge" | "communication";
+
 /**
  * Grade ALL of a session's typed answers in ONE call and write the report-card
  * narrative. This is the only AI call in the whole review flow.
+ *
+ * `mode` selects the rubric: "knowledge" (default) grades correctness against
+ * the topic's reference material; "communication" grades a workplace-scenario
+ * answer on Content / Structure / Delivery and returns coaching + a rewrite —
+ * used by The Communication Lab story (topics with category "Communication").
  */
-export async function gradeSession(items: SessionGradeInput[]): Promise<SessionGradeResult> {
+export async function gradeSession(
+  items: SessionGradeInput[],
+  mode: GradeMode = "knowledge"
+): Promise<SessionGradeResult> {
+  if (mode === "communication") return gradeCommunicationSession(items);
   return generateJson<SessionGradeResult>(`You are grading a learner's spaced-repetition quiz session. Be encouraging but honest — accurate grading drives their revision schedule.
 
 Grade EVERY item below. Score 0-5: 0 = blank/irrelevant, 1 = mostly wrong, 2 = fragments but big gaps, 3 = core idea right with notable gaps or errors, 4 = solid with minor omissions, 5 = complete and accurate.
@@ -303,4 +326,48 @@ Also return an overall report:
 - "focus": 1-3 short phrases naming what to revisit next.
 
 Return JSON: { "grades": [{ "index": number, "score": number, "feedback": string, "correct_answer": string }], "summary": string, "strengths": string[], "focus": string[] }`);
+}
+
+/**
+ * The "answer judge" for The Communication Lab. Each item is a workplace
+ * COMMUNICATION scenario — the learner had to write/say a response. We grade the
+ * response itself (not factual recall) on three axes and coach them to a
+ * stronger version. Still ONE Gemini call for the whole session.
+ */
+async function gradeCommunicationSession(items: SessionGradeInput[]): Promise<SessionGradeResult> {
+  return generateJson<SessionGradeResult>(`You are an executive communication coach grading how a working professional RESPONDED to a workplace scenario. You are NOT grading factual knowledge — you are judging how well they communicate. Be specific, encouraging, and honest: your job is to make them a sharper communicator.
+
+For EACH item, score three axes from 0-5 (0 = absent/blank, 3 = competent with clear gaps, 5 = excellent):
+- "content": did the response actually address the situation and say the right substance? (Did they answer the real question, make the right call, include what mattered?)
+- "structure": is it well-organised? (Leads with the point/bottom line, logical flow, uses a sensible shape like BLUF/PREP/STAR where relevant, clean close — not rambling or buried.)
+- "delivery": how does it land? (Clarity, concision, professional yet human tone, confidence without arrogance, grammar and word choice, no filler or hedging pile-ups.)
+
+The "reference answer" shown for each item is ONE example of a strong response — a north star, NOT the only correct answer. Reward any response that communicates well, even if it differs from the reference. A short, clear, well-structured answer can score 5.
+
+ITEMS:
+${items
+  .map(
+    (i) => `[item ${i.index}] Skill focus: ${i.topic}
+What good looks like (context): ${i.summary ?? ""}
+${i.reference_answer ? `Example of a strong response: ${i.reference_answer}` : ""}
+Scenario / prompt: ${i.question}
+The learner's response: """${i.answer.slice(0, 3000)}"""`
+  )
+  .join("\n\n")}
+
+For each item return:
+- "index" (echo it back)
+- "content", "structure", "delivery" (each 0-5)
+- "score": the overall 0-5 for this response — roughly the average of the three axes, but weight the axis that most affects whether the message would actually work.
+- "feedback": 2-3 sentences addressing the learner as "you" — name the single biggest strength and the single most valuable fix. Be concrete (quote or reference their actual words).
+- "tips": 1-3 short, concrete, actionable phrases they can apply next time (e.g. "Lead with the ask, not the backstory", "Cut the three hedges in your first line").
+- "improved_answer": a stronger rewrite of THEIR answer (max 80 words) — keep their intent and any good specifics, but fix the structure and delivery so they can see the upgrade, not just be told about it.
+- "correct_answer": one sentence naming what a great response to THIS scenario nails (the principle, not a full script).
+
+Also return an overall report:
+- "summary": 2-3 sentences on their communication across the session, addressed as "you". Plain prose, no markdown.
+- "strengths": 1-3 short phrases naming communication strengths they showed.
+- "focus": 1-3 short phrases naming the communication habits to work on next.
+
+Return JSON: { "grades": [{ "index": number, "content": number, "structure": number, "delivery": number, "score": number, "feedback": string, "tips": string[], "improved_answer": string, "correct_answer": string }], "summary": string, "strengths": string[], "focus": string[] }`);
 }

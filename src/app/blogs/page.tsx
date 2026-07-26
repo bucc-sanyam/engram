@@ -66,6 +66,15 @@ const STORY_SERIES = [
     meta: "12 chapters",
     desc: "A deep dive into the minds of predators. Are they clinical psychopaths, or unrestrained savages?",
   },
+  {
+    href: "/blogs/english-communication",
+    label: "The Communication Lab",
+    tag: "Communication",
+    color: "#3fb4c4",
+    title: "English communication for working professionals",
+    meta: "3 chapters · scenario grading",
+    desc: "Speak and write to be understood — with an AI that judges not just what you say, but how you structure and deliver it.",
+  },
 ];
 
 export default function BlogsPage() {

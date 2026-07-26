@@ -169,6 +169,10 @@ Don't study more — study *at the right moment*. Spacing turns forgetting from 
     "Improvement comes from focused practice at the edge of ability with immediate feedback — not from repetition of what's already comfortable.",
     ["Practice at the edge of current skill", "Immediate feedback is essential", "Mental representations distinguish experts"],
     38, 4, 0),
+  t("d15", "Delivering Bad News at Work", "Communication",
+    "Breaking difficult news to a manager or client clearly and professionally — lead with brief framing, be direct about the substance, warm about the person, and always propose a path forward.",
+    ["Lead with the bottom line — don't bury it", "Be direct about the substance, warm about the person", "Always pair bad news with a proposed next step"],
+    20, 3, 0),
 ];
 
 const l = (id: string, source: string, target: string, reason: string, strength = 1): TopicLink =>
@@ -250,6 +254,7 @@ export const demoPlan: DailyPlan = {
     { topic_id: "d5", topic_name: "Spaced Repetition", category: "Science", mode: "quickfire", reason: "Interval up today — keep the curve flat" },
     { topic_id: "d9", topic_name: "Stoicism", category: "Philosophy", mode: "recall", reason: "Not seen in 3 days" },
     { topic_id: "d12", topic_name: "Bayes' Theorem", category: "Mathematics", mode: "quickfire", reason: "Needs practice — only 1 review" },
+    { topic_id: "d15", topic_name: "Delivering Bad News at Work", category: "Communication", mode: "recall", reason: "New — practise structuring the message" },
   ],
   completed: false,
 };
@@ -376,6 +381,12 @@ export const demoQuestionBank: DemoBankQuestion[] = [
     options: null, correct_index: null,
     model_answer: "Base-rate neglect: ignoring the prior probability and judging only from the new evidence.",
   },
+  {
+    topic_id: "d15", kind: "open",
+    prompt: "Your team will miss a client's deadline by a week because a vendor's API isn't ready. Write a 2–3 sentence message to the client that delivers the news clearly and keeps their trust.",
+    options: null, correct_index: null,
+    model_answer: "I want to flag this early: we're moving your launch from the 7th to the 14th. A payments vendor shipped a critical fix late, and rather than pass that risk to your users, we're using the week to finish testing properly — nothing changes on your side. I'll send a firm go-live confirmation on the 12th.",
+  },
 ];
 
 /** Demo facts pool — mirrors the ingest-time facts table in real mode. */
@@ -389,6 +400,54 @@ export const demoFacts: { topic_id: string; fact: string }[] = [
   { topic_id: "d12", fact: "Doctors given a positive test result routinely overestimate disease probability tenfold — base-rate neglect is that strong, and Bayes' theorem is the antidote." },
   { topic_id: "d4", fact: "HNSW indexes find nearest neighbours among billions of vectors in milliseconds by navigating a small-world graph — the same maths as six degrees of separation." },
 ];
+
+/**
+ * Demo grader for The Communication Lab. Mirrors the real "answer judge": it
+ * scores Content / Structure / Delivery from rough structural signals so the
+ * report card can render its C·S·D breakdown logged-out. The tailored rewrite
+ * ("improved_answer") needs the real AI judge, so it's omitted in demo.
+ */
+export function demoCommGrade(answer: string): {
+  score: number;
+  feedback: string;
+  comm: { content: number; structure: number; delivery: number; tips: string[]; improved_answer?: string };
+} {
+  const text = answer.trim();
+  const words = text.split(/\s+/).filter(Boolean);
+  const wc = words.length;
+  const sentences = text.split(/[.!?\n]+/).map((s) => s.trim()).filter(Boolean);
+
+  const content = wc < 6 ? 1 : wc < 20 ? 3 : wc <= 120 ? 4 : 3;
+
+  const firstLen = sentences[0]?.split(/\s+/).filter(Boolean).length ?? 0;
+  let structure = 2;
+  if (sentences.length >= 2) structure += 1;
+  if (firstLen > 0 && firstLen <= 20) structure += 1;
+  if (sentences.length >= 3 && sentences.length <= 8) structure += 1;
+  structure = Math.min(5, structure);
+
+  const fillers =
+    text.toLowerCase().match(/\b(just|really|very|actually|basically|sort of|kind of|maybe|i think|i guess|sorry)\b/g)?.length ?? 0;
+  const fillerRatio = wc ? fillers / wc : 1;
+  let delivery = 4;
+  if (fillerRatio > 0.06) delivery -= 2;
+  else if (fillerRatio > 0.03) delivery -= 1;
+  if (wc > 140) delivery -= 1;
+  delivery = Math.max(1, Math.min(5, delivery));
+
+  const score = Math.max(1, Math.min(5, Math.round((content + structure + delivery) / 3)));
+  return {
+    score,
+    feedback:
+      "Judged on how it lands — content, structure, and delivery. (Demo mode: add your Gemini key for full AI coaching and a rewrite tailored to your answer.)",
+    comm: {
+      content,
+      structure,
+      delivery,
+      tips: ["Lead with the bottom line", "Keep it concise — cut the hedges", "End with a clear next step"],
+    },
+  };
+}
 
 export function demoGrade(answer: string, keyPoints: string[]): { score: number; feedback: string; model_answer: string } {
   const a = answer.toLowerCase();
