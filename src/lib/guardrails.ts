@@ -3,6 +3,8 @@
  * chunk.ts's style — no NLP libraries, just cheap heuristics.
  */
 
+import { parseVizPayload } from "@/components/viz/types";
+
 /**
  * Catches obvious junk (keyboard mashing, copy-paste spam, repeated-character
  * floods) BEFORE it burns a Gemini call, a daily-ingest-cap slot, and
@@ -68,4 +70,42 @@ const CONTROL_CHARS = new RegExp(`[${CONTROL_CODES.map((c) => String.fromCharCod
 export function sanitizeField(value: unknown, maxLen: number): string {
   const s = typeof value === "string" ? value : "";
   return s.replace(CONTROL_CHARS, "").trim().slice(0, maxLen);
+}
+
+/**
+ * Remove any ```viz:*``` diagram fence whose JSON payload fails validation, so
+ * an AI-generated blog body can never ship a broken diagram (which would render
+ * as an inline error card). Valid diagrams are kept verbatim. Applied to the
+ * blog `body` at ingest — the model is asked to emit a diagram, this is the
+ * safety net for when it emits a malformed one.
+ */
+export function stripInvalidVizBlocks(md: string): string {
+  if (!md.includes("```viz:")) return md;
+  const lines = md.split("\n");
+  const out: string[] = [];
+  let i = 0;
+  while (i < lines.length) {
+    const m = lines[i].trim().match(/^```viz:(\S+)/);
+    if (m) {
+      const kind = m[1];
+      const buf: string[] = [];
+      let j = i + 1;
+      while (j < lines.length && !/^```/.test(lines[j].trim())) buf.push(lines[j++]);
+      let valid = false;
+      try {
+        parseVizPayload(kind, buf.join("\n"));
+        valid = true;
+      } catch {
+        valid = false;
+      }
+      if (valid) out.push(lines[i], ...buf, lines[j] ?? "```");
+      // else: drop the whole fenced block
+      i = j + 1;
+      continue;
+    }
+    out.push(lines[i]);
+    i++;
+  }
+  // Collapse the blank-line gap a dropped block may leave behind.
+  return out.join("\n").replace(/\n{3,}/g, "\n\n");
 }

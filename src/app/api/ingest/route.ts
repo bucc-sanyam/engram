@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { extractKnowledge } from "@/lib/gemini";
 import { advanceStreak } from "@/lib/progress";
 import { indexContent, retrieveContext, formatContext, findDuplicateEntry, linkRetrievalLogToEntry } from "@/lib/rag";
-import { looksLikeGibberish, sanitizeField } from "@/lib/guardrails";
+import { looksLikeGibberish, sanitizeField, stripInvalidVizBlocks } from "@/lib/guardrails";
 import { CATEGORY_COLORS } from "@/lib/types";
 import { clampTz, localTodayForOffset, dayStartUtcIso } from "@/lib/dates";
 
@@ -406,8 +406,9 @@ export async function POST(request: Request) {
         .map((k) => sanitizeField(k, 300))
         .filter(Boolean),
       // Long-form structured article (markdown). sanitizeField keeps newlines
-      // (tab/LF/CR are preserved) so the markdown structure survives.
-      body: sanitizeField(t.body, 8000),
+      // (tab/LF/CR are preserved) so the markdown structure survives; then drop
+      // any malformed viz:* diagram the model may have emitted (safety net).
+      body: stripInvalidVizBlocks(sanitizeField(t.body, 8000)),
     }))
     .filter((t) => t.name);
   extraction.connections = (extraction.connections ?? [])

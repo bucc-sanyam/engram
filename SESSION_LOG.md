@@ -2,6 +2,14 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-26 — Diagrams on ALL user blogs + future-proofed generation
+- **All 16 real user blogs now have a fitting `viz:*` diagram** (was 1). Designed per-topic and varied by shape: `flow` for pipelines/mechanisms (RAG two-pipeline, alias index swap, shadow-index migration, observability spans, hybrid BM25+dense, BM25/TF-IDF component→score), `tree` for hierarchies/breakdowns (LLM message roles, system-prompt parts, BM25 limitations, ES gotchas, prompt-engineering habits), `table-diff` for before→after (naive vs recursive chunking). Every payload validated against the real `parseVizPayload()` before insert.
+- **Tooling:** `scripts/blog-gen.mts` gained `real <out>` (dump entry-linked blogs + hasViz) and `insert-viz <in>` (insert a viz block before "## Key points to remember", skip if a body already has one, story-seeded still excluded). Diagrams are DB data — no deploy needed (the sectioned render already ships viz support).
+- **Future-proofed (new ingests get diagrams automatically + safely):**
+  - `BLOG_BODY_SPEC` (gemini.ts) now instructs `extractKnowledge()` to emit EXACTLY ONE diagram inside the How-it-works/Why-it-matters section, with the full flow/table-diff/tree/array JSON schema + an example (still one Gemini call/ingest).
+  - New `stripInvalidVizBlocks()` (guardrails.ts, uses `parseVizPayload`) runs on the body at ingest — any malformed diagram the model emits is dropped rather than shipping an inline error card. Wired into `/api/ingest` (`body: stripInvalidVizBlocks(sanitizeField(t.body, 8000))`).
+- **Verified:** tsc + build clean; all 16 confirmed hasViz; render path proven earlier on demo d5. Code deployed to main; diagram data live in prod.
+
 ## 2026-07-26 — Blog vibe pass: on-brand section rendering + deployed to main + viz diagrams
 - **Deploy gap fixed:** all prior work was on the worktree branch; `origin/main` (what Vercel builds) was still at `fcc9926`, so prod showed the old render even though the DB had bodies. Fast-forwarded `main` to ship it.
 - **"Looked basic/generic" fix:** the body was rendering `##` as plain white bold. New `BlogBody` + `parseBodySections` in `src/app/blogs/[id]/page.tsx` render the structured body section-by-section — each heading becomes a category-accent `micro` eyebrow (matching the page's other sections), the lead "gist" gets the serif `.article-lead` drop-cap, prose stays `.article-body`. Parser is fence-aware (a viz/code fence's `#` lines never split sections).

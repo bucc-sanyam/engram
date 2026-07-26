@@ -67,6 +67,18 @@ async function storySeededIds(): Promise<Set<string>> {
   return ids;
 }
 
+/** Topic ids that came from real user ingestion (have an entry_topics link). */
+async function entryLinkedIds(): Promise<Set<string>> {
+  const ids = new Set<string>();
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await sb.from("entry_topics").select("topic_id").range(from, from + 999);
+    if (error) { console.error(error.message); process.exit(1); }
+    for (const r of data ?? []) ids.add((r as { topic_id: string }).topic_id);
+    if (!data || data.length < 1000) break;
+  }
+  return ids;
+}
+
 const [cmd, a, b] = process.argv.slice(2);
 
 if (cmd === "count") {
@@ -116,7 +128,42 @@ if (cmd === "count") {
     if (error) { console.error(`fail ${r.id} — ${error.message}`); fail++; } else ok++;
   }
   console.log(`pushed: ${ok}, failed/skipped: ${fail}`);
+} else if (cmd === "real") {
+  // Dump real user blogs (entry-linked) with enough context to design a diagram.
+  const outfile = a;
+  if (!outfile) { console.error("usage: real <outfile>"); process.exit(1); }
+  const entry = await entryLinkedIds();
+  const { data, error } = await sb.from("topics").select("id,name,category,summary,key_points,body");
+  if (error) { console.error(error.message); process.exit(1); }
+  const real = (data ?? [])
+    .filter((t) => entry.has((t as { id: string }).id))
+    .map((t) => {
+      const r = t as { id: string; name: string; category: string; summary: string | null; key_points: unknown; body: string | null };
+      return { id: r.id, name: r.name, category: r.category, summary: r.summary, key_points: r.key_points, hasViz: !!r.body && r.body.includes("```viz:") };
+    });
+  writeFileSync(outfile, JSON.stringify(real, null, 2));
+  console.log(`wrote ${real.length} real blog(s) to ${outfile} — ${real.filter((r) => r.hasViz).length} already have a diagram`);
+} else if (cmd === "insert-viz") {
+  // Insert a viz block into each topic's body, before "## Key points to
+  // remember" (fallbacks: The takeaway / Watch out for / append). Skips a
+  // topic whose body already has a viz block. infile: [{id, viz}].
+  const infile = a;
+  if (!infile) { console.error("usage: insert-viz <infile>"); process.exit(1); }
+  const rows = JSON.parse(readFileSync(infile, "utf8")) as { id: string; viz: string }[];
+  let ok = 0, skip = 0, fail = 0;
+  for (const r of rows) {
+    const { data, error } = await sb.from("topics").select("body").eq("id", r.id).single();
+    if (error || !data?.body) { console.error(`fail ${r.id} — ${error?.message ?? "no body"}`); fail++; continue; }
+    let body = data.body as string;
+    if (body.includes("```viz:")) { console.log(`skip ${r.id} — already has a diagram`); skip++; continue; }
+    const block = r.viz.trim() + "\n\n";
+    const marker = ["## Key points to remember", "## The takeaway", "## Watch out for"].find((m) => body.includes(m));
+    body = marker ? body.replace(marker, block + marker) : body.trimEnd() + "\n\n" + r.viz.trim() + "\n";
+    const { error: e2 } = await sb.from("topics").update({ body }).eq("id", r.id);
+    if (e2) { console.error(`fail ${r.id} — ${e2.message}`); fail++; } else { console.log(`ok ${r.id}`); ok++; }
+  }
+  console.log(`inserted: ${ok}, skipped: ${skip}, failed: ${fail}`);
 } else {
-  console.error("usage: blog-gen.mts <count | fetch <limit> <outfile> | push <infile>>");
+  console.error("usage: blog-gen.mts <count | fetch <limit> <outfile> | push <infile> | real <outfile> | insert-viz <infile> | revert-story>");
   process.exit(1);
 }
