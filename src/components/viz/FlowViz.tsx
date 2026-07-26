@@ -24,7 +24,7 @@ export default function FlowViz({ payload, accent = "#a3e635" }: { payload: Flow
 
   return (
     <div className="not-prose my-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
-      <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block">
+      <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block" style={{ maxWidth: "100%", height: "auto" }}>
         <defs>
           <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
             <path d="M0,0 L10,5 L0,10 z" fill={pal.accent} />

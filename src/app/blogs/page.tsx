@@ -39,15 +39,17 @@ const STORY_SERIES = [
     meta: "12 chapters · 41 problems",
     desc: "SELECT to window functions, with practice links.",
   },
-  {
-    href: "/blogs/sarfaesi-act",
-    label: "The SARFAESI Playbook",
-    tag: "Legal",
-    color: "#a78bfa",
-    title: "The SARFAESI Act, 2002",
-    meta: "6 chapters",
-    desc: "NPA resolution, asset reconstruction, and enforcement of security interest.",
-  },
+  // SARFAESI Act paused from discovery for now (2026-07-26) — route/data/seed
+  // machinery all still intact for anyone who already started it.
+  // {
+  //   href: "/blogs/sarfaesi-act",
+  //   label: "The SARFAESI Playbook",
+  //   tag: "Legal",
+  //   color: "#a78bfa",
+  //   title: "The SARFAESI Act, 2002",
+  //   meta: "6 chapters",
+  //   desc: "NPA resolution, asset reconstruction, and enforcement of security interest.",
+  // },
   {
     href: "/blogs/macroeconomics",
     label: "Macroeconomics: An Introduction",

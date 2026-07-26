@@ -46,7 +46,7 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
 
   return (
     <div className="not-prose my-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
-      <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block">
+      <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block" style={{ maxWidth: "100%", height: "auto" }}>
         {edges.map((e, i) => {
           const a = pos.get(e.from)!;
           const b = pos.get(e.to)!;
