@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "src/app/api/ingest/route.ts": {
-    "mtime": 1785038948.5965052,
-    "ast_hash": "cf955b8b5487141eb1d1e1211b97ea90",
+    "mtime": 1785076582.8043644,
+    "ast_hash": "1e3e18099c07edad58d2368146f9d8bd",
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
@@ -40,8 +40,8 @@
     "semantic_hash": ""
   },
   "src/app/api/quiz/route.ts": {
-    "mtime": 1785054337.9640267,
-    "ast_hash": "2045a9be27b1a011a0f420c585440989",
+    "mtime": 1785076669.0450575,
+    "ast_hash": "127e4a8c5010b1993bb2e770ca978a9b",
     "semantic_hash": ""
   },
   "src/app/auth/callback/route.ts": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "src/lib/gemini.ts": {
-    "mtime": 1785054266.2272575,
-    "ast_hash": "eb7554b317ce35fc45e9ffd749e78aa6",
+    "mtime": 1785076646.7291317,
+    "ast_hash": "d2614272aa2a20812664f065e9916786",
     "semantic_hash": ""
   },
   "src/lib/progress.ts": {
@@ -225,13 +225,13 @@
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785075065.877599,
-    "ast_hash": "17223f20203e9748968fb51517818d86",
+    "mtime": 1785076862.6885824,
+    "ast_hash": "b1ba5a85d0b34f98038835cccd342285",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785075083.4636846,
-    "ast_hash": "bbd2e47a93d9200eb26d56f5d5aba1e9",
+    "mtime": 1785076849.8559268,
+    "ast_hash": "dde04d1e856e607f762d8011eecd5d34",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "src/app/api/rag/reindex/route.ts": {
-    "mtime": 1784982783.101094,
-    "ast_hash": "b887a609ea991063ceed176ab8a60363",
+    "mtime": 1785076584.9956686,
+    "ast_hash": "7f724ad5eba12ebe8283e9493dafd089",
     "semantic_hash": ""
   },
   "supabase/schema-rag-v2.sql": {

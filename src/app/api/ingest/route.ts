@@ -437,7 +437,10 @@ export async function POST(request: Request) {
     })
     .select("id")
     .single();
-  if (entryErr) return NextResponse.json({ error: entryErr.message }, { status: 500 });
+  if (entryErr) {
+    console.error("ingest: entry insert failed", entryErr);
+    return NextResponse.json({ error: "Couldn't save this entry. Please try again." }, { status: 500 });
+  }
 
   // 1b. RAG bookkeeping (grounding-log backfill + chunk/embed indexing) is
   // strictly best-effort and never affects this response — deferred to run

@@ -5,6 +5,7 @@ import { scheduleNext } from "@/lib/srs";
 import { advanceStreak } from "@/lib/progress";
 import { clampTz, localTodayForOffset } from "@/lib/dates";
 import { indexAnswers } from "@/lib/rag";
+import { sanitizeField } from "@/lib/guardrails";
 import type {
   QuestionKind,
   ReportCard,
@@ -340,7 +341,10 @@ async function answer(
     },
     { onConflict: "session_id,question_index" }
   );
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    console.error("quiz answer upsert failed", error);
+    return NextResponse.json({ error: "Couldn't save that answer. Please try again." }, { status: 500 });
+  }
   return NextResponse.json({ ok: true });
 }
 
@@ -520,25 +524,28 @@ async function finish(
       try {
         const graded = await gradeSession(toGrade, gradeMode);
         const clamp5 = (n: number) => Math.max(0, Math.min(5, Math.round(n)));
+        // The grader's output is model-generated text (and a user can craft their
+        // answer to steer it), so every free-text field is sanitized — control
+        // chars stripped + length clamped — before it's stored/returned.
         for (const g of graded.grades) {
           const item = items.find((i) => i.index === g.index);
           if (!item) continue;
           item.score = clamp5(g.score);
-          item.feedback = g.feedback;
-          if (g.correct_answer) item.correct_answer = g.correct_answer;
+          item.feedback = sanitizeField(g.feedback, 700);
+          if (g.correct_answer) item.correct_answer = sanitizeField(g.correct_answer, 500);
           if (commMode) {
             item.comm = {
               content: clamp5(g.content ?? g.score),
               structure: clamp5(g.structure ?? g.score),
               delivery: clamp5(g.delivery ?? g.score),
-              tips: (g.tips ?? []).slice(0, 3),
-              improved_answer: g.improved_answer,
+              tips: (g.tips ?? []).slice(0, 3).map((t) => sanitizeField(t, 200)).filter(Boolean),
+              improved_answer: g.improved_answer ? sanitizeField(g.improved_answer, 700) : undefined,
             };
           }
         }
-        summary = graded.summary;
-        strengths = graded.strengths ?? [];
-        focus = graded.focus ?? [];
+        summary = sanitizeField(graded.summary, 900);
+        strengths = (graded.strengths ?? []).slice(0, 3).map((s) => sanitizeField(s, 120)).filter(Boolean);
+        focus = (graded.focus ?? []).slice(0, 3).map((s) => sanitizeField(s, 120)).filter(Boolean);
         usedAi = true;
       } catch (e) {
         console.error("Batch grading failed, using heuristic fallback", e);

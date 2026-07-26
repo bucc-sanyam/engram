@@ -43,7 +43,10 @@ export async function POST() {
     .eq("user_id", user.id)
     .eq("status", "active")
     .order("id", { ascending: true });
-  if (docsErr) return NextResponse.json({ error: docsErr.message }, { status: 500 });
+  if (docsErr) {
+    console.error("rag reindex: loading documents failed", docsErr);
+    return NextResponse.json({ error: "Couldn't start the reindex. Please try again." }, { status: 500 });
+  }
   if (!allDocs?.length) {
     return NextResponse.json({ message: "Nothing to reindex.", activeVersion: currentVersion });
   }
