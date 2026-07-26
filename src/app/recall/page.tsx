@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import MicButton from "@/components/MicButton";
 import Nav from "@/components/Nav";
 import RichText from "@/components/RichText";
 import ReportCardView, { KIND_LABEL } from "@/components/ReportCardView";
@@ -296,6 +297,8 @@ function ReviewRunner() {
                 <Link href="/brain" className="btn-ghost">Explore your brain</Link>
               </div>
             )}
+
+            <SpokenEnglishTip />
           </div>
         )}
       </main>
@@ -660,13 +663,21 @@ function QuizCarousel({
               })}
             </div>
           ) : (
-            <textarea
-              className="input min-h-[140px] resize-y"
-              placeholder="Answer from memory — no peeking."
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              disabled={saving}
-            />
+            <div className="relative">
+              <textarea
+                className="input min-h-[140px] resize-y !pr-14"
+                placeholder="Answer from memory — no peeking. Or tap the mic to speak it."
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                disabled={saving}
+              />
+              <div className="absolute bottom-3 right-3">
+                <MicButton
+                  disabled={saving}
+                  onTranscript={(t) => setAnswer((prev) => (prev ? `${prev.trimEnd()} ${t}` : t))}
+                />
+              </div>
+            </div>
           )}
 
           {error && <p className="mt-3 text-sm text-danger">{error}</p>}
@@ -687,6 +698,22 @@ function QuizCarousel({
         </div>
       )}
     </div>
+  );
+}
+
+/** Bottom-of-page nudge toward the mic on written questions. */
+function SpokenEnglishTip() {
+  return (
+    <p className="mx-auto mt-4 flex max-w-md items-start justify-center gap-2 text-center text-xs leading-relaxed text-faint">
+      <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#7fd0e8]" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+        <path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" />
+        <path d="M19 11a1 1 0 1 0-2 0 5 5 0 0 1-10 0 1 1 0 1 0-2 0 7 7 0 0 0 6 6.92V21a1 1 0 1 0 2 0v-3.08A7 7 0 0 0 19 11z" />
+      </svg>
+      <span>
+        Tip: on written questions, tap the mic to answer out loud. Speaking your answers
+        strengthens recall <em>and</em> sharpens your spoken English at the same time.
+      </span>
+    </p>
   );
 }
 

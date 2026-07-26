@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785089948.9087546,
-    "ast_hash": "2a33bcb0d4ba3781772a744402a59f30",
+    "mtime": 1785092582.1850905,
+    "ast_hash": "680cb444107a4c798be7e57da5220772",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785076849.8559268,
-    "ast_hash": "dde04d1e856e607f762d8011eecd5d34",
+    "mtime": 1785090676.570797,
+    "ast_hash": "d39919076aad1f7744bbd26113d3393f",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -935,8 +935,8 @@
     "semantic_hash": ""
   },
   "src/app/recall/page.tsx": {
-    "mtime": 1785043065.6587393,
-    "ast_hash": "61340ea05fb4d0a8ce303def34bdfde7",
+    "mtime": 1785092787.3304763,
+    "ast_hash": "b6cf4ba14a2262acdd80a4f02dc6b02e",
     "semantic_hash": ""
   },
   "src/components/viz/ArrayViz.tsx": {
@@ -1232,6 +1232,11 @@
   "src/lib/english-communication/topics/08-remote-and-cross-cultural.ts": {
     "mtime": 1785074717.515346,
     "ast_hash": "eed73bbb41623dc51e52a3eae2a349b5",
+    "semantic_hash": ""
+  },
+  "src/components/MicButton.tsx": {
+    "mtime": 1785092610.883105,
+    "ast_hash": "1792ea4f693b29679c7f7ce1717bfd63",
     "semantic_hash": ""
   }
 }

@@ -9,7 +9,6 @@ import RichText from "@/components/RichText";
 import StoryJourney from "@/components/StoryJourney";
 import { trackLanded } from "@/lib/analytics";
 import {
-  getEntriesCached,
   getFactCached,
   getPlanCached,
   getProfileCached,
@@ -21,7 +20,7 @@ import {
 import { type StorySection, type UserStory } from "@/lib/stories";
 import { NOTES_EVENT, childrenOf, countDescendants, ensureSeeded, getNotes } from "@/lib/notes";
 import { stripMarkdown } from "@/lib/text";
-import type { DailyFact, DailyPlan, Entry, Note, PlanItem, Profile, Review, Topic } from "@/lib/types";
+import type { DailyFact, DailyPlan, Note, PlanItem, Profile, Review, Topic } from "@/lib/types";
 import { categoryColor } from "@/lib/types";
 
 const MODE_LABEL: Record<string, string> = {
@@ -35,7 +34,6 @@ export default function Dashboard() {
   const [plan, setPlan] = useState<DailyPlan | null>(null);
   const [topics, setTopics] = useState<Topic[]>([]);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [entries, setEntries] = useState<Entry[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const [fact, setFact] = useState<DailyFact | null>(null);
   const [planError, setPlanError] = useState(false);
@@ -51,7 +49,6 @@ export default function Dashboard() {
     getProfileCached().then(setProfile).catch(() => {});
     getTopicsCached().then(setTopics).catch(() => {});
     getReviewsCached().then(setReviews).catch(() => {});
-    getEntriesCached().then(setEntries).catch(() => {});
     getFactCached().then(setFact).catch(() => {});
     getPlanCached().then(setPlan).catch(() => setPlanError(true));
     getStartedStoriesCached().then(setStories).catch(() => {});
@@ -110,6 +107,26 @@ export default function Dashboard() {
     const c = storyColorByStory.get(s.series_slug);
     if (c) topicColors.set(s.topic_id, c);
   }
+
+  // Topics slipping from memory — driven by the report-card scores. We take each
+  // topic's MOST RECENT recall score and surface the ones that came back weak
+  // (< 4 / 5 — the same "focus" threshold the report card uses; >= 4 is a
+  // "strength"). These rows point at the BLOG to re-read, not the quiz: the goal
+  // is to re-cement the topic before the next scheduled recall.
+  const latestScore = new Map<string, { score: number; at: number }>();
+  for (const r of reviews) {
+    const at = new Date(r.created_at).getTime();
+    const prev = latestScore.get(r.topic_id);
+    if (!prev || at > prev.at) latestScore.set(r.topic_id, { score: r.score, at });
+  }
+  const revisionNeeded = topics
+    .map((t) => ({ topic: t, latest: latestScore.get(t.id) }))
+    .filter(
+      (x): x is { topic: Topic; latest: { score: number; at: number } } =>
+        !!x.latest && x.latest.score < 4
+    )
+    .sort((a, b) => a.latest.score - b.latest.score || a.latest.at - b.latest.at)
+    .slice(0, 5);
 
   return (
     <>
@@ -214,34 +231,42 @@ export default function Dashboard() {
               </section>
             )}
 
-            {/* Recent entries */}
+            {/* Revision needed — topics your last recall came back weak on.
+                These point at the blog to re-read (re-cement the memory before
+                the next scheduled quiz), ranked by the report-card scores. */}
             <section className="glass rise rise-3 p-6 sm:p-7">
               <div className="mb-5 flex items-center justify-between">
                 <div>
-                  <p className="micro mb-1">Knowledge log</p>
-                  <h2 className="text-xl font-bold">Recent learnings</h2>
+                  <p className="micro mb-1 !text-[#ff8f5c]">From your report card</p>
+                  <h2 className="text-xl font-bold">Revision needed</h2>
                 </div>
-                <Link href="/add" className="btn-ghost px-4 py-2 text-sm">
-                  + Add new
+                <Link href="/blogs" className="btn-ghost px-4 py-2 text-sm">
+                  All blogs →
                 </Link>
               </div>
-              {entries.length === 0 ? (
-                <p className="text-sm text-muted">Nothing logged yet.</p>
+              {topics.length === 0 ? (
+                <Link
+                  href="/add"
+                  className="row-soft flex items-center gap-3 px-4 py-4 text-sm text-muted"
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#ff8f5c]/12 text-[#ff8f5c]">
+                    +
+                  </span>
+                  Log your first learning — revision picks up from there.
+                </Link>
+              ) : revisionNeeded.length === 0 ? (
+                <div className="row-soft flex items-center gap-3 px-4 py-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#43d6b5]/12 text-[#43d6b5]">
+                    ✓
+                  </span>
+                  <p className="text-sm text-muted">
+                    Your recall is solid — nothing needs a refresher right now. Keep it up.
+                  </p>
+                </div>
               ) : (
-                <ul className="space-y-3">
-                  {entries.slice(0, 4).map((e) => (
-                    <li key={e.id} className="row-soft px-4 py-3.5">
-                      <div className="mb-0.5 flex items-baseline justify-between gap-3">
-                        <span className="truncate font-medium">{e.title}</span>
-                        <span className="micro shrink-0">
-                          {new Date(e.created_at).toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </span>
-                      </div>
-                      <p className="line-clamp-2 text-sm text-muted">{e.summary}</p>
-                    </li>
+                <ul className="space-y-2.5">
+                  {revisionNeeded.map(({ topic, latest }) => (
+                    <RevisionRow key={topic.id} topic={topic} score={latest.score} at={latest.at} />
                   ))}
                 </ul>
               )}
@@ -413,6 +438,44 @@ function Stat({ label, value, description, accent }: { label: string; value: str
 
 function Divider() {
   return <div className="h-10 w-px bg-gradient-to-b from-transparent via-white/[0.12] to-transparent" />;
+}
+
+/** Warm→red scale for a weak recall score (all rows are < 4 / 5). */
+function scoreColor(score: number): string {
+  if (score <= 1) return "#ff6b5c";
+  if (score <= 2) return "#ff8f5c";
+  return "#f5b95f"; // score === 3
+}
+
+function RevisionRow({ topic, score, at }: { topic: Topic; score: number; at: number }) {
+  const color = scoreColor(score);
+  return (
+    <li>
+      <Link
+        href={`/blogs/${topic.id}`}
+        className="row-soft group flex items-center gap-3.5 px-4 py-3.5"
+      >
+        <span
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[11px] font-bold"
+          style={{ background: `${color}1f`, color }}
+        >
+          {score}/5
+        </span>
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-medium">{topic.name}</div>
+          <div className="truncate text-xs text-faint">
+            Last recall {new Date(at).toLocaleDateString(undefined, { month: "short", day: "numeric" })} · re-read to lock it in
+          </div>
+        </div>
+        <span
+          aria-hidden
+          className="shrink-0 text-faint opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
+        >
+          →
+        </span>
+      </Link>
+    </li>
+  );
 }
 
 function PlanRow({ item, accent }: { item: PlanItem; accent?: string }) {
