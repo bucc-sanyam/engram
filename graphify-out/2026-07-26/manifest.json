@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "src/app/api/ingest/route.ts": {
-    "mtime": 1784991163.3575728,
-    "ast_hash": "f95f6f43c6b82247326ea8c86a2f4e57",
+    "mtime": 1785038948.5965052,
+    "ast_hash": "cf955b8b5487141eb1d1e1211b97ea90",
     "semantic_hash": ""
   },
   "src/app/api/plan/route.ts": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "src/lib/gemini.ts": {
-    "mtime": 1784991131.780562,
-    "ast_hash": "a3d95e03f3ecd1638368113f0656859e",
+    "mtime": 1785038888.52097,
+    "ast_hash": "3e828aad9b9ae8b85551b261246abcf4",
     "semantic_hash": ""
   },
   "src/lib/progress.ts": {
@@ -220,13 +220,13 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785002816.2330093,
-    "ast_hash": "52d9b8ffc86ddb31eb87ae75e486a4c2",
+    "mtime": 1785042509.1433918,
+    "ast_hash": "e22f6b23080791d19f584621159f3e85",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785004703.5780616,
-    "ast_hash": "bd0b3fd40fe3d61c08dba5fe26d23ed2",
+    "mtime": 1785042495.2109501,
+    "ast_hash": "f611005b08dfb895abea011c9d6ecd61",
     "semantic_hash": ""
   },
   "TASKS.md": {
@@ -355,8 +355,8 @@
     "semantic_hash": ""
   },
   "src/lib/guardrails.ts": {
-    "mtime": 1784982783.1361833,
-    "ast_hash": "0760bfe80ac7684f5747a06016ce7da1",
+    "mtime": 1785038919.620031,
+    "ast_hash": "b0f64662db040f4cfa66735f6f4d6345",
     "semantic_hash": ""
   },
   "ARCHITECTURE.md": {
@@ -1165,8 +1165,8 @@
     "semantic_hash": ""
   },
   "scripts/blog-gen.mts": {
-    "mtime": 1785004350.352597,
-    "ast_hash": "b3d2bfad8a6f990c4f82a9740515f42a",
+    "mtime": 1785038997.8135858,
+    "ast_hash": "e261dd7a6159725d54233b321e5b0337",
     "semantic_hash": ""
   }
 }

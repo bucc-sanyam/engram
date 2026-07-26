@@ -150,9 +150,9 @@ export default function Dashboard() {
                     )}
                   </h2>
                 </div>
-                {plan && plan.items.length > 0 && (
+                {plan && plan.items.length > 0 && !plan.completed && (
                   <Link href="/recall" data-tour="recall-cta" className="btn-primary shrink-0">
-                    {plan.completed ? "See report" : "Start"} →
+                    Start →
                   </Link>
                 )}
               </div>
@@ -172,7 +172,7 @@ export default function Dashboard() {
                 </div>
               )}
 
-              {plan && plan.items.length > 0 && (
+              {plan && plan.items.length > 0 && !plan.completed && (
                 <ul className="space-y-2.5">
                   {planItems.map((item) => (
                     <PlanRow key={item.topic_id} item={item} accent={topicColors.get(item.topic_id)} />
@@ -181,9 +181,24 @@ export default function Dashboard() {
               )}
 
               {plan?.completed && (
-                <p className="mt-4 rounded-2xl bg-[#43d6b5]/[0.09] px-4 py-3 text-sm text-[#7fe5cb]">
-                  ✓ Today&apos;s session complete — streak secured. Come back tomorrow!
-                </p>
+                <div className="py-6 text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#43d6b5]/[0.12] text-2xl text-[#43d6b5]">
+                    ✓
+                  </div>
+                  <h3 className="text-lg font-bold">All done for the day</h3>
+                  <p className="mx-auto mb-5 mt-1.5 max-w-sm text-sm text-muted">
+                    You&apos;ve cleared every recall for today — streak secured. Come back
+                    tomorrow, or keep the momentum going.
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-3">
+                    <Link href="/recall" className="btn-ghost">
+                      See report
+                    </Link>
+                    <Link href="/recall?more=1" className="btn-primary">
+                      Want to attempt more? →
+                    </Link>
+                  </div>
+                </div>
               )}
             </section>
 

@@ -82,6 +82,7 @@ function ReviewRunner() {
   const searchParams = useSearchParams();
   const seriesParam = searchParams.get("series");
   const topicId = searchParams.get("topic"); // Legacy deep link support
+  const moreParam = searchParams.get("more"); // "attempt more" — re-run the day for extra practice
 
   const [phase, setPhase] = useState<"loading" | "quizzing" | "report" | "empty">("loading");
 
@@ -113,8 +114,9 @@ function ReviewRunner() {
           if (s.topic_id) seriesByTopicId.set(s.topic_id, s.series_slug);
         }
 
-        // Revisit: whole day already complete → show grouped merged report
-        if (full.completed && !topicId && !seriesParam) {
+        // Revisit: whole day already complete → show grouped merged report.
+        // "attempt more" (moreParam) deliberately bypasses this to re-quiz.
+        if (full.completed && !topicId && !seriesParam && !moreParam) {
           try {
             const latestReport = await getLatestReportToday();
             if (latestReport) {
@@ -131,6 +133,12 @@ function ReviewRunner() {
 
         if (isMatched) {
           p = { ...full, items: full.items.filter((it) => it.topic_id === topicId) };
+          setSingleTask(true);
+        } else if (moreParam) {
+          // Extra practice: re-quiz every topic (treat all as un-done). Fresh
+          // questions come from the bank's least-asked rotation — zero AI. Kept
+          // as a single-task run so it never re-touches today's plan/streak.
+          p = { ...full, items: full.items.map((it) => ({ ...it, done: false })) };
           setSingleTask(true);
         } else if (seriesParam) {
           if (seriesParam === "general") {
@@ -192,7 +200,7 @@ function ReviewRunner() {
     return () => {
       cancelled = true;
     };
-  }, [seriesParam, topicId]);
+  }, [seriesParam, topicId, moreParam]);
 
   function groupAndSetReport(rep: ReportCard, seriesByTopicId: Map<string, string>) {
     const groups = new Map<string, ReportCard>();

@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785002336.572022,
-    "ast_hash": "bd6054d568a24c068d6aa5c4d853dbbd",
+    "mtime": 1785043046.0909328,
+    "ast_hash": "e52e016eac0d2afb6c437eee4796380b",
     "semantic_hash": ""
   },
   "src/components/BrainScene.tsx": {
@@ -220,13 +220,13 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785042509.1433918,
-    "ast_hash": "e22f6b23080791d19f584621159f3e85",
+    "mtime": 1785043285.175244,
+    "ast_hash": "004648eecfb238b9b1553ab729bb763e",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785042495.2109501,
-    "ast_hash": "f611005b08dfb895abea011c9d6ecd61",
+    "mtime": 1785043266.642647,
+    "ast_hash": "d8a1ccf5f588deb8786e2570aeeff549",
     "semantic_hash": ""
   },
   "TASKS.md": {
@@ -935,8 +935,8 @@
     "semantic_hash": ""
   },
   "src/app/recall/page.tsx": {
-    "mtime": 1784984298.9829602,
-    "ast_hash": "5fe710f26579e896d7eae62b23992dd3",
+    "mtime": 1785043065.6587393,
+    "ast_hash": "61340ea05fb4d0a8ce303def34bdfde7",
     "semantic_hash": ""
   },
   "src/components/viz/ArrayViz.tsx": {
