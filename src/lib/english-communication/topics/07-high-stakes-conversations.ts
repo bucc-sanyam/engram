@@ -21,6 +21,25 @@ Delivering bad news — a missed deadline, a mistake, a project that failed — 
 4. **Bring the path forward.** Never deliver bad news empty-handed. "Here's what happened, here's what I'm doing about it, and here's what I need from you" turns a problem into a plan.
 5. **Be honest about uncertainty.** Don't over-promise a fix to make the news land softer. A recovery plan you can't keep is a second piece of bad news in waiting.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "prompt", "label": "Be prompt (the moment you know)", "row": 0, "col": 0 },
+    { "id": "direct", "label": "Brief framing, then the news, plainly", "row": 1, "col": 0 },
+    { "id": "own", "label": "Own your part (no blame-shifting)", "row": 2, "col": 0 },
+    { "id": "path", "label": "Bring the path forward + what you need", "row": 3, "col": 0 },
+    { "id": "honest", "label": "Be honest about what's still uncertain", "row": 4, "col": 0 }
+  ],
+  "edges": [
+    { "from": "prompt", "to": "direct" },
+    { "from": "direct", "to": "own" },
+    { "from": "own", "to": "path" },
+    { "from": "path", "to": "honest" }
+  ],
+  "caption": "Delivered this way, bad news can build trust: the cover-up is always worse than the crime, and arriving with a plan turns a problem into a decision."
+}
+\`\`\`
+
 **Weak vs. strong:**
 > ❌ "So, um, there might be a small delay, it's mostly because of some things outside our control, but hopefully it'll be fine."
 > ✅ "I need to give you a heads-up: we're going to miss the Friday launch — we underestimated the migration work. New realistic date is Wednesday. Here's the recovery plan, and the one thing I need from you is a call on whether we soft-launch or wait."
@@ -88,6 +107,25 @@ When someone frustrates us, we fuse what happened with our interpretation of *wh
 4. **Get curious.** "What's it looking like from your side?" You may be missing context, and asking disarms.
 5. **Move to a fix together.** "How do we handle this next time?"
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "goal", "label": "Shared goal & good intent", "row": 0, "col": 0 },
+    { "id": "facts", "label": "State the facts (not your story)", "row": 1, "col": 0 },
+    { "id": "i", "label": "Your experience in 'I' ('I felt sidelined')", "row": 2, "col": 0 },
+    { "id": "curious", "label": "Get curious ('what's it like for you?')", "row": 3, "col": 0 },
+    { "id": "fix", "label": "Move to a fix together", "row": 4, "col": 0 }
+  ],
+  "edges": [
+    { "from": "goal", "to": "facts" },
+    { "from": "facts", "to": "i" },
+    { "from": "i", "to": "curious" },
+    { "from": "curious", "to": "fix" }
+  ],
+  "caption": "Facts over accusations, 'I felt' over 'you did', curiosity over assumption — the structure that keeps a hard conversation from becoming a fight."
+}
+\`\`\`
+
 **Manage the temperature:**
 Difficult conversations go wrong when emotions spike. Slow down, stay calm, and if it overheats, it's fine to pause: "I want to get this right — can we pick this up after lunch?" Composure under tension is itself persuasive.
 
@@ -151,6 +189,23 @@ For any "tell me about a time when…" question:
 - **Task:** your specific responsibility or the challenge you owned.
 - **Action:** what *you* did — concrete steps, and emphasise *your* contribution, not "we".
 - **Result:** the outcome, ideally quantified, plus what you learned.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "s", "label": "Situation — the context, briefly", "row": 0, "col": 0 },
+    { "id": "t", "label": "Task — the challenge you owned", "row": 1, "col": 0 },
+    { "id": "a", "label": "Action — what YOU did (not 'we')", "row": 2, "col": 0 },
+    { "id": "r", "label": "Result — the outcome, quantified + lesson", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "s", "to": "t" },
+    { "from": "t", "to": "a" },
+    { "from": "a", "to": "r" }
+  ],
+  "caption": "Keep Situation short and let the Result land — the quantified outcome is the part that sells you, and the part people rush past under pressure."
+}
+\`\`\`
 
 Most people over-invest in Situation (endless setup) and under-invest in Result (the part that actually sells you). Keep the setup tight and make the result land.
 

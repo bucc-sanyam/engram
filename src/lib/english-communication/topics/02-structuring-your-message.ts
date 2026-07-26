@@ -17,6 +17,21 @@ BLUF — *Bottom Line Up Front* — is a habit borrowed from the military and ad
 **Why it works:**
 Most people write like they think: context first, build-up, then the point at the end. But readers scan top-down and often stop early. If your ask is in sentence six, half your readers never reach it. BLUF flips the order so the most important thing is impossible to miss — and the reader can decide immediately how much of the detail they even need.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "bl", "label": "Bottom line: the ask or the news", "row": 0, "col": 0 },
+    { "id": "ctx", "label": "Context: why / how you got here", "row": 1, "col": 0 },
+    { "id": "det", "label": "Detail: the supporting specifics", "row": 2, "col": 0 }
+  ],
+  "edges": [
+    { "from": "bl", "to": "ctx", "label": "then" },
+    { "from": "ctx", "to": "det", "label": "then" }
+  ],
+  "caption": "BLUF ordering: the point comes first, and everything the reader might need to justify or dig into it follows in decreasing importance."
+}
+\`\`\`
+
 **Bottom-line-last vs. bottom-line-up-front:**
 > ❌ "As you know, we've been evaluating vendors for the payments integration. We looked at three options, ran a security review, and compared pricing. After a lot of back and forth, and given the timeline, **we'd like to go with Stripe. Can you approve by Thursday?**"
 > ✅ "**We'd like to go with Stripe for payments — can you approve by Thursday?** We evaluated three vendors on security and price; Stripe won on both and fits the timeline. Details below if useful."
@@ -81,6 +96,23 @@ PREP is a portable structure for saying something persuasive without rambling. F
 - **Reason** — why you hold it.
 - **Example** — one concrete piece of evidence or a short story.
 - **Point** — restate the position, now earned.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "p1", "label": "Point — your position in one sentence", "row": 0, "col": 0 },
+    { "id": "r", "label": "Reason — why you hold it", "row": 1, "col": 0 },
+    { "id": "e", "label": "Example — one concrete piece of proof", "row": 2, "col": 0 },
+    { "id": "p2", "label": "Point — restate it, now earned", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "p1", "to": "r" },
+    { "from": "r", "to": "e" },
+    { "from": "e", "to": "p2" }
+  ],
+  "caption": "PREP: claim, reason, proof, restate — then stop. The Example is the beat that turns an opinion into an answer, and the one most people drop under pressure."
+}
+\`\`\`
 
 It works because it front-loads the conclusion (like BLUF), backs it with logic *and* a concrete example (logic convinces the head; the example makes it stick), and lands cleanly instead of trailing off.
 
@@ -168,6 +200,22 @@ Most people present the way they *did the work* — "here's all the research, an
 > **Argument 1:** The compliance work isn't done → *(supporting facts: 2 of 5 GDPR items open, legal needs 6 weeks)*
 > **Argument 2:** The market timing is better in Q3 → *(supporting facts: competitor launches in Q2, trade show is in September)*
 > **Argument 3:** Our team is over-committed this quarter → *(supporting facts: 3 launches already booked)*
+
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "top", "label": "Pause the EU launch until Q3", "highlight": true, "children": ["a1", "a2", "a3"] },
+    { "id": "a1", "label": "Compliance isn't done", "children": ["f1"] },
+    { "id": "a2", "label": "Q3 timing is better", "children": ["f2"] },
+    { "id": "a3", "label": "Team is over-committed", "children": ["f3"] },
+    { "id": "f1", "label": "2 of 5 GDPR items open; legal needs 6 weeks" },
+    { "id": "f2", "label": "Competitor launches in Q2; trade show in Sept" },
+    { "id": "f3", "label": "3 launches already booked this quarter" }
+  ],
+  "rootId": "top",
+  "caption": "The pyramid: one message on top, 2-4 MECE arguments beneath it, facts at the base. Read only the top two layers and you have the whole recommendation."
+}
+\`\`\`
 
 Someone can read just the four bold lines and understand the entire recommendation. That's the test.
 

@@ -6,6 +6,7 @@ import { everydayScenarios } from "./topics/04-everyday-scenarios";
 import { meetingsAndPresentations } from "./topics/05-meetings-and-presentations";
 import { writtenCommunication } from "./topics/06-written-communication";
 import { highStakesConversations } from "./topics/07-high-stakes-conversations";
+import { remoteAndCrossCultural } from "./topics/08-remote-and-cross-cultural";
 
 export const EC_SERIES_TITLE = "The Communication Lab";
 export const EC_SERIES_SLUG = "english-communication";
@@ -19,6 +20,7 @@ export const EC_CHAPTERS: EcChapter[] = [
   meetingsAndPresentations,
   writtenCommunication,
   highStakesConversations,
+  remoteAndCrossCultural,
 ];
 
 export function ecSectionCount(): number {

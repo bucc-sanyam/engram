@@ -21,6 +21,15 @@ Your reader is busy, skimming, and probably on their phone between two meetings.
 > ❌ "I wanted to circle back and touch base regarding the aforementioned deliverable, as there may potentially be some bandwidth constraints impacting our ability to hit the originally agreed timeline."
 > ✅ "We'll miss Friday's deadline. Can we move it to Tuesday?"
 
+\`\`\`viz:table-diff
+{
+  "columns": ["The same message"],
+  "before": [["I wanted to circle back and touch base regarding the aforementioned deliverable, as there may potentially be some bandwidth constraints impacting our ability to hit the originally agreed timeline."]],
+  "after": [["We'll miss Friday's deadline. Can we move it to Tuesday?"]],
+  "caption": "Same meaning, a third of the words. Clarity is what's left after you remove the hedging, the filler, and the vague nouns."
+}
+\`\`\`
+
 The second version says more in ten words than the first says in thirty. Notice what disappeared: the hedging ("may potentially"), the filler ("circle back and touch base"), and the vague nouns ("bandwidth constraints").
 
 **How to get there:**

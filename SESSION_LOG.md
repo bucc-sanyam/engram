@@ -2,6 +2,13 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-07-26 — The Communication Lab: backlog cleared — 18 viz diagrams + chapter 8 (now 8 chapters / 25 sections)
+- **Why:** the two remaining backlog items — `viz` diagrams in the bodies, and a possible chapter 8 (cross-cultural/remote) — user said "do it".
+- **Chapter 8 `08-remote-and-cross-cultural.ts`** — Writing for Async & Remote · Clear, Inclusive Language · Presence on Video Calls (3 sections), same `EcChapter`/question pattern, with 2 built-in diagrams. Registered in `EC_CHAPTERS`; `/blogs` card meta bumped 7→8.
+- **18 `viz` diagrams total** added across all 8 chapters (was prose-only): mostly `viz:flow` for the sequential frameworks (BLUF, PREP, SBI, status-update shape, saying-no, disagreement, Q&A, bad-news 5 moves, difficult-conversation structure, STAR, request anatomy, async decision, assertive spectrum), plus `viz:tree` (Pyramid Principle, email anatomy) and `viz:table-diff` (before/after: clarity, concision, insider→inclusive phrasing). Each inserted at the point its framework is introduced.
+- **Verified:** `scripts/validate-viz.mts` on all topic files → **18 blocks, all valid**; `tsc` clean; `npm run build` clean (strictViz means a bad payload would fail SSG — it didn't); module eval = **8 chapters / 25 sections, no dup slugs**. Browser (demo): PREP page renders the flow diagram as a teal-accent SVG (nodes + caption), no error card, no console errors. `graphify update` ran.
+- **Note:** these story bodies pass `strictViz` (a malformed diagram fails the build) — the 18 payloads were authored against the real `parseVizPayload` shapes (flow needs numeric row/col + edge ids resolving; tree children must reference existing ids; table-diff rows must match column count).
+
 ## 2026-07-26 — The Communication Lab: Phase 2 content (chapters 4-7, now 7 chapters / 22 sections)
 - **Why:** Phase-1 shipped the engine (series scaffold + the C/S/D answer judge) with 3 pilot chapters; user approved authoring the remaining chapters.
 - **Authored 4 new chapters (13 sections)** in `src/lib/english-communication/topics/`, same `EcChapter` shape, prose-only (no `viz`), each section with a MIX of choice questions + `open` scenario prompts (exemplar `model_answer`) + a fact:

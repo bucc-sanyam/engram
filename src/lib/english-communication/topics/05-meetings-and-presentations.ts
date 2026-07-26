@@ -76,6 +76,23 @@ Teams that can't disagree make bad decisions politely. But disagreement done bad
 3. **Bring reasoning, not just opposition.** "I disagree" is noise; "I disagree *because* X, and here's what I'd worry about" is signal.
 4. **Stay genuinely open.** "…but I might be missing something — what am I not seeing?" This isn't weakness; it's what makes people willing to hear you.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "goal", "label": "Affirm the shared goal ('we both want X')", "row": 0, "col": 0 },
+    { "id": "idea", "label": "Challenge the idea, not the person", "row": 1, "col": 0 },
+    { "id": "reason", "label": "Bring reasoning & evidence, not just 'no'", "row": 2, "col": 0 },
+    { "id": "open", "label": "Stay open ('what am I not seeing?')", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "goal", "to": "idea" },
+    { "from": "idea", "to": "reason" },
+    { "from": "reason", "to": "open" }
+  ],
+  "caption": "Productive disagreement: same side first, then challenge hard on the substance, stay genuinely open — and once it's decided, disagree and commit."
+}
+\`\`\`
+
 **In practice:**
 > ❌ "That won't work. We've tried that before."
 > ✅ "I want the same outcome here, and I'd push back on this approach — when we tried something similar last year it broke under load. Could we pressure-test it first, or is there a reason this time is different?"
@@ -149,6 +166,25 @@ People forget most of what they hear. Decide the *one thing* you want them to re
 1. **Answer first, then explain.** "Yes — and here's why," not a two-minute wind-up. If asked a yes/no, lead with the yes/no.
 2. **Don't bluff.** "I don't know — I'll find out and follow up by end of day" is far stronger than a confident guess that unravels on the next question. Bluffing is the single fastest way to lose a room's trust.
 3. **Reframe hostile questions charitably.** Answer the strongest reasonable version of the question, not the sharpest jab. It keeps you composed and looks generous.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "q", "label": "A question lands", "row": 0, "col": 1 },
+    { "id": "ans", "label": "Answer first (yes/no/the point)", "row": 1, "col": 0 },
+    { "id": "unk", "label": "Don't actually know?", "row": 1, "col": 2 },
+    { "id": "exp", "label": "Then explain / give the reason", "row": 2, "col": 0 },
+    { "id": "follow", "label": "'I'll find out and follow up by EOD'", "row": 2, "col": 2 }
+  ],
+  "edges": [
+    { "from": "q", "to": "ans", "label": "you know it" },
+    { "from": "ans", "to": "exp" },
+    { "from": "q", "to": "unk", "label": "you don't" },
+    { "from": "unk", "to": "follow" }
+  ],
+  "caption": "Q&A is the real test: answer first then explain — and never bluff. A confident guess that unravels on the next question costs the room's trust."
+}
+\`\`\`
 
 **Handling the curveball:**
 Buy a beat honestly — "Good question, let me think for a second" — instead of filling the silence with filler. A short, composed pause reads as confidence; a stream of "um, so, basically" reads as panic.

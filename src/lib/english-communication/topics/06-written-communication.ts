@@ -14,6 +14,20 @@ export const writtenCommunication: EcChapter = {
       body: `**The idea:**
 Email is where clarity goes to die: buried asks, vague subjects, and walls of text that get starred "to read later" and never reopened. A good work email is engineered so a skimming reader gets the point and the action in seconds.
 
+\`\`\`viz:tree
+{
+  "nodes": [
+    { "id": "email", "label": "An email that gets read & actioned", "highlight": true, "children": ["subj", "bl", "ask", "warm"] },
+    { "id": "subj", "label": "Subject: specific, names the action & deadline" },
+    { "id": "bl", "label": "First line: the bottom line / the ask" },
+    { "id": "ask", "label": "The ask made scannable: bold it, bullet the options" },
+    { "id": "warm", "label": "A line of warmth (email runs cold)" }
+  ],
+  "rootId": "email",
+  "caption": "Engineer every email for an eight-second skim: a subject that earns the open, the point up front, a scannable ask, and enough warmth that neutral doesn't read as curt."
+}
+\`\`\`
+
 **The subject line is the whole email's headline:**
 Most people decide whether (and when) to open based on the subject alone. Make it specific and, where useful, name the action:
 > ❌ "Quick question" · "Update" · "Following up"
@@ -148,6 +162,23 @@ A good request lowers the effort of the "yes." Give the person everything they n
 - **The why** — a reason gets more yeses than a bare demand (even a small reason works).
 - **The deadline** — "by Thursday" beats "when you get a chance," which means never.
 - **The easy path** — attach the doc, pre-fill the form, propose the time. Every click you remove raises your odds.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "ask", "label": "Specific ask ('review section 3')", "row": 0, "col": 0 },
+    { "id": "why", "label": "A reason (even a small one)", "row": 1, "col": 0 },
+    { "id": "when", "label": "A concrete deadline ('by Thursday')", "row": 2, "col": 0 },
+    { "id": "easy", "label": "The easy path (doc attached, time proposed)", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "ask", "to": "why" },
+    { "from": "why", "to": "when" },
+    { "from": "when", "to": "easy" }
+  ],
+  "caption": "Each element lowers the effort of the 'yes'. 'Whenever you get a chance' has no ask, no reason, and no deadline — which is why it means never."
+}
+\`\`\`
 
 > ❌ "Can you look at the proposal at some point?"
 > ✅ "Could you review just the pricing section (p.3) of the proposal by Thursday? It's the one part I'm unsure on, and I want to send it Friday. Doc's attached, should take 10 minutes."

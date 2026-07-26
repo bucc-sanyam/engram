@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785073982.9167218,
-    "ast_hash": "033fe85201a86b5bbbb33faddf5bf68b",
+    "mtime": 1785075074.9398627,
+    "ast_hash": "38472d900af118c3551784165c238ffe",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785073974.52534,
-    "ast_hash": "3d3aab9f428ffd7b4ca1d8ba2f9bffb2",
+    "mtime": 1785075065.877599,
+    "ast_hash": "17223f20203e9748968fb51517818d86",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785073996.0499408,
-    "ast_hash": "f341042c467151872656b57d7b4d02ff",
+    "mtime": 1785075083.4636846,
+    "ast_hash": "bbd2e47a93d9200eb26d56f5d5aba1e9",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1785073827.4208672,
-    "ast_hash": "e7f571e6383ecd16b242a1c1046015f3",
+    "mtime": 1785074945.6584563,
+    "ast_hash": "f7efdf2cbb9811be8a43b208bca74d2d",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -940,13 +940,13 @@
     "semantic_hash": ""
   },
   "src/components/viz/ArrayViz.tsx": {
-    "mtime": 1784982783.118555,
-    "ast_hash": "86e9c8cf9bb8d103ef40d7028b89accd",
+    "mtime": 1785074053.9961035,
+    "ast_hash": "ce405f4da3593b3f37c5f0d1b2ff25ef",
     "semantic_hash": ""
   },
   "src/components/viz/FlowViz.tsx": {
-    "mtime": 1784982783.1190095,
-    "ast_hash": "e3dec908f52c23748673be322c94acef",
+    "mtime": 1785074053.9963708,
+    "ast_hash": "868d080ca67cfdc55f9d45a862b90119",
     "semantic_hash": ""
   },
   "src/components/viz/TableDiffViz.tsx": {
@@ -955,8 +955,8 @@
     "semantic_hash": ""
   },
   "src/components/viz/TreeViz.tsx": {
-    "mtime": 1784982783.1199617,
-    "ast_hash": "e9c3091db9ed63bbfe0e1b9414fd1b30",
+    "mtime": 1785074053.9979122,
+    "ast_hash": "3bce6b9e681b1f38928c0eded6e66771",
     "semantic_hash": ""
   },
   "src/components/viz/VizBlock.tsx": {
@@ -1180,28 +1180,28 @@
     "semantic_hash": ""
   },
   "src/app/blogs/english-communication/page.tsx": {
-    "mtime": 1785073830.086641,
+    "mtime": 1785074054.0366237,
     "ast_hash": "39fbcca073bb612e2c5f3c1223929967",
     "semantic_hash": ""
   },
   "src/lib/english-communication/index.ts": {
-    "mtime": 1785073814.8763113,
-    "ast_hash": "82ad02115cac9b3dd9cfff0dd7de84e3",
+    "mtime": 1785074944.219429,
+    "ast_hash": "5f5064d07d0d898c0800108c0f94a14c",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/01-foundations.ts": {
-    "mtime": 1785051990.240791,
-    "ast_hash": "bd49d35426a9b82144e85df48b595e30",
+    "mtime": 1785074816.9961622,
+    "ast_hash": "6bf3079bfd834c4a81101245fcd38db2",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/02-structuring-your-message.ts": {
-    "mtime": 1785052065.0886915,
-    "ast_hash": "6ff1b0938603dc1f21c7120be7433bb0",
+    "mtime": 1785074832.513292,
+    "ast_hash": "f6803ba8ed7b79433a49418c5a21d6e7",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/03-delivery.ts": {
-    "mtime": 1785053544.8890522,
-    "ast_hash": "bddc06d24a2632537668302909d837a8",
+    "mtime": 1785074840.8172588,
+    "ast_hash": "dfaea78ae87d38514ed8a5d407145d53",
     "semantic_hash": ""
   },
   "src/lib/english-communication/types.ts": {
@@ -1210,23 +1210,28 @@
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/04-everyday-scenarios.ts": {
-    "mtime": 1785072142.678244,
-    "ast_hash": "a0dcb6ef3da54d5dafe161fef34a9654",
+    "mtime": 1785074871.4738708,
+    "ast_hash": "a18f82dacaab5ac6ef3c58737e2174a4",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/05-meetings-and-presentations.ts": {
-    "mtime": 1785072216.2451422,
-    "ast_hash": "db6ba21692198894fb5d7e5554bca5ab",
+    "mtime": 1785074882.7558186,
+    "ast_hash": "5a2961dcc03aacaaeb07462b9e5c2b11",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/06-written-communication.ts": {
-    "mtime": 1785072291.8013983,
-    "ast_hash": "35563b327bd2d4ce252bf2a726dca95f",
+    "mtime": 1785074913.0574927,
+    "ast_hash": "d5ca360837ff5884e6dfce6bdede7b9c",
     "semantic_hash": ""
   },
   "src/lib/english-communication/topics/07-high-stakes-conversations.ts": {
-    "mtime": 1785073804.777576,
-    "ast_hash": "652b4cc03e26858cebc37fe6f4674881",
+    "mtime": 1785074929.6476612,
+    "ast_hash": "2088ca99606a9d44a790992803a976c9",
+    "semantic_hash": ""
+  },
+  "src/lib/english-communication/topics/08-remote-and-cross-cultural.ts": {
+    "mtime": 1785074717.515346,
+    "ast_hash": "eed73bbb41623dc51e52a3eae2a349b5",
     "semantic_hash": ""
   }
 }

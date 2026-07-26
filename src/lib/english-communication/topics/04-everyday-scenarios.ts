@@ -75,6 +75,23 @@ A status update is not a diary of everything you did. It's a signal to a busy re
 3. **Risks or blockers**, flagged early enough to act on.
 4. **The ask**, if any — explicit, with a name and a date.
 
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "h", "label": "Headline: on track / at risk / blocked", "row": 0, "col": 0 },
+    { "id": "d", "label": "What changed (the delta, not everything)", "row": 1, "col": 0 },
+    { "id": "r", "label": "Risks, flagged early enough to act on", "row": 2, "col": 0 },
+    { "id": "a", "label": "The ask — explicit, with a name and date", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "h", "to": "d" },
+    { "from": "d", "to": "r" },
+    { "from": "r", "to": "a" }
+  ],
+  "caption": "A status update read top to bottom: the reader relaxes or intervenes at the headline, and only reads on for the detail they need."
+}
+\`\`\`
+
 **Vague vs. useful:**
 > ❌ "Made good progress on the migration this week, did a bunch of testing, ran into a few things, should be fine, will keep going."
 > ✅ "**Migration: on track for Friday.** Backend cutover is done and tested; the last piece is the data backfill, running now. **One risk:** if the backfill finds bad rows we may slip to Monday — I'll know by Wednesday. **No ask right now.**"
@@ -136,6 +153,21 @@ Most feedback fails because it's vague ("be more proactive"), personal ("you're 
 - **Situation:** when and where. "In yesterday's client call…"
 - **Behaviour:** what you actually observed — not your interpretation. "…you answered the pricing question before the client had finished asking it."
 - **Impact:** the effect it had. "…and I noticed they went quiet afterwards; I think they felt cut off."
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "s", "label": "Situation: when & where ('in yesterday's call')", "row": 0, "col": 0 },
+    { "id": "b", "label": "Behaviour: the observable action (no interpretation)", "row": 1, "col": 0 },
+    { "id": "i", "label": "Impact: the effect you observed", "row": 2, "col": 0 }
+  ],
+  "edges": [
+    { "from": "s", "to": "b" },
+    { "from": "b", "to": "i" }
+  ],
+  "caption": "SBI anchors feedback to facts, not character. 'You interrupted the client' (behaviour) is fixable; 'you're rude' (identity) only triggers defence."
+}
+\`\`\`
 
 **Why SBI works:**
 It separates *behaviour* from *identity.* "You interrupted the client" is a specific, fixable action; "you're rude" is an attack on who they are, and people defend their identity far harder than they defend a single action. SBI also removes mind-reading — you report the impact *you observed,* not the motive you assumed.
@@ -205,6 +237,23 @@ Saying yes to everything isn't kindness — it's how work quality collapses and 
 2. **Decline clearly** — no maybe-that-means-no. Ambiguity is unkind; it leaves them hoping.
 3. **Give a brief, honest reason** (not a pile of excuses).
 4. **Offer a path** where you can — an alternative, a later time, a different owner, or a trade-off for them to decide.
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "ack", "label": "Acknowledge the request & the person", "row": 0, "col": 0 },
+    { "id": "no", "label": "Decline clearly (no maybe-that-means-no)", "row": 1, "col": 0 },
+    { "id": "why", "label": "One brief, honest reason", "row": 2, "col": 0 },
+    { "id": "path", "label": "Offer a path: alternative / later / trade-off", "row": 3, "col": 0 }
+  ],
+  "edges": [
+    { "from": "ack", "to": "no" },
+    { "from": "no", "to": "why" },
+    { "from": "why", "to": "path" }
+  ],
+  "caption": "Say no to the request, yes to the relationship — the 'path' hands the decision back and keeps you a good colleague."
+}
+\`\`\`
 
 **Blunt vs. skilful:**
 > ❌ "No, I can't, I'm too busy."

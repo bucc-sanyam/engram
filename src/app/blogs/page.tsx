@@ -74,7 +74,7 @@ const STORY_SERIES = [
     tag: "Communication",
     color: "#3fb4c4",
     title: "English communication for working professionals",
-    meta: "7 chapters · scenario grading",
+    meta: "8 chapters · scenario grading",
     desc: "Speak and write to be understood — with an AI that judges not just what you say, but how you structure and deliver it.",
   },
 ];

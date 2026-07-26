@@ -24,6 +24,15 @@ Concision means saying exactly what's needed and then stopping. It's not about b
 > ❌ "I just wanted to quickly check in and see if you had maybe had a chance to possibly take a look at the doc I sent over, no worries at all if not!"
 > ✅ "Have you had a chance to review the doc? No rush."
 
+\`\`\`viz:table-diff
+{
+  "columns": ["The same nudge"],
+  "before": [["I just wanted to quickly check in and see if you had maybe had a chance to possibly take a look at the doc I sent over, no worries at all if not!"]],
+  "after": [["Have you had a chance to review the doc? No rush."]],
+  "caption": "Cut the throat-clearing, the stacked hedges, and the empty intensifiers, and the friendlier message is the shorter one."
+}
+\`\`\`
+
 Fourteen words instead of thirty-four — and the second is *friendlier*, because it isn't apologising for existing.
 
 **The word-count test:**
@@ -149,6 +158,18 @@ The most credible move is being exact about your confidence level. "I'm certain 
 - **Passive:** "Whatever you all think is fine." (no view — unhelpful)
 - **Aggressive:** "That's wrong, we're doing it my way." (a view, no respect)
 - **Assertive:** "I see it differently — here's why, and I'm open to being wrong." (a clear view, held with respect)
+
+\`\`\`viz:flow
+{
+  "nodes": [
+    { "id": "passive", "label": "Passive: 'Whatever you think is fine' (no view)", "row": 0, "col": 0 },
+    { "id": "assertive", "label": "Assertive: clear view, held openly (the target)", "row": 0, "col": 1 },
+    { "id": "aggressive", "label": "Aggressive: 'We're doing it my way' (no respect)", "row": 0, "col": 2 }
+  ],
+  "edges": [],
+  "caption": "Confidence sits in the middle: state your position AND leave room for others. Under-confidence dissolves the point; over-confidence torches trust."
+}
+\`\`\`
 
 Assertive is the target: state your position *and* leave room for others.
 
