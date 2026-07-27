@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/lib/data.ts": {
-    "mtime": 1785184128.457973,
-    "ast_hash": "f9ccba9223855290d2e64fb8737cbe0f",
+    "mtime": 1785056938.1924164,
+    "ast_hash": "36093f63cd7f710858631ded78c08799",
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
@@ -120,13 +120,13 @@
     "semantic_hash": "1cf9332fa62472d782bb7703f2f618a7"
   },
   "src/lib/types.ts": {
-    "mtime": 1785184087.5102656,
-    "ast_hash": "2034875a0c8d63aa4252e683536b2fa7",
+    "mtime": 1785090479.0394588,
+    "ast_hash": "0ba9cc7db4f32bd4226303f8be8e2589",
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
-    "mtime": 1785184484.5298219,
-    "ast_hash": "fe24ab1af727e0ab14705cc80b90e3d3",
+    "mtime": 1784991170.0332572,
+    "ast_hash": "357453f8c3257089815b18ce5523c815",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785184524.3765416,
-    "ast_hash": "8b1d5f19dab5cd5d3488a40a2f86fcfb",
+    "mtime": 1785116212.170965,
+    "ast_hash": "b58ad95ae5324f6b8b4bc332a84b24c4",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785184546.1596112,
-    "ast_hash": "f41d6fa858ad91c7e55a42b925035109",
+    "mtime": 1785116240.8120773,
+    "ast_hash": "4748485654f8bad766d678a9cc600859",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785184563.8116841,
-    "ast_hash": "34e126657a6e036da28a9695ed337987",
+    "mtime": 1785116250.9273486,
+    "ast_hash": "f92f84f6171adf2aedce9717e423f69d",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -1237,21 +1237,6 @@
   "src/components/MicButton.tsx": {
     "mtime": 1785092610.883105,
     "ast_hash": "1792ea4f693b29679c7f7ce1717bfd63",
-    "semantic_hash": ""
-  },
-  "src/app/api/streak/repair/route.ts": {
-    "mtime": 1785184288.021757,
-    "ast_hash": "ab354b93b597b2401d237989af5eaf9f",
-    "semantic_hash": ""
-  },
-  "src/lib/streak.ts": {
-    "mtime": 1785184249.4768755,
-    "ast_hash": "ecc7b6195cb1a9fd42e6e0d0abb85bea",
-    "semantic_hash": ""
-  },
-  "supabase/schema-streak-repair.sql": {
-    "mtime": 1785184474.6798558,
-    "ast_hash": "30ddb0f9722781e49225a8972a6e0bf7",
     "semantic_hash": ""
   }
 }

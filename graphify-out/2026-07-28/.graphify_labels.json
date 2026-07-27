@@ -54,8 +54,6 @@
   "52": "page.tsx",
   "53": "Architecture & Urban Planning Story Creator Agent",
   "54": "stories.ts",
-  "55": "page.tsx",
-  "56": "ReportCardView.tsx",
   "57": "ReadingThemeContext.tsx",
   "58": "route.ts",
   "59": "Art, Design & UI/UX Story Creator Agent",
@@ -90,7 +88,6 @@
   "88": "RichText.tsx",
   "89": "New story series: \"Talking with Psychopaths and Savages\" — Plan + Checklist",
   "90": "True Crime & Forensic Casework Story Creator Agent",
-  "91": "AccentText.tsx",
   "92": "cache.ts",
   "93": "graphify reference: transcribe video and audio",
   "94": "vercel.json",
@@ -99,11 +96,5 @@
   "97": "BrainScene.tsx",
   "98": "page.tsx",
   "99": "stories.ts",
-  "100": "page.tsx",
-  "101": "index.ts",
-  "102": "Nav.tsx",
-  "103": "RichText.tsx",
-  "104": "ReadingThemeContext.tsx",
-  "105": "ThanosSnapCanvas.tsx",
-  "106": "page.tsx"
+  "103": "RichText.tsx"
 }

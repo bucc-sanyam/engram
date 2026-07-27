@@ -8,6 +8,7 @@ create table if not exists public.profiles (
   streak integer not null default 0,
   longest_streak integer not null default 0,
   last_active date,
+  is_premium boolean not null default false, -- premium tier (streak repair etc.)
   created_at timestamptz not null default now()
 );
 
@@ -232,8 +233,48 @@ drop policy if exists "own quiz_answers" on public.quiz_answers;
 create policy "own quiz_answers" on public.quiz_answers
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+-- ============ streak repairs (premium) ============
+-- Keep is_premium tamper-resistant: only the service role (trusted backend /
+-- Stripe webhook) may change it — a browser user updating their own profile row
+-- can't self-grant premium (RLS is row-level, not column-level).
+create or replace function public.guard_is_premium()
+returns trigger language plpgsql security definer set search_path = '' as $$
+begin
+  if new.is_premium is distinct from old.is_premium
+     and coalesce(auth.jwt() ->> 'role', '') <> 'service_role' then
+    new.is_premium := old.is_premium;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profiles_guard_is_premium on public.profiles;
+create trigger profiles_guard_is_premium
+  before update on public.profiles
+  for each row execute function public.guard_is_premium();
+
+-- One row per missed day a premium user has bought back via an older-day recall.
+create table if not exists public.streak_repairs (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users on delete cascade,
+  covered_day date not null,
+  session_id uuid references public.quiz_sessions on delete set null,
+  created_at timestamptz not null default now(),
+  unique (user_id, covered_day)
+);
+alter table public.streak_repairs enable row level security;
+drop policy if exists "own streak_repairs select" on public.streak_repairs;
+create policy "own streak_repairs select" on public.streak_repairs
+  for select using (auth.uid() = user_id);
+drop policy if exists "own streak_repairs insert" on public.streak_repairs;
+create policy "own streak_repairs insert" on public.streak_repairs
+  for insert with check (auth.uid() = user_id);
+drop policy if exists "own streak_repairs delete" on public.streak_repairs;
+create policy "own streak_repairs delete" on public.streak_repairs
+  for delete using (auth.uid() = user_id);
+
 -- Helpful indexes
 create index if not exists topics_user_next_review on public.topics (user_id, next_review_at);
+create index if not exists streak_repairs_user_created on public.streak_repairs (user_id, created_at desc);
 create index if not exists reviews_user_created on public.reviews (user_id, created_at);
 create index if not exists links_user on public.topic_links (user_id);
 create index if not exists questions_user_topic on public.questions (user_id, topic_id);

@@ -31,6 +31,7 @@ import type {
   ReportItem,
   Review,
   SessionQuestion,
+  StreakRepairStatus,
   Topic,
   TopicLink,
   TopicQuestion,
@@ -184,6 +185,46 @@ export async function updateProfile(fields: { display_name: string }): Promise<P
   if (error) throw error;
   invalidate(CACHE_KEYS.profile);
   return data as Profile;
+}
+
+/**
+ * Streak repair (PREMIUM). `getStreakRepairStatus()` tells the UI whether to
+ * offer "restore your streak" — the user is premium AND missed a repairable
+ * day. After they complete an older-day recall (a normal graded quiz session),
+ * `redeemStreakRepair(sessionId)` backfills the missed day and returns the
+ * restored streak. Demo/guests are never premium, so the option stays hidden.
+ */
+export async function getStreakRepairStatus(): Promise<StreakRepairStatus> {
+  if (isDemo) {
+    return {
+      is_premium: false,
+      eligible: false,
+      reason: "not_premium",
+      missed_days: [],
+      streak_at_risk: 0,
+      current_streak: demoState.profile.streak,
+      repairs_used: 0,
+      repairs_limit: 0,
+    };
+  }
+  const res = await fetch(`/api/streak/repair?tz=${tzOffsetMinutes()}`);
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new ApiError(err.error || `Request failed (${res.status})`, res.status);
+  }
+  return res.json();
+}
+
+export async function redeemStreakRepair(
+  sessionId: string
+): Promise<{ repaired: boolean; covered_days: string[]; streak: number }> {
+  if (isDemo) throw new ApiError("Streak repair is a premium feature.", 403);
+  const result = await api<{ repaired: boolean; covered_days: string[]; streak: number }>(
+    "/api/streak/repair",
+    { sessionId, tz: tzOffsetMinutes() }
+  );
+  invalidate(CACHE_KEYS.profile);
+  return result;
 }
 
 export async function getUserEmail(): Promise<string | null> {

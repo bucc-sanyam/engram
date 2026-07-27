@@ -37,6 +37,20 @@ export interface Profile {
   streak: number;
   longest_streak: number;
   last_active: string | null;
+  /** Premium tier flag (streak repair etc.). Absent on un-migrated DBs → treat as false. */
+  is_premium?: boolean;
+}
+
+/** Eligibility payload from GET /api/streak/repair (premium streak repair). */
+export interface StreakRepairStatus {
+  is_premium: boolean;
+  eligible: boolean;
+  reason: "not_premium" | "no_gap" | "gap_too_large" | "rate_limited" | null;
+  missed_days: string[];
+  streak_at_risk: number;
+  current_streak: number;
+  repairs_used: number;
+  repairs_limit: number;
 }
 
 export interface Topic {
