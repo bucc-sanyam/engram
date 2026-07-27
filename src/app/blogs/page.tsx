@@ -3,8 +3,14 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Nav from "@/components/Nav";
-import { getTopics } from "@/lib/data";
-import { getStartedStories, getAllStorySections, type UserStory, type StorySection } from "@/lib/stories";
+import { getBlogTopicLibrary } from "@/lib/data";
+import {
+  getStartedStories,
+  getAllStorySections,
+  storySectionHref,
+  type UserStory,
+  type StorySection,
+} from "@/lib/stories";
 import type { Topic } from "@/lib/types";
 import { categoryColor, CATEGORY_COLORS } from "@/lib/types";
 
@@ -86,15 +92,19 @@ export default function BlogsPage() {
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const [stories, setStories] = useState<UserStory[]>([]);
   const [storySections, setStorySections] = useState<StorySection[]>([]);
+  const [addedTopicIds, setAddedTopicIds] = useState<Set<string>>(new Set());
   const [expertsOpen, setExpertsOpen] = useState(false);
   const [writeOpen, setWriteOpen] = useState(false);
 
   useEffect(() => {
-    getTopics()
-      .then(setTopics)
+    Promise.all([getBlogTopicLibrary(), getStartedStories(), getAllStorySections()])
+      .then(([library, startedStories, sections]) => {
+        setTopics(library.topics);
+        setAddedTopicIds(library.addedTopicIds);
+        setStories(startedStories);
+        setStorySections(sections);
+      })
       .finally(() => setLoaded(true));
-    getStartedStories().then(setStories).catch(() => {});
-    getAllStorySections().then(setStorySections).catch(() => {});
   }, []);
 
   // Build per-series progress lookup
@@ -121,6 +131,24 @@ export default function BlogsPage() {
       return bStarted - aStarted;
     });
   }, [seriesProgress]);
+
+  const displayedSeries = expertsOpen ? sortedSeries : sortedSeries.slice(0, 1);
+
+  const learnedStoryByTopic = useMemo(
+    () => new Map(
+      storySections
+        .filter((section) => section.status === "learned")
+        .map((section) => [section.topic_id, section])
+    ),
+    [storySections]
+  );
+
+  const blogHref = (topic: Topic) => {
+    const learnedSection = learnedStoryByTopic.get(topic.id);
+    return !addedTopicIds.has(topic.id) && learnedSection
+      ? storySectionHref(learnedSection)
+      : `/blogs/${topic.id}`;
+  };
 
   const categories = useMemo(() => {
     const counts = new Map<string, number>();
@@ -155,8 +183,7 @@ export default function BlogsPage() {
           </p>
         </div>
 
-        {/* Learn from our experts — collapsible so the library stays compact
-            as more series ship */}
+        {/* One expert series stays visible as a preview; the arrow expands the rest. */}
         <section className="rise mb-10">
           <div className="glass relative overflow-hidden rounded-[1.75rem]">
             {/* shared ambient wash so the whole block reads as one surface */}
@@ -165,12 +192,7 @@ export default function BlogsPage() {
               style={{ background: "linear-gradient(135deg,#ff7a5c,#f5b95f)" }}
               aria-hidden
             />
-            {/* header — click to expand/collapse */}
-            <button
-              onClick={() => setExpertsOpen((v) => !v)}
-              className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-white/[0.03]"
-              aria-expanded={expertsOpen}
-            >
+            <div className="flex w-full items-center gap-3 px-5 py-4 text-left">
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#ff7a5c]/25 to-[#f5b95f]/20 text-base">
                 🎓
               </span>
@@ -183,16 +205,10 @@ export default function BlogsPage() {
               <span className="micro shrink-0 rounded-full bg-white/[0.06] px-2.5 py-1 !text-muted">
                 {STORY_SERIES.length} series
               </span>
-              <ChevronDownIcon
-                className={`h-4 w-4 shrink-0 text-faint transition-transform ${expertsOpen ? "rotate-180" : ""}`}
-              />
-            </button>
+            </div>
 
-            {/* series as connected rows sharing one frame — collapsed by default */}
-            {expertsOpen && (
-              <>
-                <div className="divide-y divide-white/[0.05] border-t border-white/[0.06]">
-                  {sortedSeries.map((s) => {
+            <div className="divide-y divide-white/[0.05] border-t border-white/[0.06]">
+                  {displayedSeries.map((s) => {
                     // Extract the series slug from the href
                     const slug = s.href.split("/blogs/")[1];
                     const progress = slug ? seriesProgress.get(slug) : null;
@@ -250,8 +266,23 @@ export default function BlogsPage() {
                       </span>
                     </Link>
                   )})}
-                </div>
+            </div>
 
+            {sortedSeries.length > 1 && (
+              <button
+                type="button"
+                onClick={() => setExpertsOpen((open) => !open)}
+                className="flex w-full items-center justify-center gap-2 border-t border-white/[0.06] py-2.5 text-xs font-medium text-faint transition-colors hover:bg-white/[0.03] hover:text-white/80"
+                aria-expanded={expertsOpen}
+                aria-label={expertsOpen ? "Show fewer expert stories" : "Show all expert stories"}
+              >
+                <span>{expertsOpen ? "Show fewer" : `Show all ${sortedSeries.length} series`}</span>
+                <ChevronDownIcon className={`h-4 w-4 transition-transform ${expertsOpen ? "rotate-180" : ""}`} />
+              </button>
+            )}
+
+            {expertsOpen && (
+              <>
                 {/* Request a dedicated story CTA */}
                 <div className="border-t border-white/[0.06] px-5 py-4">
                   <button
@@ -356,7 +387,7 @@ export default function BlogsPage() {
               return (
                 <Link
                   key={topic.id}
-                  href={`/blogs/${topic.id}`}
+                  href={blogHref(topic)}
                   className="glass glass-hover group relative overflow-hidden rounded-[1.5rem] p-5 transition-all"
                 >
                   {/* Ambient glow */}

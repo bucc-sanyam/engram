@@ -200,6 +200,45 @@ export async function getTopics(): Promise<Topic[]> {
   return (data ?? []) as Topic[];
 }
 
+export interface BlogTopicLibrary {
+  topics: Topic[];
+  addedTopicIds: Set<string>;
+  learnedTopicIds: Set<string>;
+}
+
+/**
+ * Topics that belong in the user's blog library and brain: their own ingests,
+ * plus story sections they completed. Starting a story seeds every section as
+ * a dormant topic, but those rows stay hidden until each section is learned.
+ */
+export async function getBlogTopicLibrary(): Promise<BlogTopicLibrary> {
+  if (isDemo) {
+    return {
+      topics: demoTopics,
+      addedTopicIds: new Set(demoTopics.map((topic) => topic.id)),
+      learnedTopicIds: new Set(),
+    };
+  }
+
+  const supabase = createClient();
+  const [topicsResult, entriesResult, sectionsResult] = await Promise.all([
+    supabase.from("topics").select("*").order("created_at", { ascending: false }),
+    supabase.from("entry_topics").select("topic_id"),
+    supabase.from("story_sections").select("topic_id").eq("status", "learned"),
+  ]);
+  const addedTopicIds = new Set(
+    (entriesResult.data ?? []).map((row) => row.topic_id as string)
+  );
+  const learnedTopicIds = new Set(
+    (sectionsResult.data ?? []).map((row) => row.topic_id as string)
+  );
+  const topics = ((topicsResult.data ?? []) as Topic[]).filter(
+    (topic) => addedTopicIds.has(topic.id) || learnedTopicIds.has(topic.id)
+  );
+
+  return { topics, addedTopicIds, learnedTopicIds };
+}
+
 export async function getTopic(id: string): Promise<Topic | null> {
   if (isDemo) return demoTopics.find((t) => t.id === id) ?? null;
   const supabase = createClient();

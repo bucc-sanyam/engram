@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Nav from "@/components/Nav";
 import BrainScene from "@/components/BrainScene";
-import { getLinks, getTopics } from "@/lib/data";
+import { getBlogTopicLibrary, getLinks } from "@/lib/data";
 import {
   getAllStorySections,
   getStartedStories,
@@ -33,12 +33,14 @@ export default function BrainPage() {
   const [loaded, setLoaded] = useState(false);
   const [stories, setStories] = useState<UserStory[]>([]);
   const [storySections, setStorySections] = useState<StorySection[]>([]);
+  const [addedTopicIds, setAddedTopicIds] = useState<Set<string>>(new Set());
   const [focusSeries, setFocusSeries] = useState<string | null>(null);
 
   useEffect(() => {
-    Promise.all([getTopics(), getLinks(), getStartedStories(), getAllStorySections()]).then(
-      ([t, l, s, ss]) => {
-        setTopics(t);
+    Promise.all([getBlogTopicLibrary(), getLinks(), getStartedStories(), getAllStorySections()]).then(
+      ([library, l, s, ss]) => {
+        setTopics(library.topics);
+        setAddedTopicIds(library.addedTopicIds);
         setLinks(l);
         setStories(s);
         setStorySections(ss);
@@ -49,22 +51,42 @@ export default function BrainPage() {
 
   const byId = useMemo(() => new Map(topics.map((t) => [t.id, t])), [topics]);
 
+  const topicIds = useMemo(() => new Set(topics.map((topic) => topic.id)), [topics]);
+
+  const visibleLinks = useMemo(
+    () => links.filter((link) => topicIds.has(link.source) && topicIds.has(link.target)),
+    [links, topicIds]
+  );
+
   // topic_id → its story section (for "read the full topic" hrefs + focus set)
   const storyByTopic = useMemo(
-    () => new Map(storySections.map((s) => [s.topic_id, s])),
+    () => new Map(
+      storySections
+        .filter((section) => section.status === "learned")
+        .map((section) => [section.topic_id, section])
+    ),
     [storySections]
+  );
+
+  const visibleStories = useMemo(
+    () => stories.filter((story) => storySections.some(
+      (section) => section.series_slug === story.series_slug && topicIds.has(section.topic_id)
+    )),
+    [stories, storySections, topicIds]
   );
 
   // story-focus: recolour this story's nodes, dim the rest
   const highlight = useMemo(() => {
     if (!focusSeries) return null;
     const ids = new Set(
-      storySections.filter((s) => s.series_slug === focusSeries).map((s) => s.topic_id)
+      storySections
+        .filter((s) => s.series_slug === focusSeries && topicIds.has(s.topic_id))
+        .map((s) => s.topic_id)
     );
     if (!ids.size) return null;
     const color = stories.find((s) => s.series_slug === focusSeries)?.color ?? "#5ba4cf";
     return { topicIds: ids, color };
-  }, [focusSeries, storySections, stories]);
+  }, [focusSeries, storySections, stories, topicIds]);
 
   // give every topic belonging to a story its story's colour as a baseline
   const topicColors = useMemo(() => {
@@ -81,17 +103,17 @@ export default function BrainPage() {
   const blogHref = useCallback(
     (t: Topic) => {
       const sec = storyByTopic.get(t.id);
-      return sec ? storySectionHref(sec) : `/blogs/${t.id}`;
+      return !addedTopicIds.has(t.id) && sec ? storySectionHref(sec) : `/blogs/${t.id}`;
     },
-    [storyByTopic]
+    [addedTopicIds, storyByTopic]
   );
 
   const isLinked = useCallback(
     (a: string, b: string) =>
-      links.some(
+      visibleLinks.some(
         (l) => (l.source === a && l.target === b) || (l.source === b && l.target === a)
       ),
-    [links]
+    [visibleLinks]
   );
 
   // Walk to a topic: jump back if already visited, extend the path if it's
@@ -139,13 +161,13 @@ export default function BrainPage() {
   const currentConnections = useMemo(() => {
     if (!current) return [];
     const cur = current;
-    return links
+    return visibleLinks
       .filter((l) => l.source === cur.id || l.target === cur.id)
       .flatMap((l) => {
         const topic = byId.get(l.source === cur.id ? l.target : l.source);
         return topic ? [{ topic, reason: l.reason }] : [];
       });
-  }, [current, links, byId]);
+  }, [current, visibleLinks, byId]);
 
   // categories are derived live from whatever the user has actually added
   const categories = useMemo(() => {
@@ -166,7 +188,7 @@ export default function BrainPage() {
           {loaded && topics.length > 0 && (
             <BrainScene
               topics={visibleTopics}
-              links={links}
+              links={visibleLinks}
               path={path}
               onSelect={(id) => id && navigateTo(id)}
               highlight={highlight}
@@ -243,9 +265,9 @@ export default function BrainPage() {
             </div>
 
             {/* story focus — light up one learnable story, dim the rest */}
-            {stories.length > 0 && (
+            {visibleStories.length > 0 && (
               <div className="pointer-events-auto mt-3 flex flex-wrap justify-center gap-2">
-                {stories.map((s) => {
+                {visibleStories.map((s) => {
                   const active = focusSeries === s.series_slug;
                   return (
                     <button
