@@ -19,6 +19,10 @@ const LINE_H = 17; // line-height for wrapped text
 const GAP_X = 28; // horizontal gap between columns
 const GAP_Y = 48; // vertical gap between rows (extra room for edge labels)
 const MAX_LINE_CHARS = 28; // wrap labels longer than this
+// Diagrams shrink to fit their column, but never below this fraction of natural
+// size — past it they scroll horizontally instead of squashing into an illegible
+// smear (see the shared `overflow-x-auto` wrapper). Keeps text ≥ ~9px.
+const MIN_LEGIBLE_SCALE = 0.72;
 
 /** Split a label into lines of at most `maxChars`, breaking on word boundaries. */
 function wrapLabel(text: string, maxChars: number): string[] {
@@ -109,7 +113,7 @@ export default function FlowViz({ payload, accent = "#a3e635" }: { payload: Flow
         height={Math.max(svgH, 1)}
         viewBox={`0 0 ${Math.max(svgW, 1)} ${Math.max(svgH, 1)}`}
         className="block"
-        style={{ maxWidth: "100%", height: "auto" }}
+        style={{ maxWidth: "100%", minWidth: Math.round(Math.max(svgW, 1) * MIN_LEGIBLE_SCALE), height: "auto" }}
       >
         <defs>
           <marker id="flow-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

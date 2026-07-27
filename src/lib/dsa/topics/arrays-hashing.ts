@@ -192,8 +192,8 @@ def is_anagram(s, t):
 \`\`\`viz:array
 {
   "frames": [
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=0 (x=3)", "index": 0 }], "note": "Target = 7. x=3 $\rightarrow$ complement = 7-3 = 4. Map is {}. 4 not found. Map adds {3: 0}." },
-    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 $\rightarrow$ complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=0 (x=3)", "index": 0 }], "note": "Target = 7. x=3 → complement = 7-3 = 4. Map is {}. 4 not found. Map adds {3: 0}." },
+    { "cells": [3, 4, 5, 6], "pointers": [{ "label": "i=1 (x=4)", "index": 1 }], "highlight": [0, 1], "note": "x=4 → complement = 7-4 = 3. Map HAS key 3 at index 0! Return [0, 1]." }
   ],
   "caption": "Two Sum — single-pass complement lookup in O(N) time and O(N) space."
 }
@@ -382,7 +382,7 @@ def group_anagrams(words):
   "frames": [
     { "cells": ["freq 0", "freq 1", "freq 2", "freq 3"], "note": "Bucket array indexed by frequency 0..N (Array length N=6)." },
     { "cells": ["[]", "[3]", "[2]", "[1]"], "note": "Counts {1:3, 2:2, 3:1} placed in buckets: bucket[3]=[1], bucket[2]=[2], bucket[1]=[3]." },
-    { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements $\rightarrow$ [1, 2]." }
+    { "cells": ["[]", "[3]", "[2]", "[1]"], "highlight": [3, 2], "note": "Iterate backwards from max freq 3: collect 1, then 2. Collected K=2 elements → [1, 2]." }
   ],
   "caption": "Top K Frequent Elements — Bucket sort in O(N) time without comparison sorting."
 }
@@ -720,9 +720,9 @@ def is_valid_sudoku(board):
 {
   "frames": [
     { "cells": [100, 4, 200, 1, 3, 2], "note": "Set: {100, 4, 200, 1, 3, 2}. Scan elements..." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=100", "index": 0 }], "note": "99 in set? NO $\rightarrow$ x=100 is a sequence start. Length = 1." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=4", "index": 1 }], "note": "3 in set? YES $\rightarrow$ Skip! (3 will be handled when walking from 1)." },
-    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO $\rightarrow$ Start at 1. Count 1, 2, 3, 4 $\rightarrow$ Max Length = 4." }
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=100", "index": 0 }], "note": "99 in set? NO → x=100 is a sequence start. Length = 1." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=4", "index": 1 }], "note": "3 in set? YES → Skip! (3 will be handled when walking from 1)." },
+    { "cells": [100, 4, 200, 1, 3, 2], "pointers": [{ "label": "x=1", "index": 3 }], "highlight": [1, 3, 4, 5], "note": "0 in set? NO → Start at 1. Count 1, 2, 3, 4 → Max Length = 4." }
   ],
   "caption": "Longest Consecutive Sequence — Only sequence start elements initiate linear counting."
 }

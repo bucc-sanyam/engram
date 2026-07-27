@@ -8,13 +8,19 @@ import { useVizPalette } from "@/lib/viz-theme";
  * Array/pointer state diagram — one or more frames a reader can step through.
  * Covers most DSA two-pointer / sliding-window / array-state walkthroughs.
  */
+// Diagrams shrink to fit their column, but never below this fraction of natural
+// size — past it they scroll horizontally (see the `overflow-x-auto` wrapper)
+// instead of squashing text into an illegible smear.
+const MIN_LEGIBLE_SCALE = 0.72;
+
 export default function ArrayViz({ payload, accent = "#f5b95f" }: { payload: ArrayVizPayload; accent?: string }) {
   const [i, setI] = useState(0);
   const pal = useVizPalette(accent);
   const frame = payload.frames[Math.min(i, payload.frames.length - 1)];
   const cellSize = 44;
   const gap = 6;
-  const width = frame.cells.length * (cellSize + gap) - gap;
+  // widest frame drives the SVG box so stepping between frames never reflows width
+  const width = Math.max(...payload.frames.map((f) => f.cells.length * (cellSize + gap) - gap), cellSize);
 
   const pointersByIndex = new Map<number, string[]>();
   for (const p of frame.pointers ?? []) {
@@ -26,7 +32,7 @@ export default function ArrayViz({ payload, accent = "#f5b95f" }: { payload: Arr
 
   return (
     <div className="not-prose my-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
-      <svg width={Math.max(width, 1)} height={92} viewBox={`0 0 ${Math.max(width, 1)} 92`} className="block" style={{ maxWidth: "100%", height: "auto" }}>
+      <svg width={Math.max(width, 1)} height={92} viewBox={`0 0 ${Math.max(width, 1)} 92`} className="block" style={{ maxWidth: "100%", minWidth: Math.round(Math.max(width, 1) * MIN_LEGIBLE_SCALE), height: "auto" }}>
         {frame.cells.map((cell, idx) => {
           const x = idx * (cellSize + gap);
           const isHi = highlighted.has(idx);

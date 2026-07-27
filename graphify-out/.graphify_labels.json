@@ -54,8 +54,6 @@
   "52": "page.tsx",
   "53": "Architecture & Urban Planning Story Creator Agent",
   "54": "stories.ts",
-  "55": "route.ts",
-  "56": "dates.ts",
   "57": "ReadingThemeContext.tsx",
   "58": "route.ts",
   "59": "Art, Design & UI/UX Story Creator Agent",
@@ -98,7 +96,5 @@
   "97": "BrainScene.tsx",
   "98": "page.tsx",
   "99": "stories.ts",
-  "101": "StoryStartControl.tsx",
-  "103": "RichText.tsx",
-  "105": "backfill-rag.mts"
+  "103": "RichText.tsx"
 }

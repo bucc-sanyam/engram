@@ -73,11 +73,87 @@ export function sanitizeField(value: unknown, maxLen: number): string {
 }
 
 /**
- * Remove any ```viz:*``` diagram fence whose JSON payload fails validation, so
- * an AI-generated blog body can never ship a broken diagram (which would render
- * as an inline error card). Valid diagrams are kept verbatim. Applied to the
- * blog `body` at ingest — the model is asked to emit a diagram, this is the
- * safety net for when it emits a malformed one.
+ * Size budgets for AI-generated diagrams. A diagram that blows past these is a
+ * generation failure — even though the primitives now scroll gracefully rather
+ * than squashing, a 20-cell array or a 6-column flow scrolls off-screen and
+ * reads as broken. Kept generous (the render tolerates mild overflow); this
+ * only drops the egregious cases so an auto-generated blog stays scannable.
+ * The hand-authored story content is NOT run through here — it's tuned by hand.
+ */
+export const VIZ_BUDGETS = {
+  maxLabelChars: 60, // any single label/note/cell longer than this ⇒ over budget
+  array: { maxFrames: 8, maxCells: 14 },
+  tree: { maxNodes: 14, maxDepthLabelSum: 6 }, // maxDepthLabelSum unused placeholder
+  flow: { maxNodes: 12, maxCols: 5, maxRows: 5 },
+  "table-diff": { maxColumns: 6, maxRows: 8 },
+} as const;
+
+/** Recursively strip control chars + unrenderable `$…$` math from every string in a payload. */
+function sanitizeVizStrings(v: unknown): unknown {
+  if (typeof v === "string") {
+    return v
+      .replace(CONTROL_CHARS, " ")
+      .replace(/\$([^$]{0,60})\$/g, "$1") // `$x$` never renders as math inside a diagram — unwrap it
+      .replace(/[ \t]{2,}/g, " ")
+      .trim();
+  }
+  if (Array.isArray(v)) return v.map(sanitizeVizStrings);
+  if (v && typeof v === "object") {
+    const o: Record<string, unknown> = {};
+    for (const [k, val] of Object.entries(v)) o[k] = sanitizeVizStrings(val);
+    return o;
+  }
+  return v;
+}
+
+/** Returns true if a validated payload is within its size budget (small enough to render cleanly). */
+function withinVizBudget(kind: string, p: any): boolean {
+  const tooLong = (s: unknown) => typeof s === "string" && s.length > VIZ_BUDGETS.maxLabelChars;
+  if (kind === "array") {
+    const b = VIZ_BUDGETS.array;
+    if (p.frames.length > b.maxFrames) return false;
+    for (const f of p.frames) {
+      if (f.cells.length > b.maxCells) return false;
+      if (f.cells.some((c: unknown) => tooLong(String(c)))) return false;
+      if (tooLong(f.note)) return false;
+    }
+    return true;
+  }
+  if (kind === "tree") {
+    const b = VIZ_BUDGETS.tree;
+    if (p.nodes.length > b.maxNodes) return false;
+    return !p.nodes.some((n: any) => tooLong(n.label));
+  }
+  if (kind === "flow") {
+    const b = VIZ_BUDGETS.flow;
+    if (p.nodes.length > b.maxNodes) return false;
+    if (Math.max(...p.nodes.map((n: any) => n.col)) + 1 > b.maxCols) return false;
+    if (Math.max(...p.nodes.map((n: any) => n.row)) + 1 > b.maxRows) return false;
+    return !p.nodes.some((n: any) => tooLong(n.label));
+  }
+  if (kind === "table-diff") {
+    const b = VIZ_BUDGETS["table-diff"];
+    if (p.columns.length > b.maxColumns) return false;
+    if (p.before.length > b.maxRows || p.after.length > b.maxRows) return false;
+    const cells = [p.columns, ...p.before, ...p.after].flat();
+    return !cells.some((c: unknown) => tooLong(c === null ? "" : String(c)));
+  }
+  return true;
+}
+
+/**
+ * Normalize the ```viz:*``` diagram fences in an AI-generated blog body so a
+ * generated blog can never ship a broken, unrenderable, or oversized diagram.
+ * For each fence: parse + validate the JSON; DROP it if invalid or beyond its
+ * size budget (see VIZ_BUDGETS); otherwise sanitize its text (strip control
+ * chars / stray `$…$` math that can't render in a diagram) and re-emit it as
+ * compact JSON. The render primitives handle wide diagrams by scrolling, so
+ * this is the ingest-side complement — it keeps auto-generated diagrams small,
+ * clean, and legible. Valid, in-budget, clean fences pass through effectively
+ * verbatim (re-serialized compactly). Non-viz markdown is returned untouched.
+ *
+ * (Kept the name `stripInvalidVizBlocks` — the ingest route imports it — but it
+ * now normalizes rather than only strips.)
  */
 export function stripInvalidVizBlocks(md: string): string {
   if (!md.includes("```viz:")) return md;
@@ -91,14 +167,16 @@ export function stripInvalidVizBlocks(md: string): string {
       const buf: string[] = [];
       let j = i + 1;
       while (j < lines.length && !/^```/.test(lines[j].trim())) buf.push(lines[j++]);
-      let valid = false;
+      let emit: string[] | null = null;
       try {
-        parseVizPayload(kind, buf.join("\n"));
-        valid = true;
+        const clean = sanitizeVizStrings(parseVizPayload(kind, buf.join("\n")));
+        // Re-validate the sanitized object, then budget-check it.
+        const revalidated = parseVizPayload(kind, JSON.stringify(clean));
+        if (withinVizBudget(kind, revalidated)) emit = [`\`\`\`viz:${kind}`, JSON.stringify(clean), "```"];
       } catch {
-        valid = false;
+        emit = null;
       }
-      if (valid) out.push(lines[i], ...buf, lines[j] ?? "```");
+      if (emit) out.push(...emit);
       // else: drop the whole fenced block
       i = j + 1;
       continue;
