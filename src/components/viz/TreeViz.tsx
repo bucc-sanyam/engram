@@ -3,7 +3,11 @@
 import type { TreeVizPayload } from "./types";
 import { useVizPalette } from "@/lib/viz-theme";
 
-/** Simple tree/graph diagram — explicit node ids/children, BFS-level layout (no auto-layout engine). */
+/** Approximate text width at fontSize 13 with monospace (~7.8px/char). */
+const CHAR_W = 7.8;
+const PAD_X = 20; // horizontal padding inside node circle/pill
+
+/** Simple tree/graph diagram — BFS-level layout with dynamic column widths based on label text. */
 export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: TreeVizPayload; accent?: string }) {
   const pal = useVizPalette(accent);
   const byId = new Map(payload.nodes.map((n) => [n.id, n]));
@@ -25,7 +29,12 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
 
   const nodeR = 22;
   const rowH = 78;
-  const colW = 76;
+
+  // Compute dynamic column width based on the widest label across all levels
+  const longestLabel = Math.max(...payload.nodes.map((n) => n.label.length), 1);
+  const minColW = longestLabel * CHAR_W + PAD_X;
+  const colW = Math.max(minColW, 76); // at least 76px
+
   const maxCols = Math.max(...levels.map((l) => l.length), 1);
   const width = maxCols * colW;
   const height = levels.length * rowH;
@@ -46,7 +55,13 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
 
   return (
     <div className="not-prose my-5 overflow-x-auto rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
-      <svg width={Math.max(width, 1)} height={Math.max(height, 1)} viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`} className="block" style={{ maxWidth: "100%", height: "auto" }}>
+      <svg
+        width={Math.max(width, 1)}
+        height={Math.max(height, 1)}
+        viewBox={`0 0 ${Math.max(width, 1)} ${Math.max(height, 1)}`}
+        className="block"
+        style={{ maxWidth: "100%", height: "auto" }}
+      >
         {edges.map((e, i) => {
           const a = pos.get(e.from)!;
           const b = pos.get(e.to)!;
@@ -55,16 +70,33 @@ export default function TreeViz({ payload, accent = "#f5b95f" }: { payload: Tree
         {payload.nodes.map((n) => {
           const p = pos.get(n.id);
           if (!p) return null;
+          // Use a pill shape for longer labels, circle for short ones
+          const textW = n.label.length * CHAR_W;
+          const useCircle = textW <= nodeR * 2;
+          const pillW = textW + PAD_X;
           return (
             <g key={n.id}>
-              <circle
-                cx={p.x}
-                cy={p.y}
-                r={nodeR}
-                fill={n.highlight ? pal.accentFill : pal.cellFill}
-                stroke={n.highlight ? pal.accent : pal.gridStroke}
-                strokeWidth={n.highlight ? 1.6 : 1}
-              />
+              {useCircle ? (
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={nodeR}
+                  fill={n.highlight ? pal.accentFill : pal.cellFill}
+                  stroke={n.highlight ? pal.accent : pal.gridStroke}
+                  strokeWidth={n.highlight ? 1.6 : 1}
+                />
+              ) : (
+                <rect
+                  x={p.x - pillW / 2}
+                  y={p.y - nodeR}
+                  width={pillW}
+                  height={nodeR * 2}
+                  rx={nodeR}
+                  fill={n.highlight ? pal.accentFill : pal.cellFill}
+                  stroke={n.highlight ? pal.accent : pal.gridStroke}
+                  strokeWidth={n.highlight ? 1.6 : 1}
+                />
+              )}
               <text
                 x={p.x}
                 y={p.y + 4}
