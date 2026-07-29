@@ -234,14 +234,16 @@ create policy "own quiz_answers" on public.quiz_answers
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
 -- ============ streak repairs (premium) ============
--- Keep is_premium tamper-resistant: only the service role (trusted backend /
--- Stripe webhook) may change it — a browser user updating their own profile row
--- can't self-grant premium (RLS is row-level, not column-level).
+-- Keep is_premium tamper-resistant: a logged-in end user (a request carrying a
+-- user JWT → auth.uid() is non-null) can't self-grant premium by updating their
+-- own profile row (RLS is row-level, not column-level). Callers with no end-user
+-- JWT are allowed — the service role (Stripe webhook) and the Supabase SQL editor
+-- (postgres) both have auth.uid() = null, so admin grants work.
 create or replace function public.guard_is_premium()
 returns trigger language plpgsql security definer set search_path = '' as $$
 begin
   if new.is_premium is distinct from old.is_premium
-     and coalesce(auth.jwt() ->> 'role', '') <> 'service_role' then
+     and auth.uid() is not null then
     new.is_premium := old.is_premium;
   end if;
   return new;

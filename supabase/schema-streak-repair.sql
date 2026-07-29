@@ -10,14 +10,17 @@ alter table public.profiles
 
 -- 1a. Make the flag tamper-resistant. RLS is row-level, so without this a user
 --     could self-grant premium by updating their OWN profile row from the
---     browser. This trigger silently reverts any is_premium change that doesn't
---     come from the service role (i.e. a trusted backend / Stripe webhook), so
---     the paywall actually holds. The rest of the profile row stays editable.
+--     browser. This trigger silently reverts any is_premium change made by a
+--     logged-in END USER (a request carrying a user JWT, i.e. auth.uid() is
+--     non-null) — a browser/PostgREST call as the `authenticated` role. Trusted
+--     callers with NO end-user JWT are allowed: the service role (Stripe
+--     webhook) and the Supabase SQL editor (postgres) both have auth.uid() =
+--     null, so admin grants work. The rest of the profile row stays editable.
 create or replace function public.guard_is_premium()
 returns trigger language plpgsql security definer set search_path = '' as $$
 begin
   if new.is_premium is distinct from old.is_premium
-     and coalesce(auth.jwt() ->> 'role', '') <> 'service_role' then
+     and auth.uid() is not null then
     new.is_premium := old.is_premium;
   end if;
   return new;
