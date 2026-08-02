@@ -40,3 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /*.pdf
+
+# NCERT reference PDFs — copyrighted, never commit
+.claude/Books/
+
+# Figure render output (scripts/render-figures.mts) — build artefact, never committed
+.figures/

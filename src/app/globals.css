@@ -685,3 +685,21 @@ h1, h2, h3, .display {
     transition: background-color 300ms ease, color 300ms ease;
   }
 }
+
+/* === SCHOOL TRACK START — safe to delete as one block === */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.school-rail { min-height: 420px; }
+.school-section { scroll-margin-top: 96px; }
+@keyframes schoolFadeIn { from { opacity: 0 } to { opacity: 1 } }
+.school-fade { animation: schoolFadeIn 180ms ease both; }
+/* Inline book plates sit at reading width, breaking out of `.article-body`
+   prose measure so a labelled figure has room for its leader lines. */
+.school-figure { overflow: hidden; }
+.school-figure svg text { user-select: none; }
+@media (prefers-reduced-motion: reduce) {
+  .school-fade { animation: none; }
+}
+/* === SCHOOL TRACK END === */
