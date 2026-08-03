@@ -5,6 +5,7 @@ import type { FigureSpec, FigurePart, FigureLayer } from "@/lib/sim/types";
 import { useVizPalette } from "@/lib/viz-theme";
 import { useReadingTheme } from "@/context/ReadingThemeContext";
 import { cartoonFor } from "@/lib/sim/shading";
+import { liftSubset, layerSubset } from "@/lib/sim/draw";
 
 /**
  * A textbook plate you can magnify.
@@ -34,6 +35,18 @@ const DEFAULT_MAX_ZOOM = 3.4;
 /** How far back the unselected parts fade while something is magnified. */
 const DIM = 0.16;
 const DIM_BACKDROP = 0.42;
+/** In `magnify: "part"` mode the plate stays on screen as context, so the
+ *  unselected parts must stay readable rather than disappear. */
+const PART_DIM = 0.3;
+const PART_DIM_BACKDROP = 0.62;
+/** How large a lifted part grows, as a fraction of the plate's short side,
+ *  and the bounds that keeps a whole-cell backdrop from swallowing the frame. */
+const LIFT_TARGET = 0.3;
+const LIFT_MIN = 1.35;
+const LIFT_MAX = 2.8;
+/** How far a lifted part drifts toward the middle of the plate, so an
+ *  organelle in the corner does not enlarge straight off the edge. */
+const LIFT_RECENTRE = 0.35;
 
 type Zoom = { k: number; tx: number; ty: number };
 
@@ -60,6 +73,29 @@ function zoomTo(
   const tx = clamp(w / 2 - k * cx, w - k * w, 0);
   const ty = clamp(h / 2 - k * cy, h - k * h, 0);
   return { k, tx, ty };
+}
+
+/**
+ * The `magnify: "part"` transform: grow the part about its own centre and
+ * drift it toward the middle of the plate.
+ *
+ * Scale comes from the part's authored `focus` box rather than a measured
+ * bounding box, for the same reason the camera zoom does — a part made of four
+ * scattered chloroplasts should enlarge like one chloroplast, not like the
+ * rectangle that spans all four.
+ */
+function liftTransform(part: FigurePart, w: number, h: number): string {
+  const [fx, fy, fw, fh] = part.focus;
+  const cx = fx + fw / 2;
+  const cy = fy + fh / 2;
+  // The cytoplasm and the cell wall ARE the plate. Scaling them just pushes
+  // the specimen off its own edges, so a backdrop only lights up.
+  const k = part.backdrop
+    ? 1
+    : clamp((Math.min(w, h) * LIFT_TARGET) / Math.max(fw, fh), LIFT_MIN, LIFT_MAX);
+  const dx = (w / 2 - cx) * LIFT_RECENTRE * (part.backdrop ? 0 : 1);
+  const dy = (h / 2 - cy) * LIFT_RECENTRE * (part.backdrop ? 0 : 1);
+  return `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px) scale(${k.toFixed(3)}) translate(${(-cx).toFixed(1)}px, ${(-cy).toFixed(1)}px)`;
 }
 
 export default function FigureSim({
@@ -103,13 +139,23 @@ export default function FigureSim({
   const selected = selectedId
     ? (spec.parts.find((pt) => pt.id === selectedId) ?? null)
     : null;
+  const mode = spec.magnify ?? "camera";
 
-  const zoom = selected ? zoomTo(selected.focus, w, h, maxZoom) : IDENTITY;
-  const magnified = zoom.k > 1.02;
+  const zoom =
+    selected && mode === "camera" ? zoomTo(selected.focus, w, h, maxZoom) : IDENTITY;
+  const magnified = mode === "part" ? !!selected : zoom.k > 1.02;
 
   const ordered = spec.parts
     .map((part, i) => ({ part, order: part.depth ?? i }))
-    .sort((a, b) => a.order - b.order);
+    // A lifted part has to paint over its neighbours, or it grows *underneath*
+    // the organelles drawn after it and reads as a clipping bug.
+    .sort((a, b) =>
+      mode === "part" && a.part.id === selectedId
+        ? 1
+        : mode === "part" && b.part.id === selectedId
+          ? -1
+          : a.order - b.order,
+    );
 
   const ease = reduce ? undefined : "transform 520ms cubic-bezier(.22,.68,.24,1)";
   const fade = reduce ? undefined : "opacity 340ms ease";
@@ -124,7 +170,7 @@ export default function FigureSim({
         </h3>
         {!magnified && spec.parts.some((pt) => pt.labelAt) && (
           <span className="text-[0.68rem] tracking-wide" style={{ color: p.muted }}>
-            tap a label to magnify
+            {mode === "part" ? "tap a part to lift it out" : "tap a label to magnify"}
           </span>
         )}
       </div>
@@ -188,18 +234,67 @@ export default function FigureSim({
               {ordered.map(({ part }) => {
                 const isSelected = part.id === selectedId;
                 const c = cartoonFor(part.tint ?? accent, isPaperMode);
+                const dim = mode === "part" ? PART_DIM : DIM;
+                const dimBackdrop =
+                  mode === "part" ? PART_DIM_BACKDROP : DIM_BACKDROP;
                 const opacity =
                   !selected || isSelected
                     ? 1
                     : part.backdrop
-                      ? DIM_BACKDROP
-                      : DIM;
+                      ? dimBackdrop
+                      : dim;
+                const lifted = mode === "part" && isSelected && !part.backdrop;
+                // Which copy of a multi-copy part travels: the one its focus box
+                // was authored around. `null` when the part is a single shape,
+                // which lifts whole and untouched.
+                const subset = lifted ? liftSubset(part.d, part.focus) : null;
+                const body = subset?.d ?? part.d;
 
                 return (
-                  <g key={part.id} opacity={opacity} style={{ transition: fade }}>
+                  <g key={part.id}>
+                  {/* The part left behind. Lifting only one organelle would
+                      otherwise delete the other three chloroplasts from the
+                      cell; this keeps the specimen whole and shows where the
+                      lifted one came from. */}
+                  {subset && (
+                    <g opacity={dim} pointerEvents="none">
+                      <path d={part.d} fill={c.fill} fillOpacity={0.92} />
+                      <path
+                        d={part.d}
+                        fill="none"
+                        stroke={c.ink}
+                        strokeWidth={1.5}
+                        vectorEffect="non-scaling-stroke"
+                        strokeLinejoin="round"
+                      />
+                    </g>
+                  )}
+                  <g
+                    opacity={opacity}
+                    style={{
+                      transition: reduce
+                        ? undefined
+                        : "opacity 340ms ease, transform 520ms cubic-bezier(.22,.68,.24,1)",
+                      transform:
+                        mode === "part" && isSelected
+                          ? liftTransform(part, w, h)
+                          : undefined,
+                      transformOrigin: "0 0",
+                    }}
+                  >
+                    {/* 0 — a cast shadow, so a lifted part reads as being in
+                        front of the cell rather than merely bigger */}
+                    {lifted && (
+                      <path
+                        d={body}
+                        fill="rgba(12,8,20,0.3)"
+                        transform={`translate(${(w * 0.008).toFixed(1)} ${(h * 0.022).toFixed(1)})`}
+                        pointerEvents="none"
+                      />
+                    )}
                     {/* 1 — flat body colour */}
                     <path
-                      d={part.d}
+                      d={body}
                       fill={c.fill}
                       fillOpacity={part.backdrop ? 0.55 : 0.92}
                       onClick={() => setSelectedId(isSelected ? null : part.id)}
@@ -210,17 +305,20 @@ export default function FigureSim({
                         form some roundness without a gradient */}
                     <g clipPath={`url(#${clipId(part.id)})`} pointerEvents="none">
                       <path
-                        d={part.d}
+                        d={body}
                         fill={c.shade}
                         transform={`translate(${(w * 0.014).toFixed(1)} ${(h * 0.022).toFixed(1)})`}
                         opacity={part.backdrop ? 0.22 : 0.42}
                       />
                     </g>
-                    {/* 3 — the detail: cristae, grana, pores, striations */}
+                    {/* 3 — the detail: cristae, grana, pores, striations. A
+                        lifted copy takes only its own detail with it. */}
                     {part.layers?.map((layer, i) => (
                       <Layer
                         key={i}
-                        layer={layer}
+                        layer={
+                          subset ? { ...layer, d: layerSubset(layer.d, subset.box) } : layer
+                        }
                         ink={layer.tint ? cartoonFor(layer.tint, isPaperMode).ink : c.ink}
                         fill={layer.tint ? cartoonFor(layer.tint, isPaperMode).fill : c.fill}
                         shade={layer.tint ? cartoonFor(layer.tint, isPaperMode).shade : c.shade}
@@ -230,7 +328,7 @@ export default function FigureSim({
                     ))}
                     {/* 4 — ink outline last, so no detail crosses the edge */}
                     <path
-                      d={part.d}
+                      d={body}
                       fill="none"
                       stroke={isSelected ? p.accent : c.ink}
                       strokeWidth={isSelected ? 2.4 : 1.5}
@@ -241,6 +339,7 @@ export default function FigureSim({
                       cursor="pointer"
                       style={reduce ? undefined : { transition: "stroke 300ms ease" }}
                     />
+                  </g>
                   </g>
                 );
               })}
@@ -265,9 +364,13 @@ export default function FigureSim({
 
               {/* Leader lines, labels and panel captions — the printed-figure
                   furniture. They step aside while the plate is magnified. */}
+              {/* In "part" mode the plate never moves, so the labels stay put
+                  and keep naming the rest of the cell. Only the lifted part's
+                  own label goes — its leader would be pointing at the hole it
+                  just left. */}
               <g
-                opacity={magnified ? 0 : 1}
-                pointerEvents={magnified ? "none" : undefined}
+                opacity={mode === "camera" && magnified ? 0 : 1}
+                pointerEvents={mode === "camera" && magnified ? "none" : undefined}
                 style={{ transition: fade }}
               >
                 {spec.panels?.map((panel) => (
@@ -287,20 +390,44 @@ export default function FigureSim({
 
                 {spec.parts.map((part) =>
                   part.labelAt ? (
-                    <Label
+                    <g
                       key={part.id}
-                      part={part}
-                      w={w}
-                      panel={p.panel}
-                      ink={p.ink}
-                      accent={p.accent}
-                      edge={p.edgeStroke}
-                      active={part.id === selectedId}
-                      onSelect={() => setSelectedId(part.id)}
-                    />
+                      opacity={
+                        mode === "part" && part.id === selectedId && !part.backdrop
+                          ? 0
+                          : 1
+                      }
+                      style={{ transition: fade }}
+                    >
+                      <Label
+                        part={part}
+                        w={w}
+                        panel={p.panel}
+                        ink={p.ink}
+                        accent={p.accent}
+                        edge={p.edgeStroke}
+                        active={part.id === selectedId}
+                        onSelect={() => setSelectedId(part.id)}
+                      />
+                    </g>
                   ) : null,
                 )}
               </g>
+
+              {/* The lifted part's own tag, which travels with it. Its printed
+                  label is hidden above (the leader would point at the hole it
+                  left), so without this the enlarged organelle is unnamed on
+                  the plate itself. */}
+              {mode === "part" && selected && !selected.backdrop && (
+                <PartTag
+                  part={selected}
+                  w={w}
+                  h={h}
+                  accent={p.accent}
+                  panel={p.panel}
+                  fade={fade}
+                />
+              )}
             </g>
           </svg>
         </div>
@@ -317,7 +444,7 @@ export default function FigureSim({
               backdropFilter: "blur(4px)",
             }}
           >
-            ⤢ Zoom out
+            {mode === "part" ? "↩ Put it back" : "⤢ Zoom out"}
           </button>
         )}
       </div>
@@ -413,6 +540,106 @@ function Layer({
       opacity={layer.opacity ?? 1}
       pointerEvents="none"
     />
+  );
+}
+
+/* ── the tag that rides a lifted part ───────────────────────────── */
+
+/** Roughly how wide a character is at `TAG_FONT`. SVG cannot measure text
+ *  before layout and the tag has to be centred on the part it names, so the
+ *  width is estimated from the character count — same trick as `wrapLabel`. */
+const TAG_CHAR_W = 7.6;
+const TAG_FONT = 14;
+const TAG_H = 26;
+/** Clearance between the enlarged part and its tag. */
+const TAG_GAP = 12;
+
+/**
+ * A pill naming the part that is currently lifted, placed against its ENLARGED
+ * silhouette rather than its authored `labelAt` — which is where the part used
+ * to be, not where it now is.
+ *
+ * The geometry has to mirror `liftTransform` exactly. It is recomputed here
+ * rather than shared because the transform returns a CSS string; the numbers it
+ * is built from are cheap to derive again and impossible to read back out.
+ */
+function PartTag({
+  part,
+  w,
+  h,
+  accent,
+  panel,
+  fade,
+}: {
+  part: FigurePart;
+  w: number;
+  h: number;
+  accent: string;
+  panel: string;
+  fade?: string;
+}) {
+  const [fx, fy, fw, fh] = part.focus;
+  const cx = fx + fw / 2;
+  const cy = fy + fh / 2;
+  const k = clamp(
+    (Math.min(w, h) * LIFT_TARGET) / Math.max(fw, fh),
+    LIFT_MIN,
+    LIFT_MAX,
+  );
+  // Where the part ends up: scaled about its own centre, then nudged inward.
+  const lcx = cx + (w / 2 - cx) * LIFT_RECENTRE;
+  const lcy = cy + (h / 2 - cy) * LIFT_RECENTRE;
+  const halfH = (fh / 2) * k;
+
+  const tw = part.label.length * TAG_CHAR_W + 26;
+  // Prefer sitting above the part; flip underneath when that would leave the
+  // plate, which is what happens to anything near the top edge.
+  const halfW = (fw / 2) * k;
+  // A part that fills most of the plate's height has no room above or below —
+  // and "below" on a panelled plate lands squarely on the panel captions. Tag
+  // those to the side instead, where a tall part leaves the most space.
+  const tall = halfH * 2 > h * 0.55;
+  const above = lcy - halfH - TAG_GAP - TAG_H;
+
+  const ty = clamp(
+    tall ? lcy - TAG_H / 2 : above < 4 ? lcy + halfH + TAG_GAP : above,
+    4,
+    Math.max(4, h - TAG_H - 4),
+  );
+  const tx = clamp(
+    tall
+      ? lcx < w / 2
+        ? lcx + halfW + TAG_GAP
+        : lcx - halfW - TAG_GAP - tw
+      : lcx - tw / 2,
+    4,
+    Math.max(4, w - tw - 4),
+  );
+
+  return (
+    <g pointerEvents="none" style={{ transition: fade }}>
+      <rect
+        x={tx}
+        y={ty}
+        width={tw}
+        height={TAG_H}
+        rx={TAG_H / 2}
+        fill={panel}
+        stroke={accent}
+        strokeWidth={1.5}
+        vectorEffect="non-scaling-stroke"
+      />
+      <text
+        x={tx + tw / 2}
+        y={ty + TAG_H / 2 + TAG_FONT * 0.36}
+        textAnchor="middle"
+        fontSize={TAG_FONT}
+        fontWeight={600}
+        fill={accent}
+      >
+        {part.label}
+      </text>
+    </g>
   );
 }
 

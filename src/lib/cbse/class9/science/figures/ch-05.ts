@@ -163,6 +163,7 @@ export const tyndallFigure: FigureSpec = {
   altText:
     "Two beakers with a light beam passing through each. In the salt solution the beam is invisible; in the colloid the beam is clearly visible as a bright path because the larger particles scatter the light. Selecting a label magnifies that part.",
   viewBox: [660, 300],
+  magnify: "part",
   parts: [
     {
       id: "torch",
@@ -272,6 +273,7 @@ export const distillationFigure: FigureSpec = {
   altText:
     "A distillation apparatus showing the distillation flask over a burner, the thermometer in the neck, the water-cooled condenser with its inlet and outlet, and the receiver collecting the distillate. Selecting a label magnifies that part.",
   viewBox: [660, 420],
+  magnify: "part",
   maxZoom: 3.8,
   parts: [
     {
@@ -392,6 +394,7 @@ export const chromatographyFigure: FigureSpec = {
   altText:
     "A strip of filter paper hanging in a jar with a little solvent at the bottom. The original ink spot has separated into three coloured bands at different heights up the strip. Selecting a label magnifies that part.",
   viewBox: [660, 420],
+  magnify: "part",
   parts: [
     {
       id: "jar",
@@ -492,6 +495,7 @@ export const separatingFunnelFigure: FigureSpec = {
   altText:
     "A separating funnel held in a stand, holding oil floating on water with a clear boundary between them, the stopcock below, and a beaker catching the lower layer. Selecting a label magnifies that part.",
   viewBox: [660, 440],
+  magnify: "part",
   parts: [
     {
       id: "stand",
@@ -601,6 +605,7 @@ export const bloodFigure: FigureSpec = {
   altText:
     "Two test tubes. Before centrifuging, the blood is a uniform red liquid; after centrifuging it has separated into a pale plasma layer on top, a thin white-cell layer, and packed red cells at the bottom. Selecting a label magnifies that part.",
   viewBox: [660, 320],
+  magnify: "part",
   panels: [
     { id: "b", caption: "(a) Before centrifuging", box: bloodPanels[0] },
     { id: "a", caption: "(b) After centrifuging", box: bloodPanels[1] },

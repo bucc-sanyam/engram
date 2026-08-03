@@ -75,8 +75,15 @@ export default function ChapterReader({
         </p>
       </header>
 
-      {/* Main grid */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[58fr_42fr]">
+      {/* Main grid. Text on the left, every diagram on the right — so the
+          reading column keeps one measure the whole way down and the plates
+          get the width they need.
+          The split is 42/58 and waits for `xl`, both for the same reason: a
+          plate refuses to render below 0.72 of its own viewBox and scrolls
+          sideways instead, and the widest here is 800 units — 576px, plus the
+          card's padding. Under 1280 there is no honest way to fit that beside a
+          readable measure, so the page stacks the way it does on a phone. */}
+      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,41fr)_minmax(0,59fr)]">
         {/* LEFT COLUMN — sections stacked */}
         <div className="flex flex-col gap-12">
           {chapter.sections.map((section) => (
@@ -100,25 +107,10 @@ export default function ChapterReader({
                 </Markdown>
               </div>
 
-              {/* Inline plates — the book's figures, at reading width, on
-                  every viewport. The sticky rail is for `sim`, not these. */}
-              {section.figures?.map((figure, i) => (
-                <div key={i} className="school-figure glass mt-6 rounded-[1.5rem] p-5">
-                  <div className="motion-reduce:hidden">
-                    <SimBlock spec={figure} accent={chapter.accent} />
-                  </div>
-                  <div className="hidden motion-reduce:block">
-                    <SimFallback
-                      altText={figure.altText}
-                      title={figure.title}
-                      accent={chapter.accent}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              {/* Mobile sim + note (interleaved per section) */}
-              <div className="mt-6 lg:hidden">
+              {/* Single-column only — there the diagrams belong with the text
+                  they illustrate. Wide enough for two columns, they all move
+                  into the rail. */}
+              <div className="mt-6 xl:hidden">
                 {section.sim && (
                   <div className="mb-4">
                     <div className="motion-reduce:hidden">
@@ -129,6 +121,20 @@ export default function ChapterReader({
                     </div>
                   </div>
                 )}
+                {section.figures?.map((figure, i) => (
+                  <div key={i} className="school-figure glass mb-4 rounded-[1.5rem] p-5">
+                    <div className="motion-reduce:hidden">
+                      <SimBlock spec={figure} accent={chapter.accent} />
+                    </div>
+                    <div className="hidden motion-reduce:block">
+                      <SimFallback
+                        altText={figure.altText}
+                        title={figure.title}
+                        accent={chapter.accent}
+                      />
+                    </div>
+                  </div>
+                ))}
                 {section.note && (
                   <NoteCard note={section.note} accent={chapter.accent} />
                 )}
@@ -137,8 +143,11 @@ export default function ChapterReader({
           ))}
         </div>
 
-        {/* RIGHT COLUMN — sticky rail (desktop only) */}
-        <div className="school-rail sticky top-24 hidden self-start lg:block">
+        {/* RIGHT COLUMN — every diagram for the section being read (desktop
+            only). A section can carry several plates on top of its sim, so the
+            rail scrolls inside itself rather than growing past the viewport
+            and taking its own stickiness away. */}
+        <div className="school-rail sticky top-24 hidden max-h-[calc(100vh-7rem)] self-start overflow-y-auto xl:block">
           <div
             key={activeKey}
             className="school-fade flex flex-col gap-4"
@@ -153,6 +162,22 @@ export default function ChapterReader({
                 </div>
               </>
             )}
+            {active?.figures?.map((figure, i) => (
+              // p-4, not p-5: the rail's own scrollbar plus this padding is
+              // what an 800-unit plate has to fit inside.
+              <div key={i} className="school-figure glass rounded-[1.5rem] p-4">
+                <div className="motion-reduce:hidden">
+                  <SimBlock spec={figure} accent={chapter.accent} />
+                </div>
+                <div className="hidden motion-reduce:block">
+                  <SimFallback
+                    altText={figure.altText}
+                    title={figure.title}
+                    accent={chapter.accent}
+                  />
+                </div>
+              </div>
+            ))}
             {active?.note && (
               <NoteCard note={active.note} accent={chapter.accent} />
             )}

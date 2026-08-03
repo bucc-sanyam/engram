@@ -1,16 +1,20 @@
 import type { Chapter } from "@/lib/cbse/types";
 import type { WorkedExampleSpec } from "@/lib/sim/types";
+/* Every figure in this chapter is drawn from scratch — see ../figures/. The
+   NCERT page scans this chapter used to mount are gone, along with the
+   licensing question that came with them. */
 import {
+  microscopeFigure,
   bacterialCellFigure,
-  plantCellFigure,
-  animalCellFigure,
+  membraneFigure,
   nucleusFigure,
+  cellToDnaFigure,
   mitochondrionFigure,
   chloroplastFigure,
-  membraneFigure,
   mitosisFigure,
-  microscopeFigure,
-} from "../figures/ch-02";
+} from "../figures/ch-02-organelle-plates";
+import { plantCellPlate } from "../figures/ch-02-cell-plate";
+import { animalCellPlate } from "../figures/ch-02-animal-plate";
 
 /* ─── Sim specs ──────────────────────────────────────────────────── */
 
@@ -139,7 +143,7 @@ Cells rarely work alone in multicellular organisms. Similar cells group together
 
 Yet no matter how many levels of organisation sit above it, the cell remains the fundamental unit of structure and function in every living thing. Understanding the cell, therefore, is the first step toward understanding life itself.`,
       sim: microscopeFigure,
-      figures: [bacterialCellFigure, plantCellFigure, animalCellFigure],
+      figures: [bacterialCellFigure, plantCellPlate, animalCellPlate],
       note: {
         kind: "fact",
         body: "Robert Hooke coined the word 'cell' in 1665 because the tiny compartments he saw in cork reminded him of the small rooms (cellae) in a monastery.",
@@ -245,7 +249,7 @@ Not every cell has a membrane-bound nucleus. **Prokaryotic cells** (from the Gre
 
 **Eukaryotic cells** (*eu-*, true) — found in plants, animals, fungi and protists — have a proper nucleus and a collection of specialised organelles. This compartmentalisation lets different chemical processes run side by side without interfering with one another, a major advantage that helped complex multicellular life evolve.`,
       sim: cellSizeSim,
-      figures: [nucleusFigure],
+      figures: [nucleusFigure, cellToDnaFigure],
       note: {
         kind: "exam-tip",
         body: "Remember the Greek roots: 'pro-' means primitive, 'eu-' means true, and 'karyon' means nucleus. Prokaryotic = primitive nucleus. Eukaryotic = true nucleus — the roots literally spell out the difference.",

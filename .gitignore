@@ -41,8 +41,13 @@ yarn-error.log*
 next-env.d.ts
 /*.pdf
 
-# NCERT reference PDFs — copyrighted, never commit
+# NCERT reference PDFs — copyrighted, never commit.
+# The trailing slash misses a symlink to them, which is how a worktree gets at
+# the originals, so match both.
 .claude/Books/
+.claude/Books
 
-# Figure render output (scripts/render-figures.mts) — build artefact, never committed
+# Figure render output — build artefacts, never committed
+# (scripts/render-figures.mts, scripts/extract-book-figures.py --contact)
 .figures/
+.figures-contact.png

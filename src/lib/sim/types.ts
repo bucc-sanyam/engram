@@ -202,6 +202,20 @@ export type FigureSpec = SimBase & {
   /** Magnification ceiling. Default 3.4. Raise for a plate whose parts are
    *  tiny relative to the whole (a ribosome inside a cell). */
   maxZoom?: number;
+  /**
+   * What selecting a part does.
+   *
+   * `"camera"` (default) magnifies the whole plate into the part — the plate
+   * scales and recentres, everything else falls off the edge.
+   *
+   * `"part"` holds the plate still and lifts the PART forward instead: it
+   * enlarges about its own centre, drifts toward the middle, gains a shadow,
+   * and the rest of the cell stays where it is, dimmed, as context. Use this
+   * when the plate is a whole specimen made of separable organelles — you
+   * learn more from seeing an enlarged chloroplast still sitting in its cell
+   * than from a cropped rectangle of cell. `backdrop` parts never scale.
+   */
+  magnify?: "camera" | "part";
 };
 
 /* ----------------------------------------------------------- worked-example */

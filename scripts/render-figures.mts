@@ -16,6 +16,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import type { FigureSpec, FigureLayer, SimSpec } from "../src/lib/sim/types.js";
 import { cartoonFor } from "../src/lib/sim/shading.js";
+import { liftSubset, layerSubset } from "../src/lib/sim/draw.js";
 import { allChapters } from "../src/lib/cbse/class9/index.js";
 
 /* The dark-theme half of useVizPalette(), which is a client hook. */
@@ -62,10 +63,32 @@ function layerSvg(layer: FigureLayer, c: ReturnType<typeof cartoonFor>, backdrop
   return `<path d="${layer.d}" ${paint}${dash} stroke-linecap="round" stroke-linejoin="round" opacity="${layer.opacity ?? 1}"/>`;
 }
 
-function render(spec: FigureSpec, accent: string): string {
+/* The `magnify: "part"` constants, mirrored from FigureSim. Kept in sync by
+   hand: this script exists to show what the component actually draws, so a
+   drifted constant here is a lying preview. */
+const LIFT_TARGET = 0.3;
+const LIFT_MIN = 1.35;
+const LIFT_MAX = 2.8;
+const LIFT_RECENTRE = 0.35;
+const PART_DIM = 0.3;
+const PART_DIM_BACKDROP = 0.62;
+const TAG_CHAR_W = 7.6;
+const TAG_FONT = 14;
+const TAG_H = 26;
+const TAG_GAP = 12;
+
+const clampN = (n: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, n));
+
+/** Renders a plate. Pass `lift` (a part id) to draw it as it looks mid-click
+ *  in `magnify: "part"` mode — that part enlarged, tagged, everything else
+ *  dimmed. Without this there is no way to eyeball tag placement, which is
+ *  geometry and therefore exactly the thing that goes wrong unseen. */
+function render(spec: FigureSpec, accent: string, lift?: string): string {
   const p = palette(accent);
   const [w, h] = spec.viewBox;
   const out: string[] = [];
+  const lifted = lift ? spec.parts.find((pt) => pt.id === lift) : undefined;
+  const partMode = spec.magnify === "part" && !!lifted;
 
   out.push(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" font-family="Inter, system-ui, sans-serif">`,
@@ -89,20 +112,61 @@ function render(spec: FigureSpec, accent: string): string {
     .map((part, i) => ({ part, order: part.depth ?? i }))
     .sort((a, b) => a.order - b.order);
 
-  for (const { part } of ordered) {
+  const paintOrder = partMode
+    ? [...ordered].sort((a, b) =>
+        a.part.id === lift ? 1 : b.part.id === lift ? -1 : 0,
+      )
+    : ordered;
+
+  for (const { part } of paintOrder) {
     const c = cartoonFor(part.tint ?? accent, false);
-    out.push(`<g>`);
-    out.push(
-      `<path d="${part.d}" fill="${c.fill}" fill-opacity="${part.backdrop ? 0.55 : 0.92}"/>`,
-    );
-    out.push(
-      `<g clip-path="url(#c-${part.id})"><path d="${part.d}" fill="${c.shade}" transform="translate(${(w * 0.014).toFixed(1)} ${(h * 0.022).toFixed(1)})" opacity="${part.backdrop ? 0.22 : 0.42}"/></g>`,
-    );
-    for (const layer of part.layers ?? []) {
-      out.push(layerSvg(layer, layer.tint ? cartoonFor(layer.tint, false) : c, p.panel));
+    const isLifted = partMode && part.id === lift;
+    const opacity = !partMode || isLifted
+      ? 1
+      : part.backdrop
+        ? PART_DIM_BACKDROP
+        : PART_DIM;
+
+    let transform = "";
+    if (isLifted && !part.backdrop) {
+      const [fx, fy, fw, fh] = part.focus;
+      const cx = fx + fw / 2;
+      const cy = fy + fh / 2;
+      const k = clampN((Math.min(w, h) * LIFT_TARGET) / Math.max(fw, fh), LIFT_MIN, LIFT_MAX);
+      const dx = (w / 2 - cx) * LIFT_RECENTRE;
+      const dy = (h / 2 - cy) * LIFT_RECENTRE;
+      transform = ` transform="translate(${dx.toFixed(1)} ${dy.toFixed(1)}) translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${k.toFixed(3)}) translate(${(-cx).toFixed(1)} ${(-cy).toFixed(1)})"`;
+    }
+
+    // Which copy of a multi-copy part travels with the lift, and the ghost of
+    // the rest left behind in the plate. Shared with FigureSim rather than
+    // mirrored, so this half of the preview cannot drift.
+    const subset = isLifted && !part.backdrop ? liftSubset(part.d, part.focus) : null;
+    const body = subset?.d ?? part.d;
+    if (subset) {
+      out.push(
+        `<g opacity="${PART_DIM}"><path d="${part.d}" fill="${c.fill}" fill-opacity="0.92"/>` +
+          `<path d="${part.d}" fill="none" stroke="${c.ink}" stroke-width="1.5" stroke-linejoin="round"/></g>`,
+      );
+    }
+    out.push(`<g opacity="${opacity}"${transform}>`);
+    if (isLifted && !part.backdrop) {
+      out.push(
+        `<path d="${body}" fill="rgba(12,8,20,0.3)" transform="translate(${(w * 0.008).toFixed(1)} ${(h * 0.022).toFixed(1)})"/>`,
+      );
     }
     out.push(
-      `<path d="${part.d}" fill="none" stroke="${c.ink}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`,
+      `<path d="${body}" fill="${c.fill}" fill-opacity="${part.backdrop ? 0.55 : 0.92}"/>`,
+    );
+    out.push(
+      `<g clip-path="url(#c-${part.id})"><path d="${body}" fill="${c.shade}" transform="translate(${(w * 0.014).toFixed(1)} ${(h * 0.022).toFixed(1)})" opacity="${part.backdrop ? 0.22 : 0.42}"/></g>`,
+    );
+    for (const layer of part.layers ?? []) {
+      const l = subset ? { ...layer, d: layerSubset(layer.d, subset.box) } : layer;
+      out.push(layerSvg(l, layer.tint ? cartoonFor(layer.tint, false) : c, p.panel));
+    }
+    out.push(
+      `<path d="${body}" fill="none" stroke="${c.ink}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`,
     );
     out.push(`</g>`);
   }
@@ -121,6 +185,7 @@ function render(spec: FigureSpec, accent: string): string {
 
   for (const part of spec.parts) {
     if (!part.labelAt) continue;
+    if (partMode && part.id === lift && !part.backdrop) continue;
     const [lx, ly] = part.labelAt;
     const [fx, fy, fw, fh] = part.focus;
     const [ax, ay] = part.leaderAt ?? [fx + fw / 2, fy + fh / 2];
@@ -137,6 +202,36 @@ function render(spec: FigureSpec, accent: string): string {
       .join("");
     out.push(
       `<text x="${lx}" y="${ly}" text-anchor="${align}" font-size="15" fill="${p.ink}" stroke="${p.panel}" stroke-width="3.5" paint-order="stroke" stroke-linejoin="round">${tspans}</text>`,
+    );
+  }
+
+  if (lifted && partMode && !lifted.backdrop) {
+    const [fx, fy, fw, fh] = lifted.focus;
+    const cx = fx + fw / 2;
+    const cy = fy + fh / 2;
+    const k = clampN((Math.min(w, h) * LIFT_TARGET) / Math.max(fw, fh), LIFT_MIN, LIFT_MAX);
+    const lcx = cx + (w / 2 - cx) * LIFT_RECENTRE;
+    const lcy = cy + (h / 2 - cy) * LIFT_RECENTRE;
+    const halfH = (fh / 2) * k;
+    const tw = lifted.label.length * TAG_CHAR_W + 26;
+    const halfW = (fw / 2) * k;
+    const tall = halfH * 2 > h * 0.55;
+    const above = lcy - halfH - TAG_GAP - TAG_H;
+    const ty = clampN(
+      tall ? lcy - TAG_H / 2 : above < 4 ? lcy + halfH + TAG_GAP : above,
+      4,
+      Math.max(4, h - TAG_H - 4),
+    );
+    const tx = clampN(
+      tall ? (lcx < w / 2 ? lcx + halfW + TAG_GAP : lcx - halfW - TAG_GAP - tw) : lcx - tw / 2,
+      4,
+      Math.max(4, w - tw - 4),
+    );
+    out.push(
+      `<rect x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" width="${tw.toFixed(1)}" height="${TAG_H}" rx="${TAG_H / 2}" fill="${p.panel}" stroke="${p.accent}" stroke-width="1.5"/>`,
+    );
+    out.push(
+      `<text x="${(tx + tw / 2).toFixed(1)}" y="${(ty + TAG_H / 2 + TAG_FONT * 0.36).toFixed(1)}" text-anchor="middle" font-size="${TAG_FONT}" font-weight="600" fill="${p.accent}">${esc(lifted.label)}</text>`,
     );
   }
 
@@ -196,7 +291,10 @@ function audit(spec: FigureSpec, chapter: string): string[] {
 
 /* ---- main -------------------------------------------------------------- */
 
-const outDir = process.argv[2] ?? ".figures";
+const args = process.argv.slice(2);
+const liftFlag = args.indexOf("--lift");
+const liftId = liftFlag >= 0 ? args[liftFlag + 1] : undefined;
+const outDir = args.find((a) => !a.startsWith("--") && a !== liftId) ?? ".figures";
 mkdirSync(outDir, { recursive: true });
 
 const isFigure = (s: SimSpec | undefined): s is FigureSpec => s?.kind === "figure";
@@ -213,6 +311,12 @@ for (const chapter of allChapters()) {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "")}`;
       writeFileSync(join(outDir, `${slug}.svg`), render(spec, chapter.accent));
+      if (liftId && spec.parts.some((pt) => pt.id === liftId)) {
+        writeFileSync(
+          join(outDir, `${slug}--lift-${liftId}.svg`),
+          render(spec, chapter.accent, liftId),
+        );
+      }
       problems.push(...audit(spec, chapter.key));
       count++;
     }

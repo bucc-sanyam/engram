@@ -76,6 +76,7 @@ export const meristemFigure: FigureSpec = {
   altText:
     "A young plant showing the three kinds of meristem: apical meristem at the shoot and root tips, intercalary meristem at a node, and lateral meristem as a ring inside the stem. Selecting a label magnifies that region and explains what it does.",
   viewBox: [660, 480],
+  magnify: "part",
   scenery: [
     // Stem, leaves and roots — context only, never clickable.
     {
@@ -265,6 +266,7 @@ export const vascularTissueFigure: FigureSpec = {
   altText:
     "Two panels of conducting tissue. The xylem panel shows a wide vessel with perforated end walls, a tapered tracheid, and xylem parenchyma. The phloem panel shows a sieve tube with sieve plates, a companion cell and phloem parenchyma. Selecting a label magnifies that cell.",
   viewBox: [660, 340],
+  magnify: "part",
   panels: [
     { id: "xylem", caption: "(a) Xylem — water, upward only", box: vascPanels[0] },
     { id: "phloem", caption: "(b) Phloem — food, both ways", box: vascPanels[1] },
@@ -689,6 +691,7 @@ export const neuronFigure: FigureSpec = {
   altText:
     "A labelled diagram of a nerve cell showing the branching dendrites, the cell body with its nucleus, the long axon wrapped in a segmented myelin sheath, and the branched nerve endings. Selecting a label magnifies that part.",
   viewBox: [660, 320],
+  magnify: "part",
   maxZoom: 4,
   parts: [
     {

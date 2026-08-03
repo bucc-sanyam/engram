@@ -50,8 +50,8 @@
     "semantic_hash": ""
   },
   "src/app/brain/page.tsx": {
-    "mtime": 1784982783.1100686,
-    "ast_hash": "c90bc740ad460a29c2029b2650420cdd",
+    "mtime": 1785184619.6077285,
+    "ast_hash": "4d182347f83fafef24ee73b3253574f7",
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
@@ -85,8 +85,8 @@
     "semantic_hash": ""
   },
   "src/lib/data.ts": {
-    "mtime": 1785184128.457973,
-    "ast_hash": "f9ccba9223855290d2e64fb8737cbe0f",
+    "mtime": 1785184619.74195,
+    "ast_hash": "2241da1e4dd0789bbcf10d385cd3723b",
     "semantic_hash": ""
   },
   "src/lib/demo.ts": {
@@ -120,13 +120,13 @@
     "semantic_hash": "1cf9332fa62472d782bb7703f2f618a7"
   },
   "src/lib/types.ts": {
-    "mtime": 1785184087.5102656,
+    "mtime": 1785184619.7443116,
     "ast_hash": "2034875a0c8d63aa4252e683536b2fa7",
     "semantic_hash": ""
   },
   "supabase/schema.sql": {
-    "mtime": 1785184484.5298219,
-    "ast_hash": "fe24ab1af727e0ab14705cc80b90e3d3",
+    "mtime": 1785297004.5188634,
+    "ast_hash": "3160145a6469ca207aa2cd8560e38510",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -155,7 +155,7 @@
     "semantic_hash": ""
   },
   ".claude/settings.local.json": {
-    "mtime": 1784982783.024614,
+    "mtime": 1785487055.329595,
     "ast_hash": "46b9a75015e21c6e2c2353e76b6da456",
     "semantic_hash": ""
   },
@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785184524.3765416,
-    "ast_hash": "8b1d5f19dab5cd5d3488a40a2f86fcfb",
+    "mtime": 1785656227.090583,
+    "ast_hash": "cc4d5ee8df583d7090545d3ebf6ea866",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785184546.1596112,
-    "ast_hash": "f41d6fa858ad91c7e55a42b925035109",
+    "mtime": 1785656206.3098903,
+    "ast_hash": "e9b6fd44dfea7b10636663dc92c8d8d6",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785184563.8116841,
-    "ast_hash": "34e126657a6e036da28a9695ed337987",
+    "mtime": 1785656236.6955483,
+    "ast_hash": "722c2e3fc3fa9695c9b572c9dd3ec885",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -290,8 +290,8 @@
     "semantic_hash": ""
   },
   "src/app/blogs/page.tsx": {
-    "mtime": 1785074945.6584563,
-    "ast_hash": "f7efdf2cbb9811be8a43b208bca74d2d",
+    "mtime": 1785184619.5392184,
+    "ast_hash": "fe93bfe6fcb69032f5b1a5af5ef55135",
     "semantic_hash": ""
   },
   "src/app/blogs/[id]/page.tsx": {
@@ -1155,7 +1155,7 @@
     "semantic_hash": ""
   },
   "scripts/restructure-blogs.mts": {
-    "mtime": 1785004669.3143861,
+    "mtime": 1785520686.9665103,
     "ast_hash": "851f6b54739c8c2fe219aa7dada1d2fa",
     "semantic_hash": ""
   },
@@ -1165,7 +1165,7 @@
     "semantic_hash": ""
   },
   "scripts/blog-gen.mts": {
-    "mtime": 1785038997.8135858,
+    "mtime": 1785520686.966185,
     "ast_hash": "e261dd7a6159725d54233b321e5b0337",
     "semantic_hash": ""
   },
@@ -1240,18 +1240,288 @@
     "semantic_hash": ""
   },
   "src/app/api/streak/repair/route.ts": {
-    "mtime": 1785184288.021757,
+    "mtime": 1785184619.7415683,
     "ast_hash": "ab354b93b597b2401d237989af5eaf9f",
     "semantic_hash": ""
   },
   "src/lib/streak.ts": {
-    "mtime": 1785184249.4768755,
+    "mtime": 1785184619.7429297,
     "ast_hash": "ecc7b6195cb1a9fd42e6e0d0abb85bea",
     "semantic_hash": ""
   },
   "supabase/schema-streak-repair.sql": {
-    "mtime": 1785184474.6798558,
-    "ast_hash": "30ddb0f9722781e49225a8972a6e0bf7",
+    "mtime": 1785296996.8105302,
+    "ast_hash": "4a5400cba40052de0a90c2475dbc18e0",
+    "semantic_hash": ""
+  },
+  "scripts/render-figures.mts": {
+    "mtime": 1785612389.713895,
+    "ast_hash": "3895e450c178176a85a8f9cc393ace9e",
+    "semantic_hash": ""
+  },
+  "scripts/validate-cbse.mts": {
+    "mtime": 1785652895.8645148,
+    "ast_hash": "0597983647d66754cc60a77d020845ca",
+    "semantic_hash": ""
+  },
+  "src/app/learn/class-9/[subject]/[chapter]/page.tsx": {
+    "mtime": 1785496735.1270645,
+    "ast_hash": "b8dfecbdae4753967aebde8fd64a9e2e",
+    "semantic_hash": ""
+  },
+  "src/app/learn/class-9/[subject]/page.tsx": {
+    "mtime": 1785496743.4893224,
+    "ast_hash": "b346ad420b9c92ea2d52c182b548c602",
+    "semantic_hash": ""
+  },
+  "src/app/learn/class-9/page.tsx": {
+    "mtime": 1785496745.521143,
+    "ast_hash": "e95e7cb03181b18884f1db38143936fb",
+    "semantic_hash": ""
+  },
+  "src/app/learn/layout.tsx": {
+    "mtime": 1785496678.5067937,
+    "ast_hash": "da3d2ac203a3c4926e5e70f238632fde",
+    "semantic_hash": ""
+  },
+  "src/components/school/ChapterReader.tsx": {
+    "mtime": 1785610345.1058252,
+    "ast_hash": "455034aa6492789fc3ba65b0c4edcde0",
+    "semantic_hash": ""
+  },
+  "src/components/sim/AnatomySim.tsx": {
+    "mtime": 1785611154.6059554,
+    "ast_hash": "6202e61860a986f6abaf6e68318a9179",
+    "semantic_hash": ""
+  },
+  "src/components/sim/FigureSim.tsx": {
+    "mtime": 1785656094.9044216,
+    "ast_hash": "68180df97af3bbf0a3eb038abbb98784",
+    "semantic_hash": ""
+  },
+  "src/components/sim/GeometryBoardSim.tsx": {
+    "mtime": 1785496658.643016,
+    "ast_hash": "0810338be477d7f838c6163ee054d4f2",
+    "semantic_hash": ""
+  },
+  "src/components/sim/GraphPlotSim.tsx": {
+    "mtime": 1785496601.8261492,
+    "ast_hash": "91ef9052fbf0eb18faa019a0bbc09309",
+    "semantic_hash": ""
+  },
+  "src/components/sim/ParticleModelSim.tsx": {
+    "mtime": 1785586239.1805792,
+    "ast_hash": "b403619931a9ce8ae5f51b5ca5367a42",
+    "semantic_hash": ""
+  },
+  "src/components/sim/SimBlock.tsx": {
+    "mtime": 1785652633.6192567,
+    "ast_hash": "a3524b9ed45d299bb1acc194585736cc",
+    "semantic_hash": ""
+  },
+  "src/components/sim/SimFallback.tsx": {
+    "mtime": 1785496525.6945393,
+    "ast_hash": "470aae5f8d353705582562d88301e980",
+    "semantic_hash": ""
+  },
+  "src/components/sim/WorkedExampleSim.tsx": {
+    "mtime": 1785496573.1595516,
+    "ast_hash": "92bbeb94f301faae4428b464fd31ced6",
+    "semantic_hash": ""
+  },
+  "src/components/sim/controls/SimReadout.tsx": {
+    "mtime": 1785496533.4398499,
+    "ast_hash": "0e64aec55a3e14f3bdb68ae01723c57e",
+    "semantic_hash": ""
+  },
+  "src/components/sim/controls/SimSlider.tsx": {
+    "mtime": 1785496528.0318813,
+    "ast_hash": "e7c7dd78c94502078559b95e43563379",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/index.ts": {
+    "mtime": 1785496500.8228738,
+    "ast_hash": "f9fa200d093677423553cd8368879548",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts": {
+    "mtime": 1785648551.0867634,
+    "ast_hash": "a11e93ff808d1909d479f7d3b822f253",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts": {
+    "mtime": 1785648551.0872173,
+    "ast_hash": "48ae2e3637326d3913a7c986945aaf92",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts": {
+    "mtime": 1785648551.087601,
+    "ast_hash": "fe77b653cbb7895a1115ea99b7321420",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/figures/ch-01.ts": {
+    "mtime": 1785648419.2495117,
+    "ast_hash": "c248967a981fdd8e3c8f004a84bdd9a8",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/figures/ch-03.ts": {
+    "mtime": 1785648597.490346,
+    "ast_hash": "e0a9d97e805c42ad99a1626ec4dc0324",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/figures/ch-06.ts": {
+    "mtime": 1785648597.4901056,
+    "ast_hash": "6e5392eadd6c124c73c486785dfc9613",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/maths/index.ts": {
+    "mtime": 1785496498.7925904,
+    "ast_hash": "b340524e63871f919ba7b998593880a1",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/chapters/ch-02-cell.ts": {
+    "mtime": 1785654650.0701966,
+    "ast_hash": "8c0717ee3a7cb05f4426374c787dd5cd",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts": {
+    "mtime": 1785611995.1704419,
+    "ast_hash": "84057462e6a09cd066e26a4c23e4fda4",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts": {
+    "mtime": 1785612288.4182425,
+    "ast_hash": "f2b62a78f52da62dbaa07e05bed588b7",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/figures/ch-02.ts": {
+    "mtime": 1785611660.3392296,
+    "ast_hash": "06a5a54037e220f4446cb854131cfa38",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/figures/ch-03.ts": {
+    "mtime": 1785612150.2163575,
+    "ast_hash": "1c9f297bcb16faddfcffcb99264a27cd",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/figures/ch-05.ts": {
+    "mtime": 1785612389.7359722,
+    "ast_hash": "e51cb03824419868e91b1785164eb499",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/index.ts": {
+    "mtime": 1785496488.7688394,
+    "ast_hash": "44f71dbfb1f0dd2a56324de1a101f003",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/types.ts": {
+    "mtime": 1785610338.2562904,
+    "ast_hash": "c3b4fa2dc91a353d833e2f19645f4971",
+    "semantic_hash": ""
+  },
+  "src/lib/schools/reserved.ts": {
+    "mtime": 1785496357.1010838,
+    "ast_hash": "a504bfe9aa5cac02951ab4d9d0ca8efb",
+    "semantic_hash": ""
+  },
+  "src/lib/sim/draw.ts": {
+    "mtime": 1785611502.6811879,
+    "ast_hash": "24b233d4fcb66378c992976755dffb29",
+    "semantic_hash": ""
+  },
+  "src/lib/sim/shading.ts": {
+    "mtime": 1785608448.673045,
+    "ast_hash": "b4ea73985dc2f9f07bbe06c5383edd0c",
+    "semantic_hash": ""
+  },
+  "src/lib/sim/types.ts": {
+    "mtime": 1785654350.978025,
+    "ast_hash": "6548b09f5335e8d974babdd8b19e2613",
+    "semantic_hash": ""
+  },
+  "SCHOOL_BUILD_SPEC.md": {
+    "mtime": 1785505415.4473646,
+    "ast_hash": "5dc3ae14e100e64b908af1865a52e334",
+    "semantic_hash": ""
+  },
+  "SCHOOL_GTM.md": {
+    "mtime": 1785488592.84715,
+    "ast_hash": "172f4fa8aa25af345f51b6bd34e89aed",
+    "semantic_hash": ""
+  },
+  "SCHOOL_IMPLEMENTATION_BRIEF.md": {
+    "mtime": 1785490822.9946384,
+    "ast_hash": "f9fac0b70b425552934c322fd25bfe79",
+    "semantic_hash": ""
+  },
+  "SCHOOL_TECH_PLAN.md": {
+    "mtime": 1785493738.4610612,
+    "ast_hash": "44eb2827f384429677c5a37789cff670",
+    "semantic_hash": ""
+  },
+  "scripts/book-figures.json": {
+    "mtime": 1785653241.4553404,
+    "ast_hash": "2a6af1fe565a9283cc787175b4f5650e",
+    "semantic_hash": ""
+  },
+  "scripts/extract-book-figures.py": {
+    "mtime": 1785651943.9350586,
+    "ast_hash": "5dbbe155375fcaa916f28184ac92f6f6",
+    "semantic_hash": ""
+  },
+  "src/components/sim/PlateSim.tsx": {
+    "mtime": 1785653169.9886432,
+    "ast_hash": "0dbf78545987510aca4032c6045ff7ca",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/figures/ch-02-plates.ts": {
+    "mtime": 1785653258.8128285,
+    "ast_hash": "2fd6331d606f5b758cd2d1b403cd344c",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-10-cells.webp": {
+    "mtime": 1785653615.3884342,
+    "ast_hash": "924874ccdcae743391ee46d891e779ae",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-11-nucleus.webp": {
+    "mtime": 1785653617.218958,
+    "ast_hash": "34fa31387b00c8b4d75e251e8ae9fded",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-12-cell-to-dna.webp": {
+    "mtime": 1785653617.367551,
+    "ast_hash": "0ef008cb34ca45d940cd5095809f1d6f",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-14-mitochondrion.webp": {
+    "mtime": 1785653621.0751011,
+    "ast_hash": "94a48874184b85bd12b194eb7a10734b",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-15-chloroplast.webp": {
+    "mtime": 1785653621.2275453,
+    "ast_hash": "369eab29bf3097447e96e15ac7cd3a52",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-17-onion-mitosis.webp": {
+    "mtime": 1785653623.855849,
+    "ast_hash": "82c28fa11b49edff7b2841340ec5a73a",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-2-microscope.webp": {
+    "mtime": 1785653611.9577956,
+    "ast_hash": "a5ab3f5f872a78806a833ea6bac5bec7",
+    "semantic_hash": ""
+  },
+  "public/school/figures/science/ch-02/fig-2-7-membrane.webp": {
+    "mtime": 1785653613.6837058,
+    "ast_hash": "6a33a4b58ba619d4ac7a45def618bc80",
+    "semantic_hash": ""
+  },
+  "src/lib/cbse/class9/science/figures/ch-02-cell-plate.ts": {
+    "mtime": 1785655934.1158943,
+    "ast_hash": "45c875bccfff4fb1ad92277260a38cd7",
     "semantic_hash": ""
   }
 }
