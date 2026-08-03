@@ -512,7 +512,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_backfill_rag",
-      "community": 44,
+      "community": 87,
       "norm_label": "backfill-rag.mts"
     },
     {
@@ -522,7 +522,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "scripts_backfill_rag_commit",
-      "community": 44,
+      "community": 87,
       "norm_label": "commit"
     },
     {
@@ -532,7 +532,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "scripts_backfill_rag_supabase",
-      "community": 44,
+      "community": 87,
       "norm_label": "supabase"
     },
     {
@@ -542,7 +542,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "scripts_backfill_rag_backfill",
-      "community": 44,
+      "community": 87,
       "norm_label": "backfill()"
     },
     {
@@ -552,7 +552,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "scripts_backfill_rag_rationale_107",
-      "community": 44,
+      "community": 87,
       "norm_label": "todo: if this is too slow, optimize to batch embed + store."
     },
     {
@@ -562,7 +562,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_blog_gen",
-      "community": 132,
+      "community": 81,
       "norm_label": "blog-gen.mts"
     },
     {
@@ -582,7 +582,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "scripts_blog_gen_sb",
-      "community": 132,
+      "community": 81,
       "norm_label": "sb"
     },
     {
@@ -592,7 +592,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "scripts_blog_gen_storyseededids",
-      "community": 132,
+      "community": 81,
       "norm_label": "storyseededids()"
     },
     {
@@ -602,7 +602,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "scripts_blog_gen_entrylinkedids",
-      "community": 132,
+      "community": 81,
       "norm_label": "entrylinkedids()"
     },
     {
@@ -612,7 +612,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "scripts_blog_gen_cmd_a_b",
-      "community": 132,
+      "community": 81,
       "norm_label": "[cmd, a, b]"
     },
     {
@@ -1212,7 +1212,7 @@
       "source_location": "L231",
       "_origin": "ast",
       "id": "src_app_api_ingest_route_duplicateresponse",
-      "community": 85,
+      "community": 86,
       "norm_label": "duplicateresponse()"
     },
     {
@@ -1232,7 +1232,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_plan_route",
-      "community": 109,
+      "community": 58,
       "norm_label": "route.ts"
     },
     {
@@ -1242,7 +1242,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_app_api_plan_route_donetopicstoday",
-      "community": 109,
+      "community": 58,
       "norm_label": "donetopicstoday()"
     },
     {
@@ -1252,7 +1252,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_app_api_plan_route_markdone",
-      "community": 109,
+      "community": 58,
       "norm_label": "markdone()"
     },
     {
@@ -1262,7 +1262,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_app_api_plan_route_get",
-      "community": 109,
+      "community": 58,
       "norm_label": "get()"
     },
     {
@@ -1272,7 +1272,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "src_app_api_plan_route_composenarrative",
-      "community": 109,
+      "community": 58,
       "norm_label": "composenarrative()"
     },
     {
@@ -1282,7 +1282,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "src_app_api_plan_route_post",
-      "community": 109,
+      "community": 58,
       "norm_label": "post()"
     },
     {
@@ -1312,7 +1312,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_snapshotitem",
-      "community": 135,
+      "community": 85,
       "norm_label": "snapshotitem"
     },
     {
@@ -1542,7 +1542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_auth_callback_route",
-      "community": 109,
+      "community": 58,
       "norm_label": "route.ts"
     },
     {
@@ -1552,7 +1552,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_auth_callback_route_get",
-      "community": 109,
+      "community": 58,
       "norm_label": "get()"
     },
     {
@@ -2352,7 +2352,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_blogs_sarfaesi_act_page",
-      "community": 91,
+      "community": 54,
       "norm_label": "page.tsx"
     },
     {
@@ -2362,7 +2362,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_blogs_sarfaesi_act_page_metadata",
-      "community": 91,
+      "community": 54,
       "norm_label": "metadata"
     },
     {
@@ -2702,7 +2702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page",
-      "community": 100,
+      "community": 110,
       "norm_label": "page.tsx"
     },
     {
@@ -2712,7 +2712,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_metadata",
-      "community": 100,
+      "community": 110,
       "norm_label": "metadata"
     },
     {
@@ -2722,7 +2722,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_gradehubpage",
-      "community": 100,
+      "community": 110,
       "norm_label": "gradehubpage()"
     },
     {
@@ -3022,7 +3022,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "src_app_recall_page_reviewrunner",
-      "community": 52,
+      "community": 103,
       "norm_label": "reviewrunner()"
     },
     {
@@ -3042,7 +3042,7 @@
       "source_location": "L396",
       "_origin": "ast",
       "id": "src_app_recall_page_quizcarousel",
-      "community": 103,
+      "community": 52,
       "norm_label": "quizcarousel()"
     },
     {
@@ -3112,7 +3112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brainscene",
-      "community": 130,
+      "community": 92,
       "norm_label": "brainscene.tsx"
     },
     {
@@ -3122,7 +3122,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_components_brainscene_hashstr",
-      "community": 130,
+      "community": 92,
       "norm_label": "hashstr()"
     },
     {
@@ -3132,7 +3132,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_components_brainscene_mulberry32",
-      "community": 130,
+      "community": 92,
       "norm_label": "mulberry32()"
     },
     {
@@ -3142,7 +3142,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_components_brainscene_brainpoint",
-      "community": 130,
+      "community": 92,
       "norm_label": "brainpoint()"
     },
     {
@@ -3152,7 +3152,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_components_brainscene_lobes",
-      "community": 130,
+      "community": 92,
       "norm_label": "lobes"
     },
     {
@@ -3162,7 +3162,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "src_components_brainscene_placetopic",
-      "community": 130,
+      "community": 92,
       "norm_label": "placetopic()"
     },
     {
@@ -3172,7 +3172,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_brainscene_makecircletexture",
-      "community": 130,
+      "community": 92,
       "norm_label": "makecircletexture()"
     },
     {
@@ -3182,7 +3182,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_components_brainscene_makeglowtexture",
-      "community": 130,
+      "community": 92,
       "norm_label": "makeglowtexture()"
     },
     {
@@ -3192,7 +3192,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "src_components_brainscene_makelabeltexture",
-      "community": 130,
+      "community": 92,
       "norm_label": "makelabeltexture()"
     },
     {
@@ -3202,7 +3202,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_components_brainscene_nodeobj",
-      "community": 130,
+      "community": 92,
       "norm_label": "nodeobj"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_components_brainscene_linkobj",
-      "community": 130,
+      "community": 92,
       "norm_label": "linkobj"
     },
     {
@@ -3222,7 +3222,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_components_brainscene_brainscene",
-      "community": 130,
+      "community": 92,
       "norm_label": "brainscene()"
     },
     {
@@ -3572,7 +3572,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progresscalendar",
-      "community": 103,
+      "community": 0,
       "norm_label": "progresscalendar.tsx"
     },
     {
@@ -3582,7 +3582,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progresscalendar_weekdays",
-      "community": 103,
+      "community": 0,
       "norm_label": "weekdays"
     },
     {
@@ -3592,7 +3592,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_progresscalendar_daykey",
-      "community": 103,
+      "community": 0,
       "norm_label": "daykey()"
     },
     {
@@ -3602,7 +3602,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_components_progresscalendar_progresscalendar",
-      "community": 103,
+      "community": 0,
       "norm_label": "progresscalendar()"
     },
     {
@@ -3612,7 +3612,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_components_progresscalendar_dayclasses",
-      "community": 103,
+      "community": 0,
       "norm_label": "dayclasses()"
     },
     {
@@ -3622,7 +3622,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progressmap",
-      "community": 103,
+      "community": 0,
       "norm_label": "progressmap.tsx"
     },
     {
@@ -3632,7 +3632,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progressmap_nextmilestone",
-      "community": 103,
+      "community": 0,
       "norm_label": "nextmilestone()"
     },
     {
@@ -3642,7 +3642,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_progressmap_progressmap",
-      "community": 103,
+      "community": 0,
       "norm_label": "progressmap()"
     },
     {
@@ -3652,7 +3652,7 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "src_components_progressmap_heatmap",
-      "community": 103,
+      "community": 0,
       "norm_label": "heatmap()"
     },
     {
@@ -3662,7 +3662,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_questionwidget",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionwidget.tsx"
     },
     {
@@ -3672,7 +3672,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_questionwidget_kind_label",
-      "community": 135,
+      "community": 85,
       "norm_label": "kind_label"
     },
     {
@@ -3682,7 +3682,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_components_questionwidget_question",
-      "community": 135,
+      "community": 85,
       "norm_label": "question"
     },
     {
@@ -3692,7 +3692,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_components_questionwidget_questionwidget",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionwidget()"
     },
     {
@@ -3702,7 +3702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -3722,7 +3722,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportcardview()"
     },
     {
@@ -3732,7 +3732,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportitemcard()"
     },
     {
@@ -3742,7 +3742,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 52,
+      "community": 99,
       "norm_label": "bigscorering()"
     },
     {
@@ -3752,7 +3752,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "src_components_reportcardview_commmeter",
-      "community": 52,
+      "community": 99,
       "norm_label": "commmeter()"
     },
     {
@@ -3762,7 +3762,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 52,
+      "community": 99,
       "norm_label": "scorering()"
     },
     {
@@ -3952,7 +3952,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas",
-      "community": 104,
+      "community": 111,
       "norm_label": "thanossnapcanvas.tsx"
     },
     {
@@ -3962,7 +3962,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_thanossnapcanvasprops",
-      "community": 104,
+      "community": 111,
       "norm_label": "thanossnapcanvasprops"
     },
     {
@@ -3972,7 +3972,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_shard",
-      "community": 104,
+      "community": 111,
       "norm_label": "shard"
     },
     {
@@ -3982,7 +3982,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_ash",
-      "community": 104,
+      "community": 111,
       "norm_label": "ash"
     },
     {
@@ -3992,7 +3992,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_thanossnapcanvas",
-      "community": 104,
+      "community": 111,
       "norm_label": "thanossnapcanvas()"
     },
     {
@@ -4002,7 +4002,7 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_shade",
-      "community": 104,
+      "community": 111,
       "norm_label": "shade()"
     },
     {
@@ -4012,7 +4012,7 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_drawtile",
-      "community": 104,
+      "community": 111,
       "norm_label": "drawtile()"
     },
     {
@@ -4022,7 +4022,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_drawshard",
-      "community": 104,
+      "community": 111,
       "norm_label": "drawshard()"
     },
     {
@@ -4112,7 +4112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_anatomysim",
-      "community": 8,
+      "community": 117,
       "norm_label": "anatomysim.tsx"
     },
     {
@@ -4122,7 +4122,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_sim_anatomysim_anatomysim",
-      "community": 8,
+      "community": 117,
       "norm_label": "anatomysim()"
     },
     {
@@ -4432,7 +4432,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_viz_arrayviz_arrayviz",
-      "community": 2,
+      "community": 56,
       "norm_label": "arrayviz()"
     },
     {
@@ -4752,7 +4752,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_analytics",
-      "community": 52,
+      "community": 55,
       "norm_label": "analytics.ts"
     },
     {
@@ -4802,7 +4802,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_analytics_tracksignedin",
-      "community": 52,
+      "community": 131,
       "norm_label": "tracksignedin()"
     },
     {
@@ -4812,7 +4812,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_analytics_setuserproperties",
-      "community": 52,
+      "community": 55,
       "norm_label": "setuserproperties()"
     },
     {
@@ -4962,7 +4962,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_lib_cache_invalidate",
-      "community": 99,
+      "community": 103,
       "norm_label": "invalidate()"
     },
     {
@@ -4982,7 +4982,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_index",
-      "community": 100,
+      "community": 110,
       "norm_label": "index.ts"
     },
     {
@@ -4992,7 +4992,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_index_subject_meta",
-      "community": 100,
+      "community": 110,
       "norm_label": "subject_meta"
     },
     {
@@ -5072,7 +5072,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
-      "community": 111,
+      "community": 115,
       "norm_label": "ch-01-coordinates.ts"
     },
     {
@@ -5082,7 +5082,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_simplegridsim",
-      "community": 111,
+      "community": 115,
       "norm_label": "simplegridsim"
     },
     {
@@ -5092,7 +5092,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_quadrantsim",
-      "community": 111,
+      "community": 115,
       "norm_label": "quadrantsim"
     },
     {
@@ -5102,7 +5102,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_distancesim",
-      "community": 111,
+      "community": 115,
       "norm_label": "distancesim"
     },
     {
@@ -5112,7 +5112,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_ch01coordinates",
-      "community": 111,
+      "community": 115,
       "norm_label": "ch01coordinates"
     },
     {
@@ -5162,7 +5162,7 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_ch03numbers",
-      "community": 100,
+      "community": 115,
       "norm_label": "ch03numbers"
     },
     {
@@ -5212,7 +5212,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_ch06perimeterarea",
-      "community": 100,
+      "community": 115,
       "norm_label": "ch06perimeterarea"
     },
     {
@@ -5222,7 +5222,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01",
-      "community": 111,
+      "community": 115,
       "norm_label": "ch-01.ts"
     },
     {
@@ -5232,7 +5232,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_t",
-      "community": 111,
+      "community": 115,
       "norm_label": "t"
     },
     {
@@ -5242,7 +5242,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_grid",
-      "community": 111,
+      "community": 115,
       "norm_label": "grid()"
     },
     {
@@ -5252,7 +5252,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_axisnotes",
-      "community": 111,
+      "community": 115,
       "norm_label": "axisnotes()"
     },
     {
@@ -5262,7 +5262,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_coordinateplanefigure",
-      "community": 111,
+      "community": 115,
       "norm_label": "coordinateplanefigure"
     },
     {
@@ -5272,7 +5272,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_distanceformulafigure",
-      "community": 111,
+      "community": 115,
       "norm_label": "distanceformulafigure"
     },
     {
@@ -5492,7 +5492,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index",
-      "community": 100,
+      "community": 115,
       "norm_label": "index.ts"
     },
     {
@@ -5502,7 +5502,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index_maths_chapters",
-      "community": 100,
+      "community": 115,
       "norm_label": "maths_chapters"
     },
     {
@@ -5542,7 +5542,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_02_cell_ch02cell",
-      "community": 100,
+      "community": 112,
       "norm_label": "ch02cell"
     },
     {
@@ -5592,7 +5592,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_ch03tissues",
-      "community": 100,
+      "community": 112,
       "norm_label": "ch03tissues"
     },
     {
@@ -5642,7 +5642,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_ch05mixtures",
-      "community": 100,
+      "community": 112,
       "norm_label": "ch05mixtures"
     },
     {
@@ -5652,7 +5652,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate",
-      "community": 118,
+      "community": 56,
       "norm_label": "ch-02-animal-plate.ts"
     },
     {
@@ -5662,7 +5662,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_body",
-      "community": 118,
+      "community": 56,
       "norm_label": "body"
     },
     {
@@ -5672,7 +5672,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_outline",
-      "community": 118,
+      "community": 56,
       "norm_label": "outline()"
     },
     {
@@ -5682,7 +5682,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nuc",
-      "community": 118,
+      "community": 56,
       "norm_label": "nuc"
     },
     {
@@ -5692,7 +5692,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nucleolus",
-      "community": 118,
+      "community": 56,
       "norm_label": "nucleolus"
     },
     {
@@ -5702,7 +5702,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mito",
-      "community": 118,
+      "community": 56,
       "norm_label": "mito"
     },
     {
@@ -5712,7 +5712,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_lyso",
-      "community": 118,
+      "community": 56,
       "norm_label": "lyso"
     },
     {
@@ -5722,7 +5722,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_vesicle",
-      "community": 118,
+      "community": 56,
       "norm_label": "vesicle"
     },
     {
@@ -5732,7 +5732,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_centro",
-      "community": 118,
+      "community": 56,
       "norm_label": "centro"
     },
     {
@@ -5742,7 +5742,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mitopaths",
-      "community": 118,
+      "community": 56,
       "norm_label": "mitopaths"
     },
     {
@@ -5752,7 +5752,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_cristaepaths",
-      "community": 118,
+      "community": 56,
       "norm_label": "cristaepaths"
     },
     {
@@ -5762,7 +5762,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_t",
-      "community": 118,
+      "community": 56,
       "norm_label": "t"
     },
     {
@@ -5772,7 +5772,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_animalcellplate",
-      "community": 118,
+      "community": 56,
       "norm_label": "animalcellplate"
     },
     {
@@ -6592,7 +6592,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index",
-      "community": 100,
+      "community": 112,
       "norm_label": "index.ts"
     },
     {
@@ -6602,7 +6602,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index_science_chapters",
-      "community": 100,
+      "community": 112,
       "norm_label": "science_chapters"
     },
     {
@@ -6612,7 +6612,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_types",
-      "community": 100,
+      "community": 115,
       "norm_label": "types.ts"
     },
     {
@@ -6622,7 +6622,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_types_subject",
-      "community": 100,
+      "community": 110,
       "norm_label": "subject"
     },
     {
@@ -6632,7 +6632,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_cbse_types_cbsequestion",
-      "community": 100,
+      "community": 115,
       "norm_label": "cbsequestion"
     },
     {
@@ -6642,7 +6642,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_cbse_types_sectionnote",
-      "community": 110,
+      "community": 115,
       "norm_label": "sectionnote"
     },
     {
@@ -6652,17 +6652,17 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_lib_cbse_types_section",
-      "community": 100,
+      "community": 115,
       "norm_label": "section"
     },
     {
       "label": "Chapter",
       "file_type": "code",
       "source_file": "src/lib/cbse/types.ts",
-      "source_location": "L61",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_cbse_types_chapter",
-      "community": 100,
+      "community": 115,
       "norm_label": "chapter"
     },
     {
@@ -6672,7 +6672,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_chunk",
-      "community": 44,
+      "community": 87,
       "norm_label": "chunk.ts"
     },
     {
@@ -6682,7 +6682,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_chunk_chunk",
-      "community": 44,
+      "community": 87,
       "norm_label": "chunk"
     },
     {
@@ -6692,7 +6692,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_chunk_segments",
-      "community": 44,
+      "community": 87,
       "norm_label": "segments()"
     },
     {
@@ -6702,7 +6702,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_chunk_chunktext",
-      "community": 44,
+      "community": 87,
       "norm_label": "chunktext()"
     },
     {
@@ -7042,7 +7042,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_lib_competition_act_types_compactquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "compactquestion"
     },
     {
@@ -7122,7 +7122,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_lib_data_loaddemostate",
-      "community": 103,
+      "community": 0,
       "norm_label": "loaddemostate()"
     },
     {
@@ -7152,7 +7152,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_data_api",
-      "community": 0,
+      "community": 103,
       "norm_label": "api()"
     },
     {
@@ -7162,7 +7162,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 55,
+      "community": 106,
       "norm_label": "getprofile()"
     },
     {
@@ -7182,7 +7182,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_lib_data_getstreakrepairstatus",
-      "community": 0,
+      "community": 103,
       "norm_label": "getstreakrepairstatus()"
     },
     {
@@ -7192,7 +7192,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_lib_data_redeemstreakrepair",
-      "community": 0,
+      "community": 103,
       "norm_label": "redeemstreakrepair()"
     },
     {
@@ -7322,7 +7322,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "src_lib_data_ingesttext",
-      "community": 0,
+      "community": 103,
       "norm_label": "ingesttext()"
     },
     {
@@ -7332,7 +7332,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "src_lib_data_ingestlink",
-      "community": 0,
+      "community": 103,
       "norm_label": "ingestlink()"
     },
     {
@@ -7342,7 +7342,7 @@
       "source_location": "L447",
       "_origin": "ast",
       "id": "src_lib_data_startquiz",
-      "community": 52,
+      "community": 103,
       "norm_label": "startquiz()"
     },
     {
@@ -7352,7 +7352,7 @@
       "source_location": "L506",
       "_origin": "ast",
       "id": "src_lib_data_savequizanswer",
-      "community": 0,
+      "community": 103,
       "norm_label": "savequizanswer()"
     },
     {
@@ -7382,7 +7382,7 @@
       "source_location": "L704",
       "_origin": "ast",
       "id": "src_lib_data_markplancompleted",
-      "community": 0,
+      "community": 103,
       "norm_label": "markplancompleted()"
     },
     {
@@ -7402,7 +7402,7 @@
       "source_location": "L726",
       "_origin": "ast",
       "id": "src_lib_data_gettodayreviewdetail",
-      "community": 103,
+      "community": 52,
       "norm_label": "gettodayreviewdetail()"
     },
     {
@@ -7412,7 +7412,7 @@
       "source_location": "L775",
       "_origin": "ast",
       "id": "src_lib_data_mergereports",
-      "community": 103,
+      "community": 0,
       "norm_label": "mergereports()"
     },
     {
@@ -7422,7 +7422,7 @@
       "source_location": "L799",
       "_origin": "ast",
       "id": "src_lib_data_reportfromreviews",
-      "community": 103,
+      "community": 0,
       "norm_label": "reportfromreviews()"
     },
     {
@@ -7432,7 +7432,7 @@
       "source_location": "L843",
       "_origin": "ast",
       "id": "src_lib_data_getdayreport",
-      "community": 103,
+      "community": 0,
       "norm_label": "getdayreport()"
     },
     {
@@ -7442,7 +7442,7 @@
       "source_location": "L885",
       "_origin": "ast",
       "id": "src_lib_data_getlatestreporttoday",
-      "community": 52,
+      "community": 0,
       "norm_label": "getlatestreporttoday()"
     },
     {
@@ -7452,7 +7452,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 103,
+      "community": 58,
       "norm_label": "dates.ts"
     },
     {
@@ -7462,7 +7462,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_dates_localdaykey",
-      "community": 103,
+      "community": 0,
       "norm_label": "localdaykey()"
     },
     {
@@ -7472,7 +7472,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_dates_tzoffsetminutes",
-      "community": 0,
+      "community": 103,
       "norm_label": "tzoffsetminutes()"
     },
     {
@@ -7482,7 +7482,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_lib_dates_localdaystartiso",
-      "community": 103,
+      "community": 52,
       "norm_label": "localdaystartiso()"
     },
     {
@@ -7492,7 +7492,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_dates_localdayendiso",
-      "community": 103,
+      "community": 0,
       "norm_label": "localdayendiso()"
     },
     {
@@ -7502,7 +7502,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_lib_dates_clamptz",
-      "community": 109,
+      "community": 58,
       "norm_label": "clamptz()"
     },
     {
@@ -7522,7 +7522,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_dates_daystartutciso",
-      "community": 109,
+      "community": 58,
       "norm_label": "daystartutciso()"
     },
     {
@@ -7562,7 +7562,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_demo_clearguestmode",
-      "community": 9,
+      "community": 131,
       "norm_label": "clearguestmode()"
     },
     {
@@ -7582,7 +7582,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_demo_daysahead",
-      "community": 85,
+      "community": 0,
       "norm_label": "daysahead()"
     },
     {
@@ -7682,7 +7682,7 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "src_lib_demo_demobankquestion",
-      "community": 135,
+      "community": 85,
       "norm_label": "demobankquestion"
     },
     {
@@ -8252,7 +8252,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_dsa_types_dsaquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "dsaquestion"
     },
     {
@@ -8562,7 +8562,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_english_communication_types_ecquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "ecquestion"
     },
     {
@@ -8652,7 +8652,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "src_lib_gemini_extractknowledge",
-      "community": 87,
+      "community": 86,
       "norm_label": "extractknowledge()"
     },
     {
@@ -8692,7 +8692,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtexts",
-      "community": 44,
+      "community": 87,
       "norm_label": "embedtexts()"
     },
     {
@@ -8702,7 +8702,7 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtext",
-      "community": 44,
+      "community": 87,
       "norm_label": "embedtext()"
     },
     {
@@ -9122,7 +9122,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_macroeconomics_types_macroquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "macroquestion"
     },
     {
@@ -9372,7 +9372,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_prefetch_invalidateprogress",
-      "community": 99,
+      "community": 103,
       "norm_label": "invalidateprogress()"
     },
     {
@@ -9382,7 +9382,7 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "src_lib_prefetch_invalidatestories",
-      "community": 99,
+      "community": 103,
       "norm_label": "invalidatestories()"
     },
     {
@@ -9392,7 +9392,7 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "src_lib_prefetch_invalidateingest",
-      "community": 99,
+      "community": 103,
       "norm_label": "invalidateingest()"
     },
     {
@@ -9402,7 +9402,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 85,
+      "community": 86,
       "norm_label": "progress.ts"
     },
     {
@@ -9412,7 +9412,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_progress_advancestreak",
-      "community": 85,
+      "community": 86,
       "norm_label": "advancestreak()"
     },
     {
@@ -9752,7 +9752,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_psychopaths_and_savages_types_psquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "psquestion"
     },
     {
@@ -9862,7 +9862,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_rag_findduplicateentry",
-      "community": 44,
+      "community": 86,
       "norm_label": "findduplicateentry()"
     },
     {
@@ -10282,7 +10282,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_sarfaesi_act_types_sarfaesiquestion",
-      "community": 33,
+      "community": 54,
       "norm_label": "sarfaesiquestion"
     },
     {
@@ -10382,7 +10382,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_sim_draw_ellipse",
-      "community": 56,
+      "community": 128,
       "norm_label": "ellipse()"
     },
     {
@@ -10412,7 +10412,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_sim_draw_blob",
-      "community": 118,
+      "community": 56,
       "norm_label": "blob()"
     },
     {
@@ -10422,7 +10422,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_sim_draw_cell",
-      "community": 118,
+      "community": 56,
       "norm_label": "cell()"
     },
     {
@@ -10432,7 +10432,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_sim_draw_gleam",
-      "community": 56,
+      "community": 128,
       "norm_label": "gleam()"
     },
     {
@@ -10452,7 +10452,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_sim_draw_discstack",
-      "community": 56,
+      "community": 128,
       "norm_label": "discstack()"
     },
     {
@@ -10742,7 +10742,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_sim_types",
-      "community": 8,
+      "community": 114,
       "norm_label": "types.ts"
     },
     {
@@ -10752,7 +10752,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_sim_types_simbase",
-      "community": 8,
+      "community": 114,
       "norm_label": "simbase"
     },
     {
@@ -10762,7 +10762,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_sim_types_anatomypart",
-      "community": 8,
+      "community": 114,
       "norm_label": "anatomypart"
     },
     {
@@ -10772,7 +10772,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_lib_sim_types_anatomyspec",
-      "community": 112,
+      "community": 113,
       "norm_label": "anatomyspec"
     },
     {
@@ -10802,7 +10802,7 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurepanel",
-      "community": 8,
+      "community": 114,
       "norm_label": "figurepanel"
     },
     {
@@ -10812,7 +10812,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurespec",
-      "community": 101,
+      "community": 114,
       "norm_label": "figurespec"
     },
     {
@@ -10822,7 +10822,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedinput",
-      "community": 8,
+      "community": 114,
       "norm_label": "workedinput"
     },
     {
@@ -10832,7 +10832,7 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedstep",
-      "community": 8,
+      "community": 114,
       "norm_label": "workedstep"
     },
     {
@@ -10852,7 +10852,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "src_lib_sim_types_plotseries",
-      "community": 8,
+      "community": 114,
       "norm_label": "plotseries"
     },
     {
@@ -10862,7 +10862,7 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "src_lib_sim_types_graphplotspec",
-      "community": 8,
+      "community": 115,
       "norm_label": "graphplotspec"
     },
     {
@@ -10872,7 +10872,7 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "src_lib_sim_types_particlestate",
-      "community": 8,
+      "community": 114,
       "norm_label": "particlestate"
     },
     {
@@ -10882,7 +10882,7 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "src_lib_sim_types_particlemodelspec",
-      "community": 117,
+      "community": 113,
       "norm_label": "particlemodelspec"
     },
     {
@@ -10892,7 +10892,7 @@
       "source_location": "L322",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryvertex",
-      "community": 8,
+      "community": 114,
       "norm_label": "geometryvertex"
     },
     {
@@ -10902,7 +10902,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryreadout",
-      "community": 8,
+      "community": 114,
       "norm_label": "geometryreadout"
     },
     {
@@ -10912,7 +10912,7 @@
       "source_location": "L337",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryboardspec",
-      "community": 111,
+      "community": 115,
       "norm_label": "geometryboardspec"
     },
     {
@@ -10922,7 +10922,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "src_lib_sim_types_simspec",
-      "community": 8,
+      "community": 115,
       "norm_label": "simspec"
     },
     {
@@ -10932,7 +10932,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "src_lib_sim_types_simkind",
-      "community": 8,
+      "community": 114,
       "norm_label": "simkind"
     },
     {
@@ -11442,7 +11442,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_lib_stories_getstartedstories",
-      "community": 92,
+      "community": 99,
       "norm_label": "getstartedstories()"
     },
     {
@@ -11462,7 +11462,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "src_lib_stories_getallstorysections",
-      "community": 92,
+      "community": 55,
       "norm_label": "getallstorysections()"
     },
     {
@@ -11532,7 +11532,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_story_seeds",
-      "community": 33,
+      "community": 54,
       "norm_label": "story-seeds.ts"
     },
     {
@@ -11542,7 +11542,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seedsection",
-      "community": 33,
+      "community": 54,
       "norm_label": "seedsection"
     },
     {
@@ -11552,7 +11552,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seriesseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "seriesseed"
     },
     {
@@ -11562,7 +11562,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_lib_story_seeds_compactseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "compactseed()"
     },
     {
@@ -11572,7 +11572,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_story_seeds_dsaseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "dsaseed()"
     },
     {
@@ -11582,7 +11582,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sqlseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "sqlseed()"
     },
     {
@@ -11592,7 +11592,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sarfaesiseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "sarfaesiseed()"
     },
     {
@@ -11602,7 +11602,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_lib_story_seeds_macroeconomicsseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "macroeconomicsseed()"
     },
     {
@@ -11612,7 +11612,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "src_lib_story_seeds_psychopathsandsavagesseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "psychopathsandsavagesseed()"
     },
     {
@@ -11622,7 +11622,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_lib_story_seeds_englishcommunicationseed",
-      "community": 33,
+      "community": 54,
       "norm_label": "englishcommunicationseed()"
     },
     {
@@ -11632,7 +11632,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "src_lib_story_seeds_series",
-      "community": 33,
+      "community": 54,
       "norm_label": "series"
     },
     {
@@ -11722,7 +11722,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 106,
+      "community": 131,
       "norm_label": "client.ts"
     },
     {
@@ -11742,7 +11742,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 109,
+      "community": 58,
       "norm_label": "server.ts"
     },
     {
@@ -11752,7 +11752,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createclient",
-      "community": 109,
+      "community": 58,
       "norm_label": "createclient()"
     },
     {
@@ -11842,7 +11842,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_lib_tour_hasseentour",
-      "community": 131,
+      "community": 9,
       "norm_label": "hasseentour()"
     },
     {
@@ -12022,7 +12022,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_lib_types_reviewmode",
-      "community": 109,
+      "community": 0,
       "norm_label": "reviewmode"
     },
     {
@@ -12032,7 +12032,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_types_questionkind",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionkind"
     },
     {
@@ -12072,7 +12072,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportitem"
     },
     {
@@ -12092,7 +12092,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_lib_types_reportcard",
-      "community": 52,
+      "community": 0,
       "norm_label": "reportcard"
     },
     {
@@ -17746,6 +17746,266 @@
       "norm_label": "\ud83c\udfaf what comes next \u2014 week 2 \u2705 shipped (2026-07-25), week 3 next"
     },
     {
+      "label": "author-a-chapter.md",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter",
+      "community": 100,
+      "norm_label": "author-a-chapter.md"
+    },
+    {
+      "label": "Prompt \u2014 author a complete class-9 chapter page",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "community": 100,
+      "norm_label": "prompt \u2014 author a complete class-9 chapter page"
+    },
+    {
+      "label": "Absolute constraints",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_absolute_constraints",
+      "community": 100,
+      "norm_label": "absolute constraints"
+    },
+    {
+      "label": "What you deliver",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_what_you_deliver",
+      "community": 100,
+      "norm_label": "what you deliver"
+    },
+    {
+      "label": "The page your data lands in",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_the_page_your_data_lands_in",
+      "community": 100,
+      "norm_label": "the page your data lands in"
+    },
+    {
+      "label": "Type contract \u2014 the chapter",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
+      "community": 100,
+      "norm_label": "type contract \u2014 the chapter"
+    },
+    {
+      "label": "Writing `body`",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L143",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_writing_body",
+      "community": 100,
+      "norm_label": "writing `body`"
+    },
+    {
+      "label": "Writing `questions`",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L167",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_writing_questions",
+      "community": 100,
+      "norm_label": "writing `questions`"
+    },
+    {
+      "label": "Type contract \u2014 the figures",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L185",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
+      "community": 100,
+      "norm_label": "type contract \u2014 the figures"
+    },
+    {
+      "label": "Path helpers \u2014 import from `@/lib/sim/draw`",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L235",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_path_helpers_import_from_lib_sim_draw",
+      "community": 100,
+      "norm_label": "path helpers \u2014 import from `@/lib/sim/draw`"
+    },
+    {
+      "label": "The eight rules that decide whether a plate looks right",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L248",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_the_eight_rules_that_decide_whether_a_plate_looks_right",
+      "community": 100,
+      "norm_label": "the eight rules that decide whether a plate looks right"
+    },
+    {
+      "label": "Choosing `magnify`, and what `focus` really controls",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L291",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_choosing_magnify_and_what_focus_really_controls",
+      "community": 100,
+      "norm_label": "choosing `magnify`, and what `focus` really controls"
+    },
+    {
+      "label": "The acceptance bar, in numbers",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L329",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_the_acceptance_bar_in_numbers",
+      "community": 100,
+      "norm_label": "the acceptance bar, in numbers"
+    },
+    {
+      "label": "Labels",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L375",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_labels",
+      "community": 100,
+      "norm_label": "labels"
+    },
+    {
+      "label": "Prose in the figures",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L386",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_prose_in_the_figures",
+      "community": 100,
+      "norm_label": "prose in the figures"
+    },
+    {
+      "label": "Verification \u2014 you are not done until these pass",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L393",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_verification_you_are_not_done_until_these_pass",
+      "community": 100,
+      "norm_label": "verification \u2014 you are not done until these pass"
+    },
+    {
+      "label": "Known traps, collected",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L416",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_known_traps_collected",
+      "community": 100,
+      "norm_label": "known traps, collected"
+    },
+    {
+      "label": "TARGET",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L435",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_author_a_chapter_target",
+      "community": 100,
+      "norm_label": "target"
+    },
+    {
+      "label": "targets-existing-chapters.md",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters",
+      "community": 109,
+      "norm_label": "targets-existing-chapters.md"
+    },
+    {
+      "label": "Ready-to-run TARGET blocks for the chapters that already exist",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "community": 109,
+      "norm_label": "ready-to-run target blocks for the chapters that already exist"
+    },
+    {
+      "label": "1 \u00b7 `ch-03-tissues` \u2014 redraw the seven plates",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_1_ch_03_tissues_redraw_the_seven_plates",
+      "community": 109,
+      "norm_label": "1 \u00b7 `ch-03-tissues` \u2014 redraw the seven plates"
+    },
+    {
+      "label": "2 \u00b7 `ch-05-mixtures` \u2014 redraw the six plates",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_2_ch_05_mixtures_redraw_the_six_plates",
+      "community": 109,
+      "norm_label": "2 \u00b7 `ch-05-mixtures` \u2014 redraw the six plates"
+    },
+    {
+      "label": "3 \u00b7 `ch-01-coordinates` \u2014 add the reflections plate",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_3_ch_01_coordinates_add_the_reflections_plate",
+      "community": 109,
+      "norm_label": "3 \u00b7 `ch-01-coordinates` \u2014 add the reflections plate"
+    },
+    {
+      "label": "4 \u00b7 `ch-03-numbers` \u2014 add a place-value plate",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_4_ch_03_numbers_add_a_place_value_plate",
+      "community": 109,
+      "norm_label": "4 \u00b7 `ch-03-numbers` \u2014 add a place-value plate"
+    },
+    {
+      "label": "5 \u00b7 `ch-06-perimeter-area` \u2014 author the missing Area sections",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_5_ch_06_perimeter_area_author_the_missing_area_sections",
+      "community": 109,
+      "norm_label": "5 \u00b7 `ch-06-perimeter-area` \u2014 author the missing area sections"
+    },
+    {
+      "label": "Verification for every block above",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L159",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_targets_existing_chapters_verification_for_every_block_above",
+      "community": 109,
+      "norm_label": "verification for every block above"
+    },
+    {
       "label": "draw-cell-plate.md",
       "file_type": "document",
       "source_file": "prompts/school-figures/draw-cell-plate.md",
@@ -20141,7 +20401,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -40034,7 +40294,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/types.ts",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "src_lib_cbse_types",
       "target": "src_lib_cbse_types_chapter",
@@ -56909,6 +57169,246 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter",
+      "target": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_absolute_constraints",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L291",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_choosing_magnify_and_what_focus_really_controls",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L416",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_known_traps_collected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L375",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L386",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_prose_in_the_figures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L435",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L329",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_the_acceptance_bar_in_numbers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L248",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_the_eight_rules_that_decide_whether_a_plate_looks_right",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L75",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_the_page_your_data_lands_in",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L185",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L393",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_verification_you_are_not_done_until_these_pass",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
+      "target": "prompts_school_chapters_author_a_chapter_what_you_deliver",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
+      "target": "prompts_school_chapters_author_a_chapter_writing_body",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L167",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
+      "target": "prompts_school_chapters_author_a_chapter_writing_questions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/author-a-chapter.md",
+      "source_location": "L235",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
+      "target": "prompts_school_chapters_author_a_chapter_path_helpers_import_from_lib_sim_draw",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters",
+      "target": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_1_ch_03_tissues_redraw_the_seven_plates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_2_ch_05_mixtures_redraw_the_six_plates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_3_ch_01_coordinates_add_the_reflections_plate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_4_ch_03_numbers_add_a_place_value_plate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_5_ch_06_perimeter_area_author_the_missing_area_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/targets-existing-chapters.md",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_targets_existing_chapters_ready_to_run_target_blocks_for_the_chapters_that_already_exist",
+      "target": "prompts_school_chapters_targets_existing_chapters_verification_for_every_block_above",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "prompts/school-figures/draw-cell-plate.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -58998,5 +59498,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "e5aa5a4505245ff8b9dee5a55fc9799ef3034efb"
+  "built_at_commit": "6aef1ac5b1febf77f3952925a386d0eabfc83d19"
 }

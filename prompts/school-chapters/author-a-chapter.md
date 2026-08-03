@@ -5,6 +5,11 @@ at the very end to name the chapter you want.
 
 Companion files:
 
+- **`prompts/school-chapters/convert-the-books.md`** — the umbrella plan for
+  converting **all 21 chapters** of both books: the inventory, the running
+  order, accent assignments, how to map a printed chapter onto 5–7 app
+  sections, and which diagram register each subject needs. Start there when
+  authoring a chapter that does not exist yet.
 - **`prompts/school-chapters/targets-existing-chapters.md`** — ready-to-run
   TARGET blocks for the five chapters that already exist, aimed at bringing
   their artwork up to the Chapter 2 bar. Drop one in place of the TARGET block

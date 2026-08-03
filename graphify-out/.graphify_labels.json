@@ -117,6 +117,7 @@
   "115": "ch-06.ts",
   "116": "cache.ts",
   "117": "shading.ts",
+  "118": "ch-02-animal-plate.ts",
   "119": "Knovis for Schools — build specification (class 9, Exploration + Ganita Manjari)",
   "120": "2. Verified codebase facts — treat as ground truth",
   "121": "validate-cbse.mts",
@@ -128,6 +129,9 @@
   "127": "9. Phase 5 — school-branded URLs",
   "128": "index.ts",
   "129": "5. Phase 1 — types and contracts",
+  "130": "ch-01-coordinates.ts",
   "131": "page.tsx",
+  "132": "blog-gen.mts",
+  "133": "FigureSpec",
   "135": "RichText.tsx"
 }

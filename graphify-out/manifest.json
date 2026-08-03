@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785758607.9842143,
-    "ast_hash": "4fc53c6d6d276d5f47ee030ad86463c6",
+    "mtime": 1785759635.2124941,
+    "ast_hash": "18f2f00b1a57e7381e3ee2505e3c2204",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -1475,13 +1475,18 @@
     "semantic_hash": ""
   },
   "prompts/school-chapters/author-a-chapter.md": {
-    "mtime": 1785758572.9445808,
-    "ast_hash": "3aeeb280ac83dbad4ec0621bc0db02bd",
+    "mtime": 1785759624.5156944,
+    "ast_hash": "33ac4f7a75f10193ab86e7c5e5cfa754",
     "semantic_hash": ""
   },
   "prompts/school-chapters/targets-existing-chapters.md": {
     "mtime": 1785758542.9181862,
     "ast_hash": "097bc31d19cd828e7d61524c1b1e307b",
+    "semantic_hash": ""
+  },
+  "prompts/school-chapters/convert-the-books.md": {
+    "mtime": 1785759616.3810058,
+    "ast_hash": "9075b708626856e11fd431373cbd712e",
     "semantic_hash": ""
   }
 }
