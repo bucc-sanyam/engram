@@ -47,14 +47,15 @@ export type Section = {
   bookRef: string;
   /** LEFT PANE. Markdown, rendered with strictViz. 250–450 words. */
   body: string;
-  /** RIGHT-TOP PANE. Omit only if the section genuinely needs no diagram. */
+  /** RIGHT PANE, first. Omit only if the section genuinely needs no diagram. */
   sim?: SimSpec;
-  /** INLINE PLATES. Rendered in the reading column, at body width, in order —
-   *  the way figures sit inside a printed chapter. Use this for the book's
-   *  labelled figures (`kind: "figure"`); `sim` stays the sticky-rail hero.
-   *  A section may carry several. */
+  /** RIGHT PANE, after `sim`. The section's labelled plates (`kind: "figure"`),
+   *  in order; `sim` stays the hero. A section may carry several — all of them
+   *  ride the same sticky rail, which scrolls inside itself. Below 1400px the
+   *  page is a single column and these render inline under the section's text
+   *  instead, the way figures sit inside a printed chapter. */
   figures?: SimSpec[];
-  /** RIGHT-BOTTOM PANE. */
+  /** RIGHT PANE, last. */
   note?: SectionNote;
 };
 
