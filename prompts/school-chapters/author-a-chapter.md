@@ -3,9 +3,14 @@
 Paste everything below the line into the model. Change only the **TARGET** block
 at the very end to name the chapter you want.
 
-Companion prompt: `prompts/school-figures/draw-cell-plate.md` goes deeper on
-drawing a single plate. Use this one to author a whole chapter; use that one when
-a specific figure needs a second pass.
+Companion files:
+
+- **`prompts/school-chapters/targets-existing-chapters.md`** — ready-to-run
+  TARGET blocks for the five chapters that already exist, aimed at bringing
+  their artwork up to the Chapter 2 bar. Drop one in place of the TARGET block
+  at the end of this prompt.
+- **`prompts/school-figures/draw-cell-plate.md`** — goes deeper on drawing a
+  single plate. Use it when one figure needs a second pass.
 
 **Worth pasting in as worked examples if the model drifts** (each is a complete,
 shipped chapter or plate file):
@@ -320,6 +325,52 @@ centre. Consequences for you:
   Tighten the box if a part feels weak.
 - **`backdrop: true` parts light up but never scale.** Mark the cytoplasm, the
   cell wall, the beaker, the slide — the container *is* the plate.
+
+## The acceptance bar, in numbers
+
+Chapter 2 is the reference. These are measured from its ten plates, not
+invented, and they are what separates it from the chapters that still read as
+flat. **An anatomical or apparatus plate is not finished until it clears all
+five:**
+
+| | Chapter 2 actual | Your target |
+| --- | --- | --- |
+| parts per plate | 4–13, median 7 | **≥ 5** |
+| detail layers per part | 0.4–2.3, mean 1.3 | **≥ 1.0 on average** |
+| parts carrying ≥1 layer | 43–100%, median 90% | **≥ 70%** |
+| `magnify` | `"part"` on all ten | **`"part"`** |
+| blurb length | 26–32 words | **25–35** |
+
+For contrast, the plates in this repo that visibly fall short: a neuron at 0.2
+layers per part with 17% of parts carrying any (a bare outline), a separating
+funnel at 0.1 and 14%, a blood tube at 0.4 and 40%. They pass `tsc` and the
+validator. They just look empty.
+
+"Detail layers" means the interior that makes a shape a thing rather than a
+silhouette: a `gleam()` on every solid, plus what is actually inside it — Nissl
+granules in a cell body, lignin rings on a xylem vessel, a mercury thread in a
+thermometer, glass highlights and a meniscus on a beaker, a flame cone on a
+burner. **Every solid gets a `gleam()`; that alone is one layer per part.**
+
+**Two exemptions, and they matter as much as the bar:**
+
+1. **Comparison plates stay on `camera` and are already dense** — three tissue
+   types side by side run 1.3–3.0 layers per part because each panel is a
+   little scene. Do not convert them to `"part"`.
+2. **Maths figures are exempt entirely.** Every maths plate in this repo sits at
+   0.0–0.5 layers per part, on `camera`, with no organic curves — and that is
+   *correct*. A maths figure is a construction: flat lines, a right-angle mark,
+   a labelled length. Adding volume, gleam or blob outlines to a number line
+   makes it worse. Do not apply this section to `subject: "maths"`.
+
+Count it yourself before you claim you are done:
+
+```ts
+// per plate
+const nParts  = spec.parts.length;
+const perPart = spec.parts.reduce((a, p) => a + (p.layers?.length ?? 0), 0) / nParts;
+const covered = spec.parts.filter((p) => (p.layers?.length ?? 0) > 0).length / nParts;
+```
 
 ## Labels
 

@@ -1,7 +1,7 @@
 # Graph Report - startup-strategy-blueprint-6e9a0e  (2026-08-03)
 
 ## Corpus Check
-- 288 files · ~579,514 words
+- 288 files · ~580,132 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `aa72e94d`
+- Built from commit: `e5aa5a45`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
