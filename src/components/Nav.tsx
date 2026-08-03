@@ -13,8 +13,17 @@ const LINKS = [
   { href: "/recall", label: "Recall", icon: BoltIcon },
 ];
 
+/** The chapter reader is the one route wider than `max-w-6xl` — from 1400px it
+ *  gains a diagram rail and fills the window. The top bar matches its container
+ *  and padding there, or the wordmark floats a couple of hundred pixels inboard
+ *  of the chapter title sitting right under it. Only there: the bar's contents
+ *  are fixed-width and wrap into a mess if it is narrowed to a reading measure,
+ *  which is what the route uses below 1400. */
+const WIDE_ROUTE = /^\/learn\/class-9\/[^/]+\/[^/]+/;
+
 export default function Nav() {
   const pathname = usePathname();
+  const wide = WIDE_ROUTE.test(pathname);
   const [stats, setStats] = useState<{ streak: number } | null>(null);
   const [authStatus, setAuthStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
   // isDemo depends on the guest cookie, which the server can't see — read it
@@ -35,7 +44,13 @@ export default function Nav() {
     <>
       {/* Top bar */}
       <header className="sticky top-0 z-40 bg-gradient-to-b from-[#0b0a0e]/90 via-[#0b0a0e]/60 to-transparent backdrop-blur-xl [mask-image:linear-gradient(to_bottom,black_72%,transparent)] pb-3">
-        <div className="mx-auto flex h-[68px] max-w-6xl items-center justify-between px-4 sm:px-6">
+        <div
+          className={`mx-auto flex h-[68px] items-center justify-between ${
+            wide
+              ? "max-w-6xl px-4 sm:px-6 min-[1400px]:max-w-[1600px] min-[1400px]:px-8"
+              : "max-w-6xl px-4 sm:px-6"
+          }`}
+        >
           <Link href="/" className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#ff7a5c] to-[#f5b95f] shadow-[0_0_28px_rgba(255,122,92,0.45)]">
               <BrainIcon className="h-5 w-5 text-[#1a120e]" />

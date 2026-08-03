@@ -33,7 +33,13 @@ export default async function ChapterPage({
   return (
     <>
       <Nav />
-      <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-32 pt-8 sm:px-6 md:pb-24">
+      {/* Two widths, because this route has two layouts. Below 1400 it is a
+          single reading column and wants an article measure. At 1400 the rail
+          appears and the page fills the window instead — wider than anything
+          else on the site, deliberately: at `max-w-6xl` the diagram rail took
+          more of the page than the prose it illustrates. `Nav` mirrors both
+          (see WIDE_ROUTE there) so the wordmark stays over the title. */}
+      <main className="mx-auto w-full max-w-[46rem] flex-1 px-5 pb-32 pt-8 sm:px-8 md:pb-24 min-[1400px]:max-w-[1600px]">
         <ChapterReader subject={s} chapterKey={chapter} />
       </main>
     </>

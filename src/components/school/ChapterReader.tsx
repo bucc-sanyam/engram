@@ -75,17 +75,22 @@ export default function ChapterReader({
         </p>
       </header>
 
-      {/* Main grid. Text on the left, every diagram on the right — so the
-          reading column keeps one measure the whole way down and the plates
-          get the width they need.
-          The split is 42/58 and waits for `xl`, both for the same reason: a
-          plate refuses to render below 0.72 of its own viewBox and scrolls
-          sideways instead, and the widest here is 800 units — 576px, plus the
-          card's padding. Under 1280 there is no honest way to fit that beside a
-          readable measure, so the page stacks the way it does on a phone. */}
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,41fr)_minmax(0,59fr)]">
+      {/* Main grid. Text on the left, every diagram on the right.
+          The rail is a FIXED 640px, not a fraction: a plate refuses to render
+          below 0.72 of its own viewBox and scrolls sideways instead, and the
+          widest here is 800 units — 576px, plus the card's padding and the
+          rail's own scrollbar. That is the whole of what the diagrams need, so
+          everything else goes to the prose instead of scaling up with the
+          window. The prose itself stops at 46rem; past that the slack falls
+          between the two columns rather than stretching the line length.
+          Two columns wait for 1400px, the narrowest window where the text
+          column comes out level with the 640px rail; it overtakes it a little
+          above that. Below 1400 the page is one column, the way it is on a
+          phone — better than a cramped two-column split where the diagram
+          would have to win. */}
+      <div className="grid grid-cols-1 gap-8 min-[1400px]:grid-cols-[minmax(0,1fr)_640px] min-[1400px]:gap-12">
         {/* LEFT COLUMN — sections stacked */}
-        <div className="flex flex-col gap-12">
+        <div className="flex max-w-[46rem] flex-col gap-12">
           {chapter.sections.map((section) => (
             <section
               key={section.key}
@@ -110,7 +115,7 @@ export default function ChapterReader({
               {/* Single-column only — there the diagrams belong with the text
                   they illustrate. Wide enough for two columns, they all move
                   into the rail. */}
-              <div className="mt-6 xl:hidden">
+              <div className="mt-6 min-[1400px]:hidden">
                 {section.sim && (
                   <div className="mb-4">
                     <div className="motion-reduce:hidden">
@@ -147,7 +152,7 @@ export default function ChapterReader({
             only). A section can carry several plates on top of its sim, so the
             rail scrolls inside itself rather than growing past the viewport
             and taking its own stickiness away. */}
-        <div className="school-rail sticky top-24 hidden max-h-[calc(100vh-7rem)] self-start overflow-y-auto xl:block">
+        <div className="school-rail sticky top-24 hidden max-h-[calc(100vh-7rem)] self-start overflow-y-auto min-[1400px]:block">
           <div
             key={activeKey}
             className="school-fade flex flex-col gap-4"
