@@ -7,7 +7,7 @@ import {
   separatingFunnelFigure,
   bloodFigure,
 } from "../figures/ch-05";
-import type { ParticleModelSpec, AnatomySpec } from "@/lib/sim/types";
+import type { ParticleModelSpec, } from "@/lib/sim/types";
 
 /* ─── Sim specs ──────────────────────────────────────────────────── */
 
@@ -48,60 +48,6 @@ const pureVsMixtureSim: ParticleModelSpec = {
   count: 30,
 };
 
-const distillationAnatomy: AnatomySpec = {
-  kind: "anatomy",
-  title: "Distillation Setup",
-  altText:
-    "An interactive diagram of a distillation apparatus showing the boiling flask, condenser, and collection flask.",
-  viewBox: [400, 300],
-  defaultPartId: "flask",
-  // Bench, stand and burner, so the glassware reads as a real bench setup.
-  scenery: [
-    { path: "M16,276 H384", outline: true },
-    { path: "M74,276 L88,244 H50 Z" },
-    { path: "M56,244 H82", outline: true },
-  ],
-  parts: [
-    {
-      id: "flask",
-      label: "Boiling Flask",
-      // Round-bottomed flask with a narrow neck.
-      path: "M54,190 A40,40 0 1 0 114,190 L108,122 C108,114 102,110 94,110 L74,110 C66,110 60,114 60,122 Z",
-      // Liquid line + rising bubbles.
-      detail: "M48,194 C64,206 104,206 120,194 M78,176 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0 M92,164 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0",
-      tint: "#8fd3f4",
-      depth: 1,
-      liftBy: [0, -8],
-      // Round bottom plus the narrow neck.
-      blurb: "The mixture is heated here until it boils. Because different liquids boil at different temperatures, the one with the lower boiling point vaporises first and leaves the flask as vapour.",
-    },
-    {
-      id: "condenser",
-      label: "Condenser",
-      // Sloping water-jacketed tube from the flask neck down to the receiver.
-      path: "M110,100 L280,180 L268,206 L98,126 Z",
-      // Inner delivery tube + water jacket inlet/outlet.
-      detail: "M112,116 L270,190 M138,98 l-10,-18 M240,198 l10,18",
-      tint: "#7fd8e8",
-      depth: 2,
-      liftBy: [6, -6],
-      // Water jacket sloping down from the flask neck to the receiver.
-      blurb: "The hot vapour passes through this cooled, sloped tube, losing heat to its surroundings as it travels along and condensing back into a pure liquid before it reaches the far end.",
-    },
-    {
-      id: "collection",
-      label: "Collection Flask",
-      // Conical receiving flask under the condenser outlet.
-      path: "M254,206 L240,246 C236,258 244,268 260,268 L300,268 C316,268 324,258 320,246 L306,206 C304,200 300,198 294,198 L266,198 C260,198 256,200 254,206 Z",
-      detail: "M242,244 C258,252 302,252 318,244",
-      tint: "#a8e6a1",
-      depth: 3,
-      liftBy: [0, 10],
-      // Conical receiver sitting under the condenser outlet.
-      blurb: "The condensed, purified liquid drips down and collects in this flask, while any non-volatile impurities from the original mixture stay behind, trapped in the boiling flask.",
-    }
-  ],
-};
 
 const mixtureTypesSim: ParticleModelSpec = {
   kind: "particle-model",
@@ -285,7 +231,8 @@ If you have a mixture of common salt and naphthalene, heating it gently will cau
     /* ── S5 ─────────────────────────────────────────────────────── */
     {
       key: "separation-liquids",
-      figures: [distillationFigure, separatingFunnelFigure],
+      sim: distillationFigure,
+      figures: [separatingFunnelFigure],
       title: "Separating Liquids",
       eyebrow: "Evaporation & Distillation",
       bookRef: "Exploration §5.3",
@@ -303,7 +250,6 @@ Distillation is also used to separate two miscible liquids (liquids that mix per
 
 ### Separating Funnel
 What about immiscible liquids — liquids that refuse to mix, like oil and water? If you pour them into a **separating funnel** and let them stand, they separate into two distinct layers based on their densities. The heavier liquid (water) sinks to the bottom. You can then carefully open the stopcock at the bottom to drain the water out, closing it just before the oil escapes.`,
-      sim: distillationAnatomy,
       note: {
         kind: "watch-out",
         body: "Distillation separates miscible liquids, based on differing boiling points. A separating funnel separates immiscible liquids, based on differing density. Do not confuse the two — they solve entirely different problems.",

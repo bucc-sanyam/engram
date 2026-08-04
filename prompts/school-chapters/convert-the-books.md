@@ -1,7 +1,7 @@
 # Converting both books into the site — the full programme
 
-The two class-9 NCF-SE 2023 textbooks are on disk. This file is the plan for
-turning **all 21 chapters** into pages in the Chapter-2 format: prose, question
+The two class-9 NCF-SE 2023 textbooks are on disk. Start with **`CHAPTER-WORKFLOW.md`** — it is the runbook. This file is the
+plan for turning **all 21 chapters** into pages in the Chapter-2 format: prose, question
 bank, and drawn interactive figures.
 
 It is the umbrella document. The two files it drives are:
@@ -160,12 +160,17 @@ site has six `SimSpec` kinds and they are not interchangeable:
 
 | Chapter type | Hero `sim` | `figures[]` | `magnify` |
 | --- | --- | --- | --- |
-| **Biology** (sci 2, 3, 11, 12) | `figure` or `anatomy` | labelled `figure` plates | `"part"` |
+| **Biology** (sci 2, 3, 11, 12) | `figure` | labelled `figure` plates | `"part"` |
 | **Chemistry — apparatus** (sci 5) | `particle-model` | apparatus `figure` plates | `"part"` |
 | **Chemistry — abstract** (sci 8, 9) | `particle-model` / `worked-example` | `figure` plates of atoms, shells, bonds | `"part"` |
 | **Physics — motion & graphs** (sci 4, 10) | `graph-plot` | `figure` plates of set-ups and waveforms | `"camera"` for anything graph-like, `"part"` for apparatus |
 | **Physics — forces & machines** (sci 6, 7) | `worked-example` | `figure` plates of free-body diagrams, levers, pulleys | `"part"` for machines, `"camera"` for force diagrams |
 | **Earth systems** (sci 13) | `figure` | `figure` plates of cycles and cross-sections | `"part"` |
+
+**`sim` vs `figures[]`**: both render in the same rail, so the split is
+editorial — the section's hero goes in `sim` (the validator wants >=3 per
+chapter and one on section 1), the rest in `figures[]`. The `anatomy` kind no
+longer exists; every labelled diagram is a `figure`.
 | **Maths, all** | `graph-plot` / `worked-example` / `geometry-board` | flat construction `figure` plates | **`"camera"`, always** |
 
 **A free-body diagram, a velocity–time graph and a ray diagram are

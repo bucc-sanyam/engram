@@ -248,7 +248,7 @@ export const meristemFigure: FigureSpec = {
         { d: gleam(250, 196, 12, 14), as: "light", opacity: 0.3 },
       ],
       focus: [224, 172, 64, 62],
-      labelAt: [110, 248],
+      labelAt: [132, 248],
       leaderAt: [234, 210],
       blurb:
         "Older cells that have stopped dividing and grown large, with a big central vacuole. Compared to the meristematic cells above, they are visibly bigger, rounder, and far less densely packed.",
@@ -1113,6 +1113,277 @@ export const neuronFigure: FigureSpec = {
       labelAlign: "middle",
       blurb:
         "The axon splits into fine branches tipped with synaptic knobs packed with vesicles. Each knob comes within a hair's breadth of the next cell and passes the message using chemicals released from the vesicles.",
+    },
+  ],
+};
+
+/* ══════════════ Fig. 3.1 — the organism, and the work it divides up ══ */
+
+/** Both leaf blades. Defined once because the vein ribbons have to follow the
+ *  same curve, and a vein that misses its blade is the kind of error you only
+ *  see in a render. */
+const LEAF_L = "M316,178 C266,150 214,146 172,164 C214,194 272,202 316,178 Z";
+const LEAF_R = "M344,148 C394,120 448,116 490,134 C448,164 390,172 344,148 Z";
+
+export const organismFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 3.1",
+  title: "One plant, four kinds of tissue",
+  caption:
+    "No single cell could do all of this. The plant survives by handing each job to a tissue built for it — and by keeping them plumbed together.",
+  altText:
+    "A young plant drawn whole, with its tissue systems picked out: the epidermis wrapping the outside, photosynthesising leaf tissue in the blades, supporting stem tissue, absorbing root tissue below the soil, and a continuous strand of vascular tissue linking leaf to root. Selecting any part lifts it out, enlarged, and explains it.",
+  viewBox: [660, 430],
+  magnify: "part",
+  scenery: [
+    { d: "M96,300 H564", as: "stroke", width: 2, tint: T.sclerenchyma },
+  ],
+  parts: [
+    {
+      id: "epidermis",
+      label: "Epidermis",
+      tint: T.parenchyma,
+      depth: 0,
+      backdrop: true,
+      // A whole silhouette one size up from the stem: the skin is continuous
+      // over every organ, which is the point being made. The band has to be
+      // wide enough to read as a separate layer — at 10 units it looked like
+      // an outline stroke on the stem rather than a tissue of its own.
+      d: "M298,92 C292,170 290,248 294,314 L366,314 C370,248 368,170 362,92 C352,70 308,70 298,92 Z",
+      layers: [
+        { d: "M298,92 C292,170 290,248 294,314 L366,314 C370,248 368,170 362,92 C352,70 308,70 298,92 Z", as: "light" },
+        // The brick-like file of surface cells.
+        { d: "M296,140 H364 M295,192 H365 M294,244 H366 M294,296 H366", as: "stroke", width: 1, opacity: 0.5 },
+      ],
+      focus: [290, 244, 78, 70],
+      labelAt: [552, 96],
+      leaderAt: [360, 118],
+      blurb:
+        "A single layer of flat cells wrapping every surface of the plant. It keeps water in and pests out, and on a leaf it is punctured by tiny pores that let gases through.",
+    },
+    {
+      id: "stem",
+      label: "Stem tissue",
+      tint: T.collenchyma,
+      depth: 1,
+      d: "M314,100 C308,172 306,244 310,300 L350,300 C354,244 352,172 346,100 C340,86 320,86 314,100 Z",
+      layers: [
+        { d: gleam(330, 200, 18, 96), as: "light", opacity: 0.55 },
+        // Thick-walled fibres running the length of the stem.
+        { d: "M319,116 C316,186 315,250 318,296 M341,116 C344,186 345,250 342,296", as: "stroke", width: 1.4, opacity: 0.7 },
+      ],
+      focus: [306, 208, 48, 92],
+      labelAt: [552, 236],
+      leaderAt: [350, 246],
+      blurb:
+        "Packs thick-walled cells around the transport strands, which is what lets a soft green shoot hold itself upright. Every extra centimetre of height is paid for in support tissue.",
+    },
+    {
+      id: "leaf",
+      label: "Leaf tissue",
+      tint: T.parenchyma,
+      depth: 2,
+      d: `${LEAF_L} ${LEAF_R}`,
+      layers: [
+        { d: gleam(250, 170, 44, 16), as: "light", opacity: 0.7 },
+        { d: gleam(424, 140, 44, 16), as: "light", opacity: 0.7 },
+        // Chloroplast-packed cells, the reason the blade is spread flat at all.
+        { d: dots([[226, 168], [258, 176], [290, 178], [206, 172], [274, 164]], 5), as: "shade", opacity: 0.55 },
+        { d: dots([[400, 138], [432, 146], [464, 146], [380, 142], [448, 134]], 5), as: "shade", opacity: 0.55 },
+      ],
+      focus: [172, 144, 146, 60],
+      labelAt: [150, 128],
+      leaderAt: [228, 158],
+      blurb:
+        "Cells crammed with chloroplasts, spread into a broad flat sheet so that as much of them as possible faces the light. This is the only tissue in the plant that makes food.",
+    },
+    {
+      id: "vascular",
+      label: "Vascular tissue",
+      tint: T.xylem,
+      depth: 3,
+      // One continuous plumbing run: leaf vein → stem strand → root. The veins
+      // are deliberately thin — drawn at the stem strand's width they read as
+      // planks laid across the blades rather than as veins inside them.
+      d: [
+        "M325,112 C322,182 321,250 324,306 L336,306 C333,250 334,182 337,112 Z",
+        "M314,176 C272,161 228,157 182,164 L182,168 C228,161 272,165 314,180 Z",
+        "M346,150 C388,137 432,133 478,140 L478,144 C432,137 388,141 346,154 Z",
+      ].join(" "),
+      layers: [
+        // Xylem one side, phloem the other — two pipes, opposite directions.
+        { d: "M327,120 C324,186 323,250 326,300", as: "stroke", width: 2, opacity: 0.85 },
+        { d: "M335,120 C332,186 331,250 334,300", as: "stroke", width: 2, tint: T.phloem },
+      ],
+      focus: [318, 196, 26, 110],
+      labelAt: [150, 250],
+      leaderAt: [322, 250],
+      blurb:
+        "The pipework, running unbroken from the deepest root hair to the tip of every leaf. One set of tubes carries water up, the other carries dissolved food back down.",
+    },
+    {
+      id: "root",
+      label: "Root tissue",
+      tint: T.sclerenchyma,
+      depth: 4,
+      d: "M310,300 H350 C354,328 364,348 388,374 C362,364 346,350 340,334 C340,358 343,378 348,404 C335,384 329,360 328,338 C323,362 314,382 299,406 C306,380 309,356 309,334 C297,352 282,364 260,372 C286,346 300,330 310,300 Z",
+      layers: [
+        { d: gleam(324, 340, 44, 40), as: "light", opacity: 0.4 },
+        // Root hairs — the whole reason a root can drink.
+        {
+          d: "M344,340 l14,-6 M348,362 l15,-4 M314,344 l-15,-5 M308,368 l-16,-3 M334,392 l13,4 M300,392 l-13,5",
+          as: "stroke",
+          width: 1.4,
+        },
+      ],
+      focus: [284, 306, 92, 82],
+      labelAt: [552, 356],
+      leaderAt: [346, 348],
+      blurb:
+        "Cells drawn out into fine hairs, multiplying the surface touching the soil many times over. Water and dissolved minerals cross into the plant here and nowhere else.",
+    },
+  ],
+};
+
+/* ═══════════════════ Fig. 3.10 — four tissues in one organ ══ */
+
+export const animalArmFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 3.10",
+  title: "Four tissues in a single organ",
+  caption:
+    "A slice straight through the upper arm. An organ is never one tissue — it is several, layered and doing different jobs at once.",
+  altText:
+    "A cross-section through a human upper arm showing skin on the outside, a layer of fatty connective tissue beneath it, the bulk of muscle tissue, the bone at the centre with its hard outer shell and marrow, and an artery and a nerve running alongside the bone. Selecting any part lifts it out, enlarged, and explains it.",
+  viewBox: [660, 420],
+  magnify: "part",
+  parts: [
+    {
+      id: "skin",
+      label: "Epithelial tissue",
+      tint: T.epithelium,
+      depth: 0,
+      backdrop: true,
+      d: blob(330, 206, 128, 118, [1, 0.98, 1.02, 0.99, 1.01, 0.98, 1.02, 0.99]),
+      layers: [
+        { d: blob(330, 206, 128, 118, [1, 0.98, 1.02, 0.99, 1.01, 0.98, 1.02, 0.99]), as: "light" },
+        { d: gleam(330, 206, 128, 118), as: "light", opacity: 0.5 },
+      ],
+      focus: [206, 90, 100, 60],
+      labelAt: [560, 106],
+      leaderAt: [418, 124],
+      blurb:
+        "The skin: sheets of cells packed edge to edge with almost nothing between them. That tight packing is what makes it a barrier against water loss, injury and microbes.",
+    },
+    {
+      id: "fat",
+      label: "Fatty tissue",
+      tint: T.adipose,
+      depth: 1,
+      backdrop: true,
+      d: blob(330, 206, 112, 102, [1, 0.99, 1.01, 0.98, 1.02, 0.99, 1.01, 0.98]),
+      layers: [
+        { d: blob(330, 206, 112, 102, [1, 0.99, 1.01, 0.98, 1.02, 0.99, 1.01, 0.98]), as: "light" },
+        // Fat cells: almost entirely one droplet, nucleus shoved to the rim.
+        { d: dots([[248, 140], [284, 122], [388, 126], [420, 148], [244, 272], [412, 268]], 13), as: "fill", opacity: 0.8 },
+        { d: dots([[248, 140], [284, 122], [388, 126], [420, 148], [244, 272], [412, 268]], 4), as: "shade" },
+      ],
+      focus: [232, 108, 82, 56],
+      labelAt: [560, 170],
+      leaderAt: [416, 152],
+      blurb:
+        "Connective tissue whose cells are each mostly a single fat droplet. It cushions what is underneath, insulates against cold, and is the body's long-term fuel store.",
+    },
+    {
+      id: "muscle",
+      label: "Muscle tissue",
+      tint: T.muscle,
+      depth: 2,
+      d: blob(330, 206, 94, 86, [1, 0.98, 1.02, 0.99, 1.01, 0.98, 1.02, 0.99]),
+      layers: [
+        { d: gleam(330, 206, 94, 86), as: "light", opacity: 0.45 },
+        // Fascicles — muscle is bundles of fibres, not a solid mass.
+        {
+          d: [
+            cell(276, 158, 26, 20, 1),
+            cell(330, 142, 28, 20, 2),
+            cell(384, 160, 26, 20, 3),
+            cell(266, 250, 26, 20, 4),
+            cell(392, 248, 26, 20, 5),
+          ].join(" "),
+          as: "shade",
+          opacity: 0.6,
+        },
+        {
+          d: [
+            cell(276, 158, 26, 20, 1),
+            cell(330, 142, 28, 20, 2),
+            cell(384, 160, 26, 20, 3),
+            cell(266, 250, 26, 20, 4),
+            cell(392, 248, 26, 20, 5),
+          ].join(" "),
+          as: "stroke",
+          width: 1.2,
+          opacity: 0.8,
+        },
+      ],
+      focus: [250, 138, 52, 42],
+      labelAt: [124, 132],
+      leaderAt: [258, 156],
+      blurb:
+        "Long fibres gathered into bundles, each able to shorten on command. Contract them and the bone they are anchored to swings — every voluntary movement you make starts here.",
+    },
+    {
+      id: "bone",
+      label: "Bone",
+      tint: T.bone,
+      depth: 3,
+      d: blob(330, 206, 40, 38, [1, 0.99, 1.01, 0.98, 1.01, 0.99]),
+      layers: [
+        { d: blob(330, 206, 30, 28, [1, 0.99, 1.01, 0.98, 1.01, 0.99]), as: "shade" },
+        // The marrow cavity, and the rings of hard matrix around it.
+        { d: circle(330, 206, 17), as: "fill", tint: T.blood, opacity: 0.75 },
+        { d: `${circle(330, 206, 36)} ${circle(330, 206, 24)}`, as: "stroke", width: 1.1, opacity: 0.7 },
+        { d: gleam(330, 206, 40, 38), as: "light", opacity: 0.4 },
+      ],
+      focus: [290, 168, 80, 76],
+      labelAt: [124, 206],
+      leaderAt: [296, 204],
+      blurb:
+        "Connective tissue with a matrix hardened by calcium salts, laid down by living cells trapped inside it. Hollow at the centre, which keeps it light without giving up strength.",
+    },
+    {
+      id: "artery",
+      label: "Blood",
+      tint: T.blood,
+      depth: 4,
+      d: circle(398, 268, 15),
+      layers: [
+        { d: circle(398, 268, 8), as: "panel" },
+        { d: dots([[394, 264], [402, 271], [398, 258]], 3), as: "shade" },
+        { d: gleam(398, 268, 15, 15), as: "light", opacity: 0.5 },
+      ],
+      focus: [380, 250, 36, 36],
+      labelAt: [560, 292],
+      leaderAt: [412, 270],
+      blurb:
+        "A connective tissue that flows. Its cells are carried in liquid plasma, which is how it can reach every other tissue in the arm to deliver oxygen and take waste away.",
+    },
+    {
+      id: "nerve",
+      label: "Nervous tissue",
+      tint: T.nerve,
+      depth: 5,
+      d: circle(262, 270, 13),
+      layers: [
+        { d: dots([[258, 266], [266, 273], [262, 262], [266, 264]], 3), as: "shade" },
+        { d: gleam(262, 270, 13, 13), as: "light", opacity: 0.5 },
+      ],
+      focus: [246, 254, 32, 32],
+      labelAt: [124, 300],
+      leaderAt: [252, 274],
+      blurb:
+        "A bundle of nerve fibres, each one the long arm of a cell whose body sits back in the spinal cord. It carries the order to contract out, and the sense of touch back.",
     },
   ],
 };

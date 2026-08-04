@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785750065.9833374,
-    "ast_hash": "0cb36d55ae4bc4093dfe86f3e11f8f78",
+    "mtime": 1785833197.9788415,
+    "ast_hash": "6abd0e8e016e24e19cd994e0824e5cc2",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785750078.2346206,
-    "ast_hash": "26ea663649cf5ad7ac2d8d6dd239c942",
+    "mtime": 1785833156.1486957,
+    "ast_hash": "b014547038f41d5f15b09e24234c2d35",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785759635.2124941,
-    "ast_hash": "18f2f00b1a57e7381e3ee2505e3c2204",
+    "mtime": 1785833156.1495562,
+    "ast_hash": "181daf91e83155641a6b62761f8f093a",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -1255,13 +1255,13 @@
     "semantic_hash": ""
   },
   "scripts/render-figures.mts": {
-    "mtime": 1785747332.3411105,
-    "ast_hash": "722a56a58a4492f8daed633c322c1b8d",
+    "mtime": 1785832797.895187,
+    "ast_hash": "2e911d0a0d25ca32f21291fdee464b31",
     "semantic_hash": ""
   },
   "scripts/validate-cbse.mts": {
-    "mtime": 1785744284.2529244,
-    "ast_hash": "0d82f5f59cece3d4b35f2c78379e54e6",
+    "mtime": 1785832876.469998,
+    "ast_hash": "32d16a4ee68ad74cb149bad1b73b6531",
     "semantic_hash": ""
   },
   "src/app/learn/class-9/[subject]/[chapter]/page.tsx": {
@@ -1289,11 +1289,6 @@
     "ast_hash": "8c4f837fbadf5cd171ee607293acba80",
     "semantic_hash": ""
   },
-  "src/components/sim/AnatomySim.tsx": {
-    "mtime": 1785611154.6059554,
-    "ast_hash": "6202e61860a986f6abaf6e68318a9179",
-    "semantic_hash": ""
-  },
   "src/components/sim/FigureSim.tsx": {
     "mtime": 1785747303.5200002,
     "ast_hash": "b2986aac2fc3ab37e78afff1ab32cd7c",
@@ -1315,8 +1310,8 @@
     "semantic_hash": ""
   },
   "src/components/sim/SimBlock.tsx": {
-    "mtime": 1785744284.252152,
-    "ast_hash": "d684172dbd7bfa9aa5e6a3590b0b585c",
+    "mtime": 1785832846.9061167,
+    "ast_hash": "1caffb9af171dc1c92a4e92b3b388e19",
     "semantic_hash": ""
   },
   "src/components/sim/SimFallback.tsx": {
@@ -1385,23 +1380,23 @@
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts": {
-    "mtime": 1785611995.1704419,
-    "ast_hash": "84057462e6a09cd066e26a4c23e4fda4",
+    "mtime": 1785832950.7569647,
+    "ast_hash": "b2c3997d8e7d4e2a878377d65452aaa3",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts": {
-    "mtime": 1785612288.4182425,
-    "ast_hash": "f2b62a78f52da62dbaa07e05bed588b7",
+    "mtime": 1785832950.7571208,
+    "ast_hash": "d05f327d02b18b0435bebbd436936735",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-03.ts": {
-    "mtime": 1785762781.0699673,
-    "ast_hash": "be1c3c073404f6f6373b42ced6e59fa6",
+    "mtime": 1785832826.593351,
+    "ast_hash": "8cf76bcd698504414c30ba6d3925d6e7",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-05.ts": {
-    "mtime": 1785761635.8963723,
-    "ast_hash": "5986a614908718776bf6d8cda4c2b295",
+    "mtime": 1785832826.593712,
+    "ast_hash": "24a8a4e32f63a94f6cff76b1178e668c",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/index.ts": {
@@ -1430,8 +1425,8 @@
     "semantic_hash": ""
   },
   "src/lib/sim/types.ts": {
-    "mtime": 1785744284.2525346,
-    "ast_hash": "ffe66b1c51440769386a05a3fb3c1440",
+    "mtime": 1785832876.4696813,
+    "ast_hash": "7b7fcdb601dac58ed55ea465314b519a",
     "semantic_hash": ""
   },
   "SCHOOL_BUILD_SPEC.md": {
@@ -1475,8 +1470,8 @@
     "semantic_hash": ""
   },
   "prompts/school-chapters/author-a-chapter.md": {
-    "mtime": 1785759624.5156944,
-    "ast_hash": "33ac4f7a75f10193ab86e7c5e5cfa754",
+    "mtime": 1785833116.979093,
+    "ast_hash": "75d6777a2b7cb6d73422fd7f7623a3c9",
     "semantic_hash": ""
   },
   "prompts/school-chapters/targets-existing-chapters.md": {
@@ -1485,8 +1480,13 @@
     "semantic_hash": ""
   },
   "prompts/school-chapters/convert-the-books.md": {
-    "mtime": 1785759616.3810058,
-    "ast_hash": "9075b708626856e11fd431373cbd712e",
+    "mtime": 1785833097.8642547,
+    "ast_hash": "a2e4ad482a90f50936013be0c6882b94",
+    "semantic_hash": ""
+  },
+  "prompts/school-chapters/CHAPTER-WORKFLOW.md": {
+    "mtime": 1785833072.9633598,
+    "ast_hash": "a2f0f0ce2c30c11b4f1c3fd2f12d8698",
     "semantic_hash": ""
   }
 }

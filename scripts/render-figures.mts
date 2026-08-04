@@ -262,13 +262,17 @@ function audit(spec: FigureSpec, chapter: string): string[] {
       const [lx, ly] = part.labelAt;
       const lines = wrapLabel(part.label);
       const align = part.labelAlign ?? (lx < w / 2 ? "end" : "start");
-      // ~7.4 user units per character at font-size 15.
-      const width = Math.max(...lines.map((l) => l.length)) * 7.4;
+      // Per-character advance at font-size 15, measured off the live SVG with
+      // getBBox across every label on a plate: 7.2 for lowercase-heavy text,
+      // 8.0 for short capitalised text. This has to be the WORST case, not the
+      // average — at 7.4 a 15-character label sitting at x=110 audited clean
+      // and rendered with its first letter shaved off the plate.
+      const width = Math.max(...lines.map((l) => l.length)) * 8.0;
       const x0 = align === "end" ? lx - width : align === "middle" ? lx - width / 2 : lx;
       const x1 = x0 + width;
       const y0 = ly - 13;
       const y1 = ly + (lines.length - 1) * 17 + 4;
-      if (x0 < -2 || x1 > w + 2 || y0 < 0 || y1 > h) {
+      if (x0 < 0 || x1 > w || y0 < 0 || y1 > h) {
         problems.push(
           `${chapter}/${spec.title}: label "${part.label}" runs off the plate (x ${x0.toFixed(0)}–${x1.toFixed(0)}, y ${y0.toFixed(0)}–${y1.toFixed(0)} in ${w}x${h})`,
         );

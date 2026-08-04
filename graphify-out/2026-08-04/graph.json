@@ -512,7 +512,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_backfill_rag",
-      "community": 131,
+      "community": 44,
       "norm_label": "backfill-rag.mts"
     },
     {
@@ -522,7 +522,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "scripts_backfill_rag_commit",
-      "community": 131,
+      "community": 44,
       "norm_label": "commit"
     },
     {
@@ -532,7 +532,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "scripts_backfill_rag_supabase",
-      "community": 131,
+      "community": 44,
       "norm_label": "supabase"
     },
     {
@@ -542,7 +542,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "scripts_backfill_rag_backfill",
-      "community": 131,
+      "community": 44,
       "norm_label": "backfill()"
     },
     {
@@ -552,7 +552,7 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "scripts_backfill_rag_rationale_107",
-      "community": 131,
+      "community": 44,
       "norm_label": "todo: if this is too slow, optimize to batch embed + store."
     },
     {
@@ -562,7 +562,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_blog_gen",
-      "community": 132,
+      "community": 81,
       "norm_label": "blog-gen.mts"
     },
     {
@@ -582,7 +582,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "scripts_blog_gen_sb",
-      "community": 132,
+      "community": 81,
       "norm_label": "sb"
     },
     {
@@ -592,7 +592,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "scripts_blog_gen_storyseededids",
-      "community": 132,
+      "community": 81,
       "norm_label": "storyseededids()"
     },
     {
@@ -602,7 +602,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "scripts_blog_gen_entrylinkedids",
-      "community": 132,
+      "community": 81,
       "norm_label": "entrylinkedids()"
     },
     {
@@ -612,7 +612,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "scripts_blog_gen_cmd_a_b",
-      "community": 132,
+      "community": 81,
       "norm_label": "[cmd, a, b]"
     },
     {
@@ -992,7 +992,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 9,
+      "community": 118,
       "norm_label": "page.tsx"
     },
     {
@@ -1002,7 +1002,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 9,
+      "community": 118,
       "norm_label": "metadata"
     },
     {
@@ -1012,7 +1012,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 9,
+      "community": 118,
       "norm_label": "aboutpage()"
     },
     {
@@ -2542,7 +2542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_layout",
-      "community": 9,
+      "community": 103,
       "norm_label": "layout.tsx"
     },
     {
@@ -2552,7 +2552,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_layout_inter",
-      "community": 9,
+      "community": 103,
       "norm_label": "inter"
     },
     {
@@ -2562,7 +2562,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_layout_fraunces",
-      "community": 9,
+      "community": 103,
       "norm_label": "fraunces"
     },
     {
@@ -2572,7 +2572,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_layout_grotesk",
-      "community": 9,
+      "community": 103,
       "norm_label": "grotesk"
     },
     {
@@ -2582,7 +2582,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_app_layout_jetmono",
-      "community": 9,
+      "community": 103,
       "norm_label": "jetmono"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_layout_metadata",
-      "community": 9,
+      "community": 103,
       "norm_label": "metadata"
     },
     {
@@ -2602,7 +2602,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_app_layout_viewport",
-      "community": 9,
+      "community": 103,
       "norm_label": "viewport"
     },
     {
@@ -2612,7 +2612,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_app_layout_rootlayout",
-      "community": 9,
+      "community": 103,
       "norm_label": "rootlayout()"
     },
     {
@@ -2702,7 +2702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page",
-      "community": 116,
+      "community": 110,
       "norm_label": "page.tsx"
     },
     {
@@ -2712,7 +2712,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_metadata",
-      "community": 116,
+      "community": 110,
       "norm_label": "metadata"
     },
     {
@@ -2722,7 +2722,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_gradehubpage",
-      "community": 116,
+      "community": 110,
       "norm_label": "gradehubpage()"
     },
     {
@@ -2752,7 +2752,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_login_page",
-      "community": 9,
+      "community": 130,
       "norm_label": "page.tsx"
     },
     {
@@ -2762,7 +2762,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_app_login_page_loginpage",
-      "community": 9,
+      "community": 130,
       "norm_label": "loginpage()"
     },
     {
@@ -2832,7 +2832,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_page",
-      "community": 55,
+      "community": 98,
       "norm_label": "page.tsx"
     },
     {
@@ -2842,7 +2842,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_app_page_mode_label",
-      "community": 55,
+      "community": 98,
       "norm_label": "mode_label"
     },
     {
@@ -2852,7 +2852,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_page_dashboard",
-      "community": 55,
+      "community": 98,
       "norm_label": "dashboard()"
     },
     {
@@ -2862,7 +2862,7 @@
       "source_location": "L421",
       "_origin": "ast",
       "id": "src_app_page_stat",
-      "community": 55,
+      "community": 98,
       "norm_label": "stat()"
     },
     {
@@ -2872,7 +2872,7 @@
       "source_location": "L439",
       "_origin": "ast",
       "id": "src_app_page_divider",
-      "community": 55,
+      "community": 98,
       "norm_label": "divider()"
     },
     {
@@ -2882,7 +2882,7 @@
       "source_location": "L444",
       "_origin": "ast",
       "id": "src_app_page_scorecolor",
-      "community": 55,
+      "community": 98,
       "norm_label": "scorecolor()"
     },
     {
@@ -2892,7 +2892,7 @@
       "source_location": "L450",
       "_origin": "ast",
       "id": "src_app_page_revisionrow",
-      "community": 55,
+      "community": 98,
       "norm_label": "revisionrow()"
     },
     {
@@ -2902,7 +2902,7 @@
       "source_location": "L481",
       "_origin": "ast",
       "id": "src_app_page_planrow",
-      "community": 55,
+      "community": 98,
       "norm_label": "planrow()"
     },
     {
@@ -2912,7 +2912,7 @@
       "source_location": "L524",
       "_origin": "ast",
       "id": "src_app_page_bulbicon",
-      "community": 55,
+      "community": 98,
       "norm_label": "bulbicon()"
     },
     {
@@ -2922,7 +2922,7 @@
       "source_location": "L532",
       "_origin": "ast",
       "id": "src_app_page_sparkleicon",
-      "community": 55,
+      "community": 98,
       "norm_label": "sparkleicon()"
     },
     {
@@ -3042,7 +3042,7 @@
       "source_location": "L396",
       "_origin": "ast",
       "id": "src_app_recall_page_quizcarousel",
-      "community": 52,
+      "community": 0,
       "norm_label": "quizcarousel()"
     },
     {
@@ -3082,7 +3082,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_accenttext_accenttext",
-      "community": 7,
+      "community": 47,
       "norm_label": "accenttext()"
     },
     {
@@ -3112,7 +3112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brainscene",
-      "community": 92,
+      "community": 116,
       "norm_label": "brainscene.tsx"
     },
     {
@@ -3122,7 +3122,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_components_brainscene_hashstr",
-      "community": 92,
+      "community": 116,
       "norm_label": "hashstr()"
     },
     {
@@ -3132,7 +3132,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_components_brainscene_mulberry32",
-      "community": 92,
+      "community": 116,
       "norm_label": "mulberry32()"
     },
     {
@@ -3142,7 +3142,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_components_brainscene_brainpoint",
-      "community": 92,
+      "community": 116,
       "norm_label": "brainpoint()"
     },
     {
@@ -3152,7 +3152,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_components_brainscene_lobes",
-      "community": 92,
+      "community": 116,
       "norm_label": "lobes"
     },
     {
@@ -3162,7 +3162,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "src_components_brainscene_placetopic",
-      "community": 92,
+      "community": 116,
       "norm_label": "placetopic()"
     },
     {
@@ -3172,7 +3172,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_brainscene_makecircletexture",
-      "community": 92,
+      "community": 116,
       "norm_label": "makecircletexture()"
     },
     {
@@ -3182,7 +3182,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_components_brainscene_makeglowtexture",
-      "community": 92,
+      "community": 116,
       "norm_label": "makeglowtexture()"
     },
     {
@@ -3192,7 +3192,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "src_components_brainscene_makelabeltexture",
-      "community": 92,
+      "community": 116,
       "norm_label": "makelabeltexture()"
     },
     {
@@ -3202,7 +3202,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_components_brainscene_nodeobj",
-      "community": 92,
+      "community": 116,
       "norm_label": "nodeobj"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_components_brainscene_linkobj",
-      "community": 92,
+      "community": 116,
       "norm_label": "linkobj"
     },
     {
@@ -3222,7 +3222,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_components_brainscene_brainscene",
-      "community": 92,
+      "community": 116,
       "norm_label": "brainscene()"
     },
     {
@@ -3232,7 +3232,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_footer",
-      "community": 9,
+      "community": 103,
       "norm_label": "footer.tsx"
     },
     {
@@ -3242,7 +3242,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_footer_explore",
-      "community": 9,
+      "community": 103,
       "norm_label": "explore"
     },
     {
@@ -3252,7 +3252,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_footer_connect",
-      "community": 9,
+      "community": 103,
       "norm_label": "connect"
     },
     {
@@ -3262,7 +3262,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_footer_footer",
-      "community": 9,
+      "community": 103,
       "norm_label": "footer()"
     },
     {
@@ -3392,7 +3392,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_nav",
-      "community": 9,
+      "community": 118,
       "norm_label": "nav.tsx"
     },
     {
@@ -3402,7 +3402,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_nav_links",
-      "community": 9,
+      "community": 118,
       "norm_label": "links"
     },
     {
@@ -3412,7 +3412,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_components_nav_nav",
-      "community": 9,
+      "community": 55,
       "norm_label": "nav()"
     },
     {
@@ -3422,7 +3422,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "src_components_nav_brainicon",
-      "community": 9,
+      "community": 130,
       "norm_label": "brainicon()"
     },
     {
@@ -3432,7 +3432,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "src_components_nav_sunicon",
-      "community": 9,
+      "community": 118,
       "norm_label": "sunicon()"
     },
     {
@@ -3442,7 +3442,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_components_nav_plusicon",
-      "community": 9,
+      "community": 118,
       "norm_label": "plusicon()"
     },
     {
@@ -3452,7 +3452,7 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "src_components_nav_bolticon",
-      "community": 9,
+      "community": 118,
       "norm_label": "bolticon()"
     },
     {
@@ -3472,7 +3472,7 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "src_components_nav_bookicon",
-      "community": 9,
+      "community": 118,
       "norm_label": "bookicon()"
     },
     {
@@ -3482,7 +3482,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "src_components_nav_usericon",
-      "community": 9,
+      "community": 118,
       "norm_label": "usericon()"
     },
     {
@@ -3532,7 +3532,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_posthogprovider",
-      "community": 9,
+      "community": 103,
       "norm_label": "posthogprovider.tsx"
     },
     {
@@ -3542,7 +3542,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_posthogprovider_posthogwrapper",
-      "community": 9,
+      "community": 103,
       "norm_label": "posthogwrapper()"
     },
     {
@@ -3552,7 +3552,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_prefetcher",
-      "community": 9,
+      "community": 55,
       "norm_label": "prefetcher.tsx"
     },
     {
@@ -3562,7 +3562,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_components_prefetcher_prefetcher",
-      "community": 9,
+      "community": 55,
       "norm_label": "prefetcher()"
     },
     {
@@ -3572,7 +3572,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_progresscalendar",
-      "community": 52,
+      "community": 0,
       "norm_label": "progresscalendar.tsx"
     },
     {
@@ -3582,7 +3582,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_components_progresscalendar_weekdays",
-      "community": 52,
+      "community": 0,
       "norm_label": "weekdays"
     },
     {
@@ -3592,7 +3592,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_progresscalendar_daykey",
-      "community": 52,
+      "community": 0,
       "norm_label": "daykey()"
     },
     {
@@ -3602,7 +3602,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_components_progresscalendar_progresscalendar",
-      "community": 52,
+      "community": 0,
       "norm_label": "progresscalendar()"
     },
     {
@@ -3612,7 +3612,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_components_progresscalendar_dayclasses",
-      "community": 52,
+      "community": 0,
       "norm_label": "dayclasses()"
     },
     {
@@ -3702,7 +3702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 99,
+      "community": 52,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -3722,7 +3722,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 99,
+      "community": 52,
       "norm_label": "reportcardview()"
     },
     {
@@ -3732,7 +3732,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 99,
+      "community": 52,
       "norm_label": "reportitemcard()"
     },
     {
@@ -3742,7 +3742,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 99,
+      "community": 52,
       "norm_label": "bigscorering()"
     },
     {
@@ -3752,7 +3752,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "src_components_reportcardview_commmeter",
-      "community": 99,
+      "community": 52,
       "norm_label": "commmeter()"
     },
     {
@@ -3762,7 +3762,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 99,
+      "community": 52,
       "norm_label": "scorering()"
     },
     {
@@ -4112,7 +4112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_anatomysim",
-      "community": 103,
+      "community": 117,
       "norm_label": "anatomysim.tsx"
     },
     {
@@ -4122,7 +4122,7 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "src_components_sim_anatomysim_anatomysim",
-      "community": 103,
+      "community": 117,
       "norm_label": "anatomysim()"
     },
     {
@@ -4322,7 +4322,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_simblock",
-      "community": 103,
+      "community": 8,
       "norm_label": "simblock.tsx"
     },
     {
@@ -4332,7 +4332,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_components_sim_simblock_simblock",
-      "community": 103,
+      "community": 8,
       "norm_label": "simblock()"
     },
     {
@@ -4752,7 +4752,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_analytics",
-      "community": 9,
+      "community": 52,
       "norm_label": "analytics.ts"
     },
     {
@@ -4762,7 +4762,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_analytics_tracklanded",
-      "community": 55,
+      "community": 52,
       "norm_label": "tracklanded()"
     },
     {
@@ -4772,7 +4772,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_analytics_trackgueststarted",
-      "community": 9,
+      "community": 130,
       "norm_label": "trackgueststarted()"
     },
     {
@@ -4802,7 +4802,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_analytics_tracksignedin",
-      "community": 9,
+      "community": 52,
       "norm_label": "tracksignedin()"
     },
     {
@@ -4812,7 +4812,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_analytics_setuserproperties",
-      "community": 9,
+      "community": 52,
       "norm_label": "setuserproperties()"
     },
     {
@@ -4982,7 +4982,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_index",
-      "community": 116,
+      "community": 110,
       "norm_label": "index.ts"
     },
     {
@@ -4992,7 +4992,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_index_subject_meta",
-      "community": 116,
+      "community": 110,
       "norm_label": "subject_meta"
     },
     {
@@ -5072,47 +5072,47 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
-      "community": 130,
+      "community": 114,
       "norm_label": "ch-01-coordinates.ts"
     },
     {
       "label": "simpleGridSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_simplegridsim",
-      "community": 130,
+      "community": 114,
       "norm_label": "simplegridsim"
     },
     {
       "label": "quadrantSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_quadrantsim",
-      "community": 130,
+      "community": 114,
       "norm_label": "quadrantsim"
     },
     {
       "label": "distanceSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L47",
+      "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_distancesim",
-      "community": 130,
+      "community": 114,
       "norm_label": "distancesim"
     },
     {
       "label": "ch01Coordinates",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L74",
+      "source_location": "L75",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_ch01coordinates",
-      "community": 130,
+      "community": 110,
       "norm_label": "ch01coordinates"
     },
     {
@@ -5129,7 +5129,7 @@
       "label": "rationalAdditionSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_rationaladditionsim",
       "community": 114,
@@ -5139,7 +5139,7 @@
       "label": "tallySim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L43",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_tallysim",
       "community": 114,
@@ -5149,7 +5149,7 @@
       "label": "integerArithmeticSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L63",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_integerarithmeticsim",
       "community": 114,
@@ -5159,10 +5159,10 @@
       "label": "ch03Numbers",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L86",
+      "source_location": "L87",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_ch03numbers",
-      "community": 130,
+      "community": 110,
       "norm_label": "ch03numbers"
     },
     {
@@ -5179,7 +5179,7 @@
       "label": "perimeterSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L11",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_perimetersim",
       "community": 115,
@@ -5189,7 +5189,7 @@
       "label": "circumferenceWorked",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L60",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_circumferenceworked",
       "community": 115,
@@ -5199,7 +5199,7 @@
       "label": "arcLengthWorked",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L91",
+      "source_location": "L93",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_arclengthworked",
       "community": 115,
@@ -5209,10 +5209,10 @@
       "label": "ch06PerimeterArea",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L133",
+      "source_location": "L135",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_ch06perimeterarea",
-      "community": 130,
+      "community": 110,
       "norm_label": "ch06perimeterarea"
     },
     {
@@ -5222,7 +5222,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01",
-      "community": 133,
+      "community": 114,
       "norm_label": "ch-01.ts"
     },
     {
@@ -5232,7 +5232,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_t",
-      "community": 133,
+      "community": 114,
       "norm_label": "t"
     },
     {
@@ -5242,7 +5242,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_grid",
-      "community": 133,
+      "community": 114,
       "norm_label": "grid()"
     },
     {
@@ -5252,7 +5252,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_axisnotes",
-      "community": 133,
+      "community": 114,
       "norm_label": "axisnotes()"
     },
     {
@@ -5262,7 +5262,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_coordinateplanefigure",
-      "community": 130,
+      "community": 114,
       "norm_label": "coordinateplanefigure"
     },
     {
@@ -5272,8 +5272,18 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_distanceformulafigure",
-      "community": 130,
+      "community": 114,
       "norm_label": "distanceformulafigure"
+    },
+    {
+      "label": "reflectionsFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-01.ts",
+      "source_location": "L281",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_01_reflectionsfigure",
+      "community": 114,
+      "norm_label": "reflectionsfigure"
     },
     {
       "label": "ch-03.ts",
@@ -5374,6 +5384,16 @@
       "id": "src_lib_cbse_class9_maths_figures_ch_03_rootspiralfigure",
       "community": 114,
       "norm_label": "rootspiralfigure"
+    },
+    {
+      "label": "zeroPlaceholderFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-03.ts",
+      "source_location": "L328",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_03_zeroplaceholderfigure",
+      "community": 114,
+      "norm_label": "zeroplaceholderfigure"
     },
     {
       "label": "ch-06.ts",
@@ -5486,13 +5506,63 @@
       "norm_label": "sectorfigure"
     },
     {
+      "label": "unitSquaresFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L309",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_06_unitsquaresfigure",
+      "community": 115,
+      "norm_label": "unitsquaresfigure"
+    },
+    {
+      "label": "dissectionOutline()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L382",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_06_dissectionoutline",
+      "community": 115,
+      "norm_label": "dissectionoutline()"
+    },
+    {
+      "label": "dissectionCuts()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L397",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_06_dissectioncuts",
+      "community": 115,
+      "norm_label": "dissectioncuts()"
+    },
+    {
+      "label": "circleWedges()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L410",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_06_circlewedges",
+      "community": 115,
+      "norm_label": "circlewedges()"
+    },
+    {
+      "label": "circleDissectionFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L420",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_maths_figures_ch_06_circledissectionfigure",
+      "community": 115,
+      "norm_label": "circledissectionfigure"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/maths/index.ts",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index",
-      "community": 130,
+      "community": 110,
       "norm_label": "index.ts"
     },
     {
@@ -5502,7 +5572,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index_maths_chapters",
-      "community": 130,
+      "community": 110,
       "norm_label": "maths_chapters"
     },
     {
@@ -5542,7 +5612,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_02_cell_ch02cell",
-      "community": 116,
+      "community": 110,
       "norm_label": "ch02cell"
     },
     {
@@ -5592,7 +5662,7 @@
       "source_location": "L196",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_ch03tissues",
-      "community": 116,
+      "community": 110,
       "norm_label": "ch03tissues"
     },
     {
@@ -5642,7 +5712,7 @@
       "source_location": "L161",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_ch05mixtures",
-      "community": 116,
+      "community": 110,
       "norm_label": "ch05mixtures"
     },
     {
@@ -5652,7 +5722,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate",
-      "community": 118,
+      "community": 56,
       "norm_label": "ch-02-animal-plate.ts"
     },
     {
@@ -5662,7 +5732,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_body",
-      "community": 118,
+      "community": 56,
       "norm_label": "body"
     },
     {
@@ -5672,7 +5742,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_outline",
-      "community": 118,
+      "community": 56,
       "norm_label": "outline()"
     },
     {
@@ -5682,7 +5752,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nuc",
-      "community": 118,
+      "community": 56,
       "norm_label": "nuc"
     },
     {
@@ -5692,7 +5762,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nucleolus",
-      "community": 118,
+      "community": 56,
       "norm_label": "nucleolus"
     },
     {
@@ -5702,7 +5772,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mito",
-      "community": 118,
+      "community": 56,
       "norm_label": "mito"
     },
     {
@@ -5712,7 +5782,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_lyso",
-      "community": 118,
+      "community": 56,
       "norm_label": "lyso"
     },
     {
@@ -5722,7 +5792,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_vesicle",
-      "community": 118,
+      "community": 56,
       "norm_label": "vesicle"
     },
     {
@@ -5732,7 +5802,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_centro",
-      "community": 118,
+      "community": 56,
       "norm_label": "centro"
     },
     {
@@ -5742,7 +5812,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mitopaths",
-      "community": 118,
+      "community": 56,
       "norm_label": "mitopaths"
     },
     {
@@ -5752,7 +5822,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_cristaepaths",
-      "community": 118,
+      "community": 56,
       "norm_label": "cristaepaths"
     },
     {
@@ -5762,7 +5832,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_t",
-      "community": 118,
+      "community": 56,
       "norm_label": "t"
     },
     {
@@ -5772,7 +5842,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_animalcellplate",
-      "community": 118,
+      "community": 56,
       "norm_label": "animalcellplate"
     },
     {
@@ -6289,7 +6359,7 @@
       "label": "T",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L15",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_t",
       "community": 112,
@@ -6299,7 +6369,7 @@
       "label": "panelBoxes()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L37",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_panelboxes",
       "community": 112,
@@ -6309,17 +6379,47 @@
       "label": "ticks()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L54",
+      "source_location": "L61",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_ticks",
       "community": 112,
       "norm_label": "ticks()"
     },
     {
+      "label": "dividingCells()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_03_dividingcells",
+      "community": 112,
+      "norm_label": "dividingcells()"
+    },
+    {
+      "label": "cellNuclei()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L96",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_03_cellnuclei",
+      "community": 112,
+      "norm_label": "cellnuclei()"
+    },
+    {
+      "label": "polyCell()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_03_polycell",
+      "community": 112,
+      "norm_label": "polycell()"
+    },
+    {
       "label": "meristemFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L70",
+      "source_location": "L131",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_meristemfigure",
       "community": 112,
@@ -6329,7 +6429,7 @@
       "label": "simplePanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L147",
+      "source_location": "L261",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_simplepanels",
       "community": 112,
@@ -6339,7 +6439,7 @@
       "label": "simpleTissueFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L149",
+      "source_location": "L263",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_simpletissuefigure",
       "community": 112,
@@ -6349,7 +6449,7 @@
       "label": "vascPanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L258",
+      "source_location": "L403",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_vascpanels",
       "community": 112,
@@ -6359,7 +6459,7 @@
       "label": "vascularTissueFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L260",
+      "source_location": "L405",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_vasculartissuefigure",
       "community": 112,
@@ -6369,7 +6469,7 @@
       "label": "epiPanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L388",
+      "source_location": "L592",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_epipanels",
       "community": 112,
@@ -6379,7 +6479,7 @@
       "label": "basement()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L390",
+      "source_location": "L594",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_basement",
       "community": 112,
@@ -6389,7 +6489,7 @@
       "label": "epithelialFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L396",
+      "source_location": "L600",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_epithelialfigure",
       "community": 112,
@@ -6399,7 +6499,7 @@
       "label": "conPanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L478",
+      "source_location": "L699",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_conpanels",
       "community": 112,
@@ -6409,7 +6509,7 @@
       "label": "connectiveFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L480",
+      "source_location": "L701",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_connectivefigure",
       "community": 112,
@@ -6419,7 +6519,7 @@
       "label": "musPanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L602",
+      "source_location": "L823",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_muspanels",
       "community": 112,
@@ -6429,7 +6529,7 @@
       "label": "muscleFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L604",
+      "source_location": "L825",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_musclefigure",
       "community": 112,
@@ -6439,7 +6539,7 @@
       "label": "neuronFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L685",
+      "source_location": "L909",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_neuronfigure",
       "community": 112,
@@ -6459,7 +6559,7 @@
       "label": "T",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L16",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_t",
       "community": 113,
@@ -6469,7 +6569,7 @@
       "label": "panelBoxes()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L36",
+      "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_panelboxes",
       "community": 113,
@@ -6479,47 +6579,57 @@
       "label": "flask()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L53",
+      "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_flask",
       "community": 113,
       "norm_label": "flask()"
     },
     {
-      "label": "mixPanels",
-      "file_type": "code",
-      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L65",
-      "_origin": "ast",
-      "id": "src_lib_cbse_class9_science_figures_ch_05_mixpanels",
-      "community": 113,
-      "norm_label": "mixpanels"
-    },
-    {
       "label": "scatter()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L69",
+      "source_location": "L74",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_scatter",
-      "community": 113,
+      "community": 112,
       "norm_label": "scatter()"
     },
     {
       "label": "beakerAt()",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L88",
+      "source_location": "L93",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_beakerat",
       "community": 113,
       "norm_label": "beakerat()"
     },
     {
+      "label": "meniscus()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_05_meniscus",
+      "community": 113,
+      "norm_label": "meniscus()"
+    },
+    {
+      "label": "mixPanels",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_05_mixpanels",
+      "community": 113,
+      "norm_label": "mixpanels"
+    },
+    {
       "label": "mixtureTypesFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L91",
+      "source_location": "L106",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_mixturetypesfigure",
       "community": 113,
@@ -6529,7 +6639,7 @@
       "label": "tyndallFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L157",
+      "source_location": "L176",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_tyndallfigure",
       "community": 113,
@@ -6539,7 +6649,7 @@
       "label": "distillationFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L267",
+      "source_location": "L321",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_distillationfigure",
       "community": 113,
@@ -6549,7 +6659,7 @@
       "label": "chromatographyFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L388",
+      "source_location": "L507",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_chromatographyfigure",
       "community": 113,
@@ -6559,7 +6669,7 @@
       "label": "separatingFunnelFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L489",
+      "source_location": "L641",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_separatingfunnelfigure",
       "community": 113,
@@ -6569,17 +6679,27 @@
       "label": "bloodPanels",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L597",
+      "source_location": "L809",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_bloodpanels",
       "community": 113,
       "norm_label": "bloodpanels"
     },
     {
+      "label": "rbcDisc()",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L812",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_05_rbcdisc",
+      "community": 113,
+      "norm_label": "rbcdisc()"
+    },
+    {
       "label": "bloodFigure",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L599",
+      "source_location": "L822",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_bloodfigure",
       "community": 113,
@@ -6592,7 +6712,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index",
-      "community": 116,
+      "community": 110,
       "norm_label": "index.ts"
     },
     {
@@ -6602,7 +6722,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index_science_chapters",
-      "community": 116,
+      "community": 110,
       "norm_label": "science_chapters"
     },
     {
@@ -6612,7 +6732,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_types",
-      "community": 116,
+      "community": 110,
       "norm_label": "types.ts"
     },
     {
@@ -6622,7 +6742,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_types_subject",
-      "community": 116,
+      "community": 110,
       "norm_label": "subject"
     },
     {
@@ -6632,7 +6752,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_cbse_types_cbsequestion",
-      "community": 116,
+      "community": 110,
       "norm_label": "cbsequestion"
     },
     {
@@ -6652,7 +6772,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_lib_cbse_types_section",
-      "community": 116,
+      "community": 110,
       "norm_label": "section"
     },
     {
@@ -6662,7 +6782,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_cbse_types_chapter",
-      "community": 116,
+      "community": 110,
       "norm_label": "chapter"
     },
     {
@@ -6672,7 +6792,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_chunk",
-      "community": 131,
+      "community": 44,
       "norm_label": "chunk.ts"
     },
     {
@@ -6682,7 +6802,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_chunk_chunk",
-      "community": 131,
+      "community": 44,
       "norm_label": "chunk"
     },
     {
@@ -6692,7 +6812,7 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "src_lib_chunk_segments",
-      "community": 131,
+      "community": 44,
       "norm_label": "segments()"
     },
     {
@@ -6702,7 +6822,7 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "src_lib_chunk_chunktext",
-      "community": 131,
+      "community": 44,
       "norm_label": "chunktext()"
     },
     {
@@ -7122,7 +7242,7 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "src_lib_data_loaddemostate",
-      "community": 52,
+      "community": 0,
       "norm_label": "loaddemostate()"
     },
     {
@@ -7152,7 +7272,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_data_api",
-      "community": 0,
+      "community": 52,
       "norm_label": "api()"
     },
     {
@@ -7162,7 +7282,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_lib_data_getprofile",
-      "community": 106,
+      "community": 55,
       "norm_label": "getprofile()"
     },
     {
@@ -7172,7 +7292,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_data_updateprofile",
-      "community": 0,
+      "community": 106,
       "norm_label": "updateprofile()"
     },
     {
@@ -7182,7 +7302,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_lib_data_getstreakrepairstatus",
-      "community": 0,
+      "community": 52,
       "norm_label": "getstreakrepairstatus()"
     },
     {
@@ -7192,7 +7312,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_lib_data_redeemstreakrepair",
-      "community": 0,
+      "community": 52,
       "norm_label": "redeemstreakrepair()"
     },
     {
@@ -7222,7 +7342,7 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "src_lib_data_blogtopiclibrary",
-      "community": 92,
+      "community": 0,
       "norm_label": "blogtopiclibrary"
     },
     {
@@ -7302,7 +7422,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "src_lib_data_getplan",
-      "community": 55,
+      "community": 52,
       "norm_label": "getplan()"
     },
     {
@@ -7322,7 +7442,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "src_lib_data_ingesttext",
-      "community": 0,
+      "community": 52,
       "norm_label": "ingesttext()"
     },
     {
@@ -7332,7 +7452,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "src_lib_data_ingestlink",
-      "community": 0,
+      "community": 52,
       "norm_label": "ingestlink()"
     },
     {
@@ -7352,7 +7472,7 @@
       "source_location": "L506",
       "_origin": "ast",
       "id": "src_lib_data_savequizanswer",
-      "community": 0,
+      "community": 52,
       "norm_label": "savequizanswer()"
     },
     {
@@ -7382,7 +7502,7 @@
       "source_location": "L704",
       "_origin": "ast",
       "id": "src_lib_data_markplancompleted",
-      "community": 0,
+      "community": 52,
       "norm_label": "markplancompleted()"
     },
     {
@@ -7402,7 +7522,7 @@
       "source_location": "L726",
       "_origin": "ast",
       "id": "src_lib_data_gettodayreviewdetail",
-      "community": 52,
+      "community": 0,
       "norm_label": "gettodayreviewdetail()"
     },
     {
@@ -7412,7 +7532,7 @@
       "source_location": "L775",
       "_origin": "ast",
       "id": "src_lib_data_mergereports",
-      "community": 52,
+      "community": 0,
       "norm_label": "mergereports()"
     },
     {
@@ -7422,7 +7542,7 @@
       "source_location": "L799",
       "_origin": "ast",
       "id": "src_lib_data_reportfromreviews",
-      "community": 52,
+      "community": 0,
       "norm_label": "reportfromreviews()"
     },
     {
@@ -7432,7 +7552,7 @@
       "source_location": "L843",
       "_origin": "ast",
       "id": "src_lib_data_getdayreport",
-      "community": 52,
+      "community": 0,
       "norm_label": "getdayreport()"
     },
     {
@@ -7442,7 +7562,7 @@
       "source_location": "L885",
       "_origin": "ast",
       "id": "src_lib_data_getlatestreporttoday",
-      "community": 52,
+      "community": 0,
       "norm_label": "getlatestreporttoday()"
     },
     {
@@ -7452,7 +7572,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 123,
+      "community": 0,
       "norm_label": "dates.ts"
     },
     {
@@ -7462,7 +7582,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_dates_localdaykey",
-      "community": 52,
+      "community": 0,
       "norm_label": "localdaykey()"
     },
     {
@@ -7472,7 +7592,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_dates_tzoffsetminutes",
-      "community": 0,
+      "community": 52,
       "norm_label": "tzoffsetminutes()"
     },
     {
@@ -7482,7 +7602,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_lib_dates_localdaystartiso",
-      "community": 52,
+      "community": 0,
       "norm_label": "localdaystartiso()"
     },
     {
@@ -7492,7 +7612,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_dates_localdayendiso",
-      "community": 52,
+      "community": 0,
       "norm_label": "localdayendiso()"
     },
     {
@@ -7552,7 +7672,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_demo_enableguestmode",
-      "community": 9,
+      "community": 130,
       "norm_label": "enableguestmode()"
     },
     {
@@ -7562,7 +7682,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_demo_clearguestmode",
-      "community": 9,
+      "community": 130,
       "norm_label": "clearguestmode()"
     },
     {
@@ -8692,7 +8812,7 @@
       "source_location": "L228",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtexts",
-      "community": 87,
+      "community": 44,
       "norm_label": "embedtexts()"
     },
     {
@@ -8702,7 +8822,7 @@
       "source_location": "L245",
       "_origin": "ast",
       "id": "src_lib_gemini_embedtext",
-      "community": 87,
+      "community": 44,
       "norm_label": "embedtext()"
     },
     {
@@ -9282,7 +9402,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_lib_prefetch_getplancached",
-      "community": 55,
+      "community": 52,
       "norm_label": "getplancached()"
     },
     {
@@ -9292,7 +9412,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_prefetch_getstorysectionscached",
-      "community": 55,
+      "community": 52,
       "norm_label": "getstorysectionscached()"
     },
     {
@@ -9402,7 +9522,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 85,
+      "community": 86,
       "norm_label": "progress.ts"
     },
     {
@@ -9412,7 +9532,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_progress_advancestreak",
-      "community": 85,
+      "community": 86,
       "norm_label": "advancestreak()"
     },
     {
@@ -9862,7 +9982,7 @@
       "source_location": "L122",
       "_origin": "ast",
       "id": "src_lib_rag_findduplicateentry",
-      "community": 86,
+      "community": 44,
       "norm_label": "findduplicateentry()"
     },
     {
@@ -10382,7 +10502,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_sim_draw_ellipse",
-      "community": 56,
+      "community": 113,
       "norm_label": "ellipse()"
     },
     {
@@ -10392,7 +10512,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_sim_draw_dots",
-      "community": 113,
+      "community": 112,
       "norm_label": "dots()"
     },
     {
@@ -10412,7 +10532,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_sim_draw_blob",
-      "community": 118,
+      "community": 56,
       "norm_label": "blob()"
     },
     {
@@ -10422,7 +10542,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_sim_draw_cell",
-      "community": 118,
+      "community": 56,
       "norm_label": "cell()"
     },
     {
@@ -10432,7 +10552,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_sim_draw_gleam",
-      "community": 56,
+      "community": 113,
       "norm_label": "gleam()"
     },
     {
@@ -10452,7 +10572,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_sim_draw_discstack",
-      "community": 56,
+      "community": 113,
       "norm_label": "discstack()"
     },
     {
@@ -10742,7 +10862,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_sim_types",
-      "community": 103,
+      "community": 114,
       "norm_label": "types.ts"
     },
     {
@@ -10752,7 +10872,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_sim_types_simbase",
-      "community": 103,
+      "community": 114,
       "norm_label": "simbase"
     },
     {
@@ -10762,7 +10882,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_sim_types_anatomypart",
-      "community": 103,
+      "community": 114,
       "norm_label": "anatomypart"
     },
     {
@@ -10772,7 +10892,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_lib_sim_types_anatomyspec",
-      "community": 103,
+      "community": 112,
       "norm_label": "anatomyspec"
     },
     {
@@ -10782,7 +10902,7 @@
       "source_location": "L104",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurelayer",
-      "community": 124,
+      "community": 101,
       "norm_label": "figurelayer"
     },
     {
@@ -10802,7 +10922,7 @@
       "source_location": "L162",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurepanel",
-      "community": 103,
+      "community": 114,
       "norm_label": "figurepanel"
     },
     {
@@ -10812,7 +10932,7 @@
       "source_location": "L171",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurespec",
-      "community": 133,
+      "community": 114,
       "norm_label": "figurespec"
     },
     {
@@ -10822,7 +10942,7 @@
       "source_location": "L224",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedinput",
-      "community": 103,
+      "community": 114,
       "norm_label": "workedinput"
     },
     {
@@ -10832,7 +10952,7 @@
       "source_location": "L238",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedstep",
-      "community": 103,
+      "community": 114,
       "norm_label": "workedstep"
     },
     {
@@ -10842,7 +10962,7 @@
       "source_location": "L246",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedexamplespec",
-      "community": 8,
+      "community": 114,
       "norm_label": "workedexamplespec"
     },
     {
@@ -10852,7 +10972,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "src_lib_sim_types_plotseries",
-      "community": 103,
+      "community": 114,
       "norm_label": "plotseries"
     },
     {
@@ -10862,7 +10982,7 @@
       "source_location": "L264",
       "_origin": "ast",
       "id": "src_lib_sim_types_graphplotspec",
-      "community": 8,
+      "community": 114,
       "norm_label": "graphplotspec"
     },
     {
@@ -10872,7 +10992,7 @@
       "source_location": "L280",
       "_origin": "ast",
       "id": "src_lib_sim_types_particlestate",
-      "community": 103,
+      "community": 114,
       "norm_label": "particlestate"
     },
     {
@@ -10892,7 +11012,7 @@
       "source_location": "L322",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryvertex",
-      "community": 103,
+      "community": 114,
       "norm_label": "geometryvertex"
     },
     {
@@ -10902,7 +11022,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryreadout",
-      "community": 103,
+      "community": 114,
       "norm_label": "geometryreadout"
     },
     {
@@ -10912,7 +11032,7 @@
       "source_location": "L337",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryboardspec",
-      "community": 130,
+      "community": 8,
       "norm_label": "geometryboardspec"
     },
     {
@@ -10922,7 +11042,7 @@
       "source_location": "L350",
       "_origin": "ast",
       "id": "src_lib_sim_types_simspec",
-      "community": 103,
+      "community": 8,
       "norm_label": "simspec"
     },
     {
@@ -10932,7 +11052,7 @@
       "source_location": "L358",
       "_origin": "ast",
       "id": "src_lib_sim_types_simkind",
-      "community": 103,
+      "community": 114,
       "norm_label": "simkind"
     },
     {
@@ -11442,7 +11562,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_lib_stories_getstartedstories",
-      "community": 99,
+      "community": 92,
       "norm_label": "getstartedstories()"
     },
     {
@@ -11462,7 +11582,7 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "src_lib_stories_getallstorysections",
-      "community": 55,
+      "community": 92,
       "norm_label": "getallstorysections()"
     },
     {
@@ -11722,7 +11842,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 9,
+      "community": 130,
       "norm_label": "client.ts"
     },
     {
@@ -11762,7 +11882,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_text",
-      "community": 55,
+      "community": 98,
       "norm_label": "text.ts"
     },
     {
@@ -11772,7 +11892,7 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_lib_text_stripmarkdown",
-      "community": 55,
+      "community": 98,
       "norm_label": "stripmarkdown()"
     },
     {
@@ -11962,7 +12082,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_lib_types_topic",
-      "community": 92,
+      "community": 0,
       "norm_label": "topic"
     },
     {
@@ -12072,7 +12192,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 99,
+      "community": 52,
       "norm_label": "reportitem"
     },
     {
@@ -12102,7 +12222,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 55,
+      "community": 0,
       "norm_label": "dailyfact"
     },
     {
@@ -12112,7 +12232,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "src_lib_types_planitem",
-      "community": 55,
+      "community": 123,
       "norm_label": "planitem"
     },
     {
@@ -14982,7 +15102,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "school_build_spec_4_phase_0_guardrails_do_these_first",
-      "community": 119,
+      "community": 131,
       "norm_label": "4. phase 0 \u2014 guardrails (do these first)"
     },
     {
@@ -14992,7 +15112,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "school_build_spec_task_0_1_feature_flag_and_gitignore",
-      "community": 119,
+      "community": 131,
       "norm_label": "task 0.1 \u2014 feature flag and gitignore"
     },
     {
@@ -15002,7 +15122,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "school_build_spec_task_0_2_reserved_slugs",
-      "community": 119,
+      "community": 131,
       "norm_label": "task 0.2 \u2014 reserved slugs"
     },
     {
@@ -20611,7 +20731,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -37409,7 +37529,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L74",
+      "source_location": "L75",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_ch01coordinates",
@@ -37419,7 +37539,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L47",
+      "source_location": "L48",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_distancesim",
@@ -37429,7 +37549,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_quadrantsim",
@@ -37439,7 +37559,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_simplegridsim",
@@ -37479,6 +37599,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
+      "target": "src_lib_cbse_class9_maths_figures_ch_01_reflectionsfigure",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -37505,7 +37636,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_sim_types",
@@ -37516,7 +37647,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_sim_types_geometryboardspec",
@@ -37527,7 +37658,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts",
-      "source_location": "L6",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
       "target": "src_lib_sim_types_graphplotspec",
@@ -37559,7 +37690,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L86",
+      "source_location": "L87",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_ch03numbers",
@@ -37569,7 +37700,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L63",
+      "source_location": "L64",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_integerarithmeticsim",
@@ -37579,7 +37710,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_rationaladditionsim",
@@ -37589,7 +37720,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L43",
+      "source_location": "L44",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_tallysim",
@@ -37640,6 +37771,17 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
+      "target": "src_lib_cbse_class9_maths_figures_ch_03_zeroplaceholderfigure",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -37666,7 +37808,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_sim_types",
@@ -37677,7 +37819,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts",
-      "source_location": "L7",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_03_numbers",
       "target": "src_lib_sim_types_workedexamplespec",
@@ -37709,7 +37851,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L91",
+      "source_location": "L93",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_arclengthworked",
@@ -37719,7 +37861,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L133",
+      "source_location": "L135",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_ch06perimeterarea",
@@ -37729,7 +37871,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L60",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_circumferenceworked",
@@ -37739,7 +37881,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L11",
+      "source_location": "L13",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_perimetersim",
@@ -37786,7 +37928,29 @@
       "source_location": "L2",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_circledissectionfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_cbse_class9_maths_figures_ch_06_sectorfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_unitsquaresfigure",
       "confidence_score": 1.0
     },
     {
@@ -37816,7 +37980,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_sim_types",
@@ -37827,7 +37991,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_sim_types_geometryboardspec",
@@ -37838,7 +38002,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area",
       "target": "src_lib_sim_types_workedexamplespec",
@@ -37904,6 +38068,16 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_figures_ch_01",
       "target": "src_lib_cbse_class9_maths_figures_ch_01_grid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-01.ts",
+      "source_location": "L281",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_01",
+      "target": "src_lib_cbse_class9_maths_figures_ch_01_reflectionsfigure",
       "confidence_score": 1.0
     },
     {
@@ -38051,6 +38225,16 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-03.ts",
+      "source_location": "L328",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_03",
+      "target": "src_lib_cbse_class9_maths_figures_ch_03_zeroplaceholderfigure",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -38123,6 +38307,46 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_figures_ch_06",
       "target": "src_lib_cbse_class9_maths_figures_ch_06_athleticstrackfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L420",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_06",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_circledissectionfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L410",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_06",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_circlewedges",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L397",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_06",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_dissectioncuts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L382",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_06",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_dissectionoutline",
       "confidence_score": 1.0
     },
     {
@@ -38203,6 +38427,16 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_maths_figures_ch_06",
       "target": "src_lib_cbse_class9_maths_figures_ch_06_track_outer",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/maths/figures/ch-06.ts",
+      "source_location": "L309",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_maths_figures_ch_06",
+      "target": "src_lib_cbse_class9_maths_figures_ch_06_unitsquaresfigure",
       "confidence_score": 1.0
     },
     {
@@ -39974,7 +40208,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L390",
+      "source_location": "L594",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_basement",
@@ -39984,7 +40218,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L480",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_cellnuclei",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L701",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_connectivefigure",
@@ -39994,7 +40238,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L478",
+      "source_location": "L699",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_conpanels",
@@ -40004,7 +40248,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L388",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_dividingcells",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L592",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_epipanels",
@@ -40014,7 +40268,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L396",
+      "source_location": "L600",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_epithelialfigure",
@@ -40024,7 +40278,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L70",
+      "source_location": "L131",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_meristemfigure",
@@ -40034,7 +40288,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L604",
+      "source_location": "L825",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_musclefigure",
@@ -40044,7 +40298,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L602",
+      "source_location": "L823",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_muspanels",
@@ -40054,7 +40308,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L685",
+      "source_location": "L909",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_neuronfigure",
@@ -40064,7 +40318,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L37",
+      "source_location": "L44",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_panelboxes",
@@ -40074,7 +40328,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L147",
+      "source_location": "L117",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_polycell",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L261",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_simplepanels",
@@ -40084,7 +40348,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L149",
+      "source_location": "L263",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_simpletissuefigure",
@@ -40094,7 +40358,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L15",
+      "source_location": "L19",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_t",
@@ -40104,7 +40368,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L54",
+      "source_location": "L61",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_ticks",
@@ -40114,7 +40378,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L258",
+      "source_location": "L403",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_vascpanels",
@@ -40124,7 +40388,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
-      "source_location": "L260",
+      "source_location": "L405",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_vasculartissuefigure",
@@ -40139,6 +40403,28 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_sim_draw",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_sim_draw_blob",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_sim_draw_cell",
       "confidence_score": 1.0
     },
     {
@@ -40172,6 +40458,17 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_sim_draw_ellipse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_sim_draw_gleam",
       "confidence_score": 1.0
     },
     {
@@ -40230,10 +40527,21 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03_cellnuclei",
+      "target": "src_lib_sim_draw_dots",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L88",
+      "source_location": "L93",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_beakerat",
@@ -40243,7 +40551,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L599",
+      "source_location": "L822",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_bloodfigure",
@@ -40253,7 +40561,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L597",
+      "source_location": "L809",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_bloodpanels",
@@ -40263,7 +40571,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L388",
+      "source_location": "L507",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_chromatographyfigure",
@@ -40273,7 +40581,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L267",
+      "source_location": "L321",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_distillationfigure",
@@ -40283,7 +40591,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L53",
+      "source_location": "L62",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_flask",
@@ -40293,7 +40601,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L65",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_05",
+      "target": "src_lib_cbse_class9_science_figures_ch_05_meniscus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L104",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_mixpanels",
@@ -40303,7 +40621,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L91",
+      "source_location": "L106",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_mixturetypesfigure",
@@ -40313,7 +40631,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_panelboxes",
@@ -40323,7 +40641,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L69",
+      "source_location": "L812",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_05",
+      "target": "src_lib_cbse_class9_science_figures_ch_05_rbcdisc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L74",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_scatter",
@@ -40333,7 +40661,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L489",
+      "source_location": "L641",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_separatingfunnelfigure",
@@ -40343,7 +40671,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L16",
+      "source_location": "L20",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_t",
@@ -40353,7 +40681,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L157",
+      "source_location": "L176",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_cbse_class9_science_figures_ch_05_tyndallfigure",
@@ -40411,6 +40739,17 @@
       "source_location": "L2",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05",
+      "target": "src_lib_sim_draw_gleam",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_05",
       "target": "src_lib_sim_draw_roundrect",
       "confidence_score": 1.0
     },
@@ -40452,10 +40791,21 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
-      "source_location": "L85",
+      "source_location": "L90",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_05_scatter",
       "target": "src_lib_sim_draw_dots",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
+      "source_location": "L816",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_05_rbcdisc",
+      "target": "src_lib_sim_draw_ellipse",
       "confidence_score": 1.0
     },
     {
@@ -59908,5 +60258,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "93798114b7e36289ca5815540670d3b883bd045b"
+  "built_at_commit": "d0aa58e714acba8e0702f017a68fdc2f6e9c92be"
 }

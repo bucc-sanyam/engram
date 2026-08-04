@@ -107,19 +107,6 @@ function check() {
           reportError(`Section ${section.key} SimSpec.altText is too short (min 40 chars) or empty.`);
         }
         
-        // 9. AnatomySpec.defaultPartId exists in parts; all part ids unique.
-        if (section.sim.kind === "anatomy") {
-          const parts = section.sim.parts;
-          const partIds = new Set<string>();
-          parts.forEach(p => partIds.add(p.id));
-          if (parts.length !== partIds.size) {
-            reportError(`Section ${section.key} AnatomySpec has duplicate part ids.`);
-          }
-          if (!partIds.has(section.sim.defaultPartId)) {
-            reportError(`Section ${section.key} AnatomySpec defaultPartId ${section.sim.defaultPartId} not found in parts.`);
-          }
-        }
-
         // 10. ParticleModelSpec.defaultStateId exists in states; count is 18–40.
         if (section.sim.kind === "particle-model") {
           const states = section.sim.states;

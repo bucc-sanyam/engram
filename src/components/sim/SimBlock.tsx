@@ -1,7 +1,6 @@
 "use client";
 
 import type { SimSpec } from "@/lib/sim/types";
-import AnatomySim from "./AnatomySim";
 import FigureSim from "./FigureSim";
 import WorkedExampleSim from "./WorkedExampleSim";
 import GraphPlotSim from "./GraphPlotSim";
@@ -12,8 +11,6 @@ import GeometryBoardSim from "./GeometryBoardSim";
  *  adding a kind without a case here is a compile error. */
 export default function SimBlock({ spec, accent }: { spec: SimSpec; accent: string }) {
   switch (spec.kind) {
-    case "anatomy":
-      return <AnatomySim spec={spec} accent={accent} />;
     case "figure":
       return <FigureSim spec={spec} accent={accent} />;
     case "worked-example":

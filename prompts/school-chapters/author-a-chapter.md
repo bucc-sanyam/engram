@@ -88,10 +88,15 @@ Know this before you decide what goes where.
 - Below 1400px the page collapses to one column and everything renders inline
   under its own section, in the same order.
 
-So: `sim` is the hero diagram of the section, `figures[]` are its plates, and
-both live in the same rail. Put a diagram in `figures[]` when it is a *labelled
-plate* (`kind: "figure"`); use `sim` for the section's single most important
-diagram of any kind.
+So `sim` and `figures[]` land in the same place; the split is editorial, not
+visual. **The section's best diagram goes in `sim`**, the rest in `figures[]`.
+Two validator rules force this: a chapter needs **at least 3 `sim`s**, and
+**section 1 must have one**. Putting everything in `figures[]` because it looks
+tidier fails with "is missing a sim".
+
+**Audit every diagram the chapter renders, not just the ones you edited.** A
+restyle that covered only `figures[]` once left four crude `sim`s untouched, and
+they were what the owner saw.
 
 ## Type contract — the chapter
 
@@ -112,8 +117,11 @@ type Section = {
                              //   /^(Exploration|Ganita Manjari) §\d+(\.\d+)*$/
                              // e.g. "Exploration §2.3", "Ganita Manjari §1.2"
   body: string;              // markdown, 250–450 words — see below
-  sim?: SimSpec;             // the section's hero diagram
-  figures?: SimSpec[];       // its labelled plates, in order
+  sim?: SimSpec;             // the section's HERO diagram. The validator wants
+                             // >=3 per chapter and one on section 1, so the
+                             // best plate of a section belongs here, not in
+                             // `figures`. Both render in the same rail.
+  figures?: SimSpec[];       // its remaining plates, in order
   note?: SectionNote;
 };
 
@@ -234,8 +242,11 @@ type FigureSpec = {
 ```
 
 Types from `@/lib/sim/types`. Other `SimSpec` kinds exist for `sim` —
-`anatomy`, `worked-example`, `graph-plot`, `particle-model`, `geometry-board` —
-but **`figure` is the default and the right choice for anything labelled.**
+`worked-example`, `graph-plot`, `particle-model`, `geometry-board` — but
+**`figure` is the default and the right choice for anything labelled.** There
+was once an `anatomy` kind, a flat cartoon that lifted a part out of a body;
+its last four diagrams were redrawn as plates and the kind was deleted on
+2026-08-04. Do not reach for it.
 
 ### Path helpers — import from `@/lib/sim/draw`
 
@@ -431,6 +442,10 @@ from its source.**
   those are type errors.
 - Forgetting the two registry lines yields a chapter that compiles, validates
   and has no URL.
+- Putting every plate in `figures[]` and leaving `sim` empty fails validation:
+  a chapter needs >=3 sims and section 1 needs one.
+- Auditing only the plates you edited. A section's `sim` is a diagram too, and
+  four crude ones survived a restyle that way. Check everything the page renders.
 - The in-app preview pane reports `visibilityState === "hidden"`, which throttles
   IntersectionObserver and rAF — the sticky rail will not swap and canvas sims
   render blank there. Verify in a real browser.

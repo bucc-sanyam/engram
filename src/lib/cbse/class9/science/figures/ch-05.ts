@@ -494,7 +494,7 @@ export const distillationFigure: FigureSpec = {
         { d: gleam(496, 340, 20, 20), as: "light", opacity: 0.25 },
       ],
       focus: [462, 274, 120, 116],
-      labelAt: [598, 356],
+      labelAt: [590, 356],
       leaderAt: [576, 350],
       blurb:
         "Collects the distillate drop by drop. Swap it for a clean one when the thermometer jumps to a new steady reading — that jump means the next component has started coming across.",

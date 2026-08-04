@@ -7,189 +7,9 @@ import {
   connectiveFigure,
   muscleFigure,
   neuronFigure,
+  organismFigure,
+  animalArmFigure,
 } from "../figures/ch-03";
-import type { AnatomySpec } from "@/lib/sim/types";
-
-/* ─── Sim specs ──────────────────────────────────────────────────── */
-
-const basicTissueAnatomy: AnatomySpec = {
-  kind: "anatomy",
-  title: "A Multicellular Organism",
-  altText:
-    "An interactive diagram of a simple plant. Clicking different parts reveals the specialised tissues they are made of.",
-  viewBox: [400, 300],
-  defaultPartId: "leaf",
-  // Soil line, so the root system reads as being underground.
-  scenery: [{ path: "M20,214 H380", outline: true }],
-  parts: [
-    {
-      id: "stem",
-      label: "Stem Tissue",
-      // Tapered upright stem from soil line to shoot tip.
-      path: "M193,64 C187,116 185,168 189,214 L211,214 C215,168 213,116 207,64 Z",
-      tint: "#9ccf72",
-      depth: 0,
-      liftBy: [8, 0],
-      blurb: "Specialised for transport and support. Stem tissue bundles thick-walled cells around a core of vascular tissue, giving the plant enough rigidity to stand upright while still channelling water upward and food downward along its length.",
-    },
-    {
-      id: "leaf",
-      label: "Leaf Tissue",
-      // Two blades, left and right of the stem.
-      path: [
-        "M192,130 C152,100 112,104 80,128 C112,156 158,156 192,130 Z",
-        "M208,100 C248,70 288,74 320,98 C288,126 242,126 208,100 Z",
-      ].join(" "),
-      // Midribs.
-      detail: [
-        "M188,130 C156,126 122,126 88,128",
-        "M212,100 C244,96 278,96 312,98",
-      ].join(" "),
-      tint: "#57c785",
-      depth: 1,
-      liftBy: [0, -10],
-      // Real leaf blades: pointed tip, raised midrib, drooping and cupped.
-      blurb: "Specialised for photosynthesis. Leaf cells pack in chloroplasts and spread out into a broad, flat shape that maximises the surface area exposed to sunlight, with tiny pores called stomata letting carbon dioxide in and oxygen out.",
-    },
-    {
-      id: "roots",
-      label: "Root Tissue",
-      // Branching root mass below the soil line.
-      path: "M189,214 H211 C214,236 222,248 240,264 C222,259 210,249 205,239 C205,255 207,268 211,286 C203,272 199,256 198,241 C195,257 189,270 179,286 C183,268 185,252 185,238 C177,250 167,258 153,264 C171,246 181,235 189,214 Z",
-      // Root hairs.
-      detail: [
-        "M205,242 l10,-5 M209,256 l11,-3 M191,246 l-11,-4 M187,262 l-12,-2",
-      ].join(" "),
-      tint: "#d9a86a",
-      depth: 2,
-      liftBy: [0, 10],
-      blurb: "Specialised for absorption. Root cells grow fine, hair-like extensions that dramatically increase their surface area, letting the plant pull in far more water and dissolved minerals from the soil than a smooth surface ever could.",
-    }
-  ],
-};
-
-const meristemAnatomy: AnatomySpec = {
-  kind: "anatomy",
-  title: "Meristematic Regions",
-  altText:
-    "An interactive diagram showing the three types of meristematic tissues in a plant: apical at the top, intercalary in the middle, and lateral along the sides.",
-  viewBox: [400, 300],
-  defaultPartId: "apical",
-  // The stem the three meristem regions sit in, plus a leaf at the node.
-  scenery: [
-    { path: "M176,58 C168,120 166,200 172,286 L228,286 C234,200 232,120 224,58 C216,40 184,40 176,58 Z" },
-    { path: "M224,150 C266,132 300,138 322,158 C292,180 250,178 224,166 Z" },
-    { path: "M176,150 C134,132 100,138 78,158 C108,180 150,178 176,166 Z" },
-  ],
-  parts: [
-    {
-      id: "apical",
-      label: "Apical Meristem",
-      // Dome of dividing cells at the very shoot tip.
-      path: "M178,62 C182,36 218,36 222,62 C214,52 186,52 178,62 Z",
-      detail: "M190,54 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 M202,56 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0",
-      tint: "#ffd166",
-      depth: 2,
-      liftBy: [0, -12],
-      blurb: "Located at the growing tips of stems and roots, where cells divide faster than anywhere else in the plant. It drives primary growth — the lengthening that pushes shoots upward toward light and roots downward into soil.",
-    },
-    {
-      id: "intercalary",
-      label: "Intercalary Meristem",
-      // Band across the stem at the node, just under the leaf join.
-      path: "M170,158 C186,152 214,152 230,158 L230,178 C214,184 186,184 170,178 Z",
-      detail: "M174,168 H226",
-      tint: "#f0a35e",
-      depth: 3,
-      liftBy: [12, 0],
-      blurb: "Located at the base of leaves or at the joints (internodes) of a stem, most famously in grasses. Because it survives being grazed or mown, a lawn or a wheat field can keep growing back from underneath.",
-    },
-    {
-      id: "lateral",
-      label: "Lateral Meristem",
-      // Two thin strips down the flanks — the cambium ring, seen edge-on.
-      path: [
-        "M170,86 C166,150 165,220 169,282 L179,282 C175,220 176,150 180,86 Z",
-        "M220,86 C224,150 225,220 221,282 L231,282 C235,220 234,150 230,86 Z",
-      ].join(" "),
-      tint: "#b39ddb",
-      depth: 4,
-      liftBy: [-12, 0],
-      blurb: "Located along the sides of the stem and roots, forming a thin ring of dividing cells just beneath the bark. It drives secondary growth — the slow widening that thickens a trunk year after year.",
-    }
-  ],
-};
-
-const tissueTypesAnatomy: AnatomySpec = {
-  kind: "anatomy",
-  title: "Tissues in an Animal Arm",
-  altText:
-    "An interactive diagram of a human arm showing the four main types of animal tissue. Clicking any part lifts it and displays a description of its role.",
-  viewBox: [400, 300],
-  defaultPartId: "muscle-tissue",
-  // The arm itself — a cross-section running left (shoulder) to right (elbow).
-  scenery: [
-    { path: "M36,150 C36,92 84,64 152,62 C240,60 316,74 356,104 C372,116 372,184 356,196 C316,226 240,240 152,238 C84,236 36,208 36,150 Z", outline: true },
-  ],
-  parts: [
-    {
-      id: "epithelial-tissue",
-      label: "Epithelial Tissue (Skin)",
-      // Outer sheath, hugging the arm outline.
-      path: "M36,150 C36,92 84,64 152,62 C240,60 316,74 356,104 C372,116 372,184 356,196 C316,226 240,240 152,238 C84,236 36,208 36,150 Z M52,150 C52,200 88,222 152,224 C236,226 308,212 346,186 C356,178 356,122 346,114 C308,88 236,74 152,76 C88,78 52,100 52,150 Z",
-      tint: "#f4a4c0",
-      depth: 0,
-      liftBy: [0, -12],
-      blurb:
-        "The outermost protective layer. Epithelial tissue consists of tightly packed cells that shield the body from injury, prevent water loss, and block harmful microbes from entering.",
-    },
-    {
-      id: "muscle-tissue",
-      label: "Muscle Tissue",
-      // Spindle-shaped belly with fibre striations.
-      path: "M74,150 C90,104 132,90 192,94 C256,98 306,116 330,150 C306,184 256,202 192,206 C132,210 90,196 74,150 Z",
-      detail: [
-        "M96,140 C140,116 232,120 308,146",
-        "M96,160 C140,184 232,180 308,154",
-        "M104,150 C160,146 244,148 316,150",
-      ].join(" "),
-      tint: "#f4796b",
-      depth: 1,
-      liftBy: [0, -6],
-      blurb:
-        "Bundles of long, cylindrical cells (muscle fibres) that can contract and relax. Skeletal muscle is attached to bones and is responsible for all our voluntary movements like lifting and walking.",
-    },
-    {
-      id: "connective-bone",
-      label: "Connective Tissue (Bone)",
-      // Long bone: two flared ends joined by a shaft, running through the muscle belly.
-      path: "M132,110 C147,110 154,120 151,123 L283,123 C280,120 287,110 302,110 C319,110 328,121 328,134 C328,147 319,158 302,158 C287,158 280,148 283,145 L151,145 C154,148 147,158 132,158 C115,158 106,147 106,134 C106,121 115,110 132,110 Z",
-      tint: "#e8e0cf",
-      depth: 2,
-      liftBy: [0, 8],
-      // Shaft plus the two flared ends.
-      blurb:
-        "A rigid connective tissue with a hard matrix built from calcium and phosphorus compounds, laid down by living bone cells embedded within it. Bones form the skeleton, providing overall structure, anchoring muscles for movement, and shielding delicate internal organs from injury.",
-    },
-    {
-      id: "nervous-tissue",
-      label: "Nervous Tissue",
-      // A neuron: cell body with dendrites, and a long axon running down the arm.
-      path: "M84,196 m-13,0 a13,13 0 1,0 26,0 a13,13 0 1,0 -26,0",
-      detail: [
-        "M84,183 l-10,-14 M71,192 l-16,-8 M71,204 l-16,8 M84,209 l-8,15",
-        "M97,196 C150,208 230,210 320,200",
-        "M320,200 l12,-8 M320,200 l12,8 M320,200 l2,14",
-      ].join(" "),
-      tint: "#ffd166",
-      depth: 3,
-      liftBy: [0, 12],
-      // Cell body at the shoulder end, axon running the length of the limb.
-      blurb:
-        "A network of specialised cells called neurons. Nervous tissue rapidly transmits electrical signals between the brain and the rest of the body, controlling movement and sensing the environment.",
-    },
-  ],
-};
 
 /* ─── Chapter ────────────────────────────────────────────────────── */
 
@@ -224,7 +44,7 @@ This same principle of specialisation scales upward. Tissues themselves group to
 Plants are stationary. Their primary need is structural support to stay firm and upright. Consequently, many plant tissues are made of dead cells with thick walls, providing maximum strength with minimal maintenance.
 
 Animals, on the other hand, are highly mobile in search of food and shelter, consuming far more energy. Most animal tissues consist of living cells. Furthermore, while animals grow somewhat uniformly across their bodies until adulthood, plants only grow in specific regions throughout their lifespan.`,
-      sim: basicTissueAnatomy,
+      sim: organismFigure,
       note: {
         kind: "fact",
         title: "The study of tissues",
@@ -257,8 +77,7 @@ As the cells produced by meristems mature, they take on specific roles and lose 
 > — *Exploration*, §3.2.4
 
 Differentiated cells form **permanent tissues**, which make up the bulk of the plant. You can see the record of a tree's lateral meristem activity directly: each ring visible in a cut trunk marks one year of growth, wider in wet seasons and narrower in dry ones.`,
-      sim: meristemAnatomy,
-      figures: [meristemFigure],
+      sim: meristemFigure,
       note: {
         kind: "remember",
         body: "Meristematic cells are the only plant cells that actively divide. Once they stop dividing and specialise, they become permanent tissues through a process called differentiation.",
@@ -323,7 +142,6 @@ Because the main conducting cells are dead and rigid, xylem also acts as the woo
     /* ── S5 ─────────────────────────────────────────────────────── */
     {
       key: "animal-epithelial",
-      figures: [epithelialFigure],
       title: "Animal Tissues: Covering and Lining",
       eyebrow: "Epithelial tissue",
       bookRef: "Exploration §3.3",
@@ -339,7 +157,8 @@ The structure of epithelial tissue directly matches its specific job:
 - **Columnar epithelium**: Tall, pillar-like cells found lining the intestine, where they absorb nutrients. In the respiratory tract, these cells have tiny hair-like projections called *cilia* that sweep mucus and trapped dust away from the lungs.
 
 Because epithelial tissue takes constant wear from friction, chemicals, and pathogens, its cells are also among the fastest in the body to be replaced — the outer layer of your skin, for instance, renews itself completely roughly every four weeks.`,
-      sim: tissueTypesAnatomy,
+      sim: animalArmFigure,
+      figures: [epithelialFigure],
     },
 
     /* ── S6 ─────────────────────────────────────────────────────── */

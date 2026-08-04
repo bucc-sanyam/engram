@@ -23,77 +23,16 @@ type SimBase = {
   altText: string;
 };
 
-/* ------------------------------------------------------------------ anatomy */
-/** Click a labelled part; it lifts away from the body and explains itself.
- *  Use for: cell organelles, tissue types, any labelled structure. */
-export type AnatomyPart = {
-  /** Unique within the spec, kebab-case, e.g. "cell-wall" */
-  id: string;
-  /** Shown in the part list and as the selected heading. Max 28 chars. */
-  label: string;
-  /** SVG path `d` attribute, drawn inside the spec's viewBox. */
-  path: string;
-  /** Translation applied when this part is selected, in viewBox units.
-   *  This is the "raises it" behaviour. Default [0, 0] (no lift). */
-  liftBy?: [number, number];
-  /** What this part does. 25–45 words. Plain prose, no markdown. */
-  blurb: string;
-
-  /* ---- optional presentation (see src/lib/sim/shading.ts) ---------------
-   * Without these a part renders in the accent hue, which is why an
-   * un-tinted diagram reads as a stack of identical blobs. Authoring a
-   * `tint` per part is what makes a cell look like a cell. */
-
-  /** Bright hue for this part, tuned for the dark theme. Paper Mode darkens
-   *  it automatically. Omit to inherit the chapter accent. */
-  tint?: string;
-  /** Secondary path drawn on top of the body — cristae, grana, a nucleolus.
-   *  Shares the part's `transform`. Stroked, not filled, unless `detailFill`. */
-  detail?: string;
-  /** Fill the `detail` path instead of stroking it (e.g. a nucleolus). */
-  detailFill?: boolean;
-  /** SVG transform applied to the part's body AND detail, e.g.
-   *  "translate(330 196) rotate(-22)". Lets a shape be authored around the
-   *  origin and then placed, instead of hand-computing rotated arc endpoints. */
-  transform?: string;
-  /** Paint order. Lower numbers render first (further back). Default: array index. */
-  depth?: number;
-  /** Treat as a flat backdrop (cytoplasm, cell wall): softer shading, no lift
-   *  scale, sits behind everything and never steals visual focus. */
-  backdrop?: boolean;
-
-};
-
-export type AnatomySpec = SimBase & {
-  kind: "anatomy";
-  /** [width, height] of the SVG coordinate space. Use [400, 300] unless the
-   *  drawing genuinely needs another ratio. */
-  viewBox: [number, number];
-  parts: AnatomyPart[];
-  /** Part id selected on first render. Must exist in `parts`. */
-  defaultPartId: string;
-  /** Optional non-interactive context drawn behind every part — the arm
-   *  outline, the plant stem, the lab bench. Without it, a diagram of three
-   *  isolated regions has nothing to anchor them to. Not clickable, not in
-   *  the part list, purely scene-setting. */
-  scenery?: {
-    /** SVG path `d`, same coordinate space as the parts. */
-    path: string;
-    /** Stroke only (an outline) rather than a filled silhouette. */
-    outline?: boolean;
-  }[];
-};
-
 /* ------------------------------------------------------------------ figure */
 /**
  * A textbook plate: the whole specimen drawn at once with leader-line labels
  * around it, and every labelled part clickable to MAGNIFY into it.
  *
- * This is deliberately a separate kind from `anatomy`. `anatomy` is a small
- * cartoon that lifts a part out of the body; a `figure` is the printed-book
- * article — dense internal structure, fine linework, labels with leaders, and
- * a magnifier instead of a lift. Keeping them apart means the four existing
- * cartoon diagrams are untouched by anything done here.
+ * This began as a separate kind from `anatomy`, a small flat cartoon that
+ * lifted a part out of a body. `figure` is the printed-book article instead —
+ * dense internal structure, fine linework, labels with leaders, and a
+ * magnifier. It won: the last four `anatomy` diagrams were redrawn as plates
+ * on 2026-08-04 and the kind was deleted.
  *
  * Rendering is plain SVG + one CSS transform. No WebGL, no new dependency
  * (SCHOOL_BUILD_SPEC.md Rules 2 and 3).
@@ -348,7 +287,6 @@ export type GeometryBoardSpec = SimBase & {
 
 /* ------------------------------------------------------------------- union */
 export type SimSpec =
-  | AnatomySpec
   | FigureSpec
   | WorkedExampleSpec
   | GraphPlotSpec

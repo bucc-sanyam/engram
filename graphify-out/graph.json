@@ -562,7 +562,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "scripts_blog_gen",
-      "community": 81,
+      "community": 123,
       "norm_label": "blog-gen.mts"
     },
     {
@@ -582,7 +582,7 @@
       "source_location": "L49",
       "_origin": "ast",
       "id": "scripts_blog_gen_sb",
-      "community": 81,
+      "community": 123,
       "norm_label": "sb"
     },
     {
@@ -592,7 +592,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "scripts_blog_gen_storyseededids",
-      "community": 81,
+      "community": 123,
       "norm_label": "storyseededids()"
     },
     {
@@ -602,7 +602,7 @@
       "source_location": "L71",
       "_origin": "ast",
       "id": "scripts_blog_gen_entrylinkedids",
-      "community": 81,
+      "community": 123,
       "norm_label": "entrylinkedids()"
     },
     {
@@ -612,7 +612,7 @@
       "source_location": "L82",
       "_origin": "ast",
       "id": "scripts_blog_gen_cmd_a_b",
-      "community": 81,
+      "community": 123,
       "norm_label": "[cmd, a, b]"
     },
     {
@@ -729,7 +729,7 @@
       "label": "args",
       "file_type": "code",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L294",
+      "source_location": "L298",
       "_origin": "ast",
       "id": "scripts_render_figures_args",
       "community": 101,
@@ -739,7 +739,7 @@
       "label": "liftFlag",
       "file_type": "code",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L295",
+      "source_location": "L299",
       "_origin": "ast",
       "id": "scripts_render_figures_liftflag",
       "community": 101,
@@ -749,7 +749,7 @@
       "label": "isFigure()",
       "file_type": "code",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L300",
+      "source_location": "L304",
       "_origin": "ast",
       "id": "scripts_render_figures_isfigure",
       "community": 101,
@@ -759,7 +759,7 @@
       "label": "problems",
       "file_type": "code",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L303",
+      "source_location": "L307",
       "_origin": "ast",
       "id": "scripts_render_figures_problems",
       "community": 101,
@@ -939,7 +939,7 @@
       "label": "checkQuote()",
       "file_type": "code",
       "source_file": "scripts/validate-cbse.mts",
-      "source_location": "L267",
+      "source_location": "L254",
       "_origin": "ast",
       "id": "scripts_validate_cbse_checkquote",
       "community": 121,
@@ -992,7 +992,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_about_page",
-      "community": 118,
+      "community": 45,
       "norm_label": "page.tsx"
     },
     {
@@ -1002,7 +1002,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_about_page_metadata",
-      "community": 118,
+      "community": 45,
       "norm_label": "metadata"
     },
     {
@@ -1012,7 +1012,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_about_page_aboutpage",
-      "community": 118,
+      "community": 45,
       "norm_label": "aboutpage()"
     },
     {
@@ -1232,7 +1232,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_api_plan_route",
-      "community": 123,
+      "community": 58,
       "norm_label": "route.ts"
     },
     {
@@ -1242,7 +1242,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_app_api_plan_route_donetopicstoday",
-      "community": 123,
+      "community": 58,
       "norm_label": "donetopicstoday()"
     },
     {
@@ -1252,7 +1252,7 @@
       "source_location": "L39",
       "_origin": "ast",
       "id": "src_app_api_plan_route_markdone",
-      "community": 123,
+      "community": 58,
       "norm_label": "markdone()"
     },
     {
@@ -1262,7 +1262,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_app_api_plan_route_get",
-      "community": 123,
+      "community": 58,
       "norm_label": "get()"
     },
     {
@@ -1272,7 +1272,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "src_app_api_plan_route_composenarrative",
-      "community": 123,
+      "community": 58,
       "norm_label": "composenarrative()"
     },
     {
@@ -1282,7 +1282,7 @@
       "source_location": "L257",
       "_origin": "ast",
       "id": "src_app_api_plan_route_post",
-      "community": 123,
+      "community": 58,
       "norm_label": "post()"
     },
     {
@@ -1312,7 +1312,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_app_api_quiz_route_snapshotitem",
-      "community": 135,
+      "community": 85,
       "norm_label": "snapshotitem"
     },
     {
@@ -1542,7 +1542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_auth_callback_route",
-      "community": 123,
+      "community": 58,
       "norm_label": "route.ts"
     },
     {
@@ -1552,7 +1552,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_app_auth_callback_route_get",
-      "community": 123,
+      "community": 58,
       "norm_label": "get()"
     },
     {
@@ -1712,7 +1712,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_blogs_competition_act_page",
-      "community": 47,
+      "community": 91,
       "norm_label": "page.tsx"
     },
     {
@@ -1722,7 +1722,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_blogs_competition_act_page_metadata",
-      "community": 47,
+      "community": 91,
       "norm_label": "metadata"
     },
     {
@@ -2062,7 +2062,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_blogs_macroeconomics_page",
-      "community": 7,
+      "community": 91,
       "norm_label": "page.tsx"
     },
     {
@@ -2072,7 +2072,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_app_blogs_macroeconomics_page_metadata",
-      "community": 7,
+      "community": 91,
       "norm_label": "metadata"
     },
     {
@@ -2082,7 +2082,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_app_blogs_macroeconomics_page_macroeconomicspage",
-      "community": 7,
+      "community": 91,
       "norm_label": "macroeconomicspage()"
     },
     {
@@ -2542,7 +2542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_layout",
-      "community": 103,
+      "community": 9,
       "norm_label": "layout.tsx"
     },
     {
@@ -2552,7 +2552,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_layout_inter",
-      "community": 103,
+      "community": 9,
       "norm_label": "inter"
     },
     {
@@ -2562,7 +2562,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_app_layout_fraunces",
-      "community": 103,
+      "community": 9,
       "norm_label": "fraunces"
     },
     {
@@ -2572,7 +2572,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_app_layout_grotesk",
-      "community": 103,
+      "community": 9,
       "norm_label": "grotesk"
     },
     {
@@ -2582,7 +2582,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_app_layout_jetmono",
-      "community": 103,
+      "community": 9,
       "norm_label": "jetmono"
     },
     {
@@ -2592,7 +2592,7 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "src_app_layout_metadata",
-      "community": 103,
+      "community": 9,
       "norm_label": "metadata"
     },
     {
@@ -2602,7 +2602,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_app_layout_viewport",
-      "community": 103,
+      "community": 9,
       "norm_label": "viewport"
     },
     {
@@ -2612,7 +2612,7 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_app_layout_rootlayout",
-      "community": 103,
+      "community": 9,
       "norm_label": "rootlayout()"
     },
     {
@@ -2702,7 +2702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page",
-      "community": 110,
+      "community": 103,
       "norm_label": "page.tsx"
     },
     {
@@ -2712,7 +2712,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_metadata",
-      "community": 110,
+      "community": 103,
       "norm_label": "metadata"
     },
     {
@@ -2722,7 +2722,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_app_learn_class_9_page_gradehubpage",
-      "community": 110,
+      "community": 103,
       "norm_label": "gradehubpage()"
     },
     {
@@ -2752,7 +2752,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_app_login_page",
-      "community": 130,
+      "community": 9,
       "norm_label": "page.tsx"
     },
     {
@@ -2762,7 +2762,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_app_login_page_loginpage",
-      "community": 130,
+      "community": 9,
       "norm_label": "loginpage()"
     },
     {
@@ -3082,7 +3082,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_accenttext_accenttext",
-      "community": 47,
+      "community": 91,
       "norm_label": "accenttext()"
     },
     {
@@ -3112,7 +3112,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_brainscene",
-      "community": 116,
+      "community": 92,
       "norm_label": "brainscene.tsx"
     },
     {
@@ -3122,7 +3122,7 @@
       "source_location": "L21",
       "_origin": "ast",
       "id": "src_components_brainscene_hashstr",
-      "community": 116,
+      "community": 92,
       "norm_label": "hashstr()"
     },
     {
@@ -3132,7 +3132,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_components_brainscene_mulberry32",
-      "community": 116,
+      "community": 92,
       "norm_label": "mulberry32()"
     },
     {
@@ -3142,7 +3142,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_components_brainscene_brainpoint",
-      "community": 116,
+      "community": 92,
       "norm_label": "brainpoint()"
     },
     {
@@ -3152,7 +3152,7 @@
       "source_location": "L108",
       "_origin": "ast",
       "id": "src_components_brainscene_lobes",
-      "community": 116,
+      "community": 92,
       "norm_label": "lobes"
     },
     {
@@ -3162,7 +3162,7 @@
       "source_location": "L116",
       "_origin": "ast",
       "id": "src_components_brainscene_placetopic",
-      "community": 116,
+      "community": 92,
       "norm_label": "placetopic()"
     },
     {
@@ -3172,7 +3172,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_brainscene_makecircletexture",
-      "community": 116,
+      "community": 92,
       "norm_label": "makecircletexture()"
     },
     {
@@ -3182,7 +3182,7 @@
       "source_location": "L163",
       "_origin": "ast",
       "id": "src_components_brainscene_makeglowtexture",
-      "community": 116,
+      "community": 92,
       "norm_label": "makeglowtexture()"
     },
     {
@@ -3192,7 +3192,7 @@
       "source_location": "L177",
       "_origin": "ast",
       "id": "src_components_brainscene_makelabeltexture",
-      "community": 116,
+      "community": 92,
       "norm_label": "makelabeltexture()"
     },
     {
@@ -3202,7 +3202,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_components_brainscene_nodeobj",
-      "community": 116,
+      "community": 92,
       "norm_label": "nodeobj"
     },
     {
@@ -3212,7 +3212,7 @@
       "source_location": "L248",
       "_origin": "ast",
       "id": "src_components_brainscene_linkobj",
-      "community": 116,
+      "community": 92,
       "norm_label": "linkobj"
     },
     {
@@ -3222,7 +3222,7 @@
       "source_location": "L277",
       "_origin": "ast",
       "id": "src_components_brainscene_brainscene",
-      "community": 116,
+      "community": 92,
       "norm_label": "brainscene()"
     },
     {
@@ -3232,7 +3232,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_footer",
-      "community": 103,
+      "community": 9,
       "norm_label": "footer.tsx"
     },
     {
@@ -3242,7 +3242,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_components_footer_explore",
-      "community": 103,
+      "community": 9,
       "norm_label": "explore"
     },
     {
@@ -3252,7 +3252,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_footer_connect",
-      "community": 103,
+      "community": 9,
       "norm_label": "connect"
     },
     {
@@ -3262,7 +3262,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_footer_footer",
-      "community": 103,
+      "community": 9,
       "norm_label": "footer()"
     },
     {
@@ -3272,7 +3272,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_markdown",
-      "community": 7,
+      "community": 54,
       "norm_label": "markdown.tsx"
     },
     {
@@ -3282,7 +3282,7 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_components_markdown_issafehref",
-      "community": 7,
+      "community": 54,
       "norm_label": "issafehref()"
     },
     {
@@ -3292,7 +3292,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_components_markdown_math_symbols",
-      "community": 7,
+      "community": 54,
       "norm_label": "math_symbols"
     },
     {
@@ -3302,7 +3302,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_components_markdown_lookslikemath",
-      "community": 7,
+      "community": 54,
       "norm_label": "lookslikemath()"
     },
     {
@@ -3312,7 +3312,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_components_markdown_tokenizescripts",
-      "community": 7,
+      "community": 54,
       "norm_label": "tokenizescripts()"
     },
     {
@@ -3322,7 +3322,7 @@
       "source_location": "L92",
       "_origin": "ast",
       "id": "src_components_markdown_rendermath",
-      "community": 7,
+      "community": 54,
       "norm_label": "rendermath()"
     },
     {
@@ -3332,7 +3332,7 @@
       "source_location": "L144",
       "_origin": "ast",
       "id": "src_components_markdown_inlinerule",
-      "community": 7,
+      "community": 54,
       "norm_label": "inlinerule"
     },
     {
@@ -3342,7 +3342,7 @@
       "source_location": "L149",
       "_origin": "ast",
       "id": "src_components_markdown_inline",
-      "community": 7,
+      "community": 54,
       "norm_label": "inline"
     },
     {
@@ -3352,7 +3352,7 @@
       "source_location": "L207",
       "_origin": "ast",
       "id": "src_components_markdown_markdown",
-      "community": 7,
+      "community": 54,
       "norm_label": "markdown()"
     },
     {
@@ -3392,7 +3392,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_nav",
-      "community": 118,
+      "community": 45,
       "norm_label": "nav.tsx"
     },
     {
@@ -3402,7 +3402,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_nav_links",
-      "community": 118,
+      "community": 45,
       "norm_label": "links"
     },
     {
@@ -3422,7 +3422,7 @@
       "source_location": "L159",
       "_origin": "ast",
       "id": "src_components_nav_brainicon",
-      "community": 130,
+      "community": 9,
       "norm_label": "brainicon()"
     },
     {
@@ -3432,7 +3432,7 @@
       "source_location": "L172",
       "_origin": "ast",
       "id": "src_components_nav_sunicon",
-      "community": 118,
+      "community": 45,
       "norm_label": "sunicon()"
     },
     {
@@ -3442,7 +3442,7 @@
       "source_location": "L181",
       "_origin": "ast",
       "id": "src_components_nav_plusicon",
-      "community": 118,
+      "community": 45,
       "norm_label": "plusicon()"
     },
     {
@@ -3452,7 +3452,7 @@
       "source_location": "L190",
       "_origin": "ast",
       "id": "src_components_nav_bolticon",
-      "community": 118,
+      "community": 45,
       "norm_label": "bolticon()"
     },
     {
@@ -3462,7 +3462,7 @@
       "source_location": "L198",
       "_origin": "ast",
       "id": "src_components_nav_flameicon",
-      "community": 0,
+      "community": 45,
       "norm_label": "flameicon()"
     },
     {
@@ -3472,7 +3472,7 @@
       "source_location": "L206",
       "_origin": "ast",
       "id": "src_components_nav_bookicon",
-      "community": 118,
+      "community": 45,
       "norm_label": "bookicon()"
     },
     {
@@ -3482,7 +3482,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "src_components_nav_usericon",
-      "community": 118,
+      "community": 45,
       "norm_label": "usericon()"
     },
     {
@@ -3532,7 +3532,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_posthogprovider",
-      "community": 103,
+      "community": 9,
       "norm_label": "posthogprovider.tsx"
     },
     {
@@ -3542,7 +3542,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_posthogprovider_posthogwrapper",
-      "community": 103,
+      "community": 9,
       "norm_label": "posthogwrapper()"
     },
     {
@@ -3662,7 +3662,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_questionwidget",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionwidget.tsx"
     },
     {
@@ -3672,7 +3672,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_components_questionwidget_kind_label",
-      "community": 135,
+      "community": 85,
       "norm_label": "kind_label"
     },
     {
@@ -3682,7 +3682,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_components_questionwidget_question",
-      "community": 135,
+      "community": 85,
       "norm_label": "question"
     },
     {
@@ -3692,7 +3692,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_components_questionwidget_questionwidget",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionwidget()"
     },
     {
@@ -3702,7 +3702,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_reportcardview",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportcardview.tsx"
     },
     {
@@ -3722,7 +3722,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportcardview",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportcardview()"
     },
     {
@@ -3732,7 +3732,7 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "src_components_reportcardview_reportitemcard",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportitemcard()"
     },
     {
@@ -3742,7 +3742,7 @@
       "source_location": "L179",
       "_origin": "ast",
       "id": "src_components_reportcardview_bigscorering",
-      "community": 52,
+      "community": 99,
       "norm_label": "bigscorering()"
     },
     {
@@ -3752,7 +3752,7 @@
       "source_location": "L199",
       "_origin": "ast",
       "id": "src_components_reportcardview_commmeter",
-      "community": 52,
+      "community": 99,
       "norm_label": "commmeter()"
     },
     {
@@ -3762,7 +3762,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_components_reportcardview_scorering",
-      "community": 52,
+      "community": 99,
       "norm_label": "scorering()"
     },
     {
@@ -3952,7 +3952,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas",
-      "community": 111,
+      "community": 101,
       "norm_label": "thanossnapcanvas.tsx"
     },
     {
@@ -3962,7 +3962,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_thanossnapcanvasprops",
-      "community": 111,
+      "community": 101,
       "norm_label": "thanossnapcanvasprops"
     },
     {
@@ -3972,7 +3972,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_shard",
-      "community": 111,
+      "community": 101,
       "norm_label": "shard"
     },
     {
@@ -3982,7 +3982,7 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_ash",
-      "community": 111,
+      "community": 101,
       "norm_label": "ash"
     },
     {
@@ -3992,7 +3992,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_thanossnapcanvas",
-      "community": 111,
+      "community": 101,
       "norm_label": "thanossnapcanvas()"
     },
     {
@@ -4002,7 +4002,7 @@
       "source_location": "L310",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_shade",
-      "community": 111,
+      "community": 101,
       "norm_label": "shade()"
     },
     {
@@ -4012,7 +4012,7 @@
       "source_location": "L319",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_drawtile",
-      "community": 111,
+      "community": 101,
       "norm_label": "drawtile()"
     },
     {
@@ -4022,7 +4022,7 @@
       "source_location": "L331",
       "_origin": "ast",
       "id": "src_components_thanossnapcanvas_drawshard",
-      "community": 111,
+      "community": 101,
       "norm_label": "drawshard()"
     },
     {
@@ -4106,33 +4106,13 @@
       "norm_label": "notecard()"
     },
     {
-      "label": "AnatomySim.tsx",
-      "file_type": "code",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "src_components_sim_anatomysim",
-      "community": 117,
-      "norm_label": "anatomysim.tsx"
-    },
-    {
-      "label": "AnatomySim()",
-      "file_type": "code",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L23",
-      "_origin": "ast",
-      "id": "src_components_sim_anatomysim_anatomysim",
-      "community": 117,
-      "norm_label": "anatomysim()"
-    },
-    {
       "label": "FigureSim.tsx",
       "file_type": "code",
       "source_file": "src/components/sim/FigureSim.tsx",
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_figuresim",
-      "community": 124,
+      "community": 101,
       "norm_label": "figuresim.tsx"
     },
     {
@@ -4142,7 +4122,7 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_zoom",
-      "community": 124,
+      "community": 101,
       "norm_label": "zoom"
     },
     {
@@ -4152,7 +4132,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_identity",
-      "community": 124,
+      "community": 101,
       "norm_label": "identity"
     },
     {
@@ -4162,7 +4142,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_clamp",
-      "community": 124,
+      "community": 101,
       "norm_label": "clamp()"
     },
     {
@@ -4172,7 +4152,7 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_zoomto",
-      "community": 124,
+      "community": 101,
       "norm_label": "zoomto()"
     },
     {
@@ -4182,7 +4162,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_lifttransform",
-      "community": 124,
+      "community": 101,
       "norm_label": "lifttransform()"
     },
     {
@@ -4192,7 +4172,7 @@
       "source_location": "L101",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_figuresim",
-      "community": 124,
+      "community": 101,
       "norm_label": "figuresim()"
     },
     {
@@ -4202,7 +4182,7 @@
       "source_location": "L512",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_layer",
-      "community": 124,
+      "community": 101,
       "norm_label": "layer()"
     },
     {
@@ -4212,7 +4192,7 @@
       "source_location": "L566",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_parttag",
-      "community": 124,
+      "community": 101,
       "norm_label": "parttag()"
     },
     {
@@ -4222,7 +4202,7 @@
       "source_location": "L653",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_wraplabel",
-      "community": 124,
+      "community": 101,
       "norm_label": "wraplabel()"
     },
     {
@@ -4232,7 +4212,7 @@
       "source_location": "L669",
       "_origin": "ast",
       "id": "src_components_sim_figuresim_label",
-      "community": 124,
+      "community": 101,
       "norm_label": "label()"
     },
     {
@@ -4292,7 +4272,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_particlemodelsim",
-      "community": 117,
+      "community": 8,
       "norm_label": "particlemodelsim.tsx"
     },
     {
@@ -4302,7 +4282,7 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "src_components_sim_particlemodelsim_rnd",
-      "community": 117,
+      "community": 8,
       "norm_label": "rnd()"
     },
     {
@@ -4312,7 +4292,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_components_sim_particlemodelsim_particlemodelsim",
-      "community": 117,
+      "community": 8,
       "norm_label": "particlemodelsim()"
     },
     {
@@ -4322,17 +4302,17 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_sim_simblock",
-      "community": 8,
+      "community": 110,
       "norm_label": "simblock.tsx"
     },
     {
       "label": "SimBlock()",
       "file_type": "code",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "src_components_sim_simblock_simblock",
-      "community": 8,
+      "community": 110,
       "norm_label": "simblock()"
     },
     {
@@ -4432,7 +4412,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_components_viz_arrayviz_arrayviz",
-      "community": 2,
+      "community": 111,
       "norm_label": "arrayviz()"
     },
     {
@@ -4752,7 +4732,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_analytics",
-      "community": 52,
+      "community": 9,
       "norm_label": "analytics.ts"
     },
     {
@@ -4762,7 +4742,7 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_lib_analytics_tracklanded",
-      "community": 52,
+      "community": 98,
       "norm_label": "tracklanded()"
     },
     {
@@ -4772,7 +4752,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_analytics_trackgueststarted",
-      "community": 130,
+      "community": 9,
       "norm_label": "trackgueststarted()"
     },
     {
@@ -4802,7 +4782,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_analytics_tracksignedin",
-      "community": 52,
+      "community": 9,
       "norm_label": "tracksignedin()"
     },
     {
@@ -4812,7 +4792,7 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "src_lib_analytics_setuserproperties",
-      "community": 52,
+      "community": 9,
       "norm_label": "setuserproperties()"
     },
     {
@@ -4842,7 +4822,7 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "src_lib_cache_cache_keys",
-      "community": 55,
+      "community": 99,
       "norm_label": "cache_keys"
     },
     {
@@ -4982,7 +4962,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_index",
-      "community": 110,
+      "community": 103,
       "norm_label": "index.ts"
     },
     {
@@ -5072,7 +5052,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates",
-      "community": 114,
+      "community": 117,
       "norm_label": "ch-01-coordinates.ts"
     },
     {
@@ -5082,7 +5062,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_simplegridsim",
-      "community": 114,
+      "community": 117,
       "norm_label": "simplegridsim"
     },
     {
@@ -5092,7 +5072,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_quadrantsim",
-      "community": 114,
+      "community": 117,
       "norm_label": "quadrantsim"
     },
     {
@@ -5102,7 +5082,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_distancesim",
-      "community": 114,
+      "community": 117,
       "norm_label": "distancesim"
     },
     {
@@ -5112,7 +5092,7 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_01_coordinates_ch01coordinates",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch01coordinates"
     },
     {
@@ -5162,7 +5142,7 @@
       "source_location": "L87",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_03_numbers_ch03numbers",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch03numbers"
     },
     {
@@ -5212,7 +5192,7 @@
       "source_location": "L135",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_chapters_ch_06_perimeter_area_ch06perimeterarea",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch06perimeterarea"
     },
     {
@@ -5222,7 +5202,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01",
-      "community": 114,
+      "community": 117,
       "norm_label": "ch-01.ts"
     },
     {
@@ -5232,7 +5212,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_t",
-      "community": 114,
+      "community": 117,
       "norm_label": "t"
     },
     {
@@ -5242,7 +5222,7 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_grid",
-      "community": 114,
+      "community": 117,
       "norm_label": "grid()"
     },
     {
@@ -5252,7 +5232,7 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_axisnotes",
-      "community": 114,
+      "community": 117,
       "norm_label": "axisnotes()"
     },
     {
@@ -5262,7 +5242,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_coordinateplanefigure",
-      "community": 114,
+      "community": 117,
       "norm_label": "coordinateplanefigure"
     },
     {
@@ -5272,7 +5252,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_distanceformulafigure",
-      "community": 114,
+      "community": 117,
       "norm_label": "distanceformulafigure"
     },
     {
@@ -5282,7 +5262,7 @@
       "source_location": "L281",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_figures_ch_01_reflectionsfigure",
-      "community": 114,
+      "community": 117,
       "norm_label": "reflectionsfigure"
     },
     {
@@ -5562,7 +5542,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index",
-      "community": 110,
+      "community": 103,
       "norm_label": "index.ts"
     },
     {
@@ -5572,7 +5552,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_maths_index_maths_chapters",
-      "community": 110,
+      "community": 103,
       "norm_label": "maths_chapters"
     },
     {
@@ -5612,7 +5592,7 @@
       "source_location": "L113",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_02_cell_ch02cell",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch02cell"
     },
     {
@@ -5626,43 +5606,13 @@
       "norm_label": "ch-03-tissues.ts"
     },
     {
-      "label": "basicTissueAnatomy",
-      "file_type": "code",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_basictissueanatomy",
-      "community": 112,
-      "norm_label": "basictissueanatomy"
-    },
-    {
-      "label": "meristemAnatomy",
-      "file_type": "code",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L71",
-      "_origin": "ast",
-      "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_meristemanatomy",
-      "community": 112,
-      "norm_label": "meristemanatomy"
-    },
-    {
-      "label": "tissueTypesAnatomy",
-      "file_type": "code",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L123",
-      "_origin": "ast",
-      "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_tissuetypesanatomy",
-      "community": 112,
-      "norm_label": "tissuetypesanatomy"
-    },
-    {
       "label": "ch03Tissues",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L196",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_03_tissues_ch03tissues",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch03tissues"
     },
     {
@@ -5686,20 +5636,10 @@
       "norm_label": "purevsmixturesim"
     },
     {
-      "label": "distillationAnatomy",
-      "file_type": "code",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L51",
-      "_origin": "ast",
-      "id": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_distillationanatomy",
-      "community": 113,
-      "norm_label": "distillationanatomy"
-    },
-    {
       "label": "mixtureTypesSim",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L106",
+      "source_location": "L52",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_mixturetypessim",
       "community": 113,
@@ -5709,10 +5649,10 @@
       "label": "ch05Mixtures",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L161",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_ch05mixtures",
-      "community": 110,
+      "community": 103,
       "norm_label": "ch05mixtures"
     },
     {
@@ -5722,7 +5662,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate",
-      "community": 56,
+      "community": 111,
       "norm_label": "ch-02-animal-plate.ts"
     },
     {
@@ -5732,7 +5672,7 @@
       "source_location": "L35",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_body",
-      "community": 56,
+      "community": 111,
       "norm_label": "body"
     },
     {
@@ -5742,7 +5682,7 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_outline",
-      "community": 56,
+      "community": 111,
       "norm_label": "outline()"
     },
     {
@@ -5752,7 +5692,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nuc",
-      "community": 56,
+      "community": 111,
       "norm_label": "nuc"
     },
     {
@@ -5762,7 +5702,7 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_nucleolus",
-      "community": 56,
+      "community": 111,
       "norm_label": "nucleolus"
     },
     {
@@ -5772,7 +5712,7 @@
       "source_location": "L48",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mito",
-      "community": 56,
+      "community": 111,
       "norm_label": "mito"
     },
     {
@@ -5782,7 +5722,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_lyso",
-      "community": 56,
+      "community": 111,
       "norm_label": "lyso"
     },
     {
@@ -5792,7 +5732,7 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_vesicle",
-      "community": 56,
+      "community": 111,
       "norm_label": "vesicle"
     },
     {
@@ -5802,7 +5742,7 @@
       "source_location": "L66",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_centro",
-      "community": 56,
+      "community": 111,
       "norm_label": "centro"
     },
     {
@@ -5812,7 +5752,7 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_mitopaths",
-      "community": 56,
+      "community": 111,
       "norm_label": "mitopaths"
     },
     {
@@ -5822,7 +5762,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_cristaepaths",
-      "community": 56,
+      "community": 111,
       "norm_label": "cristaepaths"
     },
     {
@@ -5832,7 +5772,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_t",
-      "community": 56,
+      "community": 111,
       "norm_label": "t"
     },
     {
@@ -5842,7 +5782,7 @@
       "source_location": "L94",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_02_animal_plate_animalcellplate",
-      "community": 56,
+      "community": 111,
       "norm_label": "animalcellplate"
     },
     {
@@ -6402,7 +6342,7 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_03_cellnuclei",
-      "community": 112,
+      "community": 113,
       "norm_label": "cellnuclei()"
     },
     {
@@ -6546,6 +6486,26 @@
       "norm_label": "neuronfigure"
     },
     {
+      "label": "organismFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L1128",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_03_organismfigure",
+      "community": 112,
+      "norm_label": "organismfigure"
+    },
+    {
+      "label": "animalArmFigure",
+      "file_type": "code",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L1250",
+      "_origin": "ast",
+      "id": "src_lib_cbse_class9_science_figures_ch_03_animalarmfigure",
+      "community": 112,
+      "norm_label": "animalarmfigure"
+    },
+    {
       "label": "ch-05.ts",
       "file_type": "code",
       "source_file": "src/lib/cbse/class9/science/figures/ch-05.ts",
@@ -6592,7 +6552,7 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_scatter",
-      "community": 112,
+      "community": 113,
       "norm_label": "scatter()"
     },
     {
@@ -6692,7 +6652,7 @@
       "source_location": "L812",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_figures_ch_05_rbcdisc",
-      "community": 113,
+      "community": 124,
       "norm_label": "rbcdisc()"
     },
     {
@@ -6712,7 +6672,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index",
-      "community": 110,
+      "community": 103,
       "norm_label": "index.ts"
     },
     {
@@ -6722,7 +6682,7 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_lib_cbse_class9_science_index_science_chapters",
-      "community": 110,
+      "community": 103,
       "norm_label": "science_chapters"
     },
     {
@@ -6732,7 +6692,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_cbse_types",
-      "community": 110,
+      "community": 103,
       "norm_label": "types.ts"
     },
     {
@@ -6742,7 +6702,7 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "src_lib_cbse_types_subject",
-      "community": 110,
+      "community": 103,
       "norm_label": "subject"
     },
     {
@@ -6752,7 +6712,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_cbse_types_cbsequestion",
-      "community": 110,
+      "community": 103,
       "norm_label": "cbsequestion"
     },
     {
@@ -6772,7 +6732,7 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "src_lib_cbse_types_section",
-      "community": 110,
+      "community": 103,
       "norm_label": "section"
     },
     {
@@ -6782,7 +6742,7 @@
       "source_location": "L62",
       "_origin": "ast",
       "id": "src_lib_cbse_types_chapter",
-      "community": 110,
+      "community": 103,
       "norm_label": "chapter"
     },
     {
@@ -7162,7 +7122,7 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_lib_competition_act_types_compactquestion",
-      "community": 54,
+      "community": 33,
       "norm_label": "compactquestion"
     },
     {
@@ -7272,7 +7232,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_data_api",
-      "community": 52,
+      "community": 0,
       "norm_label": "api()"
     },
     {
@@ -7292,7 +7252,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_data_updateprofile",
-      "community": 106,
+      "community": 0,
       "norm_label": "updateprofile()"
     },
     {
@@ -7302,7 +7262,7 @@
       "source_location": "L197",
       "_origin": "ast",
       "id": "src_lib_data_getstreakrepairstatus",
-      "community": 52,
+      "community": 0,
       "norm_label": "getstreakrepairstatus()"
     },
     {
@@ -7312,7 +7272,7 @@
       "source_location": "L218",
       "_origin": "ast",
       "id": "src_lib_data_redeemstreakrepair",
-      "community": 52,
+      "community": 0,
       "norm_label": "redeemstreakrepair()"
     },
     {
@@ -7342,7 +7302,7 @@
       "source_location": "L244",
       "_origin": "ast",
       "id": "src_lib_data_blogtopiclibrary",
-      "community": 0,
+      "community": 92,
       "norm_label": "blogtopiclibrary"
     },
     {
@@ -7422,7 +7382,7 @@
       "source_location": "L384",
       "_origin": "ast",
       "id": "src_lib_data_getplan",
-      "community": 52,
+      "community": 0,
       "norm_label": "getplan()"
     },
     {
@@ -7442,7 +7402,7 @@
       "source_location": "L406",
       "_origin": "ast",
       "id": "src_lib_data_ingesttext",
-      "community": 52,
+      "community": 0,
       "norm_label": "ingesttext()"
     },
     {
@@ -7452,7 +7412,7 @@
       "source_location": "L422",
       "_origin": "ast",
       "id": "src_lib_data_ingestlink",
-      "community": 52,
+      "community": 0,
       "norm_label": "ingestlink()"
     },
     {
@@ -7472,7 +7432,7 @@
       "source_location": "L506",
       "_origin": "ast",
       "id": "src_lib_data_savequizanswer",
-      "community": 52,
+      "community": 0,
       "norm_label": "savequizanswer()"
     },
     {
@@ -7502,7 +7462,7 @@
       "source_location": "L704",
       "_origin": "ast",
       "id": "src_lib_data_markplancompleted",
-      "community": 52,
+      "community": 0,
       "norm_label": "markplancompleted()"
     },
     {
@@ -7572,7 +7532,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_dates",
-      "community": 0,
+      "community": 58,
       "norm_label": "dates.ts"
     },
     {
@@ -7592,7 +7552,7 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "src_lib_dates_tzoffsetminutes",
-      "community": 52,
+      "community": 0,
       "norm_label": "tzoffsetminutes()"
     },
     {
@@ -7622,7 +7582,7 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "src_lib_dates_clamptz",
-      "community": 123,
+      "community": 58,
       "norm_label": "clamptz()"
     },
     {
@@ -7642,7 +7602,7 @@
       "source_location": "L45",
       "_origin": "ast",
       "id": "src_lib_dates_daystartutciso",
-      "community": 123,
+      "community": 58,
       "norm_label": "daystartutciso()"
     },
     {
@@ -7672,7 +7632,7 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "src_lib_demo_enableguestmode",
-      "community": 130,
+      "community": 9,
       "norm_label": "enableguestmode()"
     },
     {
@@ -7682,7 +7642,7 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "src_lib_demo_clearguestmode",
-      "community": 130,
+      "community": 9,
       "norm_label": "clearguestmode()"
     },
     {
@@ -7692,7 +7652,7 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_lib_demo_daysago",
-      "community": 85,
+      "community": 0,
       "norm_label": "daysago()"
     },
     {
@@ -7702,7 +7662,7 @@
       "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_demo_daysahead",
-      "community": 85,
+      "community": 0,
       "norm_label": "daysahead()"
     },
     {
@@ -7712,7 +7672,7 @@
       "source_location": "L50",
       "_origin": "ast",
       "id": "src_lib_demo_t",
-      "community": 85,
+      "community": 0,
       "norm_label": "t()"
     },
     {
@@ -7802,7 +7762,7 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "src_lib_demo_demobankquestion",
-      "community": 135,
+      "community": 85,
       "norm_label": "demobankquestion"
     },
     {
@@ -8372,7 +8332,7 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_lib_dsa_types_dsaquestion",
-      "community": 54,
+      "community": 33,
       "norm_label": "dsaquestion"
     },
     {
@@ -8682,7 +8642,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_english_communication_types_ecquestion",
-      "community": 54,
+      "community": 33,
       "norm_label": "ecquestion"
     },
     {
@@ -8772,7 +8732,7 @@
       "source_location": "L128",
       "_origin": "ast",
       "id": "src_lib_gemini_extractknowledge",
-      "community": 86,
+      "community": 87,
       "norm_label": "extractknowledge()"
     },
     {
@@ -9242,7 +9202,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_macroeconomics_types_macroquestion",
-      "community": 54,
+      "community": 7,
       "norm_label": "macroquestion"
     },
     {
@@ -9422,7 +9382,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_lib_prefetch_getstartedstoriescached",
-      "community": 55,
+      "community": 98,
       "norm_label": "getstartedstoriescached()"
     },
     {
@@ -9442,7 +9402,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_prefetch_gettopicscached",
-      "community": 55,
+      "community": 106,
       "norm_label": "gettopicscached()"
     },
     {
@@ -9522,7 +9482,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_progress",
-      "community": 86,
+      "community": 58,
       "norm_label": "progress.ts"
     },
     {
@@ -9532,7 +9492,7 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_lib_progress_advancestreak",
-      "community": 86,
+      "community": 58,
       "norm_label": "advancestreak()"
     },
     {
@@ -9872,7 +9832,7 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "src_lib_psychopaths_and_savages_types_psquestion",
-      "community": 54,
+      "community": 33,
       "norm_label": "psquestion"
     },
     {
@@ -10082,7 +10042,7 @@
       "source_location": "L454",
       "_origin": "ast",
       "id": "src_lib_rag_linkretrievallogtoentry",
-      "community": 86,
+      "community": 44,
       "norm_label": "linkretrievallogtoentry()"
     },
     {
@@ -10402,7 +10362,7 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_sarfaesi_act_types_sarfaesiquestion",
-      "community": 54,
+      "community": 33,
       "norm_label": "sarfaesiquestion"
     },
     {
@@ -10492,7 +10452,7 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_sim_draw_circle",
-      "community": 56,
+      "community": 113,
       "norm_label": "circle()"
     },
     {
@@ -10502,7 +10462,7 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "src_lib_sim_draw_ellipse",
-      "community": 113,
+      "community": 124,
       "norm_label": "ellipse()"
     },
     {
@@ -10512,7 +10472,7 @@
       "source_location": "L47",
       "_origin": "ast",
       "id": "src_lib_sim_draw_dots",
-      "community": 112,
+      "community": 113,
       "norm_label": "dots()"
     },
     {
@@ -10522,7 +10482,7 @@
       "source_location": "L52",
       "_origin": "ast",
       "id": "src_lib_sim_draw_smoothclosed",
-      "community": 56,
+      "community": 111,
       "norm_label": "smoothclosed()"
     },
     {
@@ -10532,7 +10492,7 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "src_lib_sim_draw_blob",
-      "community": 56,
+      "community": 111,
       "norm_label": "blob()"
     },
     {
@@ -10542,7 +10502,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_sim_draw_cell",
-      "community": 56,
+      "community": 111,
       "norm_label": "cell()"
     },
     {
@@ -10552,7 +10512,7 @@
       "source_location": "L133",
       "_origin": "ast",
       "id": "src_lib_sim_draw_gleam",
-      "community": 113,
+      "community": 124,
       "norm_label": "gleam()"
     },
     {
@@ -10572,7 +10532,7 @@
       "source_location": "L170",
       "_origin": "ast",
       "id": "src_lib_sim_draw_discstack",
-      "community": 113,
+      "community": 124,
       "norm_label": "discstack()"
     },
     {
@@ -10762,7 +10722,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_sim_shading",
-      "community": 117,
+      "community": 101,
       "norm_label": "shading.ts"
     },
     {
@@ -10772,7 +10732,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_sim_shading_clamp",
-      "community": 117,
+      "community": 101,
       "norm_label": "clamp()"
     },
     {
@@ -10782,7 +10742,7 @@
       "source_location": "L19",
       "_origin": "ast",
       "id": "src_lib_sim_shading_parsehex",
-      "community": 117,
+      "community": 101,
       "norm_label": "parsehex()"
     },
     {
@@ -10792,7 +10752,7 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "src_lib_sim_shading_rgbtohsl",
-      "community": 117,
+      "community": 101,
       "norm_label": "rgbtohsl()"
     },
     {
@@ -10802,7 +10762,7 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "src_lib_sim_shading_hsl",
-      "community": 117,
+      "community": 101,
       "norm_label": "hsl()"
     },
     {
@@ -10812,7 +10772,7 @@
       "source_location": "L63",
       "_origin": "ast",
       "id": "src_lib_sim_shading_shades",
-      "community": 117,
+      "community": 101,
       "norm_label": "shades"
     },
     {
@@ -10822,7 +10782,7 @@
       "source_location": "L85",
       "_origin": "ast",
       "id": "src_lib_sim_shading_shadesfor",
-      "community": 117,
+      "community": 101,
       "norm_label": "shadesfor()"
     },
     {
@@ -10832,7 +10792,7 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "src_lib_sim_shading_shadesforaccent",
-      "community": 117,
+      "community": 101,
       "norm_label": "shadesforaccent()"
     },
     {
@@ -10842,7 +10802,7 @@
       "source_location": "L118",
       "_origin": "ast",
       "id": "src_lib_sim_shading_cartoon",
-      "community": 117,
+      "community": 101,
       "norm_label": "cartoon"
     },
     {
@@ -10852,7 +10812,7 @@
       "source_location": "L137",
       "_origin": "ast",
       "id": "src_lib_sim_shading_cartoonfor",
-      "community": 117,
+      "community": 101,
       "norm_label": "cartoonfor()"
     },
     {
@@ -10862,7 +10822,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_sim_types",
-      "community": 114,
+      "community": 118,
       "norm_label": "types.ts"
     },
     {
@@ -10872,34 +10832,14 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "src_lib_sim_types_simbase",
-      "community": 114,
+      "community": 118,
       "norm_label": "simbase"
-    },
-    {
-      "label": "AnatomyPart",
-      "file_type": "code",
-      "source_file": "src/lib/sim/types.ts",
-      "source_location": "L29",
-      "_origin": "ast",
-      "id": "src_lib_sim_types_anatomypart",
-      "community": 114,
-      "norm_label": "anatomypart"
-    },
-    {
-      "label": "AnatomySpec",
-      "file_type": "code",
-      "source_file": "src/lib/sim/types.ts",
-      "source_location": "L67",
-      "_origin": "ast",
-      "id": "src_lib_sim_types_anatomyspec",
-      "community": 112,
-      "norm_label": "anatomyspec"
     },
     {
       "label": "FigureLayer",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L104",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurelayer",
       "community": 101,
@@ -10909,27 +10849,27 @@
       "label": "FigurePart",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L121",
+      "source_location": "L60",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurepart",
-      "community": 124,
+      "community": 101,
       "norm_label": "figurepart"
     },
     {
       "label": "FigurePanel",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L162",
+      "source_location": "L101",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurepanel",
-      "community": 114,
+      "community": 118,
       "norm_label": "figurepanel"
     },
     {
       "label": "FigureSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L171",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "src_lib_sim_types_figurespec",
       "community": 114,
@@ -10939,120 +10879,120 @@
       "label": "WorkedInput",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L224",
+      "source_location": "L163",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedinput",
-      "community": 114,
+      "community": 118,
       "norm_label": "workedinput"
     },
     {
       "label": "WorkedStep",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L238",
+      "source_location": "L177",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedstep",
-      "community": 114,
+      "community": 118,
       "norm_label": "workedstep"
     },
     {
       "label": "WorkedExampleSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L246",
+      "source_location": "L185",
       "_origin": "ast",
       "id": "src_lib_sim_types_workedexamplespec",
-      "community": 114,
+      "community": 8,
       "norm_label": "workedexamplespec"
     },
     {
       "label": "PlotSeries",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L257",
+      "source_location": "L196",
       "_origin": "ast",
       "id": "src_lib_sim_types_plotseries",
-      "community": 114,
+      "community": 118,
       "norm_label": "plotseries"
     },
     {
       "label": "GraphPlotSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L264",
+      "source_location": "L203",
       "_origin": "ast",
       "id": "src_lib_sim_types_graphplotspec",
-      "community": 114,
+      "community": 8,
       "norm_label": "graphplotspec"
     },
     {
       "label": "ParticleState",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L280",
+      "source_location": "L219",
       "_origin": "ast",
       "id": "src_lib_sim_types_particlestate",
-      "community": 114,
+      "community": 118,
       "norm_label": "particlestate"
     },
     {
       "label": "ParticleModelSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L310",
+      "source_location": "L249",
       "_origin": "ast",
       "id": "src_lib_sim_types_particlemodelspec",
-      "community": 117,
+      "community": 8,
       "norm_label": "particlemodelspec"
     },
     {
       "label": "GeometryVertex",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L322",
+      "source_location": "L261",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryvertex",
-      "community": 114,
+      "community": 118,
       "norm_label": "geometryvertex"
     },
     {
       "label": "GeometryReadout",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L331",
+      "source_location": "L270",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryreadout",
-      "community": 114,
+      "community": 118,
       "norm_label": "geometryreadout"
     },
     {
       "label": "GeometryBoardSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L337",
+      "source_location": "L276",
       "_origin": "ast",
       "id": "src_lib_sim_types_geometryboardspec",
-      "community": 8,
+      "community": 115,
       "norm_label": "geometryboardspec"
     },
     {
       "label": "SimSpec",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L350",
+      "source_location": "L289",
       "_origin": "ast",
       "id": "src_lib_sim_types_simspec",
-      "community": 8,
+      "community": 110,
       "norm_label": "simspec"
     },
     {
       "label": "SimKind",
       "file_type": "code",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L358",
+      "source_location": "L296",
       "_origin": "ast",
       "id": "src_lib_sim_types_simkind",
-      "community": 114,
+      "community": 118,
       "norm_label": "simkind"
     },
     {
@@ -11652,7 +11592,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_story_seeds",
-      "community": 54,
+      "community": 33,
       "norm_label": "story-seeds.ts"
     },
     {
@@ -11662,7 +11602,7 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seedsection",
-      "community": 54,
+      "community": 33,
       "norm_label": "seedsection"
     },
     {
@@ -11672,7 +11612,7 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_lib_story_seeds_seriesseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "seriesseed"
     },
     {
@@ -11682,7 +11622,7 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "src_lib_story_seeds_compactseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "compactseed()"
     },
     {
@@ -11692,7 +11632,7 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "src_lib_story_seeds_dsaseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "dsaseed()"
     },
     {
@@ -11702,7 +11642,7 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sqlseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "sqlseed()"
     },
     {
@@ -11712,7 +11652,7 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "src_lib_story_seeds_sarfaesiseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "sarfaesiseed()"
     },
     {
@@ -11722,7 +11662,7 @@
       "source_location": "L110",
       "_origin": "ast",
       "id": "src_lib_story_seeds_macroeconomicsseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "macroeconomicsseed()"
     },
     {
@@ -11732,7 +11672,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "src_lib_story_seeds_psychopathsandsavagesseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "psychopathsandsavagesseed()"
     },
     {
@@ -11742,7 +11682,7 @@
       "source_location": "L148",
       "_origin": "ast",
       "id": "src_lib_story_seeds_englishcommunicationseed",
-      "community": 54,
+      "community": 33,
       "norm_label": "englishcommunicationseed()"
     },
     {
@@ -11752,7 +11692,7 @@
       "source_location": "L169",
       "_origin": "ast",
       "id": "src_lib_story_seeds_series",
-      "community": 54,
+      "community": 33,
       "norm_label": "series"
     },
     {
@@ -11842,7 +11782,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_client",
-      "community": 130,
+      "community": 9,
       "norm_label": "client.ts"
     },
     {
@@ -11862,7 +11802,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_supabase_server",
-      "community": 123,
+      "community": 58,
       "norm_label": "server.ts"
     },
     {
@@ -11872,7 +11812,7 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_lib_supabase_server_createclient",
-      "community": 123,
+      "community": 58,
       "norm_label": "createclient()"
     },
     {
@@ -12082,7 +12022,7 @@
       "source_location": "L56",
       "_origin": "ast",
       "id": "src_lib_types_topic",
-      "community": 0,
+      "community": 92,
       "norm_label": "topic"
     },
     {
@@ -12142,7 +12082,7 @@
       "source_location": "L123",
       "_origin": "ast",
       "id": "src_lib_types_reviewmode",
-      "community": 123,
+      "community": 58,
       "norm_label": "reviewmode"
     },
     {
@@ -12152,7 +12092,7 @@
       "source_location": "L126",
       "_origin": "ast",
       "id": "src_lib_types_questionkind",
-      "community": 135,
+      "community": 85,
       "norm_label": "questionkind"
     },
     {
@@ -12162,7 +12102,7 @@
       "source_location": "L129",
       "_origin": "ast",
       "id": "src_lib_types_topicquestion",
-      "community": 0,
+      "community": 106,
       "norm_label": "topicquestion"
     },
     {
@@ -12192,7 +12132,7 @@
       "source_location": "L158",
       "_origin": "ast",
       "id": "src_lib_types_reportitem",
-      "community": 52,
+      "community": 99,
       "norm_label": "reportitem"
     },
     {
@@ -12212,7 +12152,7 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_lib_types_reportcard",
-      "community": 52,
+      "community": 0,
       "norm_label": "reportcard"
     },
     {
@@ -12222,7 +12162,7 @@
       "source_location": "L205",
       "_origin": "ast",
       "id": "src_lib_types_dailyfact",
-      "community": 0,
+      "community": 98,
       "norm_label": "dailyfact"
     },
     {
@@ -12232,7 +12172,7 @@
       "source_location": "L210",
       "_origin": "ast",
       "id": "src_lib_types_planitem",
-      "community": 123,
+      "community": 52,
       "norm_label": "planitem"
     },
     {
@@ -14779,7 +14719,7 @@
       "label": "Diagram rendering \u2014 how the figures are drawn (settled 2026-08-02)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L90",
+      "source_location": "L91",
       "_origin": "ast",
       "id": "project_summary_diagram_rendering_how_the_figures_are_drawn_settled_2026_08_02",
       "community": 26,
@@ -14789,7 +14729,7 @@
       "label": "Key modules",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L110",
+      "source_location": "L111",
       "_origin": "ast",
       "id": "project_summary_key_modules",
       "community": 26,
@@ -14799,7 +14739,7 @@
       "label": "Security posture (reviewed 2026-07-15, hardened 2026-07-18)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L145",
+      "source_location": "L146",
       "_origin": "ast",
       "id": "project_summary_security_posture_reviewed_2026_07_15_hardened_2026_07_18",
       "community": 26,
@@ -14809,7 +14749,7 @@
       "label": "Dates / \"today\" (fixed 2026-07-15)",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L154",
+      "source_location": "L155",
       "_origin": "ast",
       "id": "project_summary_dates_today_fixed_2026_07_15",
       "community": 26,
@@ -14819,7 +14759,7 @@
       "label": "Conventions / gotchas",
       "file_type": "document",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L157",
+      "source_location": "L158",
       "_origin": "ast",
       "id": "project_summary_conventions_gotchas",
       "community": 26,
@@ -15102,7 +15042,7 @@
       "source_location": "L213",
       "_origin": "ast",
       "id": "school_build_spec_4_phase_0_guardrails_do_these_first",
-      "community": 131,
+      "community": 119,
       "norm_label": "4. phase 0 \u2014 guardrails (do these first)"
     },
     {
@@ -15112,7 +15052,7 @@
       "source_location": "L215",
       "_origin": "ast",
       "id": "school_build_spec_task_0_1_feature_flag_and_gitignore",
-      "community": 131,
+      "community": 119,
       "norm_label": "task 0.1 \u2014 feature flag and gitignore"
     },
     {
@@ -15122,7 +15062,7 @@
       "source_location": "L233",
       "_origin": "ast",
       "id": "school_build_spec_task_0_2_reserved_slugs",
-      "community": 131,
+      "community": 119,
       "norm_label": "task 0.2 \u2014 reserved slugs"
     },
     {
@@ -16756,10 +16696,20 @@
       "norm_label": "session log"
     },
     {
-      "label": "2026-08-03 \u2014 Lifted parts stop breaking; diagrams move to their own column",
+      "label": "2026-08-04 \u2014 The four diagrams nobody was looking at",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
       "source_location": "L5",
+      "_origin": "ast",
+      "id": "session_log_2026_08_04_the_four_diagrams_nobody_was_looking_at",
+      "community": 28,
+      "norm_label": "2026-08-04 \u2014 the four diagrams nobody was looking at"
+    },
+    {
+      "label": "2026-08-03 \u2014 Lifted parts stop breaking; diagrams move to their own column",
+      "file_type": "document",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "session_log_2026_08_03_lifted_parts_stop_breaking_diagrams_move_to_their_own_column",
       "community": 28,
@@ -16769,7 +16719,7 @@
       "label": "2026-08-02 \u2014 Lift-a-part magnify + an original plant cell drawn to replace the scan",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L15",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "session_log_2026_08_02_lift_a_part_magnify_an_original_plant_cell_drawn_to_replace_the_scan",
       "community": 28,
@@ -16779,7 +16729,7 @@
       "label": "2026-08-03 \u2014 Chapter 2 fully redrawn; every NCERT scan deleted",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L24",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "session_log_2026_08_03_chapter_2_fully_redrawn_every_ncert_scan_deleted",
       "community": 28,
@@ -16789,7 +16739,7 @@
       "label": "2026-08-03 \u2014 Part-lift rolled out across the science plates; two tag bugs fixed",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L33",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "session_log_2026_08_03_part_lift_rolled_out_across_the_science_plates_two_tag_bugs_fixed",
       "community": 28,
@@ -16799,7 +16749,7 @@
       "label": "2026-08-03 \u2014 Lifted parts carry their own tag, and stop dragging their siblings along",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L41",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "session_log_2026_08_03_lifted_parts_carry_their_own_tag_and_stop_dragging_their_siblings_along",
       "community": 28,
@@ -16809,7 +16759,7 @@
       "label": "2026-08-02 \u2014 Drawn cell plates + click-to-lift, replacing the book scans for Fig. 2.10",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L48",
+      "source_location": "L57",
       "_origin": "ast",
       "id": "session_log_2026_08_02_drawn_cell_plates_click_to_lift_replacing_the_book_scans_for_fig_2_10",
       "community": 28,
@@ -16819,7 +16769,7 @@
       "label": "2026-08-02 \u2014 Book plates: Ch2 now uses the textbook's own figures (TRIAL, 1 chapter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L58",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "session_log_2026_08_02_book_plates_ch2_now_uses_the_textbook_s_own_figures_trial_1_chapter",
       "community": 28,
@@ -16829,7 +16779,7 @@
       "label": "2026-08-02 \u2014 Textbook plates: click-to-magnify figures across all six chapters",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L71",
+      "source_location": "L80",
       "_origin": "ast",
       "id": "session_log_2026_08_02_textbook_plates_click_to_magnify_figures_across_all_six_chapters",
       "community": 28,
@@ -16839,7 +16789,7 @@
       "label": "2026-08-01 \u2014 Diagrams committed to a cartoon illustration style",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L84",
+      "source_location": "L93",
       "_origin": "ast",
       "id": "session_log_2026_08_01_diagrams_committed_to_a_cartoon_illustration_style",
       "community": 28,
@@ -16849,7 +16799,7 @@
       "label": "2026-08-01 \u2014 3-D kept only where it earns its place; four diagrams back to SVG",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L92",
+      "source_location": "L101",
       "_origin": "ast",
       "id": "session_log_2026_08_01_3_d_kept_only_where_it_earns_its_place_four_diagrams_back_to_svg",
       "community": 28,
@@ -16859,7 +16809,7 @@
       "label": "2026-08-01 \u2014 3-D anatomy: primitives \u2192 real generated geometry",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L101",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "session_log_2026_08_01_3_d_anatomy_primitives_real_generated_geometry",
       "community": 28,
@@ -16869,7 +16819,7 @@
       "label": "2026-08-01 \u2014 3-D anatomy: flat-shaded primitives \u2192 PBR",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L113",
+      "source_location": "L122",
       "_origin": "ast",
       "id": "session_log_2026_08_01_3_d_anatomy_flat_shaded_primitives_pbr",
       "community": 28,
@@ -16879,7 +16829,7 @@
       "label": "2026-08-01 \u2014 School anatomy figures \u2192 real 3-D (WebGL)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L132",
       "_origin": "ast",
       "id": "session_log_2026_08_01_school_anatomy_figures_real_3_d_webgl",
       "community": 28,
@@ -16889,7 +16839,7 @@
       "label": "2026-08-01 \u2014 School sims: flat line diagrams \u2192 shaded, dimensional figures (superseded for anatomy by the entry above)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L134",
+      "source_location": "L143",
       "_origin": "ast",
       "id": "session_log_2026_08_01_school_sims_flat_line_diagrams_shaded_dimensional_figures_superseded_for_anatomy_by_the_entry_above",
       "community": 28,
@@ -16899,7 +16849,7 @@
       "label": "2026-08-01 \u2014 Knovis for Schools Phase 4 defect-fix pass (corrected)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L145",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "session_log_2026_08_01_knovis_for_schools_phase_4_defect_fix_pass_corrected",
       "community": 28,
@@ -16909,7 +16859,7 @@
       "label": "2026-07-27 \u2014 Streak repair API (PREMIUM): maintain a streak by attempting an older-day recall",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L159",
+      "source_location": "L168",
       "_origin": "ast",
       "id": "session_log_2026_07_27_streak_repair_api_premium_maintain_a_streak_by_attempting_an_older_day_recall",
       "community": 28,
@@ -16919,7 +16869,7 @@
       "label": "2026-07-27 \u2014 Blog/brain visibility boundary + one-story experts preview",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L167",
+      "source_location": "L176",
       "_origin": "ast",
       "id": "session_log_2026_07_27_blog_brain_visibility_boundary_one_story_experts_preview",
       "community": 28,
@@ -16929,7 +16879,7 @@
       "label": "2026-07-27 \u2014 Diagram overflow fix (legibility floor + tree wrapping) + hardened auto-blog viz generation",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L173",
+      "source_location": "L182",
       "_origin": "ast",
       "id": "session_log_2026_07_27_diagram_overflow_fix_legibility_floor_tree_wrapping_hardened_auto_blog_viz_generation",
       "community": 28,
@@ -16939,7 +16889,7 @@
       "label": "2026-07-27 \u2014 Homepage \"Revision needed\" (replaces Recent learnings) + voice answers in recall",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L181",
+      "source_location": "L190",
       "_origin": "ast",
       "id": "session_log_2026_07_27_homepage_revision_needed_replaces_recent_learnings_voice_answers_in_recall",
       "community": 28,
@@ -16949,7 +16899,7 @@
       "label": "2026-07-26 \u2014 Three user-reported fixes: story-recall resurfacing, Medium 403 ingest, empty-user recall card",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L187",
+      "source_location": "L196",
       "_origin": "ast",
       "id": "session_log_2026_07_26_three_user_reported_fixes_story_recall_resurfacing_medium_403_ingest_empty_user_recall_card",
       "community": 28,
@@ -16959,7 +16909,7 @@
       "label": "2026-07-26 \u2014 Backlog cleanup: cleared the two security-audit findings + reorganised TASKS",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L194",
+      "source_location": "L203",
       "_origin": "ast",
       "id": "session_log_2026_07_26_backlog_cleanup_cleared_the_two_security_audit_findings_reorganised_tasks",
       "community": 28,
@@ -16969,7 +16919,7 @@
       "label": "2026-07-26 \u2014 The Communication Lab: backlog cleared \u2014 18 viz diagrams + chapter 8 (now 8 chapters / 25 sections)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L201",
+      "source_location": "L210",
       "_origin": "ast",
       "id": "session_log_2026_07_26_the_communication_lab_backlog_cleared_18_viz_diagrams_chapter_8_now_8_chapters_25_sections",
       "community": 28,
@@ -16979,7 +16929,7 @@
       "label": "2026-07-26 \u2014 The Communication Lab: Phase 2 content (chapters 4-7, now 7 chapters / 22 sections)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L208",
+      "source_location": "L217",
       "_origin": "ast",
       "id": "session_log_2026_07_26_the_communication_lab_phase_2_content_chapters_4_7_now_7_chapters_22_sections",
       "community": 28,
@@ -16989,7 +16939,7 @@
       "label": "2026-07-26 \u2014 \"The Communication Lab\" story series + the Content/Structure/Delivery answer judge",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L218",
+      "source_location": "L227",
       "_origin": "ast",
       "id": "session_log_2026_07_26_the_communication_lab_story_series_the_content_structure_delivery_answer_judge",
       "community": 28,
@@ -16999,7 +16949,7 @@
       "label": "2026-07-26 \u2014 Homepage recall \"All done for the day\" + \"attempt more\" mode",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L228",
+      "source_location": "L237",
       "_origin": "ast",
       "id": "session_log_2026_07_26_homepage_recall_all_done_for_the_day_attempt_more_mode",
       "community": 28,
@@ -17009,7 +16959,7 @@
       "label": "2026-07-26 \u2014 Diagrams on ALL user blogs + future-proofed generation",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L234",
+      "source_location": "L243",
       "_origin": "ast",
       "id": "session_log_2026_07_26_diagrams_on_all_user_blogs_future_proofed_generation",
       "community": 28,
@@ -17019,7 +16969,7 @@
       "label": "2026-07-26 \u2014 Blog vibe pass: on-brand section rendering + deployed to main + viz diagrams",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L242",
+      "source_location": "L251",
       "_origin": "ast",
       "id": "session_log_2026_07_26_blog_vibe_pass_on_brand_section_rendering_deployed_to_main_viz_diagrams",
       "community": 28,
@@ -17029,7 +16979,7 @@
       "label": "2026-07-26 \u2014 Blog backfill EXECUTED against prod (16 user blogs) + caught story-seeded scope leak",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L248",
+      "source_location": "L257",
       "_origin": "ast",
       "id": "session_log_2026_07_26_blog_backfill_executed_against_prod_16_user_blogs_caught_story_seeded_scope_leak",
       "community": 28,
@@ -17039,7 +16989,7 @@
       "label": "2026-07-25 \u2014 Mobile horizontal-overflow fix + blog backfill gets a deterministic (no-AI) mode",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L256",
+      "source_location": "L265",
       "_origin": "ast",
       "id": "session_log_2026_07_25_mobile_horizontal_overflow_fix_blog_backfill_gets_a_deterministic_no_ai_mode",
       "community": 28,
@@ -17049,7 +16999,7 @@
       "label": "2026-07-25 \u2014 Structured blog body for user topic blogs (spine + AI-regenerate backfill)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L265",
+      "source_location": "L274",
       "_origin": "ast",
       "id": "session_log_2026_07_25_structured_blog_body_for_user_topic_blogs_spine_ai_regenerate_backfill",
       "community": 28,
@@ -17059,7 +17009,7 @@
       "label": "2026-07-25 \u2014 Week 2: outcome-first hero + demo compressed 14\u21926 steps + site-wide recopy",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L280",
+      "source_location": "L289",
       "_origin": "ast",
       "id": "session_log_2026_07_25_week_2_outcome_first_hero_demo_compressed_14_6_steps_site_wide_recopy",
       "community": 28,
@@ -17069,7 +17019,7 @@
       "label": "2026-07-25 \u2014 Week 1 COMPLETE: PostHog live + ICP + OMTM (growth playbook execution underway)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L292",
+      "source_location": "L301",
       "_origin": "ast",
       "id": "session_log_2026_07_25_week_1_complete_posthog_live_icp_omtm_growth_playbook_execution_underway",
       "community": 28,
@@ -17079,7 +17029,7 @@
       "label": "2026-07-22 \u2014 Paper-mode accent-component rollout to ALL story-series pages (hub + chapter + section)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L305",
+      "source_location": "L314",
       "_origin": "ast",
       "id": "session_log_2026_07_22_paper_mode_accent_component_rollout_to_all_story_series_pages_hub_chapter_section",
       "community": 28,
@@ -17089,7 +17039,7 @@
       "label": "2026-07-22 \u2014 DSA quiz questions made language-agnostic (were JavaScript-specific)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L312",
+      "source_location": "L321",
       "_origin": "ast",
       "id": "session_log_2026_07_22_dsa_quiz_questions_made_language_agnostic_were_javascript_specific",
       "community": 28,
@@ -17099,7 +17049,7 @@
       "label": "2026-07-21 \u2014 Paper-mode: real particle \"paper-snap\" transition + accent contrast fix (pills/diagrams)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L318",
+      "source_location": "L327",
       "_origin": "ast",
       "id": "session_log_2026_07_21_paper_mode_real_particle_paper_snap_transition_accent_contrast_fix_pills_diagrams",
       "community": 28,
@@ -17109,7 +17059,7 @@
       "label": "2026-07-21 \u2014 Follow-ups: dynamic per-section quiz AI budget + blogs/brain search icon overlap",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L326",
+      "source_location": "L335",
       "_origin": "ast",
       "id": "session_log_2026_07_21_follow_ups_dynamic_per_section_quiz_ai_budget_blogs_brain_search_icon_overlap",
       "community": 28,
@@ -17119,7 +17069,7 @@
       "label": "2026-07-21 \u2014 Blog/recall/paper-mode fixes: inline math, per-series report cards, experts dropdown, paper-fold transition",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L331",
+      "source_location": "L340",
       "_origin": "ast",
       "id": "session_log_2026_07_21_blog_recall_paper_mode_fixes_inline_math_per_series_report_cards_experts_dropdown_paper_fold_transition",
       "community": 28,
@@ -17129,7 +17079,7 @@
       "label": "2026-07-21 \u2014 DSA: full hellointerview-style rewrite of all 150 questions COMPLETE (diagrams + rewrite, sequentially by hand)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L340",
+      "source_location": "L349",
       "_origin": "ast",
       "id": "session_log_2026_07_21_dsa_full_hellointerview_style_rewrite_of_all_150_questions_complete_diagrams_rewrite_sequentially_by_hand",
       "community": 28,
@@ -17139,7 +17089,7 @@
       "label": "2026-07-20 \u2014 Story content full rollout COMPLETE: 91 diagrams + 8 accuracy fixes across all 34 chapters (3rd of the 4-part redesign, done)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L349",
+      "source_location": "L358",
       "_origin": "ast",
       "id": "session_log_2026_07_20_story_content_full_rollout_complete_91_diagrams_8_accuracy_fixes_across_all_34_chapters_3rd_of_the_4_part_redesign_done",
       "community": 28,
@@ -17149,7 +17099,7 @@
       "label": "2026-07-20 \u2014 Story content full rollout: 10/33 chapters done, 3 partial (session-limit interrupted, in-progress)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L358",
+      "source_location": "L367",
       "_origin": "ast",
       "id": "session_log_2026_07_20_story_content_full_rollout_10_33_chapters_done_3_partial_session_limit_interrupted_in_progress",
       "community": 28,
@@ -17159,7 +17109,7 @@
       "label": "2026-07-20 \u2014 Story content: `viz:*` diagram system + pilot (3rd of the 4-part redesign, in-progress)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L367",
+      "source_location": "L376",
       "_origin": "ast",
       "id": "session_log_2026_07_20_story_content_viz_diagram_system_pilot_3rd_of_the_4_part_redesign_in_progress",
       "community": 28,
@@ -17169,7 +17119,7 @@
       "label": "2026-07-20 \u2014 Rename \"Review\" \u2192 \"Recall\" (2nd of the 4-part redesign)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L377",
+      "source_location": "L386",
       "_origin": "ast",
       "id": "session_log_2026_07_20_rename_review_recall_2nd_of_the_4_part_redesign",
       "community": 28,
@@ -17179,7 +17129,7 @@
       "label": "2026-07-20 \u2014 Homepage story real estate: flatten plan, cap journey, float `/blogs`",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L384",
+      "source_location": "L393",
       "_origin": "ast",
       "id": "session_log_2026_07_20_homepage_story_real_estate_flatten_plan_cap_journey_float_blogs",
       "community": 28,
@@ -17189,7 +17139,7 @@
       "label": "2026-07-20 \u2014 Story agent prompts: fixed compile-breaking gaps, added coverage & depth rules",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L391",
+      "source_location": "L400",
       "_origin": "ast",
       "id": "session_log_2026_07_20_story_agent_prompts_fixed_compile_breaking_gaps_added_coverage_depth_rules",
       "community": 28,
@@ -17199,7 +17149,7 @@
       "label": "2026-07-20 \u2014 Esc exits the dive-inside view",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L396",
+      "source_location": "L405",
       "_origin": "ast",
       "id": "session_log_2026_07_20_esc_exits_the_dive_inside_view",
       "community": 28,
@@ -17209,7 +17159,7 @@
       "label": "2026-07-20 \u2014 Organic \"thought waves\": flood-fill activation replaces mechanical sine wave",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L399",
+      "source_location": "L408",
       "_origin": "ast",
       "id": "session_log_2026_07_20_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
       "community": 28,
@@ -17219,7 +17169,7 @@
       "label": "2026-07-19 \u2014 Post-prod fixes: greeting, brain brightness, review headers, learned-section surfacing",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L408",
+      "source_location": "L417",
       "_origin": "ast",
       "id": "session_log_2026_07_19_post_prod_fixes_greeting_brain_brightness_review_headers_learned_section_surfacing",
       "community": 28,
@@ -17229,7 +17179,7 @@
       "label": "2026-07-19 \u2014 Learnable-stories polish: blogs \"one story\" module, grouped dashboard, seed-safety",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L415",
+      "source_location": "L424",
       "_origin": "ast",
       "id": "session_log_2026_07_19_learnable_stories_polish_blogs_one_story_module_grouped_dashboard_seed_safety",
       "community": 28,
@@ -17239,7 +17189,7 @@
       "label": "2026-07-19 \u2014 The Pattern Atlas: complete DSA blog series (NeetCode 150)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L422",
+      "source_location": "L431",
       "_origin": "ast",
       "id": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
       "community": 28,
@@ -17249,7 +17199,7 @@
       "label": "2026-07-18 \u2014 About page: SM-2/Ebbinghaus explainer section",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L430",
+      "source_location": "L439",
       "_origin": "ast",
       "id": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
       "community": 28,
@@ -17259,7 +17209,7 @@
       "label": "2026-07-18 \u2014 Server-side security audit + fixes: SSRF DNS-rebinding, quiz Gemini-quota abuse, curl-hardening",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L436",
+      "source_location": "L445",
       "_origin": "ast",
       "id": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
       "community": 28,
@@ -17269,7 +17219,7 @@
       "label": "2026-07-16 \u2014 Remove the XP feature entirely",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L446",
+      "source_location": "L455",
       "_origin": "ast",
       "id": "session_log_2026_07_16_remove_the_xp_feature_entirely",
       "community": 28,
@@ -17279,7 +17229,7 @@
       "label": "2026-07-16 \u2014 Fix false-positive gibberish rejection on real link ingests",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L451",
+      "source_location": "L460",
       "_origin": "ast",
       "id": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
       "community": 28,
@@ -17289,7 +17239,7 @@
       "label": "2026-07-16 \u2014 Team architecture doc (backend/AI/RAG/auth/security)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L457",
+      "source_location": "L466",
       "_origin": "ast",
       "id": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
       "community": 28,
@@ -17299,7 +17249,7 @@
       "label": "2026-07-16 \u2014 Ingest guardrails: gibberish rejection, prompt-injection hardening, output validation, link-scheme XSS fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L462",
+      "source_location": "L471",
       "_origin": "ast",
       "id": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
       "community": 28,
@@ -17309,7 +17259,7 @@
       "label": "2026-07-15 \u2014 Fix silent link-ingest failure, URL-based fast-path dedup",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L471",
+      "source_location": "L480",
       "_origin": "ast",
       "id": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
       "community": 28,
@@ -17319,7 +17269,7 @@
       "label": "2026-07-15 \u2014 RAG pipeline hardening: document registry, hybrid search, observability",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L481",
+      "source_location": "L490",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
       "community": 28,
@@ -17329,7 +17279,7 @@
       "label": "2026-07-15 \u2014 Rebrand: Engramia \u2192 Knovis",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L490",
+      "source_location": "L499",
       "_origin": "ast",
       "id": "session_log_2026_07_15_rebrand_engramia_knovis",
       "community": 28,
@@ -17339,7 +17289,7 @@
       "label": "2026-07-15 \u2014 Tour interactivity, demo add-gate popup, review-demo step",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L499",
+      "source_location": "L508",
       "_origin": "ast",
       "id": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
       "community": 28,
@@ -17349,7 +17299,7 @@
       "label": "2026-07-15 \u2014 Guided feature tour (first visit + every demo entry)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L508",
+      "source_location": "L517",
       "_origin": "ast",
       "id": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
       "community": 28,
@@ -17359,7 +17309,7 @@
       "label": "2026-07-15 \u2014 Attempted-tracking bug fix, security review, Gemini fallback, RAG pipeline, DB decision",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L515",
+      "source_location": "L524",
       "_origin": "ast",
       "id": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
       "community": 28,
@@ -17369,7 +17319,7 @@
       "label": "2026-07-14 \u2014 Quiz-kind overhaul, day-report calendar, blog Q&A, streak bar, footer + About",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L524",
+      "source_location": "L533",
       "_origin": "ast",
       "id": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
       "community": 28,
@@ -17379,7 +17329,7 @@
       "label": "2026-07-13 \u2014 Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L534",
+      "source_location": "L543",
       "_origin": "ast",
       "id": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
       "community": 28,
@@ -17389,7 +17339,7 @@
       "label": "2026-07-13 \u2014 Review bug fixes + /blogs page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L541",
+      "source_location": "L550",
       "_origin": "ast",
       "id": "session_log_2026_07_13_review_bug_fixes_blogs_page",
       "community": 28,
@@ -17399,7 +17349,7 @@
       "label": "2026-07-13 \u2014 Guest mode fix, plan done-tracking, review error card, blog pills",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L548",
+      "source_location": "L557",
       "_origin": "ast",
       "id": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
       "community": 28,
@@ -17409,7 +17359,7 @@
       "label": "2026-07-13 \u2014 AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L555",
+      "source_location": "L564",
       "_origin": "ast",
       "id": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
       "community": 28,
@@ -17419,7 +17369,7 @@
       "label": "2026-07-13 \u2014 Personal notes feature + blog source attribution",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L565",
+      "source_location": "L574",
       "_origin": "ast",
       "id": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
       "community": 28,
@@ -17429,7 +17379,7 @@
       "label": "2026-07-13 \u2014 Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L572",
+      "source_location": "L581",
       "_origin": "ast",
       "id": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
       "community": 28,
@@ -17439,7 +17389,7 @@
       "label": "2026-07-13 \u2014 Vercel Migration & Nav Auth Fix",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L580",
+      "source_location": "L589",
       "_origin": "ast",
       "id": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
       "community": 28,
@@ -17449,7 +17399,7 @@
       "label": "2026-07-13 \u2014 Fix /profile infinite loading (missing profiles row)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L585",
+      "source_location": "L594",
       "_origin": "ast",
       "id": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
       "community": 28,
@@ -17459,7 +17409,7 @@
       "label": "2026-07-13 \u2014 Plan markdown fix, progress calendar, profile page",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L591",
+      "source_location": "L600",
       "_origin": "ast",
       "id": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
       "community": 28,
@@ -17469,7 +17419,7 @@
       "label": "2026-07-13 \u2014 Brain label overhaul (clickable, Space Grotesk, declutter)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L597",
+      "source_location": "L606",
       "_origin": "ast",
       "id": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
       "community": 28,
@@ -17479,7 +17429,7 @@
       "label": "Earlier (from git history)",
       "file_type": "document",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L607",
+      "source_location": "L616",
       "_origin": "ast",
       "id": "session_log_earlier_from_git_history",
       "community": 28,
@@ -17866,6 +17816,136 @@
       "norm_label": "\ud83c\udfaf what comes next \u2014 week 2 \u2705 shipped (2026-07-25), week 3 next"
     },
     {
+      "label": "CHAPTER-WORKFLOW.md",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow",
+      "community": 116,
+      "norm_label": "chapter-workflow.md"
+    },
+    {
+      "label": "The chapter workflow \u2014 start here",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "community": 116,
+      "norm_label": "the chapter workflow \u2014 start here"
+    },
+    {
+      "label": "The rule that this workflow exists to enforce",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_the_rule_that_this_workflow_exists_to_enforce",
+      "community": 116,
+      "norm_label": "the rule that this workflow exists to enforce"
+    },
+    {
+      "label": "Phase 0 \u2014 Before you touch anything",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_0_before_you_touch_anything",
+      "community": 116,
+      "norm_label": "phase 0 \u2014 before you touch anything"
+    },
+    {
+      "label": "Phase 1 \u2014 Read the printed chapter",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_1_read_the_printed_chapter",
+      "community": 116,
+      "norm_label": "phase 1 \u2014 read the printed chapter"
+    },
+    {
+      "label": "Phase 2 \u2014 Inventory every diagram the chapter will render",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_2_inventory_every_diagram_the_chapter_will_render",
+      "community": 116,
+      "norm_label": "phase 2 \u2014 inventory every diagram the chapter will render"
+    },
+    {
+      "label": "Phase 3 \u2014 Map the printed sections onto 5\u20137 app sections",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_3_map_the_printed_sections_onto_5_7_app_sections",
+      "community": 116,
+      "norm_label": "phase 3 \u2014 map the printed sections onto 5\u20137 app sections"
+    },
+    {
+      "label": "Phase 4 \u2014 Write the prose and the question bank",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L121",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_4_write_the_prose_and_the_question_bank",
+      "community": 116,
+      "norm_label": "phase 4 \u2014 write the prose and the question bank"
+    },
+    {
+      "label": "Phase 5 \u2014 Draw",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L139",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_5_draw",
+      "community": 116,
+      "norm_label": "phase 5 \u2014 draw"
+    },
+    {
+      "label": "Phase 6 \u2014 Gates",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L168",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_6_gates",
+      "community": 116,
+      "norm_label": "phase 6 \u2014 gates"
+    },
+    {
+      "label": "Phase 7 \u2014 Look at it. This is the step that catches everything.",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L186",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_7_look_at_it_this_is_the_step_that_catches_everything",
+      "community": 116,
+      "norm_label": "phase 7 \u2014 look at it. this is the step that catches everything."
+    },
+    {
+      "label": "Phase 8 \u2014 Wire, record, commit",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L219",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_phase_8_wire_record_commit",
+      "community": 116,
+      "norm_label": "phase 8 \u2014 wire, record, commit"
+    },
+    {
+      "label": "The traps, collected",
+      "file_type": "document",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L238",
+      "_origin": "ast",
+      "id": "prompts_school_chapters_chapter_workflow_the_traps_collected",
+      "community": 116,
+      "norm_label": "the traps, collected"
+    },
+    {
       "label": "author-a-chapter.md",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
@@ -17919,7 +17999,7 @@
       "label": "Type contract \u2014 the chapter",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L96",
+      "source_location": "L101",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
       "community": 100,
@@ -17929,7 +18009,7 @@
       "label": "Writing `body`",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L148",
+      "source_location": "L156",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_writing_body",
       "community": 100,
@@ -17939,7 +18019,7 @@
       "label": "Writing `questions`",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L172",
+      "source_location": "L180",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_writing_questions",
       "community": 100,
@@ -17949,7 +18029,7 @@
       "label": "Type contract \u2014 the figures",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L190",
+      "source_location": "L198",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
       "community": 100,
@@ -17959,7 +18039,7 @@
       "label": "Path helpers \u2014 import from `@/lib/sim/draw`",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L240",
+      "source_location": "L251",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_path_helpers_import_from_lib_sim_draw",
       "community": 100,
@@ -17969,7 +18049,7 @@
       "label": "The eight rules that decide whether a plate looks right",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L253",
+      "source_location": "L264",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_the_eight_rules_that_decide_whether_a_plate_looks_right",
       "community": 100,
@@ -17979,7 +18059,7 @@
       "label": "Choosing `magnify`, and what `focus` really controls",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L296",
+      "source_location": "L307",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_choosing_magnify_and_what_focus_really_controls",
       "community": 100,
@@ -17989,7 +18069,7 @@
       "label": "The acceptance bar, in numbers",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L334",
+      "source_location": "L345",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_the_acceptance_bar_in_numbers",
       "community": 100,
@@ -17999,7 +18079,7 @@
       "label": "Labels",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L380",
+      "source_location": "L391",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_labels",
       "community": 100,
@@ -18009,7 +18089,7 @@
       "label": "Prose in the figures",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L391",
+      "source_location": "L402",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_prose_in_the_figures",
       "community": 100,
@@ -18019,7 +18099,7 @@
       "label": "Verification \u2014 you are not done until these pass",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L398",
+      "source_location": "L409",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_verification_you_are_not_done_until_these_pass",
       "community": 100,
@@ -18029,7 +18109,7 @@
       "label": "Known traps, collected",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L421",
+      "source_location": "L432",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_known_traps_collected",
       "community": 100,
@@ -18039,7 +18119,7 @@
       "label": "TARGET",
       "file_type": "document",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L440",
+      "source_location": "L455",
       "_origin": "ast",
       "id": "prompts_school_chapters_author_a_chapter_target",
       "community": 100,
@@ -18169,7 +18249,7 @@
       "label": "Step 5 \u2014 Draw the figures",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L177",
+      "source_location": "L182",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_step_5_draw_the_figures",
       "community": 102,
@@ -18179,7 +18259,7 @@
       "label": "Step 6 \u2014 Write the question bank",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L188",
+      "source_location": "L193",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_step_6_write_the_question_bank",
       "community": 102,
@@ -18189,7 +18269,7 @@
       "label": "Step 7 \u2014 Wire it up",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L197",
+      "source_location": "L202",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_step_7_wire_it_up",
       "community": 102,
@@ -18199,7 +18279,7 @@
       "label": "4 \u00b7 Accent assignments",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L213",
+      "source_location": "L218",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_4_accent_assignments",
       "community": 102,
@@ -18209,7 +18289,7 @@
       "label": "5 \u00b7 Effort, honestly",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L241",
+      "source_location": "L246",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_5_effort_honestly",
       "community": 102,
@@ -18219,7 +18299,7 @@
       "label": "6 \u00b7 Rules that survive every chapter",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L267",
+      "source_location": "L272",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_6_rules_that_survive_every_chapter",
       "community": 102,
@@ -18229,7 +18309,7 @@
       "label": "7 \u00b7 Gates \u2014 a chapter is not done until all of these pass",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L287",
+      "source_location": "L292",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_7_gates_a_chapter_is_not_done_until_all_of_these_pass",
       "community": 102,
@@ -18239,7 +18319,7 @@
       "label": "8 \u00b7 The per-chapter TARGET block",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L311",
+      "source_location": "L316",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_8_the_per_chapter_target_block",
       "community": 102,
@@ -18249,7 +18329,7 @@
       "label": "9 \u00b7 What not to do",
       "file_type": "document",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L352",
+      "source_location": "L357",
       "_origin": "ast",
       "id": "prompts_school_chapters_convert_the_books_9_what_not_to_do",
       "community": 102,
@@ -20731,7 +20811,7 @@
       "community": 12,
       "norm_label": "graphify skill",
       "community_name": "Extraction Rules",
-      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
+      "id": "claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claude_claudemd_graphify"
     },
     {
       "label": "Graphify Ingest",
@@ -21562,7 +21642,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L294",
+      "source_location": "L298",
       "weight": 1.0,
       "source": "scripts_render_figures",
       "target": "scripts_render_figures_args",
@@ -21602,7 +21682,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L307",
+      "source_location": "L311",
       "weight": 1.0,
       "context": "argument",
       "source": "scripts_render_figures",
@@ -21623,7 +21703,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L295",
+      "source_location": "L299",
       "weight": 1.0,
       "source": "scripts_render_figures",
       "target": "scripts_render_figures_liftflag",
@@ -21643,7 +21723,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/render-figures.mts",
-      "source_location": "L303",
+      "source_location": "L307",
       "weight": 1.0,
       "source": "scripts_render_figures",
       "target": "scripts_render_figures_problems",
@@ -22080,7 +22160,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/validate-cbse.mts",
-      "source_location": "L267",
+      "source_location": "L254",
       "weight": 1.0,
       "source": "scripts_validate_cbse",
       "target": "scripts_validate_cbse_checkquote",
@@ -22176,7 +22256,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/validate-cbse.mts",
-      "source_location": "L270",
+      "source_location": "L257",
       "weight": 1.0,
       "source": "scripts_validate_cbse_checkquote",
       "target": "scripts_validate_cbse_reporterror",
@@ -22187,7 +22267,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "scripts/validate-cbse.mts",
-      "source_location": "L173",
+      "source_location": "L160",
       "weight": 1.0,
       "source": "scripts_validate_cbse_check",
       "target": "scripts_validate_cbse_checkquote",
@@ -34578,159 +34658,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_components_sim_anatomysim_anatomysim",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_context_readingthemecontext",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_context_readingthemecontext_usereadingtheme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_sim_shading",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_sim_shading_cartoonfor",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_sim_types",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_sim_types_anatomypart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_sim_types_anatomyspec",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_viz_theme",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim",
-      "target": "src_lib_viz_theme_usevizpalette",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "src_components_sim_simblock",
-      "target": "src_components_sim_anatomysim",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim_anatomysim",
-      "target": "src_context_readingthemecontext_usereadingtheme"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L144",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim_anatomysim",
-      "target": "src_lib_sim_shading_cartoonfor"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/sim/AnatomySim.tsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "source": "src_components_sim_anatomysim_anatomysim",
-      "target": "src_lib_viz_theme_usevizpalette"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/sim/FigureSim.tsx",
       "source_location": "L55",
       "weight": 1.0,
@@ -34976,7 +34903,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L5",
+      "source_location": "L4",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_figuresim",
@@ -35184,7 +35111,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L9",
+      "source_location": "L8",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_geometryboardsim",
@@ -35292,7 +35219,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L7",
+      "source_location": "L6",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_graphplotsim",
@@ -35422,7 +35349,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L8",
+      "source_location": "L7",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_particlemodelsim",
@@ -35487,7 +35414,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L13",
+      "source_location": "L12",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_simblock_simblock",
@@ -35498,7 +35425,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/sim/SimBlock.tsx",
-      "source_location": "L6",
+      "source_location": "L5",
       "weight": 1.0,
       "source": "src_components_sim_simblock",
       "target": "src_components_sim_workedexamplesim",
@@ -38769,40 +38696,10 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
-      "target": "src_lib_cbse_class9_science_chapters_ch_03_tissues_basictissueanatomy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L196",
+      "source_location": "L16",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
       "target": "src_lib_cbse_class9_science_chapters_ch_03_tissues_ch03tissues",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L71",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
-      "target": "src_lib_cbse_class9_science_chapters_ch_03_tissues_meristemanatomy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L123",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
-      "target": "src_lib_cbse_class9_science_chapters_ch_03_tissues_tissuetypesanatomy",
       "confidence_score": 1.0
     },
     {
@@ -38814,6 +38711,17 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
       "target": "src_lib_cbse_class9_science_figures_ch_03",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_animalarmfigure",
       "confidence_score": 1.0
     },
     {
@@ -38879,6 +38787,17 @@
       "source_location": "L2",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_organismfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
       "target": "src_lib_cbse_class9_science_figures_ch_03_simpletissuefigure",
       "confidence_score": 1.0
     },
@@ -38919,28 +38838,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
-      "target": "src_lib_sim_types",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-03-tissues.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_03_tissues",
-      "target": "src_lib_sim_types_anatomyspec",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/index.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -38963,7 +38860,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L161",
+      "source_location": "L107",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_05_mixtures",
       "target": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_ch05mixtures",
@@ -38973,17 +38870,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L51",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_05_mixtures",
-      "target": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_distillationanatomy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L106",
+      "source_location": "L52",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_05_mixtures",
       "target": "src_lib_cbse_class9_science_chapters_ch_05_mixtures_mixturetypessim",
@@ -39107,17 +38994,6 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_chapters_ch_05_mixtures",
       "target": "src_lib_sim_types",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/cbse/class9/science/chapters/ch-05-mixtures.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "source": "src_lib_cbse_class9_science_chapters_ch_05_mixtures",
-      "target": "src_lib_sim_types_anatomyspec",
       "confidence_score": 1.0
     },
     {
@@ -40208,6 +40084,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L1250",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_animalarmfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
       "source_location": "L594",
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
@@ -40312,6 +40198,16 @@
       "weight": 1.0,
       "source": "src_lib_cbse_class9_science_figures_ch_03",
       "target": "src_lib_cbse_class9_science_figures_ch_03_neuronfigure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/cbse/class9/science/figures/ch-03.ts",
+      "source_location": "L1128",
+      "weight": 1.0,
+      "source": "src_lib_cbse_class9_science_figures_ch_03",
+      "target": "src_lib_cbse_class9_science_figures_ch_03_organismfigure",
       "confidence_score": 1.0
     },
     {
@@ -50218,27 +50114,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L29",
-      "weight": 1.0,
-      "source": "src_lib_sim_types",
-      "target": "src_lib_sim_types_anatomypart",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/sim/types.ts",
-      "source_location": "L67",
-      "weight": 1.0,
-      "source": "src_lib_sim_types",
-      "target": "src_lib_sim_types_anatomyspec",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/sim/types.ts",
-      "source_location": "L104",
+      "source_location": "L43",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_figurelayer",
@@ -50248,7 +50124,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L162",
+      "source_location": "L101",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_figurepanel",
@@ -50258,7 +50134,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L121",
+      "source_location": "L60",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_figurepart",
@@ -50268,7 +50144,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L171",
+      "source_location": "L110",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_figurespec",
@@ -50278,7 +50154,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L337",
+      "source_location": "L276",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_geometryboardspec",
@@ -50288,7 +50164,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L331",
+      "source_location": "L270",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_geometryreadout",
@@ -50298,7 +50174,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L322",
+      "source_location": "L261",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_geometryvertex",
@@ -50308,7 +50184,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L264",
+      "source_location": "L203",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_graphplotspec",
@@ -50318,7 +50194,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L310",
+      "source_location": "L249",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_particlemodelspec",
@@ -50328,7 +50204,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L280",
+      "source_location": "L219",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_particlestate",
@@ -50338,7 +50214,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L257",
+      "source_location": "L196",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_plotseries",
@@ -50358,7 +50234,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L358",
+      "source_location": "L296",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_simkind",
@@ -50368,7 +50244,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L350",
+      "source_location": "L289",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_simspec",
@@ -50378,7 +50254,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L246",
+      "source_location": "L185",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_workedexamplespec",
@@ -50388,7 +50264,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L224",
+      "source_location": "L163",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_workedinput",
@@ -50398,7 +50274,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/lib/sim/types.ts",
-      "source_location": "L238",
+      "source_location": "L177",
       "weight": 1.0,
       "source": "src_lib_sim_types",
       "target": "src_lib_sim_types_workedstep",
@@ -54660,7 +54536,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L157",
+      "source_location": "L158",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_conventions_gotchas",
@@ -54670,7 +54546,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L154",
+      "source_location": "L155",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_dates_today_fixed_2026_07_15",
@@ -54690,7 +54566,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L110",
+      "source_location": "L111",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_key_modules",
@@ -54730,7 +54606,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L145",
+      "source_location": "L146",
       "weight": 1.0,
       "source": "project_summary_knovis_project_summary",
       "target": "project_summary_security_posture_reviewed_2026_07_15_hardened_2026_07_18",
@@ -54770,7 +54646,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "PROJECT_SUMMARY.md",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0,
       "source": "project_summary_school_track_class_9_cbse_reader_added_2026_07_31_2026_08_02_spec_school_build_spec_md",
       "target": "project_summary_diagram_rendering_how_the_figures_are_drawn_settled_2026_08_02",
@@ -56650,7 +56526,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L555",
+      "source_location": "L564",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_ai_call_minimisation_redesign_question_bank_batch_report_card_mcqs_fact_of_the_day",
@@ -56660,7 +56536,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L597",
+      "source_location": "L606",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_brain_label_overhaul_clickable_space_grotesk_declutter",
@@ -56670,7 +56546,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L572",
+      "source_location": "L581",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_dashboard_brain_polish_rich_insight_clickable_plan_topic_blogs_smaller_labels",
@@ -56680,7 +56556,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L585",
+      "source_location": "L594",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_fix_profile_infinite_loading_missing_profiles_row",
@@ -56690,7 +56566,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L548",
+      "source_location": "L557",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_guest_mode_fix_plan_done_tracking_review_error_card_blog_pills",
@@ -56700,7 +56576,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L565",
+      "source_location": "L574",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_personal_notes_feature_blog_source_attribution",
@@ -56710,7 +56586,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L591",
+      "source_location": "L600",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_plan_markdown_fix_progress_calendar_profile_page",
@@ -56720,7 +56596,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L534",
+      "source_location": "L543",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_rebranding_to_engramia_mastery_xp_removal_true_false_statements_detailed_completed_reviews",
@@ -56730,7 +56606,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L541",
+      "source_location": "L550",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_review_bug_fixes_blogs_page",
@@ -56740,7 +56616,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L580",
+      "source_location": "L589",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_13_vercel_migration_nav_auth_fix",
@@ -56750,7 +56626,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L524",
+      "source_location": "L533",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_14_quiz_kind_overhaul_day_report_calendar_blog_q_a_streak_bar_footer_about",
@@ -56760,7 +56636,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L515",
+      "source_location": "L524",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_attempted_tracking_bug_fix_security_review_gemini_fallback_rag_pipeline_db_decision",
@@ -56770,7 +56646,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L471",
+      "source_location": "L480",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_fix_silent_link_ingest_failure_url_based_fast_path_dedup",
@@ -56780,7 +56656,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L508",
+      "source_location": "L517",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_guided_feature_tour_first_visit_every_demo_entry",
@@ -56790,7 +56666,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L481",
+      "source_location": "L490",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rag_pipeline_hardening_document_registry_hybrid_search_observability",
@@ -56800,7 +56676,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L490",
+      "source_location": "L499",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_rebrand_engramia_knovis",
@@ -56810,7 +56686,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L499",
+      "source_location": "L508",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_15_tour_interactivity_demo_add_gate_popup_review_demo_step",
@@ -56820,7 +56696,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L451",
+      "source_location": "L460",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_fix_false_positive_gibberish_rejection_on_real_link_ingests",
@@ -56830,7 +56706,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L462",
+      "source_location": "L471",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_ingest_guardrails_gibberish_rejection_prompt_injection_hardening_output_validation_link_scheme_xss_fix",
@@ -56840,7 +56716,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L446",
+      "source_location": "L455",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_remove_the_xp_feature_entirely",
@@ -56850,7 +56726,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L457",
+      "source_location": "L466",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_16_team_architecture_doc_backend_ai_rag_auth_security",
@@ -56860,7 +56736,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L430",
+      "source_location": "L439",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_about_page_sm_2_ebbinghaus_explainer_section",
@@ -56870,7 +56746,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L436",
+      "source_location": "L445",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_18_server_side_security_audit_fixes_ssrf_dns_rebinding_quiz_gemini_quota_abuse_curl_hardening",
@@ -56880,7 +56756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L415",
+      "source_location": "L424",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_learnable_stories_polish_blogs_one_story_module_grouped_dashboard_seed_safety",
@@ -56890,7 +56766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L408",
+      "source_location": "L417",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_post_prod_fixes_greeting_brain_brightness_review_headers_learned_section_surfacing",
@@ -56900,7 +56776,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L422",
+      "source_location": "L431",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_19_the_pattern_atlas_complete_dsa_blog_series_neetcode_150",
@@ -56910,7 +56786,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L396",
+      "source_location": "L405",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_esc_exits_the_dive_inside_view",
@@ -56920,7 +56796,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L384",
+      "source_location": "L393",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_homepage_story_real_estate_flatten_plan_cap_journey_float_blogs",
@@ -56930,7 +56806,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L399",
+      "source_location": "L408",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_organic_thought_waves_flood_fill_activation_replaces_mechanical_sine_wave",
@@ -56940,7 +56816,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L377",
+      "source_location": "L386",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_rename_review_recall_2nd_of_the_4_part_redesign",
@@ -56950,7 +56826,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L391",
+      "source_location": "L400",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_story_agent_prompts_fixed_compile_breaking_gaps_added_coverage_depth_rules",
@@ -56960,7 +56836,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L358",
+      "source_location": "L367",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_story_content_full_rollout_10_33_chapters_done_3_partial_session_limit_interrupted_in_progress",
@@ -56970,7 +56846,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L349",
+      "source_location": "L358",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_story_content_full_rollout_complete_91_diagrams_8_accuracy_fixes_across_all_34_chapters_3rd_of_the_4_part_redesign_done",
@@ -56980,7 +56856,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L367",
+      "source_location": "L376",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_20_story_content_viz_diagram_system_pilot_3rd_of_the_4_part_redesign_in_progress",
@@ -56990,7 +56866,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L331",
+      "source_location": "L340",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_21_blog_recall_paper_mode_fixes_inline_math_per_series_report_cards_experts_dropdown_paper_fold_transition",
@@ -57000,7 +56876,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L340",
+      "source_location": "L349",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_21_dsa_full_hellointerview_style_rewrite_of_all_150_questions_complete_diagrams_rewrite_sequentially_by_hand",
@@ -57010,7 +56886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L326",
+      "source_location": "L335",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_21_follow_ups_dynamic_per_section_quiz_ai_budget_blogs_brain_search_icon_overlap",
@@ -57020,7 +56896,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L318",
+      "source_location": "L327",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_21_paper_mode_real_particle_paper_snap_transition_accent_contrast_fix_pills_diagrams",
@@ -57030,7 +56906,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L312",
+      "source_location": "L321",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_22_dsa_quiz_questions_made_language_agnostic_were_javascript_specific",
@@ -57040,7 +56916,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L305",
+      "source_location": "L314",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_22_paper_mode_accent_component_rollout_to_all_story_series_pages_hub_chapter_section",
@@ -57050,7 +56926,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L256",
+      "source_location": "L265",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_25_mobile_horizontal_overflow_fix_blog_backfill_gets_a_deterministic_no_ai_mode",
@@ -57060,7 +56936,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L265",
+      "source_location": "L274",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_25_structured_blog_body_for_user_topic_blogs_spine_ai_regenerate_backfill",
@@ -57070,7 +56946,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L292",
+      "source_location": "L301",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_25_week_1_complete_posthog_live_icp_omtm_growth_playbook_execution_underway",
@@ -57080,7 +56956,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L280",
+      "source_location": "L289",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_25_week_2_outcome_first_hero_demo_compressed_14_6_steps_site_wide_recopy",
@@ -57090,7 +56966,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L194",
+      "source_location": "L203",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_backlog_cleanup_cleared_the_two_security_audit_findings_reorganised_tasks",
@@ -57100,7 +56976,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L248",
+      "source_location": "L257",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_blog_backfill_executed_against_prod_16_user_blogs_caught_story_seeded_scope_leak",
@@ -57110,7 +56986,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L242",
+      "source_location": "L251",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_blog_vibe_pass_on_brand_section_rendering_deployed_to_main_viz_diagrams",
@@ -57120,7 +56996,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L234",
+      "source_location": "L243",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_diagrams_on_all_user_blogs_future_proofed_generation",
@@ -57130,7 +57006,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L228",
+      "source_location": "L237",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_homepage_recall_all_done_for_the_day_attempt_more_mode",
@@ -57140,7 +57016,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L201",
+      "source_location": "L210",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_the_communication_lab_backlog_cleared_18_viz_diagrams_chapter_8_now_8_chapters_25_sections",
@@ -57150,7 +57026,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L208",
+      "source_location": "L217",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_the_communication_lab_phase_2_content_chapters_4_7_now_7_chapters_22_sections",
@@ -57160,7 +57036,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L218",
+      "source_location": "L227",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_the_communication_lab_story_series_the_content_structure_delivery_answer_judge",
@@ -57170,7 +57046,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L187",
+      "source_location": "L196",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_26_three_user_reported_fixes_story_recall_resurfacing_medium_403_ingest_empty_user_recall_card",
@@ -57180,7 +57056,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L167",
+      "source_location": "L176",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_27_blog_brain_visibility_boundary_one_story_experts_preview",
@@ -57190,7 +57066,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L173",
+      "source_location": "L182",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_27_diagram_overflow_fix_legibility_floor_tree_wrapping_hardened_auto_blog_viz_generation",
@@ -57200,7 +57076,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L181",
+      "source_location": "L190",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_27_homepage_revision_needed_replaces_recent_learnings_voice_answers_in_recall",
@@ -57210,7 +57086,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L159",
+      "source_location": "L168",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_07_27_streak_repair_api_premium_maintain_a_streak_by_attempting_an_older_day_recall",
@@ -57220,7 +57096,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L113",
+      "source_location": "L122",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_3_d_anatomy_flat_shaded_primitives_pbr",
@@ -57230,7 +57106,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L101",
+      "source_location": "L110",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_3_d_anatomy_primitives_real_generated_geometry",
@@ -57240,7 +57116,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L92",
+      "source_location": "L101",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_3_d_kept_only_where_it_earns_its_place_four_diagrams_back_to_svg",
@@ -57250,7 +57126,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L84",
+      "source_location": "L93",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_diagrams_committed_to_a_cartoon_illustration_style",
@@ -57260,7 +57136,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L145",
+      "source_location": "L154",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_knovis_for_schools_phase_4_defect_fix_pass_corrected",
@@ -57270,7 +57146,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L123",
+      "source_location": "L132",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_school_anatomy_figures_real_3_d_webgl",
@@ -57280,7 +57156,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L134",
+      "source_location": "L143",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_01_school_sims_flat_line_diagrams_shaded_dimensional_figures_superseded_for_anatomy_by_the_entry_above",
@@ -57290,7 +57166,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L58",
+      "source_location": "L67",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_02_book_plates_ch2_now_uses_the_textbook_s_own_figures_trial_1_chapter",
@@ -57300,7 +57176,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L48",
+      "source_location": "L57",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_02_drawn_cell_plates_click_to_lift_replacing_the_book_scans_for_fig_2_10",
@@ -57310,7 +57186,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L15",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_02_lift_a_part_magnify_an_original_plant_cell_drawn_to_replace_the_scan",
@@ -57320,7 +57196,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L71",
+      "source_location": "L80",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_02_textbook_plates_click_to_magnify_figures_across_all_six_chapters",
@@ -57330,7 +57206,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L24",
+      "source_location": "L33",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_03_chapter_2_fully_redrawn_every_ncert_scan_deleted",
@@ -57340,7 +57216,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L41",
+      "source_location": "L50",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_03_lifted_parts_carry_their_own_tag_and_stop_dragging_their_siblings_along",
@@ -57350,7 +57226,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_03_lifted_parts_stop_breaking_diagrams_move_to_their_own_column",
@@ -57360,7 +57236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L33",
+      "source_location": "L42",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_2026_08_03_part_lift_rolled_out_across_the_science_plates_two_tag_bugs_fixed",
@@ -57370,7 +57246,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "SESSION_LOG.md",
-      "source_location": "L607",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "session_log_session_log",
+      "target": "session_log_2026_08_04_the_four_diagrams_nobody_was_looking_at",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "SESSION_LOG.md",
+      "source_location": "L616",
       "weight": 1.0,
       "source": "session_log_session_log",
       "target": "session_log_earlier_from_git_history",
@@ -57729,6 +57615,126 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow",
+      "target": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_0_before_you_touch_anything",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_1_read_the_printed_chapter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_2_inventory_every_diagram_the_chapter_will_render",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_3_map_the_printed_sections_onto_5_7_app_sections",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L121",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_4_write_the_prose_and_the_question_bank",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_5_draw",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L168",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_6_gates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_7_look_at_it_this_is_the_step_that_catches_everything",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L219",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_phase_8_wire_record_commit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_the_rule_that_this_workflow_exists_to_enforce",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "prompts/school-chapters/CHAPTER-WORKFLOW.md",
+      "source_location": "L238",
+      "weight": 1.0,
+      "source": "prompts_school_chapters_chapter_workflow_the_chapter_workflow_start_here",
+      "target": "prompts_school_chapters_chapter_workflow_the_traps_collected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -57750,7 +57756,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L296",
+      "source_location": "L307",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_choosing_magnify_and_what_focus_really_controls",
@@ -57760,7 +57766,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L421",
+      "source_location": "L432",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_known_traps_collected",
@@ -57770,7 +57776,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L380",
+      "source_location": "L391",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_labels",
@@ -57780,7 +57786,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L391",
+      "source_location": "L402",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_prose_in_the_figures",
@@ -57790,7 +57796,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L440",
+      "source_location": "L455",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_target",
@@ -57800,7 +57806,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L334",
+      "source_location": "L345",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_the_acceptance_bar_in_numbers",
@@ -57810,7 +57816,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L253",
+      "source_location": "L264",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_the_eight_rules_that_decide_whether_a_plate_looks_right",
@@ -57830,7 +57836,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L96",
+      "source_location": "L101",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
@@ -57840,7 +57846,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L190",
+      "source_location": "L198",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
@@ -57850,7 +57856,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L398",
+      "source_location": "L409",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_prompt_author_a_complete_class_9_chapter_page",
       "target": "prompts_school_chapters_author_a_chapter_verification_you_are_not_done_until_these_pass",
@@ -57870,7 +57876,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L148",
+      "source_location": "L156",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
       "target": "prompts_school_chapters_author_a_chapter_writing_body",
@@ -57880,7 +57886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L172",
+      "source_location": "L180",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_type_contract_the_chapter",
       "target": "prompts_school_chapters_author_a_chapter_writing_questions",
@@ -57890,7 +57896,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/author-a-chapter.md",
-      "source_location": "L240",
+      "source_location": "L251",
       "weight": 1.0,
       "source": "prompts_school_chapters_author_a_chapter_type_contract_the_figures",
       "target": "prompts_school_chapters_author_a_chapter_path_helpers_import_from_lib_sim_draw",
@@ -57950,7 +57956,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L213",
+      "source_location": "L218",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_4_accent_assignments",
@@ -57960,7 +57966,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L241",
+      "source_location": "L246",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_5_effort_honestly",
@@ -57970,7 +57976,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L267",
+      "source_location": "L272",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_6_rules_that_survive_every_chapter",
@@ -57980,7 +57986,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L287",
+      "source_location": "L292",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_7_gates_a_chapter_is_not_done_until_all_of_these_pass",
@@ -57990,7 +57996,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L311",
+      "source_location": "L316",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_8_the_per_chapter_target_block",
@@ -58000,7 +58006,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L352",
+      "source_location": "L357",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_converting_both_books_into_the_site_the_full_programme",
       "target": "prompts_school_chapters_convert_the_books_9_what_not_to_do",
@@ -58070,7 +58076,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L177",
+      "source_location": "L182",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_3_per_chapter_pipeline",
       "target": "prompts_school_chapters_convert_the_books_step_5_draw_the_figures",
@@ -58080,7 +58086,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L188",
+      "source_location": "L193",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_3_per_chapter_pipeline",
       "target": "prompts_school_chapters_convert_the_books_step_6_write_the_question_bank",
@@ -58090,7 +58096,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "prompts/school-chapters/convert-the-books.md",
-      "source_location": "L197",
+      "source_location": "L202",
       "weight": 1.0,
       "source": "prompts_school_chapters_convert_the_books_3_per_chapter_pipeline",
       "target": "prompts_school_chapters_convert_the_books_step_7_wire_it_up",
@@ -60258,5 +60264,5 @@
       "source_file": ".claude/skills/graphify/references/exports.md"
     }
   ],
-  "built_at_commit": "d0aa58e714acba8e0702f017a68fdc2f6e9c92be"
+  "built_at_commit": "c0b3a811a3732e246581442821cae4bd00912c8f"
 }
