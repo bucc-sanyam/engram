@@ -2,6 +2,7 @@ import type { Chapter } from "@/lib/cbse/types";
 import {
   coordinatePlaneFigure,
   distanceFormulaFigure,
+  reflectionsFigure,
 } from "../figures/ch-01";
 import type { GraphPlotSpec, GeometryBoardSpec } from "@/lib/sim/types";
 
@@ -172,6 +173,7 @@ Quadrants come up constantly outside the maths classroom too. A chart plotting d
     /* ── S4 ─────────────────────────────────────────────────────── */
     {
       key: "reflections",
+      figures: [reflectionsFigure],
       title: "Reflections in the Plane",
       eyebrow: "Mirror images",
       bookRef: "Ganita Manjari §1.3",

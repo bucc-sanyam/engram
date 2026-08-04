@@ -1,5 +1,5 @@
 import type { FigureSpec, FigureLayer } from "@/lib/sim/types";
-import { circle, ellipse, dots, roundRect, stadium } from "@/lib/sim/draw";
+import { circle, ellipse, dots, roundRect, stadium, cell, blob, gleam } from "@/lib/sim/draw";
 
 /**
  * Chapter 3 plates — "Tissues".
@@ -8,6 +8,10 @@ import { circle, ellipse, dots, roundRect, stadium } from "@/lib/sim/draw";
  * every plate here is a multi-panel one: the panels sit side by side so the
  * differences are visible at a glance, and magnifying a panel is how a student
  * gets from "they all look like blobs" to "that one has a thickened corner".
+ *
+ * THE FOUR COMPARISON PLATES (Fig 3.8, 3.11, 3.12, 3.13) STAY ON
+ * `magnify: "camera"`. Converting them to `"part"` was tried and reverted —
+ * it clamps every lift to 1.35× and drops the name tag onto the panel captions.
  *
  * Drawn from the biology, not traced. See the note at the top of ch-02.ts.
  */
@@ -31,6 +35,9 @@ const T = {
   nucleus: "#8a6fd4",
   myelin: "#f2d06b",
   cellWall: "#a3c76d",
+  axoplasm: "#d4c4e8",
+  vesicle: "#e8a0cf",
+  nissl: "#6f5ab8",
 } as const;
 
 /** Evenly spaced panel boxes across a 660-wide plate. */
@@ -65,6 +72,60 @@ function ticks(
   return out.join(" ");
 }
 
+/** Small square dividing cells — the hallmark of a meristem. */
+function dividingCells(
+  cx: number,
+  cy: number,
+  cols: number,
+  rows: number,
+  size: number,
+  gap: number,
+): string {
+  const out: string[] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = cx - ((cols - 1) * (size + gap)) / 2 + c * (size + gap);
+      const y = cy - ((rows - 1) * (size + gap)) / 2 + r * (size + gap);
+      out.push(`M${x},${y} h${size} v${size} h${-size} Z`);
+    }
+  }
+  return out.join(" ");
+}
+
+/** Nuclei dots inside a grid of dividing cells. */
+function cellNuclei(
+  cx: number,
+  cy: number,
+  cols: number,
+  rows: number,
+  size: number,
+  gap: number,
+  radius: number,
+): string {
+  const pts: [number, number][] = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const x = cx - ((cols - 1) * (size + gap)) / 2 + c * (size + gap) + size / 2;
+      const y = cy - ((rows - 1) * (size + gap)) / 2 + r * (size + gap) + size / 2;
+      pts.push([x, y]);
+    }
+  }
+  return dots(pts, radius);
+}
+
+/** Polygonal tissue cell — drawn as a 5–7 sided irregular polygon. */
+function polyCell(cx: number, cy: number, r: number, seed: number, sides = 6): string {
+  const pts: string[] = [];
+  for (let i = 0; i < sides; i++) {
+    const angle = (Math.PI * 2 * i) / sides - Math.PI / 2;
+    const wobble = 0.85 + (Math.sin((seed + 1) * 12.9898 + i * 78.233) * 43758.5453 % 1) * 0.3;
+    const x = cx + Math.cos(angle) * r * wobble;
+    const y = cy + Math.sin(angle) * r * wobble;
+    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+  }
+  return `M${pts[0]} L${pts.slice(1).join(" L")} Z`;
+}
+
 /* ══════════════════════════════════════════════════════════ meristems ══ */
 
 export const meristemFigure: FigureSpec = {
@@ -74,7 +135,7 @@ export const meristemFigure: FigureSpec = {
   caption:
     "A plant does not grow all over. Division is confined to meristems: at the tips, at the nodes, and in a ring inside the stem.",
   altText:
-    "A young plant showing the three kinds of meristem: apical meristem at the shoot and root tips, intercalary meristem at a node, and lateral meristem as a ring inside the stem. Selecting a label magnifies that region and explains what it does.",
+    "A young plant showing the five kinds of meristematic region: shoot-tip meristem and root-tip meristem at the tips, intercalary meristem at a node, and lateral meristem as a ring inside the stem. Selecting a label lifts that region out enlarged and explains what it does.",
   viewBox: [660, 480],
   magnify: "part",
   scenery: [
@@ -97,30 +158,54 @@ export const meristemFigure: FigureSpec = {
   ],
   parts: [
     {
-      id: "apical",
-      label: "Apical meristem",
+      id: "shoot-tip",
+      label: "Shoot-tip meristem",
       tint: T.meristem,
       depth: 0,
-      d: [
-        "M236,150 C234,122 244,102 255,100 C266,102 276,122 274,150 Z",
-        "M246,420 C244,438 249,452 256,457 C263,452 268,438 266,420 Z",
-      ].join(" "),
+      d: "M236,150 C234,122 244,102 255,100 C266,102 276,122 274,150 Z",
       layers: [
-        { d: dots([[248, 124], [262, 126], [255, 138], [256, 436], [251, 446]], 4), as: "shade" },
+        // Dense, small, square dividing cells packed together
+        { d: dividingCells(255, 126, 4, 3, 8, 2), as: "shade" },
+        // A nucleus in each dividing cell
+        { d: cellNuclei(255, 126, 4, 3, 8, 2, 2), as: "shade", opacity: 0.9 },
+        { d: gleam(250, 114, 12, 16), as: "light", opacity: 0.35 },
       ],
       focus: [228, 92, 56, 66],
       labelAt: [492, 100],
       leaderAt: [272, 120],
       blurb:
-        "Sits at the very tip of every shoot and every root. Its cells divide to make the plant longer — this is what pushes a root deeper into the soil and a stem up towards the light.",
+        "Cells at the very tip of the shoot divide faster than anywhere else above ground. Each division pushes the stem a little higher, which is why shoots always grow from their tips upward toward the light.",
+    },
+    {
+      id: "root-tip",
+      label: "Root-tip meristem",
+      tint: T.meristem,
+      depth: 1,
+      d: "M246,420 C244,438 249,452 256,457 C263,452 268,438 266,420 Z",
+      layers: [
+        // Dense dividing cells at the root apex
+        { d: dividingCells(256, 438, 3, 3, 6, 1.5), as: "shade" },
+        { d: cellNuclei(256, 438, 3, 3, 6, 1.5, 1.5), as: "shade", opacity: 0.9 },
+        { d: gleam(253, 432, 8, 10), as: "light", opacity: 0.3 },
+      ],
+      focus: [240, 414, 32, 48],
+      labelAt: [400, 430],
+      leaderAt: [268, 440],
+      blurb:
+        "Cells at the root tip divide to push the root deeper into the soil. A cap of dead cells shields them from the abrasion of soil particles, wearing away and being replaced continuously.",
     },
     {
       id: "intercalary",
       label: "Intercalary meristem",
       tint: T.meristem,
-      depth: 1,
+      depth: 2,
       d: roundRect(230, 252, 50, 26, 8),
-      layers: [{ d: "M230,265 H280", width: 1.2, opacity: 0.6, dash: "5 4" }],
+      layers: [
+        // Band of dividing cells at the node
+        { d: dividingCells(255, 265, 5, 2, 7, 2), as: "shade" },
+        { d: cellNuclei(255, 265, 5, 2, 7, 2, 1.8), as: "shade", opacity: 0.85 },
+        { d: gleam(248, 256, 16, 8), as: "light", opacity: 0.3 },
+      ],
       focus: [220, 242, 70, 46],
       labelAt: [110, 190],
       leaderAt: [232, 262],
@@ -131,13 +216,42 @@ export const meristemFigure: FigureSpec = {
       id: "lateral",
       label: "Lateral meristem",
       tint: T.meristem,
-      depth: 2,
+      depth: 3,
       d: [roundRect(238, 300, 10, 84, 5), roundRect(266, 300, 10, 84, 5)].join(" "),
+      layers: [
+        // Thin files of dividing cells running longitudinally
+        { d: "M240,308 V376 M242,312 V372 M244,316 V368 M268,308 V376 M270,312 V372 M272,316 V368", width: 1.2, opacity: 0.65 },
+        { d: dots([[243, 320], [243, 342], [243, 364], [271, 330], [271, 352], [271, 374]], 1.8), as: "shade", opacity: 0.9 },
+        { d: gleam(242, 326, 4, 28), as: "light", opacity: 0.3 },
+      ],
       focus: [228, 292, 58, 100],
       labelAt: [492, 344],
       leaderAt: [278, 342],
       blurb:
         "A thin cylinder of dividing cells running the length of the stem, also called cambium. It adds cells sideways, so the trunk thickens year after year rather than merely getting taller.",
+    },
+    {
+      id: "vacuolated",
+      label: "Permanent cells",
+      tint: T.parenchyma,
+      depth: 4,
+      d: [
+        cell(255, 186, 16, 12, 1),
+        cell(240, 206, 14, 11, 2),
+        cell(270, 200, 15, 12, 3),
+        cell(252, 222, 16, 13, 4),
+      ].join(" "),
+      layers: [
+        // Large vacuoles — the contrast with the meristematic cells
+        { d: [ellipse(255, 186, 10, 7), ellipse(240, 206, 9, 6), ellipse(270, 200, 10, 7), ellipse(252, 222, 11, 8)].join(" "), as: "light", opacity: 0.5 },
+        { d: dots([[255, 190], [240, 210], [270, 204], [252, 226]], 3), as: "shade" },
+        { d: gleam(250, 196, 12, 14), as: "light", opacity: 0.3 },
+      ],
+      focus: [224, 172, 64, 62],
+      labelAt: [110, 248],
+      leaderAt: [234, 210],
+      blurb:
+        "Older cells that have stopped dividing and grown large, with a big central vacuole. Compared to the meristematic cells above, they are visibly bigger, rounder, and far less densely packed.",
     },
   ],
 };
@@ -153,7 +267,7 @@ export const simpleTissueFigure: FigureSpec = {
   caption:
     "All three are made of one kind of cell. What separates them is the wall: thin, thickened at the corners, or thick enough to kill the cell.",
   altText:
-    "Three panels comparing parenchyma, collenchyma and sclerenchyma. Parenchyma has thin-walled rounded cells with air spaces, collenchyma has extra wall material at the corners, and sclerenchyma has walls so thick that only a narrow lumen is left. Selecting a panel magnifies it.",
+    "Three panels comparing parenchyma, collenchyma and sclerenchyma. Parenchyma has thin-walled polygonal cells with air spaces between them, collenchyma has extra wall material at the corners, and sclerenchyma has walls so thick that only a narrow lumen is left. Selecting a panel magnifies it.",
   viewBox: [660, 240],
   panels: [
     { id: "p0", caption: "Parenchyma", box: simplePanels[0] },
@@ -168,25 +282,27 @@ export const simpleTissueFigure: FigureSpec = {
       panel: "p0",
       depth: 0,
       d: [
-        circle(64, 80, 32),
-        circle(134, 74, 30),
-        circle(170, 134, 30),
-        circle(96, 144, 34),
-        circle(38, 148, 24),
+        polyCell(60, 74, 28, 1, 6),
+        polyCell(128, 68, 26, 2, 5),
+        polyCell(162, 128, 26, 3, 6),
+        polyCell(92, 138, 30, 4, 7),
+        polyCell(34, 140, 22, 5, 5),
+        polyCell(96, 82, 14, 6, 5),
       ].join(" "),
       layers: [
+        // Nucleus in each cell
+        { d: dots([[60, 74], [128, 68], [162, 128], [92, 138], [34, 140]], 6), as: "shade" },
+        // Nucleolus inside nucleus
+        { d: dots([[60, 74], [128, 68], [162, 128], [92, 138], [34, 140]], 2.5), as: "shade", opacity: 0.8 },
+        // Intercellular spaces — triangular gaps visible between cells
         {
-          d: dots(
-            [
-              [64, 80],
-              [134, 74],
-              [170, 134],
-              [96, 144],
-              [38, 148],
-            ],
-            8,
-          ),
-          as: "shade",
+          d: [
+            "M88,94 L96,84 L104,96 Z",
+            "M138,100 L148,92 L152,104 Z",
+            "M60,112 L68,104 L72,116 Z",
+          ].join(" "),
+          as: "panel",
+          opacity: 0.5,
         },
       ],
       focus: simplePanels[0],
@@ -200,26 +316,33 @@ export const simpleTissueFigure: FigureSpec = {
       panel: "p1",
       depth: 1,
       d: [
-        roundRect(246, 58, 84, 66, 14),
-        roundRect(336, 58, 84, 66, 14),
-        roundRect(246, 132, 84, 66, 14),
-        roundRect(336, 132, 84, 66, 14),
+        polyCell(268, 78, 30, 7, 6),
+        polyCell(340, 72, 28, 8, 6),
+        polyCell(268, 148, 30, 9, 6),
+        polyCell(340, 142, 28, 10, 6),
+        polyCell(406, 108, 24, 11, 5),
       ].join(" "),
       layers: [
+        // Corner thickenings — THE DIAGNOSTIC FEATURE. Extra wall material
+        // piled into the corners of each cell where cell walls meet.
         {
-          // Extra wall material piled into the corners — the whole point.
-          d: dots(
-            [
-              [252, 64], [324, 64], [252, 118], [324, 118],
-              [342, 64], [414, 64], [342, 118], [414, 118],
-              [252, 138], [324, 138], [252, 192], [324, 192],
-              [342, 138], [414, 138], [342, 192], [414, 192],
-            ],
-            9,
-          ),
+          d: [
+            // Top-left cluster of corners
+            circle(244, 56, 8), circle(292, 56, 8), circle(244, 100, 8), circle(292, 100, 8),
+            // Top-right cluster
+            circle(316, 50, 7), circle(364, 50, 7), circle(316, 94, 7), circle(364, 94, 7),
+            // Bottom-left cluster
+            circle(244, 126, 8), circle(292, 126, 8), circle(244, 170, 8), circle(292, 170, 8),
+            // Bottom-right cluster
+            circle(316, 120, 7), circle(364, 120, 7), circle(316, 164, 7), circle(364, 164, 7),
+          ].join(" "),
           as: "shade",
+          opacity: 0.7,
         },
-        { d: dots([[288, 91], [378, 91], [288, 165], [378, 165]], 8), as: "shade" },
+        // Nuclei
+        { d: dots([[268, 78], [340, 72], [268, 148], [340, 142], [406, 108]], 5.5), as: "shade" },
+        // Nucleoli
+        { d: dots([[268, 78], [340, 72], [268, 148], [340, 142], [406, 108]], 2), as: "shade", opacity: 0.8 },
       ],
       focus: simplePanels[1],
       blurb:
@@ -231,17 +354,39 @@ export const simpleTissueFigure: FigureSpec = {
       tint: T.sclerenchyma,
       panel: "p2",
       depth: 2,
+      // Genuinely polygonal cells — NOT rounded. These are dead cells
+      // with thick, lignified walls and only a narrow lumen left.
       d: [
-        roundRect(464, 44, 52, 152, 14),
-        roundRect(524, 44, 52, 152, 14),
-        roundRect(584, 44, 52, 152, 14),
+        polyCell(490, 78, 30, 12, 6),
+        polyCell(560, 72, 28, 13, 5),
+        polyCell(628, 80, 26, 14, 6),
+        polyCell(490, 148, 28, 15, 5),
+        polyCell(560, 144, 30, 16, 6),
+        polyCell(628, 150, 26, 17, 5),
       ].join(" "),
       layers: [
+        // Thick lignified walls shown as a shade layer covering most of the cell
         {
           d: [
-            roundRect(482, 66, 16, 108, 8),
-            roundRect(542, 66, 16, 108, 8),
-            roundRect(602, 66, 16, 108, 8),
+            polyCell(490, 78, 26, 12, 6),
+            polyCell(560, 72, 24, 13, 5),
+            polyCell(628, 80, 22, 14, 6),
+            polyCell(490, 148, 24, 15, 5),
+            polyCell(560, 144, 26, 16, 6),
+            polyCell(628, 150, 22, 17, 5),
+          ].join(" "),
+          as: "shade",
+          opacity: 0.5,
+        },
+        // Narrow dead lumens — the tiny space left inside
+        {
+          d: [
+            polyCell(490, 78, 8, 120, 4),
+            polyCell(560, 72, 7, 130, 4),
+            polyCell(628, 80, 6, 140, 4),
+            polyCell(490, 148, 7, 150, 4),
+            polyCell(560, 144, 8, 160, 4),
+            polyCell(628, 150, 6, 170, 4),
           ].join(" "),
           as: "panel",
         },
@@ -264,7 +409,7 @@ export const vascularTissueFigure: FigureSpec = {
   caption:
     "Two plumbing systems in one plant. Xylem carries water up through dead, hollow pipes; phloem carries food both ways through living tubes.",
   altText:
-    "Two panels of conducting tissue. The xylem panel shows a wide vessel with perforated end walls, a tapered tracheid, and xylem parenchyma. The phloem panel shows a sieve tube with sieve plates, a companion cell and phloem parenchyma. Selecting a label magnifies that cell.",
+    "Two panels of conducting tissue. The xylem panel shows a wide vessel with annular lignin thickening, a tapered tracheid with pits, and xylem parenchyma. The phloem panel shows a sieve tube with sieve plates bearing visible pores, a companion cell with dense cytoplasm and large nucleus, and phloem fibre. Selecting a label magnifies that cell.",
   viewBox: [660, 340],
   magnify: "part",
   panels: [
@@ -280,15 +425,29 @@ export const vascularTissueFigure: FigureSpec = {
       depth: 0,
       d: roundRect(46, 44, 72, 190, 10),
       layers: [
-        // Perforated end walls: the plates between stacked cells, mostly gone.
+        // Perforated end walls
         { d: "M46,104 H118 M46,174 H118", width: 2.2, dash: "9 7" },
+        // ANNULAR / SPIRAL LIGNIN THICKENING BANDS — the diagnostic feature
+        // Drawn as horizontal rings inside the vessel, representing the
+        // thickening pattern laid down by the vessel before it died.
+        {
+          d: [
+            "M54,60 H110", "M54,72 H110", "M54,84 H110", "M54,96 H110",
+            "M54,116 H110", "M54,128 H110", "M54,140 H110", "M54,152 H110",
+            "M54,164 H110",
+            "M54,186 H110", "M54,198 H110", "M54,210 H110", "M54,222 H110",
+          ].join(" "),
+          width: 2.0,
+          opacity: 0.55,
+        },
+        { d: gleam(72, 100, 28, 60), as: "light", opacity: 0.3 },
       ],
       focus: [38, 36, 88, 206],
       labelAt: [16, 262],
       leaderAt: [82, 234],
       labelAlign: "start",
       blurb:
-        "A wide pipe made from dead cells stacked end to end, with the end walls largely dissolved away. Water pulled up from the roots runs through it in an unbroken column, like water through a drainpipe.",
+        "A wide pipe made from dead cells stacked end to end, with annular lignin rings banding the wall. Water pulled up from the roots runs through it in an unbroken column, like water through a drainpipe.",
     },
     {
       id: "tracheid",
@@ -296,16 +455,27 @@ export const vascularTissueFigure: FigureSpec = {
       tint: T.xylem,
       panel: "xylem",
       depth: 1,
-      d: "M146,64 C146,50 158,42 170,44 C182,46 192,54 192,68 V212 C192,226 182,234 170,232 C158,230 146,222 146,208 Z",
+      // Tapered at both ends — the hallmark of a tracheid
+      d: "M160,54 C160,44 170,38 178,44 C186,50 186,54 186,64 V208 C186,218 186,222 178,228 C170,234 160,228 160,218 Z",
       layers: [
-        { d: dots([[152, 92], [186, 118], [152, 148], [186, 176], [152, 202]], 5), as: "panel" },
+        // Bordered pits along the side walls — how water crosses between tracheids
+        {
+          d: [
+            circle(158, 80, 5), circle(188, 100, 5), circle(158, 120, 5),
+            circle(188, 140, 5), circle(158, 160, 5), circle(188, 180, 5),
+            circle(158, 200, 5),
+          ].join(" "),
+          as: "panel",
+          opacity: 0.6,
+        },
+        { d: gleam(172, 100, 10, 50), as: "light", opacity: 0.3 },
       ],
-      focus: [138, 36, 62, 206],
+      focus: [150, 32, 46, 206],
       labelAt: [150, 288],
       leaderAt: [170, 232],
       labelAlign: "middle",
       blurb:
-        "A narrower dead cell tapered at both ends, with pits in its side walls rather than open ends. Water crosses from one tracheid to the next through those pits, so flow is slower than in a vessel.",
+        "A narrower dead cell tapered at both ends, with bordered pits in its side walls. Water crosses from one tracheid to the next through those pits, so flow is slower than in a vessel.",
     },
     {
       id: "xylem-parenchyma",
@@ -314,7 +484,12 @@ export const vascularTissueFigure: FigureSpec = {
       panel: "xylem",
       depth: 2,
       d: [roundRect(222, 44, 42, 92, 10), roundRect(222, 142, 42, 92, 10)].join(" "),
-      layers: [{ d: dots([[243, 90], [243, 188]], 8), as: "shade" }],
+      layers: [
+        // Nuclei — these are the only LIVING cells in xylem
+        { d: dots([[243, 90], [243, 188]], 8), as: "shade" },
+        { d: dots([[243, 90], [243, 188]], 3), as: "shade", opacity: 0.7 },
+        { d: gleam(238, 68, 14, 26), as: "light", opacity: 0.3 },
+      ],
       focus: [214, 36, 58, 206],
       labelAt: [318, 262],
       leaderAt: [264, 198],
@@ -330,18 +505,22 @@ export const vascularTissueFigure: FigureSpec = {
       depth: 3,
       d: roundRect(386, 44, 70, 190, 10),
       layers: [
-        { d: "M386,104 H456 M386,174 H456", width: 2.4 },
-        // The pores of the sieve plate.
+        // SIEVE PLATES WITH PORES — the diagnostic feature of sieve tubes.
+        // The end walls between cells survive as perforated plates.
+        { d: "M386,104 H456 M386,174 H456", width: 2.8 },
+        // The pores — larger and more prominent than before
         {
-          d: dots(
-            [
-              [398, 104], [412, 104], [426, 104], [440, 104],
-              [398, 174], [412, 174], [426, 174], [440, 174],
-            ],
-            3,
-          ),
+          d: [
+            circle(398, 104, 4), circle(414, 104, 4), circle(430, 104, 4), circle(446, 104, 4),
+            circle(406, 104, 3), circle(422, 104, 3), circle(438, 104, 3),
+            circle(398, 174, 4), circle(414, 174, 4), circle(430, 174, 4), circle(446, 174, 4),
+            circle(406, 174, 3), circle(422, 174, 3), circle(438, 174, 3),
+          ].join(" "),
           as: "panel",
         },
+        // Thin cytoplasm lining — sieve tubes lose their nucleus but keep cytoplasm
+        { d: "M394,50 V98 M448,50 V98 M394,110 V168 M448,110 V168 M394,180 V228", width: 1.6, opacity: 0.35 },
+        { d: gleam(414, 90, 24, 50), as: "light", opacity: 0.25 },
       ],
       focus: [378, 36, 86, 206],
       labelAt: [352, 262],
@@ -357,13 +536,32 @@ export const vascularTissueFigure: FigureSpec = {
       panel: "phloem",
       depth: 4,
       d: roundRect(468, 60, 38, 158, 8),
-      layers: [{ d: circle(487, 110, 11), as: "shade" }],
+      layers: [
+        // Dense cytoplasm — companion cells are metabolically very active
+        {
+          d: dots(
+            [
+              [478, 80], [496, 80], [478, 100], [496, 100],
+              [478, 120], [496, 120], [478, 140], [496, 140],
+              [478, 160], [496, 160], [478, 180], [496, 180],
+              [478, 200], [496, 200],
+            ],
+            3,
+          ),
+          as: "shade",
+          opacity: 0.4,
+        },
+        // Large, prominent nucleus — the hallmark of a companion cell
+        { d: circle(487, 110, 13), as: "shade" },
+        { d: circle(487, 110, 5), as: "shade", opacity: 0.7 },
+        { d: gleam(484, 96, 12, 18), as: "light", opacity: 0.3 },
+      ],
       focus: [460, 52, 54, 174],
       labelAt: [468, 288],
       leaderAt: [490, 218],
       labelAlign: "middle",
       blurb:
-        "A narrow living cell pressed against the sieve tube. A mature sieve tube has lost its nucleus, so this neighbour keeps it alive and does its housekeeping for it.",
+        "A narrow living cell pressed against the sieve tube, packed with dense cytoplasm and a large nucleus. A mature sieve tube has lost its nucleus, so this neighbour keeps it alive and does its housekeeping.",
     },
     {
       id: "phloem-parenchyma",
@@ -372,7 +570,13 @@ export const vascularTissueFigure: FigureSpec = {
       panel: "phloem",
       depth: 5,
       d: roundRect(518, 60, 34, 158, 8),
-      layers: [{ d: roundRect(529, 78, 12, 122, 6), as: "panel" }],
+      layers: [
+        // Narrow dead lumen — thick-walled fibre
+        { d: roundRect(529, 78, 12, 122, 6), as: "panel" },
+        // Lignified wall shading
+        { d: "M524,66 V212 M546,66 V212", width: 1.2, opacity: 0.3 },
+        { d: gleam(532, 100, 8, 40), as: "light", opacity: 0.25 },
+      ],
       focus: [510, 52, 50, 174],
       labelAt: [648, 262],
       leaderAt: [552, 210],
@@ -400,7 +604,7 @@ export const epithelialFigure: FigureSpec = {
   caption:
     "Every epithelium is a sheet of tightly packed cells on a basement membrane. The shape of the cell tells you what the sheet is for.",
   altText:
-    "Four panels of epithelial tissue: flat squamous cells, cube-shaped cuboidal cells, tall columnar cells, and columnar cells carrying cilia. All four sit on a basement membrane. Selecting a panel magnifies it.",
+    "Four panels of epithelial tissue: flat squamous cells, cube-shaped cuboidal cells, tall columnar cells, and columnar cells carrying cilia. All four sit on a basement membrane with a nucleus in every cell. Selecting a panel magnifies it.",
   viewBox: [660, 232],
   panels: [
     { id: "sq", caption: "Squamous", box: epiPanels[0] },
@@ -417,7 +621,11 @@ export const epithelialFigure: FigureSpec = {
       depth: 0,
       d: [stadium(24, 118, 42, 26), stadium(68, 118, 42, 26), stadium(112, 118, 42, 26)].join(" "),
       layers: [
+        // Nucleus in each cell
         { d: dots([[45, 131], [89, 131], [133, 131]], 7), as: "shade" },
+        // Nucleolus
+        { d: dots([[45, 131], [89, 131], [133, 131]], 2.5), as: "shade", opacity: 0.7 },
+        // Basement membrane
         basement(20, 156),
       ],
       focus: epiPanels[0],
@@ -432,7 +640,11 @@ export const epithelialFigure: FigureSpec = {
       depth: 1,
       d: [roundRect(186, 104, 36, 36, 6), roundRect(226, 104, 36, 36, 6), roundRect(266, 104, 36, 36, 6)].join(" "),
       layers: [
+        // Nucleus in each cell
         { d: dots([[204, 122], [244, 122], [284, 122]], 8), as: "shade" },
+        // Nucleolus
+        { d: dots([[204, 122], [244, 122], [284, 122]], 3), as: "shade", opacity: 0.7 },
+        // Basement membrane
         basement(182, 306),
       ],
       focus: epiPanels[1],
@@ -447,7 +659,11 @@ export const epithelialFigure: FigureSpec = {
       depth: 2,
       d: [roundRect(350, 56, 36, 104, 6), roundRect(390, 56, 36, 104, 6), roundRect(430, 56, 36, 104, 6)].join(" "),
       layers: [
+        // Nucleus in each cell — positioned toward the base
         { d: dots([[368, 136], [408, 136], [448, 136]], 8), as: "shade" },
+        // Nucleolus
+        { d: dots([[368, 136], [408, 136], [448, 136]], 3), as: "shade", opacity: 0.7 },
+        // Basement membrane
         basement(346, 470),
       ],
       focus: epiPanels[2],
@@ -462,8 +678,13 @@ export const epithelialFigure: FigureSpec = {
       depth: 3,
       d: [roundRect(512, 68, 36, 92, 6), roundRect(552, 68, 36, 92, 6), roundRect(592, 68, 36, 92, 6)].join(" "),
       layers: [
+        // Cilia at the top — beating hairs
         { d: ticks(516, 624, 52, 16, 8), width: 1.6, opacity: 0.85 },
+        // Nucleus in each cell
         { d: dots([[530, 138], [570, 138], [610, 138]], 8), as: "shade" },
+        // Nucleolus
+        { d: dots([[530, 138], [570, 138], [610, 138]], 3), as: "shade", opacity: 0.7 },
+        // Basement membrane
         basement(508, 632),
       ],
       focus: epiPanels[3],
@@ -624,8 +845,10 @@ export const muscleFigure: FigureSpec = {
       depth: 0,
       d: [stadium(24, 62, 180, 44), stadium(24, 122, 180, 44)].join(" "),
       layers: [
-        { d: ticks(42, 190, 66, 36, 12), width: 1.5, opacity: 0.75 },
-        { d: ticks(42, 190, 126, 36, 12), width: 1.5, opacity: 0.75 },
+        // Striations — the alternating light and dark bands, drawn with
+        // closer spacing so they read at rail size (~590px wide)
+        { d: ticks(36, 194, 66, 36, 8), width: 1.8, opacity: 0.7 },
+        { d: ticks(36, 194, 126, 36, 8), width: 1.8, opacity: 0.7 },
         // Many nuclei, all pushed to the edge of the fibre.
         {
           d: [
@@ -667,8 +890,9 @@ export const muscleFigure: FigureSpec = {
       depth: 2,
       d: [stadium(456, 62, 150, 38), roundRect(556, 92, 28, 30, 8), stadium(474, 116, 160, 38)].join(" "),
       layers: [
-        { d: ticks(472, 594, 66, 30, 11), width: 1.4, opacity: 0.7 },
-        { d: ticks(490, 622, 120, 30, 11), width: 1.4, opacity: 0.7 },
+        // Striations — closer spacing for readability at rail size
+        { d: ticks(464, 596, 66, 30, 8), width: 1.6, opacity: 0.65 },
+        { d: ticks(482, 624, 120, 30, 8), width: 1.6, opacity: 0.65 },
         // Intercalated discs — the junctions that let the beat pass on.
         { d: "M516,62 V100 M582,116 V154", width: 3.4 },
         { d: [ellipse(500, 81, 10, 6), ellipse(548, 135, 10, 6), ellipse(614, 135, 10, 6)].join(" "), as: "shade" },
@@ -689,7 +913,7 @@ export const neuronFigure: FigureSpec = {
   caption:
     "The longest cell in your body: signals arrive on the dendrites, cross the cell body, and race down the axon to the next cell.",
   altText:
-    "A labelled diagram of a nerve cell showing the branching dendrites, the cell body with its nucleus, the long axon wrapped in a segmented myelin sheath, and the branched nerve endings. Selecting a label magnifies that part.",
+    "A labelled diagram of a nerve cell showing branching dendrites, the cell body speckled with Nissl granules and holding a nucleus with a nucleolus, the long axon wrapped in discrete Schwann-cell myelin segments separated by nodes of Ranvier, and branched nerve endings tipped with synaptic knobs. Selecting a label lifts that part out enlarged.",
   viewBox: [660, 320],
   magnify: "part",
   maxZoom: 4,
@@ -699,28 +923,59 @@ export const neuronFigure: FigureSpec = {
       label: "Dendrite",
       tint: T.nerve,
       depth: 0,
+      // Branching dendrites — each branch further subdivides
       d: [
+        // Main dendrite branches from cell body
         "M136,142 C112,132 92,116 68,106 L64,118 C88,128 108,144 132,156 Z",
         "M132,178 C108,182 84,192 62,206 L68,216 C90,204 112,194 136,190 Z",
         "M150,120 C142,98 132,78 118,58 L128,52 C144,72 154,94 162,116 Z",
+        // Secondary branches — smaller sub-branches
+        "M68,106 C56,98 46,86 34,78 L38,72 C50,80 60,92 72,100 Z",
+        "M68,106 C58,114 48,124 38,132 L42,138 C52,130 62,120 72,112 Z",
+        "M62,206 C50,214 38,224 26,232 L30,238 C42,230 54,220 66,212 Z",
+        "M118,58 C108,46 96,36 84,28 L90,22 C102,30 114,42 124,54 Z",
       ].join(" "),
-      focus: [56, 46, 116, 176],
+      layers: [
+        // Small bumps on dendrites — dendritic spines
+        { d: dots([[80, 108], [98, 124], [74, 198], [90, 186], [130, 68], [136, 90]], 3), as: "shade", opacity: 0.6 },
+        { d: gleam(90, 108, 18, 24), as: "light", opacity: 0.25 },
+      ],
+      focus: [22, 18, 126, 226],
       labelAt: [140, 42],
       leaderAt: [124, 60],
       blurb:
-        "Short branching fibres reaching out from the cell body. They collect signals from neighbouring neurons — the more branches, the more connections one neuron can listen to at once.",
+        "Short branching fibres reaching out from the cell body, with smaller branches subdividing further. They collect signals from neighbouring neurons — the more branches, the more connections.",
     },
     {
       id: "cell-body",
       label: "Cell body",
       tint: T.nerve,
       depth: 1,
-      d: "M138,168 C136,138 160,116 190,118 C220,120 238,144 236,172 C234,202 210,220 182,218 C154,216 140,198 138,168 Z",
-      focus: [130, 110, 116, 116],
+      d: blob(188, 168, 52, 50, [1, 0.96, 1.04, 0.97, 1.02, 0.95, 1.03, 0.98]),
+      layers: [
+        // NISSL GRANULES — rough ER clumps that are the hallmark of a neuron
+        // cell body when stained. Shown as small speckles throughout the cytoplasm.
+        {
+          d: dots(
+            [
+              [162, 148], [174, 136], [168, 162], [156, 172],
+              [164, 186], [176, 198], [188, 202], [200, 196],
+              [212, 190], [218, 174], [222, 158], [214, 142],
+              [202, 132], [190, 130], [178, 152], [196, 180],
+              [208, 168], [170, 180], [184, 194], [216, 162],
+            ],
+            2.8,
+          ),
+          as: "shade",
+          opacity: 0.55,
+        },
+        { d: gleam(174, 148, 24, 28), as: "light", opacity: 0.3 },
+      ],
+      focus: [132, 114, 120, 110],
       labelAt: [116, 296],
       leaderAt: [172, 212],
       blurb:
-        "The bulging middle of the cell, holding the nucleus and the cytoplasm. Everything the neuron needs to stay alive is made here, then shipped out along the fibres.",
+        "The bulging middle of the cell, speckled throughout with Nissl granules — clumps of rough endoplasmic reticulum that make the proteins the neuron needs to maintain its extraordinary length.",
     },
     {
       id: "nucleus",
@@ -728,20 +983,32 @@ export const neuronFigure: FigureSpec = {
       tint: T.nucleus,
       depth: 2,
       d: circle(188, 168, 24),
-      layers: [{ d: circle(194, 162, 9), as: "shade" }],
+      layers: [
+        // Nucleolus — prominent in neurons
+        { d: circle(192, 164, 9), as: "shade" },
+        // Nucleolus core
+        { d: circle(193, 163, 4), as: "shade", opacity: 0.6 },
+        { d: gleam(182, 158, 10, 12), as: "light", opacity: 0.35 },
+      ],
       focus: [160, 140, 56, 56],
       labelAt: [232, 62],
       leaderAt: [198, 146],
       labelAlign: "middle",
       blurb:
-        "The control centre, sitting in the cell body. A neuron rarely divides again once it is mature, so this nucleus generally has to run the same cell for your whole life.",
+        "The control centre with a prominent nucleolus, sitting in the cell body. A neuron rarely divides again once it is mature, so this nucleus has to run the same cell for your whole life.",
     },
     {
       id: "axon",
       label: "Axon",
-      tint: T.nerve,
+      tint: T.axoplasm,
       depth: 3,
       d: roundRect(232, 158, 340, 22, 11),
+      layers: [
+        // Axoplasm — the cytoplasm running the length of the axon
+        { d: "M244,164 H560", width: 1.0, opacity: 0.3, dash: "3 8" },
+        { d: "M244,174 H560", width: 1.0, opacity: 0.3, dash: "5 10" },
+        { d: gleam(400, 162, 80, 8), as: "light", opacity: 0.2 },
+      ],
       focus: [352, 148, 120, 42],
       labelAt: [412, 62],
       leaderAt: [404, 158],
@@ -754,18 +1021,52 @@ export const neuronFigure: FigureSpec = {
       label: "Myelin sheath",
       tint: T.myelin,
       depth: 4,
+      // DISCRETE SCHWANN SEGMENTS with NODES OF RANVIER between them.
+      // Each segment is one Schwann cell wrapping the axon; the bare gaps
+      // between segments are the nodes where the signal regenerates.
       d: [
-        roundRect(252, 148, 72, 42, 18),
-        roundRect(334, 148, 72, 42, 18),
-        roundRect(416, 148, 72, 42, 18),
-        roundRect(498, 148, 66, 42, 18),
+        roundRect(252, 148, 60, 42, 18),
+        roundRect(322, 148, 60, 42, 18),
+        roundRect(392, 148, 60, 42, 18),
+        roundRect(462, 148, 50, 42, 18),
       ].join(" "),
+      layers: [
+        // Concentric wrapping layers visible inside each Schwann segment —
+        // the myelin sheath is literally many layers of membrane wound around the axon.
+        {
+          d: [
+            // Segment 1 inner layers
+            ellipse(282, 169, 24, 16), ellipse(282, 169, 18, 11),
+            // Segment 2
+            ellipse(352, 169, 24, 16), ellipse(352, 169, 18, 11),
+            // Segment 3
+            ellipse(422, 169, 24, 16), ellipse(422, 169, 18, 11),
+            // Segment 4
+            ellipse(487, 169, 20, 16), ellipse(487, 169, 14, 11),
+          ].join(" "),
+          width: 1.0,
+          opacity: 0.4,
+        },
+        // Schwann cell nuclei — one per segment, pressed against the outer surface
+        { d: dots([[270, 152], [340, 152], [410, 152], [476, 152]], 4), as: "shade" },
+        // Gleam on each segment
+        {
+          d: [
+            gleam(274, 158, 18, 12),
+            gleam(344, 158, 18, 12),
+            gleam(414, 158, 18, 12),
+            gleam(480, 158, 16, 12),
+          ].join(" "),
+          as: "light",
+          opacity: 0.35,
+        },
+      ],
       focus: [244, 138, 92, 62],
       labelAt: [352, 296],
       leaderAt: [288, 190],
       labelAlign: "middle",
       blurb:
-        "A fatty wrapping laid down in segments along the axon, with bare gaps between them. The signal leaps from gap to gap instead of crawling along, which makes it travel far faster.",
+        "A fatty wrapping laid down in discrete Schwann-cell segments along the axon, with bare nodes of Ranvier between them. The signal leaps node to node instead of crawling, making it travel far faster.",
     },
     {
       id: "nerve-ending",
@@ -773,16 +1074,45 @@ export const neuronFigure: FigureSpec = {
       tint: T.nerve,
       depth: 5,
       d: [
+        // Branching terminal fibres
         "M568,164 C586,152 604,142 624,138 L626,148 C608,152 592,162 576,174 Z",
         "M570,176 C590,180 610,188 628,198 L622,206 C606,196 588,188 568,186 Z",
         "M572,170 C592,170 614,170 634,170 L634,180 C614,180 592,180 572,180 Z",
+        // Sub-branches
+        "M624,138 C632,130 640,122 648,118 L652,124 C646,128 638,134 630,142 Z",
+        "M628,198 C636,206 642,214 646,222 L640,226 C636,218 630,210 624,204 Z",
       ].join(" "),
-      focus: [560, 130, 92, 82],
+      layers: [
+        // SYNAPTIC KNOBS with vesicles — bulbous endings at the tips
+        {
+          d: [
+            circle(648, 121, 8), circle(652, 170, 7), circle(646, 224, 8),
+            circle(636, 138, 6), circle(640, 204, 6),
+          ].join(" "),
+          as: "shade",
+          opacity: 0.6,
+        },
+        // Vesicles inside the synaptic knobs — tiny circles
+        {
+          d: dots(
+            [
+              [644, 118], [652, 118], [648, 124], [644, 124],
+              [648, 167], [656, 167], [652, 173],
+              [642, 221], [650, 221], [646, 227], [642, 227],
+            ],
+            1.8,
+          ),
+          as: "shade",
+          opacity: 0.7,
+        },
+        { d: gleam(640, 118, 6, 6), as: "light", opacity: 0.3 },
+      ],
+      focus: [560, 110, 100, 124],
       labelAt: [596, 246],
       leaderAt: [616, 196],
       labelAlign: "middle",
       blurb:
-        "The axon splits into fine branches at its far end. Each one comes within a hair's breadth of the next cell and passes the message across the tiny gap using chemicals.",
+        "The axon splits into fine branches tipped with synaptic knobs packed with vesicles. Each knob comes within a hair's breadth of the next cell and passes the message using chemicals released from the vesicles.",
     },
   ],
 };

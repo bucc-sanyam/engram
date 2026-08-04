@@ -275,3 +275,112 @@ export const distanceFormulaFigure: FigureSpec = {
     },
   ],
 };
+
+/* ════════════════════════════════════════════════════════════ reflections ══ */
+
+export const reflectionsFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 1.8",
+  title: "Reflecting a point in the axes",
+  caption:
+    "An axis acts as a mirror. Reflecting across the x-axis flips the y-coordinate; reflecting across the y-axis flips the x-coordinate.",
+  altText:
+    "A coordinate plane showing a point P plotted at (3, 2) in the first quadrant, and its three reflections: across the x-axis to (3, -2), across the y-axis to (-3, 2), and through the origin to (-3, -2). Dashed construction lines connect the points.",
+  viewBox: [660, 460],
+  magnify: "camera",
+  maxZoom: 2.6,
+  scenery: [
+    { d: grid(), width: 1, dash: "3 6", opacity: 0.5 },
+    { d: "M462,148 V324 M198,148 H462 M462,148 L198,324", width: 1.6, dash: "6 5", opacity: 0.7 },
+    { d: "M262,143 v10 M266,143 v10 M394,143 v10 M398,143 v10", width: 1.4 },
+    { d: "M457,192 h10 M457,280 h10", width: 1.4 },
+    { d: "M392,189 l8,6 M395,185 l8,6 M398,181 l8,6 M260,277 l8,6 M263,273 l8,6 M266,269 l8,6", width: 1.4 }
+  ],
+  notes: [
+    ...(axisNotes() ?? []),
+    { at: [474, 138], text: "P (3, 2)", size: 14, emphasis: true },
+    { at: [474, 334], text: "P' (3, -2)", size: 14 },
+    { at: [186, 138], text: "P'' (-3, 2)", size: 14, align: "end" },
+    { at: [186, 334], text: "P''' (-3, -2)", size: 14, align: "end" },
+  ],
+  parts: [
+    {
+      id: "x-axis",
+      label: "x-axis mirror",
+      tint: T.axis,
+      depth: 0,
+      d: "M50,231 H610 V241 H50 Z",
+      focus: [200, 110, 320, 260],
+      labelAt: [600, 214],
+      leaderAt: [500, 236],
+      labelAlign: "end",
+      blurb:
+        "Reflecting across the horizontal axis leaves the x-coordinate alone but flips the sign of the y-coordinate.",
+    },
+    {
+      id: "y-axis",
+      label: "y-axis mirror",
+      tint: T.axis,
+      depth: 1,
+      d: "M325,34 V442 H335 V34 Z",
+      focus: [150, 100, 360, 280],
+      labelAt: [352, 46],
+      leaderAt: [330, 76],
+      labelAlign: "start",
+      blurb:
+        "Reflecting across the vertical axis leaves the y-coordinate alone but flips the sign of the x-coordinate.",
+    },
+    {
+      id: "point-p",
+      label: "Original point",
+      tint: T.point,
+      depth: 2,
+      d: circle(462, 148, 9),
+      focus: [360, 60, 200, 180],
+      labelAt: [560, 80],
+      leaderAt: [470, 140],
+      labelAlign: "end",
+      blurb:
+        "Our starting point at (3, 2). The coordinates tell you it is 3 units right of the y-axis and 2 units above the x-axis.",
+    },
+    {
+      id: "image-x",
+      label: "Reflection in x-axis",
+      tint: T.q4,
+      depth: 3,
+      d: circle(462, 324, 9),
+      focus: [360, 240, 200, 180],
+      labelAt: [560, 400],
+      leaderAt: [470, 332],
+      labelAlign: "end",
+      blurb:
+        "The mirror image across the x-axis. It is still 3 units to the right, but now 2 units below the axis, so its coordinates are (3, -2).",
+    },
+    {
+      id: "image-y",
+      label: "Reflection in y-axis",
+      tint: T.q2,
+      depth: 4,
+      d: circle(198, 148, 9),
+      focus: [100, 60, 200, 180],
+      labelAt: [100, 80],
+      leaderAt: [190, 140],
+      labelAlign: "start",
+      blurb:
+        "The mirror image across the y-axis. It is still 2 units up, but now 3 units to the left, so its coordinates are (-3, 2).",
+    },
+    {
+      id: "image-origin",
+      label: "Through origin",
+      tint: T.q3,
+      depth: 5,
+      d: circle(198, 324, 9),
+      focus: [100, 240, 200, 180],
+      labelAt: [100, 400],
+      leaderAt: [190, 332],
+      labelAlign: "start",
+      blurb:
+        "Reflecting through the origin is the same as reflecting across the x-axis and then the y-axis. Both coordinates flip their signs: (-3, -2).",
+    },
+  ],
+};

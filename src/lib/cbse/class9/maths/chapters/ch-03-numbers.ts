@@ -3,6 +3,7 @@ import {
   numberLineFigure,
   constructRootFigure,
   rootSpiralFigure,
+  zeroPlaceholderFigure,
 } from "../figures/ch-03";
 import type { WorkedExampleSpec } from "@/lib/sim/types";
 
@@ -126,6 +127,7 @@ This cultural comfort with massive quantities, and this fascination with powers 
     /* ── S2 ─────────────────────────────────────────────────────── */
     {
       key: "invention-of-zero",
+      figures: [zeroPlaceholderFigure],
       title: "The Invention of Zero",
       eyebrow: "The void becomes a number",
       bookRef: "Ganita Manjari §3.2",

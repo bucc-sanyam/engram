@@ -322,3 +322,94 @@ export const rootSpiralFigure: FigureSpec = {
     },
   ],
 };
+
+/* ═══════════════════════════════════════════════════════ inventing zero ══ */
+
+export const zeroPlaceholderFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 3.4",
+  title: "Why zero had to be invented",
+  caption:
+    "An abacus has fixed columns, so an empty wire is obvious. But when writing numbers down, a gap can easily be missed — without a dedicated placeholder symbol, three hundred and four collapses into thirty-four.",
+  altText:
+    "Two rows of digits. The top row shows 3, 0, and 4 in three distinct columns. The bottom row shows 3 and 4 with a dashed empty space between them, showing how an empty space can easily shrink or be misread as 34. Selecting a label magnifies that part.",
+  viewBox: [660, 260],
+  magnify: "camera",
+  maxZoom: 2.2,
+  scenery: [
+    { d: "M200,40 H260 M300,40 H360 M400,40 H460", width: 1.4, opacity: 0.4 },
+    { d: "M200,66 C200,62 204,58 208,58 H252 C256,58 260,62 260,66 V124 C260,128 256,132 252,132 H208 C204,132 200,128 200,124 Z", width: 1.6, opacity: 0.3 },
+    { d: "M300,66 C300,62 304,58 308,58 H352 C356,58 360,62 360,66 V124 C360,128 356,132 352,132 H308 C304,132 300,128 300,124 Z", width: 1.6, opacity: 0.8 },
+    { d: "M400,66 C400,62 404,58 408,58 H452 C456,58 460,62 460,66 V124 C460,128 456,132 452,132 H408 C404,132 400,128 400,124 Z", width: 1.6, opacity: 0.3 },
+    { d: "M200,166 C200,162 204,158 208,158 H252 C256,158 260,162 260,166 V224 C260,228 256,232 252,232 H208 C204,232 200,228 200,224 Z", width: 1.6, opacity: 0.3 },
+    { d: "M300,166 C300,162 304,158 308,158 H352 C356,158 360,162 360,166 V224 C360,228 356,232 352,232 H308 C304,232 300,228 300,224 Z", width: 1.6, dash: "6 5", opacity: 0.6 },
+    { d: "M400,166 C400,162 404,158 408,158 H452 C456,158 460,162 460,166 V224 C460,228 456,232 452,232 H408 C404,232 400,228 400,224 Z", width: 1.6, opacity: 0.3 },
+    { d: "M270,195 L286,195 M390,195 L374,195", width: 1.6, opacity: 0.5 },
+    { d: "M280,190 L288,195 L280,200 Z", as: "fill", opacity: 0.5 },
+    { d: "M380,190 L372,195 L380,200 Z", as: "fill", opacity: 0.5 },
+  ],
+  notes: [
+    { at: [230, 32], text: "100s", size: 12 },
+    { at: [330, 32], text: "10s", size: 12 },
+    { at: [430, 32], text: "1s", size: 12 },
+    { at: [230, 106], text: "3", size: 36, align: "middle" },
+    { at: [330, 106], text: "0", size: 36, align: "middle", emphasis: true },
+    { at: [430, 106], text: "4", size: 36, align: "middle" },
+    { at: [230, 206], text: "3", size: 36, align: "middle" },
+    { at: [430, 206], text: "4", size: 36, align: "middle" },
+  ],
+  parts: [
+    {
+      id: "solid-zero",
+      label: "Solid placeholder",
+      tint: T.integer,
+      depth: 0,
+      d: "M290,50 H370 V140 H290 Z",
+      focus: [260, 40, 140, 110],
+      labelAt: [110, 80],
+      leaderAt: [290, 95],
+      labelAlign: "end",
+      blurb:
+        "A written symbol that means 'nothing is here'. Its job is simply to hold the tens column open, forcing the 3 into the hundreds column where it belongs.",
+    },
+    {
+      id: "empty-gap",
+      label: "Dangerous gap",
+      tint: T.arc,
+      depth: 1,
+      d: "M290,150 H370 V240 H290 Z",
+      focus: [220, 140, 220, 110],
+      labelAt: [110, 195],
+      leaderAt: [290, 195],
+      labelAlign: "end",
+      blurb:
+        "Leaving a physical gap works on an abacus but fails on paper. Write it a little too carelessly, or let someone else read it, and the gap vanishes.",
+    },
+    {
+      id: "hundreds",
+      label: "Hundreds place",
+      tint: T.integer,
+      depth: 2,
+      d: "M190,50 H270 V240 H190 Z",
+      focus: [180, 40, 100, 210],
+      labelAt: [540, 80],
+      leaderAt: [270, 95],
+      labelAlign: "start",
+      blurb:
+        "This 3 means three hundred. But it only means three hundred because it sits two spaces left of the units column.",
+    },
+    {
+      id: "units",
+      label: "Units place",
+      tint: T.integer,
+      depth: 3,
+      d: "M390,50 H470 V240 H390 Z",
+      focus: [380, 40, 100, 210],
+      labelAt: [540, 195],
+      leaderAt: [470, 195],
+      labelAlign: "start",
+      blurb:
+        "This 4 means four units. It is the anchor of the place-value system: every other column is defined by how far away from the units it sits.",
+    },
+  ],
+};

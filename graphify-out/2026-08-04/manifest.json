@@ -1345,33 +1345,33 @@
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/chapters/ch-01-coordinates.ts": {
-    "mtime": 1785761952.2922544,
-    "ast_hash": "b6d33ccc87da84885c881334dbcafb8e",
+    "mtime": 1785648551.0867634,
+    "ast_hash": "a11e93ff808d1909d479f7d3b822f253",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/chapters/ch-03-numbers.ts": {
-    "mtime": 1785762037.761563,
-    "ast_hash": "d71c45de0711602d6014d95f238ad073",
+    "mtime": 1785648551.0872173,
+    "ast_hash": "48ae2e3637326d3913a7c986945aaf92",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/chapters/ch-06-perimeter-area.ts": {
-    "mtime": 1785831406.8732708,
-    "ast_hash": "d61010a080a21bc739b57762fa461366",
+    "mtime": 1785648551.087601,
+    "ast_hash": "fe77b653cbb7895a1115ea99b7321420",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/figures/ch-01.ts": {
-    "mtime": 1785761933.6237986,
-    "ast_hash": "d701628cf57e165418dc0d4a4d83b95d",
+    "mtime": 1785648419.2495117,
+    "ast_hash": "c248967a981fdd8e3c8f004a84bdd9a8",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/figures/ch-03.ts": {
-    "mtime": 1785762793.7739737,
-    "ast_hash": "89b862f58cdcf3ebdc724fc873087599",
+    "mtime": 1785648597.490346,
+    "ast_hash": "e0a9d97e805c42ad99a1626ec4dc0324",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/figures/ch-06.ts": {
-    "mtime": 1785762177.7462978,
-    "ast_hash": "13d93e6d17026469152c9f24a1818b18",
+    "mtime": 1785648597.4901056,
+    "ast_hash": "6e5392eadd6c124c73c486785dfc9613",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/maths/index.ts": {
@@ -1395,13 +1395,13 @@
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-03.ts": {
-    "mtime": 1785762781.0699673,
-    "ast_hash": "be1c3c073404f6f6373b42ced6e59fa6",
+    "mtime": 1785699930.3461978,
+    "ast_hash": "af2223ae80b5454780d0aed0b5143afc",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-05.ts": {
-    "mtime": 1785761635.8963723,
-    "ast_hash": "5986a614908718776bf6d8cda4c2b295",
+    "mtime": 1785699930.3467555,
+    "ast_hash": "549d2599e6863b169f5b7f093af2a3e0",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/index.ts": {

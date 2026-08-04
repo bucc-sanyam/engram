@@ -3,6 +3,8 @@ import {
   athleticsTrackFigure,
   archimedesFigure,
   sectorFigure,
+  unitSquaresFigure,
+  circleDissectionFigure,
 } from "../figures/ch-06";
 import type { GeometryBoardSpec, WorkedExampleSpec } from "@/lib/sim/types";
 
@@ -133,12 +135,12 @@ const arcLengthWorked: WorkedExampleSpec = {
 export const ch06PerimeterArea: Chapter = {
   key: "ch-06-perimeter-area",
   number: 6,
-  title: "Measuring Space: Perimeter",
+  title: "Measuring Space: Perimeter and Area",
   subject: "maths",
   book: "Ganita Manjari",
   accent: "#ffc163",
-  summary: "Explore how to measure the boundaries of geometric shapes, and discover the fascinating history behind the most famous ratio in mathematics: pi.",
-  estMinutes: 25,
+  summary: "Explore how to measure the boundaries of geometric shapes, and discover the fascinating history behind the most famous ratio in mathematics: pi, before venturing inside to measure area.",
+  estMinutes: 40,
 
   sections: [
     /* ── S1 ─────────────────────────────────────────────────────── */
@@ -274,6 +276,67 @@ For example, a garden sprinkler set to sweep through $90°$ with a reach of $5$ 
 This is also why a running track's staggered start makes sense. Every lane traces an arc of the same angle around the bend, but at a larger radius, so the outer runners genuinely do cover more ground — and that head start is what makes the race fair.`,
       sim: arcLengthWorked,
     },
+
+    /* ── S6 ─────────────────────────────────────────────────────── */
+    {
+      key: "area-basics",
+      figures: [unitSquaresFigure],
+      title: "Measuring Area",
+      eyebrow: "The space inside",
+      bookRef: "Ganita Manjari §6.5",
+      body: `Perimeter tells you the length of a shape's border. But if you want to know how much paint you need to cover a wall, or how much carpet you need for a floor, the boundary length is useless. You need to know the amount of flat space contained *inside* that boundary. This measurement is called the **area**.
+
+You can measure perimeter with a straight, one-dimensional ruler. But a ruler cannot measure area, because a ruler has no width. To measure two-dimensional space, your measuring tool must also be two-dimensional. 
+
+The simplest shape that perfectly tiles a flat surface without leaving gaps is a square. So, to measure area, we count how many standard squares fit inside the shape. The fundamental standard is a **unit square** — a square whose sides are exactly 1 unit long (like 1 cm by 1 cm). When we say a shape has an area of "15 square centimetres" (written as $15 \\text{ cm}^2$), we mean exactly 15 of these 1 cm by 1 cm tiles fit perfectly inside it.
+
+### The Area of a Rectangle
+For a rectangle, finding the area does not require counting every single square one by one. If a rectangle is 5 cm long and 3 cm wide, you can think of it as being made of 3 rows, where each row contains exactly 5 unit squares.
+
+The total number of squares is just $5 \\times 3 = 15$. This gives us the fundamental formula for the area of any rectangle:
+**$\\text{Area} = \\text{length} \\times \\text{width}$**
+
+Because a square is just a special rectangle where the length and width are the same ($a$), its area is simply $a \\times a = a^2$. 
+
+Unlike perimeter, which scales directly with the sides (double the side, double the perimeter), area scales with the *square* of the sides. If you double the length and width of a rectangle, you do not just double its area — you quadruple it ($2 \\times 2 = 4$). A 2 cm by 2 cm square holds 4 unit squares, while a 4 cm by 4 cm square holds 16!`,
+      note: {
+        kind: "exam-tip",
+        body: "Never confuse perimeter with area. Perimeter is measured in linear units (cm, m). Area is always measured in squared units ($\\text{cm}^2, \\text{m}^2$).",
+      },
+    },
+
+    /* ── S7 ─────────────────────────────────────────────────────── */
+    {
+      key: "area-by-dissection",
+      figures: [circleDissectionFigure],
+      title: "Area by Dissection",
+      eyebrow: "Rearranging the pieces",
+      bookRef: "Ganita Manjari §6.6",
+      body: `Finding the area of a rectangle is straightforward because squares fit perfectly into it. But what about a triangle, a parallelogram, or a circle? You cannot perfectly pack square tiles into a curved shape — the edges will always be messy.
+
+Instead of trying to count squares directly, mathematicians rely on a brilliant principle: **if you cut a shape into pieces and rearrange them, the total area does not change**. This is called finding area by *dissection*.
+
+If you take a parallelogram, cut off a triangle from one end, and move it to the other end, it forms a perfect rectangle with the same base and height. Therefore, the area of a parallelogram is exactly the same as the rectangle it forms: $\\text{base} \\times \\text{height}$. 
+
+If you take a triangle and duplicate it, the two identical triangles can be placed together to form a parallelogram. Since the two triangles together have an area of $\\text{base} \\times \\text{height}$, a single triangle has exactly half that area: $\\frac{1}{2} \\times \\text{base} \\times \\text{height}$.
+
+### The Area of a Circle
+This same trick works even for circles, if you are willing to make an infinite number of cuts. 
+
+Imagine slicing a circular pizza into wedges. If you cut it into 4 wedges and arrange them side by side, pointing alternately up and down, they form a bumpy shape. Cut it into 16 wedges, and the shape begins to look like a parallelogram with slightly scalloped top and bottom edges.
+
+As you cut the circle into thinner and thinner wedges (moving towards infinity), the scalloped edges become perfectly straight, and the shape becomes a perfect, flat-edged parallelogram.
+
+What are the dimensions of this new parallelogram?
+- Its height is exactly the length of the straight side of a wedge — which is the **radius ($r$)**.
+- Its top and bottom edges are made of the circle's curved crust. Half the crust forms the top, and half forms the bottom. So the base is exactly half the circumference. Since the full circumference is $2\\pi r$, the base is just **$\\pi r$**.
+
+The area of a parallelogram is base $\\times$ height. 
+$\\text{Area} = (\\pi r) \\times (r)$
+**$\\text{Area} = \\pi r^2$**
+
+Through the magic of dissection, the seemingly impossible task of measuring a curved area is solved by turning it into a rectangle.`,
+    },
   ],
 
   /* ─── Questions (50 total) ─────────────────────────────────────── */
@@ -295,12 +358,17 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "mcq",
-      prompt: "If a square has a side length of 5 cm, what is its perimeter?",
-      options: ["10 cm", "15 cm", "20 cm", "25 cm"],
-      correct_index: 2,
-      model_answer: "A square has four equal sides, so the perimeter is 4 × 5 = 20 cm.",
+      prompt: "Why can a one-dimensional ruler not be used to measure area?",
+      options: [
+        "Because rulers only measure in centimetres",
+        "Because area is a two-dimensional space and a ruler has no width",
+        "Because rulers are not long enough",
+        "Because area is measured in degrees",
+      ],
+      correct_index: 1,
+      model_answer: "A ruler measures length, which is one-dimensional. Area is two-dimensional, so it requires a two-dimensional unit (like a square) to measure.",
       difficulty: "basic",
-      section: "perimeter-basics",
+      section: "area-basics",
     },
     {
       kind: "mcq",
@@ -327,21 +395,21 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "mcq",
-      prompt: "What is the constant ratio C/D for any circle representing?",
-      options: ["Radius", "Area", "Pi (π)", "Diameter"],
-      correct_index: 2,
-      model_answer: "The ratio of a circle's circumference (C) to its diameter (D) is identical for all circles, and is represented by the constant π.",
-      difficulty: "basic",
-      section: "perimeter-of-circle",
+      prompt: "If you double the length and width of a rectangle, what happens to its area?",
+      options: ["It stays the same", "It doubles", "It triples", "It quadruples"],
+      correct_index: 3,
+      model_answer: "Area scales with the square of the sides. 2 × 2 = 4, so the area quadruples.",
+      difficulty: "intermediate",
+      section: "area-basics",
     },
     {
       kind: "mcq",
-      prompt: "Which formula correctly represents the circumference of a circle given its radius 'r'?",
-      options: ["πr", "2πr", "πr²", "4πr"],
-      correct_index: 1,
-      model_answer: "Since Diameter (D) = 2r, substituting this into C = πD gives C = 2πr.",
-      difficulty: "basic",
-      section: "perimeter-of-circle",
+      prompt: "In the dissection of a circle into a parallelogram, what does the height of the parallelogram represent?",
+      options: ["The circumference", "The diameter", "The radius", "Pi"],
+      correct_index: 2,
+      model_answer: "The height is made of the straight side of the wedges, which perfectly corresponds to the radius (r) of the original circle.",
+      difficulty: "intermediate",
+      section: "area-by-dissection",
     },
     {
       kind: "mcq",
@@ -518,12 +586,12 @@ This is also why a running track's staggered start makes sense. Every lane trace
     // ── TRUE/FALSE (10) ─────────────────────────────────────────────
     {
       kind: "truefalse",
-      prompt: "The perimeter of an equilateral triangle with side 'a' is 3a.",
+      prompt: "The area of a shape changes if you cut it into pieces and rearrange them.",
       options: ["True", "False"],
-      correct_index: 0,
-      model_answer: "True — an equilateral triangle has three identical sides. Summing them (a+a+a) gives 3a.",
+      correct_index: 1,
+      model_answer: "False — the principle of dissection states that total area remains identical no matter how the pieces are rearranged.",
       difficulty: "basic",
-      section: "perimeter-basics",
+      section: "area-by-dissection",
     },
     {
       kind: "truefalse",
@@ -599,28 +667,28 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "truefalse",
-      prompt: "The constant π is used to find the perimeter of a rectangle.",
+      prompt: "Area is always measured in squared units like cm².",
       options: ["True", "False"],
-      correct_index: 1,
-      model_answer: "False — π is related exclusively to circles (and curves). A rectangle's perimeter is strictly the sum of its straight sides.",
+      correct_index: 0,
+      model_answer: "True — because area measures 2D space, the standard unit is a 2D square (e.g., 1 cm × 1 cm).",
       difficulty: "basic",
-      section: "perimeter-basics",
+      section: "area-basics",
     },
 
     // ── MULTI (8) ───────────────────────────────────────────────────
     {
       kind: "multi",
-      prompt: "Which formulas are correct for finding the perimeter of different shapes?",
+      prompt: "Which of the following are valid formulas for area?",
       options: [
-        "Square: 4 × side",
         "Rectangle: length × width",
-        "Circle: 2π × radius",
-        "Equilateral Triangle: 3 × side",
+        "Circle: πr²",
+        "Square: 4 × side",
+        "Triangle: ½ × base × height",
       ],
-      correct_indices: [0, 2, 3],
-      model_answer: "Rectangle perimeter is 2(l+w), not l×w (which is area). The other three boundary formulas are correct.",
+      correct_indices: [0, 1, 3],
+      model_answer: "The formula 4 × side calculates the perimeter of a square, not its area. The other three correctly calculate 2D area.",
       difficulty: "intermediate",
-      section: "perimeter-basics",
+      section: "area-basics",
     },
     {
       kind: "multi",
@@ -680,17 +748,17 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "multi",
-      prompt: "Which angles subtended at the centre correspond to the given arc length fractions?",
+      prompt: "When dissecting a circle into a parallelogram to find its area, which statements are true?",
       options: [
-        "180 degrees = 1/2 circumference",
-        "90 degrees = 1/4 circumference",
-        "360 degrees = full circumference",
-        "60 degrees = 1/3 circumference",
+        "The height of the parallelogram is r",
+        "The base of the parallelogram is 2πr",
+        "The base of the parallelogram is πr",
+        "The area is πr²",
       ],
-      correct_indices: [0, 1, 2],
-      model_answer: "60 degrees is 60/360 = 1/6th of the circumference, not 1/3rd.",
-      difficulty: "intermediate",
-      section: "arc-length",
+      correct_indices: [0, 2, 3],
+      model_answer: "The base is half the circumference (πr), not the full 2πr.",
+      difficulty: "advanced",
+      section: "area-by-dissection",
     },
     {
       kind: "multi",
@@ -724,10 +792,10 @@ This is also why a running track's staggered start makes sense. Every lane trace
     // ── QUICKFIRE (6) ───────────────────────────────────────────────
     {
       kind: "quickfire",
-      prompt: "What is the perimeter of a rectangle with length 6 and width 4?",
-      model_answer: "20",
+      prompt: "What is the fundamental unit used to measure two-dimensional space?",
+      model_answer: "Unit square",
       difficulty: "basic",
-      section: "perimeter-basics",
+      section: "area-basics",
     },
     {
       kind: "quickfire",
@@ -738,10 +806,10 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "quickfire",
-      prompt: "In the equation C = πD, what does the letter 'D' stand for?",
-      model_answer: "Diameter",
+      prompt: "What is the area of a rectangle with length 5 cm and width 3 cm?",
+      model_answer: "15 cm²",
       difficulty: "basic",
-      section: "perimeter-of-circle",
+      section: "area-basics",
     },
     {
       kind: "quickfire",
@@ -768,10 +836,10 @@ This is also why a running track's staggered start makes sense. Every lane trace
     // ── OPEN (6) ────────────────────────────────────────────────────
     {
       kind: "open",
-      prompt: "Explain why it is necessary to use a 'stagger' for runners on an athletic track.",
-      model_answer: "An athletic track is made of straightaways and semicircular curves. The outer lanes have curves with a larger radius than the inner lanes. Because Circumference = 2πr, the outer curves are physically longer. If everyone started on the same straight line, the outer runners would run further. The stagger offsets their starting positions so everyone runs the exact same distance.",
+      prompt: "Explain the difference between perimeter and area, and why they require different units of measurement.",
+      model_answer: "Perimeter is the 1D length of a shape's outer boundary, measured in linear units like cm. Area is the amount of 2D space inside the boundary, which must be measured in 2D units like square centimetres (cm²). A standard 1D ruler cannot measure 2D space because it has no width.",
       difficulty: "intermediate",
-      section: "perimeter-basics",
+      section: "area-basics",
     },
     {
       kind: "open",
@@ -796,10 +864,10 @@ This is also why a running track's staggered start makes sense. Every lane trace
     },
     {
       kind: "open",
-      prompt: "Explain how to calculate the length of an arc if you know the radius of the circle and the angle it makes at the centre.",
-      model_answer: "First, you calculate the entire circumference of the circle using the formula C = 2πr. Then, you determine what fraction of the full circle the arc represents by dividing the arc's central angle by 360 degrees (the full circle). Finally, you multiply this fraction by the total circumference to get the specific arc length.",
-      difficulty: "intermediate",
-      section: "arc-length",
+      prompt: "Describe how you can find the area of a circle by dissecting it.",
+      model_answer: "You slice the circle into many thin wedges and interlock them alternately pointing up and down. This forms a bumpy shape that approaches a perfect parallelogram as the wedges get infinitely thin. The height of this parallelogram is the circle's radius (r), and its base is half the circumference (πr). Multiplying base by height gives the area: πr².",
+      difficulty: "advanced",
+      section: "area-by-dissection",
     },
     {
       kind: "open",

@@ -303,3 +303,187 @@ export const sectorFigure: FigureSpec = {
     },
   ],
 };
+
+/* ═══════════════════════════════════════════════════════════════ area ══ */
+
+export const unitSquaresFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 6.42",
+  title: "Area as counting squares",
+  caption:
+    "Area is not a length but a count of squares. A rectangle 5 cm long and 3 cm wide holds exactly 15 squares of 1 cm by 1 cm.",
+  altText:
+    "A rectangle divided into a grid of five columns and three rows, making 15 squares in total. Selecting a label highlights the full rectangle, a single row, a single column, or a single unit square.",
+  viewBox: [660, 240],
+  magnify: "part",
+  maxZoom: 2.2,
+  notes: [
+    { at: [330, 44], text: "5 cm", size: 14, align: "middle" },
+    { at: [210, 120], text: "3 cm", size: 14, align: "end" },
+  ],
+  scenery: [
+    { d: "M230,60 H430 V180 H230 Z", width: 1.6, opacity: 0.8 },
+    { d: "M230,100 H430 M230,140 H430 M270,60 V180 M310,60 V180 M350,60 V180 M390,60 V180", width: 1.4, opacity: 0.5 },
+  ],
+  parts: [
+    {
+      id: "rectangle",
+      label: "The whole area",
+      tint: T.inner,
+      depth: 0,
+      d: "M230,60 H430 V180 H230 Z",
+      focus: [210, 40, 240, 160],
+      labelAt: [130, 80],
+      leaderAt: [230, 120],
+      labelAlign: "end",
+      blurb:
+        "The total space inside the boundary. You cannot measure this with a ruler directly, because a ruler only measures one-dimensional lines. To measure 2D space, you have to count squares.",
+    },
+    {
+      id: "row",
+      label: "One row",
+      tint: T.outer,
+      depth: 1,
+      d: "M230,100 H430 V140 H230 Z",
+      focus: [210, 80, 240, 80],
+      labelAt: [560, 80],
+      leaderAt: [430, 120],
+      blurb:
+        "Because the length is 5 cm, each row holds exactly 5 unit squares. The width tells you how many of these rows will stack up to fill the shape.",
+    },
+    {
+      id: "column",
+      label: "One column",
+      tint: T.outer,
+      depth: 2,
+      d: "M350,60 H390 V180 H350 Z",
+      focus: [330, 40, 80, 160],
+      labelAt: [560, 180],
+      leaderAt: [390, 160],
+      blurb:
+        "Because the width is 3 cm, each column is a stack of 3 squares. Multiplication is just repeated addition: 5 columns of 3, or 3 rows of 5, both make 15.",
+    },
+    {
+      id: "unit-square",
+      label: "Unit square",
+      tint: T.arc,
+      depth: 3,
+      d: "M310,140 H350 V180 H310 Z",
+      focus: [290, 120, 80, 80],
+      labelAt: [130, 180],
+      leaderAt: [310, 160],
+      labelAlign: "end",
+      blurb:
+        "The fundamental unit of area: a square with sides of exactly 1 cm. When we say the area is '15 cm²', we mean exactly 15 of these tiles fit inside the boundary.",
+    },
+  ],
+};
+
+function dissectionOutline(x: number, y: number, r: number, slices: number): string {
+  const dx = (Math.PI * r) / slices;
+  const f = (n: number) => n.toFixed(1);
+  let d = `M${f(x)},${f(y)}`;
+  for (let i = 0; i < slices; i++) {
+    d += ` A${f(r)},${f(r)} 0 0 0 ${f(x + (i + 1) * dx)},${f(y)}`;
+  }
+  d += ` L${f(x + slices * dx + dx / 2)},${f(y + r)}`;
+  for (let i = slices; i > 0; i--) {
+    d += ` A${f(r)},${f(r)} 0 0 0 ${f(x + (i - 1) * dx + dx / 2)},${f(y + r)}`;
+  }
+  d += ` Z`;
+  return d;
+}
+
+function dissectionCuts(x: number, y: number, r: number, slices: number): string {
+  const dx = (Math.PI * r) / slices;
+  const f = (n: number) => n.toFixed(1);
+  let d = "";
+  for (let i = 1; i <= slices; i++) {
+    d += `M${f(x + i * dx)},${f(y)} L${f(x + i * dx - dx / 2)},${f(y + r)} `;
+    if (i < slices) {
+      d += `M${f(x + i * dx)},${f(y)} L${f(x + i * dx + dx / 2)},${f(y + r)} `;
+    }
+  }
+  return d;
+}
+
+function circleWedges(cx: number, cy: number, r: number, slices: number): string {
+  let d = "";
+  const dTheta = Math.PI / slices;
+  for (let i = 0; i < slices * 2; i++) {
+    const a = i * dTheta;
+    d += `M${cx},${cy} L${(cx + r * Math.cos(a)).toFixed(1)},${(cy + r * Math.sin(a)).toFixed(1)} `;
+  }
+  return d;
+}
+
+export const circleDissectionFigure: FigureSpec = {
+  kind: "figure",
+  figNumber: "Fig. 6.45",
+  title: "Area of a circle",
+  caption:
+    "Slice a circle into thin wedges and they interlock into a parallelogram. Its height is the radius, and its width is half the circumference — making its area πr².",
+  altText:
+    "A circle sliced into sixteen wedges, and those same wedges rearranged side-by-side to form a bumpy parallelogram. The height of the parallelogram is labelled r, and the base is labelled πr. Selecting a label magnifies that part.",
+  viewBox: [660, 260],
+  magnify: "part",
+  maxZoom: 2.2,
+  scenery: [
+    { d: "M240,110 L270,110 L264,104 M270,110 L264,116", width: 1.6, opacity: 0.5 },
+  ],
+  notes: [
+    { at: [134, 90], text: "r", size: 14, align: "end" },
+    { at: [461, 156], text: "πr (half circumference)", size: 14, align: "middle" },
+    { at: [320, 90], text: "r", size: 14, align: "end" },
+  ],
+  parts: [
+    {
+      id: "sliced-circle",
+      label: "Sliced circle",
+      tint: T.circle,
+      depth: 0,
+      d: circle(140, 110, 80),
+      layers: [
+        { d: circleWedges(140, 110, 80, 8), width: 1.2, opacity: 0.4 },
+        { d: "M140,110 V30", width: 1.8, dash: "6 4", opacity: 0.8 }
+      ],
+      focus: [50, 20, 180, 180],
+      labelAt: [40, 40],
+      leaderAt: [90, 60],
+      labelAlign: "start",
+      blurb:
+        "The circle is cut into 16 identical wedges. Because they are cut perfectly from the centre, the straight edge of every wedge is exactly the radius, r.",
+    },
+    {
+      id: "parallelogram",
+      label: "Rearranged",
+      tint: T.inner,
+      depth: 1,
+      d: dissectionOutline(320, 30, 80, 8),
+      layers: [
+        { d: dissectionCuts(320, 30, 80, 8), width: 1.0, opacity: 0.4 },
+        { d: "M320,30 L335.7,110", width: 1.8, dash: "6 4", opacity: 0.8 },
+        { d: "M336,120 v8 H587 v-8", width: 1.4, opacity: 0.6 }
+      ],
+      focus: [300, 10, 320, 200],
+      labelAt: [630, 40],
+      leaderAt: [450, 70],
+      labelAlign: "end",
+      blurb:
+        "Interlocking the wedges point-to-crust forms a bumpy parallelogram. The height is the radius, r. The bumpy top and bottom edges are made of the circle's circumference split in half, so the base is exactly πr.",
+    },
+    {
+      id: "area-formula",
+      label: "Area = πr²",
+      tint: T.sector,
+      depth: 2,
+      d: dissectionOutline(320, 30, 80, 8),
+      focus: [300, 10, 320, 200],
+      labelAt: [630, 220],
+      leaderAt: [500, 70],
+      labelAlign: "end",
+      blurb:
+        "The area of a parallelogram is base × height. Here, the base is πr and the height is r. Multiplying them gives πr², perfectly calculating the area of the original circle.",
+    },
+  ],
+};
