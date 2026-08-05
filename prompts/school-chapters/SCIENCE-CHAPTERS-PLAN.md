@@ -349,13 +349,38 @@ choice for anything labelled.** There is no `anatomy` kind — it was deleted.
 
 ## Path helpers — `@/lib/sim/draw`
 
-`circle` · `ellipse` · `dots` · `blob` · `cell` · `smoothClosed` · `gleam` ·
-`folds` · `cristae` · `discStack` · `cisterna` · `tubule` · `roundRect` ·
-`stadium` · `spindle` · `chromosomes`
+**Read the signatures. Do not guess the argument order** — the first agent to
+use this plan guessed `tubule`'s and produced four organs that rendered as bare
+lines, because it read the 4th argument as a y-coordinate when it is a wave
+amplitude.
+
+```ts
+circle(cx, cy, r)
+ellipse(cx, cy, rx, ry, deg?)
+dots(points: [number, number][], r)
+blob(cx, cy, rx, ry, wobble: number[], deg?)   // organic outline
+cell(cx, cy, rx, ry, seed?, deg?)              // organic cell, seeded wobble
+smoothClosed(points: [number, number][])
+gleam(cx, cy, rx, ry, deg?)                    // the pale highlight
+folds(cx, cy, rx, ry, count, deg?, reach?)     // cristae reaching in from the edges
+cristae(cx, cy, length, amplitude, teeth, deg?)
+discStack(cx, cy, count, rx, ry, gap)
+cisterna(cx, cy, halfWidth, bow, thickness?)
+tubule(x0, y, x1, wave, thickness?)            // ⚠️ HORIZONTAL ribbon from x0 to
+                                               // x1 at height y. The 4th arg is
+                                               // WAVE AMPLITUDE, not y1. Passing
+                                               // x0 === x1 gives a zero-length
+                                               // ribbon — a bare line, not a tube.
+roundRect(x, y, w, h, r)
+stadium(x, y, w, h)                            // handles both orientations
+spindle(poleX, poleY, equatorY, spread, fibres?)
+chromosomes(points: [number, number][], length, thickness)
+```
 
 Use them rather than hand-computing arc endpoints — that arithmetic is where
-silent errors live. Local geometry helpers at the top of your figures file are
-encouraged.
+silent errors live. **For a duct or vessel running vertically, `tubule` is the
+wrong tool** — write the ribbon explicitly, or use `roundRect`. Local geometry
+helpers at the top of your figures file are encouraged.
 
 ## The nine rules
 
@@ -368,9 +393,11 @@ encouraged.
    `fill`/`shade`/`ink`/`light` are emitted at fixed lightness. **A darker hex
    does not darken a shape.** To recede, add a `shade` self-layer; to go pale, a
    full-coverage `light` layer.
-3. **A part's body is always FILLED.** Anything thread-like — a wire, a nerve, a
-   ray — authored as an open curve closes itself into a splodge. Threads must be
-   closed ribbons; `tubule()` is the right primitive.
+3. **A part's body is always FILLED, so it must enclose an area.** Anything
+   thread-like — a duct, a nerve, a ray — must be a closed ribbon with real
+   width. A zero-area body renders as a bare stroked line with nothing in it,
+   and the geometry audit now fails on it. Check the helper's signature before
+   using it for a thread.
 4. **Anything drawn INSIDE a part needs `clip: true`.** A grid of cells, rings
    inside a vessel, **a liquid inside a flask** — each is authored as a rectangle
    or cylinder and the shape containing it is not one. A bounding-box check will
@@ -515,6 +542,7 @@ Copy this into the chapter's PR or session notes and tick it.
 - [ ] `NEXT_PUBLIC_SCHOOL_TRACK=1 npm run build` clean
 
 **Looked at**
+- [ ] Every part encloses an area — no organ drawn as a bare line
 - [ ] Every plate rasterised and viewed at rest
 - [ ] Every part-mode plate viewed lifted — whole shapes, tag readable, no strays
 - [ ] Real page checked at 1440px and 390px, no horizontal scroll in a card
@@ -545,4 +573,6 @@ Each of these produced a defect that passed every automated check.
 8. **Uncommitted at the end.** Invisible to every other checkout and deploy — a
    finished restyle once looked like "nothing happened" for exactly this reason.
 9. **A `gleam()` or detail layer floating beside its part rather than on it.**
-10. **Reported done on green gates alone.** Phase 7 is not optional.
+10. **A helper called with guessed argument order.** Read the signatures above.
+    An organ drawn as a bare line still passes `tsc` and the validator.
+11. **Reported done on green gates alone.** Phase 7 is not optional.

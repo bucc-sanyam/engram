@@ -16,7 +16,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import type { FigureSpec, FigureLayer, SimSpec } from "../src/lib/sim/types.js";
 import { cartoonFor } from "../src/lib/sim/shading.js";
-import { liftSubset, layerSubset } from "../src/lib/sim/draw.js";
+import { liftSubset, layerSubset, subpaths } from "../src/lib/sim/draw.js";
 import { allChapters } from "../src/lib/cbse/class9/index.js";
 
 /* The dark-theme half of useVizPalette(), which is a client hook. */
@@ -256,6 +256,20 @@ function audit(spec: FigureSpec, chapter: string): string[] {
     const [fx, fy, fw, fh] = part.focus;
     if (fx < 0 || fy < 0 || fx + fw > w || fy + fh > h) {
       problems.push(`${chapter}/${spec.title}: focus of "${part.id}" falls outside the viewBox`);
+    }
+    // A filled body with no area is a part that vanished. It happens when a
+    // helper is called with the wrong argument order — `tubule(x0, y, x1, wave,
+    // thickness)` is HORIZONTAL, and calling it as if it were (x0,y0,x1,y1)
+    // gives x0 === x1, a zero-length ribbon that renders as a bare stroked line
+    // with nothing in it. Four parts shipped that way before this check existed.
+    for (const sp of subpaths(part.d)) {
+      const [, , sw, sh] = sp.box;
+      if (sw < 0.5 || sh < 0.5) {
+        problems.push(
+          `${chapter}/${spec.title}: part "${part.id}" has a zero-area subpath (${sw.toFixed(1)}x${sh.toFixed(1)}) — a filled body drawn as a bare line`,
+        );
+        break;
+      }
     }
     if (fw <= 0 || fh <= 0) {
       problems.push(`${chapter}/${spec.title}: focus of "${part.id}" has zero size`);

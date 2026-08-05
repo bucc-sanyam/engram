@@ -401,6 +401,51 @@ function growArc(
   return grow(grow(a, cx - ex, cy - ey), cx + ex, cy + ey);
 }
 
+
+/**
+ * Extend `a` over a cubic, using the curve's true extrema rather than its
+ * control-point hull.
+ *
+ * The hull is an over-estimate, and a generous one: a smooth `blob()` reports a
+ * box well outside the ink. That is harmless for `liftSubset` (a bigger box only
+ * keeps a shape whole) but useless for an audit — "does this drawing leave the
+ * plate?" cannot be answered by a box that is wrong by 100 units. So solve
+ * B'(t)=0 per axis and take the real roots in (0,1).
+ */
+function growCubic(
+  a: Acc | null,
+  x0: number, y0: number,
+  x1: number, y1: number,
+  x2: number, y2: number,
+  x3: number, y3: number,
+): Acc {
+  let out = grow(grow(a, x0, y0), x3, y3);
+  const axis = (p0: number, p1: number, p2: number, p3: number): number[] => {
+    // B'(t) = 3[ (p1-p0)(1-t)^2 + 2(p2-p1)(1-t)t + (p3-p2)t^2 ]
+    const A = -p0 + 3 * p1 - 3 * p2 + p3;
+    const B = 2 * (p0 - 2 * p1 + p2);
+    const C = p1 - p0;
+    const at = (t: number) => {
+      const u = 1 - t;
+      return u * u * u * p0 + 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t * p3;
+    };
+    const ts: number[] = [];
+    if (Math.abs(A) < 1e-9) {
+      if (Math.abs(B) > 1e-9) ts.push(-C / B);
+    } else {
+      const disc = B * B - 4 * A * C;
+      if (disc >= 0) {
+        const r = Math.sqrt(disc);
+        ts.push((-B + r) / (2 * A), (-B - r) / (2 * A));
+      }
+    }
+    return ts.filter((t) => t > 0 && t < 1).map(at);
+  };
+  for (const vx of axis(x0, x1, x2, x3)) out = grow(out, vx, y0);
+  for (const vy of axis(y0, y1, y2, y3)) out = grow(out, x0, vy);
+  return out;
+}
+
 /**
  * Split a `d` string into its subpaths — one per `M` — each with its bounding
  * box.
@@ -410,8 +455,8 @@ function growArc(
  * one `d`, so anything that wants to act on "the one the label points at" has to
  * be able to tell them apart, and that means measuring them.
  *
- * Curves are boxed by their control points (an over-estimate, never an
- * under-estimate). Deliberately only as much of an SVG path parser as the
+ * Cubics are boxed by their true extrema (see `growCubic`); arcs via the SVG
+ * spec's endpoint→centre conversion. Deliberately only as much of an SVG path parser as the
  * plates in this repo emit — every path here comes from the helpers above.
  */
 export function subpaths(d: string): Subpath[] {
@@ -476,11 +521,15 @@ export function subpaths(d: string): Subpath[] {
           y = ay(n[i]);
           acc = grow(acc, x, y);
           break;
-        case "C":
-          acc = grow(grow(grow(acc, ax(n[i]), ay(n[i + 1])), ax(n[i + 2]), ay(n[i + 3])), ax(n[i + 4]), ay(n[i + 5]));
-          x = ax(n[i + 4]);
-          y = ay(n[i + 5]);
+        case "C": {
+          const x1 = ax(n[i]), y1 = ay(n[i + 1]);
+          const x2 = ax(n[i + 2]), y2 = ay(n[i + 3]);
+          const x3 = ax(n[i + 4]), y3 = ay(n[i + 5]);
+          acc = growCubic(acc, x, y, x1, y1, x2, y2, x3, y3);
+          x = x3;
+          y = y3;
           break;
+        }
         case "S":
         case "Q":
           acc = grow(grow(acc, ax(n[i]), ay(n[i + 1])), ax(n[i + 2]), ay(n[i + 3]));
