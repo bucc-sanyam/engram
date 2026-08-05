@@ -25,7 +25,6 @@ export default async function SubjectPage({
 }: {
   params: Promise<{ subject: string }>;
 }) {
-  if (process.env.NEXT_PUBLIC_SCHOOL_TRACK !== "1") notFound();
   const { subject } = await params;
   const s = getSubject(subject);
   if (!s) notFound();
