@@ -165,9 +165,9 @@ export const meristemFigure: FigureSpec = {
       d: "M236,150 C234,122 244,102 255,100 C266,102 276,122 274,150 Z",
       layers: [
         // Dense, small, square dividing cells packed together
-        { d: dividingCells(255, 126, 4, 3, 8, 2), as: "shade" },
+        { d: dividingCells(255, 126, 4, 3, 8, 2), as: "shade" , clip: true },
         // A nucleus in each dividing cell
-        { d: cellNuclei(255, 126, 4, 3, 8, 2, 2), as: "shade", opacity: 0.9 },
+        { d: cellNuclei(255, 126, 4, 3, 8, 2, 2), as: "shade", opacity: 0.9 , clip: true },
         { d: gleam(250, 114, 12, 16), as: "light", opacity: 0.35 },
       ],
       focus: [228, 92, 56, 66],
@@ -184,8 +184,8 @@ export const meristemFigure: FigureSpec = {
       d: "M246,420 C244,438 249,452 256,457 C263,452 268,438 266,420 Z",
       layers: [
         // Dense dividing cells at the root apex
-        { d: dividingCells(256, 438, 3, 3, 6, 1.5), as: "shade" },
-        { d: cellNuclei(256, 438, 3, 3, 6, 1.5, 1.5), as: "shade", opacity: 0.9 },
+        { d: dividingCells(256, 438, 3, 3, 6, 1.5), as: "shade" , clip: true },
+        { d: cellNuclei(256, 438, 3, 3, 6, 1.5, 1.5), as: "shade", opacity: 0.9 , clip: true },
         { d: gleam(253, 432, 8, 10), as: "light", opacity: 0.3 },
       ],
       focus: [240, 414, 32, 48],
@@ -202,8 +202,8 @@ export const meristemFigure: FigureSpec = {
       d: roundRect(230, 252, 50, 26, 8),
       layers: [
         // Band of dividing cells at the node
-        { d: dividingCells(255, 265, 5, 2, 7, 2), as: "shade" },
-        { d: cellNuclei(255, 265, 5, 2, 7, 2, 1.8), as: "shade", opacity: 0.85 },
+        { d: dividingCells(255, 265, 5, 2, 7, 2), as: "shade" , clip: true },
+        { d: cellNuclei(255, 265, 5, 2, 7, 2, 1.8), as: "shade", opacity: 0.85 , clip: true },
         { d: gleam(248, 256, 16, 8), as: "light", opacity: 0.3 },
       ],
       focus: [220, 242, 70, 46],
@@ -1122,7 +1122,7 @@ export const neuronFigure: FigureSpec = {
 /** Both leaf blades. Defined once because the vein ribbons have to follow the
  *  same curve, and a vein that misses its blade is the kind of error you only
  *  see in a render. */
-const LEAF_L = "M316,178 C266,150 214,146 172,164 C214,194 272,202 316,178 Z";
+const LEAF_L = "M320,178 C270,150 216,146 174,164 C216,194 276,202 320,178 Z";
 const LEAF_R = "M344,148 C394,120 448,116 490,134 C448,164 390,172 344,148 Z";
 
 export const organismFigure: FigureSpec = {
@@ -1149,13 +1149,13 @@ export const organismFigure: FigureSpec = {
       // over every organ, which is the point being made. The band has to be
       // wide enough to read as a separate layer — at 10 units it looked like
       // an outline stroke on the stem rather than a tissue of its own.
-      d: "M298,92 C292,170 290,248 294,314 L366,314 C370,248 368,170 362,92 C352,70 308,70 298,92 Z",
+      d: "M310,92 C305,170 303,248 307,314 L353,314 C357,248 355,170 350,92 C343,72 317,72 310,92 Z",
       layers: [
-        { d: "M298,92 C292,170 290,248 294,314 L366,314 C370,248 368,170 362,92 C352,70 308,70 298,92 Z", as: "light" },
+        { d: "M310,92 C305,170 303,248 307,314 L353,314 C357,248 355,170 350,92 C343,72 317,72 310,92 Z", as: "light" },
         // The brick-like file of surface cells.
-        { d: "M296,140 H364 M295,192 H365 M294,244 H366 M294,296 H366", as: "stroke", width: 1, opacity: 0.5 },
+        { d: "M308,140 H352 M307,192 H353 M306,244 H354 M306,296 H354", as: "stroke", width: 1, opacity: 0.5 },
       ],
-      focus: [290, 244, 78, 70],
+      focus: [304, 244, 56, 70],
       labelAt: [552, 96],
       leaderAt: [360, 118],
       blurb:
@@ -1166,13 +1166,13 @@ export const organismFigure: FigureSpec = {
       label: "Stem tissue",
       tint: T.collenchyma,
       depth: 1,
-      d: "M314,100 C308,172 306,244 310,300 L350,300 C354,244 352,172 346,100 C340,86 320,86 314,100 Z",
+      d: "M320,100 C316,172 315,244 318,300 L344,300 C347,244 346,172 342,100 C337,88 325,88 320,100 Z",
       layers: [
-        { d: gleam(330, 200, 18, 96), as: "light", opacity: 0.55 },
+        { d: gleam(331, 200, 11, 96), as: "light", opacity: 0.55 },
         // Thick-walled fibres running the length of the stem.
-        { d: "M319,116 C316,186 315,250 318,296 M341,116 C344,186 345,250 342,296", as: "stroke", width: 1.4, opacity: 0.7 },
+        { d: "M324,116 C322,186 321,250 323,296 M338,116 C340,186 341,250 339,296", as: "stroke", width: 1.4, opacity: 0.7 },
       ],
-      focus: [306, 208, 48, 92],
+      focus: [316, 208, 32, 92],
       labelAt: [552, 236],
       leaderAt: [350, 246],
       blurb:
@@ -1206,16 +1206,16 @@ export const organismFigure: FigureSpec = {
       // are deliberately thin — drawn at the stem strand's width they read as
       // planks laid across the blades rather than as veins inside them.
       d: [
-        "M325,112 C322,182 321,250 324,306 L336,306 C333,250 334,182 337,112 Z",
-        "M314,176 C272,161 228,157 182,164 L182,168 C228,161 272,165 314,180 Z",
+        "M328,112 C326,182 325,250 327,306 L336,306 C334,250 335,182 337,112 Z",
+        "M320,176 C276,161 230,157 184,164 L184,168 C230,161 276,165 320,180 Z",
         "M346,150 C388,137 432,133 478,140 L478,144 C432,137 388,141 346,154 Z",
       ].join(" "),
       layers: [
         // Xylem one side, phloem the other — two pipes, opposite directions.
-        { d: "M327,120 C324,186 323,250 326,300", as: "stroke", width: 2, opacity: 0.85 },
-        { d: "M335,120 C332,186 331,250 334,300", as: "stroke", width: 2, tint: T.phloem },
+        { d: "M330,120 C328,186 327,250 329,300", as: "stroke", width: 2, opacity: 0.85 },
+        { d: "M334,120 C332,186 331,250 333,300", as: "stroke", width: 2, tint: T.phloem },
       ],
-      focus: [318, 196, 26, 110],
+      focus: [324, 196, 18, 110],
       labelAt: [150, 250],
       leaderAt: [322, 250],
       blurb:
@@ -1226,7 +1226,7 @@ export const organismFigure: FigureSpec = {
       label: "Root tissue",
       tint: T.sclerenchyma,
       depth: 4,
-      d: "M310,300 H350 C354,328 364,348 388,374 C362,364 346,350 340,334 C340,358 343,378 348,404 C335,384 329,360 328,338 C323,362 314,382 299,406 C306,380 309,356 309,334 C297,352 282,364 260,372 C286,346 300,330 310,300 Z",
+      d: "M312,300 H352 C356,328 364,348 388,374 C362,364 346,350 340,334 C340,358 343,378 348,404 C335,384 329,360 328,338 C323,362 314,382 299,406 C306,380 309,356 309,334 C297,352 282,364 260,372 C286,346 300,330 310,300 Z",
       layers: [
         { d: gleam(324, 340, 44, 40), as: "light", opacity: 0.4 },
         // Root hairs — the whole reason a root can drink.

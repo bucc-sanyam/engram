@@ -55,6 +55,19 @@ export type FigureLayer = {
   opacity?: number;
   /** Dash pattern in viewBox units, e.g. "5 4". */
   dash?: string;
+  /**
+   * Clip this layer to the part's own outline.
+   *
+   * For INTERIOR TEXTURE — a grid of dividing cells inside a meristem dome,
+   * lignin rings inside a vessel, fat globules inside a layer. A rectangular
+   * grid never matches an organic silhouette, so without this the corners spill
+   * out and the part grows square shoulders; it is worst in a lift, where the
+   * overhang is magnified up to 2.8×.
+   *
+   * Off by default, because plenty of layers overhang on purpose — a mirror's
+   * stem, a leader dot, a flagellum trailing off its cell.
+   */
+  clip?: boolean;
 };
 
 export type FigurePart = {

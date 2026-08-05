@@ -313,19 +313,29 @@ export default function FigureSim({
                     </g>
                     {/* 3 — the detail: cristae, grana, pores, striations. A
                         lifted copy takes only its own detail with it. */}
-                    {part.layers?.map((layer, i) => (
-                      <Layer
-                        key={i}
-                        layer={
-                          subset ? { ...layer, d: layerSubset(layer.d, subset.box) } : layer
-                        }
-                        ink={layer.tint ? cartoonFor(layer.tint, isPaperMode).ink : c.ink}
-                        fill={layer.tint ? cartoonFor(layer.tint, isPaperMode).fill : c.fill}
-                        shade={layer.tint ? cartoonFor(layer.tint, isPaperMode).shade : c.shade}
-                        light={layer.tint ? cartoonFor(layer.tint, isPaperMode).light : c.light}
-                        panel={p.panel}
-                      />
-                    ))}
+                    {part.layers?.map((layer, i) => {
+                      const painted = (
+                        <Layer
+                          layer={
+                            subset ? { ...layer, d: layerSubset(layer.d, subset.box) } : layer
+                          }
+                          ink={layer.tint ? cartoonFor(layer.tint, isPaperMode).ink : c.ink}
+                          fill={layer.tint ? cartoonFor(layer.tint, isPaperMode).fill : c.fill}
+                          shade={layer.tint ? cartoonFor(layer.tint, isPaperMode).shade : c.shade}
+                          light={layer.tint ? cartoonFor(layer.tint, isPaperMode).light : c.light}
+                          panel={p.panel}
+                        />
+                      );
+                      // Interior texture is clipped to the silhouette it fills,
+                      // or a rectangular grid gives an organic shape corners.
+                      return layer.clip ? (
+                        <g key={i} clipPath={`url(#${clipId(part.id)})`}>
+                          {painted}
+                        </g>
+                      ) : (
+                        <g key={i}>{painted}</g>
+                      );
+                    })}
                     {/* 4 — ink outline last, so no detail crosses the edge */}
                     <path
                       d={body}

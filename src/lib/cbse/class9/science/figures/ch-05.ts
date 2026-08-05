@@ -455,13 +455,13 @@ export const distillationFigure: FigureSpec = {
       label: "Cold water in",
       tint: T.water,
       depth: 5,
-      d: [roundRect(452, 254, 16, 54, 7), roundRect(444, 300, 32, 14, 6)].join(" "),
+      d: [roundRect(452, 254, 16, 54, 7), roundRect(426, 300, 34, 14, 6)].join(" "),
       layers: [
         { d: gleam(456, 270, 6, 18), as: "light", opacity: 0.3 },
       ],
-      focus: [436, 246, 48, 76],
-      labelAt: [556, 300],
-      leaderAt: [470, 296],
+      focus: [420, 246, 62, 76],
+      labelAt: [408, 400],
+      leaderAt: [438, 310],
       blurb:
         "Water enters at the lower end, so it flows up against the direction of the vapour. Running it the other way would leave the far end of the jacket warm and the cooling incomplete.",
     },
@@ -488,7 +488,7 @@ export const distillationFigure: FigureSpec = {
       d: "M470,282 V366 Q470,382 486,382 L558,382 Q574,382 574,366 V282 Z",
       layers: [
         // Collected distillate
-        { d: "M470,330 H574 V366 Q574,382 558,382 L486,382 Q470,382 470,366 Z", as: "shade" },
+        { d: "M473,332 H571 V365 Q571,379 557,379 L487,379 Q473,379 473,365 Z", as: "shade" },
         // DROPLETS collecting at the mouth
         { d: dots([[476, 286], [480, 294], [474, 302], [478, 310]], 2.5), as: "shade", opacity: 0.7 },
         { d: gleam(496, 340, 20, 20), as: "light", opacity: 0.25 },

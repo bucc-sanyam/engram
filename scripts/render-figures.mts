@@ -163,7 +163,9 @@ function render(spec: FigureSpec, accent: string, lift?: string): string {
     );
     for (const layer of part.layers ?? []) {
       const l = subset ? { ...layer, d: layerSubset(layer.d, subset.box) } : layer;
-      out.push(layerSvg(l, layer.tint ? cartoonFor(layer.tint, false) : c, p.panel));
+      const painted = layerSvg(l, layer.tint ? cartoonFor(layer.tint, false) : c, p.panel);
+      // Interior texture is clipped to the silhouette it fills — mirrors FigureSim.
+      out.push(layer.clip ? `<g clip-path="url(#c-${part.id})">${painted}</g>` : painted);
     }
     out.push(
       `<path d="${body}" fill="none" stroke="${c.ink}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/>`,

@@ -2,6 +2,14 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-08-05 — Three drawing defects, one of which needed a renderer feature
+
+- **Liquid escaping the receiver (Fig. 5.12).** Two causes, both geometry: the cold-water inlet's spout ran `x 444→476` while the beaker's left wall is at `x=470`, so the blue rounded rect poked *through* the glass; and `water-in`'s label sat at `x=556`, directly over the beaker, so its leader drew a horizontal blue-adjacent line straight across the liquid surface. Spout turned to point away (`426→460`), label moved below-left, and the distillate inset 3 units so the wall reads as a wall.
+- **The stem was a slab.** `organismFigure`'s epidermis was 68 units across and its stem 36. Narrowed to 44/24 with the vascular strand, both leaf joins, the fibre lines, the gleam and three focus boxes all moved to match — a narrowing that only touches the outline leaves everything inside it hanging off the new edge.
+- **Grid boxes hanging out of the meristem domes — and this one was not fixable per-plate.** `dividingCells()` emits a rectangular grid; a meristem dome is not a rectangle, so the corners always spill, and a lift magnifies the overhang up to 2.8×. **New `FigureLayer.clip`**: clips a detail layer to its part's outline, reusing the per-part clipPath the shade layer already uses. Off by default, because plenty of layers overhang deliberately (a mirror's stem, a trailing flagellum). Applied to all six cell-grid layers. Mirrored into `render-figures.mts`.
+- **The general lesson, now in the workflow file:** interior texture is authored as a rectangle and the shape it fills never is. Any layer meant to be *inside* something needs `clip: true`.
+- **Verified:** tsc, validate-cbse, geometry audit and the 422-page build clean. All three checked in rendered stills *and* the running app, including both lifted meristem states where the overhang was worst.
+
 ## 2026-08-04 — The four diagrams nobody was looking at
 
 - **Why:** owner sent six screenshots of "weird" images on Ch3 and Ch5 after the restyle brief had run. **Three of the six were not plates at all** — they were section `sim`s using the legacy `anatomy` renderer, which the brief had explicitly scoped out. The fourth ("Tissues in an Animal Arm") was the same kind: a pink ring for skin, a red spindle for muscle and a beige dumbbell that read as a dog bone.

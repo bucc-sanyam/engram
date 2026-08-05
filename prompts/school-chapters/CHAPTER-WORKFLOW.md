@@ -159,6 +159,11 @@ already dense; **maths and construction figures are exempt entirely** — flat
 lines are the correct register and adding volume to a number line makes it
 worse.
 
+**Interior texture needs `clip: true` on the layer.** A grid of cells, a set of
+rings, a scatter of globules — all authored as rectangles, none of which match
+the silhouette they fill. Without the flag the corners hang outside the part,
+and a lift magnifies that up to 2.8×.
+
 **Do not draw two diagrams of the same idea in one section.** Chapter 3 had a
 meristem `sim` *and* a meristem plate in the same section; the reader got the
 same content twice, once badly. Pick one and make it good.
@@ -248,4 +253,6 @@ looked like "nothing happened" for exactly this reason.
 7. **Question mix off by one.** It is exact. Rebalance, do not grow.
 8. **Registry lines forgotten.** Compiles, validates, no URL.
 9. **Uncommitted at the end.** Looks like nothing happened.
-10. **Reported done on green gates alone.** Phase 7 is not optional.
+10. **Interior texture without `clip: true`.** Square shoulders on an organic
+    shape; obvious the moment a part is lifted.
+11. **Reported done on green gates alone.** Phase 7 is not optional.

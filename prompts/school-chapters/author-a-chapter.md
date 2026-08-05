@@ -205,6 +205,15 @@ type FigureLayer = {
   width?: number;            // stroke width in viewBox units, default 1.2
   opacity?: number;
   dash?: string;             // e.g. "9 7"
+  clip?: boolean;            // clip this layer to the PART's outline. Use for
+                             // interior texture — a grid of cells inside a
+                             // dome, rings inside a vessel. A rectangular grid
+                             // never matches an organic silhouette, so without
+                             // this its corners spill out and the part grows
+                             // square shoulders, worst in a lift where the
+                             // overhang is magnified up to 2.8x. Off by
+                             // default: plenty of layers overhang on purpose
+                             // (a mirror's stem, a trailing flagellum).
 };
 
 type FigurePart = {
@@ -261,7 +270,7 @@ Use them instead of hand-computing arc endpoints — that arithmetic is where
 silent errors live. Writing your own local geometry helpers at the top of the
 figures file is encouraged.
 
-## The eight rules that decide whether a plate looks right
+## The nine rules that decide whether a plate looks right
 
 These were each paid for by a plate that shipped looking wrong. They are not
 style preferences.
@@ -283,23 +292,26 @@ style preferences.
    flagellum, an ER tubule, a wire — authored as an open curve closes itself
    into a splodge. Threads must be closed ribbons; `tubule()` is the right
    primitive.
-4. **Give every solid a `gleam()`.** A small pale `light` ellipse up and left of
+4. **Interior texture must be `clip: true`.** Anything that fills a shape —
+   a grid of dividing cells, lignin rings, fat globules — is authored as a
+   rectangle and the shape is not one. Clip it, or the corners hang out.
+5. **Give every solid a `gleam()`.** A small pale `light` ellipse up and left of
    centre. Detail and palette are what make a plate read as an illustration —
    not perspective. A pseudo-3-D attempt was tried and it still read as a
    diagram.
-5. **A sub-part must ALSO be a layer of its parent.** The nucleolus is its own
+6. **A sub-part must ALSO be a layer of its parent.** The nucleolus is its own
    clickable part *and* a `shade` layer inside the nucleus — otherwise the
    nucleus lifts away and leaves its nucleolus hanging in the cytoplasm. Define
    the shape once in a `const` and use it twice.
-6. **Structures must touch what they are continuous with.** The ER is continuous
+7. **Structures must touch what they are continuous with.** The ER is continuous
    with the outer nuclear membrane; drawn floating below the nucleus it is
    simply wrong.
-7. **Keep the viewBox tight to the content**, and leave ~150 units of margin on
+8. **Keep the viewBox tight to the content**, and leave ~150 units of margin on
    each side for labels. Dead vertical space above the drawing is the usual
    sloppiness — measure where your topmost label and bottommost element actually
    sit. Width 660 suits most plates; 800 is the practical maximum (the rail is
    640px and a plate will not render below 0.72 of its viewBox).
-8. **One `tint` per part, collected in a `const T = { … }` at the top.** Aim for
+9. **One `tint` per part, collected in a `const T = { … }` at the top.** Aim for
    a saturated, friendly textbook register — greens for wall and chloroplasts,
    cyan for vacuoles, purple for nuclei, warm orange for mitochondria, blue for
    ER, pink for Golgi.
