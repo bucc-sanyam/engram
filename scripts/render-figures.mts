@@ -303,6 +303,19 @@ function audit(spec: FigureSpec, chapter: string): string[] {
       boxes.push({ id: part.label, x: x0, y: y0, w: width, hh: y1 - y0 });
     }
   }
+  // A panel caption renders 20 units BELOW its box. Give a panel the plate's
+  // full height and the caption lands outside the viewBox and never appears —
+  // silently, because the SVG just clips it. Two plates shipped with five
+  // invisible captions before this check existed.
+  for (const panel of spec.panels ?? []) {
+    const capY = panel.box[1] + panel.box[3] + 20;
+    if (capY > h - 2) {
+      problems.push(
+        `${chapter}/${spec.title}: panel "${panel.id}" caption renders at y=${capY}, outside the ${w}x${h} viewBox — shorten the panel box`,
+      );
+    }
+  }
+
   if (spec.defaultPartId && !seen.has(spec.defaultPartId)) {
     problems.push(`${chapter}/${spec.title}: defaultPartId "${spec.defaultPartId}" is not a part`);
   }

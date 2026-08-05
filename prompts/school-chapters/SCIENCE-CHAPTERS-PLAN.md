@@ -335,6 +335,10 @@ type FigureSpec = {
   parts: FigurePart[];
   scenery?: FigureLayer[];   // non-interactive context, painted before all parts
   panels?: { id: string; box: [number,number,number,number]; caption: string }[];
+                             // ⚠️ the caption renders 20 units BELOW box.y+box.h.
+                             // Give a panel the plate's full height and its
+                             // caption falls outside the viewBox and silently
+                             // never appears. Leave ~30 units of room.
   notes?: { text: string; at: [number,number]; size?: number;
             align?: "start"|"middle"|"end"; emphasis?: boolean }[];
   magnify?: "camera" | "part";
@@ -543,6 +547,7 @@ Copy this into the chapter's PR or session notes and tick it.
 
 **Looked at**
 - [ ] Every part encloses an area — no organ drawn as a bare line
+- [ ] Panel captions actually visible on the plate, not clipped below it
 - [ ] Every plate rasterised and viewed at rest
 - [ ] Every part-mode plate viewed lifted — whole shapes, tag readable, no strays
 - [ ] Real page checked at 1440px and 390px, no horizontal scroll in a card
@@ -575,4 +580,6 @@ Each of these produced a defect that passed every automated check.
 9. **A `gleam()` or detail layer floating beside its part rather than on it.**
 10. **A helper called with guessed argument order.** Read the signatures above.
     An organ drawn as a bare line still passes `tsc` and the validator.
-11. **Reported done on green gates alone.** Phase 7 is not optional.
+11. **A full-height `panels[]` box.** Its caption renders 20 units below the box
+    and lands outside the plate, so it never appears. Leave room.
+12. **Reported done on green gates alone.** Phase 7 is not optional.
