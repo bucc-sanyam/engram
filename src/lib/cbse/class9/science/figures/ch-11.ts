@@ -4,6 +4,7 @@ import {
   ellipse,
   dots,
   blob,
+  cell,
   tubule,
   roundRect,
   stadium,
@@ -492,39 +493,107 @@ export const animalReproductionPlate: FigureSpec = {
   title: "External vs Internal Fertilisation",
   figNumber: "Fig. 11.17",
   altText: "Comparison of external fertilisation in water and internal fertilisation inside an animal body.",
-  viewBox: [660, 400],
-  magnify: "part",
+  viewBox: [660, 450],
+  magnify: "camera",
+  panels: [
+    { id: "external", caption: "(a) External fertilisation (e.g. fish)", box: [0, 0, 330, 420] },
+    { id: "internal", caption: "(b) Internal fertilisation (e.g. mammals)", box: [330, 0, 330, 420] }
+  ],
   parts: [
     {
-      id: "external-fert",
-      label: "External Fertilisation",
-      tint: T.maleOrgan,
+      id: "female-fish",
+      label: "Female Fish",
+      tint: T.femaleOrgan,
+      panel: "external",
       depth: 0,
-      d: roundRect(50, 50, 250, 300, 20),
+      d: blob(100, 150, 60, 30, [1, 1.2, 0.8, 1]) + " M30,150 L10,130 L10,170 Z",
       layers: [
-        { d: "M50,200 Q150,180 300,200", as: "light", opacity: 0.3 },
-        { d: dots([[120,250], [160,280], [140,230], [200,260], [180,220]], 4), as: "fill" },
-        { d: dots([[130,240], [150,270], [170,230]], 2), as: "shade" }
+        { d: "M70,145 A5,5 0 1,1 80,145", as: "shade" }
       ],
-      focus: [50, 50, 250, 300],
-      labelAt: [175, 80],
-      leaderAt: [175, 150],
-      blurb: "Occurs outside the female's body, usually in water. Because the gametes are exposed to predators and harsh conditions, animals must release huge numbers of eggs and sperm to ensure a few survive.",
+      focus: [10, 120, 150, 60],
+      labelAt: [100, 80],
+      leaderAt: [100, 130],
+      blurb: "Releases a very large number of eggs directly into the surrounding water. This requires an aquatic environment to ensure the gametes do not quickly dry out before fertilisation.",
     },
     {
-      id: "internal-fert",
-      label: "Internal Fertilisation",
-      tint: T.femaleOrgan,
-      depth: 0,
-      d: roundRect(360, 50, 250, 300, 20),
+      id: "water-eggs",
+      label: "Eggs in Water",
+      tint: T.femaleDuct,
+      panel: "external",
+      depth: 1,
+      d: [
+        circle(180, 200, 8), circle(210, 190, 8), circle(200, 220, 8),
+        circle(240, 210, 8), circle(230, 240, 8), circle(260, 230, 8)
+      ].join(" "),
       layers: [
-        { d: ellipse(485, 200, 60, 90), as: "shade" },
-        { d: ellipse(485, 200, 20, 20), as: "fill" }
+        { d: dots([[180,200], [210,190], [200,220], [240,210], [230,240], [260,230]], 3), as: "shade" }
       ],
-      focus: [360, 50, 250, 300],
-      labelAt: [485, 80],
-      leaderAt: [485, 150],
-      blurb: "Occurs inside the female's body. The gametes and the developing zygote are protected from the outside environment, drastically increasing the chances of successful fertilisation and early survival.",
+      focus: [170, 180, 100, 70],
+      labelAt: [220, 130],
+      leaderAt: [210, 190],
+      blurb: "Hundreds or thousands of eggs are released at once. They are highly vulnerable to aquatic predators and environmental changes, so producing massive numbers ensures at least a few survive.",
+    },
+    {
+      id: "water-sperm",
+      label: "Swimming Sperm",
+      tint: T.maleDuct,
+      panel: "external",
+      depth: 2,
+      d: [
+        circle(280, 180, 4), circle(270, 200, 4), circle(290, 220, 4), circle(260, 250, 4)
+      ].join(" "),
+      layers: [
+        { d: "M284,180 Q294,185 304,180 M274,200 Q284,205 294,200 M294,220 Q304,225 314,220 M264,250 Q274,255 284,250", as: "stroke" }
+      ],
+      focus: [250, 170, 70, 90],
+      labelAt: [280, 320],
+      leaderAt: [270, 250],
+      blurb: "The male parent releases thousands of sperm over the eggs in the water. The sperm use their tails to swim through the water and find the eggs by chance.",
+    },
+    {
+      id: "reproductive-tract",
+      label: "Female Tract",
+      tint: T.femaleOrgan,
+      panel: "internal",
+      depth: 0,
+      d: blob(490, 200, 80, 120, [1, 0.9, 1.1, 0.8]),
+      layers: [
+        { d: blob(490, 200, 60, 100, [1, 0.9, 1.1, 0.8]), as: "panel", clip: true }
+      ],
+      focus: [400, 70, 180, 260],
+      labelAt: [490, 80],
+      leaderAt: [490, 100],
+      blurb: "The specialised internal reproductive organs of a terrestrial animal. They provide a safe, moist environment deep inside the body where fertilisation can safely occur without the risk of drying out.",
+    },
+    {
+      id: "protected-egg",
+      label: "Protected Egg",
+      tint: T.femaleDuct,
+      panel: "internal",
+      depth: 1,
+      d: circle(490, 160, 15),
+      layers: [
+        { d: circle(490, 160, 6), as: "shade" }
+      ],
+      focus: [460, 130, 60, 60],
+      labelAt: [400, 120],
+      leaderAt: [475, 160],
+      blurb: "Only one or a very few eggs are produced at a time. Because they remain safely inside the mother, their chances of survival and successful fertilisation are significantly higher.",
+    },
+    {
+      id: "internal-sperm",
+      label: "Internal Sperm",
+      tint: T.maleDuct,
+      panel: "internal",
+      depth: 2,
+      d: circle(490, 240, 4) + " " + circle(505, 220, 4) + " " + circle(475, 210, 4),
+      layers: [
+        { d: "M490,244 Q490,254 485,264 M505,224 Q505,234 500,244 M475,214 Q475,224 470,234", as: "stroke" }
+      ],
+      focus: [460, 190, 60, 90],
+      labelAt: [500, 280],
+      leaderAt: [505, 220],
+      blurb: "Sperm are deposited directly into the female's reproductive tract during mating. They must swim a short distance through this highly protected environment to successfully reach and fertilise the egg.",
     }
   ]
 };
@@ -539,47 +608,86 @@ export const zygoteEmbryoPlate: FigureSpec = {
   parts: [
     {
       id: "zygote",
-      label: "Zygote",
+      label: "1. Zygote",
       tint: T.petal,
       depth: 0,
-      d: circle(150, 150, 30),
+      d: cell(100, 150, 30, 30, 1),
       layers: [
-        { d: circle(150, 150, 8), as: "shade" }
+        { d: circle(100, 150, 8), as: "shade" }
       ],
-      focus: [120, 120, 60, 60],
-      labelAt: [150, 80],
-      leaderAt: [150, 120],
-      blurb: "The single cell formed when a sperm successfully fuses with an egg. It holds the complete genetic blueprint needed to build a new individual.",
+      focus: [60, 110, 80, 80],
+      labelAt: [100, 80],
+      leaderAt: [100, 120],
+      blurb: "The single fertilised cell formed by the successful fusion of sperm and egg. It contains one diploid nucleus that holds the complete genetic blueprint inherited from both biological parents.",
     },
     {
-      id: "cleavage",
-      label: "Cell Division",
+      id: "two-cell",
+      label: "2. Two Cells",
       tint: T.pistil,
       depth: 0,
-      d: circle(330, 150, 35),
+      d: cell(215, 150, 16, 28, 2) + " " + cell(245, 150, 16, 28, 3),
       layers: [
-        { d: "M330,115 L330,185 M295,150 L365,150 M305,125 L355,175 M305,175 L355,125", as: "shade" },
-        { d: circle(330, 150, 35), as: "light", opacity: 0.2 }
+        { d: circle(215, 150, 5) + " " + circle(245, 150, 5), as: "shade" }
       ],
-      focus: [295, 115, 70, 70],
-      labelAt: [330, 80],
-      leaderAt: [330, 115],
-      blurb: "As the zygote travels down the oviduct, it immediately begins dividing repeatedly through mitosis, turning into a solid ball of many cells.",
+      focus: [190, 110, 80, 80],
+      labelAt: [230, 240],
+      leaderAt: [230, 180],
+      blurb: "About thirty hours after fertilisation occurs, the zygote completes its first major mitotic division. This process, known as cleavage, evenly splits the original single cell into two identical daughter cells.",
     },
     {
-      id: "embryo",
-      label: "Embryo",
-      tint: T.femaleDuct,
+      id: "four-cell",
+      label: "3. Four Cells",
+      tint: T.pistil,
       depth: 0,
-      d: circle(510, 150, 40),
+      d: [
+        cell(345, 135, 16, 16, 4), cell(375, 135, 16, 16, 5),
+        cell(345, 165, 16, 16, 6), cell(375, 165, 16, 16, 7)
+      ].join(" "),
       layers: [
-        { d: blob(510, 150, 30, 25, [1, 1.1, 0.9, 1.05]), as: "shade" },
-        { d: dots([[490,140], [510,130], [530,150], [500,160], [520,165]], 3), as: "light" }
+        { d: [circle(345,135,4), circle(375,135,4), circle(345,165,4), circle(375,165,4)].join(" "), as: "shade" }
       ],
-      focus: [470, 110, 80, 80],
-      labelAt: [510, 80],
-      leaderAt: [510, 110],
-      blurb: "The growing cluster of cells eventually reaches the uterus and embeds itself into the thickened uterine lining (implantation). Here, it begins developing specialised tissues and organs.",
+      focus: [320, 110, 80, 80],
+      labelAt: [360, 80],
+      leaderAt: [360, 120],
+      blurb: "The two cells divide again to form four cells. During these early divisions, the overall size of the embryo does not increase; the individual cells simply become smaller each time.",
+    },
+    {
+      id: "morula",
+      label: "4. Morula",
+      tint: T.pistil,
+      depth: 0,
+      d: cell(490, 150, 32, 32, 8),
+      layers: [
+        { d: cell(490, 150, 32, 32, 8), as: "panel", clip: true },
+        { d: [
+            circle(475, 135, 10), circle(495, 130, 10), circle(510, 140, 10),
+            circle(470, 155, 10), circle(490, 150, 10), circle(510, 160, 10),
+            circle(480, 170, 10), circle(500, 170, 10)
+          ].join(" "), as: "shade", opacity: 0.5, clip: true },
+        { d: dots([[475,135], [495,130], [510,140], [470,155], [490,150], [510,160], [480,170], [500,170]], 2), as: "fill" }
+      ],
+      focus: [450, 110, 80, 80],
+      labelAt: [490, 240],
+      leaderAt: [490, 180],
+      blurb: "After several days of continuous division, the embryo becomes a tightly packed, solid ball of sixteen to thirty-two cells. At this stage, it is called a morula because it resembles a mulberry.",
+    },
+    {
+      id: "implanted-embryo",
+      label: "5. Implantation",
+      tint: T.femaleOrgan,
+      depth: -1,
+      d: blob(600, 150, 50, 80, [1, 0.9, 1.1, 0.9]),
+      layers: [
+        { d: blob(600, 150, 50, 80, [1, 0.9, 1.1, 0.9]), as: "panel", clip: true },
+        { d: cell(590, 150, 20, 20, 9), as: "fill", tint: T.femaleDuct, clip: true },
+        { d: circle(590, 150, 12), as: "panel", clip: true },
+        { d: circle(585, 145, 5), as: "shade", tint: T.femaleDuct, clip: true }
+      ],
+      focus: [540, 60, 120, 180],
+      labelAt: [560, 60],
+      labelAlign: "end",
+      leaderAt: [590, 130],
+      blurb: "The embryo arrives in the uterus as a hollow ball of cells called a blastocyst. It then burrows deeply into the thickened uterine lining to secure a permanent nutrient supply.",
     }
   ]
 };
@@ -590,52 +698,104 @@ export const menstrualCyclePlate: FigureSpec = {
   figNumber: "Fig. 11.21",
   altText: "Diagram showing the stages of the menstrual cycle: menstruation, thickening lining, and ovulation.",
   viewBox: [660, 450],
-  magnify: "part",
+  magnify: "camera",
+  panels: [
+    { id: "p1", caption: "(a) Menstruation", box: [0, 0, 220, 420] },
+    { id: "p2", caption: "(b) Thickening & Ovulation", box: [220, 0, 220, 420] },
+    { id: "p3", caption: "(c) Prepared Lining", box: [440, 0, 220, 420] }
+  ],
   parts: [
     {
-      id: "menstruation",
-      label: "Menstruation",
-      tint: T.femaleDuct,
+      id: "uterus-menstruating",
+      label: "Uterus",
+      tint: T.femaleOrgan,
+      panel: "p1",
       depth: 0,
-      d: roundRect(230, 80, 200, 80, 10),
+      d: blob(110, 200, 60, 80, [1, 1.1, 0.9, 1]),
       layers: [
-        { d: "M240,120 L420,120", as: "shade", width: 2 },
-        { d: dots([[260,140], [300,145], [340,135], [380,140]], 3), as: "fill" }
+        { d: blob(110, 200, 55, 75, [1, 1.1, 0.9, 1]), as: "panel", clip: true }
       ],
-      focus: [230, 80, 200, 80],
-      labelAt: [150, 120],
-      leaderAt: [230, 120],
-      blurb: "If an egg is not fertilised, the unneeded uterine lining sheds and exits the body as blood and tissue. This marks the beginning of a new cycle.",
+      focus: [40, 110, 140, 180],
+      labelAt: [110, 90],
+      leaderAt: [110, 130],
+      blurb: "The main muscular body of the uterus during the very start of the menstrual cycle. Without a fertilised egg, the previous cycle's extensive blood-vessel preparations are absolutely no longer needed.",
+    },
+    {
+      id: "shedding-lining",
+      label: "Shedding Lining",
+      tint: T.femaleDuct,
+      panel: "p1",
+      depth: 1,
+      d: blob(110, 240, 20, 40, [1, 0.9, 1.1, 0.9]),
+      layers: [
+        { d: circle(110, 300, 4) + " " + circle(100, 315, 3) + " " + circle(120, 310, 4), as: "fill" }
+      ],
+      focus: [70, 190, 80, 150],
+      labelAt: [150, 360],
+      leaderAt: [110, 250],
+      blurb: "The heavily thickened inner lining, called the endometrium, breaks down and slowly sheds. It flows out through the vagina as blood and tissue, marking the beginning of a period.",
+    },
+    {
+      id: "ovary-ovulating",
+      label: "Ovary",
+      tint: T.femaleOrgan,
+      panel: "p2",
+      depth: 0,
+      d: blob(280, 150, 25, 20, [1, 0.95, 1.05, 0.95]),
+      layers: [
+        { d: circle(290, 150, 8), as: "shade" }
+      ],
+      focus: [240, 110, 80, 80],
+      labelAt: [280, 90],
+      leaderAt: [280, 130],
+      blurb: "One of the female's two ovaries begins preparing a completely new follicle. Around day fourteen of the monthly cycle, it ruptures and releases a fully mature egg into the oviduct.",
+    },
+    {
+      id: "released-egg",
+      label: "Released Egg",
+      tint: T.femaleDuct,
+      panel: "p2",
+      depth: 1,
+      d: circle(320, 160, 6),
+      layers: [
+        { d: "M295,155 L310,160", as: "stroke", dash: "2 2" }
+      ],
+      focus: [300, 140, 40, 40],
+      labelAt: [380, 160],
+      leaderAt: [326, 160],
+      blurb: "The newly released mature egg, or ovum, slowly travels down the oviduct towards the uterus. This represents the brief biological window during which successful fertilisation by a sperm can occur.",
     },
     {
       id: "thickening-lining",
       label: "Thickening Lining",
-      tint: T.femaleOrgan,
+      tint: T.femaleDuct,
+      panel: "p2",
       depth: 0,
-      d: roundRect(370, 230, 180, 150, 15),
+      d: blob(330, 200, 60, 80, [1, 1.1, 0.9, 1]),
       layers: [
-        { d: "M380,300 Q460,350 540,300", as: "shade", width: 8 },
-        { d: gleam(460, 260, 30, 40), as: "light", opacity: 0.3 }
+        { d: blob(330, 200, 45, 65, [1, 1.1, 0.9, 1]), as: "panel", clip: true },
+        { d: blob(330, 200, 45, 65, [1, 1.1, 0.9, 1]), as: "shade", clip: true, opacity: 0.3 }
       ],
-      focus: [370, 230, 180, 150],
-      labelAt: [560, 300],
-      leaderAt: [550, 300],
-      blurb: "The uterus builds up its inner lining again. It grows thick and rich with blood vessels to prepare for a potential pregnancy.",
+      focus: [260, 110, 140, 180],
+      labelAt: [330, 330],
+      leaderAt: [330, 250],
+      blurb: "At exactly the same time as the egg matures, rising hormone levels cause the uterus to start building up a brand new inner lining, densely packed with fresh blood vessels.",
     },
     {
-      id: "ovulation",
-      label: "Ovulation",
-      tint: T.stamen,
+      id: "prepared-lining",
+      label: "Prepared Endometrium",
+      tint: T.femaleDuct,
+      panel: "p3",
       depth: 0,
-      d: circle(200, 300, 40),
+      d: blob(550, 200, 60, 80, [1, 1.1, 0.9, 1]),
       layers: [
-        { d: circle(240, 280, 10), as: "fill" },
-        { d: "M220,290 Q230,285 240,280", as: "shade", width: 2 }
+        { d: blob(550, 200, 30, 50, [1, 1.1, 0.9, 1]), as: "panel", clip: true },
+        { d: "M510,180 Q530,200 550,180 M510,220 Q530,240 550,220 M590,180 Q570,200 550,180 M590,220 Q570,240 550,220", as: "stroke", tint: T.femaleDuct, width: 2, clip: true }
       ],
-      focus: [160, 260, 100, 100],
-      labelAt: [100, 300],
-      leaderAt: [160, 300],
-      blurb: "Roughly in the middle of the cycle, an ovary matures and releases an egg into the oviduct. It waits there for possible fertilisation by a sperm.",
+      focus: [480, 110, 140, 180],
+      labelAt: [550, 90],
+      leaderAt: [550, 160],
+      blurb: "The uterine lining is now fully thickened, highly vascular, and spongy. It acts as a nutrient-rich bed, perfectly prepared to receive and nourish a growing embryo if fertilisation happened.",
     }
   ]
 };
