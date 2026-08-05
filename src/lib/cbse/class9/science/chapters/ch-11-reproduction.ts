@@ -4,6 +4,9 @@ import {
   flowerPlate,
   maleSystemPlate,
   femaleSystemPlate,
+  animalReproductionPlate,
+  zygoteEmbryoPlate,
+  menstrualCyclePlate,
 } from "../figures/ch-11";
 
 export const ch11Reproduction: Chapter = {
@@ -86,6 +89,12 @@ In many aquatic animals, such as frogs and most fish, the female releases eggs i
 
 In reptiles, birds and mammals, fertilisation takes place inside the body of the female. This is called **internal fertilisation**. Here, the gametes are much better protected, increasing the chances of a successful pregnancy.
 
+### Variations in reproduction
+
+Besides fertilisation methods, animals also differ in how their young develop. Animals like hens, frogs and butterflies are **oviparous** (egg-laying), meaning the embryo develops inside an egg outside the mother's body. In contrast, mammals like cows, dogs and humans are **viviparous** (giving birth to live young), where the embryo develops safely inside the mother.
+
+In some oviparous animals, the young hatching from the egg look completely different from the adults. For instance, a caterpillar looks nothing like a butterfly, and a tadpole looks nothing like a frog. This process of drastic change from a larva into an adult is called **metamorphosis**.
+
 ### Nutrition and survival
 
 Animals also differ in how they nourish the developing embryo. Fish, amphibians and insects lay eggs containing just enough yolk to produce a **larva**. This larva hatches and must feed itself (often on organic waste) until it accumulates enough energy to transform into an adult — a process clearly seen in butterflies and frogs.
@@ -93,6 +102,7 @@ Animals also differ in how they nourish the developing embryo. Fish, amphibians 
 > Reptiles and birds lay eggs that contain enough yolk to completely nourish the embryo until it hatches as a fully formed young one.
 
 In mammals, however, the fertilised egg develops inside the female's body, drawing nutrition directly from the mother. When mammalian young are born, they typically require an extended period of care and are fed via breast milk.`,
+      sim: animalReproductionPlate,
       note: {
         kind: "watch-out",
         body: "Animals using external fertilisation must produce vastly more eggs than those using internal fertilisation because the unprotected eggs have a very low survival rate.",
@@ -140,9 +150,10 @@ If the egg is not fertilised, it survives for about a day before breaking down. 
 
 ### Growing a baby
 
-Human pregnancy lasts about nine months and is divided into three trimesters. In the first two months, the major organs form, and the embryo becomes known as a **foetus**. The uterus protects and nourishes the baby throughout. During childbirth, strong muscular contractions push the fully grown foetus out through the birth canal.
+Human pregnancy lasts about nine months and is divided into three trimesters. The developing embryo implants in the uterine wall, where a special disc-like tissue called the **placenta** forms. The placenta connects the mother's blood supply to the foetus via the umbilical cord, providing oxygen and essential nutrients while removing waste products. In the first two months, the major organs form, and the embryo becomes known as a **foetus**. The uterus protects and nourishes the baby throughout. During childbirth, strong muscular contractions push the fully grown foetus out through the birth canal.
 
 > The mother's health is critical during pregnancy. A balanced diet, adequate rest, and avoiding harmful substances are essential for the baby's safe development.`,
+      sim: zygoteEmbryoPlate,
       note: {
         kind: "exam-tip",
         body: "Fertilisation usually takes place in the oviduct (fallopian tube), not in the uterus. The uterus is where the embryo implants and develops.",
@@ -153,9 +164,9 @@ Human pregnancy lasts about nine months and is divided into three trimesters. In
       title: "Reproductive Health and Choices",
       eyebrow: "Maturity and safety",
       bookRef: "Exploration §11.5",
-      body: `During adolescence, the body gradually becomes capable of reproduction. However, physical readiness does not mean a person is emotionally or socially prepared for adult responsibilities. Emotional maturity — handling feelings and making thoughtful decisions — takes much longer to develop.
+      body: `During adolescence, the body gradually becomes capable of reproduction, marked by changes like the onset of the menstrual cycle in females. However, physical readiness does not mean a person is emotionally or socially prepared for adult responsibilities. Emotional maturity — handling feelings and making thoughtful decisions — takes much longer to develop.
 
-Responsible choices are necessary to prevent unplanned pregnancies and **Sexually Transmitted Infections (STIs)**. STIs, such as gonorrhoea, syphilis, and HIV, can be transmitted during close physical contact. Using barrier methods, like condoms, is highly effective at preventing the spread of these infections.
+Responsible choices are necessary to prevent unplanned pregnancies and **Sexually Transmitted Infections (STIs)**. STIs, such as gonorrhoea, syphilis, and HIV, can be transmitted during close physical contact. Using barrier methods, like condoms, is highly effective at preventing the spread of these infections and keeping individuals healthy. Maintaining personal hygiene during menstruation is also a vital part of reproductive health.
 
 ### Preventing unwanted pregnancy
 
@@ -169,6 +180,7 @@ There are several **contraceptive** methods available to avoid unwanted pregnanc
 > Contraception allows individuals to plan their families and avoid unwanted pregnancies, while barrier methods uniquely provide protection against sexually transmitted infections.
 
 In certain cases, unwanted pregnancies are terminated via surgery (abortion). However, using this procedure for prenatal sex determination (selective abortion based on gender) is strictly prohibited by law in India to maintain a healthy societal sex ratio.`,
+      sim: menstrualCyclePlate,
       note: {
         kind: "watch-out",
         body: "Oral pills and IUDs prevent pregnancy but offer no protection against Sexually Transmitted Infections (STIs). Only barrier methods like condoms do both.",

@@ -39,10 +39,10 @@ export const buddingHydraPlate: FigureSpec = {
       tint: T.hydraTentacle,
       depth: 1,
       d: [
-        tubule(310, 150, 270, 80, 8),
-        tubule(325, 140, 310, 60, 8),
-        tubule(340, 140, 360, 50, 8),
-        tubule(355, 150, 410, 70, 8),
+        smoothClosed([ [306, 150], [266, 80], [274, 80], [314, 150] ]),
+        smoothClosed([ [321, 140], [306, 60], [314, 60], [329, 140] ]),
+        smoothClosed([ [336, 140], [356, 50], [364, 50], [344, 140] ]),
+        smoothClosed([ [351, 150], [406, 70], [414, 70], [359, 150] ]),
       ].join(" "),
       layers: [
         { d: gleam(310, 140, 4, 30), as: "light", opacity: 0.3 },
@@ -91,12 +91,12 @@ export const buddingHydraPlate: FigureSpec = {
       label: "Developing bud",
       tint: T.hydraTentacle,
       depth: 3,
-      d: tubule(358, 300, 420, 280, 22),
+      d: smoothClosed([ [358, 290], [420, 275], [425, 285], [358, 305] ]),
       layers: [
-        { d: gleam(389, 290, 8, 30), as: "light", opacity: 0.4 },
-        { d: tubule(420, 280, 440, 260, 4), as: "light" },
-        { d: tubule(420, 280, 445, 285, 4), as: "light" },
-        { d: tubule(420, 280, 435, 305, 4), as: "light" }
+        { d: gleam(389, 285, 8, 20), as: "light", opacity: 0.4 },
+        { d: smoothClosed([ [420, 275], [440, 260], [443, 263], [423, 278] ]), as: "light" },
+        { d: smoothClosed([ [422, 280], [445, 285], [445, 289], [422, 284] ]), as: "light" },
+        { d: smoothClosed([ [425, 285], [435, 305], [431, 307], [421, 287] ]), as: "light" }
       ],
       focus: [358, 260, 80, 60],
       labelAt: [500, 280],
@@ -189,10 +189,10 @@ export const flowerPlate: FigureSpec = {
       label: "Style",
       tint: T.pistil,
       depth: 1,
-      d: tubule(330, 132, 330, 240, 12),
+      d: roundRect(324, 132, 12, 108, 6),
       layers: [
         { d: gleam(330, 186, 4, 100), as: "light", opacity: 0.4 },
-        { d: tubule(330, 132, 330, 240, 2), as: "shade" }
+        { d: roundRect(329, 132, 2, 108, 1), as: "shade" }
       ],
       focus: [324, 132, 12, 108],
       labelAt: [500, 180],
@@ -243,8 +243,8 @@ export const flowerPlate: FigureSpec = {
       tint: T.stamen,
       depth: 1,
       d: [
-        tubule(260, 170, 310, 260, 4),
-        tubule(400, 170, 350, 260, 4)
+        smoothClosed([ [258, 170], [308, 260], [312, 260], [262, 170] ]),
+        smoothClosed([ [402, 170], [352, 260], [348, 260], [398, 170] ])
       ].join(" "),
       layers: [
         { d: gleam(285, 215, 2, 80), as: "light", opacity: 0.4 },
@@ -301,12 +301,15 @@ export const maleSystemPlate: FigureSpec = {
       label: "Vas deferens",
       tint: T.maleDuct,
       depth: 1,
-      d: tubule(330, 362, 330, 200, 8),
+      d: [
+        roundRect(326, 180, 8, 182, 4),
+        roundRect(326, 180, 44, 8, 4)
+      ].join(" "),
       layers: [
-        { d: tubule(330, 362, 330, 200, 4), as: "light", opacity: 0.5 },
+        { d: roundRect(328, 182, 4, 180, 2), as: "light", opacity: 0.5 },
         { d: "M326,280 L334,280", as: "shade" }
       ],
-      focus: [326, 200, 8, 162],
+      focus: [326, 180, 44, 182],
       labelAt: [150, 280],
       leaderAt: [326, 280],
       blurb: "A muscular tube that transports mature sperm from the testis upwards into the pelvic cavity to mix with fluids before ejaculation.",
@@ -331,14 +334,14 @@ export const maleSystemPlate: FigureSpec = {
       label: "Prostate gland",
       tint: T.maleOrgan,
       depth: 1,
-      d: blob(330, 210, 22, 18, [1, 0.9, 1.1, 0.9]),
+      d: blob(315, 210, 22, 18, [1, 0.9, 1.1, 0.9]),
       layers: [
-        { d: gleam(330, 210, 12, 10), as: "light", opacity: 0.4 },
-        { d: "M320,210 Q330,220 340,210", as: "shade" }
+        { d: gleam(315, 210, 12, 10), as: "light", opacity: 0.4 },
+        { d: "M305,210 Q315,220 325,210", as: "shade" }
       ],
-      focus: [308, 192, 44, 36],
+      focus: [293, 192, 44, 36],
       labelAt: [500, 210],
-      leaderAt: [350, 210],
+      leaderAt: [335, 210],
       blurb: "A walnut-sized gland that surrounds the urethra. It adds an alkaline fluid to semen, which helps protect sperm from the acidic environment of the female reproductive tract.",
     },
     {
@@ -361,10 +364,10 @@ export const maleSystemPlate: FigureSpec = {
       label: "Urethra",
       tint: T.maleDuct,
       depth: 1,
-      d: tubule(300, 210, 300, 380, 4),
+      d: roundRect(298, 210, 4, 170, 2),
       layers: [
-        { d: tubule(300, 210, 300, 380, 1), as: "light", opacity: 0.5 },
-        { d: "M300,210 L330,210", as: "fill" }
+        { d: roundRect(299, 210, 2, 170, 1), as: "light", opacity: 0.5 },
+        { d: roundRect(298, 210, 32, 4, 2), as: "fill" }
       ],
       focus: [298, 210, 4, 170],
       labelAt: [150, 210],
@@ -437,12 +440,12 @@ export const femaleSystemPlate: FigureSpec = {
       tint: T.femaleDuct,
       depth: 1,
       d: [
-        tubule(260, 120, 200, 130, 8),
-        tubule(400, 120, 460, 130, 8)
+        smoothClosed([ [260, 116], [200, 126], [200, 134], [260, 124] ]),
+        smoothClosed([ [400, 116], [460, 126], [460, 134], [400, 124] ])
       ].join(" "),
       layers: [
-        { d: tubule(260, 120, 200, 130, 4), as: "light", opacity: 0.5 },
-        { d: tubule(400, 120, 460, 130, 4), as: "light", opacity: 0.5 },
+        { d: smoothClosed([ [260, 118], [200, 128], [200, 132], [260, 122] ]), as: "light", opacity: 0.5 },
+        { d: smoothClosed([ [400, 118], [460, 128], [460, 132], [400, 122] ]), as: "light", opacity: 0.5 },
         { d: "M210,130 A15,15 0 0,0 190,130", as: "shade" },
         { d: "M450,130 A15,15 0 0,1 470,130", as: "shade" }
       ],
@@ -471,9 +474,9 @@ export const femaleSystemPlate: FigureSpec = {
       label: "Vagina",
       tint: T.femaleDuct,
       depth: 0,
-      d: tubule(330, 300, 330, 380, 20),
+      d: roundRect(320, 300, 20, 80, 10),
       layers: [
-        { d: tubule(330, 300, 330, 380, 8), as: "light", opacity: 0.4 },
+        { d: roundRect(326, 300, 8, 80, 4), as: "light", opacity: 0.4 },
         { d: "M320,340 Q330,350 340,340 M320,360 Q330,370 340,360", as: "shade" }
       ],
       focus: [320, 300, 20, 80],
@@ -482,4 +485,157 @@ export const femaleSystemPlate: FigureSpec = {
       blurb: "A muscular canal leading from the cervix to the outside of the body. It receives sperm during intercourse and serves as the birth canal during delivery.",
     }
   ],
+};
+
+export const animalReproductionPlate: FigureSpec = {
+  kind: "figure",
+  title: "External vs Internal Fertilisation",
+  figNumber: "Fig. 11.17",
+  altText: "Comparison of external fertilisation in water and internal fertilisation inside an animal body.",
+  viewBox: [660, 400],
+  magnify: "part",
+  parts: [
+    {
+      id: "external-fert",
+      label: "External Fertilisation",
+      tint: T.maleOrgan,
+      depth: 0,
+      d: roundRect(50, 50, 250, 300, 20),
+      layers: [
+        { d: "M50,200 Q150,180 300,200", as: "light", opacity: 0.3 },
+        { d: dots([[120,250], [160,280], [140,230], [200,260], [180,220]], 4), as: "fill" },
+        { d: dots([[130,240], [150,270], [170,230]], 2), as: "shade" }
+      ],
+      focus: [50, 50, 250, 300],
+      labelAt: [175, 80],
+      leaderAt: [175, 150],
+      blurb: "Occurs outside the female's body, usually in water. Because the gametes are exposed to predators and harsh conditions, animals must release huge numbers of eggs and sperm to ensure a few survive.",
+    },
+    {
+      id: "internal-fert",
+      label: "Internal Fertilisation",
+      tint: T.femaleOrgan,
+      depth: 0,
+      d: roundRect(360, 50, 250, 300, 20),
+      layers: [
+        { d: ellipse(485, 200, 60, 90), as: "shade" },
+        { d: ellipse(485, 200, 20, 20), as: "fill" }
+      ],
+      focus: [360, 50, 250, 300],
+      labelAt: [485, 80],
+      leaderAt: [485, 150],
+      blurb: "Occurs inside the female's body. The gametes and the developing zygote are protected from the outside environment, drastically increasing the chances of successful fertilisation and early survival.",
+    }
+  ]
+};
+
+export const zygoteEmbryoPlate: FigureSpec = {
+  kind: "figure",
+  title: "From Zygote to Embryo",
+  figNumber: "Fig. 11.20",
+  altText: "Stages of early human development from a single-celled zygote to a multi-celled embryo.",
+  viewBox: [660, 300],
+  magnify: "part",
+  parts: [
+    {
+      id: "zygote",
+      label: "Zygote",
+      tint: T.petal,
+      depth: 0,
+      d: circle(150, 150, 30),
+      layers: [
+        { d: circle(150, 150, 8), as: "shade" }
+      ],
+      focus: [120, 120, 60, 60],
+      labelAt: [150, 80],
+      leaderAt: [150, 120],
+      blurb: "The single cell formed when a sperm successfully fuses with an egg. It holds the complete genetic blueprint needed to build a new individual.",
+    },
+    {
+      id: "cleavage",
+      label: "Cell Division",
+      tint: T.pistil,
+      depth: 0,
+      d: circle(330, 150, 35),
+      layers: [
+        { d: "M330,115 L330,185 M295,150 L365,150 M305,125 L355,175 M305,175 L355,125", as: "shade" },
+        { d: circle(330, 150, 35), as: "light", opacity: 0.2 }
+      ],
+      focus: [295, 115, 70, 70],
+      labelAt: [330, 80],
+      leaderAt: [330, 115],
+      blurb: "As the zygote travels down the oviduct, it immediately begins dividing repeatedly through mitosis, turning into a solid ball of many cells.",
+    },
+    {
+      id: "embryo",
+      label: "Embryo",
+      tint: T.femaleDuct,
+      depth: 0,
+      d: circle(510, 150, 40),
+      layers: [
+        { d: blob(510, 150, 30, 25, [1, 1.1, 0.9, 1.05]), as: "shade" },
+        { d: dots([[490,140], [510,130], [530,150], [500,160], [520,165]], 3), as: "light" }
+      ],
+      focus: [470, 110, 80, 80],
+      labelAt: [510, 80],
+      leaderAt: [510, 110],
+      blurb: "The growing cluster of cells eventually reaches the uterus and embeds itself into the thickened uterine lining (implantation). Here, it begins developing specialised tissues and organs.",
+    }
+  ]
+};
+
+export const menstrualCyclePlate: FigureSpec = {
+  kind: "figure",
+  title: "The Menstrual Cycle",
+  figNumber: "Fig. 11.21",
+  altText: "Diagram showing the stages of the menstrual cycle: menstruation, thickening lining, and ovulation.",
+  viewBox: [660, 450],
+  magnify: "part",
+  parts: [
+    {
+      id: "menstruation",
+      label: "Menstruation",
+      tint: T.femaleDuct,
+      depth: 0,
+      d: roundRect(230, 80, 200, 80, 10),
+      layers: [
+        { d: "M240,120 L420,120", as: "shade", width: 2 },
+        { d: dots([[260,140], [300,145], [340,135], [380,140]], 3), as: "fill" }
+      ],
+      focus: [230, 80, 200, 80],
+      labelAt: [150, 120],
+      leaderAt: [230, 120],
+      blurb: "If an egg is not fertilised, the unneeded uterine lining sheds and exits the body as blood and tissue. This marks the beginning of a new cycle.",
+    },
+    {
+      id: "thickening-lining",
+      label: "Thickening Lining",
+      tint: T.femaleOrgan,
+      depth: 0,
+      d: roundRect(370, 230, 180, 150, 15),
+      layers: [
+        { d: "M380,300 Q460,350 540,300", as: "shade", width: 8 },
+        { d: gleam(460, 260, 30, 40), as: "light", opacity: 0.3 }
+      ],
+      focus: [370, 230, 180, 150],
+      labelAt: [560, 300],
+      leaderAt: [550, 300],
+      blurb: "The uterus builds up its inner lining again. It grows thick and rich with blood vessels to prepare for a potential pregnancy.",
+    },
+    {
+      id: "ovulation",
+      label: "Ovulation",
+      tint: T.stamen,
+      depth: 0,
+      d: circle(200, 300, 40),
+      layers: [
+        { d: circle(240, 280, 10), as: "fill" },
+        { d: "M220,290 Q230,285 240,280", as: "shade", width: 2 }
+      ],
+      focus: [160, 260, 100, 100],
+      labelAt: [100, 300],
+      leaderAt: [160, 300],
+      blurb: "Roughly in the middle of the cycle, an ovary matures and releases an egg into the oviduct. It waits there for possible fertilisation by a sperm.",
+    }
+  ]
 };
