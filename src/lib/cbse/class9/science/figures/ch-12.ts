@@ -143,7 +143,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [100, 50, 500, 40],
       labelAt: [350, 70],
       labelAlign: "middle",
-      blurb: "The highest and broadest category. For example, Animalia includes all animals.",
+      blurb: "The broadest rank, splitting all life into a handful of huge groups. Animalia holds every animal from a sponge to a blue whale — enormous variety built on one shared way of living.",
     },
     {
       id: "phylum",
@@ -154,7 +154,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [140, 110, 420, 40],
       labelAt: [350, 130],
       labelAlign: "middle",
-      blurb: "Groups organisms with shared basic body plans, like Chordata (having a backbone).",
+      blurb: "Divides a kingdom by basic body plan. Chordata gathers every animal with a nerve cord running down its back, which is what puts a fish and you in the same phylum.",
     },
     {
       id: "class",
@@ -165,7 +165,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [180, 170, 340, 40],
       labelAt: [350, 190],
       labelAlign: "middle",
-      blurb: "Further divides phyla. For example, Mammalia includes all animals that give milk.",
+      blurb: "Splits a phylum into groups sharing a way of life. Mammalia covers animals that grow hair and feed their young on milk, from a bat to an elephant.",
     },
     {
       id: "order",
@@ -176,7 +176,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [220, 230, 260, 40],
       labelAt: [350, 250],
       labelAlign: "middle",
-      blurb: "Groups related families, such as Carnivora (meat-eaters).",
+      blurb: "Groups families that share a broad habit. Carnivora collects the meat-eaters — cats, dogs, bears and seals — animals built around teeth and claws for catching other animals.",
     },
     {
       id: "family",
@@ -187,7 +187,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [260, 290, 180, 40],
       labelAt: [350, 310],
       labelAlign: "middle",
-      blurb: "Groups closely related genera, like Felidae (all cats).",
+      blurb: "Groups genera that are clearly close relatives. Felidae holds every cat, from a tabby on a windowsill to a tiger, all sharing retractable claws and a hunter's build.",
     },
     {
       id: "genus",
@@ -198,7 +198,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [290, 350, 120, 40],
       labelAt: [350, 370],
       labelAlign: "middle",
-      blurb: "A group of closely related species, like Panthera (roaring cats).",
+      blurb: "A tight group of species so alike they are easily confused. Panthera holds the big roaring cats — lion, tiger, leopard and jaguar — separated by small but real differences.",
     },
     {
       id: "species",
@@ -209,7 +209,7 @@ export const taxonomicLadderPlate: FigureSpec = {
       focus: [310, 410, 80, 40],
       labelAt: [350, 430],
       labelAlign: "middle",
-      blurb: "The most specific level; organisms that can interbreed, like Panthera tigris (Tiger).",
+      blurb: "The narrowest rank: one kind of organism whose members breed together and produce fertile young. Panthera tigris is the tiger, and no other animal belongs inside it.",
     }
   ]
 };
@@ -339,7 +339,7 @@ export const fiveKingdomsPlate: FigureSpec = {
       focus: [650, 280, 140, 30],
       labelAt: [720, 295],
       labelAlign: "middle",
-      blurb: "Organisms completely lacking rigid cell walls, making them highly flexible.",
+      blurb: "Cells bounded only by a flexible membrane, with no rigid wall outside it. That flexibility is what lets an animal cell change shape, engulf its food, and move about freely.",
     },
     {
       id: "fungi",
@@ -696,7 +696,7 @@ export const binomialNamingPlate: FigureSpec = {
       focus: [180, 50, 300, 60],
       labelAt: [330, 85],
       labelAlign: "middle",
-      blurb: "The complete scientific name uniquely identifies exactly one species. It is written in Latin and typically italicised when printed.",
+      blurb: "The two-word Latin name that identifies one species anywhere in the world. It sidesteps local names entirely — a \"panther\" means different animals in different countries, but Panthera pardus never does.",
     },
     {
       id: "genus",
@@ -707,7 +707,7 @@ export const binomialNamingPlate: FigureSpec = {
       focus: [80, 160, 200, 60],
       labelAt: [180, 195],
       labelAlign: "middle",
-      blurb: "The first word of the scientific name identifies the genus. It must ALWAYS be capitalised.",
+      blurb: "The first word gives the genus, the group of closest relatives, and always starts with a capital letter. Every species in that group shares it, so it tells you who the animal's cousins are.",
     },
     {
       id: "species",
@@ -718,7 +718,7 @@ export const binomialNamingPlate: FigureSpec = {
       focus: [380, 160, 200, 60],
       labelAt: [480, 195],
       labelAlign: "middle",
-      blurb: "The second word specifies the exact species within the genus. It is ALWAYS written entirely in lowercase letters.",
+      blurb: "The second word names the one species inside that genus and is always written in lower case. On its own it means nothing — it identifies an organism only when paired with its genus.",
     }
   ]
 };

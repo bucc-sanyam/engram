@@ -471,9 +471,17 @@ layers/part with 17% coverage, a separating funnel at 0.1 and 14%. **Both passed
 `tsc` and the validator. They just looked empty.**
 
 **Exempt:** comparison plates stay on `camera` and are already dense.
-**Constructions are exempt entirely** — graphs, free-body diagrams and number
-lines sit near zero layers on `camera` with no organic curves, and that is
-correct. Adding volume to a velocity–time graph makes it worse.
+**Constructions are exempt entirely** — graphs, free-body diagrams, number lines
+and branching keys sit near zero layers on `camera` with no organic curves, and
+that is correct. Adding volume to a velocity–time graph makes it worse.
+
+**How to tell, concretely:** a plate is a construction if it is `camera` **and**
+its part bodies contain no curve commands — all `roundRect`, `stadium` and
+straight lines. Chapter 12's taxonomic ladder and five-kingdom key are the worked
+example: their decision nodes (`Prokaryotes`, `With Cell Wall`) are flat boxes by
+design, and only the kingdom cards at the leaves carry illustrations as layers.
+That plate sits at 42% coverage and is **correct**. Do not "fix" it — a gleam on
+a flowchart node is the same mistake as volume on a number line.
 
 Count it before claiming done:
 
