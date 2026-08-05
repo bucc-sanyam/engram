@@ -1,0 +1,471 @@
+import type { FigureSpec } from "@/lib/sim/types";
+import {
+  circle,
+  ellipse,
+  dots,
+  blob,
+  cell,
+  tubule,
+  roundRect,
+  stadium,
+  gleam,
+  smoothClosed,
+} from "@/lib/sim/draw";
+
+const T = {
+  treeNode: "#a3c586",
+  monera: "#7b9fcc",
+  protista: "#e6b37a",
+  fungi: "#c49393",
+  plantae: "#86c592",
+  animalia: "#d97373",
+  thallophyta: "#a1d9b3",
+  bryophyta: "#7bc994",
+  pteridophyta: "#59b375",
+  gymnosperm: "#40995c",
+  angiosperm: "#2b8044",
+  porifera: "#ffb366",
+  cnidaria: "#ff9999",
+  annelida: "#d98cd9",
+  arthropoda: "#b3b3ff",
+  chordata: "#66ccff",
+};
+
+export const endemicSpeciesPlate: FigureSpec = {
+  kind: "figure",
+  title: "Endemic Species of India",
+  figNumber: "Fig. 12.1",
+  altText: "A collection of endemic species unique to India, illustrating the rich biodiversity found in specific isolated habitats.",
+  viewBox: [660, 400],
+  magnify: "part",
+  parts: [
+    {
+      id: "pitcher-plant",
+      label: "Pitcher Plant",
+      tint: T.plantae,
+      depth: 0,
+      d: blob(200, 200, 60, 100, [1, 0.8, 1.2, 0.9]),
+      layers: [
+        { d: ellipse(200, 120, 40, 15), as: "fill", tint: T.treeNode },
+        { d: ellipse(200, 120, 40, 15), as: "shade" }
+      ],
+      focus: [120, 80, 160, 240],
+      labelAt: [200, 70],
+      leaderAt: [160, 150],
+      blurb: "The Indian pitcher plant (Nepenthes khasiana) is a rare carnivorous plant endemic to the Khasi Hills in Meghalaya, possessing unique traps to capture insects.",
+    },
+    {
+      id: "lion-tailed-macaque",
+      label: "Lion-Tailed Macaque",
+      tint: T.animalia,
+      depth: 0,
+      d: roundRect(400, 150, 100, 150, 40),
+      layers: [
+        { d: circle(450, 150, 40), as: "fill" },
+        { d: circle(435, 140, 5) + " " + circle(465, 140, 5), as: "shade" }
+      ],
+      focus: [380, 100, 140, 220],
+      labelAt: [560, 100],
+      leaderAt: [480, 150],
+      blurb: "An endangered primate species endemic to the Western Ghats of South India. It is easily recognised by its distinctive silver-white mane and lion-like tail.",
+    }
+  ]
+};
+
+export const fiveKingdomsPlate: FigureSpec = {
+  kind: "figure",
+  title: "The Five Kingdoms of Life",
+  figNumber: "Fig. 12.5",
+  altText: "A hierarchical classification tree of the five kingdoms of life, branching from organisms to Monera, Protista, Fungi, Plantae, and Animalia.",
+  viewBox: [1150, 550],
+  magnify: "camera",
+  scenery: [
+    { d: "M475,40 L475,80", as: "stroke", width: 2 },
+    { d: "M200,80 L750,80 M200,80 L200,120 M750,80 L750,120", as: "stroke", width: 2 },
+    { d: "M550,160 L850,160 M550,160 L550,200 M850,160 L850,200", as: "stroke", width: 2 },
+    { d: "M700,240 L1000,240 M700,240 L700,280 M1000,240 L1000,380", as: "stroke", width: 2 },
+    { d: "M600,320 L800,320 M600,320 L600,380 M800,320 L800,380", as: "stroke", width: 2 },
+  ],
+  parts: [
+    {
+      id: "organisms",
+      label: "Organisms",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(395, 10, 160, 30, 5),
+      focus: [395, 10, 160, 30],
+      labelAt: [475, 25],
+      labelAlign: "middle",
+      blurb: "All living things on Earth are carefully classified based on their unique cellular structure, internal body organisation, and the specific ways they obtain their food.",
+    },
+    {
+      id: "prokaryotes",
+      label: "Prokaryotes",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(130, 120, 140, 30, 5),
+      focus: [130, 120, 140, 30],
+      labelAt: [200, 135],
+      labelAlign: "middle",
+      blurb: "Simple organisms whose cells completely lack a defined, membrane-bound nucleus and any other specialised internal organelles. This is the most ancient form of life.",
+    },
+    {
+      id: "eukaryotes",
+      label: "Eukaryotes",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(680, 120, 140, 30, 5),
+      focus: [680, 120, 140, 30],
+      labelAt: [750, 135],
+      labelAlign: "middle",
+      blurb: "Organisms built from highly complex cells that contain a true, enclosed nucleus and multiple specialised membrane-bound organelles performing distinct cellular functions.",
+    },
+    {
+      id: "monera",
+      label: "Kingdom Monera",
+      tint: T.monera,
+      depth: 0,
+      d: roundRect(120, 180, 160, 80, 10),
+      layers: [
+        { d: cell(200, 220, 40, 20, 1), as: "fill" },
+        { d: cell(200, 220, 40, 20, 1), as: "shade", opacity: 0.3 }
+      ],
+      focus: [120, 180, 160, 80],
+      labelAt: [200, 275],
+      labelAlign: "middle",
+      blurb: "Includes all known bacteria. They represent the simplest and most ancient forms of life on Earth, being entirely unicellular and completely prokaryotic in nature.",
+    },
+    {
+      id: "unicellular",
+      label: "Unicellular",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(480, 200, 140, 30, 5),
+      focus: [480, 200, 140, 30],
+      labelAt: [550, 215],
+      labelAlign: "middle",
+      blurb: "Microscopic organisms that consist of only a single, completely independent eukaryotic cell that must perform every necessary biological function by itself to survive.",
+    },
+    {
+      id: "multicellular",
+      label: "Multicellular",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(780, 200, 140, 30, 5),
+      focus: [780, 200, 140, 30],
+      labelAt: [850, 215],
+      labelAlign: "middle",
+      blurb: "Large organisms constructed from millions of specialised cells closely working together, allowing for the development of complex tissues, organs, and complex body systems.",
+    },
+    {
+      id: "protista",
+      label: "Kingdom Protista",
+      tint: T.protista,
+      depth: 0,
+      d: roundRect(470, 260, 160, 80, 10),
+      layers: [
+        { d: blob(550, 300, 40, 25, [1, 1.2, 0.9, 1.1]), as: "fill" },
+        { d: circle(540, 300, 6), as: "shade" }
+      ],
+      focus: [470, 260, 160, 80],
+      labelAt: [550, 355],
+      labelAlign: "middle",
+      blurb: "Single-celled eukaryotic organisms such as Amoeba and Paramecium. They predominantly live in aquatic environments and can display plant-like or animal-like characteristics.",
+    },
+    {
+      id: "with-wall",
+      label: "With Cell Wall",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(630, 280, 140, 30, 5),
+      focus: [630, 280, 140, 30],
+      labelAt: [700, 295],
+      labelAlign: "middle",
+      blurb: "Organisms whose individual cells are completely surrounded by a thick, rigid protective layer that provides essential structural support and maintains the cell's physical shape.",
+    },
+    {
+      id: "fungi",
+      label: "Kingdom Fungi",
+      tint: T.fungi,
+      depth: 0,
+      d: roundRect(520, 380, 160, 80, 10),
+      layers: [
+        { d: blob(600, 420, 20, 20, [1, 1.1, 0.9, 1]), as: "fill" },
+        { d: stadium(595, 435, 10, 20), as: "fill" }
+      ],
+      focus: [520, 380, 160, 80],
+      labelAt: [600, 475],
+      labelAlign: "middle",
+      blurb: "Heterotrophic organisms like mushrooms that cannot make their own food. They survive by breaking down and slowly absorbing vital nutrients from decaying organic matter.",
+    },
+    {
+      id: "plantae",
+      label: "Kingdom Plantae",
+      tint: T.plantae,
+      depth: 0,
+      d: roundRect(720, 380, 160, 80, 10),
+      layers: [
+        { d: blob(800, 420, 25, 30, [1, 0.8, 1.2, 1]), as: "fill" },
+        { d: "M800,390 L800,450", as: "shade", width: 2 }
+      ],
+      focus: [720, 380, 160, 80],
+      labelAt: [800, 475],
+      labelAlign: "middle",
+      blurb: "Multicellular autotrophs that rely on green chlorophyll to efficiently perform photosynthesis, allowing them to independently produce all their own organic food from sunlight.",
+    },
+    {
+      id: "animalia",
+      label: "Kingdom Animalia",
+      tint: T.animalia,
+      depth: 0,
+      d: roundRect(920, 380, 160, 80, 10),
+      layers: [
+        { d: blob(1000, 420, 35, 25, [1, 1.1, 0.9, 1.1]), as: "fill" },
+        { d: circle(985, 415, 4), as: "shade" }
+      ],
+      focus: [920, 380, 160, 80],
+      labelAt: [1000, 475],
+      labelAlign: "middle",
+      blurb: "Multicellular heterotrophs that entirely lack rigid cell walls. They must rely on consuming other organisms for food and are generally highly mobile creatures.",
+    }
+  ]
+};
+
+export const plantKingdomPlate: FigureSpec = {
+  kind: "figure",
+  title: "The Plant Kingdom",
+  figNumber: "Fig. 12.11",
+  altText: "A hierarchy showing the major divisions of plants from Thallophyta up to Angiosperms.",
+  viewBox: [1350, 550],
+  magnify: "camera",
+  scenery: [
+    { d: "M475,40 L475,80", as: "stroke", width: 2 },
+    { d: "M200,80 L750,80 M200,80 L200,120 M750,80 L750,120", as: "stroke", width: 2 },
+    { d: "M550,160 L950,160 M550,160 L550,200 M950,160 L950,200", as: "stroke", width: 2 },
+    { d: "M750,240 L1150,240 M750,240 L750,280 M1150,240 L1150,280", as: "stroke", width: 2 },
+  ],
+  parts: [
+    {
+      id: "plants",
+      label: "Plants",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(405, 10, 140, 30, 5),
+      focus: [405, 10, 140, 30],
+      labelAt: [475, 25],
+      labelAlign: "middle",
+      blurb: "The incredibly diverse plant kingdom is systematically divided into distinct divisions based on body differentiation, the presence of vascular tissue, and whether they produce enclosed seeds.",
+    },
+    {
+      id: "no-diff",
+      label: "No distinct body",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(130, 120, 140, 30, 5),
+      focus: [130, 120, 140, 30],
+      labelAt: [200, 135],
+      labelAlign: "middle",
+      blurb: "The most primitive plants where the entire biological body is extremely simple and not well-differentiated into specialised roots, functional stems, or typical leaves.",
+    },
+    {
+      id: "diff",
+      label: "Differentiated body",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(680, 120, 140, 30, 5),
+      focus: [680, 120, 140, 30],
+      labelAt: [750, 135],
+      labelAlign: "middle",
+      blurb: "More advanced terrestrial plants possessing highly distinct and specialised functional roots, stems, and true leaves adapted for efficient survival on dry land.",
+    },
+    {
+      id: "thallophyta",
+      label: "Thallophyta",
+      tint: T.thallophyta,
+      depth: 0,
+      d: roundRect(120, 180, 160, 80, 10),
+      layers: [
+        { d: "M135,220 Q165,190 195,220 Q225,250 255,220", as: "stroke", width: 8, tint: T.thallophyta }
+      ],
+      focus: [120, 180, 160, 80],
+      labelAt: [200, 275],
+      labelAlign: "middle",
+      blurb: "Extremely simple, primarily aquatic plant organisms commonly known as algae, such as Spirogyra. They completely lack any specialised vascular transport tissues.",
+    },
+    {
+      id: "no-vascular",
+      label: "No Vascular Tissue",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(480, 200, 140, 30, 5),
+      focus: [480, 200, 140, 30],
+      labelAt: [550, 215],
+      labelAlign: "middle",
+      blurb: "Small plants that completely lack specialised internal xylem and phloem transport tubes, meaning they must rapidly absorb water directly across their entire surface.",
+    },
+    {
+      id: "vascular",
+      label: "Vascular Tissue",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(880, 200, 140, 30, 5),
+      focus: [880, 200, 140, 30],
+      labelAt: [950, 215],
+      labelAlign: "middle",
+      blurb: "Complex plants possessing highly specialised internal plumbing tissues, xylem and phloem, designed for efficiently transporting vital water and organic nutrients over large distances.",
+    },
+    {
+      id: "bryophyta",
+      label: "Bryophyta (Mosses)",
+      tint: T.bryophyta,
+      depth: 0,
+      d: roundRect(470, 260, 160, 80, 10),
+      layers: [
+        { d: blob(550, 300, 30, 20, [1, 1.2, 0.9, 1.1]), as: "fill" },
+        { d: "M550,300 L550,270", as: "stroke", width: 2 }
+      ],
+      focus: [470, 260, 160, 80],
+      labelAt: [550, 355],
+      labelAlign: "middle",
+      blurb: "Often called the amphibians of the entire plant kingdom. They successfully live on damp land but absolutely require environmental water for sexual reproduction.",
+    },
+    {
+      id: "no-seeds",
+      label: "No Seeds (Spores)",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(680, 280, 140, 30, 5),
+      focus: [680, 280, 140, 30],
+      labelAt: [750, 295],
+      labelAlign: "middle",
+      blurb: "These primitive vascular plants reliably reproduce using hidden, microscopic reproductive organs and robust tiny spores rather than employing true complex seeds.",
+    },
+    {
+      id: "seeds",
+      label: "Produce Seeds",
+      tint: T.treeNode,
+      depth: 0,
+      d: roundRect(1080, 280, 140, 30, 5),
+      focus: [1080, 280, 140, 30],
+      labelAt: [1150, 295],
+      labelAlign: "middle",
+      blurb: "Highly advanced terrestrial plants that efficiently reproduce using well-developed, protective seeds that securely enclose a dormant, tiny living plant embryo inside.",
+    },
+    {
+      id: "pteridophyta",
+      label: "Pteridophyta",
+      tint: T.pteridophyta,
+      depth: 0,
+      d: roundRect(670, 340, 160, 80, 10),
+      layers: [
+        { d: "M750,350 L750,410 M730,370 L750,360 M770,370 L750,360 M730,390 L750,380 M770,390 L750,380", as: "stroke", width: 3 }
+      ],
+      focus: [670, 340, 160, 80],
+      labelAt: [750, 435],
+      labelAlign: "middle",
+      blurb: "Common vascular plants that typically reproduce via robust microscopic spores scattered by the wind. Familiar examples found worldwide include large ferns and horsetails.",
+    },
+    {
+      id: "gymnosperms",
+      label: "Gymnosperms",
+      tint: T.gymnosperm,
+      depth: 0,
+      d: roundRect(1010, 340, 140, 80, 10),
+      layers: [
+        { d: ellipse(1080, 380, 15, 25), as: "fill" },
+        { d: "M1070,365 L1090,375 M1070,375 L1090,385", as: "shade", width: 2 }
+      ],
+      focus: [1010, 340, 140, 80],
+      labelAt: [1080, 435],
+      labelAlign: "middle",
+      blurb: "Ancient plants bearing completely naked, unprotected seeds that are surprisingly never enclosed inside a true fleshy fruit, such as evergreen pines and tropical cycads.",
+    },
+    {
+      id: "angiosperms",
+      label: "Angiosperms",
+      tint: T.angiosperm,
+      depth: 0,
+      d: roundRect(1170, 340, 140, 80, 10),
+      layers: [
+        { d: blob(1240, 380, 20, 20, [1, 1.2, 0.8, 1.1]), as: "fill" },
+        { d: circle(1240, 380, 6), as: "shade" }
+      ],
+      focus: [1170, 340, 140, 80],
+      labelAt: [1240, 435],
+      labelAlign: "middle",
+      blurb: "Modern flowering plants where precious seeds safely develop deep inside a specialised ovary structure that rapidly modifies itself into a protective, nourishing fruit.",
+    }
+  ]
+};
+
+export const animalKingdomPlate: FigureSpec = {
+  kind: "figure",
+  title: "The Animal Kingdom",
+  figNumber: "Fig. 12.16",
+  altText: "Examples of various animal phyla showing Porifera, Cnidaria, Arthropoda and Chordata, illustrating the immense biological diversity and varying complexity across the animal kingdom.",
+  viewBox: [660, 350],
+  magnify: "camera",
+  scenery: [],
+  parts: [
+    {
+      id: "porifera",
+      label: "Porifera",
+      tint: T.porifera,
+      depth: 0,
+      d: roundRect(20, 20, 200, 130, 15),
+      layers: [
+        { d: blob(120, 80, 40, 50, [1, 0.9, 1.1, 1]), as: "fill" },
+        { d: dots([[100,60], [130,70], [110,90], [140,100], [120,110]], 4), as: "shade" }
+      ],
+      focus: [20, 20, 200, 130],
+      labelAt: [120, 170],
+      labelAlign: "middle",
+      blurb: "Incredibly simple, mostly non-motile aquatic animals permanently attached to solid rocks, possessing highly porous bodies that constantly channel ocean water completely through them.",
+    },
+    {
+      id: "cnidaria",
+      label: "Cnidaria",
+      tint: T.cnidaria,
+      depth: 0,
+      d: roundRect(240, 20, 200, 130, 15),
+      layers: [
+        { d: "M340,50 Q370,50 370,80 L310,80 Q310,50 340,50 Z", as: "fill" },
+        { d: "M320,80 Q320,110 330,120 M340,80 Q340,110 350,120 M360,80 Q360,110 370,120", as: "stroke", width: 3, tint: T.cnidaria }
+      ],
+      focus: [240, 20, 200, 130],
+      labelAt: [340, 170],
+      labelAlign: "middle",
+      blurb: "Soft-bodied aquatic animals featuring a very simple sac-like central body cavity, pronounced radial symmetry, and frequently possessing stinging tentacles to immobilise passing prey.",
+    },
+    {
+      id: "arthropoda",
+      label: "Arthropoda",
+      tint: T.arthropoda,
+      depth: 0,
+      d: roundRect(460, 20, 200, 130, 15),
+      layers: [
+        { d: blob(560, 80, 25, 40, [1, 1.1, 0.9, 1]), as: "fill" },
+        { d: "M535,60 L545,70 M585,60 L575,70 M530,90 L550,90 M590,90 L570,90 M535,110 L555,100 M585,110 L565,100", as: "stroke", width: 2, tint: T.arthropoda }
+      ],
+      focus: [460, 20, 200, 130],
+      labelAt: [560, 170],
+      labelAlign: "middle",
+      blurb: "The absolute largest phylum in the animal kingdom, extraordinarily successful globally because they all uniquely possess highly functional jointed legs and a protective hard exoskeleton.",
+    },
+    {
+      id: "chordata",
+      label: "Chordata",
+      tint: T.chordata,
+      depth: 0,
+      d: roundRect(240, 190, 200, 130, 15),
+      layers: [
+        { d: blob(340, 250, 60, 25, [1, 1.2, 0.8, 1]), as: "fill" },
+        { d: "M285,250 L310,245 M380,245 L395,250", as: "stroke", width: 3, tint: T.chordata }
+      ],
+      focus: [240, 190, 200, 130],
+      labelAt: [340, 340],
+      labelAlign: "middle",
+      blurb: "Highly complex animals fundamentally characterised by featuring a stiff notochord, a hollow dorsal nerve cord, and distinct paired gill pouches at some early stage of life.",
+    }
+  ]
+};
