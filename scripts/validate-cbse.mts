@@ -139,6 +139,15 @@ function check() {
         reportError(`First section ${section.key} in chapter ${chapter.key} is missing a sim.`);
       }
 
+      // 13b. Body length. The spec says 250-450 words and nothing enforced it,
+      // so a chapter shipped at 577 words TOTAL — every section under half the
+      // floor — while passing every gate. Prose volume is the one quality
+      // measure that is trivially checkable, so check it.
+      const bodyWords = section.body.trim().split(/\s+/).length;
+      if (bodyWords < 250 || bodyWords > 480) {
+        reportError(`Section ${section.key} body is ${bodyWords} words (expected 250-450).`);
+      }
+
       // 14. Every section has a non-empty bookRef matching /^(Exploration|Ganita Manjari) §\d+(\.\d+)*$/
       if (!section.bookRef || !/^(Exploration|Ganita Manjari) §\d+(\.\d+)*$/.test(section.bookRef)) {
         reportError(`Section ${section.key} bookRef "${section.bookRef}" is invalid.`);

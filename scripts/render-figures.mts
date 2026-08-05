@@ -316,6 +316,15 @@ function audit(spec: FigureSpec, chapter: string): string[] {
     }
   }
 
+  // The diagram rail is a fixed 640px and a plate refuses to render below 0.72
+  // of its viewBox, so anything past 800 units scrolls sideways inside its card
+  // no matter how wide the window is. A 1350-wide plate needs 972px.
+  if (w > 800) {
+    problems.push(
+      `${chapter}/${spec.title}: viewBox is ${w} wide — needs ${Math.round(w * 0.72)}px, but the rail card gives ~590px. Cap at 800.`,
+    );
+  }
+
   if (spec.defaultPartId && !seen.has(spec.defaultPartId)) {
     problems.push(`${chapter}/${spec.title}: defaultPartId "${spec.defaultPartId}" is not a part`);
   }

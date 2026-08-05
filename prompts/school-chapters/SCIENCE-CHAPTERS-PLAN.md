@@ -331,7 +331,10 @@ type FigureSpec = {
   altText: string;           // REQUIRED: what it shows AND what interacting does
   figNumber?: string;        // e.g. "Fig. 4.6"
   caption?: string;
-  viewBox: [number, number]; // 660 wide suits most; 800 is the practical maximum
+  viewBox: [number, number]; // 660 wide suits most. 800 is a HARD CAP, gate-
+                             // enforced: the rail is 640px and a plate will not
+                             // render below 0.72 of its viewBox, so a 1350-wide
+                             // plate demands 972px and scrolls sideways forever.
   parts: FigurePart[];
   scenery?: FigureLayer[];   // non-interactive context, painted before all parts
   panels?: { id: string; box: [number,number,number,number]; caption: string }[];
@@ -582,4 +585,9 @@ Each of these produced a defect that passed every automated check.
     An organ drawn as a bare line still passes `tsc` and the validator.
 11. **A full-height `panels[]` box.** Its caption renders 20 units below the box
     and lands outside the plate, so it never appears. Leave room.
-12. **Reported done on green gates alone.** Phase 7 is not optional.
+12. **Thin prose.** A chapter once shipped at 577 words TOTAL — every section
+    under half the floor — passing every gate at the time. 250–450 per section
+    is now enforced. A section is a page of a textbook, not a caption.
+13. **Widening the viewBox to fit more in.** The rail is 640px; past 800 units
+    the plate scrolls sideways forever. Simplify the diagram instead.
+14. **Reported done on green gates alone.** Phase 7 is not optional.
