@@ -108,7 +108,7 @@ Per chapter, targeting the existing schema (`topics.body` + `questions` bank):
 
 91 hours in 31 days is achievable, but not by you alone alongside field sales. **Budget ₹30,000–60,000 for a freelance class-9 Science/Maths teacher** (₹400–700/hr market rate) to review, with you reviewing Maths. This is the single most important ₹50,000 you will spend: **one wrong Science answer in front of an HOD costs you the school**, and teachers check exactly this in the first week.
 
-**Ship-gate for August:** no chapter goes live to a student until a subject-competent human has signed off on every question in it. Track it like `DSA_HELLOINTERVIEW_CHECKLIST.md` — that pattern worked.
+**Ship-gate for August:** no chapter goes live to a student until a subject-competent human has signed off on every question in it. Track it like `the DSA checklist (deleted 2026-08-05, in git history)` — that pattern worked.
 
 ---
 

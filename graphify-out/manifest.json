@@ -220,18 +220,18 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785904576.2020485,
-    "ast_hash": "b15a7f4c206f70f1ae7371b529f4e04d",
+    "mtime": 1785906119.4248238,
+    "ast_hash": "87b4ecd6f6279f9d4c501f41b3b22f9f",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785905474.6956582,
-    "ast_hash": "77ba20582f85131e188ed67cc2e224c7",
+    "mtime": 1785907624.3717687,
+    "ast_hash": "04a1d651965f9d9645f2fc701593e294",
     "semantic_hash": ""
   },
   "TASKS.md": {
-    "mtime": 1785833156.1495562,
-    "ast_hash": "181daf91e83155641a6b62761f8f093a",
+    "mtime": 1785906157.5470273,
+    "ast_hash": "1ed3619071d1e4f8ee79acf1b8425497",
     "semantic_hash": ""
   },
   "public/file.svg": {
@@ -974,16 +974,6 @@
     "ast_hash": "4ffb1b86ab9bc0c23fa2255ce74fbd82",
     "semantic_hash": ""
   },
-  "DSA_HELLOINTERVIEW_CHECKLIST.md": {
-    "mtime": 1784982783.0080616,
-    "ast_hash": "d4f2d0407d25566cb57e0442f7686d53",
-    "semantic_hash": ""
-  },
-  "STORY_PSYCHOPATHS_SAVAGES_PLAN.md": {
-    "mtime": 1784982783.010798,
-    "ast_hash": "244b79769a6a7bae3033436c89f935f4",
-    "semantic_hash": ""
-  },
   "prompts/story-agents/true-crime-forensic-story-agent.md": {
     "mtime": 1784982783.0968907,
     "ast_hash": "741c2dad605d97800e93479429132bdb",
@@ -1119,11 +1109,6 @@
     "ast_hash": "06a05187002822f6db7b167c011e52b1",
     "semantic_hash": ""
   },
-  "DSA_SOLUTION_COMPLEXITY_CHECKLIST.md": {
-    "mtime": 1784982783.0083861,
-    "ast_hash": "02c6cf8e34a3b9da7a6aa9354b422d84",
-    "semantic_hash": ""
-  },
   "GROWTH_PLAYBOOK.md": {
     "mtime": 1784989957.1259456,
     "ast_hash": "340101d43dc7d45061f81e68a70de06b",
@@ -1137,11 +1122,6 @@
   "OMTM.md": {
     "mtime": 1784985231.0214996,
     "ast_hash": "3054a3518396d8e98d2b0b5e8a61c3a8",
-    "semantic_hash": ""
-  },
-  "WEEK1_CHECKLIST.md": {
-    "mtime": 1784990008.3013363,
-    "ast_hash": "831ce88157c174776a1e2febb502aa30",
     "semantic_hash": ""
   },
   "book.txt": {
@@ -1430,8 +1410,8 @@
     "semantic_hash": ""
   },
   "SCHOOL_BUILD_SPEC.md": {
-    "mtime": 1785505415.4473646,
-    "ast_hash": "5dc3ae14e100e64b908af1865a52e334",
+    "mtime": 1785906157.5480275,
+    "ast_hash": "b7f27f98081d2179f8b439a92e6dcbbf",
     "semantic_hash": ""
   },
   "SCHOOL_GTM.md": {
@@ -1440,13 +1420,8 @@
     "semantic_hash": ""
   },
   "SCHOOL_IMPLEMENTATION_BRIEF.md": {
-    "mtime": 1785490822.9946384,
-    "ast_hash": "f9fac0b70b425552934c322fd25bfe79",
-    "semantic_hash": ""
-  },
-  "SCHOOL_TECH_PLAN.md": {
-    "mtime": 1785493738.4610612,
-    "ast_hash": "44eb2827f384429677c5a37789cff670",
+    "mtime": 1785906157.5486114,
+    "ast_hash": "5f4cb78ed0930ed88d1080b71ea7e140",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-02-cell-plate.ts": {
@@ -1459,34 +1434,14 @@
     "ast_hash": "bfa21b2f04379714a715925eb442b802",
     "semantic_hash": ""
   },
-  "prompts/school-figures/draw-cell-plate.md": {
-    "mtime": 1785659206.0527291,
-    "ast_hash": "8bf4a1f79bd82b4a5bf397b0677e5f0c",
-    "semantic_hash": ""
-  },
   "src/lib/cbse/class9/science/figures/ch-02-organelle-plates.ts": {
     "mtime": 1785747492.6728978,
     "ast_hash": "18d7fa338724e6964b9c5be63769bc9e",
     "semantic_hash": ""
   },
-  "prompts/school-chapters/author-a-chapter.md": {
-    "mtime": 1785905357.3599055,
-    "ast_hash": "23105f8d71be9abf8d2861ddaf587efa",
-    "semantic_hash": ""
-  },
-  "prompts/school-chapters/targets-existing-chapters.md": {
-    "mtime": 1785758542.9181862,
-    "ast_hash": "097bc31d19cd828e7d61524c1b1e307b",
-    "semantic_hash": ""
-  },
-  "prompts/school-chapters/convert-the-books.md": {
-    "mtime": 1785833097.8642547,
-    "ast_hash": "a2e4ad482a90f50936013be0c6882b94",
-    "semantic_hash": ""
-  },
-  "prompts/school-chapters/CHAPTER-WORKFLOW.md": {
-    "mtime": 1785905357.3593817,
-    "ast_hash": "08b0ef06c3e68a73d2fe5ad79096b4ac",
+  "prompts/school-chapters/SCIENCE-CHAPTERS-PLAN.md": {
+    "mtime": 1785906063.8395283,
+    "ast_hash": "f40a232aff9ff2e91be9f00066e18624",
     "semantic_hash": ""
   }
 }

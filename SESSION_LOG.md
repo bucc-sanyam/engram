@@ -2,6 +2,16 @@
 
 > Milestone journal, newest first. One short entry per completed milestone. Keep entries terse — this file is read at the start of every session.
 
+## 2026-08-05 — One brief for the nine remaining science chapters; repo cleaned
+
+- **`prompts/school-chapters/SCIENCE-CHAPTERS-PLAN.md`** — a single self-contained file to hand an agent. Absorbs the four earlier prompt files: the workflow phases, the full type contract, the nine drawing rules, the measured acceptance bar, per-chapter starting notes for all nine chapters, an ~40-item checklist, and the ten traps that each produced a defect passing every automated check. **One chapter per run.**
+- **The per-chapter notes are honest about what they don't know.** The section lists came from a text extraction that provably misses headings (6.5, 7.2, 11.3, 12.2 are absent but exist in the book), so the brief says so and makes confirming them Phase 1. `bookRef` is regex-checked for shape only — nothing verifies the section exists.
+- **Ten docs deleted, all recoverable from git.** Three were actively lying about their own status: `SCHOOL_TECH_PLAN.md` said "PLAN ONLY — nothing built yet" (the track shipped weeks ago) and `STORY_PSYCHOPATHS_SAVAGES_PLAN.md` said "no code written yet" (`src/lib/psychopaths-and-savages/` exists). The rest were completed trackers (`DSA_HELLOINTERVIEW_CHECKLIST`, `DSA_SOLUTION_COMPLEXITY_CHECKLIST`, `WEEK1_CHECKLIST`) or prompt files absorbed into the new brief. Root `.md` count 17 → 12; school prompts 5 → 1.
+- **Kept, deliberately:** `SCHOOL_BUILD_SPEC.md` (referenced from `FigureSim.tsx` and `types.ts`), `SCHOOL_GTM.md` (live strategy), `SCHOOL_IMPLEMENTATION_BRIEF.md` (unique cost/pricing research not duplicated anywhere), `ARCHITECTURE.md` (backend/RAG/auth, distinct from PROJECT_SUMMARY), and `prompts/story-agents/` (27 reusable authoring prompts — a library, not a plan).
+- **Every dangling reference rewired** rather than left to rot: TASKS, PROJECT_SUMMARY, SCHOOL_BUILD_SPEC and SCHOOL_IMPLEMENTATION_BRIEF all pointed at deleted files. SESSION_LOG's mentions were left alone — it is a historical journal.
+- **The maths remainder was preserved before its file was deleted** — the five outstanding chapters, their PDFs, page counts and accents now live in TASKS.md.
+- **Verified:** tsc, validate-cbse, geometry audit and the 422-page build all clean after the deletions.
+
 ## 2026-08-05 — Three drawing defects, one of which needed a renderer feature
 
 - **Liquid escaping the receiver (Fig. 5.12).** Two causes, both geometry: the cold-water inlet's spout ran `x 444→476` while the beaker's left wall is at `x=470`, so the blue rounded rect poked *through* the glass; and `water-in`'s label sat at `x=556`, directly over the beaker, so its leader drew a horizontal blue-adjacent line straight across the liquid surface. Spout turned to point away (`426→460`), label moved below-left, and the distillate inset 3 units so the wall reads as a wall.

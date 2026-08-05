@@ -3,7 +3,7 @@
 > **This is an executable specification, not a discussion document.**
 > It is written to be implemented literally by an agent that has NOT read the rest of this repo.
 > Every fact in §2 was verified against the codebase on 2026-07-31. Do not second-guess it.
-> Companions (context only, not required to build): `SCHOOL_GTM.md`, `SCHOOL_IMPLEMENTATION_BRIEF.md`, `SCHOOL_TECH_PLAN.md`.
+> Companions (context only, not required to build): `SCHOOL_GTM.md`, `SCHOOL_IMPLEMENTATION_BRIEF.md`, `PROJECT_SUMMARY.md` (which superseded `PROJECT_SUMMARY.md`, deleted 2026-08-05).
 
 ---
 

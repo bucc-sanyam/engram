@@ -1,7 +1,7 @@
 # Graph Report - startup-strategy-blueprint-6e9a0e  (2026-08-05)
 
 ## Corpus Check
-- 291 files · ~597,314 words
+- 291 files · ~597,612 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ef09cf4a`
+- Built from commit: `db97e477`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -455,12 +455,12 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 85 - "route.ts"
-Cohesion: 0.17
-Nodes (17): answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicCommunicationScore(), heuristicScore(), pickQuestion(), POST() (+9 more)
+Cohesion: 0.16
+Nodes (18): answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicCommunicationScore(), heuristicScore(), pickQuestion(), POST() (+10 more)
 
 ### Community 86 - "route.ts"
-Cohesion: 0.14
-Nodes (23): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+15 more)
+Cohesion: 0.15
+Nodes (22): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+14 more)
 
 ### Community 87 - "gemini.ts"
 Cohesion: 0.17
