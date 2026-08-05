@@ -292,9 +292,12 @@ style preferences.
    flagellum, an ER tubule, a wire — authored as an open curve closes itself
    into a splodge. Threads must be closed ribbons; `tubule()` is the right
    primitive.
-4. **Interior texture must be `clip: true`.** Anything that fills a shape —
-   a grid of dividing cells, lignin rings, fat globules — is authored as a
-   rectangle and the shape is not one. Clip it, or the corners hang out.
+4. **Anything drawn inside a part must be `clip: true`.** A grid of dividing
+   cells, lignin rings, fat globules, **a liquid inside a vessel** — each is
+   authored as a rectangle or a cylinder and the shape containing it is not
+   one. Clip it, or it hangs out. A bounding-box check will not save you: a
+   cylinder of liquid fits inside a conical flask's bbox and still crosses its
+   slanted walls.
 5. **Give every solid a `gleam()`.** A small pale `light` ellipse up and left of
    centre. Detail and palette are what make a plate read as an illustration —
    not perspective. A pseudo-3-D attempt was tried and it still read as a

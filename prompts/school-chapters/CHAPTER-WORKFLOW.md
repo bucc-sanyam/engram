@@ -159,10 +159,17 @@ already dense; **maths and construction figures are exempt entirely** — flat
 lines are the correct register and adding volume to a number line makes it
 worse.
 
-**Interior texture needs `clip: true` on the layer.** A grid of cells, a set of
-rings, a scatter of globules — all authored as rectangles, none of which match
-the silhouette they fill. Without the flag the corners hang outside the part,
-and a lift magnifies that up to 2.8×.
+**Anything drawn INSIDE a part needs `clip: true` on the layer.** A grid of
+cells, a set of rings, a scatter of globules, **and above all a liquid inside a
+vessel** — all authored as rectangles or cylinders, none of which match the
+silhouette they fill. Without the flag the corners hang outside the part, and a
+lift magnifies that up to 2.8×.
+
+The liquid case is the sneakiest, because a bounding-box check passes: a
+cylinder of liquid sits *inside* a conical flask's bbox and still crosses its
+slanted walls. In Fig. 5.12 the wall at `y=236` is at `x=83` and the liquid
+started at `x=62`. **Do not rely on an automated check here — clip anything
+that is meant to be contained.**
 
 **Do not draw two diagrams of the same idea in one section.** Chapter 3 had a
 meristem `sim` *and* a meristem plate in the same section; the reader got the

@@ -366,7 +366,7 @@ export const distillationFigure: FigureSpec = {
       d: flask(120, 118, 282, 66, 17),
       layers: [
         // Liquid level inside the flask
-        { d: "M62,236 Q120,224 178,236 L178,270 Q120,282 62,270 Z", as: "shade", opacity: 0.8 },
+        { d: "M62,236 Q120,224 178,236 L178,270 Q120,282 62,270 Z", as: "shade", opacity: 0.8, clip: true },
         // RISING BUBBLES — showing the liquid is boiling
         {
           d: dots(
@@ -375,10 +375,13 @@ export const distillationFigure: FigureSpec = {
           ),
           as: "panel",
           opacity: 0.6,
+          clip: true,
         },
         // Meniscus at the liquid surface
-        { d: meniscus(62, 178, 236, 6), width: 1.4, opacity: 0.5 },
-        { d: gleam(90, 200, 24, 40), as: "light", opacity: 0.25 },
+        { d: meniscus(62, 178, 236, 6), width: 1.4, opacity: 0.5, clip: true },
+        // On the NECK. It used to sit at (90,200), which is beside the neck,
+        // not on it — a pale blob floating in the gap beside the glass.
+        { d: gleam(120, 168, 13, 42), as: "light", opacity: 0.3, clip: true },
       ],
       focus: [50, 200, 140, 92],
       labelAt: [30, 344],

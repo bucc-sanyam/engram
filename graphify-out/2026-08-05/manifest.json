@@ -220,13 +220,13 @@
     "semantic_hash": ""
   },
   "PROJECT_SUMMARY.md": {
-    "mtime": 1785833197.9788415,
-    "ast_hash": "6abd0e8e016e24e19cd994e0824e5cc2",
+    "mtime": 1785904576.2020485,
+    "ast_hash": "b15a7f4c206f70f1ae7371b529f4e04d",
     "semantic_hash": ""
   },
   "SESSION_LOG.md": {
-    "mtime": 1785833156.1486957,
-    "ast_hash": "b014547038f41d5f15b09e24234c2d35",
+    "mtime": 1785904685.2693777,
+    "ast_hash": "ecd88e96b6e40887d5ef1b00d332aad2",
     "semantic_hash": ""
   },
   "TASKS.md": {
@@ -1255,8 +1255,8 @@
     "semantic_hash": ""
   },
   "scripts/render-figures.mts": {
-    "mtime": 1785832797.895187,
-    "ast_hash": "2e911d0a0d25ca32f21291fdee464b31",
+    "mtime": 1785904282.0070004,
+    "ast_hash": "f67730879225f3111a39091f025b7c6a",
     "semantic_hash": ""
   },
   "scripts/validate-cbse.mts": {
@@ -1290,8 +1290,8 @@
     "semantic_hash": ""
   },
   "src/components/sim/FigureSim.tsx": {
-    "mtime": 1785747303.5200002,
-    "ast_hash": "b2986aac2fc3ab37e78afff1ab32cd7c",
+    "mtime": 1785904269.4334905,
+    "ast_hash": "2237c2d183e8f841fc96a5d8cdb767d4",
     "semantic_hash": ""
   },
   "src/components/sim/GeometryBoardSim.tsx": {
@@ -1390,13 +1390,13 @@
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-03.ts": {
-    "mtime": 1785832826.593351,
-    "ast_hash": "8cf76bcd698504414c30ba6d3925d6e7",
+    "mtime": 1785904402.5829525,
+    "ast_hash": "dc780aea292a96e85e0057514ffe3d93",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/figures/ch-05.ts": {
-    "mtime": 1785832826.593712,
-    "ast_hash": "24a8a4e32f63a94f6cff76b1178e668c",
+    "mtime": 1785904317.0072308,
+    "ast_hash": "8bc476de7823a7588ca09aef819efafc",
     "semantic_hash": ""
   },
   "src/lib/cbse/class9/science/index.ts": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": ""
   },
   "src/lib/sim/types.ts": {
-    "mtime": 1785832876.4696813,
-    "ast_hash": "7b7fcdb601dac58ed55ea465314b519a",
+    "mtime": 1785904226.8085446,
+    "ast_hash": "09e910e6082c0a1c228815bfdc9ba986",
     "semantic_hash": ""
   },
   "SCHOOL_BUILD_SPEC.md": {
@@ -1470,8 +1470,8 @@
     "semantic_hash": ""
   },
   "prompts/school-chapters/author-a-chapter.md": {
-    "mtime": 1785833116.979093,
-    "ast_hash": "75d6777a2b7cb6d73422fd7f7623a3c9",
+    "mtime": 1785904576.200876,
+    "ast_hash": "d3245f4d1ae677c1cf2ca917e7cae730",
     "semantic_hash": ""
   },
   "prompts/school-chapters/targets-existing-chapters.md": {
@@ -1485,8 +1485,8 @@
     "semantic_hash": ""
   },
   "prompts/school-chapters/CHAPTER-WORKFLOW.md": {
-    "mtime": 1785833072.9633598,
-    "ast_hash": "a2f0f0ce2c30c11b4f1c3fd2f12d8698",
+    "mtime": 1785904576.2013223,
+    "ast_hash": "e919158de09b7640fe61185e4148322b",
     "semantic_hash": ""
   }
 }
