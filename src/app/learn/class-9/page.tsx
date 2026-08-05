@@ -12,6 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default function GradeHubPage() {
+  if (process.env.NEXT_PUBLIC_SCHOOL_TRACK !== "1") notFound();
+
   const subjects = Object.values(SUBJECT_META) as {
     slug: Subject; label: string; book: string; accent: string; blurb: string;
   }[];

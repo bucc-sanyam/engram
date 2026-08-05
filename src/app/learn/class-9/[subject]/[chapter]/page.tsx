@@ -26,6 +26,7 @@ export default async function ChapterPage({
 }: {
   params: Promise<{ subject: string; chapter: string }>;
 }) {
+  if (process.env.NEXT_PUBLIC_SCHOOL_TRACK !== "1") notFound();
   const { subject, chapter } = await params;
   const s = getSubject(subject);
   if (!s || !getChapter(subject, chapter)) notFound();
