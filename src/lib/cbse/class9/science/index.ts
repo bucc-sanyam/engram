@@ -4,6 +4,7 @@ import { ch03Tissues } from "./chapters/ch-03-tissues";
 import { ch05Mixtures } from "./chapters/ch-05-mixtures";
 import { ch11Reproduction } from "./chapters/ch-11-reproduction";
 import { ch12Diversity } from "./chapters/ch-12-diversity";
+import { ch13EarthSystem } from "./chapters/ch-13-earth-system";
 
 /** Exploration (NCERT Science, Grade 9) — chapters we have authored, in book order. */
-export const SCIENCE_CHAPTERS: Chapter[] = [ch02Cell, ch03Tissues, ch05Mixtures, ch11Reproduction, ch12Diversity];
+export const SCIENCE_CHAPTERS: Chapter[] = [ch02Cell, ch03Tissues, ch05Mixtures, ch11Reproduction, ch12Diversity, ch13EarthSystem];
