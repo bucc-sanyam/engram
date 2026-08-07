@@ -55,9 +55,16 @@ wrong.
 
 # PART 2 — THE NINE CHAPTERS
 
-PDFs live at `.claude/Books/iesc1dd/iesc1NN.pdf`. Chapter 1 of the book is a
-preface about how to use the book — **skip it**; it is not content. Chapters 2, 3
-and 5 are already built.
+PDFs live at `.claude/Books/iesc1dd/iesc1NN.pdf`. Chapters 2, 3 and 5 are already
+built.
+
+> ⚠️ **This file used to say Chapter 1 was "a preface about how to use the book —
+> skip it". That was wrong and was never checked against the PDF.** `iesc101.pdf`
+> is 7 pages on scientific method (modelling, units, laws vs theories, prediction,
+> estimation) with 3 worked Examples, an Activity, and 11 sidebars. It breaks
+> three assumptions baked into this brief — it has no numbered sections, and all
+> four of its printed figures are photographs — so it has its own file:
+> **`CHAPTER-01-EXPLORATION.md`**. Ten chapters remain, not nine.
 
 | # | Title | PDF | Pages | Accent | Register |
 | --- | --- | --- | --- | --- | --- |
