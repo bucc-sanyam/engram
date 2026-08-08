@@ -153,9 +153,12 @@ what was dropped and that dropping it was deliberate.
 ### Plate C — "One quantity, one symbol, one unit" · `part`
 
 A bench of five instruments, each blurb naming quantity / symbol / unit: pan
-balance with brass weights (mass, $m$, kg) · steel rule (length, $l$, m) ·
-stopwatch (time, $t$, s) · laboratory thermometer (temperature, $T$, K) ·
-ammeter with a needle dial (current, $I$, A).
+balance with brass weights (mass, m, kg) · steel rule (length, l, m) · stopwatch
+(time, t, s) · laboratory thermometer (temperature, T, K) · ammeter with a needle
+dial (current, I, A).
+
+⚠️ **Write those symbols as plain letters — no `$…$`.** See the maths-markup trap
+in Part 8.
 
 All manufactured → straight edges, `roundRect`, `stadium`, `circle`. Every solid
 gets a `gleam()`. Scale marks and dial ticks are layers with **`clip: true`**.
@@ -179,7 +182,8 @@ to right: one breath ≈ 0.5 L → a party balloon = 4–5 breaths ≈ 2 L → a
 20,000 breaths ≈ 10,000 L, drawn as a block of balloons with the count. **Keep
 the arithmetic in `notes[]`, not labels:** on a quantitative plate the numerals
 *are* the content, and `notes` stay on screen and scale during magnification
-where labels fade out.
+where labels fade out. Plain text only — `notes` render as bare SVG `<text>`
+(Part 8).
 
 ### Plate F — "Why a mask needs four sciences" · `part`
 
@@ -397,6 +401,14 @@ The main brief's twelve still apply. These are additional.
 7. **Adding a plate to section 4 or 5 for symmetry.** Leave them undiagrammed.
 8. **Section 1 tagged with a bare `Exploration §1` and then "fixed"** by someone
    who thinks it is a typo. Leave a comment in the file saying it is correct.
+9. **`$…$` maths markup anywhere on a plate.** The main brief tells you to write
+   inline maths as `$…$` — that is true **only** of `Section.body`, which goes
+   through `Markdown.tsx`. A part's `blurb` renders as a plain React text node
+   (`FigureSim.tsx:504`) and `notes[]` render as bare SVG `<text>`
+   (`FigureSim.tsx:357`). Neither parses anything. `$m$` prints as `$m$`, and
+   `\\text{}` prints as `text{}`. **Plate labels, blurbs and notes are plain text
+   — write `m`, `kg`, `10,000 L`.** This chapter is full of symbols and units, so
+   it is unusually exposed. Passes every gate; visible immediately in Phase 7.
 
 ---
 
