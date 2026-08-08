@@ -1,16 +1,16 @@
-# Graph Report - startup-strategy-blueprint-6e9a0e  (2026-08-08)
+# Graph Report - startup-strategy-blueprint-6e9a0e  (2026-08-05)
 
 ## Corpus Check
-- 285 files · ~593,471 words
+- 282 files · ~579,132 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1962 nodes · 3637 edges · 125 communities (100 shown, 25 thin omitted)
+- 1925 nodes · 3574 edges · 128 communities (103 shown, 25 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.7)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `dedc6d29`
+- Built from commit: `e657dca3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -120,10 +120,12 @@
 - Nav.tsx
 - route.ts
 - ReadingThemeContext.tsx
+- ThanosSnapCanvas.tsx
 - page.tsx
 - Knovis for Schools — implementation brief & cost model
 - Knovis for Schools — B2B feasibility & positioning blueprint
 - index.ts
+- types.ts
 - ch-03.ts
 - ch-05.ts
 - ch-03.ts
@@ -131,6 +133,7 @@
 - ch-02-animal-plate.ts
 - Knovis for Schools — build specification (class 9, Exploration + Ganita Manjari)
 - 2. Verified codebase facts — treat as ground truth
+- validate-cbse.mts
 - Task 3.2 — `src/components/school/ChapterReader.tsx`
 - layout.tsx
 - FigureSim.tsx
@@ -142,7 +145,7 @@
 - RichText.tsx
 
 ## God Nodes (most connected - your core abstractions)
-1. `Session Log` - 79 edges
+1. `Session Log` - 77 edges
 2. `useVizPalette()` - 28 edges
 3. `createClient()` - 23 edges
 4. `AccentText()` - 21 edges
@@ -173,19 +176,19 @@
 - **Graphify Core Operations** — claude_skills_graphify_references_update_incremental, claude_skills_graphify_references_query_traversal, claude_skills_graphify_references_github_and_merge_merge [EXTRACTED 0.90]
 - **Graphify External Integrations** — claude_skills_graphify_references_exports_neo4j, claude_skills_graphify_references_exports_falkordb, claude_skills_graphify_references_exports_mcp [EXTRACTED 0.90]
 
-## Communities (125 total, 25 thin omitted)
+## Communities (128 total, 25 thin omitted)
 
 ### Community 0 - "Review and Scoring System"
-Cohesion: 0.11
-Nodes (35): invalidate(), api(), DemoSession, demoState, finishQuiz(), getPlan(), getStreakRepairStatus(), ingestLink() (+27 more)
+Cohesion: 0.09
+Nodes (42): api(), DemoSession, demoState, finishQuiz(), getStreakRepairStatus(), ingestLink(), ingestText(), markPlanCompleted() (+34 more)
 
 ### Community 1 - "TypeScript Configuration"
 Cohesion: 0.06
 Nodes (30): dom, dom.iterable, esnext, **/*.mts, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+22 more)
 
 ### Community 2 - "AI Content Generation"
-Cohesion: 0.12
-Nodes (23): extractVizBlocks(), main(), walkStrings(), ArrayViz(), ComplexityViz(), FlowViz(), wrapLabel(), TreeViz() (+15 more)
+Cohesion: 0.13
+Nodes (21): extractVizBlocks(), main(), walkStrings(), FlowViz(), wrapLabel(), TreeViz(), wrapLabel(), ArrayFrame (+13 more)
 
 ### Community 3 - "Nav.tsx"
 Cohesion: 0.11
@@ -204,16 +207,16 @@ Cohesion: 0.10
 Nodes (33): metadata, SqlPlaybookPage(), generateMetadata(), SqlTopicPage(), generateMetadata(), generateStaticParams(), SqlProblemPage(), getSqlProblem() (+25 more)
 
 ### Community 7 - "schema.sql"
-Cohesion: 0.08
-Nodes (36): generateMetadata(), MacroChapterPage(), generateMetadata(), generateStaticParams(), MacroSectionPage(), MacroeconomicsPage(), metadata, CompActQuestion (+28 more)
+Cohesion: 0.12
+Nodes (28): generateMetadata(), MacroChapterPage(), generateMetadata(), generateStaticParams(), MacroSectionPage(), MacroeconomicsPage(), metadata, AccentText() (+20 more)
 
 ### Community 8 - "useVizPalette"
-Cohesion: 0.22
-Nodes (10): SimReadout(), SimSlider(), GeometryBoardSim(), GraphPlotSim(), PAD, SimBlock(), SimFallback(), WorkedExampleSim() (+2 more)
+Cohesion: 0.13
+Nodes (17): SimSlider(), GraphPlotSim(), PAD, SimBlock(), WorkedExampleSim(), FigurePanel, GeometryReadout, GeometryVertex (+9 more)
 
 ### Community 9 - "layout.tsx"
-Cohesion: 0.23
-Nodes (13): SpotRect, TutorialTour(), clearTourState(), DEMO_REVIEW_QUESTION, hasSeenTour(), markTourSeen(), readTourState(), saveTourState() (+5 more)
+Cohesion: 0.09
+Nodes (28): fraunces, grotesk, inter, jetmono, metadata, viewport, LoginPage(), CONNECT (+20 more)
 
 ### Community 10 - "Engram Web Service"
 Cohesion: 0.50
@@ -236,12 +239,12 @@ Cohesion: 0.13
 Nodes (14): AI-call budget (deliberate design — keep it this way), Conventions / gotchas, Dates / "today" (fixed 2026-07-15), Design language, Diagram rendering — how the figures are drawn (settled 2026-08-02), Key modules, Knovis — Project Summary, RAG layer (added 2026-07-15, hardened 2026-07-15 — `supabase/schema-rag.sql` THEN `schema-rag-v2.sql` must both be run to activate) (+6 more)
 
 ### Community 27 - "graphify reference: query, path, explain"
-Cohesion: 0.10
-Nodes (35): animalCellPlate, BODY, CENTRO, cristaePaths, LYSO, MITO, mitoPaths, NUC (+27 more)
+Cohesion: 0.17
+Nodes (21): Acc, Box, centreOf(), chromosomes(), circle(), cisterna(), cristae(), folds() (+13 more)
 
 ### Community 28 - "Session Log"
 Cohesion: 0.03
-Nodes (79): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+71 more)
+Nodes (77): 2026-07-13 — AI-call minimisation redesign: question bank, batch report card, MCQs, fact of the day, 2026-07-13 — Brain label overhaul (clickable, Space Grotesk, declutter), 2026-07-13 — Dashboard/brain polish: rich insight, clickable plan, topic blogs, smaller labels, 2026-07-13 — Fix /profile infinite loading (missing profiles row), 2026-07-13 — Guest mode fix, plan done-tracking, review error card, blog pills, 2026-07-13 — Personal notes feature + blog source attribution, 2026-07-13 — Plan markdown fix, progress calendar, profile page, 2026-07-13 — Rebranding to Engramia + Mastery/XP removal + True/False Statements + Detailed completed reviews (+69 more)
 
 ### Community 29 - "Tasks"
 Cohesion: 0.20
@@ -252,12 +255,12 @@ Cohesion: 0.09
 Nodes (21): How to use this playbook, Knovis — 12-Week Growth Playbook, 📊 North-star metrics tracker (update every Friday), 🧭 One-line reminder, PHASE A — See the Truth & Sharpen (Weeks 1–2), PHASE B — Validation (Weeks 3–5), PHASE C — Finish the Monetizable Loop (Weeks 6–8), PHASE D — Launch (Weeks 9–12) (+13 more)
 
 ### Community 31 - "graphify reference: commit hook and native CLAUDE.md integration"
-Cohesion: 0.09
-Nodes (22): Chapter 1 — Exploration: Entering the World of Secondary Science, Optional Plate G — law / theory / principle · `camera` · 3 panels · ⚠️ read this first, Override 1 — every `bookRef` is `Exploration §1`, Override 2 — the real gates, since the checklist overstates them, Override 3 — you cannot pick the book's figures, because there are none to pick, PART 0 — THE MAIN BRIEF IS WRONG ABOUT THIS CHAPTER, PART 1 — THE THREE OVERRIDES, PART 2 — THE PLATE SLATE (+14 more)
+Cohesion: 0.15
+Nodes (12): ch01Coordinates, ch03Numbers, ch06PerimeterArea, MATHS_CHAPTERS, ch02Cell, ch03Tissues, ch05Mixtures, SCIENCE_CHAPTERS (+4 more)
 
 ### Community 32 - "graphify reference: incremental update and cluster-only"
-Cohesion: 0.15
-Nodes (9): fraunces, grotesk, inter, jetmono, metadata, viewport, CONNECT, EXPLORE (+1 more)
+Cohesion: 0.29
+Nodes (10): composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), GET(), clampTz(), dayStartUtcIso() (+2 more)
 
 ### Community 33 - "CLAUDE.md"
 Cohesion: 0.13
@@ -285,7 +288,7 @@ Nodes (7): Architecture & Urban Planning Story Creator Agent, Content Depth & En
 
 ### Community 44 - "gemini.ts"
 Cohesion: 0.13
-Nodes (33): backfill(), commit, TODO: if this is too slow, optimize to batch embed + store., supabase, POST(), Chunk, chunkText(), segments() (+25 more)
+Nodes (32): backfill(), commit, TODO: if this is too slow, optimize to batch embed + store., supabase, POST(), Chunk, chunkText(), segments() (+24 more)
 
 ### Community 45 - "Nav.tsx"
 Cohesion: 0.18
@@ -297,7 +300,7 @@ Nodes (41): DsaAtlasPage(), metadata, DsaTopicPage(), generateMetadata(), DsaPro
 
 ### Community 47 - "index.ts"
 Cohesion: 0.10
-Nodes (32): CompActChapterPage(), generateMetadata(), CompActSectionPage(), generateMetadata(), generateStaticParams(), CompetitionActPage(), metadata, AccentText() (+24 more)
+Nodes (31): CompActChapterPage(), generateMetadata(), CompActSectionPage(), generateMetadata(), generateStaticParams(), CompetitionActPage(), metadata, COMP_ACT_CHAPTERS (+23 more)
 
 ### Community 48 - "page.tsx"
 Cohesion: 0.25
@@ -316,32 +319,32 @@ Cohesion: 0.25
 Nodes (7): Business & Finance Story Creator Agent, Content Depth & Engagement, Coverage & Completeness, Domain Guidelines: Business & Finance, Output Format, Pedagogical Framework, Quiz Isolation Rules
 
 ### Community 52 - "page.tsx"
-Cohesion: 0.07
-Nodes (23): GroupRunner(), SERIES_COLORS, SERIES_TITLES, FlameIcon(), nextMilestone(), ProgressMap(), BigScoreRing(), trackLanded() (+15 more)
+Cohesion: 0.11
+Nodes (12): GroupRunner(), QuizCarousel(), ReviewRunner(), SERIES_COLORS, SERIES_TITLES, trackLanded(), trackRecallGraded(), trackSignedIn() (+4 more)
 
 ### Community 53 - "Architecture & Urban Planning Story Creator Agent"
 Cohesion: 0.25
 Nodes (7): Chemistry Story Creator Agent, Content Depth & Engagement, Coverage & Completeness, Domain Guidelines: Chemistry, Output Format, Pedagogical Framework, Quiz Isolation Rules
 
 ### Community 54 - "stories.ts"
-Cohesion: 0.09
-Nodes (32): generateMetadata(), SarfaesiChapterPage(), generateMetadata(), generateStaticParams(), SarfaesiSectionPage(), metadata, SarfaesiActPage(), INLINE (+24 more)
+Cohesion: 0.08
+Nodes (35): generateMetadata(), SarfaesiChapterPage(), generateMetadata(), generateStaticParams(), SarfaesiSectionPage(), metadata, SarfaesiActPage(), DsaQuestion (+27 more)
 
 ### Community 55 - "page.tsx"
-Cohesion: 0.11
-Nodes (33): ReviewRunner(), Nav(), Prefetcher(), CACHE_KEYS, cached(), CacheEntry, CacheOptions, canPersist (+25 more)
+Cohesion: 0.14
+Nodes (29): Dashboard(), CACHE_KEYS, cached(), CacheEntry, CacheOptions, canPersist, clearCache(), getEntry() (+21 more)
 
 ### Community 56 - "draw.ts"
-Cohesion: 0.11
-Nodes (19): distanceSim, quadrantSim, simpleGridSim, coordinatePlaneFigure, distanceFormulaFigure, reflectionsFigure, T, FigurePanel (+11 more)
+Cohesion: 0.19
+Nodes (9): distanceSim, quadrantSim, simpleGridSim, coordinatePlaneFigure, distanceFormulaFigure, reflectionsFigure, T, FigureSpec (+1 more)
 
 ### Community 57 - "ReadingThemeContext.tsx"
 Cohesion: 0.25
 Nodes (7): Content Depth & Engagement, Coverage & Completeness, Culinary Arts & Nutrition Story Creator Agent, Domain Guidelines: Culinary & Nutrition, Output Format, Pedagogical Framework, Quiz Isolation Rules
 
 ### Community 58 - "route.ts"
-Cohesion: 0.14
-Nodes (28): composeNarrative(), doneTopicsToday(), GET(), markDone(), POST(), computeStatus(), GET(), Ineligible (+20 more)
+Cohesion: 0.24
+Nodes (17): computeStatus(), GET(), Ineligible, loadActiveDays(), POST(), reasonMessage(), REPAIR_MAX_GAP_DAYS, REPAIR_ROLLING_LIMIT (+9 more)
 
 ### Community 59 - "Art, Design & UI/UX Story Creator Agent"
 Cohesion: 0.25
@@ -432,8 +435,8 @@ Cohesion: 0.33
 Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
 
 ### Community 81 - "blog-gen.mts"
-Cohesion: 0.08
-Nodes (24): [cmd, a, b], loadEnv(), sb, CHLORO, chloroPaths, cristaePaths, f(), granaPaths (+16 more)
+Cohesion: 0.10
+Nodes (22): loadEnv(), CHLORO, chloroPaths, cristaePaths, f(), granaPaths, hex(), hexPts() (+14 more)
 
 ### Community 82 - "Sociology & Anthropology Story Creator Agent"
 Cohesion: 0.50
@@ -448,12 +451,12 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 85 - "route.ts"
-Cohesion: 0.13
-Nodes (20): answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicCommunicationScore(), heuristicScore(), pickQuestion(), POST() (+12 more)
+Cohesion: 0.14
+Nodes (19): answer(), BankQuestion, CHOICE_KINDS, finish(), heuristicCommunicationScore(), heuristicScore(), pickQuestion(), POST() (+11 more)
 
 ### Community 86 - "route.ts"
-Cohesion: 0.16
-Nodes (20): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+12 more)
+Cohesion: 0.15
+Nodes (22): assertPublicHttpUrl(), duplicateResponse(), fetchReadable(), INGEST_DAILY_LIMIT, isBlockedIp(), isBlockedIPv4(), isBlockedIPv6(), LookupCallback (+14 more)
 
 ### Community 87 - "gemini.ts"
 Cohesion: 0.16
@@ -465,39 +468,43 @@ Nodes (12): AccentPill(), DifficultyPill(), TableDiffViz(), useReadingTheme(), c
 
 ### Community 92 - "cache.ts"
 Cohesion: 0.12
-Nodes (24): BlogsPage(), STORY_SERIES, BrainPage(), SERIES_TITLES, brainPoint(), BrainScene(), hashStr(), LinkObj (+16 more)
+Nodes (18): BlogsPage(), STORY_SERIES, BrainPage(), SERIES_TITLES, SERIES_META, SERIES_TITLES, BlogTopicLibrary, getBlogTopicLibrary() (+10 more)
 
 ### Community 97 - "Prompt — draw an interactive textbook plate"
-Cohesion: 0.31
-Nodes (9): ch11Reproduction, animalReproductionPlate, buddingHydraPlate, femaleSystemPlate, flowerPlate, maleSystemPlate, menstrualCyclePlate, T (+1 more)
+Cohesion: 0.20
+Nodes (5): MODE_LABEL, RevisionRow(), scoreColor(), stripMarkdown(), PlanItem
 
 ### Community 98 - "page.tsx"
-Cohesion: 0.15
-Nodes (21): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), Dashboard(), MODE_LABEL, RevisionRow(), scoreColor() (+13 more)
+Cohesion: 0.16
+Nodes (20): ancestorsInclude(), NoteEditor(), NoteRow(), NotesPage(), INLINE, InlineRule, MATH_SYMBOLS, renderMath() (+12 more)
 
 ### Community 99 - "stories.ts"
-Cohesion: 0.18
-Nodes (17): KIND_LABEL, SERIES_META, SERIES_TITLES, StoryLearnPanel(), STORY_COLORS, StoryStartControl(), completeSection(), endStory() (+9 more)
+Cohesion: 0.25
+Nodes (14): KIND_LABEL, StoryLearnPanel(), STORY_COLORS, StoryStartControl(), CompActQuestion, completeSection(), endStory(), FAR_FUTURE() (+6 more)
+
+### Community 100 - "index.ts"
+Cohesion: 0.30
+Nodes (11): brainPoint(), BrainScene(), hashStr(), LinkObj, LOBES, makeCircleTexture(), makeGlowTexture(), makeLabelTexture() (+3 more)
 
 ### Community 101 - "render-figures.mts"
 Cohesion: 0.23
 Nodes (11): args, audit(), clampN(), esc(), layerSvg(), liftFlag, palette(), problems (+3 more)
 
 ### Community 102 - "Nav.tsx"
-Cohesion: 0.38
-Nodes (5): LoginPage(), BrainIcon(), trackGuestStarted(), clearGuestMode(), enableGuestMode()
+Cohesion: 0.36
+Nodes (6): SimReadout(), GeometryBoardSim(), SimFallback(), ArrayViz(), ComplexityViz(), useVizPalette()
 
 ### Community 103 - "route.ts"
-Cohesion: 0.32
-Nodes (11): ParticleModelSim(), rnd(), Cartoon, cartoonFor(), clamp(), hsl(), parseHex(), rgbToHsl() (+3 more)
+Cohesion: 0.29
+Nodes (12): ParticleModelSim(), rnd(), Cartoon, cartoonFor(), clamp(), hsl(), parseHex(), rgbToHsl() (+4 more)
 
 ### Community 104 - "ReadingThemeContext.tsx"
 Cohesion: 0.26
 Nodes (4): PaperModeToggle(), ReadingThemeContext, ReadingThemeContextType, ReadingThemeProvider()
 
 ### Community 106 - "page.tsx"
-Cohesion: 0.22
-Nodes (13): BlogBody(), parseBodySections(), sourceLabel(), TopicBlogPage(), ProfilePage(), getLinks(), getTopic(), getTopicQuestions() (+5 more)
+Cohesion: 0.11
+Nodes (18): metadata, BlogBody(), parseBodySections(), sourceLabel(), TopicBlogPage(), ProfilePage(), LINKS, Nav() (+10 more)
 
 ### Community 107 - "Knovis for Schools — implementation brief & cost model"
 Cohesion: 0.05
@@ -508,20 +515,24 @@ Cohesion: 0.05
 Nodes (38): 10.1 Identity: join codes, not email domains, 10.2 RLS: the current model is row-owner, teacher visibility is not, 10.3 Content scoping is a routing problem, not an RLS problem, 10.4 The AI budget breaks at school scale, 10. The school track inside the existing codebase, 11. Risks, ranked, with kill criteria, 12. The conflict you have to resolve first, 13. Open questions that change the answer (+30 more)
 
 ### Community 110 - "index.ts"
-Cohesion: 0.11
-Nodes (25): check(), checkQuote(), __dirname, reportError(), ROOT, metadata, ChapterPage(), generateMetadata() (+17 more)
+Cohesion: 0.18
+Nodes (14): metadata, ChapterPage(), generateMetadata(), generateMetadata(), SubjectPage(), ChapterReader(), NOTE_LABELS, chapterHref() (+6 more)
+
+### Community 111 - "types.ts"
+Cohesion: 0.14
+Nodes (14): animalCellPlate, BODY, CENTRO, cristaePaths, LYSO, MITO, mitoPaths, NUC (+6 more)
 
 ### Community 112 - "ch-03.ts"
-Cohesion: 0.09
-Nodes (23): ch03Tissues, animalArmFigure, cellNuclei(), connectiveFigure, conPanels, epiPanels, epithelialFigure, meristemFigure (+15 more)
+Cohesion: 0.11
+Nodes (18): animalArmFigure, cellNuclei(), connectiveFigure, conPanels, epiPanels, epithelialFigure, meristemFigure, muscleFigure (+10 more)
 
 ### Community 113 - "ch-05.ts"
-Cohesion: 0.11
-Nodes (18): ch05Mixtures, mixtureTypesSim, pureVsMixtureSim, bloodFigure, bloodPanels, chromatographyFigure, distillationFigure, mixPanels (+10 more)
+Cohesion: 0.13
+Nodes (15): mixtureTypesSim, pureVsMixtureSim, bloodFigure, bloodPanels, chromatographyFigure, distillationFigure, mixPanels, mixtureTypesFigure (+7 more)
 
 ### Community 114 - "ch-03.ts"
-Cohesion: 0.13
-Nodes (14): ch01Coordinates, ch03Numbers, integerArithmeticSim, rationalAdditionSim, tallySim, ch06PerimeterArea, constructRootFigure, numberLineFigure (+6 more)
+Cohesion: 0.17
+Nodes (10): integerArithmeticSim, rationalAdditionSim, tallySim, constructRootFigure, numberLineFigure, rootSpiralFigure, SP, SPIRAL_O (+2 more)
 
 ### Community 115 - "ch-06.ts"
 Cohesion: 0.13
@@ -539,13 +550,17 @@ Nodes (12): 10. Phase 6 — validation script, 11. Acceptance criteria — the b
 Cohesion: 0.18
 Nodes (11): 2.10 `src/proxy.ts` — current shape, 2.1 Stack, 2.2 Next 16 route conventions (used by every existing page), 2.3 `src/lib/viz-theme.ts` — exact exports, 2.4 `src/components/AccentText.tsx` — exact exports, 2.5 `src/components/Markdown.tsx` — exact props, 2.6 Paper Mode — how it is mounted (IMPORTANT), 2.7 Existing CSS classes you may use (they exist in `globals.css`) (+3 more)
 
+### Community 121 - "validate-cbse.mts"
+Cohesion: 0.31
+Nodes (9): check(), checkQuote(), __dirname, reportError(), ROOT, allChapters(), questionCount(), isReservedSlug() (+1 more)
+
 ### Community 122 - "Task 3.2 — `src/components/school/ChapterReader.tsx`"
 Cohesion: 0.20
 Nodes (10): 7. Phase 3 — the reader, Header and footer, Layout, Mobile (below `lg`) — interleaved, not stacked, Note card, Scroll sync, Task 3.1 — `src/app/learn/layout.tsx`, Task 3.2 — `src/components/school/ChapterReader.tsx` (+2 more)
 
 ### Community 123 - "layout.tsx"
-Cohesion: 0.20
-Nodes (14): QuizCarousel(), dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS, getDayReport(), getLatestReportToday(), getTodayReviewDetail() (+6 more)
+Cohesion: 0.11
+Nodes (19): FlameIcon(), dayClasses(), dayKey(), ProgressCalendar(), WEEKDAYS, Heatmap(), nextMilestone(), ProgressMap() (+11 more)
 
 ### Community 124 - "FigureSim.tsx"
 Cohesion: 0.39
@@ -565,7 +580,7 @@ Nodes (5): 9. Phase 5 — school-branded URLs, Task 5.1 — `src/lib/schools/reg
 
 ### Community 128 - "index.ts"
 Cohesion: 0.08
-Nodes (29): cellSizeSim, ch02Cell, chromosomeSim, plantCellPlate, bacterialCellFigure, C, cellToDnaFigure, CHL (+21 more)
+Nodes (28): cellSizeSim, chromosomeSim, plantCellPlate, bacterialCellFigure, C, cellToDnaFigure, CHL, chloroplastFigure (+20 more)
 
 ### Community 129 - "5. Phase 1 — types and contracts"
 Cohesion: 0.50
@@ -576,24 +591,24 @@ Cohesion: 0.32
 Nodes (5): MATH_SYMBOLS, parse(), RichText(), RULES, tidy()
 
 ## Knowledge Gaps
-- **802 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+797 more)
+- **779 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `dev` (+774 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **25 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `QuestionKind` connect `route.ts` to `Review and Scoring System`, `CLAUDE.md`, `Nav.tsx`, `schema.sql`, `index.ts`, `index.ts`, `ch-03.ts`, `page.tsx`, `stories.ts`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Why does `f()` connect `blog-gen.mts` to `stories.ts`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
+- **Why does `completeSection()` connect `stories.ts` to `blog-gen.mts`, `page.tsx`?**
+  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `QuestionKind` connect `route.ts` to `Review and Scoring System`, `CLAUDE.md`, `Nav.tsx`, `schema.sql`, `index.ts`, `index.ts`, `stories.ts`, `graphify reference: commit hook and native CLAUDE.md integration`?**
+  _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _802 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _779 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Review and Scoring System` be split into smaller, more focused modules?**
-  _Cohesion score 0.10953058321479374 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08888888888888889 - nodes in this community are weakly interconnected._
 - **Should `TypeScript Configuration` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Should `AI Content Generation` be split into smaller, more focused modules?**
-  _Cohesion score 0.11724137931034483 - nodes in this community are weakly interconnected._
-- **Should `Nav.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11014492753623188 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12962962962962962 - nodes in this community are weakly interconnected._
